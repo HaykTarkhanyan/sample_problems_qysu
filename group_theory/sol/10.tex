@@ -1,0 +1,883 @@
+\documentclass[12pt,a4paper]{article}
+
+% ---- Fonts & encoding ----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}                  % Palatino-style text + math
+\usepackage[scaled=0.85]{helvet}       % Helvetica for \sffamily
+\usepackage{microtype}
+
+% ---- Layout ----
+\usepackage[margin=1in, headheight=15pt]{geometry}
+
+% ---- Core math ----
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+% ---- Visual ----
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikz}
+  \usetikzlibrary{calc,arrows.meta,decorations.pathreplacing,positioning,shapes.geometric}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[bookmarksnumbered]{hyperref}
+\usepackage{bookmark}
+
+% ---- Colour palette ----
+\definecolor{ProbBG}{HTML}{EAF0F9}
+\definecolor{ProbFrame}{HTML}{3360A0}
+\definecolor{SolBG}{HTML}{F6F8F4}
+\definecolor{SolFrame}{HTML}{4A8C5C}
+\definecolor{AccGold}{HTML}{C5960C}
+\definecolor{SectCol}{HTML}{22406A}
+\definecolor{GridGray}{HTML}{D0D0D0}
+
+% ---- Page style ----
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{SectCol}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\color{SectCol}\textsc{Group Theory}}
+\fancyhead[R]{\color{SectCol}\textsc{Practical 10}}
+\fancyfoot[C]{\color{SectCol}\thepage}
+
+% ---- Section formatting ----
+\titleformat{\section}
+  {\color{SectCol}\large\bfseries}
+  {\fcolorbox{SectCol}{SectCol}{\color{white}\;\thesection\;}}{0.6em}{}
+  [\vspace{-0.3em}\color{SectCol}\titlerule]
+\titleformat{\subsection}
+  {\color{SectCol}\normalsize\bfseries}
+  {\thesubsection.}{0.5em}{}
+
+% ---- mdframed: problem statement ----
+\mdfdefinestyle{problemstyle}{
+  linewidth=0.8pt,
+  linecolor=ProbFrame,
+  backgroundcolor=ProbBG,
+  roundcorner=3pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  font=\itshape
+}
+\newenvironment{problem}{\begin{mdframed}[style=problemstyle]}{\end{mdframed}}
+
+% ---- mdframed: solution ----
+\mdfdefinestyle{solstyle}{
+  linewidth=0.6pt,
+  linecolor=SolFrame,
+  backgroundcolor=SolBG,
+  roundcorner=3pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  frametitle={\colorbox{SolFrame}{\color{white}\;\textbf{\sffamily Solution}\;}},
+  frametitleaboveskip=-\ht\strutbox,
+  frametitlealignment=\raggedright
+}
+\newenvironment{sol}{\begin{mdframed}[style=solstyle]}{\end{mdframed}}
+
+% ---- Math shortcuts ----
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Rstar}{\mathbb{R}^{*}}
+\newcommand{\Cstar}{\mathbb{C}^{*}}
+\newcommand{\Rplus}{\mathbb{R}_{>0}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\normal}{\trianglelefteq}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cent}{Z}
+\DeclareMathOperator{\sgn}{sgn}
+
+% ===========================================================================
+\begin{document}
+% ===========================================================================
+
+% ---- Title ----
+\begin{mdframed}[
+  linewidth=0pt,
+  backgroundcolor=SectCol,
+  roundcorner=4pt,
+  innertopmargin=14pt,
+  innerbottommargin=14pt,
+  font=\color{white}\centering
+]
+  {\fontsize{22}{26}\selectfont\bfseries\sffamily Practical 10}\\[8pt]
+  {\large\sffamily Direct Products and Decompositions of Groups}\\[6pt]
+  {\color{white!70!SectCol}\rule{5cm}{0.4pt}}
+\end{mdframed}
+
+\vspace{1.2em}
+
+%==========================================================================
+\section{Klein four-group as a direct product}
+%==========================================================================
+
+\begin{problem}
+Show that the Klein $V_4$ group can be decomposed into the direct product
+of two cyclic groups of the second order.
+\end{problem}
+
+\begin{sol}
+Recall that the Klein four-group is
+$V_4 = \{e,\, a,\, b,\, c\}$,
+where every non-identity element has order~$2$, and the multiplication is
+given by $ab = c$, $ac = b$, $bc = a$.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small}]
+  % Cayley table header
+  \node[font=\small\bfseries] at (0,0) {$\cdot$};
+  \foreach \j/\el in {1/e, 2/a, 3/b, 4/c}{
+    \node[font=\small\bfseries, text=ProbFrame] at (\j*1.1, 0) {$\el$};
+    \node[font=\small\bfseries, text=ProbFrame] at (0, -\j*0.7) {$\el$};
+  }
+  % Row 1: e*e, e*a, e*b, e*c
+  \node at (1.1,-0.7) {$e$}; \node at (2.2,-0.7) {$a$};
+  \node at (3.3,-0.7) {$b$}; \node at (4.4,-0.7) {$c$};
+  % Row 2: a*e, a*a, a*b, a*c
+  \node at (1.1,-1.4) {$a$}; \node at (2.2,-1.4) {$e$};
+  \node at (3.3,-1.4) {$c$}; \node at (4.4,-1.4) {$b$};
+  % Row 3: b*e, b*a, b*b, b*c
+  \node at (1.1,-2.1) {$b$}; \node at (2.2,-2.1) {$c$};
+  \node at (3.3,-2.1) {$e$}; \node at (4.4,-2.1) {$a$};
+  % Row 4: c*e, c*a, c*b, c*c
+  \node at (1.1,-2.8) {$c$}; \node at (2.2,-2.8) {$b$};
+  \node at (3.3,-2.8) {$a$}; \node at (4.4,-2.8) {$e$};
+  % Dividers
+  \draw[ProbFrame, thick] (0.55,0.35) -- (0.55,-3.15);
+  \draw[ProbFrame, thick] (-0.55,-0.35) -- (5.05,-0.35);
+  \node[anchor=north, font=\footnotesize\sffamily, text=SectCol] at (2.2,-3.5)
+    {Cayley table of $V_4$};
+\end{tikzpicture}
+\end{center}
+
+Consider the subgroups
+\[
+  H = \gen{a} = \{e, a\} \cong \Z_2, \qquad
+  K = \gen{b} = \{e, b\} \cong \Z_2.
+\]
+
+We verify the three conditions for an \emph{internal} direct product $V_4 = H \times K$:
+
+\begin{enumerate}[label=\textcolor{SolFrame}{(\roman*)},leftmargin=*]
+  \item \textbf{$H$ and $K$ are normal in $V_4$.}
+    Since $V_4$ is abelian, every subgroup is normal.
+
+  \item \textbf{$H \cap K = \{e\}$.}
+    The only element common to $\{e,a\}$ and $\{e,b\}$ is~$e$.
+
+  \item \textbf{$HK = V_4$.}
+    $HK = \{e \cdot e,\; e \cdot b,\; a \cdot e,\; a \cdot b\}
+         = \{e,\, b,\, a,\, c\} = V_4.$
+\end{enumerate}
+
+Therefore $V_4 = H \times K \cong \Z_2 \times \Z_2$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Decomposability of $S_3$, $A_4$, and $S_4$}
+%==========================================================================
+
+\begin{problem}
+Are the groups $S_{3}$, $A_{4}$, and $S_{4}$ decomposable into a direct product
+of (non-trivial) subgroups?
+\end{problem}
+
+\begin{sol}
+\textbf{\color{SectCol}$S_3$ is indecomposable.}\;
+$|S_3| = 6$. A non-trivial decomposition requires $S_3 \cong H \times K$ with
+$|H|=2$, $|K|=3$. Then $H \times K \cong \Z_2 \times \Z_3 \cong \Z_6$ is
+abelian, but $S_3$ is non-abelian. Contradiction.
+
+\medskip
+\textbf{\color{SectCol}$A_4$ is indecomposable.}\;
+$|A_4|=12$. Possible non-trivial factor sizes: $(2,6)$, $(3,4)$, $(2,2,3)$.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{$(2,6)$:} $A_4$ has no subgroup of order~$6$ at all
+    ($A_4$ is the smallest group with $6 \mid |G|$ yet no order-$6$ subgroup).
+
+  \item \textbf{$(3,4)$:} The Klein four-group
+    $V = \{e, (12)(34), (13)(24), (14)(23)\} \normal A_4$
+    has order~$4$, and $\gen{(123)}$ has order~$3$ with
+    $V \cap \gen{(123)} = \{e\}$. However $\gen{(123)}$ is
+    \emph{not normal} in $A_4$ (e.g.\
+    $(12)(34)(123)(12)(34) = (243) \notin \gen{(123)}$).
+
+  \item \textbf{$(2,2,3)$:} $A_4$ has only one subgroup of order~$4$,
+    so we cannot find the required pair of order-$2$ normal subgroups.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  nd/.style={draw, rounded corners=2pt, fill=ProbBG, inner sep=3pt,
+             minimum width=1.2cm, font=\small},
+  >=Stealth]
+  \node[nd] (A4) at (0,3) {$A_4$};
+  \node[nd] (V)  at (-2.5,1.5) {$V_4$};
+  \node[nd] (H1) at (-0.2,1.5) {$\gen{(123)}$};
+  \node[nd] (H2) at (1.8,1.5) {$\gen{(124)}$};
+  \node[nd,draw=none,fill=none] at (3.3,1.5) {$\cdots$};
+  \node[nd] (e)  at (0,0) {$\{e\}$};
+  \draw[thick,ProbFrame] (A4)--(V)--(e) (A4)--(H1)--(e) (A4)--(H2)--(e);
+  \node[anchor=north,font=\footnotesize\sffamily,text=SectCol] at (0,-0.6)
+    {Subgroup lattice of $A_4$ (partial) --- no valid decomposition pair};
+\end{tikzpicture}
+\end{center}
+
+\textbf{\color{SectCol}$S_4$ is indecomposable.}\;
+$|S_4|=24$. The only proper non-trivial normal subgroups are $A_4$ (order~$12$)
+and $V_4$ (order~$4$).
+\begin{itemize}[leftmargin=*]
+  \item $H = A_4$, $|K|=2$: no normal subgroup of order~$2$ exists.
+  \item $H = V_4$, $|K|=6$: no normal subgroup of order~$6$ exists.
+\end{itemize}
+
+All three groups are \textbf{indecomposable}. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{$\Z$ and $\Q$ are indecomposable (additively)}
+%==========================================================================
+
+\begin{problem}
+Prove that the additive groups $\Z$ and $\Q$ cannot be decomposed into a
+direct sum of subgroups, none of which is zero.
+\end{problem}
+
+\begin{sol}
+\textbf{\color{SectCol}Case $\Z$.}\;
+Suppose $\Z = A \oplus B$ with $A, B \neq 0$.
+Every non-trivial subgroup of $\Z$ has the form $n\Z$, so $A = m\Z$, $B = n\Z$
+with $m, n \geq 1$.
+
+\begin{itemize}[leftmargin=*]
+  \item $A + B = \Z \implies \gcd(m,n)=1$\; (otherwise every element of
+    $m\Z + n\Z$ is divisible by $\gcd(m,n) > 1$).
+  \item $A \cap B = m\Z \cap n\Z = \lcm(m,n)\Z = mn\Z$\; (since $\gcd(m,n)=1$).
+\end{itemize}
+
+For $A \cap B = \{0\}$ we need $mn = 0$, impossible for $m,n \geq 1$. Contradiction.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+  \draw[->,thick] (-7,0) -- (7,0);
+  \foreach \x in {-6,...,6}
+    \draw (\x,0.1)--(\x,-0.1);
+  % 2Z
+  \foreach \x in {-6,-4,-2,0,2,4,6}
+    \fill[ProbFrame] (\x,0) circle (3pt);
+  \node[font=\footnotesize,text=ProbFrame,above] at (6,0.2) {$2\Z$};
+  % 3Z
+  \foreach \x in {-6,-3,0,3,6}
+    \fill[SolFrame] (\x,-0.5) circle (3pt);
+  \node[font=\footnotesize,text=SolFrame,below] at (6,-0.6) {$3\Z$};
+  % overlap
+  \foreach \x in {-6,0,6}
+    \draw[AccGold,very thick] (\x,-0.7) circle (5pt);
+  \node[font=\footnotesize\sffamily,text=AccGold,below] at (0,-1.2)
+    {$2\Z \cap 3\Z = 6\Z \neq \{0\}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{\color{SectCol}Case $\Q$.}\;
+Suppose $\Q = A \oplus B$ with $A, B \neq 0$.
+Pick $0 \neq a \in A$ and $0 \neq b \in B$.
+Write them with a common denominator: $a = \alpha/d$, $b = \beta/d$
+where $\alpha, \beta, d \in \Z$, $d > 0$.
+
+Since $A$ is a subgroup containing $a = \alpha/d$, it contains
+$\beta \cdot a = \alpha\beta/d$. Similarly $B$ contains
+$\alpha \cdot b = \alpha\beta/d$.
+
+So $\alpha\beta/d \in A \cap B$ with $\alpha\beta/d \neq 0$
+(since $\alpha, \beta \neq 0$),
+contradicting $A \cap B = \{0\}$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Decompositions of $(\C,+)$ and $(\Cstar, \cdot)$}
+%==========================================================================
+
+\subsection{$(\C,+) \cong (\R,+) \oplus (\R,+)$}
+
+\begin{problem}
+Prove that the additive group of complex numbers can be decomposed into the
+direct sum of the additive groups of real and purely imaginary numbers.
+\end{problem}
+
+\begin{sol}
+Let $A = \R$ and $B = i\R = \{bi : b \in \R\}$, both subgroups of $(\C,+)$.
+
+\begin{enumerate}[label=\textcolor{SolFrame}{(\roman*)},leftmargin=*]
+  \item \textbf{Normality.} $(\C,+)$ is abelian, so all subgroups are normal.
+  \item \textbf{$A \cap B = \{0\}$.}
+    $z \in A \cap B$ $\Rightarrow$ $z$ is both real and purely imaginary $\Rightarrow$ $z=0$.
+  \item \textbf{$A + B = \C$.}
+    Every $z \in \C$ decomposes as $z = \underbrace{\Re(z)}_{\in\, A}
+    + \underbrace{i\,\Im(z)}_{\in\, B}$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[->,thick,gray!60] (-3.2,0)--(3.2,0) node[right,font=\small]{$\R$};
+  \draw[->,thick,gray!60] (0,-2.7)--(0,2.7) node[above,font=\small]{$i\R$};
+  \coordinate (P) at (2,1.6);
+  \fill[AccGold] (P) circle (3pt);
+  \node[font=\small,above right] at (P) {$z = x + iy$};
+  \draw[dashed, ProbFrame, thick] (P) -- (2,0);
+  \draw[dashed, SolFrame,  thick] (P) -- (0,1.6);
+  \fill[ProbFrame] (2,0) circle (2.5pt);
+  \fill[SolFrame]  (0,1.6) circle (2.5pt);
+  \node[font=\footnotesize, ProbFrame, below] at (2,0) {$x \in A$};
+  \node[font=\footnotesize, SolFrame, left]  at (0,1.6) {$iy \in B$};
+  \node[font=\footnotesize\sffamily, SectCol, anchor=north] at (0,-3.1)
+    {Every $z\in\C$ uniquely decomposes as $z = x + iy$};
+\end{tikzpicture}
+\end{center}
+
+Therefore $(\C,+) = A \oplus B \cong (\R,+) \oplus (\R,+)$. \qed
+\end{sol}
+
+\subsection{$(\Cstar, \cdot) \cong (\Rplus, \cdot) \times (S^1, \cdot)$}
+
+\begin{problem}
+Prove that the multiplicative group of nonzero complex numbers can be decomposed
+into the direct product of positive reals and complex numbers of modulus one.
+\end{problem}
+
+\begin{sol}
+Let $P = \Rplus$ (positive reals under multiplication) and
+$S^1 = \{z \in \C : |z|=1\}$ (unit circle).
+
+\begin{enumerate}[label=\textcolor{SolFrame}{(\roman*)},leftmargin=*]
+  \item \textbf{Normality.} $\Cstar$ is abelian.
+  \item \textbf{$P \cap S^1 = \{1\}$.}
+    $r \in P \cap S^1 \Rightarrow r > 0$ and $|r|=1 \Rightarrow r=1$.
+  \item \textbf{$P \cdot S^1 = \Cstar$.}
+    Every $z \neq 0$ writes as
+    $z = \underbrace{|z|}_{\in\, P}\;\cdot\;\underbrace{z/|z|}_{\in\, S^1}$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->,thick,gray!50] (-2.5,0)--(3.5,0);
+  \draw[->,thick,gray!50] (0,-2.2)--(0,2.5);
+  \draw[SolFrame, thick] (0,0) circle (1);
+  \node[font=\footnotesize, SolFrame] at (1.35,0.85) {$S^1$};
+  \coordinate (P) at (55:2.3);
+  \draw[ProbFrame, thick, dashed] (0,0) -- (55:3);
+  \fill[AccGold] (P) circle (3pt);
+  \node[font=\small, above right] at (P) {$z$};
+  \coordinate (U) at (55:1);
+  \fill[SolFrame] (U) circle (2.5pt);
+  \node[font=\footnotesize, SolFrame, below left] at (U) {$\frac{z}{|z|}$};
+  \draw[<->,ProbFrame, thick] (0,-0.15) -- node[below,font=\footnotesize]{$|z|$}
+    ($(55:2.3)+(0,-0.15)$);
+  \node[font=\footnotesize\sffamily, SectCol, anchor=north] at (0.5,-2.6)
+    {Polar decomposition: $z = |z| \cdot e^{i\theta}$};
+\end{tikzpicture}
+\end{center}
+
+Therefore $(\Cstar, \cdot) = P \times S^1 \cong (\Rplus, \cdot) \times (S^1, \cdot)$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{The quaternion group is indecomposable}
+%==========================================================================
+
+\begin{problem}
+Prove that the quaternion group $Q_8$ is indecomposable.
+\end{problem}
+
+\begin{sol}
+Recall $Q_8 = \{\pm 1, \pm i, \pm j, \pm k\}$, $|Q_8|=8$.
+A non-trivial decomposition requires $(|H|,|K|) \in \{(2,4),(4,2)\}$.
+
+\textbf{Subgroups of $Q_8$:}
+
+\begin{center}
+\begin{tikzpicture}[
+  nd/.style={draw, rounded corners=2pt, fill=ProbBG, inner sep=3pt,
+             font=\small, minimum width=1.6cm},
+  >=Stealth]
+  \node[nd,fill=ProbFrame!15] (Q) at (0,3.5) {$Q_8$};
+  \node[nd] (I) at (-3,2)   {$\gen{i}$};
+  \node[nd] (J) at ( 0,2)   {$\gen{j}$};
+  \node[nd] (K) at ( 3,2)   {$\gen{k}$};
+  \node[nd,fill=AccGold!20] (C) at (0,0.5) {$\{1,-1\}$};
+  \node[nd] (E) at (0,-0.8) {$\{1\}$};
+  \draw[thick] (Q)--(I)--(C) (Q)--(J)--(C) (Q)--(K)--(C) (C)--(E);
+  % annotation
+  \draw[AccGold, very thick, rounded corners=3pt]
+    (-1.1,0.1) rectangle (1.1,0.95);
+  \node[font=\footnotesize\sffamily, AccGold, anchor=west] at (1.3,0.5)
+    {unique order-$2$ subgroup};
+  % side labels
+  \node[font=\scriptsize, gray, right] at (3.8,2) {$= \{\pm 1, \pm k\}$};
+  \node[font=\scriptsize, gray, left]  at (-3.8,2) {$= \{\pm 1, \pm i\}$};
+  \node[font=\scriptsize, gray, right] at (0.8,2) {$= \{\pm 1, \pm j\}$};
+\end{tikzpicture}
+\end{center}
+
+There is exactly \emph{one} subgroup of order~$2$: the center $\{1,-1\}$.
+Every subgroup of order~$4$ contains $-1$, hence contains $\{1,-1\}$.
+
+For any attempt $Q_8 = H \times K$ with $|H|=2$, $|K|=4$:
+\[
+  H = \{1,-1\}, \quad K \in \bigl\{\gen{i},\,\gen{j},\,\gen{k}\bigr\}
+  \quad\Longrightarrow\quad
+  H \cap K \supseteq \{1,-1\} \neq \{1\}.
+\]
+
+This violates $H \cap K = \{1\}$, so $Q_8$ is indecomposable. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{$\Rstar$ is decomposable}
+%==========================================================================
+
+\begin{problem}
+Prove that the group $\Rstar$ (nonzero reals under multiplication) is decomposable.
+\end{problem}
+
+\begin{sol}
+Let $P = \Rplus = \{x \in \R : x > 0\}$ and $N = \{1,-1\} \cong \Z_2$.
+
+\begin{enumerate}[label=\textcolor{SolFrame}{(\roman*)},leftmargin=*]
+  \item \textbf{Normality.} $\Rstar$ is abelian.
+  \item \textbf{$P \cap N = \{1\}$.} The only positive element in $\{1,-1\}$ is~$1$.
+  \item \textbf{$PN = \Rstar$.}
+    Every $x \neq 0$ writes as $x = |x| \cdot \sgn(x)$ with $|x| \in P$, $\sgn(x) \in N$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->,thick,gray!50] (-5,0)--(5,0);
+  \fill[ProbFrame!20] (0.05,-0.4) rectangle (4.8,0.4);
+  \fill[SolFrame!20]  (-4.8,-0.4) rectangle (-0.05,0.4);
+  \node[font=\footnotesize,ProbFrame] at (2.5,0.7) {$P = \Rplus$};
+  \node[font=\footnotesize,SolFrame] at (-2.5,0.7) {$(-1)\cdot P$};
+  \fill[AccGold] (0,0) circle (2.5pt);
+  \node[font=\footnotesize,below,AccGold] at (0,-0.55) {$0$ (excluded)};
+  \draw[thick,decorate,decoration={brace,amplitude=4pt,mirror}]
+    (-4.8,-0.7) -- (4.8,-0.7)
+    node[midway,below=5pt,font=\footnotesize\sffamily,SectCol]
+    {$\Rstar = P \times \{1,-1\} \;\cong\; \Rplus \times \Z_2$};
+\end{tikzpicture}
+\end{center}
+\qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Center of a direct product}
+%==========================================================================
+
+\begin{problem}
+Prove that $\Cent(G \times H) = \Cent(G) \times \Cent(H)$.
+\end{problem}
+
+\begin{sol}
+\noindent$(\subseteq)$\;
+Let $(g,h) \in \Cent(G \times H)$.
+For every $(x,y) \in G \times H$:
+\[
+  (g,h)(x,y) = (x,y)(g,h)
+  \;\Longrightarrow\;
+  \begin{cases} gx = xg & \forall\, x \in G,\\[2pt] hy = yh & \forall\, y \in H, \end{cases}
+\]
+so $g \in \Cent(G)$ and $h \in \Cent(H)$.
+
+\medskip
+\noindent$(\supseteq)$\;
+If $g \in \Cent(G)$ and $h \in \Cent(H)$, then for every $(x,y)$:
+\[
+  (g,h)(x,y) = (gx,hy) = (xg,yh) = (x,y)(g,h).
+\]
+
+By induction: $\displaystyle\Cent\!\Bigl(\prod_{i=1}^{n} G_i\Bigr) = \prod_{i=1}^{n} \Cent(G_i).$ \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Commutator subgroup of a direct product}
+%==========================================================================
+
+\begin{problem}
+Prove that $[G \times H,\, G \times H] = [G,G] \times [H,H]$.
+\end{problem}
+
+\begin{sol}
+\noindent$(\supseteq)$\;
+For $[g_1,g_2] \in [G,G]$:
+\[
+  \bigl([g_1,g_2],\, e_H\bigr)
+  = \bigl[(g_1,e_H),\,(g_2,e_H)\bigr]
+  \in [G \times H,\, G \times H].
+\]
+Symmetrically for $[H,H]$. Since $[G\times H, G\times H]$ is a subgroup, it
+contains $[G,G] \times [H,H]$.
+
+\medskip
+\noindent$(\subseteq)$\;
+Every commutator factors componentwise:
+\[
+  [(g_1,h_1),\,(g_2,h_2)]
+  = \bigl(g_1^{-1}g_2^{-1}g_1 g_2,\;\; h_1^{-1}h_2^{-1}h_1 h_2\bigr)
+  = \bigl([g_1,g_2],\;[h_1,h_2]\bigr)
+  \in [G,G] \times [H,H].
+\]
+Since $[G \times H, G \times H]$ is generated by such commutators, the inclusion follows. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Abelian group of order 385}
+%==========================================================================
+
+\begin{problem}
+Prove that an abelian group of order $385$ can be decomposed into the direct
+sum of cyclic subgroups of orders $5$, $7$, and $11$.
+\end{problem}
+
+\begin{sol}
+$385 = 5 \times 7 \times 11$ (square-free).
+
+\textbf{Via the Fundamental Theorem:}\;
+Since each prime appears to the first power only, the unique decomposition is
+\[
+  G \cong \Z_5 \oplus \Z_7 \oplus \Z_{11} \cong \Z_{385}.
+\]
+
+\textbf{Elementary proof:}\;
+By Cauchy's theorem, pick elements $a,b,c$ of orders $5,7,11$.
+Let $A = \gen{a}$, $B = \gen{b}$, $C = \gen{c}$.
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small}]
+  \node[draw, circle, minimum size=1.4cm, thick, ProbFrame, fill=ProbBG]
+    (A) at (0,0) {$\gen{a}$};
+  \node[font=\scriptsize,ProbFrame] at (0,-1.1) {order $5$};
+  \node[draw, circle, minimum size=1.4cm, thick, SolFrame, fill=SolBG]
+    (B) at (2.6,0) {$\gen{b}$};
+  \node[font=\scriptsize,SolFrame] at (2.6,-1.1) {order $7$};
+  \node[draw, circle, minimum size=1.4cm, thick, AccGold!80!black, fill=AccGold!10]
+    (C) at (5.2,0) {$\gen{c}$};
+  \node[font=\scriptsize,AccGold!80!black] at (5.2,-1.1) {order $11$};
+  \node[font=\Large] at (1.3,0) {$\oplus$};
+  \node[font=\Large] at (3.9,0) {$\oplus$};
+  \node[font=\normalsize] at (7,0) {$= G$};
+  \node[font=\footnotesize\sffamily,SectCol,anchor=north] at (2.6,-1.7)
+    {Pairwise coprime orders $\Rightarrow$ trivial intersections};
+\end{tikzpicture}
+\end{center}
+
+Any element in $A \cap B$ has order dividing $\gcd(5,7)=1$, so $A \cap B = \{0\}$.
+Similarly $A \cap C = B \cap C = \{0\}$ and $(A\oplus B) \cap C = \{0\}$
+(since $\gcd(35,11)=1$). Finally,
+$|A\oplus B\oplus C| = 5\cdot 7\cdot 11 = 385 = |G|$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Decomposing $\Z_6$, $\Z_{12}$, $\Z_{60}$}
+%==========================================================================
+
+\begin{problem}
+Decompose the groups $\Z_6$, $\Z_{12}$, and $\Z_{60}$ into direct sums.
+\end{problem}
+
+\begin{sol}
+By the Chinese Remainder Theorem:
+$\Z_n \cong \Z_a \oplus \Z_b$ iff $n = ab$ and $\gcd(a,b)=1$.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \tikzstyle{mybox}=[draw=SectCol, rounded corners=3pt, fill=ProbBG,
+              inner sep=6pt, font=\normalsize, minimum width=3cm]
+  \tikzstyle{myres}=[font=\normalsize\bfseries, text=SolFrame]
+  \tikzstyle{myarr}=[->,thick,SectCol]
+  % Z_6
+  \node[mybox] (z6) at (0,0) {$\Z_6$};
+  \node[myres] (r6) at (5.5,0) {$\Z_2 \oplus \Z_3$};
+  \draw[myarr] (z6) -- node[above,font=\footnotesize]{$6 = 2\times 3$} (r6);
+  % Z_12
+  \node[mybox] (z12) at (0,-1.4) {$\Z_{12}$};
+  \node[myres] (r12) at (5.5,-1.4) {$\Z_4 \oplus \Z_3$};
+  \draw[myarr] (z12) -- node[above,font=\footnotesize]{$12 = 4\times 3$} (r12);
+  % Z_60
+  \node[mybox] (z60) at (0,-2.8) {$\Z_{60}$};
+  \node[myres] (r60) at (5.5,-2.8) {$\Z_4 \oplus \Z_3 \oplus \Z_5$};
+  \draw[myarr] (z60) -- node[above,font=\footnotesize]{$60 = 4\times 3\times 5$} (r60);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Note:} $\Z_4$ cannot be further decomposed as $\Z_2 \oplus \Z_2$,
+since $\Z_4$ has an element of order~$4$ while every element of
+$\Z_2 \oplus \Z_2$ has order $\leq 2$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Subgroups of non-cyclic abelian group of order 12}
+%==========================================================================
+
+\begin{problem}
+How many subgroups of order $2$ and $6$ does a non-cyclic abelian group of order~$12$ have?
+\end{problem}
+
+\begin{sol}
+The non-cyclic abelian group of order~$12$ is
+$G = \Z_2 \oplus \Z_6 \;\cong\; \Z_2 \oplus \Z_2 \oplus \Z_3$.
+
+\medskip
+\textbf{\color{SectCol}Subgroups of order 2.}\;
+An element $(a,b) \neq (0,0)$ has order~$2$ iff $2(a,b)=(0,0)$, i.e.\
+$b \in \{0,3\}$. The three non-identity elements of order~$2$ are
+$(1,0)$, $(0,3)$, $(1,3)$, each generating a distinct subgroup:
+\[
+  \gen{(1,0)},\quad \gen{(0,3)},\quad \gen{(1,3)}.
+\]
+
+\medskip
+\textbf{\color{SectCol}Subgroups of order 6.}\;
+These are kernels of surjective homomorphisms $\varphi\colon G \to \Z_2$.
+Such $\varphi$ is determined by $\bigl(\varphi(1,0),\, \varphi(0,1)\bigr) \in \Z_2^2$.
+Of $4$ homomorphisms, $3$ are surjective (excluding the zero map), giving:
+
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccc}
+  \toprule
+  $\varphi(1,0)$ & $\varphi(0,1)$ & $\ker\varphi$ \\
+  \midrule
+  $1$ & $0$ & $\{0\}\oplus\Z_6 \cong \Z_6$ \\
+  $0$ & $1$ & $\Z_2\oplus\{0,2,4\} \cong \Z_2\oplus\Z_3$ \\
+  $1$ & $1$ & $\{(0,0),(0,2),(0,4),(1,1),(1,3),(1,5)\} \cong \Z_6$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+$G$ has $\boxed{3}$ subgroups of order~$2$ and $\boxed{3}$ subgroups of order~$6$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Subgroups of non-cyclic abelian group of order 18}
+%==========================================================================
+
+\begin{problem}
+How many subgroups of order $3$ and $6$ does a non-cyclic abelian group of order~$18$ have?
+\end{problem}
+
+\begin{sol}
+The non-cyclic abelian group of order~$18$ is
+$G = \Z_3 \oplus \Z_3 \oplus \Z_2$.
+
+\medskip
+\textbf{\color{SectCol}Subgroups of order 3.}\;
+Elements of order~$3$ must satisfy $3(a,b,c) = 0$; since $\gcd(3,2)=1$, this
+forces $c=0$. So the elements of order dividing~$3$ are the $9$ elements
+$(a,b,0)$ with $a,b \in \Z_3$. Removing the identity leaves $8$ elements of
+order exactly~$3$. Each cyclic subgroup of order~$3$ accounts for $2$ such
+elements, giving $8/2 = \boxed{4}$ subgroups:
+\[
+  \gen{(1,0,0)}, \quad \gen{(0,1,0)}, \quad \gen{(1,1,0)}, \quad \gen{(1,2,0)}.
+\]
+
+\textbf{\color{SectCol}Subgroups of order 6.}\;
+These are kernels of surjections $\varphi\colon G \to \Z_3$. Such $\varphi$ is
+determined by $\varphi(1,0,0)$ and $\varphi(0,1,0)$ (since $\gcd(2,3)=1$ forces
+$\varphi(0,0,1)=0$). Of $9$ total homomorphisms, $8$ are surjective.
+Two surjections share a kernel iff they differ by a unit in $\Z_3^* = \{1,2\}$,
+so we get $8/2 = \boxed{4}$ subgroups of order~$6$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{Abelian groups of order 200}
+%==========================================================================
+
+\begin{problem}
+Describe, up to isomorphism, all abelian groups of order $200$.
+\end{problem}
+
+\begin{sol}
+$200 = 2^3 \times 5^2$. By the Fundamental Theorem, we independently
+partition each prime-power exponent.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \tikzstyle{partb}=[draw=SectCol, rounded corners=3pt, fill=ProbBG,
+               inner sep=5pt, font=\small, text=SectCol, minimum width=2.8cm]
+  % 2^3 partitions
+  \node[font=\normalsize\bfseries\sffamily, SectCol] at (-3.2,2.4) {$2^3$};
+  \node[partb] at (-3.2,1.6) {$\Z_8$};
+  \node[partb] at (-3.2,0.6) {$\Z_4\oplus\Z_2$};
+  \node[partb] at (-3.2,-0.4) {$\Z_2^3$};
+  % 5^2 partitions
+  \node[font=\normalsize\bfseries\sffamily, SectCol] at (3.2,2.4) {$5^2$};
+  \node[partb, fill=SolBG, draw=SolFrame, text=SolFrame] at (3.2,1.2) {$\Z_{25}$};
+  \node[partb, fill=SolBG, draw=SolFrame, text=SolFrame] at (3.2,0.1) {$\Z_5\oplus\Z_5$};
+  % cross symbol
+  \node[font=\Huge] at (0,1) {$\times$};
+\end{tikzpicture}
+\end{center}
+
+\smallskip
+The $3 \times 2 = 6$ non-isomorphic groups are:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cl}
+  \toprule
+  \# & Group \\
+  \midrule
+  1 & $\Z_8 \oplus \Z_{25} \;\cong\; \Z_{200}$ \\
+  2 & $\Z_8 \oplus \Z_5 \oplus \Z_5$ \\
+  3 & $\Z_4 \oplus \Z_2 \oplus \Z_{25}$ \\
+  4 & $\Z_4 \oplus \Z_2 \oplus \Z_5 \oplus \Z_5$ \\
+  5 & $\Z_2 \oplus \Z_2 \oplus \Z_2 \oplus \Z_{25}$ \\
+  6 & $\Z_2 \oplus \Z_2 \oplus \Z_2 \oplus \Z_5 \oplus \Z_5$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+There are $\boxed{6}$ non-isomorphic abelian groups of order~$200$. \qed
+\end{sol}
+
+\bigskip
+%==========================================================================
+\section{All subgroups of $\Z_3 \oplus \Z_3$}
+%==========================================================================
+
+\begin{problem}
+Find all subgroups of the group $\Z_3 \oplus \Z_3$.
+\end{problem}
+
+\begin{sol}
+$G = \Z_3 \oplus \Z_3$ has $9$ elements. Possible subgroup orders: $1, 3, 9$.
+
+\medskip
+\textbf{\color{SectCol}Order 1:} $\{(0,0)\}$.
+\qquad\textbf{\color{SectCol}Order 9:} $G$ itself.
+
+\medskip
+\textbf{\color{SectCol}Order 3:}
+The $8$ non-identity elements pair up ($g$ and $2g$ generate the same subgroup),
+giving $8/2 = 4$ cyclic subgroups:
+
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{cl}
+  \toprule
+  Subgroup & Elements \\
+  \midrule
+  $H_1 = \gen{(1,0)}$ & $\{(0,0),\,(1,0),\,(2,0)\}$ \\
+  $H_2 = \gen{(0,1)}$ & $\{(0,0),\,(0,1),\,(0,2)\}$ \\
+  $H_3 = \gen{(1,1)}$ & $\{(0,0),\,(1,1),\,(2,2)\}$ \\
+  $H_4 = \gen{(1,2)}$ & $\{(0,0),\,(1,2),\,(2,1)\}$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+In total, $\Z_3 \oplus \Z_3$ has exactly $\boxed{6}$ subgroups.
+\end{sol}
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  % --- Left: lattice diagram ---
+  \node[font=\small\bfseries\sffamily,SectCol] at (-4,4.2) {Subgroup lattice};
+  \node[draw,rounded corners=3pt,fill=ProbFrame!15,inner sep=4pt,font=\small]
+    (top) at (-4,3.5) {$\Z_3\oplus\Z_3$};
+  \node[draw,rounded corners=3pt,fill=ProbBG,inner sep=3pt,font=\scriptsize]
+    (a) at (-6.4,1.75) {$\gen{(1,0)}$};
+  \node[draw,rounded corners=3pt,fill=ProbBG,inner sep=3pt,font=\scriptsize]
+    (b) at (-4.8,1.75) {$\gen{(0,1)}$};
+  \node[draw,rounded corners=3pt,fill=ProbBG,inner sep=3pt,font=\scriptsize]
+    (c) at (-3.2,1.75) {$\gen{(1,1)}$};
+  \node[draw,rounded corners=3pt,fill=ProbBG,inner sep=3pt,font=\scriptsize]
+    (d) at (-1.6,1.75) {$\gen{(1,2)}$};
+  \node[draw,rounded corners=3pt,fill=SolBG,inner sep=4pt,font=\small]
+    (bot) at (-4,0) {$\{(0,0)\}$};
+  \draw[thick,ProbFrame] (top)--(a)--(bot) (top)--(b)--(bot)
+                         (top)--(c)--(bot) (top)--(d)--(bot);
+
+  % --- Right: grid of Z_3 x Z_3 elements ---
+  \node[font=\small\bfseries\sffamily,SectCol] at (4.5,4.2)
+    {Elements of $\Z_3\oplus\Z_3$};
+  \draw[step=1,GridGray,thin] (3,-0.5) grid (6.5,2.5);
+  \draw[->,thick,gray!60] (3,0)--(7,0) node[right,font=\tiny]{$a$};
+  \draw[->,thick,gray!60] (3.5,-0.5)--(3.5,3) node[above,font=\tiny]{$b$};
+  % H1: along a-axis (blue)
+  \fill[ProbFrame]    (3.5,0) circle (5pt);
+  \fill[ProbFrame!70] (4.5,0) circle (4pt);
+  \fill[ProbFrame!70] (5.5,0) circle (4pt);
+  % H2: along b-axis (green)
+  \fill[SolFrame!70]  (3.5,1) circle (4pt);
+  \fill[SolFrame!70]  (3.5,2) circle (4pt);
+  % H3: diagonal (gold)
+  \fill[AccGold]      (4.5,1) circle (4pt);
+  \fill[AccGold]      (5.5,2) circle (4pt);
+  % H4: anti-diagonal (red)
+  \fill[red!60!black] (4.5,2) circle (4pt);
+  \fill[red!60!black] (5.5,1) circle (4pt);
+  % element labels
+  \node[font=\tiny,above right,inner sep=1pt] at (3.58,0.08) {$(0,0)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (4.58,0.08) {$(1,0)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (5.58,0.08) {$(2,0)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (3.58,1.08) {$(0,1)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (4.58,1.08) {$(1,1)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (5.58,1.08) {$(2,1)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (3.58,2.08) {$(0,2)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (4.58,2.08) {$(1,2)$};
+  \node[font=\tiny,above right,inner sep=1pt] at (5.58,2.08) {$(2,2)$};
+  % legend
+  \fill[ProbFrame]    (6.65,2.3) circle (3pt);
+  \node[font=\tiny,ProbFrame,    right] at (6.85,2.3) {$H_1$};
+  \fill[SolFrame]     (6.65,1.8) circle (3pt);
+  \node[font=\tiny,SolFrame,     right] at (6.85,1.8) {$H_2$};
+  \fill[AccGold]      (6.65,1.3) circle (3pt);
+  \node[font=\tiny,AccGold,      right] at (6.85,1.3) {$H_3$};
+  \fill[red!60!black] (6.65,0.8) circle (3pt);
+  \node[font=\tiny,red!60!black, right] at (6.85,0.8) {$H_4$};
+\end{tikzpicture}
+\end{center}
+
+\smallskip
+\noindent The lattice has a characteristic \emph{diamond} shape ($M_4$): every pair
+of distinct order-$3$ subgroups intersects only at the identity and together
+generates the full group.
+
+\end{document}
