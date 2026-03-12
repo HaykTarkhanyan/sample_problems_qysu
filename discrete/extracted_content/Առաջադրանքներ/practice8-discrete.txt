@@ -1,0 +1,17 @@
+Gornakan 8
+1) Trva en a1 , a2 , ..., a200 ver: Haytni , or a1 = 3  a2 = 9 : Gtnel
+a200 , ee kamayakan n-i hamar an+2 = an+1 an :
+2) Luel ekurent anuyun` a1 = 2 , a2 = 10  an = 5 an1 6an2 ,
+n > 2:
+3) Luel ekurent anuyun` a0 = 2 , a1 = 6  an = 4 an1 4an2 ,
+n 2:
+4) Luel ekurent anuyun` a0 = 1 , a1 = 2  an = 2
+p
+2an1 4an2 ,
+n 2:
+5) Luel ekurent anuyun` a0 = 0 , a1 = 1  an = 2an1+an2 , n 2:
+6) Inqan 0-eric  1-eric kazmva 10 erkaruyun uneco to ka, oronc
+mej kan erku har an 0-er:
+7) Qani ba kareli  kazmel a; b; c taeric, aydpes or a  b taer
+linen har an:
+1

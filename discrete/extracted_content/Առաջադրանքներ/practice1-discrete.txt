@@ -1,0 +1,178 @@
+Gornakan 1
+1 Bazmuyan gaaar
+1. In  irenic nerkayacnum {;} bazmuyun: Qani tarr uni ayn:
+2. Het yal pndumneric oronqen marit`
+2.1. ;2{; ;{;}};
+2.2. {;}2{{;}} ;
+2.3. ;2{{;}} :
+3. Qani tarr uni {{;}} bazmuyun:
+4. Qani tarr unen het yal bazmuyunner`
+4.1. {1; 2; 1};
+4.2. {1; 2;{1; 2}};
+4.3. {{2}};
+4.4. {1;{1}};
+4.5. {1;;};
+4.6. {{;};;};
+4.7. {{;};{;}};
+4.8. {x; 2x 1} erb x2 R:
+5. it  ardyoq` {1; 2}2{ 1; 2;{1; 3};{1; 2; 3}}
+6. Bereq bazmuyunnri rinakner, oronq irenc tarrern en:
+7. Berel A, B , C bazmuyunneri rinakner, oronq bavararum en paymannerin`
+A2 B , B2 C , sakayn A =2 C :
+8. Apacucel, or kamayakan a; b; c  d aarkanneri hamar`
+{{a};{a; b}} ={{c};{c; d}} ayn  miayn ayn depqum, erb a = c  b = d:
+9. Apacucel`
+a) {x2 Zj9y; x = 6y}={x2 Zj9u; v; x = 2u&x = 2v}
+b) {x2 Rj9y; x = y2}={x2 Rjx 0}
+c) {x2 Zj9y; x = 6y}{ x2 Zj9y; x = 2y}
+1
+10. Apacucel`
+a) Ee A B & B C , apa A C ;
+b) Ee A B & B C , apa A C ;
+c) Ee A B & B C , apa A C ;
+d) Ee A B & B C , apa A C :
+11. Berel A; B; C; D  E bazmuyunneri rinakner, oronq bavararum
+en het yal paymannerin` A B , B2 C , C D  D E :
+12. Het yal pndumneric oronq en marit bolor A; B  C bazmuyunneri
+hamar`
+a) Ee A =2 B  B =2 C , apa A =2 C ;
+b) Ee A6= B  B6= C , apa A6= C ;
+c) Ee A2 B  it , or B C , apa A =2 C ;
+d) Ee A B  B C , apa it , or C A;
+e) Ee A B  B2 C , apa A =2 C :
+13. Berel bazmuyunneri rinakner, oronc yuraqan yur tarr nranc
+enabazmuyun :
+14. varkel 2A bazmuyan tarrer het yal bazmuynneri hamar`
+14.1. ee A =;;
+14.2. ee A ={x};
+14.3. ee A ={1; a};
+14.4. ee A ={;;{1};{2}};
+14.5. ee A ={1;{3};{1; 2}}:
+2 Gorouyunner bazmuyunneri het
+15. Apacucel, or kamayakan A  B bazmuyunneri hamar marit `
+; A\ B A[ B :
+16. Dicuq Z universal bazmuyun   
+A ={x2 Zj9y2 Z+; x = 2y};
+B ={x2 Zj9y2 Z+; x = 2y 1};
+C ={x2 Zjx < 10} :
+Nkaragreq het yal bazmuyunner` A, A S B , C , A C , C (A S B):
+2
+17. Ditarkenq het yal bazmuyunner`
+A ={x2 Z+j9y2 Z; x = 2y};
+B ={x2 Z+j9y2 Z; x = 2y 1};
+C ={x2 Z+j9y2 Z; x = 3y} :
+a) Nkaragreq` A\ C , B[ C  B C :
+b) Stugeq, or
+A\ (B[ C) = ( A\ B)[ (A\ C) :
+18. Dicuq A-n kamayakan bazmuyun : In en irenic nerkayacnum
+het yal bazmuyunner` A\; , A[; , A; , A A, ; A:
+19. Oroeq het yal bazmuyunner` ;\{;} , {;}\{;} , {;;{;}}; ,
+{;;{;}}{;} :
+20. Apacucel, or U bazmuyan A; B kamayakan enabazmuyunneri
+hamar yuraqan yur ketum paymanner irar hamareq en`
+1)A B; B A; A[ B = B; A\ B = A;
+2)A\ B =;; A B; B A;
+3)A[ B = U; A B; B A :
+21. Apacuceq, or A; B; C bazmuyunneri hamar (A\B)[C = A\(B[C)
+payman hamareq  C A paymanin:
+22. Apacuceq, or kamayakan A; B; C bazmuyunneri hamar tei uni
+nuynuyun`
+(A B) C = (A C) (B C) :
+3 Maematikakan indukciayi skzbunq
+23. Apacucel` 1 + 2 + 3 + + n = n(n + 1)
+2 :
+24. Apacucel` 12 + 22 + 32 + + n2 = n(n + 1)(2n + 1)
+6 :
+25. Apacucel` 1 + 4 + 7 + 10 + + (3n 2) = n(3n 1)
+2 :
+3
+26. Apacucel` 1
+1 3 + 1
+3 5 + 1
+5 7 + 1
+7 9 + 1
+(2n 1)(2n + 1) = n
+2n + 1 :
+27. Apacucel` 1 + 2 + 2 2 + 23 + + 2n1 = 2 n 1 :
+28. Apacucel` 1 + r + r2 + r3 + + rn1 = 1 rn
+1 r :
+29. Apacucel` 1 + 3 + 5 + 7 + + (2n 1) = n2 :
+30. Apacucel` 2 + 4 + 6 + + 2n = n2 + n;
+31. Apacucel indukciayi skzbunqi mijocov` am+n = aman :
+32. Apacucel indukciayi skzbunqi mijocov` (ab)k = akbk :
+33. Apacucel indukciayi skzbunqi mijocov, or n2 > 2n + 1, ee n 3:
+34. Apacucel indukciayi skzbunqi mijocov, or 2n > n 2 , ee n 5:
+35. Apacuce` a3 3a2 + 3a + 1, ee a 4;
+36. Apacucel, or 52n + 3 25n2 iv baanvum  7-i vra (n2 N):
+37. Apacucel, or 3n+2 + 42n+1 iv baanvum  13-i vra (n2 N):
+38. Apacucel, or 52n + 7 iv baanvum  8-i vra (n2 N):
+39. Apacucel, or 33n+1 + 2n+1 iv baanvum  5-i vra (n2 N):
+40. Apacucel, or 9n 1 iv baanvum  8-i vra (n2 N):
+41. Apacucel, or 10n 1 iv baanvum  9-i vra (n2 N):
+42. Apacucel, or n2 1 iv baanvum  4-i vra bolor kent bnakan
+veri hamar:
+43. Gtnel  apacucel bana  het yal gumari hamar`
+3 + 7 + 11 + + (4n 1);
+44. Gtnel  apacucel bana  het yal gumari hamar`
+1 + 5 + 9 + + (4n + 1);
+45. Gtnel  apacucel bana  het yal gumari hamar`
+1 + 2 3 + 4 (2n 1) + 2n;
+46. Gtnel  apacucel bana  het yal gumari hamar`
+1 3 + 5 7 + + (4n 3) (4n 1);
+4
+47. Apacucel, or me n-eri hamar (sahman oroel inqnuruyn) tei
+unen anhavasaruyunner` 2n > n 3 , n! > 100n :
+48. (Xndir Hanoyi ataraki masin) Unenq ereq ccao, oronc vra karo
+enq haqcnel skavaakner: nd orum skavaakneri aer tarber
+en  nranc qanak havasar  n-i:Skzbum bolor meic oqr skavaakner
+gtnvum en mek ccaoi vra: Xndir  het yaln , teaoxel ayd
+burg uri ccaoi vra het yal eanakov` mek qayli amanak teaoxum
+enq mek skavaak  me skavaak uyl i trvum dnel oqri vra:
+Apacucel, or da hnaravor  anel kamayakan n-i hamar:
+49. (Benulii anhavasaruyun) Apacucel`
+(1 + h)n 1 + nh;
+cankaca h 1 irakan vi hamar  n2 N:
+4 Bazmuyunneri hanrahaiv
+50. Apacucel eorem 1 gtagorelov patkaneliuyan haraberuyun:
+51. Apacucel eorem 2 gtagorelov patkaneliuyan haraberuyun:
+52. Apacucel eorem 2 gtagorelov eorem 1 nuynuyuner orpes aqsiomner:
+53. gtagorelov eorem 1  2 apacucel, or het yal havasaruyunner
+nuynuyuner en`
+1)(A\ B\ X)[ (A\ B\ C\ X\ Y )[ (A\ X\ A) = A\ B\ X;
+2)(A\ B\ C)[ (A\ B\ C)[ B[ C = U ;
+3)(A\ B\ C\ X)[ (A\ C)[ (B\ C)[ (C\ X) = C :
+54. Apacucel nuynuyunner.
+1)A\ (B C) = ( A\ B) C;
+2)A (B[ C) = ( A B) C;
+3)(A[ B) C = (A C)[ (B C);
+4)A\ (B C) = ( A\ B) (A\ C);
+5)A (B C) = ( A B)[ (A\ C);
+6)(A B) C = (A C) (B C);
+7)A; = A;
+8)A B = B A;
+9)A (B C) = ( A B) C;
+10)A A =;;
+11)A\ (B C) = ( A\ B) (A\ C) :
+5
+55. Cuyc tal, or
+A[ (B C)6= (A[ B) (A[ C) :
+56. Apacucel, or het yal havasarum` A X = B , uni miak luum:
+5 Bazmuyunneri dekartyan artadryal
+57. Goyuyun unen ardyoq A  B bazmuyunner aydpisin, or A2 B
+bazmuyun unena`
+57.1. 12 tarr;
+57.2. 13 tarr:
+58. Apacucel, or A B = B A havasaruyun nanakum , or A = B :
+59. Oroel A B bazmuyan tarrer, ee A ={a; b}, B ={1; 2; 3; 4}:
+60. Apacucel nuynuyunner`
+1)A (B[ C) = ( A B)[ (A C);
+2)(B[ C) A = (B A)[ (C A);
+3)A (B\ C) = ( A B)\ (A C);
+4)(B\ C) A = (B A)\ (C A);
+5)A (B C) = ( A B) (A C);
+6)(B C) A = (B A) (C A) :
+61. Apacucel medialuyan nuynuyun`
+(A\ B) (C\ D) = ( A C)\ (B D) :
+62. Apacucel`
+A B&C D ! A C B D;
+6

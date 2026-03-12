@@ -1,0 +1,147 @@
+Gornakan 2-3
+1. Haraberuyunner
+1.1. Nerkayacnel het yal haraberuyunner varkelov kargavorva n-yakner`
+a) {(d; 12)jd2 N; 12=d};
+b) {(d;n )jd;n2{ 2; 3; 4; 5; 6};n=d};
+g) {(x;y;z )jx =y +z;x;y;z 2{ 1:2:3}}:
+1.2. Gtnel haraberuyunneri D oroman  R areqneri tiruyner`
+a)  ={(a; 1); (a; 2); (c; 1); (c; 2); (c; 4); (d; 5)};
+b)  ={(1; 2); (2; 4); (3; 6); (4; 8);:::};
+g)  ={(x;y )2 R2jx =y2};
+d)  ={(x;y )2 R2jx2 +y2 16};
+e)  ={(x;y )2 N2jx=y};
+z)  ={(x;y )2 N2jy=x};
+).  ={(x;y )2 R2jx +y 0};
+)  ={(x;y )2 R2j2x 3y}:
+2. Haraberuyunneri trman eanakner
+2.1. Kaucel A ={a;b;c;d;e } bazmuyan vra orova het yal haraberuyunneri
+graf  matric`
+a)  ={(a;b ); (b;a ); (b;c ); (c;b ); (c;a ); (a;c ); (d;e ); (e;d )};
+b)  ={(a;b ); (b;a ); (b;c ); (c;b ); (c;d ); (d;c ); (c;a ); (a;c )};
+g)  ={(a;b ); (b;a ); (b;c ); (c;b ); (c;d ); (d;c ); (c;a ); (a;c )}:
+2.2. Kaucel A ={a;b;c;d;e;f } bazmuyan vra orova het yal haraberuyunneri
+digraf  matric`
+a)  ={(a;b ); (b;c ); (a;c ); (b;e ); (c;f ); (c;d ); (d;f ); (f;e )};
+b)  ={(a;b ); (b;c ); (d;c ); (d;e ); (f;e ); (f;a ); (b;e )};
+c)  ={(a;c ); (c;c ); (c;d ); (c;e ); (e;c ); (e;e ); (e;f ); (a;e )}:
+3. Gorouyunner haraberuyunneri het
+3.1. Apacucel eorem 1-:
+3.2. Dicuq    haraberuyunner trva en irakan veri R bazmuyan
+vra`
+ ={(x;y )jy =x2 + 5};
+ ={(x;y )jy = 3x} :
+1
+Nkaragrel`  , , 1 , 1 , 1  1 haraberuyunner:
+3.3. Dicuq    haraberuyunner trva en amboj veri Z bazmuyan
+vra`
+ ={(x;x + 2)jx2 Z};
+ ={(x;x 2)jx2 Z} :
+Gtnel`    haraberuyunner:
+3.4. Havel 2  3 , orte  ={(x;y )2 Zjx +y2 2N + 1}:
+3.5. Havel 2 , 3 ,..., k , orte  ={(x;x + 1)jx2 N}:
+3.6. Dicuq trva   +{(1; 2); (2; 3); (3; 4); (4; 5)} haraberuyun: Havel`
+2 , 3 , 4  5 :
+4. Haraberuyunneri himnakan hatkuyunner
+4.1. Parzel het yal haraberuyunneri hatkuyunner`
+a)  ={(x;y )2 R2jx2 +y2 = 1};
+b)  ={(x;y )2 R2jx2 =y2};
+g)  ={(x;y )2 Z2jx=y};
+d)  ={(x;y )2 N2jx=y};
+e)  ={(x;y )2 N2j(x;y ) = 1};
+z)  ={(x;y )2 Z2j(x;y ) = 1}:
+4.2. Parzel  ={(x;y )2 Z2jjxyj2 2N} haraberuyan hatkuyunner:
+4.3. Oroel het yal pndumneric oronq en marit`  pndumi ke linelu
+depqum berel rinak`
+a) ee R  S haraberuyunner efleqsiv en, apa R\S haraberuyun
+ s efleqsiv :
+b) ee R  S haraberuyunner efleqsiv en, apa R[S haraberuyun
+ s efleqsiv :
+g) ee R  S haraberuyunner efleqsiv en, apa RS haraberuyun
+ s efleqsiv :
+d) ee R  S haraberuyunner efleqsiv en, apa RnS haraberuyun
+ s efleqsiv :
+e) ee R  S haraberuyunner efleqsiv en, apa RS haraberuyun
+ s efleqsiv :
+4.4. Oroel het yal pndumneric oronq en marit`  pndumi ke
+linelu depqum berel rinak`
+a) ee R  S haraberuyunner simetrik en, apa R\S haraberuyun
+ s simetrik :
+b) ee R  S haraberuyunner simetrik en, apa R[S haraberuyun
+ s simetric :
+g) ee R  S haraberuyunner simetrik en, apa RS haraberuyun
+ s simetrik :
+d) ee R  S haraberuyunner simetrik en, apa RnS haraberuyun
+ s simetrik :
+e) ee R  S haraberuyunner simetrik en, apa RS haraberuyun
+2
+ s simetrik :
+4.5. Oroel het yal pndumneric oronq en marit`  pndumi ke
+linelu depqum berel rinak`
+a) ee R  S haraberuyunner hakasimetrik en, apa R\S haraberuyun
+ s hakasimetrik :
+b) ee R  S haraberuyunner hakasimetrik en, apa R[S haraberuyun
+ s hakasimetrik :
+g) ee R  S haraberuyunner hakasimetrik en, apa RS haraberuyun
+ s hakasimetrik :
+d) ee R  S haraberuyunner hakasimetrik en, apa RnS haraberuyun
+ s hakasimetrik :
+e) ee R  S haraberuyunner hakasimetrik en, apa RS haraberuyun
+ s hakasimetrik :
+4.6. Oroel het yal pndumneric oronq en marit`  pndumi ke
+linelu depqum berel rinak`
+a) ee R  S haraberuyunner tranzitiv en, apa R\S haraberuyun
+ s tranzitiv :
+b) ee R  S haraberuyunner tranzitiv en, apa R[S haraberuyun
+ s tranzitiv :
+g) ee R  S haraberuyunner tranzitiv en, apa RS haraberuyun
+ s tranzitiv :
+d) ee R  S haraberuyunner tranzitiv en, apa RnS haraberuyun
+ s tranzitiv :
+e) ee R  S haraberuyunner tranzitiv en, apa RS haraberuyun
+ s tranzitiv :
+5. Kargi haraberuyun
+5.1. Kaucelkargavorva bazmuyun or uni miak minimal tarr,
+sakayn uni oqraguyn tarr:
+5.2. Apacucel, or ee -n masnaki karg , apa 1 -  s klini masnaki
+karg:
+5.3. Apacucel, or A bazmuyan vra trva masnaki kargeri hatum
+noric klini masnaki karg A bazmuyan vra:
+5.4. Apacucel, or ee -n karg  X bazmuyan vra  AX , apa
+\ (AA) klini karg A bazmuyan vra:
+5.5. Dicuq 1  2 gayin karger en A bazmuyan vra: Or depqum 12
+ s klini gayin karg A-i vra:
+5.6. Apacucel, or yuraqan yur verjavor bazmuyun kareli  goren
+kargavorel:
+6. Hamarequyan haraberuyun
+6.1. Hamarequyan haraberuyunner en ardyoq het yal haraberuyunner`
+a)  ={(x;y )2 Q2jxy >0};
+b)  ={(x;y )2 Q2jxy2 Z}:
+g)  ={(x;y )2 N2j(ab)_ (a>b )}:
+3
+d)  ={(x;y )2 N2jjabj 2}:
+6.2. Apacucel eorem 6-:
+6.3. Kazmel Z2 , Z3  Z4 mnacqneri daseri gumarman  bazmapatkman
+a yusakner:
+6:4 . Apacucel, or [a]2 Zn mnacqneri das hakadareli  (aysinqn
+goyuyun uni [b]2 Zn mnacqneri das aynpisin, or [a] [b] = [1] ) ayn  
+miayn ayn depqum, erb (a;n ) = 1 :
+7. Gorouyunner hamarequyan haraberuyunneri het
+7.1. A ={a;b;c} bazmuyan vra orova het yal  haraberuyunneri
+hamar havel r()-n, s()-n  t()-n`
+a)  ={(a;b ); (b;a )};
+b)  ={(a;b ); (b;c )};
+g)  ={(a;a ); (a;b ); (c;b ); (c;a )};
+d)  ={(a;a ); (a;c ); (b;c )};
+d)  ={(a;b ); (c;a ); (b;c )};
+e)  ={(a;b ); (c;b ); (b;c )}:
+7.2. A ={1; 2; 3; 4} bazmuyan vra orova  ={(1; 2); (3; 1); (3; 2); (2; 4)}
+haraberuyan hamar havel r()-n, s()-n  t()-n:
+7.3. Apacucel, or mi nuyn bazmuyan vra orova cankaca vov hamarequyunneri
+hatum noric hamarequyun :
+7:4 . Apacucel, or mi nuyn bazmuyan vra orova    hamarequyunneri
+ artadryal klini hamarequyun ayn  miayn ayn depqum, erb
+ =:
+7:5 . Apacucel, or mi nuyn bazmuyan vra orova    hamarequyunneri
+[ miavorum klini hamarequyun ayn  miayn ayn depqum, erb
+[ = :
+4

@@ -1,0 +1,455 @@
+Dasaxosuyun 10
+6. 	egalkini bazmandam:
+Sahmanum 7: x1;x 2;:::;x n ooxanneric kaxva monoton konyunkcia
+kovum  1- kam het yal artahaytuyun
+xi1xi2 xis; orte s 1; 1ijn (j = 1; 2;:::;s; )
+orte bolor ooxakanner tarber en ( ij6=ik ee j6=k ): 
+Sahmanum 8: x1;x 2;:::;x n ooxanneri vra trva 	egalkini bazmandam
+kam hanrahavakan normal  kovum  0-n kam het yal artahaytuyun`
+K1 +K2 +K3 + +Kl;
+orte l 1  bolor Ki - tarber monoton konyunkcianer en x1;x 2;:::;x n
+ooxanneri vra: 
+Sahmanumneric het um , or 0  1 hastatun funkcianner nuynpes
+	egalkini bazmandamner en:
+eorem 8 (	egalkin): Yuraqan yur f(x1;x 2;:::;x n) bul yan funkcian
+kareli  miareqoren artahaytel x1;x 2;:::;x n ooxakanneri vra trva
+	egalkini bazmandamov`
+f(x1;x 2;:::;x n) =
+X
+1i1 <i 2 < <i kn
+{i1;i 2;:::;i k}{ 1; 2;:::;n}
+ai1i2:::ikxi1xi2 xik +a0;
+orte a0;a i1i2:::ik2{ 0; 1}:
+Apacucum: Goyuyun: Bul yan funkcianneri {x1x2;x 1+x2; 1} hamakarg
+lriv , het abar yuraqan yur f(x1;:::;x n) funkcian kareli  artahaytel
+ayd hamakargi mijocov` f(x1;:::;x n) = A[x1x2;x 1 +x2; 1]: Katarenq ayd
+nerkayacman mej het yal  aoxuyunner`
+a) gtvelov x1(x2 +x3) =x1x2 +x1x3 baxakan renqov, bac enq anum
+bolor akager  stanum enq het yal artahaytuyun`
+f(x1;:::;x n) =K0
+1 +K0
+2 + +K0
+l;
+orte bolor K0
+i - ooxakanneri  mekeri konyunkcianer en;
+b) darnenq bolor K0
+i konyunkcianner monoton gtagorelov` xx = x,
+1 1 = 1  A 1 =A nuynuyunner;
+1
+g) darnenq gumar 	egalkini bazmandam gtvelov` A+A = 0  A+0 =
+A nuynuyunnerov:
+Ardyunqum stanum enq 0hastatun kam 	egalkini bazmandam:
+Miakuyun: Miakuyun apacucenq kombinator eanakov: Havenq
+x1;x 2;:::;x n ooxanneri vra trva monoton konyunkcianneri qanak:
+Qani, or yuraqan yur monoton konyunkciayin karo enq hamapatasxanecnel
+n erkaruyun uneco 0-ic  1-ic kazmva vektor, apa monoton konyunkcianneri
+qanak havasar  2n (rinak, ee n = 5, apa x1x2x4x5 -in hamapatasxanum
+ (11011) vektor isk 1-in` (00000) vektor):
+Aym havenq monoton konyunkcianneri tarber gumarneri qanak: M onoton
+konyunkcianneri yuraqan yur gumarin hamapatasxanecnum enq 0-ic
+ 1-ic kazmva 2n erkarutyun uneco vektor, het yal eanakov` ee
+monoton konyunkcian mtnum  gumari mej, apa nran hamapatasxanum
+ 1-, isk ee o, apa 0-n: Aydpisi vektorneri qanak havasar  22n
+,
+aysinqn bolor n teani bul yan funkcianneri qanakin: :
+rinak 8: Nerkayucnenq x1_ x2 funkcian 	egalkini bazmandami
+tesqov: Unenq x =x + 1, het abar`
+x1_x2 = x1 x2 = (x1 + 1)(x2 + 1) = (x1 + 1)(x2 + 1) + 1 =
+=x1x2 +x2 +x1 + 1 + 1 =x1x2 +x1 +x2;
+Nuyn xndir karo enq luel anoro goragicneri mijocov: Enadrenq`
+x1_x2 =ax1x2 +bx1 +cx2 +d;
+ee x1 =x2 = 0, apa d = 0;
+ee x1 = 0;x 2 = 1, apa c = 1;
+ee x1 = 1;x 2 = 0, apa b = 1;
+ee x1 =x2 = 1, apa a +b +c = 1, aysinqn a = 1:
+Ayspisov` x1_x2 =x1x2 +x1 +x2 : 
+Bul yan funkcianneri nerkayacum 	egalkini bazmandamov hnaravoruyun
+ talis dasakargel bul yan funkcianner st nranc o gaynuyan astiani:
+Drancic parzaguyn afinakan funkcianern en, oronc o gaynuyan
+astian i gerazancum 1-: Yuraqan yur afinakan funkcian, 0-ic  
+1-ic tarber, kareli  nerkayacnel het yal tesqeric mekov`
+a) xi1 + +xik; b) xi1 + +xik + 1 :
+(a) tesqi funkcianner  0-n kovum en gayin funkcianner:
+f bul yan funkciayi hanrahavakan astian kovum  nra 	egalkini
+bazmandami amenaerkar monoton konyunkciayi ooxakanneri qanak
+ nanakvum  deg(f)-ov: rinak` deg(x_y) = 2, deg(0) = 0:
+Ee deg(f) =k> 0  deg(g) =l> 0, apa deg(fg)-n karo  linel kl -ic
+oqr yuraqan yur iv  nuynisq 0-n:
+7. akuy: ak daser:
+Sahmanum 9: Bul yan funkcianneri A P2 dasi akuy kovum 
+bolor bul yan funkcianneri bazmuyun, oronq nerkayacvum en bana ov
+2
+A bazmuyan vra  nanakvum ` [A]-ov: Bul yan funkcianneri A das
+kovum  ak , ee A = [A]:
+Lemm 2: Bul yan funkcianneri akuy bavararum  het yal hatkuyunnerin`
+1. A [A];
+2. ee AB , apa [A] [B];
+3. [[A]] = [A]: 
+Ayspisov, karo enq asel, or bul yan funkcianneri A das lriv  P2 -um,
+ee [A] =P2 :
+rinak 9: 1) [P2] =P2 ;
+2) [&;_;:] =P2 , [_;:] =P2 : 
+Ditarkenq bul yan funkcianneri het yal das`
+T0 ={f(x1;:::;x n)jf(0;:::; 0) = 0} :
+Ayd dasin patkanum en het yal funkcianner` 0;x;xy;x _y;x +y  en
+patkanum 1;x!y;x$y;xjy;x#y funkcianner:
+Lemm 3: Ee T0 das bakaca  n teani bul yan funkcianneric, apa
+jT0j = 1
+2 22n
+:
+Apacucum: Kaucenq T0 dasin patkano funkcianeri a yusak`
+x1;x 2;:::;x n f(x1;x 2;:::;x n)
+0 0::: 0 0 0
+0 0::: 0 1 f(0; 0;:::; 0; 1)
+0 0::: 1 1 f(0; 0;:::; 1; 1)
+ 
+1 1::: 1 1 f(1; 1;:::; 1; 1)
+Qani, or 2n1 toerum funkcianer karo en ndunel kamayakan areq,
+apa stanum enq jT0j = 22n1 = 1
+2 22n
+: 
+eorem 9: T0 -n ak das :
+Apacucum: Qani, or T0 -in patkanum  hastatun funkcian, apa
+apacucman hamar bavakan  cuyc tal, or`
+F =f(f1;:::;f m)
+funkcian, orte f;f 1;:::;f m2T0 , patkanum  T0 -in: Iroq`
+F (0;:::; 0) =f(f1(0;:::; 0);::::;f m(0;:::; 0)) =f(0;:::; 0) = 0 : 
+Ditarkenq bul yan funkcianneri het yal das`
+T1 ={f(x1;:::;x n)jf(1;:::; 1) = 1} :
+Ayd dasin patkanum en het yal funkcianner` 1;x;xy;x _y;x!y;x$y
+ en patkanum 0; x;x +y;xjy;x#y funkcianner:
+3
+Lemm 4: Ee T0 das bakaca  n teani bul yan funkcianneric, apa
+jT1j = 1
+2 22n
+: 
+eorem 10: T1 - ak das : 
+8. Gayin funkcianer:
+Sahmanum 10: f(x1;:::;x n) bul yan funkcian kovum  gayin , ee uni
+het yal tesq`
+f(x1;x 2;:::;x n) =a0 +a1x1 +a2x2 + +anxn;
+orte ai2{ 0; 1}; i = 0; 1;:::;n : 
+Ayspisov, gayin funkciayi 	egalkini bazmandamum kan konyunkcia
+parunako andamner:
+Gayin funkcianneri das knanakenq L-ov: Gayin en het yal funkcianner`
+0; 1;x +y; x;x$y , isk funkcianner` xy;x_y;x!y;xjy;x#y gayin en:
+Lemm 5: n teani gayin funkcianneri qanak havasar ` jLj = 2n+1 :
+Apacucum: Yuraqan yur gayin funkciayin hamapatasxanum 
+0-ic  1-ic kazmva (n + 1) erkaruyun uneco vektor, oronc qanak
+havasar  2n+1 : 
+eorem 11: Gayin funkcianneri L das ak das :
+Apacucum: Qani, or nuynakan funkcian gayin , apa bavakan 
+ditarkel ayn depq erb bana i mej teadrvum en funkcianner: Dicuq
+f(x1;:::;x n)2L  gi2L (i = 1; 2;:::;n ): Bavakan  apacucel, or
+f(g1;:::;g n)2L :
+Iroq, ee havi anenq zro gorakicnerov gumarelinner, apa gayin
+funkcian kareli  nerkayacnel het yal tesqov`
+xi1 +xi2 + +xik +a0; 1kn :
+Ee xij oxaren teadrenq gayin artahaytuyunner, apa noric kstananq
+gayin artahaytuyun (kam 0 kam 1): 
+Lemm 6 (Lemm o gayin funkciayi masin): Yuraqan yur o gayin
+f(x1;:::;x n) funkciayic teadrelov bolor ooxakanneri oxaren x; x;y; y; 0; 1
+kareli  stanal '(x;y ) =xy kam '(x;y ) =xy funkcianner:
+Apacucum: Dicuq f(x1;:::;x n) =2L: Ditarkenq f funkciayi nerkayacum
+	egalkini bazmandami tesqov: Qani, or f - ogayin , apa 	egalkini
+bazmandamum aka  xi1xi2 tesqi gumareli: sahmanaakelov ndhanruyun,
+karo enq hamarel, or ayd gumarelin het yaln ` x1x2 : Ayspisov 	egalkini
+bazmandam uni het yal tesq`
+f(x1;:::;x n) =x1x2P1(x3;:::;x n)+x1P2(x3;:::;x n)+x2P3(x3;:::;x n)+P4(x3;:::;x n);
+nd orum P1(x3;:::;x n) 6= 0 , qani, or nerkayacum miakn : Ayspisov,
+goyuyun unen a3;:::;a n2 B , aydpisiq, or P1(a3;:::;a n) = 1 : Ditarkenq
+het yal andak funkcian`
+'(x1;x 2) =f(x1;x 2;a 3;:::;a n) =x1x2 +bx1 +cx2 +d;
+4
+orte b;c;d hastatunner havasar en 0-in kam 1-in: Ayd depqum kstananq`
+'(x +c;y +b) = (x +c)(y +b) + (x +c)b + (y +b)c +d =
+=xy +xb +cy +cb +xb +cb +yc +bc +d =xy + (bc +d) =
+=
+(
+xy; bc +d = 0;
+xy; bc +d = 1 : 
+9. Erkakiuyan skzbunq:
+Sahmanum 11: f(x1;:::;x n) funkciayin erakaki funkcia kovum 
+f(x1;:::;x n) = f( x1;:::; xn)
+funkcian: 
+Sahmanumic het um , or (f) =f , aysinqn f - erkaki funkcia  f
+hamar:
+rinak 10: f(x;y ) =xy funkciayin erkaki funkcia klini` f(x;y ) =
+xy =x_y funkcian; 0-i hamar` 1-, x-i hamar` x-, x-i hamar` x-: 
+Aknhayt , or f(x1;:::;x n) erkaki funkciayi a yusak stacvum 
+f(x1;:::;x n) funkciayi a yusakic, ee dranum verjin syunum oxenq 0-n
+1-ov, 1- 0-ov  ayd syun rjenq (a yusak 5):
+A yusak 5.
+x1 x2 x3 f(x1;x 2;x 3) f(x1;x 2;x 3)
+0 0 0 1 0
+0 0 1 1 1
+0 1 0 0 0
+0 1 1 0 1
+1 0 0 0 1
+1 0 1 1 1
+1 1 0 0 0
+1 1 1 1 0
+Dicuq f funkcian nerkayacva  bana ov funkcianneri or  bazmuyan
+vra: Harc  aajanum, onc kaucel bana , or irakanacnum  f bana :
+Nanakenq (y1;:::;y m)-ov bolor tarber ooxakanneri simvolner, oronq
+handipum en (y11;:::;y 1k1),..., (yn1;:::;y nkn) hajordakanuyunnerum: Tei
+uni het yal ardyunq:
+eorem 12 (erkakiuyan skzbunq): Dicuq`
+F (y1;:::;y m) =f(g1(y11;:::;y 1k1);:::;g n(yn1;:::;y nkn)) :
+Ayd depqum`
+F(y1;:::;y m) =f(g
+1(y11;:::;y 1k1);:::;g
+n(yn1;:::;y nkn)) :
+5
+Apacucum:
+F(y1;:::;y m) = f(g1(y11;:::; y1k1);:::;g n(yn1;:::; ynkn)) =
+= f( g1(y11;:::; y1k1);:::; gn(yn1;:::; ynkn)) = f( g
+1(y11;:::; y1k1);:::; gn(yn1;:::; ynkn)) =
+=f(g
+1(y11;:::;y 1k1);:::;g
+n(yn1;:::;y nkn)) : 
+Het uyun 5: Ee F (x1;:::;x n) funkcian irakanacvum  bana ov
+A ={f1;f 2;:::;f k;:::} bazmuyan vra, apa oxarinelov ayd bana um
+fi funkcianner f
+i funkcianneri vra kstananq F(x1;:::;x n) funkcian
+iarakancno bana : 
+A ={0; 1; x;x 1&x2;x 1_x2} bazmuyan vra trva bana eri hamar
+erkakiuyan skzbunq kareli   akerpel het yal  ov` A bana in erkaki
+A bana stanalu hamar, anhraet  A bana um katarel het yal
+ooxuyunner`
+07!1; 17!0; &7!_;_7! & :
+rinak, ee A =x1x2_ x1 x2 , apa A = (x1_x2)( x1_ x2) :
+10. Inqnaerkaki funkcianner:
+Sahmanum 12: f(x1;:::;x n) funkcian kovum  inqnaerkaki , ee
+f(x1;:::;x n) =f(x1;:::;x n) :
+Inqnaerkaki funkcianneri das knanakenq S -ov: 
+Inqnaerkaki en het yal funkcianner` x, x, inqnaerkaki en` 0; 1;x_
+y;x &y : Orpes inqnaerkaki funkciayi aveli bard rinak kareli  berel
+h(x1;x 2;x 3) =x1x2_x1x3_x2x3 funkcian: Iroq`
+h(x1;x 2;x 3) = (x1_x2)(x1_x3)(x2_x3) =x1x2_x1x3_x2x3 :
+Lemm 7: n teani inqnaerkaki funkcianneri qanak havasar ` jSj =
+22n1
+=
+p
+22n
+:
+Apacucum: Inqnaerkaki funkciayi hamar tei uni
+f( x1;:::; xn) =f(x1;:::;x n)
+nuynuyun: Aysinqn, (a1;:::;a n)  ( a1;:::; an) ( ai2B ) hajordakanuyunneri
+vra inqnaerkaki funkcian ndunum  hakadir areqner: Ayspisov funkciayi
+areqner miareqoren orovum en nra areqnerov a yusaki toeri aajin
+kesi hamar: Het abar inqnaerkaki funkcianneri qanak havasar 
+22n1
+=
+p
+22n
+: 
+eorem 13: Inqnaerkaki funkcianneri S das ak das :
+Apacucum: Qani, or nuynakan funkcian inqnaerkaki , apa bavakan
+ ditarkel ayn depq erb bana i mej teadrvum en funkcianner: Dicuq
+f(x1;:::;x n) 2 S  bolor i-eri hamar gi(yi1;:::;y iki) 2 S , i = 1 ; 2;:::;n :
+Ditarkenq
+F =f(g1(y11;:::;y 1k1);:::;g n(yn1;:::;y nkn))
+6
+funkcian: Hamaayn erkakiuyan skzbunqi kstananq`
+F =f(g
+1(y11;:::;y 1k1);:::;g
+n(yn1;:::;y nkn)) =
+=f(g1(y11;:::;y 1k1);:::;g n(yn1;:::;y nkn)) :
+Ayspisov stanum enq, or F =F  het abar F2S : 
+Lemm 8 (Lemm o inqnaerkaki funkciayi masin): Yuraqan yur o inqnaerkaki
+f(x1;:::;x n) funkciayic teadrelov bolor ooxakanneri oxaren x  x
+kareli  stanal hastatun funkcia` '(x) =const:
+Apacucum: Dicuq f =2S : Ayd depqum
+f( x1;:::; xn)6=f(x1;:::;x n);
+het abar goyuyun uni (1;:::; n)2 Bn hajordakanuyun, aydpisin,
+or
+f( 1;:::; n)6=f(1;:::; n);
+in hamareq  het yal havasaruyan`
+f( 1;:::; n) =f(1;:::; n) :
+Kaucenq '(x) funkcian het yal kerp`
+'(x) =f(x +1;:::;x +n) :
+Ayd depqum kstananq`
+'(0) =f(1;:::; n); '(1) =f( 1;:::; n)
+het abar '(0) ='(1)  '(x) =conct: Verjum nenq, or kirava teadruyun
+bavararum  lemmi paymannerin`
+x + =
+(
+x;  = 0;
+x;  = 1 : 
+11. M onoton funkcianner:
+Sahmanum 13: Dicuq e = (1; 2;:::; n)2Bn  e = (1; 2;:::; n)2Bn :
+Kasenq, or e  e ayn  miayn depqum, erb bolor i-eri hamar i  i
+( i = 1; 2;:::;n ): 
+Ayspisov, menq sahmanum enq masnaki karg Bn bazmuyan vra: Nenq,
+or o bolor n-yakner kareli  hamematel, rinak (0; 1; 0)  (0; 0; 1) eryakner
+hamemateli en:
+Sahmanum 14: f(x1;:::;x n) bul yan funkcian kovum  monoton funkcia ,
+ee kamayakan e  e hamemateli hajordakanuyunneri hamar tei uni
+het yal payman`
+e e !f(e)f( e) :
+M onoton funkcianneri das knanakenq M -ov: 
+7
+M onoton funkcianneri dasin patkanum en 0; 1;x;xy;x_y funkcianner
+ en patkanum` x;xjy;x#y;x +y;x!y;x$y funkcianner:
+Bolor naxord T0 , T1 , L  S daseri hamar menq havel enq ayd daseri
+n-teani funkcianneri qanak: M onoton funkcianneri depqum ayd harc
+ndhanur depqum der luvac : jMj iv hava  oro n-eri hamar,
+rinak n = 2 hamar monoton funkcianneri qanak havasar  6-i` 0; 1;x;y;xy;x _
+y :
+eorem 14: M onoton funkcianneri M das ak das :
+Apacucum: Qani, or nuynakan funkcian monoton , apa bavakan 
+ditarkel ayn depq erb bana i mej teadrvum en funkcianner: Dicuq
+f(x1;:::;x n) 2 M  bolor i-eri hamar gi(y1;:::;y m) 2 M , i = 1; 2;:::;n :
+Ditarkenq
+F (y1;:::;y m) =f(g1(y1;:::;y m);:::;g n(y1;:::;y m))
+funkcian: Dicuq e = (1;:::; m)  e = (1;:::; m) hajordakanuyunner
+bavararum en paymanin` e e : Katarenq het yal nanakumner`
+gi(e) =i; g i( e) =i; i = 1; 2;:::;n :
+Qani, or gi2M ( i = 1; 2;:::;n ), apa ii bolor i-eri hamar: Katarenq
+nanakumner`
+e = (1;:::; n); e = (i;:::; n :)
+Ayspisov e e  f funkciayi monotonuyan hamaayn stanum enq, or
+f(e)f(e) :
+Qani, or
+F (e) =f(1;:::; n) =f(e); F ( e) =f(1;:::; n) =f(e)
+ f(e)f(e) anhavaaruyun hamareq  F (e)F ( e) anhavasaruyan,
+stanum enq, or F2M : 
+Lemm 9 (Lemm o monoton funkciayi masin): Yuraqan yur o monoton
+f(x1;:::;x n) funkciayic teadrelov bolor ooxakanneri oxaren 0; 1
+kam x- kareli  stanal xtum funkcian` '(x) = x:
+Apacucum: Dicuq f(x1;:::;x n) =2 M , het abar goyuyun unen e =
+(1;:::; m2 Bn  e = (1;:::; m)2 Bn , hajordakanuyunner, or e e
+sakayn f(e) > f( e), nd orum gone mek i-i hamar i < i : Katarenq f
+funkciayi ooxakanneri het yal oxarinum`
+xi oxarinum enq
+8
+><
+>:
+0; ee i =i = 0;
+1; ee i =i = 1;
+x; ee i < i :
+Ays teadrumic heto kstananq mek ooxakani '(x) funkcia, ori hamar
+unenq`
+8
+'(0) =f(e) = 1;
+'(1) =f( e) = 0 :
+Isk da nanakum , or '(x) = x: 
+Verjum nenq, or bolor ditarkva T0 , T1 , S , L  M ak daser zuyg
+a zuyg tarber en`
+A yusak 6.
+f T0 T1 S M L
+0 +   + +
+1  +  + +
+x   +  +
+12. Posti eorem lrivuyan masin:
+Aym menq karo enq ancnel himnakan harceric mekin` lrivuyan anhraet
+ bavarar paymannerin: Dicuq A ={f1;f 2;:::;f s;:::} P2 bul yan funkcianneri
+kamayakan bazmuyun : Onc parzel lriv  ayn  o:
+eorem 14 (Post): Bul yan funkcianneri A ={f1;f 2;:::;f s;:::} das
+lriv  P2 -um ayn  miayn ayn depqum, erb A-n nka  T0 , T1 , S , L, M
+daseric o mekum:
+Apacucum: Anhraetuyun: Dicuq A-n lriv hamakarg , N - T0 ,
+T1 , S , L, M daseric mek  AN : Ayd depqum unenq`
+P2 = [A] [N] =N6=P2 :
+Stanum enq hakasuyun, het abar, ee A-n lriv hamakarg , apa ayn
+i karo nka linel T0 , T1 , S , L, M daseric o mekum:
+Bavararuyun: Dicuq`
+A *T0; A *T1; A *M; A *S; A *L :
+Ayd depqum A-um goyuyun unen het yal funkcianner`
+f0 =2T0; f 1 =2T1; f M =2M; f L =2L; f S =2S :
+Bavakan  cuyc tal, or P2 = [f0;f 1;f M;f L;f S]: Baanenq apacucum
+ereq maseri:
+a) x funkciayi stacum : Ditarkenq f0(x1;:::;x n) =2 T0 funkcian  
+nermuenq '0(x) =f0(x;:::;x ) funkcian: Qani, or f0 funkcian i pahpanum
+0-n, apa '0(0) = 1 : Hnaravor en erku depqer`
+kam '0(x) = x; kam '0(x) = 1 :
+Ditarkenq f1(x1;:::;x n) =2T1 funkcian  nuyn eanakov nermuenq '1(x) =
+f!(x;:::;x ) funkcian: Qani, or f1 funkcian i pahpanum 1-, apa '1(1) =
+0 : Hnaravor en erku depqer`
+kam '1(x) = x; kam '1(x) = 0 :
+9
+Ee depqeric or  mekum stanum enq x funkcian, apa depq apacucva
+: Ee erku depqerum stanum enq 0  1 hastatun funkcianner, apa
+hamaayn o monoton funkciayi masin lemmi, fm =2M funkciayic, teadrelov
+bolor ooxakanneri oxaren hastatun funkcianner  nuynakan
+funkcia kstananq xtum:
+b) 0  1 hastatun funkcianneri stacum : Ditarkenq fS =2 S
+funkcian: Hamaayn o inqnaerkaki funkciayi masin lemmi, teadrelov
+fS -i mej ooxakanneri oxaren xtum (orn arden stacel enq)  
+nuynakan funkcian kareli  stanal hastatun funkcianner` 0; 1 2
+[fS; x]:
+g) xy funkciayi stacum : Ditarkenq fL =2L funkcian: Hamaayn
+o gayin funkciayi masin lemmi, teadrelov fL -i mej ooxakanneri
+oxaren hastatun funkcianner  xtum (oronq arden stacel enq),
+kareli  stanal kam xy kam xy : Sakayn aajin qaylum menq arden stacel
+enq xtum, het abar mit kareli  stanal konyunkcian` xy2 [fL; 0; 1; x]:
+Ayspisov, stanum enq` P2 = [x;xy ] [f0;f 1;f M;f L;f S]  qani, or {x;xy}
+hamakarg lriv , apa eorem apacucva : 
+T0 , T1 , S , L, M daser kovum en Posti daser:
+Het uyun 6: Yuraqan yur P2 -um ak das, aynpisin, or A6= P2 ,
+nka  T0 , T1 , S , L, M daseric or  mekum:
+rinak 11: Cuyc tanq, or f(x;y ) =xjy funkcian kazmum  lriv hamakarg:
+Kaucenq nra a yusak`
+x y xjy
+0 0 1
+0 1 1
+1 0 1
+1 1 0
+f(0; 0) = 1, het abar, xjy =2T0 ;
+f(1; 1) = 0, het abar, xjy =2T1 ;
+f(0; 0) = 1;f (1; 1) = 0, het abar, xjy =2M ;
+f(0; 1) = f(1; 0) = 1 , hakadir hajordakanuyunneri vra ndunum 
+havasar areqner, het abar, xjy =2S ;
+Verjapes, xjy = x_y = xy + 1 , in nanakum , or xjy funkcian
+gayin , het abar xjy =2L:
+rinak 12: Cuyc tanq, or funkcianneri het yal hamakarg lriv `
+f1(x;y ) =xy; f 2(x) = 0; f 3(x) = 1; f 4(x;y;z ) =x +y +z :
+Unenq` f3 =2T0 , f2 =2T1 , f2 =2S , f4 =2M , f1 =2L: Hamaayn Posti eoremi
+ayd hamakarg lriv : Baci ayd, ee menq heacnenq ayd hamakargic or 
+funkcia, apa ayn arden ilini lriv: Iroq`
+{f2;f 3;f 4} L; {f1;f 3;f 4} T1; {f1;f 2;f 4} T0; {f1;f 2;f 3} M :
+13. Bul yan funkcianneri bazis: Naxalriv daser:
+10
+Sahmanum 15: Bul yan funkcianneri A  P2 das kovum  bazis
+P2 -um, ee`
+1) [A] =P2 ;
+2) cankaca f2A hamar [An{f}]6=P2 :
+eorem 15: Bazisum funkcianneri maqsimal qanak havasar  4-i:
+Apacucum: Apacucenq, or yuraqan yur lriv hamakargic kareli 
+aannacnel lriv enahamakarg, or parunakum  4 funkciayic o at:
+Ee funkcianneri A bazmuyun lriv , apa hamaayn Posti eoremi,
+A-um goyuyun unen
+f0 =2T0; f 1 =2T1; f M =2M; f L =2L; f S =2S
+funkcianner  A-i A0 ={f0;f 1;f S;f L;f M} enabazmuyun lriv  P2 -um:
+Ditarkenq f0(x1;:::;x n) funkcian: Hnaravor en erku depqer`
+a) f0(1;:::; 1) = 1 , isk da nanakum , or f0 =2 S  fS funkcian karo
+enq heacnel A0 bazmuyunic, het abar [f0;f 1;f M;f L] =P2 :
+b) f0(1;:::; 1) = 0 isk da nanakum , or f0 =2 M; f 0 =2 T1  fM , f1
+funkcianner karo enq heacnel A0 bazmuyunic, het abar [f0;f S;f L] =
+P2 :
+Hamaayn rinak 12-i goyuyun unen ors funkcianneric kazmva
+bazisner: 
+Sahmanum 16: Dicuq AP2 : A bazmuyun kovum  naxalriv das
+P2 -um, ee`
+1) [A]6=P2 ;
+2) cankaca f2P2 funkciayi hamar, ee f =2A, apa [A[{f}] =P2 :
+eorem 16: P2 -um naxalriv daser kazmum en miayn T0 , T1 , S , L, M
+daser:
+Apacucum: Menq arden gitenq, or T0 , T1 , S , L, M daser nka en
+mek myusi mej (a yusak 6):
+Apacucenq, or bolor T0 , T1 , S , L, M daser naxalriv en: Dicuq N2
+{T0;T 1;S;L;M }  f =2N : Ayd depqum N[{f} hamakarg nka  Posti
+hing daseric o mekum (qani, or N - nka  ors daseric o mekum isk
+f - i patkanum N -in): Het abar, hamaayn Posti eoremi, N[{f}
+hamakarg lriv , aysinqn N - naxalriv das :
+Aym enadrenq A-n naxalriv das : Ayd depqum [A]6=P2  het abar
+goyuyun uni N2{ T0;T 1;S;L;M } das aydpisin, or A N : Ee A6= N ,
+apa goyuyun uni f ( f2N , f =2A) funkcia aydpisin, or A[{f} N ,
+het abar [A[{f}]6=P2 : Stanum enq hakasuyun A-i naxalriv linelu
+het: Het abar A =N : 
+Verjum, aanc apacucman nerkayacnenq Posti erku at kar or
+ardyunqner:
+1) P2 -um goyuyun unen haveli vov ak daser;
+2) Yuraqan yur ak dasum goyuyun uni verjavor bazis:
+11

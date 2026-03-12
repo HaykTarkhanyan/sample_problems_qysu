@@ -1,0 +1,49 @@
+Gornakan 5
+1. Kombinatorikayi himnakan kanonner:
+1) Havel 0-ic min 1000 amboj veri qanak, oronc vanannerum ka
+it mek 6:
+2) Havel 0-ic min 1000 amboj veri qanak, oronc vanannerum ka
+mek kam avel 6:
+3) Qani eanakov kareki  ntrel tarber emannerov erku girq, ee
+unenq 15 girq informatikayic, 12 girq maematikayic  10 girq fizikayic:
+4) Qani kent iv ka 100-i  1000-i mi :
+5) 700-ic oqr qani bnakan iv ka, oronq baanvum en 5-i vra: Ayd veric
+qanisn en baanvum 3-i vra: Ayd veric qanicn en baanvum 3-i  
+5-i vra:
+6) Ee goyuyun uni 15 ver Er anic depi M oskva  20 ver M oskvaic
+depi London, apa qani ver Er anic depi London ancnum  M oskvayov:
+7) Gtnel qaani veri qanak, ee nranc anvazn erku vaniner
+hamnknum en:
+8) Gtnel yoani veri qanak, oronc aajin  verjin vananner iraric
+tarber en:
+9) Gtnel vecani veri qanak, oronc har an vanannern iraric
+tarber en:
+10) Gtnel yoani veri qanak, oronc zuyg teerum grva  kent vanan,
+isk kent teerum zuyg vanan:
+2.1. Kargavoruyunner:
+1) Qani artapatkerum ka 6 tarranoc bazmuyunic depi 3 tarranoc
+bazmuyun:
+2) Qani inyektiv artapatkerum ka 6 tarranoc bazmuyunic depi 3
+tarranoc bazmuyun:
+3) Qani eanakov 5 tayi  6 ajka kareli  arq kangnecnel aynpes, or
+taner zbaecnen aajin 5 teer:
+4) Qani eanakov 6 tayi  7 ajka kareli  arq kangnecnel aynpes, or
+1
+arqi aajin te zbaecni ta:
+5) Qani eanakov 6 tayi  7 ajka kareli  arq kangnecnel aynpes, or
+arqi aajin  verjin teer zbaecnen taner:
+6) Qani eanakov 5 tayi  6 ajka kareli  arq kangnecnel aynpes, or
+taner zbaecnen 5 hajordakan teer:
+7) Qani eanakov 9 mardik karo en dasavorvel arqov:
+8) Qani uani iv kareli  kazmel 23122313 vi vananneric:
+9) Gtnel ^a,b,g,d,e,z_ aybubeni bolor taer parunako 6 erkaruyamb
+ayn baeri qanak, oroncum erku aynavor mimyanc har an en:
+10) Enadrenq, or senyakum kan 6 mardik, oroncic yuraqan yur erkus
+nkerner en kam nami: Apacucel, or kan ereq mardik kam nkerner
+en kam nami:
+11) Aajin 210 bnakan veric qani iv  petq ntrel, or ntrvaneri
+mej lini zuyg iv:
+12) Apacucel, or veri het yal hajordakanuyan`
+7; 77; 777; 7777; :::
+aajin 2014 andamneric mek baanvum  2013 vra:
+2

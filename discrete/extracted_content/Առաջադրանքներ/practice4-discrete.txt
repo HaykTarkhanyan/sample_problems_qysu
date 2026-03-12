@@ -1,0 +1,90 @@
+Gornakan 4
+1 Artapatkerumner
+1. Ee f funkcian amenureq orova , isk g -n o, inpisin klinen gf
+ fg funkcianner:
+2. Dicuq f R R: Gtnel het yal funkcianneri oroman  areqneri
+tiruyner`
+(a) f (x) = x2 + 3;
+(b) f (x) =px 2;
+(g) f (x) = 1px 2 ;
+(d) f (x) =jxj;
+(e) f (x) = 1
+x2 + 2 ;
+(z) f (x) = 1
+x2 2 :
+3. Dicuq  RR: Het yal haraberuyunneric oronq en funkcianer`
+(a)  ={(x;
+p
+x2 + 4)jx2 R};
+(b)  ={(x; 5)jx2 R};
+(g)  ={(7;y )jy2 R}:
+4. Dicuq f;g : R! R: Gtnel fg  gf funkcianner, ee`
+(a) f (x) = x2 + 1, g(x) = x + 3;
+(b) f (x) =
+p
+x2 + 2, g(x) = x2 + 3;
+(g) f (x) = 1
+x , g(x) = 2x + 3:
+5. Gtnel hakadar haraberuyun het yal funkcianneri hamar`
+(a) f (x) = x + 4
+2 ,
+(b) f (x) = x3 ;
+1
+(g) f (x) = x 2
+x + 3 :
+6. Parzel het yal R ! R artapatkerumneric oronq en inyektiv,
+syurektiv kam biektiv`
+(a) f (x) =jxj;
+(b) f (x) = x2 + 4;
+(g) f (x) = x3 + 6;
+(d) f (x) = x +jxj;
+(e) f (x) = x(x 2)(x + 2) :
+7. Gtnel het yal artapatkerumneri mijuk`
+(a) f : Z! Z, f (x) =jxj;
+(b) f : R! Z, f (x) =bxc;
+(g) f : R! Z, f (x) =dxe:
+8. Apacucel, or het yal paymanner hamareq en`
+(a) (x) = (y)!x =y ;
+(b) x6=y!(x)6=(y):
+9. Apacucel lemm 1, 2, 3, 5:
+10. Apacucel, or kamayakan f :A!B artapatkerman hamar, nra
+mijuk Ker (f )- hamarequyan haraberuyun  A bazmuyan vra:
+11. Nkaragreq het yal artapatkerumneri mijukner
+(a) f : Z! N, f (x) =jxj;
+(b) f : R! Z, f (x) =bxc:
+12. Dicuq f : Q+! Q+ artapatkerum orovum  bana ov` f (x) =x
+2x + 1 : Apacucel, or ayn inyektiv artapatkerum , sakayn syurektiv
+artapatkerum :
+13. Dicuq f : Z15! Z15 artapatkerum orovum  bana ov` f (x) =
+4x(mod15): Cuyc tal, or ayn biektiv   gtnel nra hakadar artapatkerum:
+14. Dicuq f : Z15! Z15 artapatkerum orovum  bana ov` f (x) =
+2x + 4(mod15): Cuyc tal, or ayn biektiv   gtnel nra hakadar
+artapatkerum:
+15. Apacucel, or ee A bazmuyun verjavor , apa f : A ! A
+artapatkerum biektiv  ayn  miayn ayn depqum, erb ayn inyektiv
+:
+2
+16. Apacucel, or ee A bazmuyun verjavor , apa f : A ! A
+artapatkerum biektiv  ayn  miayn ayn depqum, erb ayn syurektiv
+:
+17. Apacucel Het anq 1:
+18. Apacucel eorem 6  7:
+19. Inpisi artapatkerumneri hamar tei uni het yal nuynuyun`
+f (A\B) = f (A)\f (B)
+:
+20. Inpisi artapatkerumneri hamar tei uni het yal nuynuyun`
+f (AnB) = f (A)nf (B)
+:
+21. Hnaravor  ardyoq in or f :A!B artapatkerman  X1;X 2A
+enabazmuyunneri hamar X16=X2 , bayc f (X1) = f (X2):
+22. Hnaravor  ardyoq in or f :A!B artapatkerman  X1;X 2A
+o datark enabazmuyunneri hamar X1\X2 =;  f (X1) = f (X2):
+23. Hnaravor  ardyoq in or f :A!B artapatkerman  Y1;Y 2B
+etabazmuyunneri hamar Y16=Y2 , bayc f 1(Y1) = f 1(Y2):
+24. it  ardyoq, or f :A!B artapatkerman  Y1;Y 2B etabazmuyunneri
+hamar, ee Y1\Y2 =;, apa f 1(Y1)\f 1(Y2) =;:
+25. Apacucel, or f :A!B artapatkerman hamar  Y B enabazmuyan
+hamar tei uni het yal haraberuyun`
+f (f 1(Y ))Y :
+Berel rinak, or hakaak nerdnum tei uni:
+3

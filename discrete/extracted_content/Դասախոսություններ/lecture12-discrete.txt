@@ -1,0 +1,407 @@
+Dasaxosuyun 12
+Grafneri tesuyun
+14.1. Grafner: Grafneri erkraaakan nerkayacum:
+Grafi gaaar menq ditarkel enq erkrord dasaxosuyunum:
+Sahmanum 1: Graf kovum erku bazmuyunneri kargavorva zuyg
+G = (V;E ), orte V bazmuyan tarrer kovum en grafi gaganer isk
+E -n V bazmuyan tarreri erkutarranoc enabazmuyunneri bazmuyun
+: E bazmuyan tarrer kovum en koer  ee {a;b}2 E , apa asum en
+or a  b gaganer miacva en {a;b} koov: 
+Grafi nanakman hamar V  E taeri gtagorum galis  ”vertex”
+(gaga)  ”edge” (ko) angleren baeric:
+
+at depqerum sahmanva grafi gaaar bavakan  tarber kiraakan
+xndirner luelu hamar: Sakayn oro depqerum anhraet  linum ditarkel
+grafi gaaari oro ndhanracumner: Ee koeri bazmuyun irenic
+nerkayacnum  multibazmuyun, apa aydpisi grafner kovum en multigrafner :
+Ee {a;b} ko E bazmuyunum handipum  k angam, apa k -n kovum 
+{a;b} koi patikuyun:
+Ee orpes koer uyl  trvum ditarkel {a;a} tesqi multibazmuyunner,
+apa multigraf kovum  ps dograf , isk {a;a} ko kovum  ak :
+Hetagayun menq kditarkenq parz grafner (aanc akneri  patik
+koeri):
+Kan grafneri trman mi qani eanakner: Amenaparz eanak` varkel
+nra bolor gaganer  korer:
+rinak 1: Dicuq
+V ={v1;v 2;v 3;v 4;v 5;v 6}  E ={{v1;v 2};{v2;v 2};{v5;v 6};{v5;v 6}} :
+Ayd depqum (V;E ) zuyg klini ps dograf, orte {v2;v 2} ko ak , isk
+{v5;v 6} ko 2-patik ko : Ee vercnenq`
+E1 ={{v1;v 2};{v1;v 3};{v2;v 5};{v5;v 6}};
+apa (V;E 1) zuyg parz graf : 
+Inpes gitenq graf kareli  sahmanel, orpes V gaganeri bazmuyan
+vra trva hakaefleqsiv  simetrik haraberuyun: Het abar grafi
+trman eanakneric mek da erkraaakan eanakn : Nenq, or graf
+ba hunerenic argmanvum , orpes "nkarel", "gel":
+1
+Dicuq trva  G = (V;E ) graf: Grafi yuraqan yur vi2V gagain
+hamapatasxanecnenq or  ai ket vklidyan taracuyunum` vi7!ai;a i6=
+aj(i6=j): Isk, yuraqan yur e ={a;b} koin hamapatasxanecnenq anndhat
+kor, or miacnum  ai ket aj keti het  i ancnum uri ak ( k6= i;j )
+keterov: Ayd depqum, ee bolor stacva korer unen ndhanur keter,
+baci gaganerin hamapatasxano ai keteric, apa asum en, or trva
+ grafi erkraaakan irakanacum:
+erkraaakan irakanacum 
+erkraaakan irakanacum 
+Harc  aajanum, ardyoq kamayakan G = (V;E ) graf uni erkraaakan
+irakanacum:
+eorem 1: Yuraqan yur grafi hamar goyuyun uni nra erkraaakan
+irakanacum ereqaani vklidyan tarauyan mej:
+Apacucum: Vercnenq ereqaani tarauyan mej kamayakan l ui
+gi  teavorenq nra vra grafi gaganerin hamapatasxano bolor
+keter: Enadrenq graf uni q koer: Anckacnenq l ui gov q tarber
+kisaharuyunneri unj: Yuraqan yur koin hamapatasxanecnenq
+kisaharuyun  ayd kisaharuyan mej anckacnenq koin hamapatasxano
+anndhat gi: Aknhayt , or ayd ger en hatvum  kstananq grafi
+erkraaakan irakanacum: 
+Hetagayum cuyc ktanq, or ays eorem hnaravor  ueacnel ijecnelov
+vklidyan tarauyan aoakanuyun:
+Sahmanum 2: Erku G1 = (V1;E 1)  G2 = (V2;E 2) grafner kovum en
+izomorf , ee goyuyun uni biektiv artapatkerum
+' :V1!V2
+aydpisin, or
+{u;v}2 E1 !{'(u);' (v)}2 E2 : 
+Ayspisov, grafner izomorfen, ee nranc gaganeri mij goyuyun
+uni biektiv artapatkerum  G1 grafum gaganer miacvum en koov
+ayn  miayn ayn depqum, erb hamapatasxan gaganer miacvum en
+koov G2 grafum:
+Hamaayn Sahmanum 2-i abstrakt graf  nra erkraaakan irakanacum
+izomorfen, het abar abstrakt grafneri oxaren kareli  ditarkel
+2
+nranc erkraaakan irakanacumner: Ayspisov grafner kareli  ditarkel,
+orpes erkraaakan byektner:
+rinak 2: Nk.1-um nerkayacva G1  G2 grafner izomorfen: Izomorfizm
+trvum  het yal artapatkerman mijocov`
+f (v1) = u1;f (v2) = u3;f (v3) = u5;f (v4) = u2;f (v5) = u4;f (v6) = u6 :
+Isk G1  G3 grafner izomorf en:
+Nk.1
+14.2. Gagai astian: Grafi trman matricayin Eanak
+G = (V;E ) grafi a  b gaganer kovum en kic kam har an , ee
+{a;b}2 E :
+Grafi erku koer kovum en kic kam har an , ee nranq unen ndhanur
+gaga:
+Ee e ={a;b}2 E , apa kasenq, or a  b gagner patkanum en kam
+incindent en e koin, na e ko patkanum  kam incindent  a  b
+gaganerin:
+Sahmanum 3: v2V gagai astian kovum  koeri qanak, oronq
+patkanum en v gagain  nanakvum  deg(v)-ov: Gaga, ori astian
+havasar  0-in, kovum  mekusacva gaga, isk ee deg(v) = 1 , apa
+v -n kovum  ezrayin gaga:
+Ayspisov, grafum orova en erku haraberuyunner nra tarreri
+mi ` har anuyan  patkaneliuyan: Har anuyan haraberuyun
+gaganeri mi erkte haraberuyun , or kareli  nkaragrel qaakusi
+matricov (kazmva 0-ic  1-ic):
+Sahmanum 4: G = (V;E ) grafi A(G) har anuyan matric kovum 
+het yal matric`
+aij =
+(
+1; ee (vi;v j)2E;
+0; ee (vi;v j) =2E : 
+Har anuyan matric mit simetrik :
+3
+rinak 3: Nk.1-um berva grafneri hamar, har anuyan matricner
+unen het yal tesq`
+A(G1) =
+0
+BBBBBB@
+0 0 0 1 1 1
+0 0 0 1 1 1
+0 0 0 1 1 1
+1 1 1 0 0 0
+1 1 1 0 0 0
+1 1 1 0 0 0
+1
+CCCCCCA
+;A (G2) =
+0
+BBBBBB@
+0 1 0 1 0 1
+1 0 1 0 1 0
+0 1 0 1 0 1
+1 0 1 0 1 0
+0 1 0 1 0 1
+1 0 1 0 1 0
+1
+CCCCCCA
+A(G3) =
+0
+BBBBBB@
+0 0 0 1 1 0
+0 0 1 1 1 1
+0 1 0 0 1 1
+1 1 0 0 1 0
+1 1 1 1 0 0
+0 1 1 0 0 0
+1
+CCCCCCA
+: 
+vi gagai astian havasar  i-rd toum kam syunum gtnvo 1-eri
+qanakin: Nerkayacva rinakic er um , or izomorf grafner karo
+en unenal tarber har anuyan matricner: Sakayn tei uni het yal
+eorem:
+eorem 2: Grafner izomorfen ayn  miayn ayn depqum, erb nranc
+har anuyan matricner kareli  stanal mek myusic katarelov toeri
+ syuneri nuyn teaxuyun:
+Apacucum: Hamarakalenq G = (V;E )  G1 = (V1;E 1) grafneri gaganer
+1-ic mi n amboj verov: Enadrenq G  G1 grafner izomorfen: Ee
+(aij) = A(G) = A(G1) = (bij), apa pndum marit : Ee A(G)6=A(G1),
+apa qani, or grafner izomorfen goyuyun uni f biektiv artapatkerum
+grafneri gagneri mi , or pahpanum  gagneri har anuyan haraberuyun,
+aysinqn, ee {u;v} 2E , apa {f (u);f (v)} 2E1 : Het abar kstananq
+aij =bf (i)f (j) , i;j = 1; 2;:::;n :
+Hakaak aknhayt : 
+Patkaneliuyan haraberuyun da gaganeri  koeri mi haraberuyun
+, or  s kareli  nkaragrel matricov:
+Sahmanum 5: G = (V;E ) grafi C(G) patkaneliuyan matric kovum
+ matric, ori toer hamarakalvum en grafi gaganerov, isk syuner
+koerov  uni het yal tesq`
+cij =
+(
+1; ee vi gaga patkanum  ej koin ;
+0; ee vi gaga i patkanum  ej koin : 
+C(G) matric uank yun matric , ori toeri qanak havasar 
+gaganeri qanakin isk syuneri qanak koeri qanakin:
+vi gagai astian havasar  C(G) matrici i-rd toi 1-eri qanakin:
+eorem 3: Yuraqan yur grafi hamar marit  het yal havasaruyun`
+pX
+i=i
+deg(vi) = 2q;
+4
+orte p-n grafi gaganeri qanakn , isk q -n koeri qanakn ` jVj = p,
+jEj =q :
+Apacucum: Gaganeri astianner havelu amanak menq yuraqan yur
+ko havum enq erku angam, qani or yuraqan yur koin patkanum en
+erku gaganer: 
+Het uyun 1: Grafum kent astian uneco gaganeri qanak zuyg
+: 
+Ays parz het uyun uyl  talis luel hetaqrqir xndirner:
+rinak 5: Handipumic aaj oro masnakicner katarum en eqsemum:
+Hamaayn Het uyun 1-i masnakicneri qanak, oronq katarum en kent
+vov erqsemum zuyg : 
+Sahmanum 6: G1 = (V1;E 1) graf kovum  G = (V;E ) grafi enagraf ,
+ee V1V  E1E :
+14.3. anaparhner grafum: Kapakcva grafner
+Sahmanum 7: G = ( V;E ) grafum anaparh v0 gagaic depi vn
+gaga kovum  het yal hajordakanuyun`
+v0;{v0;v 1};v 1;{v1;v 2};v 2;:::;v n1;{vn1;v n};v n;
+orte vi2V : n- kovum  anaparhi erkaruyun: anaparh kovum 
+parz , ee nranum kan krknvo gaganer: anaparh, or uni krknvo
+koer kovum  a : anaparh kovum  ak , ee v0 =vn : anaparh
+kovum  cikl , ee ayn ak   a , aysinqn koer nranum en krknvum:
+
+Pndum 1: Dicuq G = (V;E ) grafum P -n anaparh  v1 -ic depi v2 ,
+nd orum v16= v2 : Ayd depqum P -um kareli  aannacnel v1 -ic depi v2
+enaanarh, or klini parz xa:
+Apacucum: Enadrenq trva anaparh i handisanum parz xa:
+Ayd depqum nranum ka krknvo v gaga  ayn uni het yal tesq`
+P =v1C1vC2vC3v2 :
+Ayd depqum P -um arka  P1 =v1C1vC3v2 enaanaprh v1 -ic depi v2 : Ee
+P1 -um kan krknvo gaganer, apa nuyn eanakov artaqselov anaparhi
+mi mas, verjavor qayleric heto, kstananq parz xa, qani or P anaparh
+verjavor : 
+Sahmanum 8: G = (V;E ) graf kovum  kapakcva , ee nra kamayakan
+vi  vj gaganeri hamar goyuyun uni anaparh vi -ic depi vj : 
+Ditarkenq G = (V;E ) grafi gaganeri bazmuyan vra het yal 
+haraberuyun` (vi;v j)2  ee goyutyun uni anaparh vi -ic depi vj `
+vi7!vj : Parz , or ayd haraberuyun efleqsiv , simetrik  tranzitiv,
+aysinqn hamarequyan haraberuyun : Het abar gaganeri bazmut;yun
+baanvum  hatvo daseri` V = V1[V2[[ Vk , Vi\Vj =; ( i6= j ):
+G = (V;E ) graf trohvum  kapakcva enagrafneri, oronq kovum en
+G = (V;E ) grafi kapakcuyan baadriner (nk.1):
+5
+| {z }
+Kapakcuyan baadriner
+nk.2.
+Graf kovum  lriv , ee nra kamayakan gaganer kapva en koov,
+aysinqn cankaca u;v2V , {u;v}2 E : Aknhayt , or ee jVj =p, apa lriv
+grafum koeri qanak havasar ` p(p 1)
+2 : Lriv grafner nanakvum en
+Kp -ov (nk.3):
+K5 lriv graf
+nk.3.
+Graf kovum  datark , ee ayn uni koer, aysinqn nra gaganer
+bolor mekusacva en: Parz , or datark grafi yuraqan yur gaga
+klini nra kapakcuyan baadri: Datark grafner nanakvum en Op -ov:
+eorem 4: Ee grafum it erku gaganer unen kent astian, apa
+nranq kapva en anaparhov, aysinqn patkanum en nuyn kapakcuyan
+baadriin:
+Apacucum: Hamaayn Het uyun 1-i, grafum kent astiani gaganeri
+qanak zuyg : Qani, or pndum marit  na ayn kapakcuyan baadrii
+hamar, orin patkanum  v1 gaga, apa v2 -n nuynpes patkanum  ayd
+baadriin: 
+eorem 5: Ee G = ( V;E ) graf uni p gaga  k kapakcuyan
+baadriner, apa nra maqsimal koeri qanak havasar 
+N (p;k ) = 1
+2 (pk)(pk + 1) :
+6
+Apacucum: Dicuq G grafi Gi ( i = 1; 2;:::;k ) kapakcuyan baadri
+uni pi gaga: Ayd depqum G-um koeri maqsimal qanak havasar `
+N = 1
+2
+kX
+i=1
+pi(pi 1) :
+N iv stanum enq ayn depqum, erb bolor Gi baadriner pi gaganerov
+lriv grafner en: Enadrenq, or Gi grafneri mej kan anvazn erkus,
+oronq unen erkusic avel gaganer, rinak p2p1 > 1: Ee G grafum G1
+ G2 baadriner xarinenq p11  p2+1 gaga uneco lriv grafnerov,
+kstananq graf, ori koeri qanak kavelana: Het abar, maqsimal koer
+kunena graf, or kazmva  k1 mekusacva gaganeric  mek pk +1
+gaganerov lriv grafic: 
+Het uyun 2: p gaganerov  1
+2 (p 1)(p 2)-ic at koer uneco
+graf kapakcva :
+Apacucum: Het um  naxord eoremic, ee vercnenq k = 2 : 
+14.4. aer:
+Sahmanum 9: Aanc cikleri kapakcva graf kovum  a :
+Sahmanum 10: G = (V;E ) grafi G1 = (V1;E 1) enagraf kovum  G-i
+kmaxk , ee G1 - a   V =V1 :
+Lemm 1: Ee G = (V;E ) graf kapakcva   nra (u;v ) ko patkanum
+ or  ciklin G grafum, apa heacnelov ayd ko G grafic, noric kstananq
+kapakcva graf:
+Apacucum: Heacnelov (u;v ) ko grafic graf kmna kapakcva,
+qani vor u-ic depi v karo enq ancnel cikli mnaca masov: 
+eorem 6: Yuraqan yur kapakcva graf parunakum  anvazn mek
+kmaxk:
+Apacucum: Ee G-um kan cikler, apa henc G-n klini kmaxkayin
+a: Ee G-um kan cikler, apa heacnelov ciklic or  ko, hamaayn
+Lemm 1-i kstananq G-i kapakcva G1 enagraf: Ee G1 -um kan cikler,
+apa G1 - klini kmaxkayin enaa: Ayspes arunakelov verjavor qayleric
+heto kstananq G-i kmaxk: 
+Lemm 2: Ee kapakcva grafin nuyn gaganeri vra avelacnel ko,
+apa grafum kaajana cikl:
+Apacucum: Ditarkenq kamayakan G = (V;E ) kapakcva graf: Dicuq
+u;v 2 V  {u;v} =2 E : Qani, or G-n kapakcva graf , apa nranum
+goyuyun uni anaparh u-ic depi v : Het abar goyuyun uni na C
+parz xa u-ic depi v : Avelacnelov trva grafin {u;v} ko kstananq
+graf, orum aka  C;{v;u};u cikl: 
+Lemm 3: Dicuq G = (V;E ) graf uni p gaganer  q koer: Ayd depqum
+G-um klini (pq)-ic o qi kapakcuyan baadriner: nd orum, ee G-um
+kan cikler, apa G-um klini it (pq) kapakcuyan baadriner:
+Apacucum: Dicuq or  H grafin, or parunakum  u  v gaganer,
+avelacvum  {u;v} ko: Ayd depqum, ee u  v gaganer nka en
+tarber kapakcuyan baadrinerum, apa kapakcuyan baadrineri
+7
+qanak knvazi mekov: Ee u  v gaganer nka en nuyn kapakcuyan
+baadrium, apa kapakcuyan baadrineri qanak i oxvi: Bolor
+depqerum, kapakcuyan baadrineri qanak knvazi mekic o avel: Het abar,
+avelacnelov q koer, kapakcuyan baadrineri qanak knvazi q -ic o
+avel: Qani, or G graf stacvum  datark Op grafic avelacnelov q
+koer, apa G-um klini (pq) kapakcuyan baadrineric o at:
+Aym enadrenq G-um kan cikler: Ee Op -ic G graf stanalu nacqum,
+avelacnelov {u;v} ko, u  v gaganer nka lineyin nuyn kapakcuyan
+baadrinerum, apa hamaayn Lemm 2-i G-um kaajanar cikl: Het abar
+u  v gaganer nka en tarber kapakcuyan baadrinerum  avelacnelov
+{u;v} ko kapakcuyan baadrineri qanak nvazum  mekov: Ayspisov
+G grafum klini (pq) kapakcuyan baadriner: 
+eorem 7 (ai tarber sahmanumner): G = ( V;E ) grafi hamar
+het yal paymanner hamareq en ( p-n gaganeri qanakn , isk q -n koeri
+qanakn )`
+1. G-n a ;
+2. G-n aanc cikleri graf   q =p 1;
+3. G-n kapakcva graf   q =p 1
+4. G-n kapakcva graf , sakayn heacnelov nra kamayakan ko
+graf darnum  o kapakcva;
+5. G-n aanc cikleri graf , sakayn avelacnelov nuyn gaganeri vra
+nor ko grafum aajanum  cikl:
+Apacucum: (1)! (2): Qani, or G-n kapakcva   uni ciklner,
+apa hamaayn Lemm 3-i pq = 1  het abar p =q 1;
+(2)! (3): Hamaayn Lemm 3-i G-um kapakcuyan baadrineri qanak
+havasar  pq = 1 , aysinqn G-n kapakcva graf ;
+(3) ! (4): Heacnelov grafic or  ko kstananq pq = 2 : Ayd
+depqum, hamaayn Lemm 3-i kapakcuyan baadrineri qanak pq = 2
+qi , het abar graf kapakcva ;
+(4)! (5): Ee G graf unenar cikl, apa hamaayn Lemm 1-i heacnelov
+grafi or  ko graf kmna kapakcva, in hakasum  paymanin: Het abar
+G graf uni cikler: Hamaayn Lemm 2-i, ee avelacnenq kapakcva
+grafin nuyn gaganeri vra nor ko, apa nranum aajanum  cikl;
+(5)! (1): Ee G graf kapakcva   u, v gagner patkanum en
+tarber kapakcuyan baadrinerin, apa avelacnelov G-in {u;v} ko
+enq stana cikl, in hakasum  paymanin: Het abar G-n kapakcva
+graf : 
+rinak 6: Nk.4 nerkayacva  10 gaganeri vra kaucva a:
+8
+nk.4.
+ai gaga, ori astian havasar  mekin, kovum  ter : Nk.4-um
+nerkayacva ai ter nern en` 1,2,3,7,9  10:
+Pndum 2: Yuraqan yur erku gagaic avel uneco a uni anvazn
+erku ter :
+Apacucum: Vercnenq ai kamayakan v gaga: ntrenq nran patkano
+or  ko  ayd koov ancnenq v gagain kic gaga: Ee ayn ter , apa
+ntrum enq nran patkano uri ko  ayd koov ancnum enq depi nran
+kic hajord gaga  ayln: Ayd nacqum gaganer en karo krknvel, qani
+or aum kan cikler: Het abar, or  verjavor qaylic heto kstananq
+ter : Ayspisov stanum enq aajin ter : Ee skzbnakan v gaga ter 
+er, apa karo enq ntrel iren patkano uri ko  krknel nkaragrva
+nacq: 
+Ee grafi gaganer hamarakalva en, apa graf kovum  hamarakalva
+kam nva :
+Aanc apacucman  akerpenq het yal eorem:
+eorem 8 (Qeli): n gaganerov hamarakalva aeri qanak havasar
+ nn2 : 
+14.5. Armatayin aer:
+Sahmanum 11: Yuraqan yur ar, orum aannacva  mek gaga
+kovum  armatayin a , isk ayd gaga kovum  ai armat :
+Armatayin ai sahmanum kareli  tal na induktiv eanakov:
+Sahmanum 12: 1) Mek gagaic bakaca graf kovum  armatayin
+a;
+2) Dicuq unenq D1 , D2 ,..., Dm armatayin aer v1 , v2 ,..., vm gaganerov,
+Di = (Vi;E i), Vi\Vj =; ( i6=j ): Ayd depqum D = (V;E ) graf, or stacvum
+ het yal eanakov`
+V =V1[V2[[ Vm[{v} (v =2Vi bolor i-eri hamar );
+E =E1[E2[[ Em[{{v;v 1};{v;v 2}{ v;v m}};
+kovum  armatayin a, orte v -n armatn ;
+3) Armatayin aer kovum en miayn ayn byektner, oronq stacvum en
+1)  2) keterum: 
+D1;D 2;:::;D m -er kovum en D -i enaaer:
+9
+Sahmanum 13: Kargavorva armatayin a kovum  armatayin ar,
+or bavararum  het yal paymannerin`
+1) Trva  nra enaaeri karg,
+2) Yuraqan yur Di enaa kargavorva armatayin enaa : 
+Mek gaga uneco a  s klini kargavorva a:
+eorem 9: q koer uneco kargavorva armatayin aeri qanak i
+gerazancum 4q :
+Apacucum: Ditarkenq kargavorva armatayin ai "xoruymab"
+rjancman het yal algorim`
+1) Sksel armatic: Min kan enaaer katarel.
+2) Ancnel heraka enaai armatin, rjancelov ayn "xoruyamb":
+3) Veradarnal skzbnakan armatin:
+Ays algorimi ardyunqum, rjancelov a, ancnum enq yuraqan yur
+koov erku angam` mek angam ancnelov depi herakan enaa  erkrord
+angam veradarnalov skzbnakan armatin: Yuraqan yur aydpisi rjancman
+hamapatasxanecn enq 2q erkaruyun uneco  0-ic  1-ic kazmva
+vektor: 0-n grum enq ayn depqum, erb barranum enq depi herakan
+enaar, isk 1- erb veradarnum enq depi armat: Qani, or aydpisi
+vektorneri qanak havasar  22q , apa kargavorva armatayin aeri
+qanak klini 4q -ic oqr: 
+rinak 7: Nk.4-um patkerva a kareli  darnel armatayin a
+hamarelov orpes armat, rinak nra 6 gaga (nk.7): 
+nk.5.
+10
+Yuraqan yur r armatov Tr armatayin aum goyuyu uni miak anaparh
+r armati depi nra yuraqan yur x gaga: Ayd anaparhi erkaruyun
+oroum  x gagi makardak Tr armatayin aum:
+ari barruyun kam xoruyun kovum  r gagaic depi nra x
+gaga amenaerkar anaparhi erkaruyun: Parz , or ays depqum x
+gaga petq  lini ai ter : rinak nk.5-um patkerva armatayin
+ai barruyun havasar  ereqi, isk 4 gagai makardak havasar
+ erkusi:
+Oro depqerum Tr armatayin a harmar  linum uordel r gagaic
+depi nra ter ner stanalov  !Tr komnorova graf (digraf) (nk.6):
+nk.6.
+ !Tr aum x gaga kovum  y gagai no ( parent ), isk y - x-i
+erexan ( child), ee goyuyun uni (x;y ) ae x-iv depi y : rinak nk.6-um
+5 gaga 4 gagai non , isk 4- 5-i erexan:
+Ee goyuyun uni uordva anaparh x gagaic depi z gaga,
+apa x- kovum  z -i naxahayr ( ancestor ), isk z - x-i hetnord ( descendant):
+Nk.6-um 1,2  3 gaganer 5 gagai hetnordnern en, isk 5 nranc naxahayrn
+:
+Ee T aum ntrum enq or  armat, apa nra V (T ) gaganeri
+bazmuyan vra kareli  sahmanel karg  darcnel V (T )-n kargavorva
+bazmuyun: Cankaca x;y2V (T ) gaganeri hamar kasenq, or xy , ee
+x- nka  anaparhi vra, or miacnum  ai r armat y gagai het:
+Uri xosqerov asa, Tr -in hamapatasxano komnorova  !Tr aum
+x gaga y -i naxahayrn : Baci ayd, bolor gaganer, oronq nka en
+armat or  ter i het miacno anarhi vra, hamemateli en  kazmum
+en a stacva kargavorva bazmuyan mej:
+11

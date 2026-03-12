@@ -1,0 +1,33 @@
+Gornakan 6
+2.4. Zugorduyunner: Binomial gorakicner:
+1) Inqan 9 erkaruyun uneco bitayin hajordakanuyun ka, oronq
+kazmva en 5 zroneric  4 mekeric:
+2) Qani eanakov kareli  ntrel 6 taneric  8 aikneric komite, ee
+ntruyun katarvum  12 tanneric  20 aikneric:
+3) Qani eanakov karo enq ntrel 13 xaayin qart 52 qarteric, or
+dranc mej lini 5 kart nuyn masti:
+4) Qani eanakov kare enq baanel 10 mardkanc erku imeri, oronq
+kazmva en 5 hoguc:
+5) Dicuq A = {a; b; c; d; e; f; g; h}: Qani a-n parunako hingtarranoc
+enabazmuyun uni A bazmuyun:
+6) (2x + 3y)10 artahaytuyunum gtnel x6y4 miandami gorakic:
+7) 
+axmatayin taxtaki vra navak gtnvum  a1 vandakum: Qani
+enakov ayn karo  hasnel e5 vandak, ee ayn karo  arvel
+miayn aj kam ver :
+8) Gtnel O(0; 0); A(7; 8) qakusayin cancum O  A gaganer miacno
+ayn anaarneri qanak, oronq ancnum en (3; 4) ketov:
+2.5. Krknuyunnerov zugorduyunner:
+9) Havel 6-i trohumneri qanak ereq gumarelineri tesqov:
+10) Xanuum vaarvum en ereq tesaki torer: Qani eanakov kareli
+ gnel yo torer:
+3. Bazmuyan kargavorva  polinomial gorakicner:
+11) Qani tarber baer kareli  kazmel "maematika" baic:
+12) Qani eanakov kareli  dasavorel 15 girq maematikayic, 16 girq
+informatikayic  12 girq fizikayic, ee nuyn masnagituyan grqer
+tarberel:
+13) Inin  havasar x4
+1x3
+2x2
+3 miandami gorakic (x1+x2+x3)9 artahaytuyunum:
+1

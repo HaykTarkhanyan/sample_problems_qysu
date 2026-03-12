@@ -1,0 +1,589 @@
+Dasaxosuyun 4
+16. Artapatkerumner: Himnakan gaaarner:
+Naxord dasaxosuyunum menq ditarkel enq erkte haraberuyunner
+orova A bazmuyan vra  dranc hatkuyunner` efleqsivuyun, simetricuyun
+ tranzitivuyun: Haraberuyunneri hamar, oronq trva en erku tarber
+bazmuyunneri vra`  AB , xosel efleqsivuyan, simetrikuyan
+ tranzitivuyan masin imast uni, qani or -i aajin  erkrord
+kordinatner karo en linel tarber bnuyi: rinak haraberuyun " x-
+aprum  y qaaqum" irenic nerkayacnum  bolor mardkanc  bolor qaakneri
+bazmuyunneri dekartyan artadryali enabazmuyun  yuraqan yur
+mardun hamapatasxanecnum  qaak orte ayn aprum : Nman haraberuyunneri
+usumnasiruyan hamar nermuvum  artapatkerman kam funkciayi
+gaaar:
+Sahmanum 29 : Dicuq A-n  B -n erku kamayakan o datark bazmuyunner
+en: f haraberuyun A  B bazmuyunneri mij ` f  AB , kovum 
+funkcia A-ic B  nanakvum `
+f :A!B;
+ee bavararum  het yal paymanin`
+(x;y ); (x;z )2f!y =z :
+Ee (x;y )2f apa y - kovum  x-i patker kam` x-i f -patker, isk x- y -i
+naxapatker kam` x-i f -naxapatker  grvum ` y = f (x): f funkcian
+kovum  amenureq orova kam artapatkerum ee Df = A  masnaki
+artapatkerum kam funkcia ee` DfA: 
+Qani or funkcianer bazmuyunner en, apa dranc havasaruyun
+haskacvum  orpes bazmuyunneri havasaruyun` erku f  g funkcianner
+havasar en ee bakaca en nuyn tarreric, uri xosqerov asac` f =g
+ayn  miayn ayn depqum, erb Df = Dg  cankaca x2 A hamar f (x) =
+g(x): Het abar, funkcian kareli  oroel nelov nra oroman tiruy
+ sahmanelov oroman tiruyic cankaca tarri patker: Ayspisov,
+funkcian kareli  patkeracnel orpes renq, ori mijocov orovum  cankaca
+tarri patker funkciayi oroman tiruyic:
+rinak 32 : Kamayakan A bazmuyan hamar "A ank yunagayin haraberuyun
+klini artapatkerum A bazmuyunic A-i mej  cankaca x2 A hamar
+"A(x) = x: Ayn kovum  nuynakan artapatkerum :
+1
+Lemm 4 : Kamayakan f : A!B artapatkerman hamar tei unen
+het yal havasaruyunner` f"A =f  "Bf =f : 
+rinak 33 : Dicuq f RR: Het yal renqnerov trva funkcianner
+f (x) = x2 + 3;
+f (x) = 1
+x2 + 2;
+klinen amenureq orova, isk het yal funkcianner`
+f (x) =
+p
+x 4;
+f (x) = 1
+x2 4
+masnaki orova , qani or, rinak erkrordi depqum, x = 2  x =2
+keterum ayn orova : 
+rinak 34 : Ditarkenq het yal erku funkcianner f;g : R! R`
+f (x) = x2 1
+x + 1 ;g (x) = x 1 :
+Cankaca x 6= 1 hamar f (x) = g(x), sakayn ayd funkcianner irar
+havasar en, qani or Df6=Dg : 
+Verjavor oroman tiruyov artapatkerumner harmar  patkerel
+a yusakayin  ov: rinak`
+f =
+ 1 2 3 4
+b1 b2 b3 b4
+
+;
+havasaruyun nanakum  mi f : A!B artapatkerum, orte A =
+{1; 2; 3; 4}, {b1;b 2;b 3;b 4} B , isk f (i) = bi , i = 1; 2; 3; 4:
+rinak 35 : Dicuq, A ={2;1; 0; 1; 2}  B ={0; 1; 2; 3; 4; 5}: Sahmanenq
+fAB haraberuyun het yal kerp` f ={(2; 5); (1; 2); (0; 1); (1; 2); (2; 5)}:
+Ayd depqum f - klini artapatkerum A-ic B  a yusakov ayn trvum 
+het yal  ov`
+f =
+2 1 0 1 2
+5 2 1 2 5
+
+: 
+Ee f - funkcia  A-ic B , isk g funkcia B -ic C , apa menq gitenq,
+or goyuyun uni dranc artadryal haraberuyun` fgAC :
+eorem 14 : Dicuq f : A!B  g : B!C funkcianer en en, ayd
+depqum`
+1) fg haraberuyun  s klini funkcia`
+fg :A!C;
+or erbemn kovum  funkcianeri hamadruy kam superposicia;
+2
+2) kamayakan a2 Df hamar` (fg)(a) = g(f (a)), ee g -n orova 
+f (a) ketum (artapatkerumneri hamar ayd havasaruyun tei uni
+cankaca a2A hamar):
+Apacucum : 1) Dicuq (a;c ) 2 f g  (a;c 1) 2 f g : Anhraet 
+apacucel, or c =c1 :
+Qani, or (a;c )2fg , apa goyuyun uni b2B aydpisin, or (a;b )2f
+ (b;c )2g : Nmanapes, (a;c 1)2 (fg)-ic het um , or goyuyun uni b12B
+aydpisin, or (a;b 1)2 f  (b1;c 1)2 g : Ayspisov, (a;b )2 f  (a;b 1)2 f  
+het abar b =b1 , qani, or f - funkcia : Nmanapes, (b;c ) = (b1;c )2g  
+(b1;c 1)2g -ic het um , or c =c1 :
+2) Ee f : A!B  a2 A, apa goyuyun uni b2 B , aydpisin, or
+b =f (a): Qani, or b2B  g :B!C , apa goyuyun uni c2C , aydpisin,
+or c = g(b): Het abar` c = g(f (a)): M yus komic, (a;b )2 f  (b;c )2 g ,
+het abar (a;c )2fg , aysinqn c = (fg)(a): 
+Nenq, or funkcianeri artadryal nanakum en na het yal  ov`
+fg :
+Qani, or haraberuyunneri artadryal zugordakan  (dasaxosuyun
+2, eorem 5(1)), apa funkcianeri artadryal  s zugordakan   tei
+uni het yal eorem:
+eorem 15 : Dicuq` f :A!B , g :B!C  h :C!D : Apa`
+f (gh) = (fg)h;
+ee orova  havasarman ax kam aj kom: 
+rinak 36 : Dicuq f : R+! R+  g : R+! R+ funkcianer trvum
+en bana erov` f (x) =px  g(x) = x + 3: Ayd depqum` fg(x) =px + 3, isk
+gf (x) =px + 3: 
+Cankaca f : A!B artapatkerman hamapatasxan sahmanenq
+” ” haraberuyun het yal kerp`
+xy !f (x) = f (y);x;y 2A :
+Aknhayt , or ” ”- hamarequyun   ayd hamarequyun kovum 
+f -i mijuk  nanakvum  ` ” ” = Ker (f ):
+Sahmanum 30 : R ! Z artapatkerum or yuraqan yur x 2 R
+irakan vin hamapatasxanacnum  amename k amboj iv, or i
+gerazancum x-, aysinqn`
+kx<k + 1;
+kovum  x vi storin amboj mas  nanakvum e het yal  ov` bxc: Isk
+artapatkerum R! Z, or yuraqan yur x irakan vin hamapatasxanecnum
+ amenaoqr s amboj iv, orin i gerazancum x-, aysinqn`
+s 1<x s;
+kovum  x-i verin amboj mas  nanakvum  dxe: 
+rinak, b8; 9c = 8 , b(3; 5)c =4, d8; 9e = 9 , d(3; 5)e =3:
+3
+Ayspisov`
+bxc =max{k2 Zjkx};
+dxe =min{k2 Zjkx} :
+Lemm 5 : Cankaca x irakan vi hamar`
+1) bx + 1c =bxc + 1;
+2) dx 1e =dxe 1;
+3) dxe =bxc ! x2 Z;
+4) dxe =bxc + 1 !x =2 Z;
+5) bxc =dx 1e ! x =2 Z: 
+Ee a;b2 Z, b> 0  
+a =bq +r; 0r<b;
+apa
+b< r<b;
+ab<a ra;
+ab
+b < ar
+b  a
+b;
+a
+b 1< ar
+b  a
+b;
+a
+b 1<q  a
+b;
+ qani, or q -n amboj iv , verjin artahaytuyun kareli  grel q =ba
+bc
+tesqov, het abar stanum enq`
+r =abba
+bc :
+16.1. Inyektiv artapatkerumner :
+Sahmanum 31 : f : A!B artapatkerum kovum  inyektiv kam
+nerdro, ee
+f (x) = f (y)!x =y;
+cankaca x;y2A: 
+Inyektivuyan payman kareli  oxarinel het yal hamareq paymanov`
+x6=y!f (x)6=f (y);
+cankaca x;y 2 A: Het abar, orpezi f artapatkerum lini inyektiv
+anhraet   bavarar, or nra Ker (f ) mijuk lini zroyakan hamarequyun:
+Lemm 6 : Erku f :A!B  g :B!C inyektiv artapatkerumneri
+fg :A!C artadryal noric inyektiv artapatkerum : 
+Lemm 7 : Ee f :A!B  g :B!C artapatkerumneri fg :A!
+C artadryal inyektiv , apa f - inyektiv :
+4
+Apacucum : Ee fg :A!C artadryal inyektiv , apa`
+f (x) = f (y)!g(f (x)) = g(f (y))! ((fg)(x) = (fg)(y)!x =y : 
+rinak 37 : Kaucenq f  g artapatkerumneri aynpisi rinakner,
+oronc fg artadryal lini inyektiv, bayc g -n lini inyektiv: Dicuq f :
+N! N  g : N! N artapatkerumner orovum en het yal kerp`
+f (x) = 2x + 1;x2 N;
+g(1) = g(2) = 1;
+g(x) = x;x 3;x2 N :
+Ayd depqum fg : N! N artadryal klini inyektiv, orovhet fg =f ,
+sakayn g -n inyektiv :
+Sahmanum 32 : f : A!B artapatkerum kovum  hakadareli
+ajic, ee goyuyun uni aynpisi f
+0
+:B!A artapatkerum, or
+ff
+0
+="A :
+Ayd depqum f
+0
+- kovum  f -i aj hakadar: 
+Ee f : A!B artapatkerum hakadareli  ajic, apa nra f
+0
+aj hakadar, ndhanur depqum, miareqoren i orovum: rinak, ee
+A ={1; 2}, B ={3; 4; 5},  f =
+1 2
+3 4
+
+; apa f - klini hakadareli ajic,
+nd orum nra aj hakadar orovum  erku tarber eanaknerov`
+f
+0
+=
+3 4 5
+1 2 1
+
+;f
+0
+=
+3 4 5
+1 2 2
+
+:
+eorem 16 (inyektivuyan haytani) : Orpeszi f :A!B artapatkerum
+lini inyektiv anhraet   bavarar, or ayn lini hakadareli ajic:
+Apacucum : Anhraetuyun : Dicuq
+f (A) ={f (x)jx2A} B
+ s erenq or  a2A tarr: Hnaravor  erku depq`
+1) f (A) = B , aysinqn` Bnf (A) = ;: Ays depqum yuraqan yur y2 B
+tarri hamar goyuyun kunena aynpisi x2 A, or f (x) = y , aysinqn` y -n
+uni naxapatker:
+2) Bnf (A)6=;: Ays depqum yuraqan yur y2 Bnf (A) tarri hamar
+goyuyun uni aynpisi x2A, or f (x) = y , aysinqn` y - uni naxapatker:
+Sahmanenq f
+0
+:B!A artapatkerum het yal kerp`
+f
+0
+(y) =
+(
+x; f (x) = y;
+a; y 2Bnf (A) :
+5
+Nax nkatenq, or y 2 B tarrin hamapatasxano f
+0
+(y)- orovum
+ miareqoren: Iroq, ee f (x1) = y  f (x2) = y , apa f (x1) = f (x2)  
+hamaayn f -i inyektivuyan` x1 =x2 :
+Aym stugenq ff
+0
+="A havasaruyun`
+(ff
+0
+)x =f
+0
+(f (x)) = f
+0
+(y) = x ="A(x);
+orte y =f (x):
+f
+0
+-i kaucumic bxum , or Bnf (A)6=;  A6={a} depqum f
+0
+- i
+orovum miareqoren:
+Bavararuyun : Ee f : A!B artapatkerum hakadareli 
+ajic, aysinqn` ff
+0
+="A , or  f
+0
+:B!A artapatkerman hamar, apa
+hamaayn Lemm 7-i, f - klini inyektiv, orovhet "A -n inyektiv : 
+16.2. Syurektiv artapatkerumner :
+Sahmanum 33 : f :A!B artapatkerum kovum  syurektiv kam
+veradro (ako), ee yuraqan yur y2 B tarri hamar goyuyun uni
+aynpisi x2 A tarr, or f (x) = y , aysinqn yuraqan yur y2 B tarr uni
+naxapatker: 
+rinak 38 : Ee ”  ”- hamarequyun  orova A bazmuyan
+vra, isk B = A= nran hamapatasxano qanord-bazmuyun , apa
+sahmanelov (a) = [a] hamapatasxanuyun ( a2A), stanum enq`
+ :A!B
+syurektiv artapatkerum, or kovum  bnakan artapatkerum:
+Lemm 8 : Erku f :A!B  g :B!C syurektiv artapatkerumneri
+fg :A!C artadryal noric syurektiv artapatkerum : 
+Lemm 9 : Ee f :A!B  g :B!C artapatkerumneri fg :A!
+C artadryal syurektiv , apa g - syurektiv :
+Apacucum : Ee f : A ! B  g : B ! C artapatkerumneri
+fg : A!C artadryal syurektiv , apa yuraqan yur z2 C tarri
+hamar goyuyun kunena aynpisi x2 A tarr, or (fg)x = z , aysinqn`
+g(f (x)) = z  het abar g(y) = z , orte y =f (x)2B : 
+rinak 39 : Kaucenq f  g artapatkerumner, oronc artadryal
+lini syurektiv, bayc f - lini syurektiv: Vercnenq` A ={a;b}, B ={c;d},
+C ={s}, f (a) = f (b) = c, g(c) = g(d) = s:
+A B
+f g
+C
+Sahmanum 34 : f : A!B artapatkerum kovum  hakadareli
+axic, ee goyuyun uni aynpisi f
+00
+:B!A artapatkerum, or
+f
+00
+f ="B :
+6
+Ayd depqum f
+00
+- kovum  f -i ax hakadar: 
+Ee f :A!B artapatkerum hakadareli  axic, apa nra f
+00
+ax hakadar, ndhanur depqum, miareqoren i orovum: rinak, ee
+A ={1; 2}, B ={3}  f =
+1 2
+3 3
+
+; apa f - klini hakadareli axic, nd
+orum nra f
+00
+ax hakadar orovum  tarber erku eanaknerov`
+f
+00
+=
+3
+1
+
+;f
+00
+=
+3
+2
+
+:
+eorem 17 (syurektivuyan haytani) : Orpeszi f :A!B artapatkerum
+lini syurektiv anhraet   bavarar, or ayn lini hakadareli axic:
+Apacucum : Anhraetuyun : st syurektivuyan sahmanman,
+yuraqan yur y2 B tarri hamar goyuyun uni aynpisi x2 A tarr, or
+f (x) = y : S erenq aydpisi x-eric miayn mek` nanakelov nran xy -ov  
+sahmanenq f
+00
+:B!A artapatkerum het yal kerp`
+f
+00
+(y) = xy;
+orte f (xy) = y : Stugenq f
+00
+f ="B havasaruyun`
+(f
+00
+f )y =f (f
+00
+(y)) = f (xy) = y ="B(y) :
+nd orum, f
+00
+-i kaucumic bxum , or ayn i orovum miareqoren, ee f -
+inyektiv :
+Bavararuyun : Ee f : A!B artapatkerman hamar goyuyun
+uni aynpisi f
+00
+:B!A artapatkerum, or f
+00
+f ="B , apa hamaayn
+Lemm 9-i, f - klini syurektiv, orovhet "B -n syurektiv : 
+16.3. Biektiv artapatkerumner :
+Sahmanum 35 : f : A!B artapatkerum kovum  biektiv kam
+oxmiareq, ee ayn miaamanak inyektiv   syurektiv: 
+Anmijapes lemm 6, 7, 8  9-ic bxum en het yal erku lemmanner:
+Lemm 10 : Erku f :A!B  g :B!C biektiv artapatkerumneri
+fg :A!C artadryal noric biektiv artapatkerum : 
+Lemm 11 : Ee f :A!B  g :B!C artapatkerumneri fg :A!
+C artadryal biektiv , apa f - klini inyektiv, isk g -n syurektiv: 
+Ee f : A!B artapatkerum biektiv , apa ayn hakadareli 
+axic  ajic, aysinqn goyuyun unen aynpisi f
+0
+:B!A  f
+00
+:B!A
+artapatkerumner, or (
+ff
+0
+="A;
+f
+00
+f ="B :
+Cuyc tanq, or f
+0
+=f
+00
+: Iroq`
+f
+00
+=f
+00
+"A =f
+00
+ (ff
+0
+) = (f
+00
+f )f
+0
+="Bf
+0
+=f
+0
+:
+7
+Sahmanum 36 : f : A!B artapatkerum kovum  hakadareli,
+ee goyuyun uni aynpisi f  :B!A artapatkerum, or tei unenan
+het yal havasaruyunner`
+(
+ff  ="A;
+f f ="B :
+Ayspisov, f biektiv artapatkerum hakadareli artapatkerum
+, nra hakadr orovum  miareqoren  hamnknum  f artapatkerman
+hakadar f 1 haraberuyan het (apacucel, orpes varuyun, or f  =
+f 1 ):
+it  na hakaak:
+eorem 18 (biektivuyan haytani) : Orpeszi f :A!B artapatkerum
+lini biektiv anhraet   bavarar, or ayn lini hakadareli:
+Apacucum : Mnum  apacucel miayn bavararuyun: f : A!B
+artapatkerman hakadareliuyan sahmanman aajin havasaruyunic
+bxum  (eorem 15), or f - inyektiv , isk erkrord havasaruyunic bxum
+ (eorem 16), or f - syurektiv : 
+Het uyun 3 : Ee f : A! B artapatkerum biektiv , apa
+f 1  BA hakadar haraberuyun klini artapatkerum B -ic A,
+or  s klini biektiv: Hakaak, ee f artapatkerman hakadar f 1
+haraberuyun artapatkerum , apa f - biektiv artapatkerum :
+
+rinak 40 : Dicuq f : R! R artapatkerum orovum  het yal
+bana ov`
+f (x) = 2x + 5 :
+Ayn klini biektiv artapatkerum  nra hakadar kvorovi bana ov`
+f 1(x) = x 5
+2 :
+rinak 41 : Enadremq f : Z8 ! Z8 artapatkerum orovum 
+het yal bana ov`
+f (x) = 2x(mod8) :
+Ays artapatkerum inyektiv , qani or f (0) = f (4) = 0 ,  syurektiv `
+Rf ={0; 2; 4; 6}:
+rinak 42 : Enadremq f : Z5 ! Z5 artapatkerum orovum 
+het yal bana ov`
+f (x) = 2x(mod5) :
+Ays artapatkerum biektiv  qani, or` f (0) = 0 , f (1) = 2 , f (2) = 4 ,
+f (3) = 1  f (4) = 3 : Nra hakadar artapatkerum orovum  bana ov`
+f 1(x) = 3x(mod5):
+rinak 43 : Dicuq g : N! N N artapatkerum orovum  bana ov`
+g(x) = (x;x ) :
+8
+g -n klini inyektiv qani or, ee x6= y , apa g(x) = ( x;x )6= (y;y ) = g(y),
+bayc g -n syurektiv , rinak (0; 1) uni naxapatker:
+rinak 44 : f (x;y ) = 2x+y bana ov orovo f : N N! N artapatkerum
+klini syurektiv: Iroq, ee z2 N zuyg  z = 2k , apa f (k; 0) = z , isk ee
+z - kent ` z = 2k + 1 , apa f (k; 1) = z : Sakayn f - inyektiv , rinak
+f (0; 2) = f (1; 0):
+rinak 45 : Dicuq` (0; 1) = {x2 Rj0 < x <1}  R+ drakan irakan
+veri bazmuyun : Sahmanenq f : (0; 1)! R+ artapatkerum het yal
+bana ov`
+f (x) = x
+1x;
+ cutc tanq, or f - biektiv : Enadrenq` f (x) = f (y), aysinqn`
+x
+1x = y
+1y;
+orteic stanum enq` xxy = yxy , het abar` x = y : Ayspisov f -
+inyektiv : Cuyc tanq, or f - syurektiv : Dicuq y2 R+ , gtnenq x2 (0; 1)
+aynpisin, or f (x) = y : Lucelov havasarum
+x
+1x =y;
+stanum enq`
+x = y
+y + 1;
+ qani or 0 < y
+y + 1 < 1, apa x2 (0; 1): Ayspisov f - syurektiv   
+het abar biektiv: 
+Aanc apacucman  akerpenq het yal eorem:
+eorem 19 : Dicuq n> 1 amboj iv   f : Zn! Zn artapatkerum
+sahmanvum  het yal  ov`
+f (x) = (ax +b)(modn) :
+Ayd depqum f artapatkerum klini biektiv artapatkerum ayn  miayn
+ayn depqum, erb (a;n ) = 1  hakadar artapatkerum orovum  het yal
+bana ov`
+f 1(x) = (kx +c)(modn);
+orte c-n amboj tiv , aynpisin, or f (c) = 0 , isk k amboj iv bavararum
+ het yal havasarman` 1 = ak +nm, or  m amboj vi hamar: 
+Biektiv artapatkerumner  nranc hakadar artapatkerumner
+kar or der en xaum gatnagruyan mej: Parzuyan hamar ditarkenq
+26 oqr tarreric kazmva latinakan aybuben  nanakenq ayd aybuben
+Z26 bazmuyan tarrerov, orte a-n nuynacvum  0-i het, b-n 1-i het  
+ayln: Ditarkenq f (x) = 3x+5(mod26) artapatkerum: Hamaayn naxord
+eoremi ayd funkcian biektiv , het abar ayd funkcian karo enq
+gtagorel akagir stanalu hamar  ayd akagri amanak latinakan
+9
+aybubeni bolor taer kodavorvum en tarber taerov, orinak a ta
+kodavorvum  h-ov, isk h-` c-ov: Het abar ”table” ba gatnagrvum
+ het yal baov` ”mehle”, qani or f (20) = 13( mod26), f (0) = 5( mod26),
+f (1) = 5(mod26), f (12) = 15(mod26)  f (5) = 20(mod26): Stacva akagir
+bacelu hamar ogtagorum enq f funkciai hakadar funkcian` f 1(x) =
+9x + 7(mod26):
+Kasenq, or f funkcian het havarkeli  , ee trva a argumenti
+hamar f (a)-n havarkvum  argumenti graman erkaruyunic kaxva
+polinomial amanakum, hakaak depqum funkcian kovum  dvar havarkeli :
+Het havarkeli funkcianeri areqner kareli  arag havel hamakargii
+gnuyamb: Me erkaruyun uneco argumentneri hamar dvar havarkeli
+funkcianeri areqner hnaravor  stanal nduneli amanakahatvaum
+nuynisk hzor hamakargineri gnuyamb:
+Sahmanum 37 : f :A!B funkcian kovum  miakomani funkcia ,
+ee `
+1) f - het havarkeli  bolor a2A hamar;
+2) f 1 : B !A hakadar funkcian dvar havarkeli  hamarya
+bolor b2B hamar: 
+Nenq, or min aym apacucva , or goyuyun uni gone mek miakomani
+funkcia, aka en miayn eknauner: Ditarkenq drancic mek:
+a2 Zp tarr kovum  Zp dati naxnakan armat , ee cankaca
+x 2 Z
+p hamar goyuyun uni n 2 N bnakan iv, aydpisi, or x = an :
+gtagorelov eorem 12, dvar  apacucel, or 0  n < p 1, isk
+da nanakum , or f (x) = ax bana ov orovo artapatkerum klini
+biektiv artapatkerum bnakan veri {0; 1; 2;:::;p2} enabazmuyunic
+depi Zp dati o zroyakan tarreri bazmuyan mej`
+f :{0; 1; 2;:::;p  2}! Z
+p :
+Da hnaravoruyun  talis sahmanel f 1 hakadar artapatkerum,
+or havarkum  ayn n astian ori mej petq  barracnel a naxnakan
+armat, or stanal x-: f funkcian kovum  diskret cucayin funkcia ,
+isk f 1 - diskret logarim :
+Orpes rinak ditarkenq Z11 dat  ditarkenq 2-i astianner (a.
+1.):
+A yusak 1.
+n 0 1 2 3 4 5 6 7 8 9
+2n 1 2 4 8 5 10 9 7 3 6
+A yusaki erkrord toum kangna en Z11 dati bolor o zroyakan
+tarrer, in nanakum , or 2- Z11 -i naxnakan armat : Ayd a yusak
+hnaravoruyun  talis kazmel diskret logarimi areqneri a yusak
+(a.2):
+A yusak 2.
+10
+x 1 2 3 4 5 6 7 8 9 10
+log2x 0 1 8 2 4 9 7 3 6 5
+Diskret logarimi  diskret cucayin funkcianeri mij ka akan
+tarberuyun: an havelu hamar bavakan  katarel 2log2n-ic o avel
+bazmapatkumner: Ayd havark aveli het  bacatrel rinaki vra:
+Enadrenq petq  havel a53 : 52 bazmapatkum katarelu oxaren kvarvenq
+het yal kerp: Nerkayacnenq 53- erkuakan hamakargum` 53 = 2 5 + 24 +
+22 + 1  astian khavenq st het yal bana i`
+a53 =
+
+(a2)2222
+
+
+(a2)222
+ (a2)2a :
+Aajin akagi havark pahanjum  5 bazmapatkum: Ayd nacqum
+havarkvum en na erkrord  errord akager, oronc areqner hivum
+en: ors artadrineri bazmapatkum pahanjum   s ereq bazmapatkum:
+Ardyunqum pahanjvum  ndhamen 8 bazmapatkum:
+Diskret logarimi hamar aydpisi ardyunavet algorim haytni :
+Ayspisov ditarkva funkcian karo  linel miakomani funkcia (dra
+grit apacuyc unenq):
+16.4. Bazmuyan patker u naxapatker : Dicuq f : X ! Y
+kamayakan artapatkerum  isk A  X kamayakan enabazmuyn :
+B bazmuyan het yal enabazmuyun`
+f (A) ={y2Bj9x2A;f (x) = y} ={f (x)jx2A};
+kovum  A bazmuyan patker f artapatkerman nkatmamb:
+Aym enadrenq, or B -n Y -i or  enabazmuyun ` BY : B bazmuyan
+naxapatker f artapatkerman nkatmamb kovum  het yal bazmuyun`
+f 1(B) ={x2Ajf (x)2B} :
+Ee B bazmuyun mek tarranoc ` B ={b}, apa f 1({b}) oxaren grum
+en` f 1(b):
+rinak 46 : Dicuq A ={a;b;c}  B ={1; 2; 3}: Ditarkenq f :A!B
+artapatkerum, or sahmanvum  het yal kerp` f (a) = 1 , f (b) = 1  
+f (c) = 2 : Ayd depqum`
+f ({a}) ={1};
+f ({a;b}) ={1};
+f (A) ={1; 2} =Rf (A);
+f 1({1; 3}) ={a;b};
+f 1(3) =;;
+f 1(B) = A :
+eorem 20 : Ee f : X ! Y artapatkerum , apa kamayakan
+A;BX enabazmuyunneri hamar tei unen het yal hatkuyunner
+11
+1) ee AB , apa f (A)f (B);
+2) f (A[B) = f (A)[f (B);
+3) f (A)nf (B)f (AnB);
+4) f (A\B)f (A)\f (B) : 
+Cuyc tank, or naxord eoremum (3)  (4) keterum havasaruyun i
+karo linel:
+rinak 47 : Dicuq X ={1; 2; 3;}  Y ={a;b}: Ee f artapatkerum
+orovum  het yal a yusakov`
+f =
+1 2 3
+a b a
+
+;
+ A ={1; 2}, B ={2; 3}, apa A\B ={2}, het abar f (A\B) ={b}): M yus
+komic, f (A) = {a;b} = Y , f (B) = {a;b} = Y , aysinqn f (A)\f (B) = Y :
+Het abar f (A)\f (B) *f (A\B):
+Na , unenq AnB ={1}, f (AnB) ={a}, f (A)nf (B) =;  het abar
+f (AnB) *f (A)nf (B): 
+eorem 21 : Ee f : X ! Y artapatkerum , apa kamayakan
+A;BY enabazmuyunneri hamar tei unen het yal hatkuyunner
+1) f 1(A) =; ! A\Rf =;;
+2) ee AB , apa f 1(A)f 1(B);
+3) f 1(A[B) = f 1(A)[f 1(B);
+4) f 1(A\B) = f 1(A)\f 1(B);
+5) f 1(A)nf 1(B) = f 1(AnB): 
+12

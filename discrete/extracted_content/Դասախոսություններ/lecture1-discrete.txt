@@ -1,0 +1,471 @@
+Dasaxosuyun 1
+2
+Bazmuyunneri tesuyun
+1. Bazmuyan gaaar
+Bazmuyan gaaar patkanum  maematikayi aqsiomatik
+gaaarnerin (aysinqn uni grit maematikakan sahmanum), inpes
+erkraauyunun` ket, ui, haruyun:
+Bazmuyunneri tesuyun, orpes maematikakan aarka, steel
+ G.Kantor (1845-1918): st Kantori, bazmuyun da iraric tarber
+oroaki byektneri hamaxmbuyun , or ditarkvum  orpes mek
+ambouyun: Ayd byektner kovum en bazmuyan tarrer:
+Kantori sahmanum da maematikakan sahmanum e, da bazmuyan
+intuitiv sahmanum :
+Kantori sahmanman mej kareor keteric mek da ayn , or byektneri
+hamaxmbuyun ditarkvum  orpes mek byekt, isk byektner karo
+en linel kamayakan bnuyi` ver, veric kazmvac bazmuyuner, keter,
+mardik  ayln: Nenq, or Kantori sahmanum uyl  talis ditarkel
+aydpisi bazmuyuner, oronc tarrer in or patarnerov hnaravor
+ grit oroel:
+Nerkayacvac sahmanman mej "iraric tarber" nanakum , or bazmuyun
+i karo parunaki erku havasar tarrer: Sahmanman mej "oroaki"
+ba haskacvum  ayn imastov, or ee trvac  or e bazmuyun  
+or e aarka (byekt), apa kareli  oroel patkanum  ayd byekt
+ayd bazmuyan e o: Het abar bazmuyun miareqoren orovum 
+ir tarrerov:
+Ee trva  A bazmuyun  x aarkan, apa ee x- patkanum
+ A bazmuyan, apa da gravum  orpes x2 A, ee o` x =2 A:
+Miareqoren orovac X bazmuyun, ori tarrern en x1; x2; :::; xn ,
+nanakvum  ` X ={x1; x2; :::; xn}:
+Bazmuyan tarreri karg nanakuyun uni: rinak` {a; b; c}  
+{b; a; c}-n nuyn bazmuyuner en:
+Bazmuyan Kantori haskacuyan himan vra, karo enq sahmanel
+bazmuyun nra hatkuyunneri mijocov, oronq  akerpvum en orpes
+intuitiv skzbunqner: Himnakan (sahmanvo) gaaar da patkaneliuyan
+haraberuun  bazmuyan  aarkanneri mij :
+1.1. Meamasnuyan intuitiv skzbunq: Erku bazmuyunner
+havasar en ayn  miayn ayn depqum, erb nranq kazmva en nuyn
+tarreric:
+3
+Bazmuyunneri havasaruyun nanakvum ` A = B , anhavasaruyun`
+A6= B :
+Erku A  B bazmuyunneri havasaruyan apacucum kazmva
+ erku maseric` anhraet  apacucel, or ee x2 A, apa x2 B ,  
+hakaak` ee x2 B , apa x2 A:
+rinak 1. Apacucenq, or bolor drakan zuyg veri A bazmuyun
+havasar  ayn drakan veri B bazmuyan, oronq nerkayacvum en
+orpes erku drakan kent veri gumar:
+Enadrenq, or x2 A: Da nanakum , or x = 2 m, ayspisov x =
+(2m 1) + 1, in nanakum , or x2 B :
+Hakaak, enadrenq x2 B , het abar x = (2 m 1) + (2n 1),
+orteic x = 2(m + n 1), inic het um , or x2 A: 
+Oroel bazmuyun varkelov nra bolor tarrer at avalun  
+o mit hnaravor  nuynisk ayn depqum, erb bazmuyun verjavor :
+Erkrord sksbunq sahmanelu hamar tanq skzbum het yal sahmanum:
+Sahmanum 1. Asuyi tak khaskananq patmoakan naxadasuyun,
+or karo  linel kam marit kam ke: rinak` "yun spitak " kam
+"14- baanvum  5-i": x-ic kaxva mek teani P (x) predikati tak
+khaskananq verjavor hajordakanuyun, or kazmva  baeric  x
+simvolic, aydpisin or, ee x simvoli yuraqan yur muq ayd hajordakanuyan
+mej oxarinenq nuyn sei or e aarkayi mi nuyn anunov, ardyunqum
+kstananq asuy: rinak` "14- baanvum  x-i vra", x2 + x + 2 > 0,
+" x- sirum  Petrosin"  ayln:
+1.2. Abstrakciayi intuitiv skzbunq: Yuraqan yur mek teani
+P (x) predikat oroum  A bazmuyun, ori tarrer ayn  miayn ayn
+a aarkannern en, oronc hamar P (a) asuy marit :
+Hamaayn "meamasnuyan skzbunqi", yuraqan yur P (x) predikat
+miareqoren  oroum ayd A bazmuyun, orn nanakvum  `
+A ={xjP (x)}
+rinak 2.
+A ={xjx2N; x < 9} ={1; 2; 3; 4; 5; 6; 7; 8};
+B ={xjx2C; 0 x 1} = [0; 1] :
+Meamasnuyan skzbunq, abstrakciayi skzbunq  ntruyan
+skzbunq (or menq enq sahmanum), ayn himqn , ori vra kaucvum 
+4
+kantoryan bazmuyunneri tesuyun:
+2. Nerdrman haraberuyun
+Sahmanum 2. Dicuq A  B -n erku bazmuyunner en: Asum en,
+or A bazmuyun nerdrvum  B bazmuyan mej kam nka  B -i mej
+kam B -i enabazmuyun  (gravum  A  B), ee A bazmuyan
+cankaca tar patkanum  B bazmuyan`
+8x(x2 A! x2 B) :
+A bazmuyun xist nka  B -i mej, ee A B  A6= B : Da
+gravum  ` A B :
+Nerdrman haraberuyan himnakan hatkuyunern en`
+ X X ; (ainqnuyun kam efleqsivuyun)
+ ee X  Y  Y  Z , apa X  Z ; (oxancakanuyun kam
+tranzitivuyun)
+ ee X  Y  Y  X , apa X = Y ; (hakahamaauyun kam
+hakasimetrikuyun):
+Hamaayn verjin hatkuyan, ee uzum enq apacucel erku bazmuyunneri
+havasaruyun X = Y , petq  apacucel, or X Y  Y X (rinak
+1):
+Meamasnuyan intuitiv skzbunqic, het um , or goyuyun uni
+miayn mek bazmuyun, orn uni tarrer: Ayd bazmuyun kovum 
+datark bazmuyun  nanakvum ` ;: Datark bazmuyun bolor
+bazmuyunneri enabazmuyunn :
+Yuraqan yur A6=; bazmuyun uni anvazn erku enabazmuyun`
+;  inq A; aysinqn ; A  A A: A bazmuyan bolor enbazmuyunneri
+bazmuyun knanakenq` 2A .
+rinak 3. Ee A ={1; 2; 3}, apa 2A ={;;{1};{2};{3};{1; 2};{1; 3};{2; 3};{1; 2; 3}}:
+3. Gorouyunner bazmuyunneri het
+Naxord ketum menq nkaragrecinq mi eanak ori mijocov trva A
+bazmuyunic kaucvec nor bazmuyun 2A : Sahmanenq gorouyunner
+bazmutyunneri vra, oronc mijocov trvac bazmuyunneric stacvum
+en nor bazmuyunner:
+Sahmanum 3. Erku A  B bazmuyunneri miavorum kovum  ayn
+C bazmuyun, or kazmva  bolor ayn tarreric, oronq patkanum
+en kam A bazmuyan, kam B bazmuyan (i bacavum na tarri
+5
+patkanel erku bazmuyunnerin), aysinqn` A  B bazmuyunneric
+gone mekin: A  B bazmuyunneri miavorum nanakvum  A[ B  ov`
+A[ B ={xjx2 A kam x2 B} :
+rinak 4. {1; 2; 3}[{ 1; 3; 4} ={1; 2; 3; 4}:
+Sahmanum 4. Erku A  B bazmuyunneri hatum kovum  ayn C
+bazmuyun, or kazmva  bolor ayn tarreric, oronq miaamanak
+patkanum en  ` A bazmuyan,  ` B bazmuyan u nanakvum 
+C = A\ B  ov`
+A\ B ={xjx2 A  x2 B} :
+rinak 5. {1; 2; 3}\{ 1; 3; 4} ={1; 3}:
+Cakkaca A  B bazmuyunneri hamar tei unen het yal anuyunner`
+; A\ B A A[ B :
+Sahmanum 5. Erku A  B bazmuyunner kovum en hatvo (kam
+diz yunkt), ee A\ B =;,  hatvo, ee A\ B6=;:
+Sahmanum 6. X bazmuyan trohum kovum  ayd bazmuyan o
+datark  zuyg a zuyg hatvo enabazmuyunneri U hamakarg,
+aydpisin, or X bazmuyan yuraqan yur tarr U hamakargi or e
+bazmuyan tarr  (h abar miayn meki):
+rinak 5. U ={{1; 2};{3};{4; 5}} hamakarg {1; 2; 3; 4; 5} bazmuyan
+trohumn :
+Sahmanum 7. A bazmuyan bacarak A lracum kovum  bolor ayn
+tarreri bazmuyun, oronq en patkanum A bazmuyan` A ={xjx =2
+A}:
+Sahmanum 8. B bazmuyan haraberakan lracum A bazmuyan
+nkatmamb kovum  A\ B bazmuyun, ayn nanakvum  AB (kam
+A B )  kardacvum ` " A-ic hanac B ": Ayspisov`
+AB = A\ B ={x2 Ajx =2 B} :
+Sahmanum 9. A  B bazmuyunneri simetrik A B (gtagorum
+en na het yal nanakumner` A4B , A+B , AB , A	B ) tarberuyun
+kovum  ayn tarreri bazmuyun, oronq patkanum en A  B bazmuyunneric
+miayn mekin`
+A B = (An B)[ (Bn A) = (A[ B)n (A\ B) :
+6
+Ee bolor ditarkvo bazmuyunner or  U bazmuyan enabazmuyunner
+en, apa ayd U bazmuyun kovum  universal bazmuyun kam tv yal
+usumnasiruyan universum: rinak` tarrakan vabanuyan universum,
+da amboj veri Z bazmuyun :
+Bazmuyunneri masin katarva ditarkumner aveli ditoxakan
+darnelu hamar dranq patkerum en haruyan vra rjanaknerov
+kam bazmank yunnerov: Bazmuyan tarrern ayd depqum patkervum
+en rjanaki (bazmank yan) nersi keterov, isk bazmuyan patkano
+tarrer` rjanakic (bazmank yunic) durs gtnvo keterov:
+A
+a
+b
+a2 A; b =2 A
+Aydpisi patkerner kovum en Veni (angliaci maematikos (1834-1923))
+diagramaner: Veni diagramanerov gorouyunner bazmuyunneri
+het patkervum en het yal  ov`
+A B
+A\ B
+A B
+A[ B
+A B
+An B
+A B
+AB
+4. M aematikakan idukciayi (verhangman) skzbunq
+M aematikakan bazmaiv xndirner neraum en miayn amboj
+ver: rinak, hamakarginer irakanacnum en gorouyunner
+amboaiv vabanuyan terminnerov: Bnakan ver mez hnaravoruyun
+en talis luel xndirner axatelov qayl a qayl: Ays ketum, menq
+kditarkenq mamatikakan indukciayi eanak, orn irenic nerkayacnum
+ apacucman fundamental eanakneric mek:
+7
+Bnakan veri gtagorum havelu hamar,  avorum  patkeracum
+nranc masin orpes anverj "vayin arq" meki glxavoruyamb`
+1; 2; 3; 4; 5; 6; 7; 8; :::
+orenq  avorel ayd "vayin arqi" amenakar or hatkuyunner
+ da kndunenq orpes sahmanum (bnakan veri grit sahmanum
+trvum  Peanoyi aqsiomneri himan vra):
+Bnakan veri oxadar dasavoruyun kareli  bnuagrel baerov`
+"anmijakanoren het um ": Ayspes, 1-in anmijakanoren het um 
+2-, 2-in anmijakanoren het um  3-  ayln: Bnakan veri arqum
+miayn 1- i het um o mi bnakan vic: Baci ayd, yuraqan yur k
+bnakan vin anmijakanoren het um  miayn mek bnakan iv` (k +1) -
+ yuraqan yur bnakan iv, baci 1-ic, anmijakanoren het um  miayn
+mek bnakan vic:
+Nerkayacva nkaragruyan mej pakasum  miayn mek  amenakar or
+payman: Ayd payman menq k akerpenq orpes aqsiom:
+Aqsiom (bnakan veri liovin kargavoruyan skzbunq): Bnakan
+veri yuraqan yur o datark enabazmuyun uni oqraguyn tarr:
+eorem 1 . Dicuq N bnakan veri T enabazmuyun bavararum
+ het yal paymannerin`
+1) 12 T ;
+2) ee k2 T , apa (k + 1)2 T :
+Ayd depqum T =N:
+Apacucum : Ee T 6=N, apa T =N T 6=;, het abar ayn uni
+oqraguyn tarr m: Hamaayn (1) paymani' ` m6= 1, het abar m12
+N: Qani, or m- T bazmuyan oqraguyn tarrn , isk m 1 oqr 
+m-ic, kstananq` m 1 2 T : Aym, hamaayn (2) paymani` m 2 T ,
+hakasuyun: 
+Het uyun 1 : (M aematikakan indukciayi skzbunq) n-ic kaxva
+P (n) pndum it  n-i bolor bnakan areqneri hamar, ee tei unen
+het yal paymanner`
+1) P (n) pndum it  n = 1 depqum, aysinqn P (1)- it  (ays
+payman kovum  indukciayi henq kam bazis);
+2) Cankaca n2N bnakan vi hamar, P (n) pndman it lineluc
+bxum  P (n+1) pndman it linel (ays payman kovum  indukciayi
+qayl):
+Apacucum : Dicuq` T ={n2 NjP (n)}: Hamaayn eorem 1, (1)  
+8
+(2) paymanneric het um , or T = N, het abar cankaca n2 N-i
+hamar P (n) pndum it : 
+Aknhayt , or indukciayi skzbunqum (2) payman kareli  oxarinel
+het yal (2
+0
+) paymanov.
+(2
+0
+) Cankaca n2N bnakan vi hamar, P (1); P(2); :::; P(n) pndumneri
+it lineluc bxum  P (n + 1) pndman it linel, aysinqn, ee P (k)-n
+it  bolor k n bnakan veri hamar, apa P (n + 1)-  s it :
+rinak 6 : Apacucenq, or k -tarrani A bazmuyan bolor enabazmuyunneri
+2A bazmuyan tarreri qanak havasar  2k -i:
+Iroq, k = 1 depqum pndum it : Enadrelov pndum it 
+k = n depqum, apacucenq, or ayn it  k = n + 1 depqum: Ee A =
+{x1; x2; :::; xn; xn+1}, apa, hamaayn indukciayi enadruyan, xn+1 -
+parunako A-i bolor enabazmuyunneri iv havasar  2n -i: Ayd
+enabazmuynneri kazmum avelacnelov xn+1 -, kstananq A-i bolor
+ayn enabazmuyunner, oronq parunakum en xn+1 -, oronc qanak
+nuynpes klini havasar 2n -i: Het abar, A-i bolor enabazmuyunneri
+iv klini havasar`
+2n + 2n = 2 2n = 2n+1 : 
+rinak 7 (Xndir haruyan nerkman masin) : Haruyun baanva
+ n ui gerov tiruyneri: Apacucel, or ayd tiruyner kareli 
+nerkel erku guynerov aydpes, or har an tiruyner nerkva linen
+tarber guynerov: Har an hamarvum en ayn tiruyner, oronq unen
+sahmani ndhanur hatva (ket i hamarvum sahman):
+1
+2
+1
+12 2
+2 21
+1
+1 2 1
+nk.1.
+Luum : Nanakenq Pn -ov pndum, or n uinerov baanva haruyun
+kareli  nerkel erku guynerov: Ee n = 1 apa pndum aknhayt 
+(nk.1): Enadrenq, or Pn - marit , apacucenq Pn+1 -i martuyun:
+Ditarkenq (n + 1) uinerov baanva haruyun  heacnenq
+aynteic or  ui gi: Kstananq n ui gerov baanva haruyun:
+Hamaayn indukciayi enadruyan ayd tiruyner karo enq nerkel
+9
+erku guynerov: Aym veradarcnenq heacva ui gi  oxenq
+nerkum heacva ui gi nkatmamb mi kisaharuyunum` aajin
+nerk erkrordov isk erkrord aajinov: 
+rinak 8 : Apacucenq, or 2n n2 , ee n 4:
+Ee n = 4, apa pndum aknhayt : Enadrenq, or pndum marit
+ n-i hamar, apacucenq (n + 1)-i hamar:
+2n+1 = 2n 2 n2 2 n2 (1; 25)2 n2(1 + 1
+n)2 = n2(n + 1)2
+n2 = (n + 1)2;
+orovhet (n + 1)2
+n2 = (1 + 1
+n)2 < 2; erb n 4: 
+Haax indukciayi skzbunq kiravum  na haskacuyunneri
+kam byektnreri sahmanumneri amanak` het yal kerp:
+Dicuq pahanjvum  sahmanel byektneri a1; a2; :::; an; ::: hajordakanuyun:
+Sahmanum indukciayi eanakov : an byekt klini sahmanva
+bolor n2N bnakan veri hamar, ee tei unen het yal paymanner
+1) Sahmanva  a1 -;
+2) Cankaca k2N bnakan vi hamar ak+1 - sahmanva  a1; :::; ak
+byektneri mijocov:
+rinak 9 : Cankaca n2N bnakan vi hamar xn - klini sahmanva,
+ee enadrenq`
+x1 = x;
+xk+1 = xk x; k2N :
+5.Bazmuyunneri hanrahaiv
+Bazmuyunneri intuitiv (bovandakalic) tesuyan mej, gtagorelov
+patkaneliuyan haraberuyun kareli  apacucel het yal eorem:
+eorem 2. U bazmuyan kamayakan A; B; C enabazmuyunneri
+hamar tei unen het yal nuynuyunner`
+1) A[(B[C) = (A[B)[C; A\(B\C) = (A\B)\C; (zugordakanuyun)
+2) A[ B = B[ A; A\ B = B\ A; (teaoxeliuyun)
+3) A\ (B[ C) = (A\ B)[ (A\ C); A[ (B\ C) = (A[ B)\ (A[ C);
+(baxakanuyun)
+4) A[; = A; A\ U = A;
+5) A[ A = U; A\ A =; : 
+Nerkayacvac tas nuynuyunneric er um , or yuraqan yur aj
+nuynuyun stacvum  axic oxarinelov [ { \-ov  hakaak u
+oxarinelov ; { U -ov  hakaak:
+10
+Sahmanum 10. Nuynuyun or stacvum  skzbnakan nuynuyunic
+oxarinelov U , ;, [, \, hamapatasxanabar ;, U , \, [ -ov, kovum 
+erkaki skzbnakan nuynuyan:
+Verjin eoremum yuraqan yur nuynuyun uni ir erkaki nuynuyun:
+Ayspisov menq galis enq erkakiuyan skzbunqin` bazmuyunneri tesuyan
+yuraqan yur eoremin hamapatasxanum  nran erkaki eorem:
+eorem 3 : U universal bazmuyan cankacac A; B enabazmuyunneri
+hamar tei unen het yal nuynuyunner`
+6) ee cankaca A bazmuyan hamar A[ B = A, apa B =;,
+ee cankaca A bazmuyan hamar A\ B = A, apa B = U ;
+7) ee A[ B = U  A\ B =;, apa B = A;
+8) A = A;
+9) ; = U , U =;;
+10) A[ A = A, A\ A = A (idempotent renqner);
+11) A[ U = U , A\; =;;
+12) A[ (A\ B) = A, A\ (A[ B) = A (klanman renqner);
+13) A[ B = A\ B , A\ B = A[ B (de M organi renqner): 
+Sahmanum 11. X bazmuyan enabazmuyunneri S o datark
+bazmuyun kovum  bazmuyunneri hanrahaiv orova X -i vra,
+ee tei unen het yal erku paymanner`
+1) A; B2 S! A\ B2 S;
+2) A2 S! A = Xn A2 S :
+Qani, or S - datark , apa goyuyun uni A2 S : Het abar,
+A2 S  
+3) ; = A\ A2 S , X =;2 S ;
+4) A[ B = A\ B2 S , ee A; B2 S ;
+5) An B = A\ B2 S , ee A; B2 S :
+Aknhayt , or A bazmuyan bolor enabazmuyunneri 2A bazmuyun
+kazmum  bazmuyunneri hanrahaiv:
+Ee eorem 2-i nuynuyunner ndunenq orpes aqsiomner, apa
+bazmuyunneri hanrahavi bolor eoremner karo enq durs berel
+drancic, ayd vum na eorem 3-i nuynuyunner:
+ndhanracva zugordakanuyun : Bazmuyunneri miavorman
+zugordakan orenqi norhiv A[ (B[ C) = ( A[ B)[ C bazmuyun
+kareli  grel aanc akageri` A[ B[ C : Nuyn patarov ors
+bazmuyunneri A; B; C; D hajordakanuyunic akageri tarber dasavoruyamb
+11
+kazmva bolor hing bazmuyunner klinen mimyanc havasar`
+((A[ B)[ C)[ D = (A[ (B[ C))[ D = A[ ((B[ C)[ D) =
+(A[ (B[ (C[ D))) = (A[ B)[ (C[ D) :
+eorem 4 : Kamayakan A1; A2; :::; An bazmuyunneri hajordakanuyunic
+akageri tarber dasavoruyamb stacvo bolor ayd bazmuyunneri
+miavorumner mimyanc havasar en, ayd patarov ayd miavorum
+kareli  grel aanc akageri` A![ A2[[ An :
+Apacucum : Nax n 2 depqum nermuenq A1; A2; :::; An bazmuyunneri
+hajordakanuyan kanonakan miavorum`
+( ((A1[ A2)[ A3)[[ An1)[ An :
+Aym indukciayi eanakov apacucenq, or n 3 depqum trva A1; A2; :::; An
+bazmuyunneric akageri tarber dasavoruyamb stacvo yuraqan yur
+miavorum havasar  dranc kanonakan miavorumin:
+n = 3 depqum pndum het um  zugordakan renqic: Enadrenq
+pndum it  n-ic qi vov bazmuyunneri depqum: Ditarkenq
+A1; A2; :::; An bazmuyunneric akageri kamayakan dasavoruyamb
+kazmva miavorum`
+(A1[[ Ak)[ (Ak+1[[ An) :
+Nva aajin A1[[ Ak  erkrord Ak+1[[ An miavorumner grva
+en aanc akageri, orovhet drancic yuraqan yurum bazmuyunneri
+iv oqr  n-ic  hamaayn indukciayi enadruyan, drancic
+yuraqan yur, anvazn erku bazmuyun parunakelu depqum, klini
+havasar hamapatasxan kanonakan miavorumin,  het abar kaxva
+ akageri dasavoruyunic:
+Qnarkenq het yal erku enadepqer`
+a) k = n 1, aysinqn erkrord miavorum mek tarrani : Hamaayn
+indukciayi enadruyan n 1 vov bazmuyunneri A1[[ An1
+miavorum havasar  kanonakanin, isk kanonakan miavorum, ajic
+miavorelov An bazmuyan het noric kstananq kanonakan miavorum:
+b) 1 k < n  1  het abar erkrord Ak+1[[ An miavorum
+kparunaki anvazn erku bazmuyun:
+12
+st indukciayi enadruyan, nax Ak+1[[ An miavorum
+klini havasar hamapatasxan kanonakanin  aynuhet gtvelov
+[ gorouyan zugordakanuyunic kunenanq`
+(A1[[ Ak)[ (Ak+1[ An) = (A1[ Ak)[ ((Ak+1[ An1)[ An) =
+((A1[[ Ak)[ (Ak+1[[ An1))[ An;
+Mnum  n 1 bazmuyunneri`
+(A1[[ Ak)[ (Ak+1[[ An1)
+miavorum grel hamapatasxan kanonakan tesqov: 
+Ditouyun : Apacucva eoremum menq o mi te enq gtagorel
+bazmuyunneri miavorman hatkuyunner, baci zugordakanuyunic,
+het abar eorem klini marit  uri zugordakan gorouyunneri
+hamar, masnavorapes bazmuyunneri hatman  simetric tarberuyan
+hamar:
+Nuynuyunner oronc bavararum en gorouyunner bazmuyunneri
+vra kareli  apacucel na Veni diagramaneri mijocov: rinak,
+ditarkenq A; B; C ereq bazmuyunneri ndhanur dasavoruyun haruyan
+vra`
+A B
+C
+Yuraqan yur tarr karo  patkanel kam o ayd ereq bazmuyunneric
+yuraqan yurin: Ee tarr patkanum  bazmuyan, apa da knanakenq
+1-ov, ee o` 0-ov: Ereq bazmuyunneri hamar unenq 8 tarber hnaravoruyunner,
+rinak 101 hajordakanuyun nanakum , or tarr patkanum 
+A  C bazmuyunnerin  i patkanum B -in: Ayspisov haruyun
+baanvum  8 tiruyneri  yuraqan yur tiruyin hamapatasxanum
+ 0  1 -ic kazmva eryak`
+13
+100 010
+001
+110
+111
+101 011
+Kazmenq bolor hnaravor tarberakneri hamar het yal a ysak`
+x2 A x2 B x2 C x2 A\ B x2 (A\ B)n C x2 An C x2 (An C)\ B
+0 0 0 0 0 0 0
+0 0 1 0 0 0 0
+0 1 0 0 0 0 0
+0 1 1 0 0 0 0
+1 0 0 0 0 1 0
+1 0 1 0 0 0 0
+1 1 0 1 1 1 1
+1 1 1 1 0 0 0
+Menq tesnumenq or 5  7 syuner hamnknum en, het abar st
+bazmuyunneri havasarman sahmanman ayd syunerin hamapatasxano
+bazmuyunner havasar en` (A\ B) C = (A C)\ B ):
+6.aseli paradoqs
+1902. angliaci maematikos  ilisoa Bertran asel (1872-1970)
+haytnaberel  paradoqs, or himnva  miayn bazmuyan sahmanman
+vra: Bazmuyunner kam irenq irenc tarrern en kam o: rinak,
+abstrakt gaaarneri bazmuyun inq abstrakt gaaar ,
+isk asteri bazmuyun ast :
+Ditarkenq "bolor ayn bazmuyunneri bazmuyun, oronq irenq
+irenc andam en"`
+R ={AjA =2 A};
+in tanum  hakasuyan, qani or ayn miaamanak petq  lini ir
+andam  lini ir andam`
+R =2 R ! R2 R :
+Nman iraviakic durs galu hamar stecvel er bazmuyunneri
+aqsiomatik tesuyun:
+14
+7. Bazmuyunneri dekartyan artadryal
+Kamayakan erku byektneri in or kap nanakelu hamar maematikayum
+gtagorum en "haraberuyun" gaaar: rinak, tarri hatkuyun
+patkanel bazmuyan irenic nerkayacnum  haraberuyun " x2 A",
+nd orum ee tarr patkanum  bazmuyan, apa asum en, or
+haraberuyun tei uni, isk ee tarr i patkanum bazmuyan,
+apa asum en, or haraberuyun tei uni: Linel bazmuyan enabazmuyun
+A  B ,  s haraberuyun : M ardkanc bazmuyan vra karo enq
+sahmanel het yal haraberuyun` " x- y -i mayrn ": Ee vercnenq
+konkret mardkanc  teadrenq nranc anunner x-i  y -i oxaren,
+apa kstananq marit kam ke asuy: Ayd imastov, haraberuyun
+irenic nerkayacnum  predikat, or darnum  marit kam ke
+asuy, erb teadrum enq nra mej konkret tarrer ooxakanneri
+oroman tiruyic: M yus komic, ee verjin rinakum mer haraberuyun
+marit  in or x; y konkret zuygi hamar, apa oxelov ayd zuygi
+karg` vercnelov y; x zuyg, menq kstananq ke asuy: Ayspisov
+menq galis enq kargavorvac zuygi gaaarin: a  b byektneri
+(tarreri) kargavorva zuyg knanakenq` (a; b)-ov: a-n kovum  (a; b)
+kargavorva zuygi aajin kordinat, isk b-n` erkrord nra kordinat:
+Erku (a; b)  (u; v) kargavorva zuyger irar havasar en` (a; b) =
+(u; v) ee a = u  b = v :
+Iharke, kargavorva zuygi trva sahmanum i kareli hamarel
+grit maematikakan sahmanum: Ayd gaaar kareli  sahmanel
+na bazmuyan gaaari himan vra, ndunelov`
+(a; b) ={{a};{a; b}}
+Kargavorva zuygeri havasaruyan (a; b) = (u; v) paymann, ays depqum
+petq  apacucvi (varuyun 1.4):
+Sahmanum 12. A  B bazmuyunneri dekartyan artadryal kovum
+ (a; b) tesqi bolor kargavorva zuygeri bazmuyun, orte a2 A,
+b2 B `
+A B ={(a; b)ja2 A; b2 B} :
+rinak 10. 1) Dicuq trva en A ={1; 2}  B ={2; 3; 4} bazmuyunner:
+Ayd depqum` A B ={(1; 2); (1; 3); (1; 4); (2; 2); (2; 3); (2; 4)}:
+2) ; B = A; =;; 
+Aknhayt , or ee A6= B , apa A B6= B A:
+15
+Erku bazmuyunneri dekartyan artadryal induktiv eanakov
+kareli  ndhanracnel kamayakan verjavor vov bazmuyunneri dekartyan
+artadryali: Nax sahmanenq kargavorva n-yaki gaaar:
+Cankaca n2N bnakan vi hamar x12 A1; :::; xn2 An tarreri
+kargavorva n-yak nanakvum  (x1; :::; xn)-ov  ayn sahmanvum 
+induktiv eanakov het yal kerp`
+(x1) = x1;
+(x1; :::; xk+1) = ((x1; :::xk); xk+1); k2N :
+Isk
+A1 ::: An ={(x1; :::; xn)jx12 A1; :::; xn2 An}; n 2;
+bazmuyun kovum  A1; :::; An bazmuyunneri dekartyan artadryal:
+Ee A1 = ::: = An = A, apa A1 ::: An dekartyan artadryal
+nanakvum  An -ov, isk (x1; :::; xn) kargavorva n-yak ayd depqum
+kovum  orova A bazmuyan vra:

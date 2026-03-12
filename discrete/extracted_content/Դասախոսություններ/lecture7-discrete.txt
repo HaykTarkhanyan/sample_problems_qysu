@@ -1,0 +1,500 @@
+Dasaxosuyun 7
+4. Bazmuyan kargavorva trohumner  artapatkerumner:
+Sksenq parz rinakic:
+rinak 23: Ditarkenq bolor artapatkerumner X = {x1;x 2;x 3}
+bazmuyunic Y ={y1;y 2} bazmuyan mej: Menq gitenq, or dranc qanak
+havasar  23 = 8 : Nerkayacnenq dranq, orpes X bazmuyan enabazmuyunneri
+kargavorva zuyger`
+1) f1(x1) = f1(x2) = f1(x3) = y1 , {{x1;x 2;x 3};;};
+2) f2(x1) = f2(x2) = y1;f 2(x3) = y2 , {{x1;x 2};{x3}};
+3) f3(x1) = f3(x3) = y1;f 3(x2) = y2 , {{x1;x 3};{x2}};
+4) f4(x2) = f4(x3) = y1;f 4(x1) = y2 , {{x2;x 3};{x1}};
+5) f5(x1) = y1;f 5(x2) = f5(x3) = y2 , {{x1};{x2;x 3}};
+6) f6(x2) = y1;f 6(x1) = f6(x3) = y2 , {{x2};{x1;x 3}};
+7) f7(x3) = y1;f 7(x1) = f7(x2) = y2 , {{x3};{x1;x 2}};
+8) f8(x1) = f8(x2) = f8(x3) = y2 , {;;{x1;x 2;x 3};}:
+Menq tesnum enq, or artapatkerumneri qanak hamnknum  X bazmuyun
+erku blokeri (oroncic mek karo  linel datark) kargavorva trohumneri
+qanaki het: 
+Aknhayt e, or naxord rinaki ardyunq marit  ndhanur depqum:
+Yuraqn yur artapatkerum f :X!Y oroum  X bazmuyan trohum
+jYj = k kargavorva blokeri (daseri), oroncic mi qanis karo  linel
+datark: Ayspisov tei uni het yal eorem:
+eorem 11: n tarreric kazmva X bazmuyan k kargavorva blokeri
+(oroncic mi qanis karo  linel datark) trohumneri qanak havasar
+ kn , aysinqn hamnknum  f : X!Y artapatkerumneri qanaki het,
+orte jYj =k : 
+eorem 9-ic  verjin eoremic stanum enq het yal ardyunq:
+Het uyun 7:
+kn =
+X
+n1 + +nk =n
+ni 0
+C n1nk
+n =
+X
+n1 + +nk =n
+ni 0
+n!
+n1! nk! : 
+Ee kamayakan artapatkerman oxaren ditarkenq syurektiv artapatkerum
+f : X !Y , apa kstananq X bazmuyan trohum jYj = k o datark
+blokeri (qani or syurektiv artapatkerman amanak Y bazmuyan yuraqan yur
+tarr uni naxapatker): Nanakenq ^S(n;k )-ov bolor syurektiv artapatkerumneri
+qanak X bazmuyunic Y bazmuyan mej, orte jXj =n, jYj =k :
+1
+Het uyun 8:
+^S(n;k ) =
+X
+n1 + +nk =n
+ni > 0
+C n1nk
+n =
+X
+n1 + +nk =n
+ni > 0
+n!
+n1! nk! : 
+Baanenq X -ic depi Y bolor artapatkerumneri bazmuyun k blokeri
+(orte jYj =k ), aynpes, or i-rd blokin patkanen bolor artapatkerumner,
+oronc patkeri hzoruyun havasar  i-in` jIm(f )j =jR(f )j =i: k tarranoc
+bazmuyunic C i
+n eanaknerov kareli  ntrel i tarr parunako enabazmuyun:
+Yuraqan yur aydpisi enabazmuyan hamar goyuyun uni ^S(n;i ) tarber
+syurektiv artapatkerumner n tarreric kazmva X bazmuyunic depi
+ntrva Y -i i tarranoc enabazmuyun: Het abar, hamaayn bazmapatkman
+skzbunqi, i-rd bloki tarreri qanak havasar `
+C i
+k ^S(n;i ) :
+Aym, kiraelov gumarman skzbunq, stanum enq het yal ardyunq:
+eorem 12: kn =
+kP
+i=0
+C i
+k ^S(n;i ) : 
+Menq artahaytecinq n tarr parunako bazmuyunic depi k tarr
+parunako bazmuyun bolor artapatkerumneri qanak ^S(n;i ) syurektiv
+artapatkerumneri qanaki mijocov: Hakaak anelu hamar  akerpenq
+het yal pndum aanc apacuyci:
+eorem 13 (hakadarman bana er): Dicuq (f0;f 1;f 2;::: )  (g0;g 1;g 2;::: )
+erku vayin hajordakanuyuner en, oroncic mek artahaytvum  myusi
+mijocov het yal bana erov`
+fk =
+kX
+i=o
+C i
+kgi; k  0 :
+Ayd depqum tei uni het yal hakadarman bana `
+gk =
+kX
+i=0
+(1)kiC i
+kfi; k  0 : 
+gtagorelov hakadarman bana er stanum enq syurektiv artapatkerumneri
+qanak havelu bana :
+eorem 14: Bolor syurektiv artapatkerumneri qanak n tarr parunako
+bazmuyunic depi k tarr parunako bazmuyun havasar `
+^S(n;k ) =
+kX
+i=0
+(1)kiC i
+kin : 
+2
+5. Bazmuyan trohumner  Stirlingi erkrord sei ver:
+Ditarkenq n tarreric kazmva X bazmuyan kargavorva trohumneri
+qanak k blokeri: Nanakenq aydpisi trohumneri qanak S(n;k )-ov:
+rinak 24: X ={1; 2; 3; 4} bazmuyun kareli  6 eanakov trohel
+ereq kargavorva blokeri`
+X ={1}[{ 2}[{ 3; 4};
+X ={1}[{ 3}[{ 2; 4};
+X ={1}[{ 4}[{ 2; 3};
+X ={2}[{ 3}[{ 1; 4};
+X ={2}[{ 4}[{ 1; 3};
+X ={3}[{ 4}[{ 1; 2} : 
+Qani, or yuraqan yur kargavorva trohum k blokeri kareli  k!
+eanaknerov kargavorel nra k bloker, apa tei uni het yal bana `
+^S(n;k ) = k!S(n;k ) :
+Havi arnelov Het uyun 8  eorem 14 stanum enq het yal eorem:
+eorem 15:
+S(n;k ) = 1
+k!
+kX
+i=0
+(1)iC i
+k (ki)n = 1
+k!
+X
+n1 + +nk =n
+ni > 0
+n!
+n1! nk! : 
+S(n;k ) ver kovum en Stirlingi erkrord sei ver  handipum en
+kombinatorikayi tarber kirauyunnerum: Usumnasirenq ayd ver
+aveli manramasn:
+Praktik havarkneri hamar aveli harmar  gtagorel S(n;k ) veri
+ekurent bana er:
+eorem 16: Erkrord sei Stirlingi ver bavararum en het yal ekurent
+bana erin`
+S(n;k ) = S(n 1;k 1) +kS(n 1;k ); k = 1; 2;:::;n ;
+S(0; 0) = 1; S(n; 0) = 0; n> 0; S(n;k ) = 0; k>n :
+Apacucum: Bazmuyan k blokeri bolor trohumner baanenq erku
+daseri: Aajin dasin kpatkanen ayn trohumner oronc blokeric mek
+kazmum  {x1} bazmuyun: Erkrord das kkazmen bolor myus trohumner,
+aysinqn trohumner orte x1 tarr patkanum  mekic avel tarr parunako
+blokerin: rinak 24-um, aajin das kazmum en het yal trohumner`
+{{1};{2};{3; 4}}; {{1};{3};{2; 4}}; {{1};{4};{2; 3}};
+3
+isk erkrord das het yal trohumner`
+{{2};{3};{1; 4}}; {{2};{4};{1; 3}}; {{3};{4};{1; 2}} :
+Aknhayt , or aajin dasum trohumneri qanak havasar  S(n
+1;k 1)-in, mnaca (n 1) tarreric kazmva bazmuyan (k 1) blokeri
+trohumneri qanakin: Mer rinaki hamar ayd iv havasar  S(3; 2) = 3 :
+Erkrord dasum trohumneri qanak havasar  (n1) tarranoc bazmuyan
+k blokeri trohman qanakin herakanuyamb avelacnelov x1 tarr yuraqan yur
+blokin: Mer rinakum, {2; 3; 4} bazmuyun menq karo enq trohel ereq
+blokeri miayn mek eanakov` {{2};{3};{4}}: Avelacnelov yuraqan yur blokin
+1- kstananq 3 1 = 3 tarber trohumner`
+{{2};{3};{1; 4}}; {{2};{4};{1; 3}}; {{3};{4};{1; 2}} :
+Ayspisov, erkrord dasum trohumneri qanak havasar  kS(n 1;k ): 
+eorem 16 uyl  talis hetuyamb havel Stirlingi erkrord sei
+ver, oronq kazmum en Stirlingi eank yun (Paskali eank yan nman):
+Het yal a yusakum nerkayacva en S(n;k ) ver 0n;k 8 hamar:
+Verjum, nerkayacnenq eorem 12-i bana  Stirlingi erkrord sei
+veri mijocov`
+kn =
+nX
+i=0
+C i
+ki!S(n;i ) =
+nX
+i=0
+[k]iS(n;i ) :
+Nenq, or ayd bana  marit  cankaca k kompleqs vi hamar  layn
+kiravum  verjavor peratorneri tesuyan mej, or uyl  talis xn
+bazisic ancnel [x]n bazisin`
+xn =
+nX
+i=0
+[x]iS(n;i ) :
+4
+6. Belli ver:
+Stirlingi erkrord sei ver nkaragrum en n tarbervo aarkaneri
+dasavorum k tarbervo arkneri mej aynpes, or yuraqan yur arkum
+gtnvi anvazn mek aarka: Nanakenq B(n;k )-ov n tarbervo aarkaneri
+k tarbervo arkneri mej dasavorman enakneri qanak, erb aarkaneri
+qanaki vra arknerum sahmanaakum i drvum (aysinqn arkner karo
+en linel na datark):
+Havenq B(n;k ) ver: Baanenq bolor aarkaneri dasavorumner
+arkneri mej blokeri, teavorelov i-rd bloki mej bolor ayn dasavorumner,
+oronc depqum zbava en it i arkner: Qani, or arkner en tarbervum,
+apa k arkneric i hat ark menq ntrum enq ndamen mek eanakov  
+S(n;i ) eanaknerov lcnum enq ayd arkner n aarkanerov (hiecnenq,
+or ee arkner iraric tarbervum en, apa i ark n arkneric menq
+karo enq ntrel C i
+n eanaknerov  het abar i-rd blokum kliner C i
+k ^S(n;i )
+tarrer): gtagorelov gumarman skzbunq stanum enq`
+B(n;k ) =
+kX
+i=1
+S(n;i ) :
+B(n;k ) ver n = k depqum kovum en Belli ver  nanakvum en`
+B(n)-ov:
+Hienq, or bazmuyan trohum hamapatasxanum  ayd bazmuyan
+vra hamarequyan haraberuyun sahmanelun  hakaak: Het abar
+bolor hnaravor hamarequyan haraberuyunneri qanak, oronq kareli
+ sahmanel bazmuyan vra nkaragrvum  Belli veri mijocov: Nenq na ,
+k hamarequyan daser uneco harequyan haraberuyunneri qanak
+n tarranoc bazmuyan vra havasar  S(n;k )-in:
+eorem 17: B(n) Belli ver bavararum en het yal ekurent bana erin`
+B(n + 1) =
+nX
+k=0
+C k
+nB(k) :
+Apacucum: Ditarkenq (n + 1) tarranoc bazmuyan trohumi blok,
+orin patkanum  (n + 1)-: Bolor trohumneri qanak karo enq baanel
+(n + 1) daseri kaxva nranic e qani tar uni blok, orin patkanum
+ (n + 1) -: Enadrenq, or (n + 1) -i het kan i = 0 ; 1; 2;:::;n ver: Ayd
+ver karo enq ntrel C i
+n =C ni
+n eanaknerov: Mnaca k =ni ver,
+k = 0; 1;:::;n , menq karo enq B(k) eanaknerov trohel blokeri: Gumarelov
+st bolor k -eri kstananq pahanjvo bana : 
+Aym ancnenq kombinatorikayi oro meodneri usumnasiruyan` kcman
+ artaqsman skzbunq, ekurent hajordakanuyunneri meod  nord
+funkcianeri skzbunq:
+5
+7. Kcman  artaqsman skzbunq:
+Der s 1713 . M onmor kirael  ayd skzbunq handipumneri masin
+(teadruyunneri qanaki masin, oronc bolor keter arun en) xndir
+luelis:
+Sksenq rinakic:
+Kombinatorikayi gumarman skzbunq  akerpman amanak himnakan
+payman eel , or A  B bazmuyunner unein ndhanur tarrer: Ditarkenq
+ayn depq erb A  B bazmuyunner hatvum en:
+rinak 25: Havenq qani ver 1-ic min 1000- baanvum en 2-i kam
+3-i vra: Erkusi vra baanvo ver dranq zuyg vern en  dranc qanak
+havel het `
+2; 4; 6; 8; ; 998; 1000;
+nranq kazmum en bolor veri kes` 500: Ereqi baanvum en`
+3; 6; 9; 12;:::; 996; 999;
+aysinqn bolor veri 1
+3 mas` 333: Ee menq gumarenq 500  333, apa oro
+ver menq khavenq erku angam: Nranq ayn vern en oronq baanvum en  
+2-i  3-i vra, aysinqn 6-i vra (qani,or 2-  3- oxadarabar parz en):
+6-i vra baanvo veri qanak havelu hamar baanenq 1000- 6-i vra
+mancordov  kstananq, or ayd veri v havasar  b 1000
+6 c = 166 : Aym
+karo enq havel qani ver baanvum en 2-i kam 3-i vra: Ee nanakenq
+min 1000 zuyg veri bazmuyun A-ov, 3-i vra baanvo` B -ov, apa mer
+havarq karo enq grel het yal bana i mijocov`
+jA[Bj =jAj +jBjj A\Bj :
+Ayspisov` 500+333-166=667: 
+Nman havarkner hnaravor en kamayakan verjavor vov bazmuyunneri
+hamar:
+eorem 18 (kcman  artaqsman skzbunq): Dicuq Xi , i = 1; 2;:::;n
+verjavor bazmuyunner en: Tei uni het yal bana `
+jX1[X2[[ Xnj =
+X
+1in
+jXij
+X
+1ii<i2n
+jXi1\Xi2j+
++
+X
+1i1<i2<i3n
+jXi1\Xi2\Xi3j + (1)n+1jX1\X2\\ Xnj =
+=
+X
+S{ 1; 2;:::;n}
+S6=;
+(1)jSj+1j
+\
+i2S
+Xij :
+Apacucum: Apacucelu hamar anhraet  cuyc tal, or X1[X2[[
+Xn bazmuyan yuraqan yur tarr, bana i aj masum, havarvum  mek
+angam: Dicuq a2X1[X2[[ Xn tarr patkanum  Xi bazmuyunneric
+6
+m ( 1mn) bazmuyunnerin: Ayd depqum a tarr aj masum havarvum
+ het yal angam`
+C 1
+mC 2
+m +C 3
+m + (1)m+1C m
+m =
+= 1 (1C 1
+m +C 2
+mC 3
+m + + (1)mC m
+m ) = 1 (1 1)m = 1;
+in nanakum , or yuraqan yur tarr X1[X2[[ Xn bazmuyunic aj
+masum havarvum  mek angam: 
+Het uyun 9: Dicuq X verjavor bazmuyun  isk X1;X 2;:::;X n nra
+enabazmuyunern en: Ayd depqum tei uni het yal bana `
+jXn (X1[X2[[ Xn)j =jXj
+X
+1in
+jXij +
+X
+1ii<i2n
+jXi1\Xi2j
+
+X
+1i1<i2<i3n
+jXi1\Xi2\Xi3j + + (1)njX1\X2\\ Xnj :
+Apacucum: Qani or`
+(Xn (X1[[ Xn))[ (X1[[ Xn) = X
+ 
+(Xn (X1[[ Xn))\ (X1[[ Xn) =;;
+apa, hamaayn gumarman skzbunqi, kstananq`
+jXn (X1[[ Xn)j +jX1[[ Xnj =jXj;
+het abar`
+jXn (X1[[ Xn)j =jXjj X1[[ Xnj : 
+Nerkayacnenq kcman  artaqsman skzbunqi kar or meknabanuyun:
+Dicq jXj = N , 1; 2;:::; n hatkuyuner en  X bazmuyan tarrer
+karo en tva linel kam o ayd hatkuyunnerov: Cankaca i2{ 1; 2;:::;n}
+hamar nanakenq Xi -ov X bazmuyan tarrer, oronq tvaen i hatkuyunov`
+Xi ={x2Xji(x)} :
+Dicuq
+N (i1;:::; ik ) =jXi1\\ Xikj =j{x2Xji1 (x)&  & ik (x)}j
+X bazmuyan tarreri qanakn , oronq miaamanak tva en i1;:::; ik
+hatkuyunnerov: Ayd depqum N0 =jXn(X1[[ Xn)j klini X bazmuyan
+ayn tarreri qanak, oronq en bavararum 1; 2;:::; n hatkuyunneric
+o mekin: Hamaayn Het uyun 9 kstananq het yal bana `
+N0 =NS1 +S2 + (1)nSn;
+7
+orte
+Sk =
+X
+1i1<<ikn
+N (i1;:::; ik ); k = 1; 2;:::;n :
+rinak 26: Ditarkenq bolor n teadruyunner: Dicuq Dn bolor
+ayn teadruyunneri qanakn , orte anvazn mek iv mnum  anar:
+Gtnel Dn :
+Luum: Nanakenq Ak -ov ayn teadruyunneri bazmuyun, orte k
+anar ket : Ayd depqum`
+Dn =jA1[A2[[ Anj :
+Ai1\\ Aik bazmuyun parunakum  ayn teadruyunner, oronc
+hamar i1;:::;i k -n anar keter en, isk myus (nk) ver kargavorva en
+kamayakan eanakov: Het abar`
+jAi1\\ Aikj = (nk)!;
+ X
+1i1<;i2<<ikn
+jAi1\\ Aikj =C k
+n(nk)! = n!
+k! :
+Ayspisov`
+Dn =n!( 1
+1! 1
+2! + 1
+3! + (1)n+1 1
+n! ) : 
+7.1. Xndir ankarguyunneri masin: Unenq a1;a 2;:::;a n tarber aarkanner
+ b1;b 2;:::;b n tarber arkner: Qani N0 eanakov kareli  dasvorel ayd
+aarkanner arknerov aynpes, or ai aarkan gtnvi bi arkum, aysinqn
+bolor aarkanner gtnven irencic tarber hamar uneco arknerum:
+Luum: Dicuq X - n aarkaneri n arknerum bolor hnaravor dasavorumneri
+bazmuyun : Ayd depqum` N =jXj =n!: Sahmanenq het yal hatkuyun`
+" ai aarkan gtnvum  bi arkum", i = 1; 2;:::;n : N (i1;:::; ik ) iv irenic
+nerkayacnum  dasavorumneri qanak, erb aij aarkaner gtnvum  bij
+( j = 1; 2;:::;k ) arknerum  ayn havasar  (nk)!: Het abar`
+Sk =
+X
+1i1<<ikn
+N (i1;:::; ik ) = C k
+n(nk)! = n!
+k! :
+Ayspisov`
+N0 =N
+nX
+k=1
+(1)k+1Sk =n!
+nX
+k=1
+(1)k+1n!
+k! =n!
+nX
+k=0
+(1)k 1
+k! :
+7.2. yleri funkcia: Hiecnenq yleri funkciaji sahmanum:
+Dicuq m- amboj  drakan iv : '(m)-ov nanakenq ayn amboj  
+drakan veri qanak, oronq en gerazancum m-  oxadarabar parz
+en nra het, aysinqn
+'(m) =j{x2 Zj1xm; (x;m ) = 1}j :
+8
+rinak, '(1) = 1 , '(2) = 1 , '(3) = 2 , '(4) = 2 , '(5) = 4 , '(6) = 2 , '(7) = 6 ,...
+Ayspisov, stacvum  ' : N! N artapatkerum:
+Gtneq yleri funkciayi bana : Dicuq P ={p1;p 2;:::;p r}-n n vi
+bolor parz baanararneri bazmuyun  (ee n = 1 apa P =;): Katarenq
+het yal nanakumner` A ={1; 2;:::;n}  I ={1; 2;:::;r}: Cankaca i2 I
+hamar Ai -ov nanakenq A bazmuyan ayn ver, oronq baanvum en pi -i
+vra`
+Ai ={x2Ajx=pi} A :
+m iv oxadarabar parz  n-i het ayn  miayn ayn depqum, erb m-
+i baanvum pi ( i2I ) veric o meki vra, aysinqn canakaca i2I hamar
+m =2Ai  het abar m =2A1[A2[[ Ar : Ayspisov`
+'(n) =jAjj A1[A2[[ Arj =n
+X
+SI
+S6=;
+(1)jSj+1j
+\
+i2S
+Aij :
+AS = T
+i2S
+Ai bazmuyun bakaca  A bazmuyan veric, oronq baanvum
+en bolor pi parz veri vra i2S hamarnerov  het abar kbaanvi dranc
+artadryali vra`
+nS =
+Y
+i2S
+pi :
+Ayspisov`
+AS ={nS; 2nS; 3nS;:::; n
+nS
+nS}
+ het abar`
+jASj = n
+nS
+=n
+Y
+i2S
+1
+pi
+:
+Ayspisov stanum enq`
+'(n) = n
+X
+SI
+S6=;
+(1)jSj+1n
+Y
+i2S
+1
+pi
+=n
+X
+SI
+(1)jSj Y
+i2S
+1
+pi
+=n
+Y
+i2I
+(1 1
+pi
+) :
+Verjin  aoxuyan amanak gtagorel enq het yal nuynuyun`
+Y
+i2I
+(1 +xi) =
+X
+SI
+(
+Y
+i2S
+xi); jIj<:
+7.3. Syurektiv artapatkerumneri qanak: Kcman  artaqsman
+skzbunqi mijocov havenq syurektiv artapatkerumneri qanak:
+Dicuq jAj =k  jBj =n: Havenq A!B bolor syurektiv artapatkerumneri
+qanak: Enadrenq` B ={b1;b 2;:::;b n}: Nanakenq Ai -ov A-ic depi B bolor
+ayn artapatkerumner, oronc amank bi tarr uni naxapatker: Ee
+9
+S{ 1; 2;:::;n}, apa T
+i2S
+Ai bazmuyan patkanum en artapatkerumner,
+oronc amanak bi -er bolor i2S hamar unen naxapatker: Ayspisov f
+artapatkerum klini syurektiv, ee f =2A1[A2[[ An : Het abar
+syurektiv artapatkerumneri qanak havasar `
+nkjA1[A2[[ Anj =nk
+X
+S{ 1; 2;:::;n}
+S6=;
+(1)jSj+1jASj;
+orte AS = T
+i2S
+Ai : Havenq jASj iv: Ee jSj = j , apa unenq` (n
+jSj)k = ( n j)k artapatkerumner, oronc amanak bolor bi tarrer
+unen naxapatker cankaca i 2 S hamar: B bazmuyan tarreric
+C J
+n eanaknerov kareli  ntrel j tarr parunako enabazmuyun,
+het abar`
+jASj =C j
+n(nj)k :
+Ayspisov`
+nk
+nX
+j=1
+(1)j+1C j
+n(nj)k =
+nX
+j=0
+(1)jC j
+n(nj)k :
+10

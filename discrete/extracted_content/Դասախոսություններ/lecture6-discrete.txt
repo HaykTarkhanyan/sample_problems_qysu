@@ -1,0 +1,480 @@
+Dasaxosuyun 6
+2.4. Zugorduyunner: Binomial gorakicner:
+eorem 5: Ee rn, apa C r
+n = n!
+(nr)!r! = Ar
+n
+r!  C r
+n = 0 ee r>n :
+Apacucum: r>n depq aknhayt : Ditarkenq rn depq: Yuraqan yur
+(n;r ) zugorduyun kareli  kargavorel r! eanaknerov (hamaayn Het uyan
+1-i): Tarber (n;r ) zugorduyunnerin hamapatasxanum en hatvo (n;r )
+kargavoruyunneri bazmuyunner: Ayd bazmuyunneri miavorum, oronq
+hamapatasxanum en bolor hnaravor (n;r ) zugorduyunnerin, kta bolor
+(n;r ) kargavoruyunneri bazmuyun: Het abar, hamaayn gumarman
+kanoni kstananq`
+Ar
+n =C r
+nr!
+aysinqn`
+C r
+n = Ar
+n
+r! = n!
+(nr)!r! : 
+rinak 12: Qani depqerum ntrelov 52 xaayin qarteric 10- kunenanq
+nranc mej 4 tuzer: Qani 10 qarteri mej ampayman petq  linen 4 tuzer,
+apa mer nruyun 48 qarteric 6 hatn ` C 6
+48 : 
+Havi arnelov (n;r ) zugorduyan meknabanuyun orpes n tarr uneco
+bazmuyan r tarranoc enabazmuyun, stanum enq het yal ardyunq:
+Het uyun 3: n tarr parunako bazmuyan r tarranoc enabazmuyunneri
+qanak havasar  C r
+n : 
+Het uyun 4: C k
+n =C k
+n1 +C k1
+n1 :
+Apacucum: C k
+n1 +C k1
+n1 = (n 1)!
+k!(nk 1)! + (n 1)!
+(k 1)!(nk)! =
+= (n1)!
+ (nk)
+k!(nk)! + k
+k!(nk)!
+
+= (n1)! n
+k!(nk)! = n!
+k!(nk)! =C k
+n : 
+C k
+n ver kovum en binomial gorakicner: Nranc havelu hamar apacucva
+bana  harmar  erku tesank yunneric` havoakan  gaaarakan:
+Havoakan tesank yunic ayd bana  dvar  gtagorel bavakan me
+n  k veri hamar: Gaaarayin tesank yunic ayd bana  harmar
+ qani, or uyl i talis ndhanracnel binomial gorkicneri gaaar
+amboj, irakan  kompleqs veri hamar: Hetagayum menq kstananq aveli
+harmar artahaytuyun binomial gorakicneri hamar, or uyl  talis
+aydpisi ndhanracum:
+1
+Ee Het uyun 4-um stacva bana  menq lracnenq skzbnakan  
+sahmanyin paymannerov`
+C k
+n = 0;k>n;
+C 0
+n = 1;n 0;
+stanum enq ekurent bana er binomial gorakicneri hamar, oronc mijocov
+kareli  ardyunavet havel binomial gorakicner bavakan me veri
+hamar:
+ekurent bana eri (latinakan recurrere ` veradarnal baic) mijocov
+C k
+n veri herakan areq havarvum  naxord areqneri mijocov: Orpes
+ekurent bana eri rinakner karo enq berel n! funkciayi sahmanum`
+n! =
+(
+1; n = 0;
+(n 1)!n; n  1;
+ Fibonaii veri sahmanum`
+Fn =
+8
+><
+>:
+0; n = 0;
+1; n = 1;
+Fn1 +Fn2; n  2 :
+Veradarnanq binomial gorakicnerin:
+Ee sahmanenq C k
+n binomial gorakicner, orpes n tarranoc bazmuyan
+k tarr uneco enabazmuyunneri qanak, apa binomial gorakicneri
+hamar ekurent bana er kareli  apacucel kombinator eanakov:
+Iroq, nanakenq k -ov n-tarranoc X bazmuyan k -tarranoc enabazmuyunneri
+bazmuyun: rinak X ={x1;x 2;x 3} bazmuyan hamar`
+2 ={{x1;x 2};{x1;x 3};{x2;x 3}} :
+Baanenq k bazmuyun erku blokeri` (1)
+k - bolor k -tarranoc enabazmuyunner,
+oronq parunakum en x1 ,  (2)
+k , enabazmuyunner oronc mej ka x1 -:
+Parz , or k = (1)
+k [ (2)
+k  ayd bazmuyunner en hatvum, het abar
+hamaayn gumarman kanoni unenq`
+C k
+n =jkj =j(1)
+k j +j(2)
+k j :
+Mnum  havel j(1)
+k j  j(1)
+k j ver: Aajin bloki bolor bazmuyunnerum x1
+tarr arden ntrva ,  mnum  (n 1) tarranoc Xn{x1} bazmuyunic
+ntrel (k 1)-tarranoc enabazmuyunner: Da karo enq anel C k1
+n1
+eanaknerov: Erkrord blokum gtnvum en Xn{x1} bazmuyan k tarranoc
+enabazmuyunner  dranc qanak havasar  C k
+n1 : Ayspisov stanum
+enq ekurent bana er binomial gorakicneri hamar`
+C k
+n =C k
+n1 +C k1
+n1 :
+2
+gtagorelov ayd bana er menq qayl a qayl karo enq havel binomial
+gorakicner  haax nranc nerkayacnum en Paskali erank yan tesqov`
+1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+
+Binomial gorakicner unen at kar or  harmar nerkayacum koordinatayin
+haruyan vra: Dicuq unenq ahmatayin taxtak, or baanac  nm
+vandakneri:
+x
+y
+(0; 0)
+(n;m )
+n
+m
+Qani eanakov (0; 0) koordinatnerov ketic karo  hasnel (n;m ) koordinatnerov
+ketin arvelov miayn aj kam ver oqr vandakneri komerov: Parz ,
+or durs galov (0; 0) ketic  (n;m ) ketin hasnelu hamar petq  ancnel
+(n +m) oqr vandakneri komerov, nd orum drancic n- horizonakan
+komern en  m uaig komern en: Ayd anaparner tarbervum en miayn
+horizonakan  uaig komeri qanakov: Het abar tarber anaparneri
+qanak havasar  (n + m) komeric n horizonakan (kam m uaig)
+kogmeri ntruyan qanakin` C n
+n+m (kam C m
+n+m ): Ayspisov stanum enq
+na , binomial gorakicneri simetrikuyan hatkuyun`
+C nk
+n =C k
+n :
+3
+Ayd hatkuyun het um  na Paskali erank yunic  uni at parz
+kombinator apacucum: Iroq, ntrelov n tarranoc bazmuyunic k tarranoc
+enabazmuyun, menq miareqoren ntrum enq na nra lracum, aysinqn
+(nk) tarranoc enabazmuyun: Het abar, k tarranoc enabazmuyunneri
+qanak havasar  (nk) tarranoc enabazmuyunneri qanakin:
+eorem 6 (Vandermondi nuynuyun): C k
+n+m =
+kP
+i=0
+C i
+nC ki
+m :
+Apacucum: Katarenq kombinator apacucum: Ditarkenq n taneric
+ m aikneric kazmva xumb: Ayd xmbic k hoganoc im ntrelu qanak
+havasar  C k
+n+m : M yus komic, menq karo enq ntrel ayd im aydpes, or
+aynte lini i ta  (ki) aik: Fiqsva i depqum, aydpisi im ntrelu
+qanak havasar  C i
+nC ki
+m (hamaayn bazmapatkman skzbunqi): pxelov
+i-n 0-ic mi k menq kstananq pahanjvo bana : 
+Nerkayacva apacucum kombinatorikayum uyni hatuk anvanum`
+erku eanaknerov havelu skzbunq ( double counting):
+C m
+n veri anvanum` binomial gorakicner kapva  het yal eoremi
+het:
+eorem 7 (Nyutoni erkandam kam binom): (x +y)n =
+nP
+k=0
+C k
+nxkynk :
+Apacucum: 1) Skzbum katarenq kombinator apacucum:
+Nerkayacnenq (x +y)n - het yal tesqov`
+(x +y)n = (x +y) (x +y) (x +y)
+ nenq yuraqan yur artadri 1-ic mi n: Ardyunqum unenq (x +y)-i n
+hat tarber rinakneric kazmva X bazmuyun: Bazmapatkelov ayd n
+akager kstananq het yal tesqi artadryalneri gumar`
+xkynk
+k = 0; 1; 2;:::;n : Havenq gumarelineri qanak fiqsva k -i depqum: Yuraqan yur
+xkynk gumarelin kareli  stanal het yal eanakov` ntrel n tarranoc
+X bazmuyunum k tarranoc enabazmuyun, vercnel ayd enabazmuyunum
+orpes artadriner x ooxakanner, isk mnaca (nk) tarranoc bazmuyunic
+ntrel orpes artadriner y ooxakan: Ayspisov xkynk gumarelineri
+qanak hamnknum  n tarranoc bazmuyan k tarranoc enabazmuyunneri
+qanaki het, aysinqn havasar  C k
+n :
+2) Ee n = 1, apa pndum aknhayt ` (x+y)1 =C 0
+1x1y0+C 1
+1x0y1 =x+y :
+Enadrenq eorem marit  n-i hamar, apacucenq nra martuyun
+(n + 1)-i hamar: Hamaayn indukciayi enadruyan kstananq`
+(x+y)n+1 = (x+y)n(x+y) = (C 0
+nxny0+C 1
+nxn1y1+ +C n1
+n xyn1+C n
+nx0yn)(x+y) =
+=C 0
+nxn+1y0 + (C 1
+nxny +C 0
+nxny) + (C 2
+nxn1y2 +C 1
+nxn1y2) + +C n
+nx0yn+1 =
+=C 0
+n+1xn+1y0 +C 1
+n+1xny +C 2
+n+1xn1y2 + +C n
+n+1xyn +C n+1
+n+1x0yn+1;
+hamaayn C k
+n1 +C k1
+n1 =C k
+n havasaruyan  C 0
+n =C 0
+n+1 = 1: 
+4
+Het uyun 5: Tei unen het yal nuynuyunner`
+1) C 0
+n +C 1
+n +C 2
+n + +C n
+n = 2n;
+2) C 0
+nC 1
+n +C 2
+n + + (1)kC k
+n + + (1)nC n
+n = 0 :
+Apacucum: Aajin nuynuyun stacvum  ee Nyutoni erkandamum
+vercnenq x =y = 1, isk erkrord` x = 1  y =1: 
+Nkatenq, or gumarelov C k
+n binomial gorakicner st k -i, menq havum
+enq n tarranoc bazmuyan bolor enabazmuyunner: Ayspisov, menq
+noric apacucel enq, or n tarranoc bazmuyan enabazmuyunneri qanak
+havasar  2n :
+Het uyun 5-i erkrord nuynuyun nerkayacnenq het yal tesqov`
+C 0
+n +C 2
+n + =C 1
+n +C 3
+n + ;
+ayd nuynuyan ax masum grva  zuyg tarrer parunako enabazmuyunneri
+qanak, isk aj masum kent tarrer parunako enabazmuyunneri qanak:
+Ayspisov, o datark bazmuyan zuyg enabazmuyunneri qanak havasar
+ kent enabazmuyunneri qanakin: Baci dranic, kent (zuyg) enabazmuyunneri
+qanak havasar  2n1 :
+Verjapes, ee menq aancenq Nyutoni erkandam st x-i, apa kstananq
+het yal nuynuyun`
+n(x +y)n1 =
+nX
+k=1
+kC k
+nxk1ynk :
+Teadrelov ayd nuynuyan mej x =y = 1 kstananq kar or nuynuyun`
+nX
+k=1
+kC k
+n =n2n1 :
+2.5. Krknuyunnerov zugorduyunner:
+eorem 8: C rn =C r
+n+r1 :
+Apacucum: Yuraqan yur B krknuyunnerov (n;r )-zugorduyan X =
+{x1;x 2;:::;x n} bazmuyan vra, hamapatasxanecnenq (n+r1) erkaruyamb
+(B) vektor kazmva r zroneric  (n1) mekeric: (B) vektorum aajin
+meki aj um kangna en aynqan zroner inqan x1 ka B zugorduyan mej,
+aajin  erkrord mekeri mi kangana en aynqan zroner inqan x2 ka
+B zugorduyan mej  ayln,  verjapes, (n 1)-rd mekic heto kangna
+en aynqan zroner inqan xn tarr ka B zugorduyunum: rinak, ee
+X ={1; 2; 3; 4}  B ={2; 2; 3; 3; 3; 4}-n krknuyunnerov (4; 6)-zugorduyun
+ X bazmuyan vra, apa
+(B) = (100100010) :
+Hakaak, (C) = (110010000) vektorin hamapatasxanum  C ={3; 3; 4; 4; 4; 4}
+krknuyunnerov (4; 6)-zugorduyun:
+5
+Ayspisov stanum enq biektiv hamapatasxanuyun krknuyunnerov
+(n;r )-zugorduyunneri  aydpisi vektorneri mi : Mnum  havel vektorneri
+qanak: (n1) hat mekerov  r hat zronerov vektorneri qanak havasar
+ (n+r1) tarranoc bazmuyan (vektori andamneri hamarneri bazmuyan)
+r tarranoc (zroyakan andamneri hamarneri) enabazmuyunneri qanakin,
+aysinqn` C r
+n+r1 : 
+rinak 13: Xanuum vaarvum en tas tesaki griner: Qani eanakov
+kareli  gnel u gri  qani eanakov kareli  gnel tarber teaski u
+gri:
+Luum: Aajin depqum yuraqan yur u grineric kazmva havaqaun
+irenic nerkayacnum  krknuyunnerov zugorduyun isk erkrord depqum
+aranc krknuyunneri zugorduyun: Het abar aajin depqum stanum
+enq C 8
+10 isk erkrordum` C 8
+10 :
+rinak 14: Fizikayum handipum en xndirner erb unenq nergiayi
+n tarber makardakner  k tarrakan masnikner: Ee ayd masnikner
+fermionner en, apa nranc vra gorum Paulii argelqi skzbunq, hamaayn
+ori yuraqan yur nergetik makardaki vra karo  gtnvel mekic o avel
+tarrakan masnik: Het abar n nergetik makardaknerum k fermionneri
+tarber baxumneri qanak havasar  C k
+n : Goyuyun unen tarrakan
+masnikneri uri tarberak, oronq kovum en bozonner, nranc hamar aydpisi
+sahmanaakum ka  tarber bozonner karo en gtnvel nuyn nergetik
+makardaki vra: Bozonneri hamar tarber baxumneri qanak havasar
+ C kn :
+rinak 15: Inqan o bacasakan amboj luumner uni het yal havasarum`
+x1 +x2 + +xn =m :
+Luum: Ee xi 0, ( i = 1; 2;:::;n ) ver trva havasarman luumnern
+en, apa xi vi i indeqs menq karo enq meknabanel, orpes i-rd ark,
+orum teadrva en xi hat meker: Het abar m hat meker menq petk 
+teavorenq n arknerum, aysinqn unenq m-multibazmuyun n tarranoc
+bazmuyan vra: Het abar luumneri qanak havasar  C mn :
+rinak 16: Havel 4-i trohumneri qanak erku gumarelineri tesqov:
+Luum: Petq  luel het yal havasarum`
+x1 +x2 = 4; x 1 0; x 2 0 :
+Isk da menq karo enq C 4
+2 = 5 eanaknerov` 0 + 4 = 1 + 3 = 2 + 2 = 3 + 1 =
+4 + 0 = 4: 
+Ayspisov, menq stacel enq tarrakan kombinatorikayi ors himnakan
+byektneri havelu hamar bana er` (n;r )-kargavoruyunneri (krknuyunnerov
+ aanc krknuyunneri)  (n;r )-zugorduyunneri (krknuyunnerov  
+aanc krknuyunneri):
+2.6. Binomial gorakicneri ndhanracum:
+Cankaca n kompleqs vi hamar binomial gorakicneri ndhanracman
+hamar nermuenq het yal gaaarner:
+6
+Sahmanum 4: Cankaca x 2 C kompleqs vi  k 2 N bnakan vi
+hamar, x vi storin k -rd astian kam k faktorial x-ic depi nerq 
+kovum  het yal iv`
+[x]k =xk =x(x 1)(x 2) (xk + 1) :
+x vi verin k -rd astian kam k faktorial x-ic depi ver kovum 
+het yal iv`
+[x]k =xk =x(x + 1)(x + 2) (x +k 1) :
+rinak 17: Ee x = 5  k = 4 , apa` [5]4 = 5(5 1)(5 2)(5 3) = 120 ,
+[5]4 = 5(5+1)(5+2)(5+3) = 1680 : Isk, ee x = 0; 5, apa` [0; 5]4 = 0; 5(0; 5
+1)(0; 52)(0; 53) =0; 9375, [0; 5]4 = 0; 5(0; 5+1)(0; 5+2)(0; 5+3) = 6; 5625:
+
+Sahmanumic anmijapes het um , or Ak
+n = [n]k  het abar`
+C k
+n = [n]k
+k! ;
+C kn = [n]k
+k! :
+Verjin erku bana er ndunum en, orpes binomial gorakicneri  krknuyunnerov
+zugorduyunneri o kombinator sahmanum erb n2 C, isk k2 N:
+rinak 18: C 3
+(1) = (1)(2)(3)
+3! =1 :
+3. Bazmuyan kargavorva trohumner  polinomial gorakicner:
+Dicuq trva  n tarrer parunako X bazmuyun: Havenq qani
+eanakov kareli  trohel X bazmuyun k ( k  1) hatvo Xi ( i =
+1; 2; 3;:::;k ) enabazmuyunneri (blokeri), aynpisin, or jXij =ni  
+kP
+i=1
+ni =
+n: Nenq, or Xi oro i-eri hamar karo  linel datark:
+X =
+k[
+i=1
+Xi; Xi\Xj =;; i6=j; jXij =ni; i = 1; 2;:::;k ;
+kX
+i=1
+ni =n :
+Nenq, or Xi enabazmuyun oro i-eri hamar karo  linel datark  
+X1;X 2;:::;X k enabazmuyunneri hajordakanuyun hamarvum  kargavorva:
+rinak 19: Dicuq X ={1; 2; 3; 4; 5}  n1 = 2, n2 = 1, n3 = 2: Ayd depqum
+het yal trohumner`
+{1; 2};{4};{2; 5}
+7
+ 
+{2; 5};{4};{1; 3}
+hamarvum en tarber: 
+Nanakenq aydpisi trohumneri qanak C n1n2:::nk
+n -ov: Ayd ver kovum
+en polinomial gorakicner:
+eorem 9: C n1n2:::nk
+n = n!
+n1!n2!n3! nk! :
+Apacucum: X1 bazmuyun kazmelu hamar menq karo enq gtagorel
+X bazmuyan bolor tarrer, aysinqn X1 enabazmuyun menq karo
+enq ntrel C n1
+n eanaknerov: X1 enabazmuyun ntreluc heto X2
+enabazmuyun karo enq ntrel XnX1 bazmuyunic C n2
+nn1 eanaknerov:
+Cankaca i, 2ik hamar, X1;X 2;:::;X i1 enabazmuyunneri ntruyunic
+heto Xi enabazmuyun karo enq ntrel C ni
+nn1n2ni1 eanaknerov:
+Hamaayn bazmapatkman zkzbunqi X1;X 2;:::;X k kargavorva hajordakanuyun
+karo enq ntrel
+C n1
+n C n2
+nn1 C nk
+n1n2nk1
+eanaknerov: Het abar`
+C n1n2:::nk
+n =C n1
+n C n2
+nn1 C nk
+n1n2nk1 =
+= n!
+n11(nn1)! (nn1)!
+n2!(nn1n2)! (nn1n2 nk1)!
+nk!(nn1n2 nk1nk)! =
+= n!
+n1!n2! nk!;
+qani, or (nn1n2 nk1nk) = 0: 
+Ditarkenq polinamial gorakicneri kar or meknabanuyun: Dicuq
+unenq k tarreric kazmva or  aybuben` X ={a;b;c;:::;d }  ayd aybubeni
+n simvolneric kazmva bazmuyun, nd orum ayd bazmuyunum ka n1 hat
+a tarr, n2 hat b tarr  ayln,  , nk hat d tarr  n1 + n2 + +
+nk = n: Pahanjvum  gtnel tarber baeri qanak, oronq stacvum en
+ayd n tarreric: Hamarakalenq teer, orte kangna en tarrer 1-ic
+mi n: Yuraqan yur ba miareqoren orovum  teeri hamarneri A1
+bazmuyunov, orte kangna  a tarr, A2 bazmuyunov` b tarri teeri
+hamarnerov,  , Ak bazmuyunov` d tarri teeri hamarnerov: Het abar
+tarber baeri qanak havasar  k -multibazmuyunneri qanakin orova
+{1; 2; 3;:::;n} bazmut;yan vra, orte a;b;:::;d tarreri qanak habasar 
+hamapatsxan n1;n 2;:::;n k , aysinqn
+C n1n2:::nk
+n = n!
+n1!n2!n3! nk! :
+Ayspisov karo enq  akerpel het yal het uyun:
+Het uyun 6: C n1n2:::nk
+n iv, orte ni  0  
+kP
+i=1
+= n, havasar 
+k -multibazmuyunneri qanakin, orte ka n1 hat aajin tipi tarrer,
+n2 hat erkrord tipi tarrer,  ayln., nk tarr k -rd tipi tarrer: 
+8
+rinak 20: Inqan tarber baer kareli  kazmel "lava" baic:
+Luum: Qani, or "lava" ba kazmva  erku "a" tarric  mekakan
+"l", "v", "" tarreric, apa kstananq`
+C 2;1;1;1
+5 = 5!
+2!1!1!1! = 60 :
+rinak 21: Qani tarber eanaeknerov kareli  nerkel ors nerkerov
+in maseri baana qaakusin , ee aajin guynov nerkvum en 3 maser,
+erkrord guynov` 2 maser, errord guynov` ereq maser  orrord guynov` mek
+mas:
+Luum: C 3;2;3;1
+9 = 9!
+3!2!3!1! = 5040 :
+eorem 10: (a1 +a2 + +ak)n =
+r1+r2++rk=nP
+r10;:::;rk0
+C r1r2rk
+n ar1
+1 ar2
+2  ark
+k ;
+orte a1;a 2;:::;a k2 C, n2 N:
+Apacucum: Bazmapatkenq irar (a1 +a2 + +ak) artahaytuyun
+n angam: Ardyunqum kstananq d1d2 dn tesqi kn gumareliner, orte
+yuraqan yur di artadri havasar  kam a1 -in, kam a2 -in,  , kam ak -in:
+Dicuq B(r1;r 2;:::;r k) bolor ayn gumarelineri bazmuyun , orte a1 -
+handipum  r1 angam, a2 -` r2 angam,  , ak -n` rk angam: Hamaayn
+Het uyun 6-i B(r1;r 2;:::;r k) bazmuyan tarreri qanak havasar 
+C r1r2:::rk
+n : 
+Nenq, or k = 2 depqum stanum enq Nyutoni erkandami bana :
+rinak 22: Oroel (x1 +x2 +x3)10 artahaytuyunum x3
+1x4
+2x3
+3 miandami
+gorakic:
+Luum: C 3;4;3
+10 = 10!
+3!4!3! = 4200:
+9

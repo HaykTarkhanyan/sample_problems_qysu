@@ -1,0 +1,419 @@
+Dasaxosuyun 8
+8. ekurent anuyunner:
+Menq arden handipel enq ekurent bana erin: Aym usumnasirenq
+ekurent bana eri  anuynneri meod aveli manramasn:
+Sksenq rinakic:
+rinak 27: Gorteri qanak lum amentari avelanum  ors angam:
+Yuraqan yur tarva verjin or 100 gort teaoxum en uri li: Enadrelov,
+or tarva skzbin lium kar 50 gort, gtnel gorteri qanak kamayakan
+tarva skzbum:
+Luum: Nanakenq an -ov gorteri qanak (n + 1) -rd tarva skzbin:
+Hamaayn paymani` a0 = 50 : Ayd depqum, aknhayt , or`
+a1 = 4 50 100 = 100; a 2 = 4 100 100 = 300;
+isk ndhanur depqum`
+an+1 = 4an 100; n = 0; 1; 2;::: : 
+Stacva havasarum irenic nerkayacnum  parzaguyn ekurent
+anuyun:
+Ancnenq formal sahmanumnerin:
+Sahmanum 5: Dicuq a0;a 1;a 2;::: kamayakan vayin hajordakanuyun
+: Ee kamayakan n 0 hamar an+m iv irenic nerkayacnum  naxord
+m andamneric kaxva funkcia (artapatkerum)`
+an+m =fn(an;an+1;:::;a n+m1); (1)
+apa ayd hajordakanuyun kovum  ekurent hajordakanuyun, isk
+(1) anuyun kovum  m kargi ekurent anuyun:
+Ee f funkcian gayin , apa ayd anuyunner kovum en gayin
+ekurent anuyunner`
+an+m =b1(n)an+m1 +b2(n)an+m2 + +bm1(n)an+1 +bm(n)an +u(n) : (2)
+Ayn depqum, erb u(n) = 0 , gayin ekurent anuyun kovum  hamase,
+hakaak depqum` o hamase: (2) ekurent anuyunneri amenaparz
+depq, da hastatun gorakicnerov gayin ekurent anuyunnern en`
+an+m =b1an+m1 +b2an+m2 + +bm1an+1 +bman : (3)
+1
+Aajin a0;a 1;:::;a m1 andamner kovum en skzbnakan paymanner (1) ekurent
+anuyan hamar: 
+Ayspisov, ekurent anuyunneri akayuyun uyl  talis qayl a
+qayl havel hajordakanuyan andamner: Sakayn at depqerum anhraet
+ linum imanal ayd hajordakanuyan an ndhanur andami bana : Ayd
+bana  kovum  ditarkvo ekurent hajordakanuyan luum:
+Menq kluenq ekurent anuyunneri amena parz depq` hastatun
+gorakicnerov gayin hamase ekurent anuyunner:
+Min ndhanur (3) depqin ancnel, ditarkenq amena parz depq
+aajin kargi gayin ekurent anuyun`
+an+1 =b1an; n = 0; 1; 2:::; a0 zkzbnakan payman : (4)
+Unenq`
+a1 =b1a0; a2 =b1a1 =b2
+1a0;  an =bn
+1a0 :
+Aym enadrenq, in or mek mez huel  luumi tesq  ayn uni astianayin
+kapvauyun n-ic`
+an =rn in or r -i hamar:
+Teadrenq ayd artahaytuyun (4) ekurent anuyan mej: Ardyunqum
+kstananq het yal tesqi havasaruyun`
+rn+1 =b1rn;
+orteic anmijapes het um , or r =b1  het abar an =bn
+1 : Da nanakum
+, or n = 0 depqum stanum enq a0 = 1 : Ayspisov, an = bn
+1 klini (4)
+havasarman luum a0 = 1 depqum: Aydpisi luum kovum  masnavor
+luum:
+Aym orenq gtnel ndhanur luum imanalov nra masnavor luum:
+Qani, or mer havasarum hamase , apa bazmapatkelov nra masnavor
+luum kamayakan c hastatunov, noric kstananq havasarman luum`
+cbn+1
+1 cb1bn
+1 :
+cbn
+1 tesqi luum arden bavararum  cankaca skzbnakan paymanin:
+Iroq, teadrelov nran (4) havasarman skzbnakan paymani mej kstananq`
+cb0
+1 =a0!c =a0!an =a0bn
+1 :
+Ayspisov stanum enq (4) havasarman ndhanur luum` cbn
+1 :
+Parzvum , or aajin kargi havasarman luman algorim hamarya
+aanc ooxuyan axatum  na kamayakan kargi hamase gayin
+havasarumneri hamar:
+8.1. Erkrord kargi gayin hamase ekurent anuyunner:
+Orpes rinak ditarkenq erkrord kargi gayin hamase ekurent
+anuyun`
+an+2 =b1an+1 +b2an; n = 0; 1; 2:::; a0;a 1 trva vern en, (5)
+2
+ orenq kirael naxord depqi hamar nkaragrva algorim:
+Enadrenq, or (5) havasarman masnavor lum noric uni astianayin
+kaxvauyun n-ic, aysinqn goyuyun unen a0  a1 ver, oronc hamar
+an =rn : Teadrelov ayd artahaytuyun ekurent anuyan mej kstananq`
+rn+2 =b1rn+1 +b2rn!r2b1rb2 = 0; (6)
+ayspisov stanum enq qaakusi havasarum, orte r - anhayt : Ayd
+havasarman cankaca luum klini (5) havasarman masnavor luum:
+(6) havasarum kovum  (5) ekurent havasarman bnuagri havasarum:
+Ditarkenq bnuagri havasarman luumner kaxva nra diskriminanti
+nanic:
+I . Enadrenq diskriminant drakan , aysinqn bnuagri havasarum
+uni erku tarber irakan armatner` r1  r2 : Cuyc tanq, or ays depqum
+het yal artahaytuyun
+an =c1rn
+1 +c2rn
+2; (7)
+orte c1  c2 kamayakam hastatuner en, klini (5) havasarman ndhanur
+luum, ayn imastov, or trva skzbnakan paymannerov kamayakan luum
+nka  ayd luman mej: Teadrenq (7) artahaytuyun (5) havasarman
+mej, kstananq`
+c1rn+2
+1 +c2rn+2
+2 =b1c1rn+1
+1 +b1c2rn+1
+2 +b2c1rn
+1 +b2c1rn
+1 +b2c2rn
+2;
+c1rn
+1 (r2
+1b1r1b2) +c2rn
+2 (r2
+2b1r2b2) = 0;
+ayspisov (7) artahaytuyun bavararum  (5) ekurent anuyan:
+Aym cuyc tanq, or (7) artahaytuyun iskapes irenic nerkayacnum
+ ndhanur luum: Ditarkenq ayn n = 0  n = 1 depqerum`
+a0 =c1r0
+1 +c2r0
+2 =c1 +c2;
+a1 =c1r1
+1 +c2r1
+2 =c1r1 +c2r2 :
+Stacanq c1  c2 anhaytnerov gayin havasarumneri hamakarg, or uni
+miak luum, qani, or nra oroi havasar  zroyi`
+
+1 1
+r1 r2
+ =r2r16= 0 :
+rinak 28: Ditarkenq amenakar or ekurent anuyunneric mek`
+Fibonaii hajordakanuyun`
+Fn+2 =Fn+1 +Fn; n = 0; 1; 2:::; F 0 = 1;F 1 = 1 :
+Gtnenq ayd hajordakanuyan ndhanur bana : Fibonaii hajordakanuyan
+bnuagri havasarum uni het yal tesq`
+r2r 1 = 0;
+3
+ori armatnern en`
+r1 = 1 +
+p
+5
+2 ; r 2
+1
+p
+5
+2 :
+Het abar`
+Fn =c1
+ 1 +
+p
+5
+2
+n
++c2
+ 1
+p
+5
+2
+n
+:
+c1  c2 hastatunner orovum en skzbnakan paymanneric`
+F0 = 0 = c1 +c2;
+F1 = 1 = c1
+1 +
+p
+5
+2 +c2
+1
+p
+5
+2 =c1
+1 +
+p
+5 1 +
+p
+5
+2 =c1
+p
+5 :
+Het abar stanumenq`
+c1 = 1p
+5; c 2 = 1p
+5 :
+Ayspisov, Fibonaii hajordakanuyan ndhanur bana  uni het yal
+tesq`
+Fn = 1p
+5
+ 1 +
+p
+5
+2
+n
+ 1p
+5
+ 1
+p
+5
+2
+n
+:  (8)
+II . Enadrenq diskriminant havasar  zroyi, aysinqn bnuagri
+havasarum uni mek patik armat` r1 = r2 = : Cuyc tanq, or ays
+depqum ndhanur luum uni het yal tesq`
+an =c1n +c2nn :
+Menq arden cuyc enq tvel, or n tesqi luum bavararum  (5) havasarman
+ qani, or havasarum hamase   gayin, apa c1n -  s bavararum 
+(5) havasarman: Cuyc tanq, or nn - nuynpes bavararum  ayd havasarman:
+Teadrenq nn artahaytuyun (5) havasarman mej, kstanan`
+(n + 2)n+2 =b1(n + 1)n+1 +b2nn;
+in hamareq  het yal havasaruyan`
+n(2b1b2) +(2b1) = 0 :
+Qani, or bnuagri havasarman diskriminant havasar  zroyi, apa
+2b1 = 0  aknhayt , or 2b1b2 = 0 : Ayspisov verjin havasarum
+bavararvum :
+Mnum  cuyc tal, or ayd tesqi luum karo  bavarari cankaca
+skzbnakan paymannerin: Teadrelov skzbnakan paymanner an -i hamar
+artahaytuyan mej, kstatnanq c1  c2 anhaytnerov gayin havasarumneri
+het yal hamakarg`
+c1 =a0;
+4
+(c1 +c2) = a1 :
+Parz , or ayd hamakarg uni luum cankaca a0 , a1  6= 0 hamar:  = 0
+depq trivial , ayd depqum b1 = b2 = 0  het abar an = 0 cankaca
+n-i hamar:
+III . Verjapes ditarkenq ayn depq, erb bnuagri bazmandam uni
+erku kompleqs hamalu armatner`
+r1 =x +iy =ei'; r 2 =xiy =ei'; ;' 6= 0 :
+Cuyc tanq, or ays depqum (5) havasarman luum kunena het yal tesq`
+an = ec1ncos(n') + ec2nsin(n') : (9)
+Aajin depqin nman datouyunnerov cuyc  trvum, or het yal tesqi
+erku masnavor luumneri gayin kombinacian`
+an =c1rn
+1 +c2rn
+2
+bavararum  (5) havasarman kamayakan c1  c2 hamar: Aym ditarkenq
+gayin havasarumneri het yal hamakarg`
+ a0 = c1 +c2
+a1 = c1ei' +c2ei' =(c1 +c2)cos' +i(c1c2)sin' : (10)
+Ayd hamakargi oroi havasar  zroyi, het abar ndhanur luumi
+mijocov kareli  bavararel cankaca skzbnakan paymannerin: (10) hamakargi
+het um , or ec1 = c1 +c2  ec2 = i(c1c2) gorakicner irakan ver en:
+Iroq, (10) hamakargi aajin havasarumic het um , or c1 +c2 gumar
+irakan v   het abar i(c1c2) artahaytuyun  s petq  lini irakan
+iv:
+M asnavor luumneri gayin kombinacian kareli  grel het yal tesqov`
+an =c1rn
+1 +c2rn
+2 =c1nei'n +c2nei'n =
+= (c1 +c2)ncos(n') +i(c1c2)nsin(n') :
+Nanakelov` ec1 = c1 +c2  ec2 = i(c1c2), stanum enq an -i hamar (9)
+bana :
+8.2. m-rd kargi gayin hamase ekurent anuyunner:
+Erkrord kargi gayin hamase ekurent anuyunneri nkaragrva
+luman eanak ndhanracvum  aveli barr kargi anuyunneri vra:
+Ditarkenq m-rd kargi ) gayin hamase ekurent (3) anuyun`
+an+m =b1an+m1 +b2an+m2 + +bm1an+1 +bman :
+Enadrenq, or nra masnavor luum uni het yal tesq` an =rn : Tedrelov
+ayd artahaytiyun (3) havasarman mej, stanum enq r -i hamar het yal
+bnuagri havasarum`
+rm =b1rm1 +b2rm2 + +bmr :
+5
+Dicuq r1;r 2;:::;r k bnuagri havasarman armatnern en: Yuraqan yur
+armat uni ir nerdnum ditarkvo ekurent anuyan ndhanur luman
+mej: M asnavorapes, ee rj armati patikuyun havasar  qj -in, apanra
+nerdnum ndhanur luumi mej klini`
+c1;jrn
+j +c2;jnrn
+j + +cqj;jnqj 1rn
+j :
+rinak, ee or e 6-rd kargi ekurent anuyan hamar bnuagri
+havasarum uni het yal tesq`
+(r 1)3 (r 2)2 (r 3) = 0;
+apa ayd anuyan ndhanur luum klini`
+an =c1 +c2n +c3n2 +c4 2n +c5n 2n +c6 3n :
+8.3. O hamase gayin ekurent anuyunner:
+Veradarnanq rinak 27-in: Aynte stacva ekurent anuyun
+hamase er: orcenq haskanal inpes luel aydpisi havasarumner:
+Ditarkenq aajin kargi gayin o hamase ekurent anuyun`
+an+1 =b1an +u; a 0 trva iv  : (11)
+Inpes hamaser anuyan depqum, (11) havasarum luum enq hajordabar
+artahaytelov an - a0 -i  u-i mijocov`
+a1 =b1a0 +u;
+a2 =b1a1 +u =b1 (b1a0 +u) +u =b2
+1a0 +b1u +u;
+a3 =b1a2 +u =b1 (b2
+1a0 +b1u +u) +u =b3
+1a0 +b2
+1u +b1u +u;
+
+an =bn
+1a0 + (bn1
+1 +bn2
+1 + +b1 + 1)u :
+Kaxva b1 parametri areqic stanum enq erku depqer:
+1) b16= 1 depqum an -i artahaytuyun grvum  het yal tesqov`
+an =bn
+1a0 + bn
+1 1
+b1 1u =
+
+a0 u
+1b1
+
+bn
+1 + u
+1b1
+:
+2) b1 = 1 depqum stanum enq`
+an =a0 +nu :
+Nerkayacva datouyunneric karo enq anel en erku kar or ditarkumner:
+Aajin` erku depqerum ohamase ekurent anuyan ndhanur luum
+kareli  grel het yal tesqov'
+an =c1rn +qn;
+6
+orte c1rn - (11)-in hamapatasxano`
+a(0)
+n+1 =b1a(0)
+n
+hamase ekurent anuyan ndhanur luumn , isk qn - (11) ohamase
+ekurent anuyan masnavor luumn :
+Parzvum , or ayd ast marit  na ndhanur depqum:
+eorem 19: Dicuq qn - het yal`
+an+m =b1an+m1 +b2an+m2 + +bm1an+1 +bman +u(n)
+ekurent anuyan masnavor luumn :Ayd depqum, ayd ekurent havasarman
+cankaca luum uni het yal tesq`
+an =pn +qn;
+orte pn - hamapatasxan`
+a(0)
+n+m =b1a(0)
+n+m1 +b2a(0)
+n+m2 + +bm1a(0)
+n+1 +bma(0)
+n
+hamase ekurent anuyan lundhanur luumn : 
+Erkrord kar or ditarkum kayanum  nranum, or menq karo enq kaucel
+ekurent anuyan luum, ee mez huen hamase anuyan nhanur
+luman tesq  o hamase anuyan masnavor luman tesq: Enadrenq
+menq gitenq, or b16= 1 depqum (11) havasarman masnavor luum uni
+het yal tesq` qn =c0u, isk (11)-in hamapatasxano hamaser anuyan
+ndhanur luum uni het yal tesq` an =c1rn : Tedrelov (11)-i mej qn -i
+oxaren c0u artahaytuyun kstananq`
+c0u =b1c0u +u!c0 = 1
+1b1
+:
+Aynuhet , teadrelov (11)-in hamapatasxano hamaser anuyan`
+a(0)
+n+1 =b1a(0)
+n
+mej a(0)
+n -i oxaren c1rn artahaytuyun stanum enq` r = b1 : Mnum 
+gtnel c1 hastatun: Dra hamar gtvenq skzbnakan paymanov`
+c1b0
+1 + u
+1b1
+=a0!c1 =a0 u
+1b1
+:
+Nman algorim kiravum  na b1 = 1 depqum:
+rinak 29: Gtnel
+an+2 = 4an+1 4an + 3 2n
+erkrord kargi o hamase ekurent anuyan ndhanur luum:
+7
+Luum: Trva ekurent anuyan bnuagri havasarum uni het yal
+tesq`
+r2 4r + 4 = 0 ! (r 2)2 = 0 :
+Het abar hamapatasxan hamase anuyan nhanur luum uni het yal
+tesq`
+c1 2n +c2n 2n :
+Qani, or bnuagri havasarman r = 2 armat uni erku patikuyun,
+apa trva anuyan masnavor luum kntrenq het yal tesqi`
+c0n2 2n :
+Teadrenq ayd artahaytuyun ekurent anuyan mej kstananq`
+c0(n + 2)2 2n+2 = 4c0(n + 1)2 2n+1 4c0n2 2n + 3 2n
+4c0(n2 + 4n + 4) = 8c0(n2 + 2n + 1) 4c0n2 + 3
+8c0 = 3 :
+Het abar, c0 = 3=8,  masnavor luum uni het yal tesq`
+3n2 2n3 :
+rinak 30: Gtnel
+an+2 = 6an+1 9an + 3nn + 3ncos(n=2)
+erkrord kargi o hamase ekurent anuyan ndhanur luum:
+Luum: Trva ekurent anuyan bnuagri havasarum uni het yal
+tesq`
+r2 = 6r 9 ! (r 3)2 = 0 :
+Bnuagri havasarum uni erku patikuyan armat` r = 3 : Het abar,
+hamase ekurent anuyan ndhanur luum uni het yal tesq`
+(d1 +d2n) 3n :
+ekurent anuyan o hamase mas kazmva  erku andamneric:
+u1(n) = 3nn  u2(n) = 3ncos(n=2) :
+Qani, or
+cos(n=2) = ein=2 +ein=2
+2 ;
+apa u2(n)-i hamar artahaytuyun kareli  grel het yal tesqov`
+u2(n) = 1
+2 (rn
+1 +rn
+2 ); orte r1 = 3ei=2; r 2 = 3ei=2 :
+8
+Uri hosqerov asac, ekurent anuyan o hamase mas kazmva 
+ereq andamneric het yal tesqi` rn Pi(n);  miayn drancic aajinum
+astiani cuci hamnknum  bnuagri havasarman armati het: Het abar,
+menq karo enq ntrel masnavor luum aanin aajin andami hamar
+ myus erku andamaneri hamar:
+Skzbic ditarkanq het yal ekurent anuyun`
+an+2 = 6an+1 9an + 3nn :
+Nra masnavor luum kntrenq het yal tesqov` (c1 +c2n)n2 3n :
+Teadrelov ayn ekurent anuyan mej kstananq`
+54nc2 + 54c2 + 18c1 =n :
+Havasaracnelov n-i nuyn astianneri gorakicner kstananq` c2 =
+1=54, c1 =1=18:
+Aym ditarkenq ekurent anuyun`
+an+2 = 6an+1 9an + 3ncos(n=2)
+or hamareq  het yal anuyan`
+an+2 = 6an+1 9an + 3nein=2=2 + 3nein=2=2 :
+Nra masnavor luum harmar  ntrel het yal  i`
+c3 3ncos(n=2) +c4 3nsin(n=2) :
+Teadrelov ayn ekurent anuyan mej kstananq`
+18c3sin(n=2) (18c4 + 1)cos(n=2) = 0;
+orteic het um , or c3 = 0 , c4 =1=18:
+Verjnakan, stanum enq het yal ndhanur luum`
+(d1 +d2n) 3n + (n 3)n2 3n3=2 3n2sin(n=2)=2 :
+9
