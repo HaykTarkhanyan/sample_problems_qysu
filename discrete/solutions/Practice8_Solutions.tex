@@ -117,21 +117,21 @@ into the general solution and solving the resulting $2 \times 2$ linear system.
   \node[draw, rounded corners=4pt, fill=stmtBg, minimum width=2.8cm,
         align=center, font=\small] (rec) {Recurrence\\$a_n = c_1 a_{n-1} + c_2 a_{n-2}$};
   \node[draw, rounded corners=4pt, fill=theoryBg, minimum width=2.8cm,
-        align=center, font=\small, right=2cm of rec] (char)
+        align=center, font=\small, right=2.6cm of rec] (char)
     {Characteristic eq.\\$r^2 - c_1 r - c_2 = 0$};
   \node[draw, rounded corners=4pt, fill=setC!15, minimum width=2.8cm,
-        align=center, font=\small, right=2cm of char] (gen)
+        align=center, font=\small, right=2.6cm of char] (gen)
     {General solution\\$a_n = \alpha r_1^n + \beta r_2^n$};
   \node[draw, rounded corners=4pt, fill=ansBg, minimum width=2.8cm,
-        align=center, font=\small, below=1.2cm of gen] (sol)
+        align=center, font=\small, below=1.4cm of gen] (sol)
     {Particular solution\\(apply initial conds.)};
 
   \draw[->, thick] (rec) -- (char)
-    node[midway, above, font=\scriptsize]{substitute $a_n = r^n$};
+    node[midway, above=3pt, font=\scriptsize]{substitute $a_n = r^n$};
   \draw[->, thick] (char) -- (gen)
-    node[midway, above, font=\scriptsize]{find roots};
+    node[midway, above=3pt, font=\scriptsize]{find roots};
   \draw[->, thick] (gen) -- (sol)
-    node[midway, right, font=\scriptsize]{solve for $\alpha, \beta$};
+    node[midway, right=3pt, font=\scriptsize]{solve for $\alpha, \beta$};
 \end{tikzpicture}
 \end{center}
 \end{theorybox}
@@ -172,12 +172,8 @@ The roots are distinct and real, so we are in \textbf{Case 1}.
     plot (\x, {(\x - 2)*(\x - 3)});
 
   % Roots
-  \fill[setB] (2, 0) circle (3pt) node[below=4pt, font=\footnotesize]{$r_1 = 2$};
-  \fill[setB] (3, 0) circle (3pt) node[below=4pt, font=\footnotesize]{$r_2 = 3$};
-
-  % Vertex
-  \fill[gray] (2.5, -0.25) circle (2pt);
-  \node[gray, font=\tiny, below] at (2.5, -0.35) {vertex};
+  \fill[setB] (2, 0) circle (3pt) node[below left=3pt, font=\footnotesize]{$r_1 = 2$};
+  \fill[setB] (3, 0) circle (3pt) node[below right=3pt, font=\footnotesize]{$r_2 = 3$};
 
   % Tick marks
   \foreach \x in {1, 2, 3, 4} {
@@ -286,20 +282,20 @@ This gives the Fibonacci-like recurrence $b_n = b_{n-1} + b_{n-2}$.
 
 \begin{center}
 \begin{tikzpicture}[>=Stealth, font=\small,
-  level distance=1.6cm, sibling distance=3.8cm,
+  level distance=2.0cm, sibling distance=5.0cm,
   edge from parent/.style={draw, thick, ->, >=Stealth},
   every node/.style={align=center}]
-  \node[draw, rounded corners, fill=theoryBg, minimum width=1.8cm]
+  \node[draw, rounded corners, fill=theoryBg, minimum width=2.0cm]
     {String of\\length $n$}
     child {
-      node[draw, rounded corners, fill=setA!12, minimum width=1.8cm]
+      node[draw, rounded corners, fill=setA!12, minimum width=2.0cm]
         {Starts with \texttt{1}\\remaining: $b_{n-1}$}
-      edge from parent node[left, font=\scriptsize] {first bit = \texttt{1}}
+      edge from parent node[left=4pt, font=\footnotesize] {first bit = \texttt{1}}
     }
     child {
-      node[draw, rounded corners, fill=setB!12, minimum width=1.8cm]
+      node[draw, rounded corners, fill=setB!12, minimum width=2.0cm]
         {Starts with \texttt{01}\\remaining: $b_{n-2}$}
-      edge from parent node[right, font=\scriptsize] {first bit = \texttt{0}}
+      edge from parent node[right=4pt, font=\footnotesize] {first bit = \texttt{0}}
     };
 \end{tikzpicture}
 \end{center}

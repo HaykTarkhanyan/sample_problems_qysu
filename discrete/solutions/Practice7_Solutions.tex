@@ -218,38 +218,38 @@ is the same as divisibility by $d_1 d_2$.
 
 \begin{center}
 \begin{tikzpicture}[>=Stealth, font=\small, scale=0.85]
-  \def\rr{1.4}
-  \coordinate (cA) at (-0.55, 0);
-  \coordinate (cB) at (0.55, 0);
+  \def\rr{1.6}
+  \coordinate (cA) at (-0.65, 0);
+  \coordinate (cB) at (0.65, 0);
 
   % Shade A only
   \begin{scope}
     \clip (cA) circle (\rr);
-    \fill[setA!20] (-3,-3) rectangle (3,3);
+    \fill[setA!20] (-4,-4) rectangle (4,4);
   \end{scope}
   % Shade B only
   \begin{scope}
     \clip (cB) circle (\rr);
-    \fill[setB!15] (-3,-3) rectangle (3,3);
+    \fill[setB!15] (-4,-4) rectangle (4,4);
   \end{scope}
   % Overlap
   \begin{scope}
     \clip (cA) circle (\rr);
     \clip (cB) circle (\rr);
-    \fill[purple!20] (-3,-3) rectangle (3,3);
+    \fill[purple!20] (-4,-4) rectangle (4,4);
   \end{scope}
 
   \draw[thick, setA] (cA) circle (\rr);
   \draw[thick, setB] (cB) circle (\rr);
 
-  \node[font=\footnotesize\bfseries, setA!70!black] at (-1.5, 0.9) {$A$};
-  \node[font=\footnotesize\bfseries, setB!70!black] at (1.5, 0.9) {$B$};
+  \node[font=\footnotesize\bfseries, setA!70!black] at (-1.7, 1.1) {$A$};
+  \node[font=\footnotesize\bfseries, setB!70!black] at (1.7, 1.1) {$B$};
 
-  \node[font=\scriptsize] at (-1.1, 0) {$|A|-|A\!\cap\! B|$};
-  \node[font=\scriptsize] at (0, 0) {$|A\!\cap\! B|$};
-  \node[font=\scriptsize] at (1.1, 0) {$|B|-|A\!\cap\! B|$};
+  \node[font=\scriptsize] at (-1.4, 0.25) {$|A|-|A\!\cap\! B|$};
+  \node[font=\scriptsize] at (0, -0.25) {$|A\!\cap\! B|$};
+  \node[font=\scriptsize] at (1.4, 0.25) {$|B|-|A\!\cap\! B|$};
 
-  \node[font=\footnotesize] at (0, -2.0) {$|A \cup B| = |A| + |B| - |A \cap B|$};
+  \node[font=\footnotesize] at (0, -2.2) {$|A \cup B| = |A| + |B| - |A \cap B|$};
 \end{tikzpicture}
 \end{center}
 \end{theorybox}
@@ -363,7 +363,7 @@ The grid contains two types of triangles with sides parallel to the original:
 \end{enumerate}
 
 \begin{center}
-\begin{tikzpicture}[scale=0.55, font=\small]
+\begin{tikzpicture}[scale=0.7, font=\small]
   % Small grid n=4 for illustration
   \def\n{4}
   % Draw grid lines
@@ -381,18 +381,18 @@ The grid contains two types of triangles with sides parallel to the original:
   % Highlight an upward triangle of side 2 (blue)
   \fill[setA!25, opacity=0.6] (0,0) -- (2,0) -- (1, {sqrt(3)}) -- cycle;
   \draw[thick, setA] (0,0) -- (2,0) -- (1, {sqrt(3)}) -- cycle;
-  \node[font=\tiny, setA!70!black] at (1, 0.45) {$s\!=\!2$};
+  \node[font=\scriptsize, setA!70!black] at (1, 0.5) {$s\!=\!2$};
 
   % Highlight a downward triangle of side 1 (red)
   \fill[setB!25, opacity=0.6] (1.5, {sqrt(3)/2}) -- (2, 0) -- (2.5, {sqrt(3)/2}) -- cycle;
   \draw[thick, setB] (1.5, {sqrt(3)/2}) -- (2, 0) -- (2.5, {sqrt(3)/2}) -- cycle;
 
   % Labels
-  \node[font=\footnotesize] at (2, -0.8) {Grid with $n=4$};
-  \node[font=\tiny, setA!70!black] at (-1.5, 1.2) {upward};
-  \draw[->, setA!70!black, thin] (-0.8, 1.1) -- (0.5, 0.7);
-  \node[font=\tiny, setB!70!black] at (4.0, 1.2) {downward};
-  \draw[->, setB!70!black, thin] (3.5, 1.0) -- (2.2, 0.4);
+  \node[font=\footnotesize] at (2, -0.9) {Grid with $n=4$};
+  \node[font=\scriptsize, setA!70!black] at (-1.8, 1.5) {upward};
+  \draw[->, setA!70!black, thin] (-1.0, 1.35) -- (0.4, 0.8);
+  \node[font=\scriptsize, setB!70!black] at (4.6, 1.5) {downward};
+  \draw[->, setB!70!black, thin] (4.0, 1.3) -- (2.3, 0.45);
 \end{tikzpicture}
 \end{center}
 \end{theorybox}

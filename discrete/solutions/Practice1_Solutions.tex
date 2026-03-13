@@ -130,38 +130,38 @@ then check whether the object on the left of $\in$ matches any of them.
 ]
   % ── 2.1 ──
   \begin{scope}[xshift=0cm]
-    \node[font=\footnotesize\bfseries] at (0.55, 2.0) {2.1};
+    \node[font=\footnotesize\bfseries] at (0.55, 2.6) {2.1};
     \node[elem, fill=setA!15] (a1) at (0, 0.7) {$\emptyset$};
     \node[elem, fill=setB!15] (a2) at (1.1, 0.7) {$\{\emptyset\}$};
     \node[container, fit=(a1)(a2),
-          label={[font=\scriptsize]above:$\{\emptyset,\;\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\emptyset,\;\{\emptyset\}\}$}] {};
     \draw[->, thick, setA!70!black]
-      (0, -0.5) node[below, font=\scriptsize]{$\emptyset$} -- (a1.south);
-    \node[font=\scriptsize\bfseries, green!50!black] at (0.55, -1.1)
+      (0, -0.7) node[below, font=\scriptsize]{$\emptyset$} -- (a1.south);
+    \node[font=\scriptsize\bfseries, green!50!black] at (0.55, -1.5)
       {Match $\checkmark$ \;\textbf{TRUE}};
   \end{scope}
 
   % ── 2.2 ──
   \begin{scope}[xshift=4.3cm]
-    \node[font=\footnotesize\bfseries] at (0, 2.0) {2.2};
+    \node[font=\footnotesize\bfseries] at (0, 2.6) {2.2};
     \node[elem, fill=setB!15] (b1) at (0, 0.7) {$\{\emptyset\}$};
     \node[container, fit=(b1),
-          label={[font=\scriptsize]above:$\{\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\{\emptyset\}\}$}] {};
     \draw[->, thick, setB!70!black]
-      (0, -0.5) node[below, font=\scriptsize]{$\{\emptyset\}$} -- (b1.south);
-    \node[font=\scriptsize\bfseries, green!50!black] at (0, -1.1)
+      (0, -0.7) node[below, font=\scriptsize]{$\{\emptyset\}$} -- (b1.south);
+    \node[font=\scriptsize\bfseries, green!50!black] at (0, -1.5)
       {Match $\checkmark$ \;\textbf{TRUE}};
   \end{scope}
 
   % ── 2.3 ──
   \begin{scope}[xshift=8cm]
-    \node[font=\footnotesize\bfseries] at (0, 2.0) {2.3};
+    \node[font=\footnotesize\bfseries] at (0, 2.6) {2.3};
     \node[elem, fill=setB!15] (c1) at (0, 0.7) {$\{\emptyset\}$};
     \node[container, fit=(c1),
-          label={[font=\scriptsize]above:$\{\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\{\emptyset\}\}$}] {};
     \draw[->, thick, red!70!black]
-      (0, -0.5) node[below, font=\scriptsize]{$\emptyset$} -- (c1.south);
-    \node[font=\scriptsize\bfseries, red!70!black] at (0, -1.1)
+      (0, -0.7) node[below, font=\scriptsize]{$\emptyset$} -- (c1.south);
+    \node[font=\scriptsize\bfseries, red!70!black] at (0, -1.5)
       {$\emptyset \neq \{\emptyset\}$ \;\textbf{FALSE}};
   \end{scope}
 \end{tikzpicture}
@@ -223,11 +223,11 @@ but is not a direct element of $C$.
   \node[font=\small, gray] at (7.0, 1.6) {$3$};
 
   % Annotations
-  \draw[<-, thick, setA!70!black] (1.7, 0.55) -- (1.7, -0.5)
+  \draw[<-, thick, setA!70!black] (1.7, 0.55) -- (1.7, -0.6)
     node[below, font=\footnotesize]{$A \in B$ (level 1)};
-  \draw[<-, thick, setB!70!black] (3.0, 0.15) -- (3.0, -0.5)
+  \draw[<-, thick, setB!70!black] (3.8, 0.15) -- (3.8, -1.1)
     node[below, font=\footnotesize]{$B \in C$ (level 2)};
-  \node[font=\footnotesize, red!70!black, align=center] at (7.0, -0.5)
+  \node[font=\footnotesize, red!70!black, align=center] at (7.0, -1.1)
     {$A$ is \emph{not} a direct\\element of $C$};
 \end{tikzpicture}
 \end{center}
@@ -490,7 +490,10 @@ $\quad\boxed{A \setminus C = \{10, 12, 14, \ldots\} = \{2k \mid k \ge 5\}}$
 
 \textbf{(e)\; $C \setminus (A \symdiff B)$:}\;
 Remove all positive integers ($=A \symdiff B$) from $C$:
-$\quad\boxed{C \setminus (A \symdiff B) = \{\ldots, -2, -1, 0\} = \{x \in \Z \mid x \le 0\}}$
+\[
+  \boxed{C \setminus (A \symdiff B) = \{\ldots, -2, -1, 0\}
+         = \{x \in \Z \mid x \le 0\}}
+\]
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
