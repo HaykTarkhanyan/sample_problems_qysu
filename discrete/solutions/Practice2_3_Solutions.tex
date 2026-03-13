@@ -7,13 +7,14 @@
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{tikz}
-\usetikzlibrary{calc, positioning, arrows.meta, fit, patterns, decorations.pathreplacing}
+\usetikzlibrary{calc, positioning, arrows.meta, fit, patterns, decorations.pathreplacing, shapes.geometric}
 \usepackage{geometry}
 \geometry{margin=2.4cm}
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems, skins, breakable}
 \usepackage{booktabs}
+\usepackage{colortbl}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
 
@@ -25,6 +26,9 @@
 \definecolor{setB}{RGB}{234, 67, 53}    % red
 \definecolor{setC}{RGB}{251, 188, 4}    % yellow
 \definecolor{newEdge}{RGB}{39, 174, 96} % green for added edges
+\definecolor{diagGray}{gray}{0.85}      % matrix diagonal shading
+\definecolor{mirrorBlue}{RGB}{173,216,230}  % mirrored pair highlight (light blue)
+\definecolor{mirrorRose}{RGB}{255,204,204}  % mirrored pair highlight (light rose)
 \definecolor{theoryBg}{RGB}{232, 245, 253}
 \definecolor{theoryFrame}{RGB}{66, 133, 244}
 \definecolor{stmtBg}{RGB}{255, 243, 224}
@@ -85,6 +89,28 @@ For a relation $\alpha \subseteq A \times B$:
 Find the domain $D_\alpha$ and range $R_\alpha$ for each of the following relations.
 \end{problembox}
 
+\textbf{Method.}\; To find the domain, fix $x$ and ask whether \textbf{some} $y$ exists satisfying the relation. To find the range, fix $y$ and ask whether \textbf{some} $x$ exists.
+
+\medskip
+
+\begin{tcolorbox}[colback=blue!3, colframe=setA!60, arc=2mm, left=5pt, right=5pt, top=4pt, bottom=4pt,
+  fonttitle=\bfseries, title={\small Intuition: Shadow Projection Analogy}]
+Think of a relation $\alpha \subseteq \R^2$ as a \textbf{2-D shape} drawn on the $xy$-plane.
+\begin{itemize}[nosep]
+  \item The \textbf{domain} $D_\alpha$ is the \emph{shadow} that shape casts onto the $x$-axis
+        (shine a light straight down and see which $x$-values are ``hit'').
+  \item The \textbf{range} $R_\alpha$ is the shadow cast onto the $y$-axis
+        (shine a light from the right and see which $y$-values are ``hit'').
+\end{itemize}
+\smallskip
+For example, the disk $x^2 + y^2 \le 16$ is a filled circle of radius~4.
+Its shadow on each axis is the interval $[-4,\,4]$, so both $D_\alpha$ and $R_\alpha$ equal $[-4,\,4]$.
+
+This ``shadow'' picture works for \emph{any} geometric relation defined by an inequality or equation.
+\end{tcolorbox}
+
+\medskip
+
 %────────────────────────────────────────
 \subsection*{(a)\; $\alpha = \{(a,1),\,(a,2),\,(c,1),\,(c,2),\,(c,4),\,(d,5)\}$}
 
@@ -107,7 +133,8 @@ $D_\alpha = \N = \{1,2,3,\dots\}, \qquad
 %────────────────────────────────────────
 \subsection*{(c)\; $\alpha = \{(x,y) \in \R^2 \mid x = y^2\}$}
 
-Since $x = y^2 \ge 0$ for all $y$, and for every $x \ge 0$ there exists $y = \pm\sqrt{x}$:
+Since $x = y^2 \ge 0$ for all $y$, and for every $x \ge 0$ there exists $y = \pm\sqrt{x}$.
+Because squares are never negative, negative values of $x$ cannot occur in the domain.
 
 \begin{answerbox}
 $D_\alpha = [0, +\infty), \qquad R_\alpha = \R.$
@@ -232,7 +259,10 @@ Construct the graph and matrix for the following relations on $A = \{a, b, c, d,
 %────────────────────────────────────────
 \subsection*{(a)\; $\alpha = \{(a,b),(b,a),(b,c),(c,b),(c,a),(a,c),(d,e),(e,d)\}$}
 
-Since every pair appears with its reverse, the relation is symmetric. Undirected edges: $a\text{--}b$,\; $b\text{--}c$,\; $a\text{--}c$,\; $d\text{--}e$.
+Since every pair appears with its reverse, the relation is symmetric. Undirected edges:
+\[
+  \boxed{a\text{--}b,\quad b\text{--}c,\quad a\text{--}c,\quad d\text{--}e.}
+\]
 
 \begin{center}
 \begin{minipage}{0.45\textwidth}\centering
@@ -251,23 +281,33 @@ Since every pair appears with its reverse, the relation is symmetric. Undirected
 \end{tikzpicture}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}\centering
-$M_\alpha = \bordermatrix{
-  & a & b & c & d & e \cr
-a & 0 & 1 & 1 & 0 & 0 \cr
-b & 1 & 0 & 1 & 0 & 0 \cr
-c & 1 & 1 & 0 & 0 & 0 \cr
-d & 0 & 0 & 0 & 0 & 1 \cr
-e & 0 & 0 & 0 & 1 & 0 \cr
-}$
+\textbf{Color-coded matrix} (symmetry visible):\\[4pt]
+{\small Diagonal = \colorbox{diagGray}{gray},\;
+mirrored 1's = \colorbox{mirrorBlue}{blue} / \colorbox{mirrorRose}{rose}.}\\[4pt]
+\renewcommand{\arraystretch}{1.15}
+$M_\alpha = \left(\;\begin{tabular}{c|ccccc}
+  & $a$ & $b$ & $c$ & $d$ & $e$ \\\hline
+$a$ & \cellcolor{diagGray}0 & \cellcolor{mirrorBlue}1 & \cellcolor{mirrorRose}1 & 0 & 0 \\
+$b$ & \cellcolor{mirrorBlue}1 & \cellcolor{diagGray}0 & \cellcolor{mirrorBlue}1 & 0 & 0 \\
+$c$ & \cellcolor{mirrorRose}1 & \cellcolor{mirrorBlue}1 & \cellcolor{diagGray}0 & 0 & 0 \\
+$d$ & 0 & 0 & 0 & \cellcolor{diagGray}0 & \cellcolor{mirrorRose}1 \\
+$e$ & 0 & 0 & 0 & \cellcolor{mirrorRose}1 & \cellcolor{diagGray}0
+\end{tabular}\;\right)$
 \end{minipage}
 \end{center}
 
+The matrix is symmetric ($M = M^T$): every shaded 1 above the diagonal has a matching shaded 1 below it.
 Two connected components: the triangle $\{a,b,c\}$ and the edge $\{d,e\}$.
+
+\textbf{Construction order.}\; For a finite relation on $A$: (1) list the ordered pairs, (2) fill the matrix row by row from the pairs, (3) read the directed graph off the matrix.
 
 %────────────────────────────────────────
 \subsection*{(b)\; $\alpha = \{(a,b),(b,a),(b,c),(c,b),(c,d),(d,c),(c,a),(a,c)\}$}
 
-Undirected edges: $a\text{--}b$,\; $b\text{--}c$,\; $c\text{--}d$,\; $a\text{--}c$.
+Undirected edges:
+\[
+  \boxed{a\text{--}b,\quad b\text{--}c,\quad c\text{--}d,\quad a\text{--}c.}
+\]
 
 \begin{center}
 \begin{minipage}{0.45\textwidth}\centering
@@ -285,14 +325,15 @@ Undirected edges: $a\text{--}b$,\; $b\text{--}c$,\; $c\text{--}d$,\; $a\text{--}
 \end{tikzpicture}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}\centering
-$M_\alpha = \bordermatrix{
-  & a & b & c & d & e \cr
-a & 0 & 1 & 1 & 0 & 0 \cr
-b & 1 & 0 & 1 & 0 & 0 \cr
-c & 1 & 1 & 0 & 1 & 0 \cr
-d & 0 & 0 & 1 & 0 & 0 \cr
-e & 0 & 0 & 0 & 0 & 0 \cr
-}$
+\renewcommand{\arraystretch}{1.15}
+$M_\alpha = \left(\;\begin{tabular}{c|ccccc}
+  & $a$ & $b$ & $c$ & $d$ & $e$ \\\hline
+$a$ & \cellcolor{diagGray}0 & \cellcolor{mirrorBlue}1 & \cellcolor{mirrorRose}1 & 0 & 0 \\
+$b$ & \cellcolor{mirrorBlue}1 & \cellcolor{diagGray}0 & \cellcolor{mirrorBlue}1 & 0 & 0 \\
+$c$ & \cellcolor{mirrorRose}1 & \cellcolor{mirrorBlue}1 & \cellcolor{diagGray}0 & \cellcolor{mirrorRose}1 & 0 \\
+$d$ & 0 & 0 & \cellcolor{mirrorRose}1 & \cellcolor{diagGray}0 & 0 \\
+$e$ & 0 & 0 & 0 & 0 & \cellcolor{diagGray}0
+\end{tabular}\;\right)$
 \end{minipage}
 \end{center}
 
@@ -436,6 +477,70 @@ f & 0 & 0 & 0 & 0 & 0 & 0 \cr
 
 The loops at $c$ and $e$ appear as 1's on the main diagonal.  The $b$-row and $b$-column are all zeros.
 
+A zero row in the matrix means ``no outgoing edges'' from that element. A zero column means ``no incoming edges'' to that element.
+
+%────────────────────────────────────────
+\subsection*{Contrast: Symmetric (2.1) vs.\ Non-symmetric (2.2) Matrices}
+
+The matrices from Problems~2.1 and 2.2 illustrate the structural difference between symmetric (undirected) and general (directed) relations.  Below we place the matrix from~2.1\,(a) next to the matrix from~2.2\,(a):
+
+\begin{center}
+\begin{minipage}{0.45\textwidth}\centering
+\textbf{Problem 2.1\,(a) --- Symmetric}\\[4pt]
+\renewcommand{\arraystretch}{1.15}
+$\left(\;\begin{tabular}{ccccc}
+0 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1 & 0
+\end{tabular}\;\right)$\\[4pt]
+{\small $M = M^T$: entry $(i,j)$ always equals entry $(j,i)$.\\
+Undirected edges; no arrows needed.}
+\end{minipage}%
+\hfill
+\begin{minipage}{0.45\textwidth}\centering
+\textbf{Problem 2.2\,(a) --- Non-symmetric}\\[4pt]
+\renewcommand{\arraystretch}{1.15}
+$\left(\;\begin{tabular}{cccccc}
+0 & 1 & 1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0
+\end{tabular}\;\right)$\\[4pt]
+{\small $M \ne M^T$: e.g.\ $M_{12}=1$ but $M_{21}=0$.\\
+Directed edges (arrows) required.}
+\end{minipage}
+\end{center}
+
+%────────────────────────────────────────
+\subsection*{Degree Tracking --- Problem 2.2\,(a)}
+
+For a directed relation, each vertex has an \textbf{in-degree} (number of incoming edges) and an \textbf{out-degree} (number of outgoing edges).  These are read directly from the matrix: the out-degree of vertex~$v$ is the row sum, and the in-degree is the column sum.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|c|c}
+  \toprule
+  \textbf{Vertex} & \textbf{In-degree} & \textbf{Out-degree} \\
+  \midrule
+  $a$ & 0 & 2 \\
+  $b$ & 1 & 2 \\
+  $c$ & 2 & 2 \\
+  $d$ & 1 & 1 \\
+  $e$ & 2 & 0 \\
+  $f$ & 2 & 1 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Observe that $\sum \text{in-degrees} = \sum \text{out-degrees} = |\alpha| = 8$ (every edge contributes~1 to each total).
+
+Vertex~$e$ has out-degree~0, making it a \emph{sink} (no outgoing arrows).
+Vertex~$a$ has in-degree~0, making it a \emph{source} (no incoming arrows).
+
 % ══════════════════════════════════════════════════════════════════
 \newpage
 \section{Problem 3.3 --- Composition of Relations}
@@ -460,6 +565,10 @@ Let $\alpha$ and $\beta$ be relations on $\Z$:
 \]
 Find $\alpha \circ \beta$ and $\beta \circ \alpha$.
 \end{problembox}
+
+\textbf{Convention.}\; Relation composition is read \textbf{left-to-right} here: in $\alpha \circ \beta$, apply $\alpha$ first, then $\beta$. This is the most common source of errors.
+
+\medskip
 
 \subsection*{Finding $\alpha \circ \beta$}
 
@@ -502,7 +611,7 @@ $\beta \circ \alpha = \{\,(x,\; x^2 + 2) \mid x \in \Z\,\}.$
 \end{tabular}
 \end{center}
 
-\textbf{Key observation:} $\alpha \circ \beta \ne \beta \circ \alpha$, confirming that composition of relations is \emph{not commutative} in general.
+\textbf{Key observation:} $\boxed{\alpha \circ \beta \ne \beta \circ \alpha}$\,--- composition of relations is \emph{not commutative} in general.
 
 \begin{center}
 \begin{tikzpicture}[>=Stealth, font=\small, node distance=2.2cm]
@@ -525,6 +634,62 @@ $\beta \circ \alpha = \{\,(x,\; x^2 + 2) \mid x \in \Z\,\}.$
   \end{scope}
 \end{tikzpicture}
 \end{center}
+
+\subsection*{Mapping Diagram for a Finite Example}
+
+To build further intuition, consider a concrete finite example.
+Let $X = \{1,2,3\}$, $Y = \{a,b\}$, $Z = \{p,q\}$, with
+\[
+  R = \{(1,a),\;(2,b),\;(3,a)\} \subseteq X \times Y,
+  \qquad
+  S = \{(a,p),\;(b,q)\} \subseteq Y \times Z.
+\]
+Then $S \circ R$ connects each $x \in X$ to every $z \in Z$ reachable via some intermediate $y$:
+\[
+  \boxed{S \circ R = \{(1,p),\;(2,q),\;(3,p)\}.}
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=0.8cm, font=\small]
+  % Set X
+  \node (x1) at (0, 2)   {$1$};
+  \node (x2) at (0, 1)   {$2$};
+  \node (x3) at (0, 0)   {$3$};
+  \node[draw=setA, ellipse, thick, fit=(x1)(x2)(x3),
+        inner xsep=8pt, inner ysep=4pt, label={above:$X$}] {};
+
+  % Set Y
+  \node (ya) at (3.5, 1.5) {$a$};
+  \node (yb) at (3.5, 0.5) {$b$};
+  \node[draw=setB, ellipse, thick, fit=(ya)(yb),
+        inner xsep=8pt, inner ysep=4pt, label={above:$Y$}] {};
+
+  % Set Z
+  \node (zp) at (7, 1.5) {$p$};
+  \node (zq) at (7, 0.5) {$q$};
+  \node[draw=newEdge, ellipse, thick, fit=(zp)(zq),
+        inner xsep=8pt, inner ysep=4pt, label={above:$Z$}] {};
+
+  % Relation R (X -> Y)
+  \draw[->, thick, setA] (x1) -- node[above, pos=0.4]{\tiny $R$} (ya);
+  \draw[->, thick, setA] (x2) -- node[above, pos=0.4]{\tiny $R$} (yb);
+  \draw[->, thick, setA] (x3) -- node[below, pos=0.4]{\tiny $R$} (ya);
+
+  % Relation S (Y -> Z)
+  \draw[->, thick, setB] (ya) -- node[above, pos=0.6]{\tiny $S$} (zp);
+  \draw[->, thick, setB] (yb) -- node[below, pos=0.6]{\tiny $S$} (zq);
+
+  % Composition paths (dashed, green)
+  \draw[->, thick, newEdge, dashed, bend left=35]
+    (x1) to node[above, pos=0.5]{\tiny $S\!\circ\!R$} (zp);
+  \draw[->, thick, newEdge, dashed, bend right=0]
+    (x2) to node[below, pos=0.5]{\tiny $S\!\circ\!R$} (zq);
+  \draw[->, thick, newEdge, dashed, bend right=35]
+    (x3) to node[below, pos=0.5]{\tiny $S\!\circ\!R$} (zp);
+\end{tikzpicture}
+\end{center}
+
+{\small\textbf{Reading the diagram:} Solid blue arrows are~$R$, solid red arrows are~$S$, and dashed green arrows are the composed pairs in $S \circ R$.  Each dashed arrow represents a connected path through some intermediate vertex in~$Y$.}
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
@@ -575,6 +740,22 @@ Geometrically, $(x,y) \in \alpha$ iff the point $(x,y)$ lies on the unit circle.
 Symmetric only.
 \end{answerbox}
 
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & No  & $(0,0)$: $0^2+0^2=0\ne1$ \\
+  Symmetric      & Yes & $x^2+y^2 = y^2+x^2$ \\
+  Antisymmetric  & No  & $(0,1)$ and $(1,0)$ both $\in\alpha$, but $0\ne1$ \\
+  Transitive     & No  & $(1,0),(0,1)\in\alpha$ but $(1,1)\notin\alpha$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{Neither equivalence relation nor partial order} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
 %────────────────────────────────────────
 \subsection*{(b)\; $\alpha = \{(x,y) \in \R^2 \mid x^2 = y^2\}$}
 
@@ -594,6 +775,25 @@ Reflexive, symmetric, transitive --- this is an \textbf{equivalence relation}.
 Equivalence classes: $[x] = \{x, -x\}$ for each $x \in \R$.
 \end{answerbox}
 
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & Yes & $x^2 = x^2$ always \\
+  Symmetric      & Yes & $x^2=y^2 \Rightarrow y^2=x^2$ \\
+  Antisymmetric  & No  & $1^2=(-1)^2$ and $(-1)^2=1^2$, but $1\ne -1$ \\
+  Transitive     & Yes & $x^2=y^2, y^2=z^2 \Rightarrow x^2=z^2$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{\textbf{Equivalence relation}} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+\textbf{Induced partition:}\; $\R$ is partitioned into blocks $\{x,-x\}$.  For $x=0$ the block is $\{0\}$; for $x\ne 0$ each block has exactly two elements.
+
 %────────────────────────────────────────
 \subsection*{(c)\; $\alpha = \{(x,y) \in \Z^2 \mid x \mid y\}$}
 
@@ -610,6 +810,22 @@ Here $x \mid y$ means ``$x$ divides $y$,'' i.e.\ $\exists\, k \in \Z:\; y = kx$.
 \begin{answerbox}
 Reflexive and transitive, but \emph{not} antisymmetric on $\Z$ (due to sign).
 \end{answerbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & Yes & $x = 1\cdot x$ \\
+  Symmetric      & No  & $1\mid 2$ but $2\nmid 1$ \\
+  Antisymmetric  & No  & $2\mid(-2)$ and $(-2)\mid 2$, but $2\ne -2$ \\
+  Transitive     & Yes & $y=kx,\; z=\ell y \Rightarrow z=\ell k x$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{Preorder (reflexive + transitive), not a partial order} \\
+  \bottomrule
+\end{tabular}
+\end{center}
 
 %────────────────────────────────────────
 \subsection*{(d)\; $\alpha = \{(x,y) \in \N^2 \mid x \mid y\}$}
@@ -630,6 +846,22 @@ Reflexive, antisymmetric, transitive --- this is a \textbf{partial order}.
 Compare with (c): restricting from $\Z$ to $\N$ restores antisymmetry.
 \end{answerbox}
 
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & Yes & $x = 1\cdot x$ \\
+  Symmetric      & No  & $1\mid 2$ but $2\nmid 1$ \\
+  Antisymmetric  & Yes & $x\mid y,\; y\mid x$ with $x,y>0 \Rightarrow x=y$ \\
+  Transitive     & Yes & $y=kx,\; z=\ell y \Rightarrow z=\ell k x$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{\textbf{Partial order} $(\N, \mid)$} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
 %────────────────────────────────────────
 \subsection*{(e)\; $\alpha = \{(x,y) \in \N^2 \mid \gcd(x,y) = 1\}$}
 
@@ -647,6 +879,22 @@ $(x,y) \in \alpha$ iff $x$ and $y$ are coprime.
 Symmetric only.
 \end{answerbox}
 
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & No  & $\gcd(2,2)=2\ne 1$ \\
+  Symmetric      & Yes & $\gcd(x,y)=\gcd(y,x)$ \\
+  Antisymmetric  & No  & $\gcd(2,3)=1$ and $\gcd(3,2)=1$, but $2\ne 3$ \\
+  Transitive     & No  & $\gcd(2,3)=1,\;\gcd(3,4)=1$, but $\gcd(2,4)=2$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{Neither equivalence relation nor partial order} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
 %────────────────────────────────────────
 \subsection*{(f)\; $\alpha = \{(x,y) \in \Z^2 \mid \gcd(x,y) = 1\}$}
 
@@ -655,6 +903,22 @@ The analysis is identical to part~(e) since $\gcd$ depends only on absolute valu
 \begin{answerbox}
 Symmetric only.
 \end{answerbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|c|l}
+  \toprule
+  \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
+  \midrule
+  Reflexive      & No  & $\gcd(2,2)=2\ne 1$ \\
+  Symmetric      & Yes & $\gcd(x,y)=\gcd(y,x)$ \\
+  Antisymmetric  & No  & $\gcd(2,3)=1$ and $\gcd(3,2)=1$, but $2\ne 3$ \\
+  Transitive     & No  & $\gcd(2,3)=1,\;\gcd(3,4)=1$, but $\gcd(2,4)=2$ \\
+  \midrule
+  \textbf{Classification} & \multicolumn{2}{l}{Neither equivalence relation nor partial order} \\
+  \bottomrule
+\end{tabular}
+\end{center}
 
 %────────────────────────────────────────
 \subsection*{Summary Table}
@@ -674,6 +938,14 @@ Symmetric only.
   \bottomrule
 \end{tabular}
 \end{center}
+
+\textbf{How to check (quick tests):}
+\begin{itemize}[nosep]
+  \item Not reflexive: find one $x$ with $(x,x) \notin R$.
+  \item Not symmetric: find $(a,b) \in R$ with $(b,a) \notin R$.
+  \item Not antisymmetric: find $a \neq b$ with both $(a,b)$ and $(b,a)$ in $R$.
+  \item Not transitive: find $(a,b), (b,c) \in R$ with $(a,c) \notin R$.
+\end{itemize}
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
@@ -733,7 +1005,7 @@ $M_\alpha = \begin{pmatrix}
 Add all diagonal pairs $(x,x)$ for $x \in A$:
 \begin{align*}
   r(\alpha) &= \alpha \cup \{(1,1),\,(2,2),\,(3,3),\,(4,4)\} \\
-            &= \{(1,1),\,(1,2),\,(2,2),\,(2,4),\,(3,1),\,(3,2),\,(3,3),\,(4,4)\}.
+            &= \boxed{\{(1,1),\,(1,2),\,(2,2),\,(2,4),\,(3,1),\,(3,2),\,(3,3),\,(4,4)\}.}
 \end{align*}
 
 \begin{center}
@@ -779,8 +1051,8 @@ Add the reverse of every pair:
   \alpha^{-1} = \{(2,1),\,(1,3),\,(2,3),\,(4,2)\}.
 \]
 \[
-  s(\alpha) = \alpha \cup \alpha^{-1}
-  = \{(1,2),\,(1,3),\,(2,1),\,(2,3),\,(2,4),\,(3,1),\,(3,2),\,(4,2)\}.
+  \boxed{s(\alpha) = \alpha \cup \alpha^{-1}
+  = \{(1,2),\,(1,3),\,(2,1),\,(2,3),\,(2,4),\,(3,1),\,(3,2),\,(4,2)\}.}
 \]
 
 \begin{center}
@@ -821,6 +1093,66 @@ $M_{s(\alpha)} = \begin{pmatrix}
 %────────────────────────────────────────
 \subsection*{Transitive closure $t(\alpha)$}
 
+\textbf{Interpretation.}\; The transitive closure $t(\alpha)$ adds all pairs $(a,c)$ such that there is a directed path from $a$ to $c$ in the relation graph. Equivalently, $(a,c) \in t(\alpha)$ iff $a$ can reach $c$ in one or more steps.
+
+\medskip
+
+\begin{tcolorbox}[colback=yellow!5, colframe=stmtFrame!80, arc=2mm,
+  fonttitle=\bfseries, title={\small Visual Build-Up: Adding ``Shortcut'' Edges},
+  breakable, left=5pt, right=5pt, top=4pt, bottom=4pt]
+The transitive closure is built layer by layer.  At each step we look for paths of increasing length and add a direct ``shortcut'' edge for each one.
+
+\begin{center}
+\begin{tikzpicture}[
+  every node/.style={circle, draw, thick, minimum size=9mm, inner sep=0pt},
+  >=Stealth
+]
+  % --- Layer 0: Original relation ---
+  \begin{scope}[local bounding box=L0]
+    \node (a1) at (0,2.2)   {$1$};
+    \node (a2) at (2.5,2.2) {$2$};
+    \node (a3) at (0,0)     {$3$};
+    \node (a4) at (2.5,0)   {$4$};
+    \draw[->, thick, setA] (a1) -- (a2);
+    \draw[->, thick, setA] (a3) -- (a1);
+    \draw[->, thick, setA] (a3) edge[bend right=12] (a2);
+    \draw[->, thick, setA] (a2) -- (a4);
+  \end{scope}
+  \node[draw=none, below=2pt of L0, font=\small\bfseries] {Step 0: $\alpha$ (original)};
+
+  % --- Layer 1: Add length-2 shortcuts ---
+  \begin{scope}[xshift=5.5cm, local bounding box=L1]
+    \node (b1) at (0,2.2)   {$1$};
+    \node (b2) at (2.5,2.2) {$2$};
+    \node (b3) at (0,0)     {$3$};
+    \node (b4) at (2.5,0)   {$4$};
+    % Original edges
+    \draw[->, thick, setA] (b1) -- (b2);
+    \draw[->, thick, setA] (b3) -- (b1);
+    \draw[->, thick, setA] (b3) edge[bend right=12] (b2);
+    \draw[->, thick, setA] (b2) -- (b4);
+    % New shortcut edges (length-2 paths) -- dashed red
+    \draw[->, thick, setB, dashed] (b1) edge[bend left=30] (b4);
+    \draw[->, thick, setB, dashed] (b3) -- (b4);
+  \end{scope}
+  \node[draw=none, below=2pt of L1, font=\small\bfseries] {Step 1: add $\alpha^2$ shortcuts};
+
+  % Legend
+  \node[draw=none, font=\small, text width=4cm, align=left]
+    at (8.8, 2.8) {%
+      \textcolor{setA}{\rule{10pt}{2pt}} original ($\alpha$)\\
+      \textcolor{setB}{- - -} length-2 shortcuts ($\alpha^2$)};
+\end{tikzpicture}
+\end{center}
+
+\smallskip
+In this example, vertex~$4$ is a sink (no outgoing edges), so there are \emph{no} paths of length~3 that produce new pairs.  The process terminates:  $t(\alpha) = \alpha \cup \alpha^2$.
+
+In general, for $|A|=n$ the process always terminates after at most $n-1$ steps, since any path in an $n$-vertex graph that does not repeat vertices has length $\le n-1$.
+\end{tcolorbox}
+
+\medskip
+
 We compute successive powers of $\alpha$:
 
 \textbf{Step 1: $\alpha^2 = \alpha \circ \alpha$.}\; For each chain $x \xrightarrow{\alpha} y \xrightarrow{\alpha} z$:
@@ -829,7 +1161,7 @@ We compute successive powers of $\alpha$:
   \item $(3,1)$ and $(1,2)$: gives $(3,2)$.  Already in $\alpha$.
   \item $(3,2)$ and $(2,4)$: gives $\boldsymbol{(3,4)}$.  \textbf{New!}
 \end{itemize}
-New pairs: $(1,4)$ and $(3,4)$.
+New pairs: $\boxed{(1,4) \text{ and } (3,4)}$.
 
 \textbf{Step 2: $\alpha^3 = \alpha^2 \circ \alpha$.}\; The new second coordinates are all~$4$, but $4$ has no outgoing edges in $\alpha$, so no further pairs arise.
 

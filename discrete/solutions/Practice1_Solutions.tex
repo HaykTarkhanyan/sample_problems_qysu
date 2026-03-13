@@ -116,6 +116,27 @@ Which of the following statements are true?
 \end{enumerate}
 \end{problembox}
 
+\medskip
+\begin{tcolorbox}[colback=blue!3, colframe=setA!60!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Box Analogy: How $\in$ Works}]
+Think of every set as a \textbf{box}. The $\in$ operator opens the box and looks at what is \emph{directly} inside---it only looks \textbf{one box deep}. It never opens inner boxes.
+
+\begin{itemize}[nosep]
+  \item $\emptyset$ is an \textbf{empty box}---you open it and find nothing inside.
+        Therefore $|\emptyset| = 0$.
+  \item $\{\emptyset\}$ is a \textbf{box containing one item}: another (empty) box.
+        You open $\{\emptyset\}$ and see one thing sitting there---the empty box $\emptyset$.
+        Therefore $|\{\emptyset\}| = 1$.
+\end{itemize}
+
+\medskip
+This is why $\emptyset \neq \{\emptyset\}$: an empty box is not the same as a box that contains an empty box, just as an empty envelope is not the same as an envelope containing another empty envelope.
+
+When you test ``$x \in S$\,?'', open the box $S$, look at the items directly visible (one level deep), and check whether $x$ is one of those items. \textbf{Never unwrap items inside items.}
+\end{tcolorbox}
+
+\medskip
+\textbf{Method.}\; List the elements of each outer set first: $\{\emptyset,\;\{\emptyset\}\}$, $\{\{\emptyset\}\}$. Then check whether the left-hand object matches any listed element.
+
 \subsection*{Solution}
 
 The strategy is always the same: \emph{list the elements} of the outer set,
@@ -165,6 +186,19 @@ then check whether the object on the left of $\in$ matches any of them.
       {$\emptyset \neq \{\emptyset\}$ \;\textbf{FALSE}};
   \end{scope}
 \end{tikzpicture}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+\toprule
+\textbf{Left object} & \textbf{Elements of outer set} & \textbf{Match?} \\
+\midrule
+$\emptyset$ & $\emptyset,\;\{\emptyset\}$ & Yes --- \textbf{TRUE} \\
+$\{\emptyset\}$ & $\{\emptyset\}$ & Yes --- \textbf{TRUE} \\
+$\emptyset$ & $\{\emptyset\}$ & No ($\emptyset \neq \{\emptyset\}$) --- \textbf{FALSE} \\
+\bottomrule
+\end{tabular}
 \end{center}
 
 \textbf{2.1.}\; $\emptyset \in \{\emptyset,\;\{\emptyset\}\}$
@@ -238,6 +272,20 @@ Give examples of sets $A$, $B$, $C$ such that
 $A \in B$, \;$B \in C$, \;but $A \notin C$.
 \end{problembox}
 
+\begin{tcolorbox}[colback=yellow!5, colframe=stmtFrame!80!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Real-World Analogy: Level Jumps}]
+\textbf{A person, a committee, and a task force.}
+
+Suppose Professor~$A$ is a \emph{member} of the Curriculum Committee~$B$, and the Curriculum Committee~$B$ is a \emph{member} of the University Task Force~$C$ (a body whose members are entire committees, not individual people).
+
+\begin{itemize}[nosep]
+  \item $A \in B$: the professor sits on the committee.
+  \item $B \in C$: the committee belongs to the task force.
+  \item $A \notin C$: the professor is \textbf{not} individually a member of the task force---only whole committees are members of the task force.
+\end{itemize}
+
+The key insight: $\in$ crosses exactly \textbf{one level} of containment. Two $\in$-steps cross \emph{two} levels, so the individual ($A$) is buried two levels deep inside $C$ but is not a \emph{direct} member of $C$.
+\end{tcolorbox}
+
 \subsection*{Solution}
 Let
 \[
@@ -262,6 +310,13 @@ $A \notin C$ & Is $1 \in \bigl\{\{1,2\},\, 3\bigr\}$?
 The number $1$ is an element of $B$, and $B$ is an element of $C$,
 but the elements of $C$ are $\{1,2\}$ (a set) and $3$ (a number).
 The number $1$ is neither of these, so $1 \notin C$.
+
+\medskip
+\textbf{Contrast.}\; The conclusion $A \notin C$ is not automatic---it can fail.
+Let $A = 1$, $B = \{1\}$, $C = \{1, \{1\}\}$.
+Then $A \in B$ ($1 \in \{1\}$), $B \in C$ ($\{1\} \in \{1, \{1\}\}$),
+and also $A \in C$ ($1 \in \{1, \{1\}\}$).
+So $\in$ is \emph{sometimes} transitive by accident, but not always.
 
 % ══════════════════════════════════════════════════════════════════
 \section{Problem 11 --- Mixing $\in$ and $\subseteq$}
@@ -306,6 +361,28 @@ Give examples of sets $A, B, C, D, E$ satisfying:
 
 \subsection*{Solution}
 
+\begin{tcolorbox}[colback=gray!3, colframe=gray!60, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Color Guide: Seeing the Nesting Levels}]
+When sets contain other sets as elements, it helps to color-code the levels:
+\begin{itemize}[nosep]
+  \item \textcolor{blue}{Blue} = plain numbers (lowest level objects).
+  \item \textcolor{red}{Red braces} = set-braces of an inner set that is itself an \emph{element} of an outer set.
+  \item Black braces = the outer set's own boundary.
+\end{itemize}
+
+\medskip
+For example, $C = \bigl\{\textcolor{red}{\{}\textcolor{blue}{1,2}\textcolor{red}{\}},\;\textcolor{blue}{3}\bigr\}$ has two elements:
+the set $\textcolor{red}{\{}\textcolor{blue}{1,2}\textcolor{red}{\}}$ (an inner set, marked in red braces) and the number $\textcolor{blue}{3}$ (a plain number in blue).
+
+\medskip
+Similarly:
+\[
+  D = \bigl\{\textcolor{red}{\{}\textcolor{blue}{1,2}\textcolor{red}{\}},\;\textcolor{blue}{3},\;\textcolor{blue}{4}\bigr\},
+  \qquad
+  E = \bigl\{\textcolor{red}{\{}\textcolor{blue}{1,2}\textcolor{red}{\}},\;\textcolor{blue}{3},\;\textcolor{blue}{4},\;\textcolor{blue}{5}\bigr\}
+\]
+In each case, the \textcolor{red}{red-braced} item is a set-element (one level up), while the \textcolor{blue}{blue} items are number-elements.
+\end{tcolorbox}
+
 \[
   A = \{1\}, \quad B = \{1,2\}, \quad C = \bigl\{\{1,2\},\;3\bigr\}, \quad
   D = \bigl\{\{1,2\},\;3,\;4\bigr\}, \quad E = \bigl\{\{1,2\},\;3,\;4,\;5\bigr\}
@@ -328,6 +405,14 @@ $D \subseteq E$ & subset &
 \bottomrule
 \end{tabular}
 \end{center}
+
+\medskip
+\textbf{Level structure.}
+\begin{itemize}[nosep]
+  \item $A, B$: sets of \emph{numbers} (elements are $1, 2$).
+  \item $C, D, E$: sets whose elements \emph{include a set} ($\{1,2\}$ is an element alongside numbers like $3, 4, 5$).
+\end{itemize}
+The $\in$-step from $B$ to $C$ is where the level jump happens.
 
 \textbf{Why this works.}\;
 $\subseteq$ preserves the ``level'': $A$ and $B$ contain the same kind of objects (numbers).
@@ -465,6 +550,16 @@ $A \setminus C$,\; $C \setminus (A \symdiff B)$.
 \end{tikzpicture}
 \end{center}
 
+\textbf{Translate each operation into words first:}
+\begin{itemize}[nosep]
+  \item $\comp{A}$: integers that are \textbf{not} positive even.
+  \item $A \symdiff B$: integers in \textbf{exactly one} of $A, B$.
+  \item $\comp{C}$: integers that are \textbf{not} less than $10$.
+  \item $A \setminus C$: positive evens that are \textbf{not} in $C$ (i.e.\ $\ge 10$).
+  \item $C \setminus (A \symdiff B)$: integers $< 10$ that are \textbf{not} positive.
+\end{itemize}
+
+\medskip
 \textbf{(a)\; $\comp{A}$:}\;
 Everything in $\Z$ that is \emph{not} a positive even integer:
 \[
@@ -476,7 +571,9 @@ Everything in $\Z$ that is \emph{not} a positive even integer:
 Since $A \cap B = \emptyset$ (no integer is both positive-even and positive-odd):
 \[
   A \symdiff B = A \cup B = \{1, 2, 3, 4, \ldots\}
-  \qquad\Longrightarrow\qquad
+\]
+Since every positive integer is either even or odd, and never both, $A \cup B = \Z^+$ and $A \cap B = \emptyset$.
+\[
   \boxed{A \symdiff B = \Z^+}
 \]
 
@@ -489,7 +586,22 @@ Positive evens that are $\ge 10$:
 $\quad\boxed{A \setminus C = \{10, 12, 14, \ldots\} = \{2k \mid k \ge 5\}}$
 
 \textbf{(e)\; $C \setminus (A \symdiff B)$:}\;
-Remove all positive integers ($=A \symdiff B$) from $C$:
+This is a compound operation---evaluate it step by step:
+
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*, nosep, itemsep=4pt]
+  \item \textbf{Evaluate the inner parentheses:}\;
+        $A \symdiff B$. From part~(b) above, we already know
+        $\boxed{A \symdiff B = \Z^+}$ (all positive integers).
+
+  \item \textbf{Substitute back into the outer operation:}\;
+        $C \setminus (A \symdiff B) = C \setminus \Z^+$.
+        This means: take all elements of $C$ (integers $< 10$) and
+        remove every positive integer.
+
+  \item \textbf{Compute the result:}\;
+        The elements of $C$ that are \emph{not} positive are
+        $\ldots, -2, -1, 0$.
+\end{enumerate}
 \[
   \boxed{C \setminus (A \symdiff B) = \{\ldots, -2, -1, 0\}
          = \{x \in \Z \mid x \le 0\}}
@@ -530,6 +642,26 @@ the conditions in each group are equivalent:
 \end{enumerate}
 \end{problembox}
 
+\begin{tcolorbox}[colback=theoryBg, colframe=theoryFrame!80!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Visual Intuition: Why These Conditions Are Equivalent}]
+Before diving into the formal proof, consider this Venn diagram showing $A \subseteq B$ (i.e.\ $A$ sits entirely inside $B$):
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick, setB, fill=setB!10] (0,0) circle (1.8);
+  \draw[thick, setA, fill=setA!25] (-0.3,0) circle (0.85);
+  \node[font=\footnotesize\bfseries, setA!70!black] at (-0.3,0) {$A$};
+  \node[font=\footnotesize\bfseries, setB!70!black] at (1.1,1.1) {$B$};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[nosep]
+  \item \textbf{Why $A \cup B = B$?}\; Since $A$ is already inside $B$, adding $A$ to the union contributes nothing new. The shaded region of $A \cup B$ is just $B$.
+  \item \textbf{Why $A \cap B = A$?}\; Every element of $A$ is also in $B$ (because $A$ is inside $B$), so intersecting with $B$ keeps all of $A$. Nothing from $A$ gets removed.
+\end{itemize}
+
+This picture makes all three conditions feel like the same statement in different words. The formal cyclic-implication proof below confirms this rigorously.
+\end{tcolorbox}
+
 % ---- Part 1 ----
 \subsection*{Part 1:\; $A \subseteq B \;\iff\; A \cup B = B \;\iff\; A \cap B = A$}
 
@@ -562,6 +694,10 @@ the conditions in each group are equivalent:
 \end{tikzpicture}
 \end{center}
 
+\smallskip
+\textit{Key idea: if $A$ is already inside $B$, adding $A$ to the union changes nothing, and intersecting with $B$ keeps all of $A$.}
+
+\smallskip
 \textbf{$(a) \Rightarrow (b)$:}\;
 $A \subseteq B \;\Longrightarrow\; A \cup B = B$.
 
@@ -602,6 +738,10 @@ Let $x \in A$. Then $x \in A = A \cap B$, so $x \in B$. \qed
 \end{tikzpicture}
 \end{center}
 
+\smallskip
+\textit{Key idea: disjointness means every element of $A$ lies outside $B$, i.e.\ in $\comp{B}$.}
+
+\smallskip
 \textbf{$(a) \Rightarrow (b)$:}\;
 $A \cap B = \emptyset \;\Longrightarrow\; A \subseteq \comp{B}$.
 
@@ -643,6 +783,10 @@ so $x \notin A$---contradicting $x \in A \cap B$. \qed
 \end{tikzpicture}
 \end{center}
 
+\smallskip
+\textit{Key idea: if $A$ and $B$ together cover $U$, then anything outside $A$ must be in $B$.}
+
+\smallskip
 \textbf{$(a) \Rightarrow (b)$:}\;
 $A \cup B = U \;\Longrightarrow\; \comp{A} \subseteq B$.
 
@@ -751,6 +895,47 @@ Let $x$ be arbitrary:
 \end{align*}
 Every step is $\iff$, so the sets are equal. \qed
 
+\smallskip
+\textbf{Set-language reading.}\; Distributing ``outside $C$'' across ``in $A$ or in $B$'' is the set version of the logical law $p \land (q \lor r) \iff (p \land q) \lor (p \land r)$.
+
+\medskip
+\begin{tcolorbox}[colback=theoryBg, colframe=theoryFrame!80!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Region Numbering Method --- Empirical Verification}]
+\textbf{Technique.}\; In a three-set Venn diagram there are $2^3 = 8$ regions.
+Number them by which sets they belong to:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cl}
+\toprule
+\textbf{Region} & \textbf{Membership} \\
+\midrule
+1 & $A$ only \\
+2 & $B$ only \\
+3 & $C$ only \\
+4 & $A \cap B$ only (not $C$) \\
+5 & $A \cap C$ only (not $B$) \\
+6 & $B \cap C$ only (not $A$) \\
+7 & $A \cap B \cap C$ \\
+8 & None ($\comp{A} \cap \comp{B} \cap \comp{C}$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Now express each side by its region numbers:
+\begin{itemize}[nosep]
+  \item $A \cup B = \{1, 2, 4, 5, 6, 7\}$
+  \item $(A \cup B) \setminus C$: remove regions in $C$ ($\{3,5,6,7\}$)
+        $\;\Longrightarrow\; \boxed{\{1, 2, 4\}}$
+  \item $A \setminus C = \{1, 4\}$, \quad $B \setminus C = \{2, 4\}$
+  \item $(A \setminus C) \cup (B \setminus C) = \{1, 4\} \cup \{2, 4\} = \boxed{\{1, 2, 4\}}$
+\end{itemize}
+
+Both sides give exactly regions $\{1, 2, 4\}$, confirming the identity empirically.
+
+\medskip
+\textit{This method does not replace a proof, but it is an excellent way to build confidence or catch errors before writing one.}
+\end{tcolorbox}
+
 \textbf{Logic correspondence.}\;
 The key step uses the propositional law
 $p \land (q \lor r) \iff (p \land q) \lor (p \land r)$,
@@ -833,6 +1018,31 @@ commutative ring. This identity is the ring distributive law.
 Prove:\quad $A \cap (B \symdiff C) = (A \cap B) \symdiff (A \cap C)$.
 \end{problembox}
 
+\begin{tcolorbox}[colback=gray!3, colframe=gray!60, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Intermediate Shading Steps --- Building the Venn Diagram}]
+To build the Venn diagram for $A \cap (B \symdiff C)$ from scratch, follow these stages:
+
+\begin{enumerate}[label=\textbf{Stage \arabic*:}, leftmargin=*, nosep, itemsep=4pt]
+  \item \textbf{Shade $B \symdiff C$:}\;
+        Shade all regions that belong to exactly one of $B$ or $C$
+        (i.e.\ $B$-only and $C$-only regions, but \emph{not} the $B \cap C$ overlap).
+        This gives regions $\{2, 4, 6\}$ in $B$-only and $\{3, 5, 6\}$ in $C$-only:
+        specifically regions $\{2, 4\}$ (in $B$ not $C$) and $\{3, 5\}$ (in $C$ not $B$).
+        So $B \symdiff C$ covers regions $\{2, 3, 4, 5\}$.
+
+  \item \textbf{Identify $A$:}\;
+        The regions inside $A$ are $\{1, 4, 5, 7\}$.
+
+  \item \textbf{Intersect---highlight the overlap:}\;
+        $A \cap (B \symdiff C)$ is the intersection of stages 1 and 2:
+        $\{2, 3, 4, 5\} \cap \{1, 4, 5, 7\} = \{4, 5\}$.
+        These are exactly region~4 ($A \cap B \cap \comp{C}$) and
+        region~5 ($A \cap C \cap \comp{B}$)---the two shaded regions in the
+        diagram above.
+\end{enumerate}
+
+The same two regions emerge from the RHS: $(A \cap B) \symdiff (A \cap C) = \{4, 7\} \symdiff \{5, 7\} = \{4, 5\}$.
+\end{tcolorbox}
+
 \subsection*{Solution}
 
 Let $x$ be arbitrary. We expand both sides to the same logical form.
@@ -879,6 +1089,29 @@ Both sides reduce to ($\star$), so:
   A \cap (B \symdiff C) = (A \cap B) \symdiff (A \cap C).
   \qquad\blacksquare
 \]
+
+\medskip
+\textbf{Verification by truth table.}\;
+Every element belongs to some combination of $A, B, C$. The table below checks that LHS and RHS agree in all cases.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccc|c|c}
+\toprule
+$x \in A$ & $x \in B$ & $x \in C$ & LHS: $A \cap (B \symdiff C)$ & RHS: $(A \cap B) \symdiff (A \cap C)$ \\
+\midrule
+\checkmark & \checkmark & \checkmark & $\times$ & $\times$ \\
+\checkmark & \checkmark & $\times$ & \checkmark & \checkmark \\
+\checkmark & $\times$ & \checkmark & \checkmark & \checkmark \\
+\checkmark & $\times$ & $\times$ & $\times$ & $\times$ \\
+$\times$ & \checkmark & \checkmark & $\times$ & $\times$ \\
+$\times$ & \checkmark & $\times$ & $\times$ & $\times$ \\
+$\times$ & $\times$ & \checkmark & $\times$ & $\times$ \\
+$\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+All rows match, confirming the identity.
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
@@ -945,8 +1178,52 @@ Prove that $A \times B = B \times A$ implies $A = B$.
 $A = B$, or $A = \emptyset$, or $B = \emptyset$.
 \end{problembox}
 
+\begin{tcolorbox}[colback=yellow!5, colframe=stmtFrame!80!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Concrete Mini-Example: Why $A \neq B$ Breaks Equality}]
+Let $A = \{1, 2\}$ and $B = \{3\}$. Then:
+\[
+  A \times B = \{(1,3),\;(2,3)\}, \qquad B \times A = \{(3,1),\;(3,2)\}.
+\]
+
+Visualise these as grids:
+\begin{center}
+\begin{tikzpicture}[scale=0.7, font=\small]
+  % A x B: 2 columns x 1 row
+  \begin{scope}
+    \node[font=\footnotesize\bfseries] at (1.5, 2.0) {$A \times B$: $2 \times 1$ grid};
+    \draw[thick, gray!50] (0.5, 0.5) grid (2.5, 1.5);
+    \fill[setA!30] (0.5,0.5) rectangle (2.5,1.5);
+    \draw[thick, gray] (0.5, 0.5) grid (2.5, 1.5);
+    \node[font=\scriptsize] at (1.0, 1.0) {$(1,3)$};
+    \node[font=\scriptsize] at (2.0, 1.0) {$(2,3)$};
+    \node[font=\tiny, below] at (1.0, 0.4) {$1$};
+    \node[font=\tiny, below] at (2.0, 0.4) {$2$};
+    \node[font=\tiny, left] at (0.4, 1.0) {$3$};
+  \end{scope}
+
+  \node[font=\Large] at (4.0, 1.0) {$\neq$};
+
+  % B x A: 1 column x 2 rows
+  \begin{scope}[xshift=5.5cm]
+    \node[font=\footnotesize\bfseries] at (1.0, 2.0) {$B \times A$: $1 \times 2$ grid};
+    \fill[setB!25] (0.5,0.5) rectangle (1.5,2.5);
+    \draw[thick, gray] (0.5, 0.5) grid (1.5, 2.5);
+    \node[font=\scriptsize] at (1.0, 1.0) {$(3,2)$};
+    \node[font=\scriptsize] at (1.0, 2.0) {$(3,1)$};
+    \node[font=\tiny, below] at (1.0, 0.4) {$3$};
+    \node[font=\tiny, left] at (0.4, 1.0) {$2$};
+    \node[font=\tiny, left] at (0.4, 2.0) {$1$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+The grids have different ``shapes'' ($2 \times 1$ vs.\ $1 \times 2$), and the pairs themselves are different: $(1,3) \neq (3,1)$. So $A \times B \neq B \times A$ whenever $A \neq B$ (and both are non-empty).
+\end{tcolorbox}
+
 \subsection*{Solution}
 
+\textbf{Hidden assumption.}\; We first assume $A \neq \emptyset$ and $B \neq \emptyset$, because if either is empty, both products are $\emptyset$ and the equality holds trivially without $A = B$. (Example: $A = \emptyset$, $B = \{1\}$.)
+
+\medskip
 Assume $A \times B = B \times A$ with $A \neq \emptyset$ and $B \neq \emptyset$.
 We show $A \subseteq B$ and $B \subseteq A$.
 
@@ -969,14 +1246,12 @@ Let $b \in B$. Since $A \neq \emptyset$, pick some $a \in A$.
 Since $b$ was arbitrary, $B \subseteq A$.
 
 By antisymmetry of $\subseteq$:
-$A \subseteq B \;\land\; B \subseteq A \;\Longrightarrow\; A = B$.
+\[
+  \boxed{A \subseteq B \;\land\; B \subseteq A \;\Longrightarrow\; A = B.}
+\]
 \qed
 
-\textbf{Why non-emptiness matters.}\;
-If $A = \emptyset$ and $B = \{1\}$, then
-$A \times B = \emptyset = B \times A$,
-but $A \neq B$.
-We cannot ``pick $b \in B$'' if $B = \emptyset$, so the argument breaks down.
+\textit{Note: the non-emptiness assumption was used above to ``pick $b \in B$'' and ``pick $a \in A$''.}
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
@@ -1036,6 +1311,50 @@ Prove the following identities:
 \end{enumerate}
 \end{problembox}
 
+\textbf{Template method.}\; To prove any Cartesian-product identity, always start with ``Let $(x,y)$ be arbitrary'' and unpack $(x,y) \in \text{LHS}$. The ordered-pair structure ensures the proof reduces to a propositional-logic equivalence.
+
+\medskip
+\begin{tcolorbox}[colback=gray!3, colframe=gray!60, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Vertical Truth Table --- Verifying the Propositional Equivalences}]
+Each identity reduces to a propositional equivalence.
+Let $P = (x \in A)$, $Q = (y \in B)$, $R = (y \in C)$.
+The table below stacks the cases vertically for easier reading:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{ccc|ccc}
+\toprule
+ & & & \textbf{Identity 1} & \textbf{Identity 3} & \textbf{Identity 5} \\
+$P$ & $Q$ & $R$
+  & $P \land (Q \lor R)$ & $P \land Q \land R$ & $P \land Q \land \lnot R$ \\
+ & &
+  & \;$\stackrel{?}{=}$\; $(P \land Q) \lor (P \land R)$
+  & \;$\stackrel{?}{=}$\; $(P \land Q) \land (P \land R)$
+  & \;$\stackrel{?}{=}$\; $(P \land Q) \land \lnot(P \land R)$ \\
+\midrule
+\multicolumn{3}{l|}{\textbf{Row 1:}\; $P{=}\mathrm{T},\;Q{=}\mathrm{T},\;R{=}\mathrm{T}$}
+  & T $=$ T \checkmark & T $=$ T \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 2:}\; $P{=}\mathrm{T},\;Q{=}\mathrm{T},\;R{=}\mathrm{F}$}
+  & T $=$ T \checkmark & F $=$ F \checkmark & T $=$ T \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 3:}\; $P{=}\mathrm{T},\;Q{=}\mathrm{F},\;R{=}\mathrm{T}$}
+  & T $=$ T \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 4:}\; $P{=}\mathrm{T},\;Q{=}\mathrm{F},\;R{=}\mathrm{F}$}
+  & F $=$ F \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 5:}\; $P{=}\mathrm{F},\;Q{=}\mathrm{T},\;R{=}\mathrm{T}$}
+  & F $=$ F \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 6:}\; $P{=}\mathrm{F},\;Q{=}\mathrm{T},\;R{=}\mathrm{F}$}
+  & F $=$ F \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 7:}\; $P{=}\mathrm{F},\;Q{=}\mathrm{F},\;R{=}\mathrm{T}$}
+  & F $=$ F \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\[2pt]
+\multicolumn{3}{l|}{\textbf{Row 8:}\; $P{=}\mathrm{F},\;Q{=}\mathrm{F},\;R{=}\mathrm{F}$}
+  & F $=$ F \checkmark & F $=$ F \checkmark & F $=$ F \checkmark \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All 8 rows match for each identity, confirming the propositional equivalences used in the proofs below.
+\end{tcolorbox}
+
+\medskip
 % ---- Identity 1 ----
 \subsection*{Identity 1:\; $A \times (B \cup C) = (A \times B) \cup (A \times C)$}
 

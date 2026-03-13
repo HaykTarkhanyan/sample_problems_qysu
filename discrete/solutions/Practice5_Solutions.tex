@@ -139,6 +139,12 @@ By the sum rule (the three cases are mutually exclusive), the total is:
 There are $\boxed{450}$ ways to choose two books of different subjects.
 \end{answerbox}
 
+\textbf{Alternative (complement method).}\;
+Total handshakes among all $15+12+10=37$ people: $\binom{37}{2}$.
+Subtract handshakes within each group (same subject): $\binom{15}{2} + \binom{12}{2} + \binom{10}{2}$.
+Result: $\binom{37}{2} - \binom{15}{2} - \binom{12}{2} - \binom{10}{2} = 666 - 105 - 66 - 45 = 450$.
+Both methods agree. \checkmark
+
 % ══════════════════════════════════════════════════════════════════
 \newpage
 \section{Problem 5 --- Natural Numbers Less Than 700 Divisible by 5 and/or 3}
@@ -177,6 +183,7 @@ The number of such multiples is:
 \]
 
 \paragraph{(b) Divisible by 3 (among natural numbers less than 700).}
+(Here ``of those'' refers to all natural numbers less than 700, not just the multiples of 5 from part~(a).)
 The multiples of 3 in $S$ are $3, 6, 9, \ldots, 699$.
 The number of such multiples is:
 \[
@@ -268,6 +275,8 @@ Since the choices at each position are independent:
   \;=\; 62{,}500.
 \]
 
+\textbf{Example.}\; $2\,143\,658$ is a valid 7-digit number (leading digit $\neq 0$). But $0\,143\,658$ is not, because it would be a 6-digit number. The leading-digit restriction removes exactly $\frac{1}{10}$ of all 7-character strings.
+
 \begin{answerbox}
 \centering
 There are $\boxed{62{,}500}$ such 7-digit numbers.
@@ -309,6 +318,10 @@ the first and last positions are occupied by boys?
 \subsection*{Solution}
 
 There are $6 + 7 = 13$ people in total.
+
+\begin{center}
+$\boxed{B}\;\_\;\_\;\_\;\cdots\;\_\;\_\;\boxed{B}$
+\end{center}
 
 \paragraph{Step 1: Fill the constrained positions.}
 \begin{itemize}[nosep]
@@ -385,6 +398,8 @@ Without loss of generality, assume $A$ has at least 3 \textbf{red}
 edges. Let the other endpoints of these red edges be $B$, $C$, $D$.
 (The case with 3 blue edges is handled symmetrically by swapping
 ``friend'' and ``stranger.'')
+
+\textbf{Why WLOG works.}\; If vertex $A$ instead has 3 blue edges, repeat the exact same argument with the roles of blue and red swapped. The problem is symmetric in the two colors, so the conclusion is the same.
 
 \begin{center}
 \begin{tikzpicture}[>=Stealth, font=\small,
@@ -526,6 +541,8 @@ We compute:
   = a_{j-i} \cdot 10^i.
 \]
 So $2013 \mid a_{j-i} \cdot 10^i$.
+
+\textbf{Example.}\; $\underbrace{77\ldots7}_{5} - \underbrace{77\ldots7}_{3} = 77777 - 777 = 77000 = 77 \times 1000 = \underbrace{77\ldots7}_{2} \times 10^3$.
 
 Now, $2013 = 3 \times 11 \times 61$. Since $\gcd(10, 2013) = 1$
 (as 2013 has no factors of 2 or 5), it follows that $\gcd(10^i, 2013) = 1$.

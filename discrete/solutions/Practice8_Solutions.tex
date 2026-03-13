@@ -146,6 +146,14 @@ with initial conditions $a_1 = 2$ and $a_2 = 10$.
 
 \subsection*{Solution}
 
+\textbf{Which case?}\; After finding the roots of the characteristic equation, select the general solution form:
+\begin{itemize}[nosep]
+  \item Distinct real roots $r_1 \neq r_2$: $a_n = \alpha\, r_1^n + \beta\, r_2^n$.
+  \item Repeated real root $r_1 = r_2 = r$: $a_n = (\alpha + \beta\, n)\, r^n$.
+  \item Complex conjugate roots $\rho\, e^{\pm i\theta}$: $a_n = \rho^n(\alpha \cos n\theta + \beta \sin n\theta)$.
+\end{itemize}
+
+\medskip
 \textbf{Step 1: Write the characteristic equation.}
 
 The recurrence $a_n - 5a_{n-1} + 6a_{n-2} = 0$ has characteristic equation
@@ -201,6 +209,8 @@ Substituting $n = 1$ and $n = 2$:
   \end{cases}
 \]
 
+\textbf{Note.}\; This is an ordinary $2 \times 2$ linear system---no recurrence tricks needed, just standard algebra.
+
 From the first equation:
 \[
   \alpha = \frac{2 - 3\beta}{2} = 1 - \frac{3\beta}{2}.
@@ -222,7 +232,7 @@ Then $\alpha = 1 - \dfrac{3 \cdot 2}{2} = 1 - 3 = -2$.
 \textbf{Step 5: Write the particular solution.}
 
 \[
-  a_n = -2 \cdot 2^n + 2 \cdot 3^n = 2\bigl(3^n - 2^n\bigr).
+  a_n = -2 \cdot 2^n + 2 \cdot 3^n = \boxed{2\bigl(3^n - 2^n\bigr)}.
 \]
 
 \textbf{Step 6: Verify.}
@@ -318,6 +328,77 @@ Each position has 2 choices, so the total is $2^{10} = 1024$.
 Let $b_n$ denote the number of binary strings of length $n$ with no two
 consecutive $0$s.
 
+\textbf{Clarification.}\; ``Contains two consecutive zeros'' means the string has \emph{at least one} occurrence of the substring ``$00$''.
+
+\textbf{Grounding the recurrence.}\; For $n = 3$, the valid strings (no ``$00$'') are:
+\texttt{010}, \texttt{011}, \texttt{101}, \texttt{110}, \texttt{111} --- exactly $5 = b_3$.
+Check: every string starting with \texttt{1} leaves 2 positions ($b_2 = 3$ valid), and every string starting with \texttt{01} leaves 1 position ($b_1 = 2$ valid), giving $3 + 2 = 5$. \checkmark
+
+\medskip
+\textbf{Decision tree for $n = 3$.}\;
+The following tree traces every bit choice for a 3-bit string,
+marking branches that produce ``$00$'' as invalid (\textcolor{setB}{\textsf{X}}).
+Valid strings (no ``$00$'') are shown at the surviving leaves.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small,
+  level 1/.style={sibling distance=6.4cm, level distance=1.6cm},
+  level 2/.style={sibling distance=3.2cm, level distance=1.6cm},
+  level 3/.style={sibling distance=1.6cm, level distance=1.6cm},
+  edge from parent/.style={draw, thick, ->, >=Stealth},
+  every node/.style={align=center},
+  valid/.style={draw, rounded corners=3pt, fill=ansBg, minimum width=1.1cm,
+                font=\small\ttfamily},
+  invalid/.style={draw, rounded corners=3pt, fill=setB!15, minimum width=1.1cm,
+                  font=\small\ttfamily, text=black!50},
+  killed/.style={font=\bfseries\sffamily, text=setB}]
+  \node[draw, rounded corners=4pt, fill=theoryBg] {start}
+    child { node[draw, rounded corners=3pt, fill=setA!10] {0\,\_\,\_}
+      child { node[draw, rounded corners=3pt, fill=setB!15] {00\,\_}
+        child { node[invalid] {000}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[invalid] {001}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[left, font=\scriptsize] {0}
+        node[killed, right=6pt, yshift=-2pt]
+          {\textcolor{setB}{\textsf{X}\;\scriptsize all children invalid}}
+      }
+      child { node[draw, rounded corners=3pt, fill=setA!10] {01\,\_}
+        child { node[valid] {010}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[valid] {011}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[right, font=\scriptsize] {1}
+      }
+      edge from parent node[left=3pt, font=\scriptsize] {0}
+    }
+    child { node[draw, rounded corners=3pt, fill=setA!10] {1\,\_\,\_}
+      child { node[draw, rounded corners=3pt, fill=setA!10] {10\,\_}
+        child { node[invalid] {100}
+                edge from parent node[left, font=\scriptsize] {0}
+                node[killed, right=3pt] {\textcolor{setB}{\textsf{X}}} }
+        child { node[valid] {101}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[left, font=\scriptsize] {0}
+      }
+      child { node[draw, rounded corners=3pt, fill=setA!10] {11\,\_}
+        child { node[valid] {110}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[valid] {111}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[right, font=\scriptsize] {1}
+      }
+      edge from parent node[right=3pt, font=\scriptsize] {1}
+    };
+\end{tikzpicture}
+\end{center}
+
+\noindent
+\textbf{Surviving leaves} (green): \texttt{010}, \texttt{011}, \texttt{101},
+\texttt{110}, \texttt{111} --- exactly $\boxed{b_3 = 5}$, confirming the
+recurrence $b_3 = b_2 + b_1 = 3 + 2 = 5$.
+
+\medskip
 \textbf{Deriving the recurrence.}\;
 Consider a valid string of length $n$:
 \begin{itemize}[nosep]
@@ -330,7 +411,7 @@ Consider a valid string of length $n$:
 
 Therefore:
 \[
-  b_n = b_{n-1} + b_{n-2}, \qquad n \ge 3.
+  \boxed{b_n = b_{n-1} + b_{n-2}}, \qquad n \ge 3.
 \]
 
 \textbf{Base cases.}
@@ -343,59 +424,38 @@ Therefore:
 \textbf{Step 3: Compute $b_n$ for $n = 3, 4, \ldots, 10$.}
 
 \begin{center}
-\begin{tikzpicture}[font=\small]
-  % Table as a TikZ figure with colored cells
-  \def\cellw{1.15}
-  \def\cellh{0.7}
-
-  % Header row
-  \foreach \i/\lab in {0/$n$, 1/1, 2/2, 3/3, 4/4, 5/5, 6/6, 7/7, 8/8, 9/9, 10/10} {
-    \node[draw, minimum width=\cellw cm, minimum height=\cellh cm,
-          fill=theoryBg, font=\small\bfseries] at (\i*\cellw, 0) {\lab};
-  }
-
-  % Value row
-  \foreach \i/\val in {0/$b_n$, 1/2, 2/3, 3/5, 4/8, 5/13, 6/21, 7/34, 8/55, 9/89, 10/144} {
-    \node[draw, minimum width=\cellw cm, minimum height=\cellh cm,
-          fill=ansBg, font=\small] at (\i*\cellw, -\cellh) {\val};
-  }
-
-  % Arrows showing the recurrence for one example
-  \draw[->, thick, setB, bend left=30]
-    (7*\cellw + 0.3, -\cellh - 0.35) to
-    node[below, font=\tiny, setB!70!black] {}
-    (9*\cellw - 0.3, -\cellh - 0.35);
-  \draw[->, thick, setA, bend left=20]
-    (8*\cellw + 0.3, -\cellh - 0.35) to
-    node[below, font=\tiny] {}
-    (9*\cellw - 0.15, -\cellh - 0.35);
-
-  \node[font=\tiny, gray] at (8.5*\cellw, -2.1*\cellh)
-    {$b_9 = b_8 + b_7 = 55 + 34 = 89$};
-\end{tikzpicture}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c l}
+\toprule
+$n$ & $b_n$ & \textbf{Verification}\; ($b_{n-1} + b_{n-2}$) \\
+\midrule
+$1$  & $2$   & (base case: \texttt{0}, \texttt{1}) \\
+$2$  & $3$   & (base case: \texttt{01}, \texttt{10}, \texttt{11}) \\
+\midrule
+$3$  & $5$   & $b_2 + b_1 = 3 + 2 = 5$\;\checkmark \\
+$4$  & $8$   & $b_3 + b_2 = 5 + 3 = 8$\;\checkmark \\
+$5$  & $13$  & $b_4 + b_3 = 8 + 5 = 13$\;\checkmark \\
+$6$  & $21$  & $b_5 + b_4 = 13 + 8 = 21$\;\checkmark \\
+$7$  & $34$  & $b_6 + b_5 = 21 + 13 = 34$\;\checkmark \\
+$8$  & $55$  & $b_7 + b_6 = 34 + 21 = 55$\;\checkmark \\
+$9$  & $89$  & $b_8 + b_7 = 55 + 34 = 89$\;\checkmark \\
+$10$ & $144$ & $b_9 + b_8 = 89 + 55 = 144$\;\checkmark \\
+\bottomrule
+\end{tabular}
 \end{center}
-
-Detailed computation:
-\begin{alignat*}{3}
-  b_3 &= b_2 + b_1 &&= 3 + 2 &&= 5 \\
-  b_4 &= b_3 + b_2 &&= 5 + 3 &&= 8 \\
-  b_5 &= b_4 + b_3 &&= 8 + 5 &&= 13 \\
-  b_6 &= b_5 + b_4 &&= 13 + 8 &&= 21 \\
-  b_7 &= b_6 + b_5 &&= 21 + 13 &&= 34 \\
-  b_8 &= b_7 + b_6 &&= 34 + 21 &&= 55 \\
-  b_9 &= b_8 + b_7 &&= 55 + 34 &&= 89 \\
-  b_{10} &= b_9 + b_8 &&= 89 + 55 &&= 144
-\end{alignat*}
 
 \textbf{Observation.}\; The values $b_n = 2, 3, 5, 8, 13, 21, 34, 55, 89, 144$
 are the Fibonacci numbers $F_3, F_4, \ldots, F_{12}$.
-In general, $b_n = F_{n+2}$ where $F_1 = 1, F_2 = 1, F_3 = 2, \ldots$
+In general,
+\[
+  \boxed{b_n = F_{n+2}}, \qquad \text{where } F_1 = 1,\; F_2 = 1,\; F_3 = 2,\; \ldots
+\]
 
 \textbf{Step 4: Apply complementary counting.}
 
 \[
   \text{Strings with ``$00$''} = \text{Total} - \text{Strings without ``$00$''}
-  = 1024 - 144 = 880.
+  = 1024 - 144 = \boxed{880}.
 \]
 
 \textbf{Verification for small cases.}\;

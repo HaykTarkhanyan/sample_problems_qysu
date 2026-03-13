@@ -115,6 +115,14 @@ Let $f : \R \to \R$. Find the domain and range of:
 
 \subsection*{Solution}
 
+\textbf{Two-step method for each mapping:}
+\begin{enumerate}[nosep]
+  \item \textbf{Domain check:} determine where the formula is defined.
+  \item \textbf{Range check:} determine which outputs are actually achieved.
+\end{enumerate}
+
+\medskip
+
 \textbf{(a)\; $f(x) = x^2 + 3$.}
 
 No restrictions on $x$: every real number can be squared.
@@ -220,6 +228,8 @@ Analyzing the sign of $\frac{1+2y}{y}$:
   \item $y > 0$: need $1 + 2y > 0$, which holds for all $y > 0$. So $y \in (0, +\infty)$.
   \item $y < 0$: need $1 + 2y < 0$ (numerator and denominator both negative), i.e.\ $y < -\frac{1}{2}$. So $y \in (-\infty, -\frac{1}{2})$.
 \end{itemize}
+\textbf{Sign analysis.}\; Solving $x^2 = \frac{1+2y}{y} \ge 0$ requires the numerator and denominator to have the same sign. For $y > 0$: $1+2y > 0$ automatically, so all $y > 0$ work. For $y < 0$: we need $1+2y < 0$, i.e.\ $y < -\frac{1}{2}$. Hence $y \in (-\infty, -\tfrac{1}{2}) \cup (0, +\infty)$, plus we must check the boundary.
+
 At $x = 0$: $f(0) = \frac{1}{-2} = -\frac{1}{2}$, so $y = -\frac{1}{2}$ is attained.
 \[
   \operatorname{Ran}(f) = \left(-\infty,\; -\tfrac{1}{2}\right] \cup (0, +\infty).
@@ -306,6 +316,8 @@ $(f \circ g)(x) = \sqrt{x^4 + 6x^2 + 11}, \qquad (g \circ f)(x) = x^2 + 5.$
 \[
   (g \circ f)(x) = g(f(x)) = g\!\left(\frac{1}{x}\right) = \frac{2}{x} + 3 = \frac{2 + 3x}{x}, \qquad x \neq 0.
 \]
+
+\textbf{Domain check.}\; After computing the formula, verify where it is defined---the domain of a composition $(g \circ f)(x)$ requires $x \in \operatorname{dom}(f)$ and $f(x) \in \operatorname{dom}(g)$.
 
 \begin{answerbox}
 $(f \circ g)(x) = \dfrac{1}{2x+3}\;(x \neq -\frac{3}{2}), \qquad
@@ -406,6 +418,9 @@ $f(f^{-1}(y)) = f\!\left(\frac{2+3y}{1-y}\right)
 $f^{-1}(x) = \dfrac{2+3x}{1-x}, \quad x \neq 1.$
 \end{answerbox}
 
+\bigskip
+\textbf{Note.}\; Here the inverse relation happens to be a function because each mapping is bijective onto its range. In general, the inverse \emph{relation} always exists, but it is a \emph{function} only when the original mapping is injective.
+
 % ══════════════════════════════════════════════════════════════════
 \newpage
 \section{Problem 6 --- Injectivity, Surjectivity, Bijectivity}
@@ -487,6 +502,17 @@ surjective, or bijective:
 \end{problembox}
 
 \subsection*{Solution}
+
+\textbf{Efficient tests for injectivity and surjectivity:}
+\begin{itemize}[nosep]
+  \item $|x|$: symmetry ($f(x) = f(-x)$) immediately shows non-injectivity.
+  \item $x^2 + c$: parabola has a minimum, so not surjective onto $\mathbb{R}$.
+  \item $x^3 + c$: strictly monotone, hence injective; end behavior gives surjectivity.
+  \item $x + |x|$: rewrite piecewise first, then check each piece.
+  \item $x^3 - 4x$: look for repeated outputs (local max/min) and use end behavior for surjectivity.
+\end{itemize}
+
+\medskip
 
 \textbf{(a)\; $f(x) = |x|$.}
 
@@ -672,6 +698,14 @@ The kernel $\operatorname{Ker}(f)$ inherits reflexivity, symmetry, and transitiv
 from the equality relation ``$=$'' on $B$, so it is an equivalence relation on $A$.
 \end{answerbox}
 
+\bigskip
+\textbf{Concrete example.}\; If $f \colon \{1,2,3,4\} \to \{a,b\}$ with $f(1) = f(3) = a$ and $f(2) = f(4) = b$, then:
+\begin{itemize}[nosep]
+  \item The equivalence class of $1$ is $f^{-1}(\{a\}) = \{1, 3\}$.
+  \item The equivalence class of $2$ is $f^{-1}(\{b\}) = \{2, 4\}$.
+  \item The partition is $\bigl\{\{1,3\},\;\{2,4\}\bigr\}$.
+\end{itemize}
+
 % ══════════════════════════════════════════════════════════════════
 \newpage
 \section{Problem 12 --- \texorpdfstring{$f(x) = \frac{x}{2x+1}$}{f(x)=x/(2x+1)} on \texorpdfstring{$\Q^+$}{Q+}: Injective but Not Surjective}
@@ -695,6 +729,10 @@ Prove that $f$ is injective but not surjective.
 \end{problembox}
 
 \subsection*{Solution}
+
+\textbf{Intuition.}\; Rewriting $f(x) = \dfrac{1}{2 + 1/x}$ shows that as $x$ increases on $\mathbb{Q}^+$, the denominator $2 + 1/x$ decreases, so $f(x)$ increases. A strictly increasing function is always injective.
+
+\medskip
 
 \textbf{Injectivity.}\;
 Let $x_1, x_2 \in \Q^+$ and suppose $f(x_1) = f(x_2)$:
@@ -784,6 +822,10 @@ Answer: injective mappings. Prove both directions.
 \end{problembox}
 
 \subsection*{Solution}
+
+\textbf{Why this matters.}\; If $f$ is not injective---say $f(1) = f(2) = y$---then $f(\{1\}) \cap f(\{2\}) = \{y\} \neq \emptyset$, but $\{1\} \cap \{2\} = \emptyset$. So $f(A \cap B) \neq f(A) \cap f(B)$ in general. Injectivity is exactly the condition that prevents this.
+
+\medskip
 
 \textbf{Direction 1: If $f$ is injective, then $f(A \cap B) = f(A) \cap f(B)$.}
 
@@ -936,6 +978,9 @@ So $f(x) \in Y_1 \cap Y_2 = \emptyset$, which is a contradiction since no elemen
 This follows from the fact that preimages preserve intersections.
 \end{answerbox}
 
+\bigskip
+\textbf{Contrast with images.}\; Preimages \emph{always} preserve intersections: $f^{-1}(C \cap D) = f^{-1}(C) \cap f^{-1}(D)$. Images do \emph{not}, unless $f$ is injective (see Problem~19). This asymmetry is a fundamental feature of functions.
+
 % ══════════════════════════════════════════════════════════════════
 \newpage
 \section{Problem 25 --- \texorpdfstring{$f(f^{-1}(Y)) \subseteq Y$}{f(f⁻¹(Y)) ⊆ Y}}
@@ -1028,5 +1073,8 @@ Then $f(f^{-1}(Y)) = \{a\} \subsetneq \{a,b\} = Y$.
 
 Equality holds for all $Y$ iff $f$ is surjective.
 \end{answerbox}
+
+\bigskip
+\textbf{Companion fact.}\; The reverse inclusion $X \subseteq f^{-1}\bigl(f(X)\bigr)$ always holds, with equality if and only if $f$ is injective. Together with this problem's result $f\bigl(f^{-1}(Y)\bigr) \subseteq Y$, these two inclusions capture how images and preimages interact.
 
 \end{document}

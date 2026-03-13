@@ -165,6 +165,8 @@ We need the Stirling number $S(5,3)$. Using the recurrence:
   S(5,3) = 7 + 3 \cdot 6 = 7 + 18 = 25.
 \]
 
+\textbf{Independent verification.}\; We now confirm this by classifying partitions by their block sizes (type $\{3,1,1\}$ vs.\ type $\{2,2,1\}$).
+
 \textbf{Verification by explicit enumeration.}\;
 Let $\{a,b,c,d,e\}$ be our set. A partition into 3 classes must have
 type $\{3,1,1\}$ or $\{2,2,1\}$ (the only integer partitions of 5 into 3 parts).
@@ -261,6 +263,9 @@ and not divisible by $3$, but \textbf{are} divisible by $11$?
 
 \subsection*{Solution}
 
+\textbf{Step 0: Choose the universe.}\; The first decision in any inclusion-exclusion problem is: \emph{what is the universe?} Here we take $S$ = integers in $\{1, \ldots, 16500\}$ divisible by 11. All counting happens inside $S$.
+
+\medskip
 Let $S$ be the set of integers in $\{1, 2, \ldots, 16500\}$ that are
 divisible by $11$. We want to remove from $S$ those elements also
 divisible by $3$ or by $5$.
@@ -408,6 +413,8 @@ such that their sides are parallel to the sides of $ABC$?
 
 We have a triangular grid with $n = 8$. We count upward-pointing and
 downward-pointing triangles separately.
+
+\textbf{What are we counting?}\; An ``upward triangle of side $s$'' is a triangle with the same orientation as the outer triangle, whose side spans $s$ grid units. A ``downward triangle of side $s$'' is inverted. Both types must have all three sides parallel to the outer triangle's sides.
 
 \textbf{Upward-pointing triangles of side $s$\; ($1 \le s \le 8$):}
 \[
@@ -574,6 +581,7 @@ Remaining sum: $22 - 12 - 10 = 0$.
 $A_1 \cap A_3$: $y_1 \ge 12,\; y_3 \ge 12$.
 Remaining sum: $22 - 12 - 12 = -2 < 0$.
 \quad $|A_1 \cap A_3| = 0$.
+A negative remaining sum means the system is impossible: nonnegative variables cannot sum to a negative number, so there are $0$ solutions.
 
 $A_2 \cap A_3$: $y_2 \ge 10,\; y_3 \ge 12$.
 Remaining sum: $22 - 10 - 12 = 0$.
