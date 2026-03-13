@@ -468,9 +468,9 @@ $D(8,s)$ & 28 & 15 & 6 & 1 & \textbf{50} \\
 
   % Example upward triangle of side 3 (blue)
   \fill[setA!20, opacity=0.5] (0.5, {sqrt(3)/2}) -- (3.5, {sqrt(3)/2})
-    -- (2, {3*sqrt(3)/2}) -- cycle;
+    -- (2, {4*sqrt(3)/2}) -- cycle;
   \draw[thick, setA] (0.5, {sqrt(3)/2}) -- (3.5, {sqrt(3)/2})
-    -- (2, {3*sqrt(3)/2}) -- cycle;
+    -- (2, {4*sqrt(3)/2}) -- cycle;
 
   % Example downward triangle of side 2 (red)
   \fill[setB!20, opacity=0.5] (3, {2*sqrt(3)/2}) -- (5, {2*sqrt(3)/2})
@@ -489,7 +489,7 @@ $\boxed{170}$\; (120 upward $+$ 50 downward).
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 12 --- Bounded Integer Solutions via Inclusion-Exclusion}
+\section{Problem 12 --- Bounded Integer Solutions}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Counting Integer Solutions with Upper Bounds]
@@ -566,17 +566,18 @@ Let $A_i$ be the set of solutions where $y_i$ exceeds its upper bound:
 \end{align*}
 
 \textbf{Step 4: Pairwise intersections.}
-\begin{align*}
-  A_1 \cap A_2 &:\; y_1 \ge 12,\; y_2 \ge 10.
-        \quad \text{Remaining sum: } 22 - 12 - 10 = 0.
-  &\quad |A_1 \cap A_2| &= \binom{2}{2} = 1. \\
-  A_1 \cap A_3 &:\; y_1 \ge 12,\; y_3 \ge 12.
-        \quad \text{Remaining sum: } 22 - 12 - 12 = -2 < 0.
-  &\quad |A_1 \cap A_3| &= 0. \\
-  A_2 \cap A_3 &:\; y_2 \ge 10,\; y_3 \ge 12.
-        \quad \text{Remaining sum: } 22 - 10 - 12 = 0.
-  &\quad |A_2 \cap A_3| &= \binom{2}{2} = 1.
-\end{align*}
+
+$A_1 \cap A_2$: $y_1 \ge 12,\; y_2 \ge 10$.
+Remaining sum: $22 - 12 - 10 = 0$.
+\quad $|A_1 \cap A_2| = \binom{2}{2} = 1$.
+
+$A_1 \cap A_3$: $y_1 \ge 12,\; y_3 \ge 12$.
+Remaining sum: $22 - 12 - 12 = -2 < 0$.
+\quad $|A_1 \cap A_3| = 0$.
+
+$A_2 \cap A_3$: $y_2 \ge 10,\; y_3 \ge 12$.
+Remaining sum: $22 - 10 - 12 = 0$.
+\quad $|A_2 \cap A_3| = \binom{2}{2} = 1$.
 
 \textbf{Step 5: Triple intersection.}
 \[

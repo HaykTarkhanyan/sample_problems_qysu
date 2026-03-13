@@ -555,6 +555,41 @@ so $f(0) = f(2) = 0$ but $0 \neq 2$.
 As $x \to -\infty$, $f(x) \to -\infty$, and as $x \to +\infty$, $f(x) \to +\infty$.
 By the Intermediate Value Theorem, every $y \in \R$ is attained.
 
+\begin{center}
+\begin{tikzpicture}[scale=0.55, >=Stealth]
+  \draw[->, thick] (-3.5, 0) -- (3.5, 0) node[right] {$x$};
+  \draw[->, thick] (0, -5.5) -- (0, 5.5) node[above] {$y$};
+
+  % The cubic curve
+  \draw[very thick, setA, domain=-2.8:2.8, samples=100, smooth]
+    plot (\x, {(\x)*(\x-2)*(\x+2)*0.6});
+  \node[setA, right] at (2.5, 4) {\small $f(x) = x^3 - 4x$};
+
+  % Horizontal line y=0 hitting 3 points (not injective)
+  \draw[thick, setB, dashed] (-3.2, 0) -- (3.2, 0);
+  \fill[setB] (-2, 0) circle (4pt);
+  \fill[setB] (0, 0) circle (4pt);
+  \fill[setB] (2, 0) circle (4pt);
+  \node[setB, below, font=\scriptsize] at (-2, -0.3) {$-2$};
+  \node[setB, below left, font=\scriptsize] at (0, -0.3) {$0$};
+  \node[setB, below, font=\scriptsize] at (2, -0.3) {$2$};
+
+  % Annotations
+  \node[font=\scriptsize, setB!70!black, align=center] at (-3, 2.5) {$y=0$ hits\\3 points:\\not injective};
+
+  % Show surjectivity: arrows to ±∞
+  \draw[->, thick, gray] (2.6, 4.5) -- (2.8, 5.2);
+  \draw[->, thick, gray] (-2.6, -4.5) -- (-2.8, -5.2);
+  \node[font=\scriptsize, gray, right] at (2.6, 5.0) {$\to +\infty$};
+  \node[font=\scriptsize, gray, left] at (-2.6, -5.0) {$\to -\infty$};
+
+  % Tick marks
+  \foreach \y in {-4,-2,2,4} {
+    \draw (0.1, \y*0.6) -- (-0.1, \y*0.6);
+  }
+\end{tikzpicture}
+\end{center}
+
 \begin{answerbox}
 $f(x) = x(x-2)(x+2)$: surjective but \textbf{not injective} (hence not bijective).
 \end{answerbox}
@@ -639,7 +674,7 @@ from the equality relation ``$=$'' on $B$, so it is an equivalence relation on $
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 12 --- $f(x) = \frac{x}{2x+1}$ on $\Q^+$: Injective but Not Surjective}
+\section{Problem 12 --- \texorpdfstring{$f(x) = \frac{x}{2x+1}$}{f(x)=x/(2x+1)} on \texorpdfstring{$\Q^+$}{Q+}: Injective but Not Surjective}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Injectivity and Surjectivity --- Proof Techniques]
@@ -705,7 +740,7 @@ but \textbf{not surjective} (e.g., $y = \frac{1}{2}$ is not in the range, since 
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 19 --- $f(A \cap B) = f(A) \cap f(B)$ Iff $f$ Is Injective}
+\section{Problem 19 --- \texorpdfstring{$f(A \cap B) = f(A) \cap f(B)$}{f(A∩B)=f(A)∩f(B)} Iff \texorpdfstring{$f$}{f} Is Injective}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Images of Intersections]
@@ -903,7 +938,7 @@ This follows from the fact that preimages preserve intersections.
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 25 --- $f(f^{-1}(Y)) \subseteq Y$}
+\section{Problem 25 --- \texorpdfstring{$f(f^{-1}(Y)) \subseteq Y$}{f(f⁻¹(Y)) ⊆ Y}}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Image of a Preimage]

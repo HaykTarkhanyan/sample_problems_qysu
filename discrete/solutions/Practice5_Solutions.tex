@@ -340,7 +340,7 @@ The total number of arrangements is $\boxed{30 \times 11! = 30 \times 39{,}916{,
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 10 --- Ramsey's Theorem $R(3,3) = 6$}
+\section{Problem 10 --- Ramsey's Theorem \texorpdfstring{$R(3,3) = 6$}{R(3,3) = 6}}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Pigeonhole Principle and Ramsey Theory]
@@ -386,6 +386,36 @@ edges. Let the other endpoints of these red edges be $B$, $C$, $D$.
 (The case with 3 blue edges is handled symmetrically by swapping
 ``friend'' and ``stranger.'')
 
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small,
+  vnode/.style={circle, draw, thick, minimum size=7mm, inner sep=0pt}]
+  % Vertices in a circle
+  \node[vnode, fill=setA!20] (A) at (0:0) {$A$};
+  \node[vnode, fill=setB!15] (B) at (60:2)  {$B$};
+  \node[vnode, fill=setB!15] (C) at (120:2) {$C$};
+  \node[vnode, fill=setB!15] (D) at (180:2) {$D$};
+  \node[vnode] (E) at (240:2) {$E$};
+  \node[vnode] (F) at (300:2) {$F$};
+
+  % Red edges from A
+  \draw[very thick, setB] (A) -- (B);
+  \draw[very thick, setB] (A) -- (C);
+  \draw[very thick, setB] (A) -- (D);
+  % Blue edges from A
+  \draw[very thick, setA, dashed] (A) -- (E);
+  \draw[very thick, setA, dashed] (A) -- (F);
+
+  % Legend
+  \node[font=\scriptsize] at (3.2, 1.0) {\textcolor{setB}{\rule{8pt}{2pt}} red (friends)};
+  \node[font=\scriptsize] at (3.2, 0.5) {\textcolor{setA}{- - -} blue (strangers)};
+
+  % Brace for the 3 red neighbors
+  \draw[decorate, decoration={brace, amplitude=5pt}, thick, setB!70!black]
+    (60:2.7) arc (60:180:2.7);
+  \node[font=\scriptsize, setB!70!black] at (120:3.3) {$\ge 3$ same colour};
+\end{tikzpicture}
+\end{center}
+
 \paragraph{Step 2: Examine the edges among $B$, $C$, $D$.}
 Consider the three edges $BC$, $BD$, $CD$.
 There are two cases:
@@ -410,6 +440,28 @@ with no monochromatic triangle: arrange 5 vertices in a regular
 pentagon and colour the edges of the pentagon red and the diagonals
 blue (or vice versa). One can verify that no triangle is monochromatic.
 
+\begin{center}
+\begin{tikzpicture}[font=\small,
+  vnode/.style={circle, draw, thick, minimum size=7mm, inner sep=0pt, fill=white}]
+  % 5 vertices in a pentagon
+  \foreach \i/\lab in {1/1, 2/2, 3/3, 4/4, 5/5} {
+    \node[vnode] (v\i) at ({90+(\i-1)*72}:1.5) {$\lab$};
+  }
+  % Pentagon edges (red)
+  \foreach \i [evaluate=\i as \j using {int(mod(\i,5)+1)}] in {1,...,5} {
+    \draw[very thick, setB] (v\i) -- (v\j);
+  }
+  % Diagonals (blue, dashed)
+  \draw[very thick, setA, dashed] (v1) -- (v3);
+  \draw[very thick, setA, dashed] (v1) -- (v4);
+  \draw[very thick, setA, dashed] (v2) -- (v4);
+  \draw[very thick, setA, dashed] (v2) -- (v5);
+  \draw[very thick, setA, dashed] (v3) -- (v5);
+
+  \node[font=\footnotesize] at (0, -2.2) {$K_5$: edges \textcolor{setB}{red}, diagonals \textcolor{setA}{blue} --- no monochromatic triangle};
+\end{tikzpicture}
+\end{center}
+
 \begin{answerbox}
 \centering
 In any group of 6 people, there are always 3 mutual friends
@@ -418,7 +470,7 @@ or 3 mutual strangers. This proves $R(3,3) = 6$.
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
-\section{Problem 12 --- Divisibility Among $7, 77, 777, \ldots$}
+\section{Problem 12 --- Divisibility Among \texorpdfstring{$7, 77, 777, \ldots$}{7, 77, 777, ...}}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Pigeonhole Principle for Divisibility]
