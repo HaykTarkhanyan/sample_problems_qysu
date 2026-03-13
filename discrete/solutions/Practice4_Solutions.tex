@@ -809,7 +809,7 @@ It holds for \emph{all} $A, B \subseteq X$ if and only if $f$ is \textbf{injecti
     \draw[->, thick, setA!70!black] (a) -- (y);
     \draw[->, thick, setB!70!black] (b) -- (y);
 
-    \node[font=\tiny, align=center] at (1.0, 0.0) {$A \cap B = \emptyset$\\but $f(A)\cap f(B) = \{y\}$};
+    \node[font=\tiny, align=center] at (1.0, 0.0) {$A \cap B = \varnothing$\\but $f(A)\cap f(B) = \{y\}$};
   \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -823,7 +823,7 @@ Answer: injective mappings. Prove both directions.
 
 \subsection*{Solution}
 
-\textbf{Why this matters.}\; If $f$ is not injective---say $f(1) = f(2) = y$---then $f(\{1\}) \cap f(\{2\}) = \{y\} \neq \emptyset$, but $\{1\} \cap \{2\} = \emptyset$. So $f(A \cap B) \neq f(A) \cap f(B)$ in general. Injectivity is exactly the condition that prevents this.
+\textbf{Why this matters.}\; If $f$ is not injective---say $f(1) = f(2) = y$---then $f(\{1\}) \cap f(\{2\}) = \{y\} \neq \varnothing$, but $\{1\} \cap \{2\} = \varnothing$. So $f(A \cap B) \neq f(A) \cap f(B)$ in general. Injectivity is exactly the condition that prevents this.
 
 \medskip
 
@@ -852,9 +852,9 @@ We prove the contrapositive: if $f$ is not injective, then there exist $A, B$ wi
 Suppose $f$ is not injective. Then there exist $x_1 \neq x_2$ in the domain with $f(x_1) = f(x_2)$.
 Set $A = \{x_1\}$ and $B = \{x_2\}$. Then:
 \begin{itemize}[nosep]
-  \item $A \cap B = \emptyset$ (since $x_1 \neq x_2$), so $f(A \cap B) = f(\emptyset) = \emptyset$.
+  \item $A \cap B = \varnothing$ (since $x_1 \neq x_2$), so $f(A \cap B) = f(\varnothing) = \varnothing$.
   \item $f(A) = \{f(x_1)\}$ and $f(B) = \{f(x_2)\} = \{f(x_1)\}$,
-        so $f(A) \cap f(B) = \{f(x_1)\} \neq \emptyset$.
+        so $f(A) \cap f(B) = \{f(x_1)\} \neq \varnothing$.
 \end{itemize}
 Therefore $f(A \cap B) \neq f(A) \cap f(B)$. \qed
 
@@ -874,7 +874,7 @@ image. This means disjoint subsets of the domain can have overlapping --- or eve
 
 \begin{problembox}
 Is it possible for $f : A \to B$ and disjoint non-empty $X_1, X_2 \subseteq A$
-(i.e.\ $X_1 \cap X_2 = \emptyset$, $X_1 \neq \emptyset$, $X_2 \neq \emptyset$)
+(i.e.\ $X_1 \cap X_2 = \varnothing$, $X_1 \neq \varnothing$, $X_2 \neq \varnothing$)
 to have $f(X_1) = f(X_2)$?
 \end{problembox}
 
@@ -920,7 +920,7 @@ Take $X_1 = \{1, 2\}$ and $X_2 = \{3, 4\}$.
 
 Then:
 \begin{itemize}[nosep]
-  \item $X_1 \cap X_2 = \{1,2\} \cap \{3,4\} = \emptyset$. \checkmark
+  \item $X_1 \cap X_2 = \{1,2\} \cap \{3,4\} = \varnothing$. \checkmark
   \item $f(X_1) = \{f(1), f(2)\} = \{a, b\}$.
   \item $f(X_2) = \{f(3), f(4)\} = \{a, b\}$.
   \item $f(X_1) = f(X_2) = \{a, b\}$. \checkmark
@@ -948,8 +948,8 @@ These hold for \emph{any} function --- no injectivity or surjectivity is require
 \end{theorybox}
 
 \begin{problembox}
-Is it true that for $f : A \to B$, if $Y_1 \cap Y_2 = \emptyset$, then
-$f^{-1}(Y_1) \cap f^{-1}(Y_2) = \emptyset$?
+Is it true that for $f : A \to B$, if $Y_1 \cap Y_2 = \varnothing$, then
+$f^{-1}(Y_1) \cap f^{-1}(Y_2) = \varnothing$?
 \end{problembox}
 
 \subsection*{Solution}
@@ -957,11 +957,11 @@ $f^{-1}(Y_1) \cap f^{-1}(Y_2) = \emptyset$?
 \textbf{Yes}, this is always true.
 
 \begin{proof}
-Suppose $Y_1 \cap Y_2 = \emptyset$. We use the identity $f^{-1}(Y_1 \cap Y_2) = f^{-1}(Y_1) \cap f^{-1}(Y_2)$.
+Suppose $Y_1 \cap Y_2 = \varnothing$. We use the identity $f^{-1}(Y_1 \cap Y_2) = f^{-1}(Y_1) \cap f^{-1}(Y_2)$.
 
-Since $Y_1 \cap Y_2 = \emptyset$:
+Since $Y_1 \cap Y_2 = \varnothing$:
 \[
-  f^{-1}(Y_1) \cap f^{-1}(Y_2) = f^{-1}(Y_1 \cap Y_2) = f^{-1}(\emptyset) = \emptyset.
+  f^{-1}(Y_1) \cap f^{-1}(Y_2) = f^{-1}(Y_1 \cap Y_2) = f^{-1}(\varnothing) = \varnothing.
 \]
 
 Alternatively, we can prove it directly. Suppose for contradiction that there exists
@@ -970,11 +970,11 @@ $x \in f^{-1}(Y_1) \cap f^{-1}(Y_2)$. Then:
   \item $x \in f^{-1}(Y_1) \implies f(x) \in Y_1$.
   \item $x \in f^{-1}(Y_2) \implies f(x) \in Y_2$.
 \end{itemize}
-So $f(x) \in Y_1 \cap Y_2 = \emptyset$, which is a contradiction since no element belongs to the empty set.
+So $f(x) \in Y_1 \cap Y_2 = \varnothing$, which is a contradiction since no element belongs to the empty set.
 \end{proof}
 
 \begin{answerbox}
-\textbf{Yes.} If $Y_1 \cap Y_2 = \emptyset$, then $f^{-1}(Y_1) \cap f^{-1}(Y_2) = \emptyset$.
+\textbf{Yes.} If $Y_1 \cap Y_2 = \varnothing$, then $f^{-1}(Y_1) \cap f^{-1}(Y_2) = \varnothing$.
 This follows from the fact that preimages preserve intersections.
 \end{answerbox}
 

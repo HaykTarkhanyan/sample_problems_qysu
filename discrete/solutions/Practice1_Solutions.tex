@@ -71,7 +71,7 @@
 \newpage
 
 % ══════════════════════════════════════════════════════════════════
-\section{Problem 2 --- Membership with $\emptyset$ and $\{\emptyset\}$}
+\section{Problem 2 --- Membership with $\varnothing$ and $\{\varnothing\}$}
 % ══════════════════════════════════════════════════════════════════
 
 \begin{theorybox}[Membership ($\in$) vs.\ Subset ($\subseteq$)]
@@ -82,8 +82,8 @@ These two relations are fundamentally different:
 \end{itemize}
 
 \medskip
-The empty set $\emptyset$ has no elements.
-The set $\{\emptyset\}$ is \textbf{not} empty---it has one element, namely $\emptyset$ itself.
+The empty set $\varnothing$ has no elements.
+The set $\{\varnothing\}$ is \textbf{not} empty---it has one element, namely $\varnothing$ itself.
 To decide ``$x \in S$\,?'' list the elements of $S$ and check whether $x$ is one of them.
 
 \begin{center}
@@ -93,11 +93,11 @@ To decide ``$x \in S$\,?'' list the elements of $S$ and check whether $x$ is one
   >=Stealth
 ]
   \node[box, fill=gray!8] (e0)
-    {$\emptyset = \{\,\}$\\[-1pt]\footnotesize 0 elements};
+    {$\varnothing = \{\,\}$\\[-1pt]\footnotesize 0 elements};
   \node[box, fill=setA!8, right=1.6cm of e0] (e1)
-    {$\{\emptyset\}$\\[-1pt]\footnotesize 1 element: $\emptyset$};
+    {$\{\varnothing\}$\\[-1pt]\footnotesize 1 element: $\varnothing$};
   \node[box, fill=setB!8, right=1.6cm of e1] (e2)
-    {$\{\{\emptyset\}\}$\\[-1pt]\footnotesize 1 element: $\{\emptyset\}$};
+    {$\{\{\varnothing\}\}$\\[-1pt]\footnotesize 1 element: $\{\varnothing\}$};
   \draw[->, thick, gray!70!black] (e0) -- (e1)
     node[midway, above, font=\footnotesize]{wrap in $\{\;\}$};
   \draw[->, thick, gray!70!black] (e1) -- (e2)
@@ -110,9 +110,9 @@ Each wrapping step creates a new set whose sole element is the previous set.
 \begin{problembox}
 Which of the following statements are true?
 \begin{enumerate}[label=2.\arabic*.]
-  \item $\emptyset \in \{\emptyset,\; \{\emptyset\}\}$
-  \item $\{\emptyset\} \in \{\{\emptyset\}\}$
-  \item $\emptyset \in \{\{\emptyset\}\}$
+  \item $\varnothing \in \{\varnothing,\; \{\varnothing\}\}$
+  \item $\{\varnothing\} \in \{\{\varnothing\}\}$
+  \item $\varnothing \in \{\{\varnothing\}\}$
 \end{enumerate}
 \end{problembox}
 
@@ -121,21 +121,21 @@ Which of the following statements are true?
 Think of every set as a \textbf{box}. The $\in$ operator opens the box and looks at what is \emph{directly} inside---it only looks \textbf{one box deep}. It never opens inner boxes.
 
 \begin{itemize}[nosep]
-  \item $\emptyset$ is an \textbf{empty box}---you open it and find nothing inside.
-        Therefore $|\emptyset| = 0$.
-  \item $\{\emptyset\}$ is a \textbf{box containing one item}: another (empty) box.
-        You open $\{\emptyset\}$ and see one thing sitting there---the empty box $\emptyset$.
-        Therefore $|\{\emptyset\}| = 1$.
+  \item $\varnothing$ is an \textbf{empty box}---you open it and find nothing inside.
+        Therefore $|\varnothing| = 0$.
+  \item $\{\varnothing\}$ is a \textbf{box containing one item}: another (empty) box.
+        You open $\{\varnothing\}$ and see one thing sitting there---the empty box $\varnothing$.
+        Therefore $|\{\varnothing\}| = 1$.
 \end{itemize}
 
 \medskip
-This is why $\emptyset \neq \{\emptyset\}$: an empty box is not the same as a box that contains an empty box, just as an empty envelope is not the same as an envelope containing another empty envelope.
+This is why $\varnothing \neq \{\varnothing\}$: an empty box is not the same as a box that contains an empty box, just as an empty envelope is not the same as an envelope containing another empty envelope.
 
 When you test ``$x \in S$\,?'', open the box $S$, look at the items directly visible (one level deep), and check whether $x$ is one of those items. \textbf{Never unwrap items inside items.}
 \end{tcolorbox}
 
 \medskip
-\textbf{Method.}\; List the elements of each outer set first: $\{\emptyset,\;\{\emptyset\}\}$, $\{\{\emptyset\}\}$. Then check whether the left-hand object matches any listed element.
+\textbf{Method.}\; List the elements of each outer set first: $\{\varnothing,\;\{\varnothing\}\}$, $\{\{\varnothing\}\}$. Then check whether the left-hand object matches any listed element.
 
 \subsection*{Solution}
 
@@ -152,12 +152,12 @@ then check whether the object on the left of $\in$ matches any of them.
   % ── 2.1 ──
   \begin{scope}[xshift=0cm]
     \node[font=\footnotesize\bfseries] at (0.55, 2.6) {2.1};
-    \node[elem, fill=setA!15] (a1) at (0, 0.7) {$\emptyset$};
-    \node[elem, fill=setB!15] (a2) at (1.1, 0.7) {$\{\emptyset\}$};
+    \node[elem, fill=setA!15] (a1) at (0, 0.7) {$\varnothing$};
+    \node[elem, fill=setB!15] (a2) at (1.1, 0.7) {$\{\varnothing\}$};
     \node[container, fit=(a1)(a2),
-          label={[font=\scriptsize, yshift=4pt]above:$\{\emptyset,\;\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\varnothing,\;\{\varnothing\}\}$}] {};
     \draw[->, thick, setA!70!black]
-      (0, -0.7) node[below, font=\scriptsize]{$\emptyset$} -- (a1.south);
+      (0, -0.7) node[below, font=\scriptsize]{$\varnothing$} -- (a1.south);
     \node[font=\scriptsize\bfseries, green!50!black] at (0.55, -1.5)
       {Match $\checkmark$ \;\textbf{TRUE}};
   \end{scope}
@@ -165,11 +165,11 @@ then check whether the object on the left of $\in$ matches any of them.
   % ── 2.2 ──
   \begin{scope}[xshift=4.3cm]
     \node[font=\footnotesize\bfseries] at (0, 2.6) {2.2};
-    \node[elem, fill=setB!15] (b1) at (0, 0.7) {$\{\emptyset\}$};
+    \node[elem, fill=setB!15] (b1) at (0, 0.7) {$\{\varnothing\}$};
     \node[container, fit=(b1),
-          label={[font=\scriptsize, yshift=4pt]above:$\{\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\{\varnothing\}\}$}] {};
     \draw[->, thick, setB!70!black]
-      (0, -0.7) node[below, font=\scriptsize]{$\{\emptyset\}$} -- (b1.south);
+      (0, -0.7) node[below, font=\scriptsize]{$\{\varnothing\}$} -- (b1.south);
     \node[font=\scriptsize\bfseries, green!50!black] at (0, -1.5)
       {Match $\checkmark$ \;\textbf{TRUE}};
   \end{scope}
@@ -177,13 +177,13 @@ then check whether the object on the left of $\in$ matches any of them.
   % ── 2.3 ──
   \begin{scope}[xshift=8cm]
     \node[font=\footnotesize\bfseries] at (0, 2.6) {2.3};
-    \node[elem, fill=setB!15] (c1) at (0, 0.7) {$\{\emptyset\}$};
+    \node[elem, fill=setB!15] (c1) at (0, 0.7) {$\{\varnothing\}$};
     \node[container, fit=(c1),
-          label={[font=\scriptsize, yshift=4pt]above:$\{\{\emptyset\}\}$}] {};
+          label={[font=\scriptsize, yshift=4pt]above:$\{\{\varnothing\}\}$}] {};
     \draw[->, thick, red!70!black]
-      (0, -0.7) node[below, font=\scriptsize]{$\emptyset$} -- (c1.south);
+      (0, -0.7) node[below, font=\scriptsize]{$\varnothing$} -- (c1.south);
     \node[font=\scriptsize\bfseries, red!70!black] at (0, -1.5)
-      {$\emptyset \neq \{\emptyset\}$ \;\textbf{FALSE}};
+      {$\varnothing \neq \{\varnothing\}$ \;\textbf{FALSE}};
   \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -194,27 +194,27 @@ then check whether the object on the left of $\in$ matches any of them.
 \toprule
 \textbf{Left object} & \textbf{Elements of outer set} & \textbf{Match?} \\
 \midrule
-$\emptyset$ & $\emptyset,\;\{\emptyset\}$ & Yes --- \textbf{TRUE} \\
-$\{\emptyset\}$ & $\{\emptyset\}$ & Yes --- \textbf{TRUE} \\
-$\emptyset$ & $\{\emptyset\}$ & No ($\emptyset \neq \{\emptyset\}$) --- \textbf{FALSE} \\
+$\varnothing$ & $\varnothing,\;\{\varnothing\}$ & Yes --- \textbf{TRUE} \\
+$\{\varnothing\}$ & $\{\varnothing\}$ & Yes --- \textbf{TRUE} \\
+$\varnothing$ & $\{\varnothing\}$ & No ($\varnothing \neq \{\varnothing\}$) --- \textbf{FALSE} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{2.1.}\; $\emptyset \in \{\emptyset,\;\{\emptyset\}\}$
+\textbf{2.1.}\; $\varnothing \in \{\varnothing,\;\{\varnothing\}\}$
 \;---\; \textbf{TRUE.}
-The set has two elements: $\emptyset$ and $\{\emptyset\}$.
-The object $\emptyset$ is explicitly one of them.
+The set has two elements: $\varnothing$ and $\{\varnothing\}$.
+The object $\varnothing$ is explicitly one of them.
 
-\textbf{2.2.}\; $\{\emptyset\} \in \{\{\emptyset\}\}$
+\textbf{2.2.}\; $\{\varnothing\} \in \{\{\varnothing\}\}$
 \;---\; \textbf{TRUE.}
-The set $\{\{\emptyset\}\}$ has exactly one element: $\{\emptyset\}$.
-The object on the left is $\{\emptyset\}$, which matches.
+The set $\{\{\varnothing\}\}$ has exactly one element: $\{\varnothing\}$.
+The object on the left is $\{\varnothing\}$, which matches.
 
-\textbf{2.3.}\; $\emptyset \in \{\{\emptyset\}\}$
+\textbf{2.3.}\; $\varnothing \in \{\{\varnothing\}\}$
 \;---\; \textbf{FALSE.}
-The only element is $\{\emptyset\}$.
-We need $\emptyset = \{\emptyset\}$, but $|\emptyset|=0$ while $|\{\emptyset\}|=1$,
+The only element is $\{\varnothing\}$.
+We need $\varnothing = \{\varnothing\}$, but $|\varnothing|=0$ while $|\{\varnothing\}|=1$,
 so they are not equal.
 
 \begin{answerbox}
@@ -480,7 +480,7 @@ Symmetric diff. & $A \symdiff B$ &
     \draw[thick, setB] (0.55,0) circle (1);
     \node[font=\small\bfseries, setA!70!black] at (-1.15,0) {$A$};
     \node[font=\small\bfseries, setB!70!black] at (1.15,0) {$B$};
-    \node[font=\scriptsize] at (0, 0) {\color{gray}$\emptyset$};
+    \node[font=\scriptsize] at (0, 0) {\color{gray}$\varnothing$};
     \node[font=\footnotesize\bfseries] at (0,-2.0) {$A \symdiff B$};
   \end{scope}
 
@@ -568,11 +568,11 @@ Everything in $\Z$ that is \emph{not} a positive even integer:
 \]
 
 \textbf{(b)\; $A \symdiff B$:}\;
-Since $A \cap B = \emptyset$ (no integer is both positive-even and positive-odd):
+Since $A \cap B = \varnothing$ (no integer is both positive-even and positive-odd):
 \[
   A \symdiff B = A \cup B = \{1, 2, 3, 4, \ldots\}
 \]
-Since every positive integer is either even or odd, and never both, $A \cup B = \Z^+$ and $A \cap B = \emptyset$.
+Since every positive integer is either even or odd, and never both, $A \cup B = \Z^+$ and $A \cap B = \varnothing$.
 \[
   \boxed{A \symdiff B = \Z^+}
 \]
@@ -637,7 +637,7 @@ Prove that for any subsets $A, B$ of universal set $U$,
 the conditions in each group are equivalent:
 \begin{enumerate}[nosep]
   \item $A \subseteq B \;\iff\; A \cup B = B \;\iff\; A \cap B = A$
-  \item $A \cap B = \emptyset \;\iff\; A \subseteq \comp{B} \;\iff\; B \subseteq \comp{A}$
+  \item $A \cap B = \varnothing \;\iff\; A \subseteq \comp{B} \;\iff\; B \subseteq \comp{A}$
   \item $A \cup B = U \;\iff\; \comp{A} \subseteq B \;\iff\; \comp{B} \subseteq A$
 \end{enumerate}
 \end{problembox}
@@ -723,7 +723,7 @@ $A \cap B = A \;\Longrightarrow\; A \subseteq B$.
 Let $x \in A$. Then $x \in A = A \cap B$, so $x \in B$. \qed
 
 % ---- Part 2 ----
-\subsection*{Part 2:\; $A \cap B = \emptyset \;\iff\; A \subseteq \comp{B} \;\iff\; B \subseteq \comp{A}$}
+\subsection*{Part 2:\; $A \cap B = \varnothing \;\iff\; A \subseteq \comp{B} \;\iff\; B \subseteq \comp{A}$}
 
 \begin{center}
 \begin{tikzpicture}[scale=0.72]
@@ -733,8 +733,8 @@ Let $x \in A$. Then $x \in A = A \cap B$, so $x \in B$. \qed
   \draw[thick, setB, fill=setB!20] (0.85,0) circle (0.9);
   \node[font=\footnotesize\bfseries, setA!70!black] at (-0.85,0) {$A$};
   \node[font=\footnotesize\bfseries, setB!70!black] at (0.85,0) {$B$};
-  \node[font=\footnotesize] at (0,-2.3) {Disjoint: $A \cap B = \emptyset$};
-  \node[font=\scriptsize, gray] at (0, 0) {$\emptyset$};
+  \node[font=\footnotesize] at (0,-2.3) {Disjoint: $A \cap B = \varnothing$};
+  \node[font=\scriptsize, gray] at (0, 0) {$\varnothing$};
 \end{tikzpicture}
 \end{center}
 
@@ -743,9 +743,9 @@ Let $x \in A$. Then $x \in A = A \cap B$, so $x \in B$. \qed
 
 \smallskip
 \textbf{$(a) \Rightarrow (b)$:}\;
-$A \cap B = \emptyset \;\Longrightarrow\; A \subseteq \comp{B}$.
+$A \cap B = \varnothing \;\Longrightarrow\; A \subseteq \comp{B}$.
 
-Let $x \in A$. If $x \in B$, then $x \in A \cap B = \emptyset$---contradiction.
+Let $x \in A$. If $x \in B$, then $x \in A \cap B = \varnothing$---contradiction.
 So $x \notin B$, i.e.\ $x \in \comp{B}$. \qed
 
 \textbf{$(b) \Rightarrow (c)$:}\;
@@ -755,7 +755,7 @@ Let $x \in B$. If $x \in A$, then $x \in \comp{B}$ (since $A \subseteq \comp{B}$
 so $x \notin B$---contradiction. Hence $x \notin A$, i.e.\ $x \in \comp{A}$. \qed
 
 \textbf{$(c) \Rightarrow (a)$:}\;
-$B \subseteq \comp{A} \;\Longrightarrow\; A \cap B = \emptyset$.
+$B \subseteq \comp{A} \;\Longrightarrow\; A \cap B = \varnothing$.
 
 Suppose $x \in A \cap B$. Then $x \in B \subseteq \comp{A}$,
 so $x \notin A$---contradicting $x \in A \cap B$. \qed
@@ -1175,7 +1175,7 @@ Prove that $A \times B = B \times A$ implies $A = B$.
 
 \smallskip
 \textit{Note:} More precisely, $A \times B = B \times A$ implies
-$A = B$, or $A = \emptyset$, or $B = \emptyset$.
+$A = B$, or $A = \varnothing$, or $B = \varnothing$.
 \end{problembox}
 
 \begin{tcolorbox}[colback=yellow!5, colframe=stmtFrame!80!black, arc=2mm, left=5pt, right=5pt, top=5pt, bottom=5pt, title={\small Concrete Mini-Example: Why $A \neq B$ Breaks Equality}]
@@ -1221,14 +1221,14 @@ The grids have different ``shapes'' ($2 \times 1$ vs.\ $1 \times 2$), and the pa
 
 \subsection*{Solution}
 
-\textbf{Hidden assumption.}\; We first assume $A \neq \emptyset$ and $B \neq \emptyset$, because if either is empty, both products are $\emptyset$ and the equality holds trivially without $A = B$. (Example: $A = \emptyset$, $B = \{1\}$.)
+\textbf{Hidden assumption.}\; We first assume $A \neq \varnothing$ and $B \neq \varnothing$, because if either is empty, both products are $\varnothing$ and the equality holds trivially without $A = B$. (Example: $A = \varnothing$, $B = \{1\}$.)
 
 \medskip
-Assume $A \times B = B \times A$ with $A \neq \emptyset$ and $B \neq \emptyset$.
+Assume $A \times B = B \times A$ with $A \neq \varnothing$ and $B \neq \varnothing$.
 We show $A \subseteq B$ and $B \subseteq A$.
 
 \textbf{$A \subseteq B$:}\;
-Let $a \in A$. Since $B \neq \emptyset$, pick some $b \in B$.
+Let $a \in A$. Since $B \neq \varnothing$, pick some $b \in B$.
 \[
   (a, b) \in A \times B = B \times A
   \quad\Longrightarrow\quad
@@ -1237,7 +1237,7 @@ Let $a \in A$. Since $B \neq \emptyset$, pick some $b \in B$.
 Since $a$ was arbitrary, $A \subseteq B$.
 
 \textbf{$B \subseteq A$:}\;
-Let $b \in B$. Since $A \neq \emptyset$, pick some $a \in A$.
+Let $b \in B$. Since $A \neq \varnothing$, pick some $a \in A$.
 \[
   (b, a) \in B \times A = A \times B
   \quad\Longrightarrow\quad

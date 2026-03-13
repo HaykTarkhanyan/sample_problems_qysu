@@ -1,0 +1,178 @@
+% ============================================================
+%  ANSWER KEY — Practice 5: Combinatorics
+% ============================================================
+
+\section*{Practice 5: Combinatorics --- Basic Rules}
+
+% ------------------------------------------------------------
+\subsection*{Section 1: Sum and Product Rules}
+
+\subsubsection*{Problem 1}
+Count of integers from 0 to 1000 containing at least one digit 6.
+
+Complement: count integers with \emph{no} digit 6.
+\begin{itemize}
+  \item 1-digit numbers (0--9): 9 have no 6 (all except 6).
+  \item 2-digit numbers (10--99): first digit from $\{1,\dots,9\}\setminus\{6\}=8$, second digit from $\{0,\dots,9\}\setminus\{6\}=9$. Total $8\cdot9=72$.
+  \item 3-digit numbers (100--999): $8\cdot9\cdot9=648$.
+  \item The number 1000 contains no 6: 1 more.
+\end{itemize}
+No-six total: $9+72+648+1=730$.
+All integers from 0 to 1000: $1001$.
+
+$\boxed{1001 - 730 = 271}$
+
+\subsubsection*{Problem 2}
+Same problem as Problem 1 (the exercise sheet notes the apparent duplication).
+
+$\boxed{271}$
+
+\subsubsection*{Problem 3}
+Choose two books of different subjects from 15 Informatics, 12 Math, 10 Physics.
+
+By the sum/product rules:
+$15\cdot12 + 15\cdot10 + 12\cdot10 = 180+150+120 = \boxed{450}$.
+
+\subsubsection*{Problem 4}
+Odd numbers between 100 and 1000 (i.e.\ 3-digit odd numbers 101, 103, \ldots, 999).
+
+Last digit: 5 choices ($\{1,3,5,7,9\}$).
+First digit: 9 choices ($1$--$9$).
+Middle digit: 10 choices ($0$--$9$).
+
+$\boxed{9 \times 10 \times 5 = 450}$
+
+\subsubsection*{Problem 5}
+Natural numbers less than 700 ($\{1,\dots,699\}$):
+
+(a) Divisible by 5: $\lfloor 699/5\rfloor = \boxed{139}$.
+
+(b) Divisible by 3: $\lfloor 699/3\rfloor = \boxed{233}$.
+
+(c) Divisible by both 3 and 5 (i.e.\ by 15): $\lfloor 699/15\rfloor = \boxed{46}$.
+
+\subsubsection*{Problem 6}
+Yerevan $\to$ Moscow: 15 flights. Moscow $\to$ London: 20 flights.
+By the product rule: $\boxed{15 \times 20 = 300}$.
+
+\subsubsection*{Problem 7}
+4-digit numbers with at least two identical digits.
+
+Total 4-digit numbers: $9\times 10^3 = 9000$.
+4-digit numbers with all digits distinct: first digit 9 choices, second 9, third 8, fourth 7, giving $9\times 9\times 8\times 7 = 4536$.
+
+$\boxed{9000 - 4536 = 4464}$
+
+\subsubsection*{Problem 8}
+7-digit numbers where first and last digits are different.
+
+Total 7-digit numbers: $9\times 10^6$.
+7-digit numbers where first = last digit: first digit 9 choices, last digit fixed equal to first (1 choice), middle 5 digits $10^5$ each. Total same: $9\times 10^5$.
+
+Answer: $9\times 10^6 - 9\times 10^5 = 9\times 10^5(10-1)=9\times 10^5\times 9$.
+
+$\boxed{9\times 10^6 - 9\times 10^5 = 8{,}100{,}000}$
+
+\subsubsection*{Problem 9}
+6-digit numbers where adjacent digits are different (digits 0--9, leading digit $\neq 0$).
+
+Position 1: 9 choices (1--9). Each subsequent position: 9 choices (any digit except the preceding one).
+
+$\boxed{9 \times 9^5 = 9^6 = 531{,}441}$
+
+\subsubsection*{Problem 10}
+7-digit numbers: even positions (2,4,6) hold odd digits; odd positions (1,3,5,7) hold even digits.
+
+Positions 2,4,6: 5 odd digits each $\Rightarrow 5^3$.
+Position 1 (leading, must be even and $\neq 0$): 4 choices $\{2,4,6,8\}$.
+Positions 3,5,7: 5 even digits each $\Rightarrow 5^3$.
+
+$\boxed{4 \times 5^3 \times 5^3 = 4 \times 15{,}625 = 62{,}500}$
+
+% ------------------------------------------------------------
+\subsection*{Section 2: Permutations and Arrangements}
+
+\subsubsection*{Problem 1}
+Mappings from a 6-element set to a 3-element set: each of the 6 elements maps to one of 3 images.
+
+$\boxed{3^6 = 729}$
+
+\subsubsection*{Problem 2}
+Injective mappings from a 6-element set to a 3-element set.
+Since $6 > 3$, by the Pigeonhole Principle no injection exists.
+
+$\boxed{0}$
+
+\subsubsection*{Problem 3}
+5 boys and 6 girls in a line; boys occupy the first 5 positions.
+
+Arrange 5 boys in the first 5 positions: $5!$.
+Arrange 6 girls in the remaining 6 positions: $6!$.
+
+$\boxed{5! \times 6! = 120 \times 720 = 86{,}400}$
+
+\subsubsection*{Problem 4}
+6 boys and 7 girls ($13$ people) in a line; first position is a boy.
+
+Choose the boy for position 1: 6 ways. Arrange remaining 12 people: $12!$.
+
+$\boxed{6 \times 12! = 6 \times 479{,}001{,}600 = 2{,}874{,}009{,}600}$
+
+\subsubsection*{Problem 5}
+6 boys and 7 girls in a line; first and last positions are boys.
+
+First position: 6 choices. Last position: 5 remaining boys. Middle 11 positions: $11!$.
+
+$\boxed{6 \times 5 \times 11! = 30 \times 39{,}916{,}800 = 1{,}197{,}504{,}000}$
+
+\subsubsection*{Problem 6}
+5 boys and 6 girls in a line; boys occupy 5 \emph{consecutive} positions.
+
+Treat the block of 5 boys as a single unit. Together with 6 girls, we have 7 objects to arrange in a line: $7!$ ways. Within the block the 5 boys can be permuted: $5!$ ways.
+
+$\boxed{7! \times 5! = 5040 \times 120 = 604{,}800}$
+
+\subsubsection*{Problem 7}
+Arrange 9 distinct people in a line.
+
+$\boxed{9! = 362{,}880}$
+
+\subsubsection*{Problem 8}
+8-digit numbers formed from the digits of 23122313.
+
+Digits: 1 appears 2 times, 2 appears 3 times, 3 appears 3 times. Total 8 digits.
+
+Permutations with repetition: $\dfrac{8!}{2!\,3!\,3!} = \dfrac{40320}{2\cdot6\cdot6} = \dfrac{40320}{72}$.
+
+$\boxed{\frac{8!}{2!\,3!\,3!} = 560}$
+
+\subsubsection*{Problem 9}
+Words of length 6 from alphabet $\{a, b, g, d, e, z\}$ (vowels: $a, e$; consonants: $b, g, d, z$) where two vowels are adjacent.
+
+Total words of length 6: $6^6 = 46656$.
+
+Strings with NO two adjacent vowels: Let $V_n, C_n$ = strings ending in vowel/consonant. $V_n = 2C_{n-1}$, $C_n = 4(V_{n-1}+C_{n-1})$.
+
+$V_1=2, C_1=4, V_2=8, C_2=24, V_3=48, C_3=128, V_4=256, C_4=704$,
+$V_5=1408, C_5=3840, V_6=7680, C_6=20992$. Total: $f(6)=28672$.
+
+$\boxed{46656 - 28672 = 17984}$
+
+\subsubsection*{Problem 10}
+\textbf{Prove:} In any group of 6 people, there are either 3 mutual friends or 3 mutual strangers ($R(3,3)=6$).
+
+\textit{Proof sketch.}
+Model the 6 people as vertices of $K_6$ with edges coloured red (friend) or blue (stranger). Pick any vertex $A$; it has 5 edges, so by the Pigeonhole Principle at least 3 share one colour, say red, to vertices $B,C,D$. If any edge among $B,C,D$ is red, it forms a red triangle with $A$; otherwise $B,C,D$ form a blue triangle. \qed
+
+\subsubsection*{Problem 11}
+How many numbers must be selected from $\{1,2,\dots,210\}$ to guarantee at least one even number?
+
+There are 105 odd numbers in $\{1,\dots,210\}$. In the worst case we pick all 105 odd numbers first. One more pick guarantees an even number.
+
+$\boxed{106}$
+
+\subsubsection*{Problem 12}
+\textbf{Prove:} Among the first 2014 terms of $7, 77, 777, \ldots$, one is divisible by 2013.
+
+\textit{Proof sketch.}
+Let $a_k = \underbrace{77\ldots7}_{k}$. Consider the 2014 remainders $a_k \bmod 2013$. If some remainder is 0, done. Otherwise 2014 remainders fall into $\{1,\dots,2012\}$ (2012 classes), so by Pigeonhole two terms $a_i, a_j$ ($i<j$) share a remainder. Then $2013 \mid a_j - a_i = a_{j-i}\cdot 10^i$. Since $\gcd(10,2013)=1$, we get $2013\mid a_{j-i}$, and $1\le j-i\le 2013$. \qed

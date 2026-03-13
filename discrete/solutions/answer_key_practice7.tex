@@ -1,0 +1,104 @@
+% ============================================================
+%  ANSWER KEY — Practice 7: Partitions & Inclusion-Exclusion
+% ============================================================
+
+\section*{Practice 7: Partitions \& Inclusion-Exclusion}
+
+\subsubsection*{Problem 1}
+Partition a 5-element set into 3 non-empty classes: Stirling number $S(5,3)$.
+
+$S(5,3) = S(4,2)+3\cdot S(4,3) = 7 + 3\cdot 6 = \boxed{25}$.
+
+\subsubsection*{Problem 2}
+Distribute $m$ distinct balls into $n$ distinct boxes, no box empty (surjections $m\to n$).
+
+By inclusion--exclusion:
+\[
+  \boxed{n!\,S(m,n) = \sum_{k=0}^{n}(-1)^k\binom{n}{k}(n-k)^m}
+\]
+
+\subsubsection*{Problem 3}
+Numbers in $\{1,\dots,1000\}$ not divisible by 2, 3, or 5.
+
+Let $A_d = $ multiples of $d$. By inclusion--exclusion:
+\begin{align*}
+|A_2|&=500,\; |A_3|=333,\; |A_5|=200,\\
+|A_6|&=166,\; |A_{10}|=100,\; |A_{15}|=66,\; |A_{30}|=33.
+\end{align*}
+$|A_2\cup A_3\cup A_5|=500+333+200-166-100-66+33=734$.
+
+$\boxed{1000-734=266}$
+
+\subsubsection*{Problem 4}
+4-digit numbers containing at least one digit 7.
+
+Total 4-digit numbers: 9000. Those with no 7: first digit $8$ choices, each other digit $9$ choices $= 8\times 9^3 = 5832$.
+
+$\boxed{9000-5832=3168}$
+
+\subsubsection*{Problem 5}
+Integers in $\{1,\dots,16500\}$ not divisible by 5.
+
+Divisible by 5: $\lfloor 16500/5\rfloor = 3300$.
+
+$\boxed{16500-3300=13200}$
+
+\subsubsection*{Problem 6}
+Integers in $\{1,\dots,16500\}$ divisible by neither 5 nor 3.
+
+$|A_3|=5500$, $|A_5|=3300$, $|A_{15}|=1100$.
+$|A_3\cup A_5|=5500+3300-1100=7700$.
+
+$\boxed{16500-7700=8800}$
+
+\subsubsection*{Problem 7}
+Integers in $\{1,\dots,16500\}$: divisible by 11, not by 5, not by 3.
+
+Universe $S$: multiples of 11, $|S|=1500$. Let $A=$ also div.\ by 3 (div.\ by 33), $B=$ also div.\ by 5 (div.\ by 55).
+$|A|=500$, $|B|=300$, $|A\cap B|=\lfloor 16500/165\rfloor=100$.
+$|A\cup B|=700$.
+
+$\boxed{1500-700=800}$
+
+\subsubsection*{Problem 8}
+Integers in $\{1,\dots,16500\}$ not divisible by 5, 3, or 11.
+
+$|A_3|=5500,\;|A_5|=3300,\;|A_{11}|=1500$.
+$|A_{15}|=1100,\;|A_{33}|=500,\;|A_{55}|=300$.
+$|A_{165}|=100$.
+
+$|A_3\cup A_5\cup A_{11}|=5500+3300+1500-1100-500-300+100=8500$.
+
+$\boxed{16500-8500=8000}$
+
+\subsubsection*{Problem 9}
+30 students; 20 know English, 12 French, 6 both.
+
+$|E\cup F|=20+12-6=26$. Know neither:
+
+$\boxed{30-26=4}$
+
+\subsubsection*{Problem 10}
+Triangles in a triangular grid with $n=8$.
+
+Upward-pointing (side $s$, $1\le s\le 8$): $\sum_{s=1}^{8}\binom{10-s}{2} = 36+28+21+15+10+6+3+1=120$.
+
+Downward-pointing (side $s$, $1\le s\le 4$): $\sum_{s=1}^{4}\binom{10-2s}{2}=28+15+6+1=50$.
+
+$\boxed{120+50=170}$
+
+\subsubsection*{Problem 11}
+Three carpets of area 3~m$^2$ each in a room of area 6~m$^2$. Prove two overlap by $\ge \frac{1}{2}$~m$^2$.
+
+\textit{Proof sketch.}
+Total carpet area $= 9$~m$^2$, room area $= 6$~m$^2$, so the total overlap (counted with multiplicity) is $\ge 9-6=3$~m$^2$. There are $\binom{3}{2}=3$ pairs of carpets. By the Pigeonhole Principle, at least one pair overlaps by $\ge 3/3 = 1$~m$^2 \ge \frac{1}{2}$~m$^2$. \qed
+
+\subsubsection*{Problem 12}
+Integer solutions of $x_1+x_2+x_3=40$ with $4\le x_1\le 15$, $9\le x_2\le 18$, $5\le x_3\le 16$.
+
+Substitute $y_i = x_i - \text{lower bound}$: $y_1+y_2+y_3=22$ with $0\le y_1\le 11$, $0\le y_2\le 9$, $0\le y_3\le 11$.
+
+Unrestricted: $\binom{24}{2}=276$.
+Violations by inclusion--exclusion: $|A_1|+|A_2|+|A_3|-(|A_1\cap A_2|+|A_1\cap A_3|+|A_2\cap A_3|)+|A_1\cap A_2\cap A_3| = (66+91+66)-(1+0+1)+0 = 221$.
+
+$\boxed{276-221=55}$

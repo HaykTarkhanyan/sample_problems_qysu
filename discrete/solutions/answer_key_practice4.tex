@@ -1,0 +1,203 @@
+\section*{Practice 4: Functions (Mappings)}
+
+% ============================================================
+\subsection*{Problem 1}
+If $f$ is total and $g$ is not (i.e.\ $g$ is a partial function):
+\begin{itemize}[nosep]
+  \item $g \circ f$ may be partial: it is defined at $x$ only if $f(x) \in \operatorname{Dom}(g)$.
+  \item $f \circ g$ is defined at $x$ only if $g(x)$ is defined; but wherever $g(x)$ is defined, $f(g(x))$ is defined since $f$ is total. So $\operatorname{Dom}(f \circ g) = \operatorname{Dom}(g)$.
+\end{itemize}
+
+% ============================================================
+\subsection*{Problem 2}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f(x)=x^2+3$:\quad $D_f = \mathbb{R}$,\; $R_f = [3,+\infty)$.
+  \item $f(x)=\sqrt{x+2}$:\quad $D_f = [-2,+\infty)$,\; $R_f = [0,+\infty)$.
+  \item $f(x)=\frac{1}{\sqrt{x-2}}$:\quad $D_f = (2,+\infty)$,\; $R_f = (0,+\infty)$.
+  \item $f(x)=|x|$:\quad $D_f = \mathbb{R}$,\; $R_f = [0,+\infty)$.
+  \item $f(x)=\frac{1}{x^2+2}$:\quad $D_f = \mathbb{R}$,\; $R_f = \bigl(0,\,\tfrac{1}{2}\bigr]$.
+  \item $f(x)=\frac{1}{x^2-2}$:\quad $D_f = \mathbb{R}\setminus\{-\sqrt{2},\sqrt{2}\}$,\; $R_f = \bigl(-\infty,-\tfrac{1}{2}\bigr]\cup(0,+\infty)$.
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 3}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $\rho = \{(x,\sqrt{x^2+4}) \mid x\in\mathbb{R}\}$: \textbf{Yes}, it is a function. Each $x$ maps to a unique value $\sqrt{x^2+4}$.
+  \item $\rho = \{(x,5) \mid x\in\mathbb{R}\}$: \textbf{Yes}, it is a (constant) function.
+  \item $\rho = \{(7,y) \mid y\in\mathbb{R}\}$: \textbf{No}, it is not a function. The element $7$ is paired with every real number, violating single-valuedness.
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 4}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f(x)=x^2+1$, $g(x)=x+3$:
+    \[
+      (f\circ g)(x) = x^2+6x+10, \qquad (g\circ f)(x) = x^2+4.
+    \]
+  \item $f(x)=\sqrt{x^2+2}$, $g(x)=x^2+3$:
+    \[
+      (f\circ g)(x) = \sqrt{x^4+6x^2+11}, \qquad (g\circ f)(x) = x^2+5.
+    \]
+  \item $f(x)=\frac{1}{x}$, $g(x)=2x+3$:
+    \[
+      (f\circ g)(x) = \frac{1}{2x+3}\;(x\neq -\tfrac{3}{2}), \qquad (g\circ f)(x) = \frac{2+3x}{x}\;(x\neq 0).
+    \]
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 5}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f(x)=\frac{x+4}{2}$:\quad $f^{-1}(x)=2x-4$.
+  \item $f(x)=x^3$:\quad $f^{-1}(x)=\sqrt[3]{x}$.
+  \item $f(x)=\frac{x-2}{x+3}$:\quad $f^{-1}(x)=\dfrac{2+3x}{1-x},\; x\neq 1$.
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 6}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f(x)=|x|$: neither injective nor surjective. ($f(1)=f(-1)$; range $=[0,\infty)\neq\mathbb{R}$.)
+  \item $f(x)=x^2+4$: neither injective nor surjective. ($f(1)=f(-1)$; range $=[4,\infty)\neq\mathbb{R}$.)
+  \item $f(x)=x^3+6$: \textbf{bijective}. (Strictly increasing, hence injective; cube root gives surjectivity.)
+  \item $f(x)=x+|x|$: neither injective nor surjective. ($f(x)=0$ for all $x<0$; range $=[0,\infty)\neq\mathbb{R}$.)
+  \item $f(x)=x(x-2)(x+2)=x^3-4x$: surjective but \textbf{not} injective. (Cubic $\to\pm\infty$ gives surjectivity; $f(0)=f(2)=0$ shows non-injectivity.)
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 7}
+The kernel $\operatorname{Ker}(f)=\{(x_1,x_2): f(x_1)=f(x_2)\}$. The equivalence classes are:
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f:\mathbb{Z}\to\mathbb{Z}$, $f(x)=|x|$:\; $\operatorname{Ker}(f)$ partitions $\mathbb{Z}$ into $\{0\}$ and $\{-n,\,n\}$ for each $n\geq 1$.
+  \item $f:\mathbb{R}\to\mathbb{Z}$, $f(x)=\lfloor x\rfloor$:\; classes are the half-open intervals $[n,\,n+1)$ for each $n\in\mathbb{Z}$.
+  \item $f:\mathbb{R}\to\mathbb{Z}$, $f(x)=\lceil x\rceil$:\; classes are the half-open intervals $(n-1,\,n]$ for each $n\in\mathbb{Z}$.
+\end{enumerate}
+
+% ============================================================
+\subsection*{Problem 8}
+We must show $(a)\Leftrightarrow(b)$, where (a) is $f(x)=f(y)\Rightarrow x=y$ and (b) is $x\neq y\Rightarrow f(x)\neq f(y)$.
+
+Statement (b) is the contrapositive of (a). A conditional and its contrapositive are logically equivalent, so (a)$\Leftrightarrow$(b). \qed
+
+% ============================================================
+\subsection*{Problem 9}
+(Reference: Lemmas 1, 2, 3, 5 from the lecture notes on functions.)
+
+\textbf{Lemma 1} (Composition of injections is injective): If $f,g$ injective, let $(g\circ f)(x_1)=(g\circ f)(x_2)$. Then $g(f(x_1))=g(f(x_2))$; $g$ injective $\Rightarrow f(x_1)=f(x_2)$; $f$ injective $\Rightarrow x_1=x_2$. \qed
+
+\textbf{Lemma 2} (Composition of surjections is surjective): If $f:A\to B$ and $g:B\to C$ are surjective, given $c\in C$, $\exists\, b\in B$ with $g(b)=c$, and $\exists\, a\in A$ with $f(a)=b$, so $(g\circ f)(a)=c$. \qed
+
+\textbf{Lemma 3} (Composition of bijections is bijective): Follows from Lemmas 1 and 2.
+
+\textbf{Lemma 5} (If $g\circ f$ is injective then $f$ is injective): Suppose $f(x_1)=f(x_2)$. Then $g(f(x_1))=g(f(x_2))$, i.e.\ $(g\circ f)(x_1)=(g\circ f)(x_2)$; since $g\circ f$ is injective, $x_1=x_2$. \qed
+
+% ============================================================
+\subsection*{Problem 10}
+$\operatorname{Ker}(f) = \{(a_1,a_2)\in A\times A : f(a_1)=f(a_2)\}$ is an equivalence relation:
+\begin{itemize}[nosep]
+  \item \emph{Reflexive:} $f(a)=f(a)$, so $a\sim a$.
+  \item \emph{Symmetric:} $f(a)=f(b)\Rightarrow f(b)=f(a)$.
+  \item \emph{Transitive:} $f(a)=f(b)$ and $f(b)=f(c)\Rightarrow f(a)=f(c)$. \qed
+\end{itemize}
+
+% ============================================================
+\subsection*{Problem 11}
+\begin{enumerate}[label=(\alph*), nosep]
+  \item $f:\mathbb{Z}\to\mathbb{N}$, $f(x)=|x|$:\; equivalence classes are $\{0\}$ and $\{-n,n\}$ for $n\geq 1$.
+  \item $f:\mathbb{R}\to\mathbb{Z}$, $f(x)=\lfloor x\rfloor$:\; equivalence classes are the intervals $[n,\,n+1)$ for each $n\in\mathbb{Z}$.
+\end{enumerate}
+(Same as Problem 7(a) and 7(b).)
+
+% ============================================================
+\subsection*{Problem 12}
+$f:\mathbb{Q}^+\to\mathbb{Q}^+$, $f(x)=\frac{x}{2x+1}$.
+
+\textbf{Injective:} $\frac{x_1}{2x_1+1}=\frac{x_2}{2x_2+1}$ $\Rightarrow$ cross-multiply $\Rightarrow$ $2x_1x_2+x_1=2x_1x_2+x_2$ $\Rightarrow$ $x_1=x_2$. \checkmark
+
+\textbf{Not surjective:} $f(x)=\frac{1}{2+1/x}<\frac{1}{2}$ for all $x>0$, so $y=\frac{1}{2}\in\mathbb{Q}^+$ has no preimage. \checkmark
+
+% ============================================================
+\subsection*{Problem 13}
+$f:\mathbb{Z}_{15}\to\mathbb{Z}_{15}$, $f(x)=4x\pmod{15}$.
+
+\textbf{Bijective:} $\gcd(4,15)=1$, so multiplication by $4$ is a bijection on $\mathbb{Z}_{15}$.
+
+\textbf{Inverse:} We need $4^{-1}\pmod{15}$. Since $4\cdot 4=16\equiv 1\pmod{15}$, we have $4^{-1}\equiv 4$. Thus $f^{-1}(x)=4x\pmod{15}$ (the function is its own inverse).
+
+% ============================================================
+\subsection*{Problem 14}
+$f:\mathbb{Z}_{15}\to\mathbb{Z}_{15}$, $f(x)=2x+4\pmod{15}$.
+
+\textbf{Bijective.} Since $\gcd(2,15)=1$, multiplication by $2$ is invertible mod $15$, so $f$ is a bijection. Explicit check: $f(0)=4,\;f(1)=6,\;f(2)=8,\;\ldots,\;f(13)=0,\;f(14)=2$ --- all $15$ residues appear.
+
+\textbf{Inverse:} $2^{-1}\equiv 8\pmod{15}$ (since $2\cdot 8=16\equiv 1$). So $f^{-1}(y)=8(y-4)\equiv 8y+13\pmod{15}$.
+
+% ============================================================
+\subsection*{Problem 15}
+\textbf{Claim:} If $A$ is finite, then $f:A\to A$ is bijective iff it is injective.
+
+\emph{Proof sketch:} ($\Rightarrow$) Bijective $\Rightarrow$ injective trivially. ($\Leftarrow$) If $f$ is injective, then $|f(A)|=|A|$. Since $f(A)\subseteq A$ and $A$ is finite, $|f(A)|=|A|$ forces $f(A)=A$, so $f$ is surjective, hence bijective. \qed
+
+% ============================================================
+\subsection*{Problem 16}
+\textbf{Claim:} If $A$ is finite, then $f:A\to A$ is bijective iff it is surjective.
+
+\emph{Proof sketch:} ($\Rightarrow$) Trivial. ($\Leftarrow$) If $f$ is surjective, then $f(A)=A$, so $|f(A)|=|A|$. By the pigeonhole principle, a surjection from a finite set to itself must be injective (otherwise two inputs share an output, leaving at most $|A|-1$ distinct outputs, contradicting surjectivity). \qed
+
+% ============================================================
+\subsection*{Problem 17}
+\textbf{Corollary 1} (from lecture): For a finite set $A$, $f:A\to A$ is injective $\Leftrightarrow$ surjective $\Leftrightarrow$ bijective.
+
+This is the direct combination of Problems 15 and 16. \qed
+
+% ============================================================
+\subsection*{Problem 18}
+(Reference: Theorems 6 and 7 from lecture notes.)
+
+\textbf{Theorem 6} ($f$ has a left inverse iff $f$ is injective): ($\Leftarrow$) If $f:A\to B$ is injective, define $g:B\to A$ by $g(y)=$ the unique $x$ with $f(x)=y$ if $y\in\operatorname{Ran}(f)$, and $g(y)=a_0$ (fixed element) otherwise. Then $g\circ f = \operatorname{id}_A$. ($\Rightarrow$) If $g\circ f=\operatorname{id}_A$, then $f(x_1)=f(x_2)\Rightarrow g(f(x_1))=g(f(x_2))\Rightarrow x_1=x_2$.
+
+\textbf{Theorem 7} ($f$ has a right inverse iff $f$ is surjective): ($\Leftarrow$) If $f$ is surjective, for each $y\in B$ choose some $x_y\in f^{-1}(\{y\})$ and define $h(y)=x_y$. Then $f\circ h=\operatorname{id}_B$. ($\Rightarrow$) If $f\circ h=\operatorname{id}_B$, then for any $y\in B$, $f(h(y))=y$, so $y\in\operatorname{Ran}(f)$.
+
+% ============================================================
+\subsection*{Problem 19}
+$f(A\cap B)=f(A)\cap f(B)$ holds for all $A,B$ if and only if $f$ is \textbf{injective}.
+
+\emph{Sketch:} ($\Rightarrow$) If $f$ not injective, take $A=\{x_1\}$, $B=\{x_2\}$ with $x_1\neq x_2$, $f(x_1)=f(x_2)$: then $f(\varnothing)=\varnothing\neq\{f(x_1)\}=f(A)\cap f(B)$. ($\Leftarrow$) If $f$ injective, the reverse inclusion $f(A)\cap f(B)\subseteq f(A\cap B)$ holds because $f(a)=f(b)\Rightarrow a=b$. \qed
+
+% ============================================================
+\subsection*{Problem 20}
+$f(A\setminus B)=f(A)\setminus f(B)$ holds for all $A,B$ if and only if $f$ is \textbf{injective}.
+
+\emph{Sketch:} ($\Rightarrow$) If $f$ not injective, take $a\neq b$ with $f(a)=f(b)$, $A=\{a,b\}$, $B=\{b\}$: then $f(A\setminus B)=f(\{a\})=\{f(a)\}$ but $f(A)\setminus f(B)=\{f(a)\}\setminus\{f(b)\}=\varnothing$. ($\Leftarrow$) If $f$ injective and $y\in f(A\setminus B)$, then $y=f(a)$ for unique $a\in A\setminus B$; injectivity ensures no $b\in B$ maps to $y$, so $y\notin f(B)$, giving $y\in f(A)\setminus f(B)$. The other inclusion holds for any function. \qed
+
+% ============================================================
+\subsection*{Problem 21}
+\textbf{Yes.} It is possible for $X_1\neq X_2$ but $f(X_1)=f(X_2)$.
+
+Example: $f:\{1,2\}\to\{a\}$ with $f(1)=f(2)=a$. Take $X_1=\{1\}$, $X_2=\{1,2\}$. Then $X_1\neq X_2$ but $f(X_1)=\{a\}=f(X_2)$.
+
+% ============================================================
+\subsection*{Problem 22}
+\textbf{Yes.} Disjoint non-empty subsets can have equal images when $f$ is not injective.
+
+Example: $A=\{1,2,3,4\}$, $B=\{a,b\}$, $f(1)=a$, $f(2)=b$, $f(3)=a$, $f(4)=b$. Take $X_1=\{1,2\}$, $X_2=\{3,4\}$. Then $X_1\cap X_2=\varnothing$ and $f(X_1)=\{a,b\}=f(X_2)$.
+
+% ============================================================
+\subsection*{Problem 23}
+\textbf{Yes.} It is possible for $Y_1\neq Y_2$ but $f^{-1}(Y_1)=f^{-1}(Y_2)$.
+
+Example: $f:\{1\}\to\{a,b\}$ with $f(1)=a$. Let $Y_1=\{a\}$ and $Y_2=\{a,b\}$. Then $Y_1\neq Y_2$ but $f^{-1}(Y_1)=\{1\}=f^{-1}(Y_2)$, because $b$ has no preimage.
+
+% ============================================================
+\subsection*{Problem 24}
+\textbf{Yes}, it is always true. If $Y_1\cap Y_2=\varnothing$, then $f^{-1}(Y_1)\cap f^{-1}(Y_2)=\varnothing$.
+
+\emph{Proof:} $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)=f^{-1}(\varnothing)=\varnothing$, using the fact that preimages preserve intersections. \qed
+
+% ============================================================
+\subsection*{Problem 25}
+\textbf{Claim:} $f(f^{-1}(Y))\subseteq Y$ for any $f:A\to B$ and $Y\subseteq B$.
+
+\emph{Proof:} Let $y\in f(f^{-1}(Y))$. Then $y=f(x)$ for some $x\in f^{-1}(Y)$, meaning $f(x)\in Y$, so $y\in Y$. \qed
+
+\textbf{Counterexample to equality:} $A=\{1\}$, $B=\{a,b\}$, $f(1)=a$, $Y=B$. Then $f(f^{-1}(Y))=\{a\}\subsetneq\{a,b\}=Y$.
+
+Equality holds for all $Y\subseteq B$ iff $f$ is surjective.

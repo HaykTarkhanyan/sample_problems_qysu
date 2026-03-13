@@ -1,0 +1,102 @@
+% ============================================================
+%  ANSWER KEY — Practice 6: Combinations
+% ============================================================
+
+\section*{Practice 6: Combinations and Binomial Coefficients}
+
+\subsubsection*{Problem 1}
+Bit strings of length 9 with exactly 5 zeros (and 4 ones).
+
+Choose positions for the 5 zeros: $\binom{9}{5}$.
+
+$\boxed{\binom{9}{5} = 126}$
+
+\subsubsection*{Problem 2}
+Committee of 6 teachers and 8 students from 12 teachers and 20 students.
+
+$\boxed{\binom{12}{6}\cdot\binom{20}{8} = 924 \times 125970 = 116{,}396{,}280}$
+
+\subsubsection*{Problem 3}
+Choose 13 cards from 52 such that they include 5 cards of the same suit.
+
+Using complement (no suit has $\ge 5$ cards, meaning each suit contributes $\le 4$ cards):
+
+The possible distributions $(a,b,c,d)$ with each $\le 4$ summing to 13 are: $(4,4,4,1)$, $(4,4,3,2)$, $(4,3,3,3)$.
+
+\begin{align*}
+(4,4,4,1):&\quad 4\cdot\binom{13}{4}^3\binom{13}{1} = 19{,}007{,}345{,}500\\
+(4,4,3,2):&\quad 12\cdot\binom{13}{4}^2\binom{13}{3}\binom{13}{2} = 136{,}852{,}887{,}600\\
+(4,3,3,3):&\quad 4\cdot\binom{13}{4}\binom{13}{3}^3 = 66{,}905{,}856{,}160
+\end{align*}
+
+$N_{\le 4} = 222{,}766{,}089{,}260$.
+Total 13-card hands: $\binom{52}{13} = 635{,}013{,}559{,}600$.
+
+$\boxed{635{,}013{,}559{,}600 - 222{,}766{,}089{,}260 = 412{,}247{,}470{,}340}$
+
+\subsubsection*{Problem 4}
+Divide 10 people into two teams of 5.
+
+Since the two teams are unordered (indistinguishable labels):
+$\dfrac{1}{2}\binom{10}{5} = \dfrac{252}{2}$.
+
+$\boxed{126}$
+
+\subsubsection*{Problem 5}
+$A=\{a,b,c,d,e,f,g,h\}$. Number of 5-element subsets containing element $a$.
+
+Fix $a$ in the subset; choose 4 more from the remaining 7 elements.
+
+$\boxed{\binom{7}{4} = 35}$
+
+\subsubsection*{Problem 6}
+Coefficient of $x^6 y^4$ in $(2x+3y)^{10}$.
+
+By the binomial theorem: $\binom{10}{6}(2x)^6(3y)^4 = \binom{10}{6}\cdot 2^6\cdot 3^4\cdot x^6 y^4$.
+
+$\binom{10}{6}=210$, $2^6=64$, $3^4=81$.
+
+$\boxed{210\cdot 64\cdot 81 = 1{,}088{,}640}$
+
+\subsubsection*{Problem 7}
+Rook at a1 reaching e5, moving only right or up.
+
+From a1 to e5: 4 steps right ($a\to b\to c\to d\to e$) and 4 steps up ($1\to2\to3\to4\to5$). Total 8 steps, choose 4 for right.
+
+$\boxed{\binom{8}{4} = 70}$
+
+\subsubsection*{Problem 8}
+Lattice paths from $O(0,0)$ to $A(7,8)$ through $(3,4)$.
+
+$O\to P(3,4)$: $\binom{7}{3}=35$ paths. $P\to A$: $\binom{8}{4}=70$ paths.
+
+$\boxed{35\times 70 = 2450}$
+
+\subsubsection*{Problem 9}
+Number of ways to partition 6 into three summands.
+
+\textbf{Ordered} (compositions, parts $\ge 1$): $\binom{5}{2}=\boxed{10}$.
+
+\textbf{Unordered} (integer partitions into 3 parts): $4+1+1$, $3+2+1$, $2+2+2$ $= \boxed{3}$.
+
+\subsubsection*{Problem 10}
+Buy 7 cakes from 3 types (combinations with repetition).
+
+$\boxed{\binom{7+3-1}{3-1} = \binom{9}{2} = 36}$
+
+\subsubsection*{Problem 11}
+Rearrangements of ``matematika'' (10 letters: a$\times 3$, m$\times 2$, t$\times 2$, e$\times 1$, i$\times 1$, k$\times 1$).
+
+$\boxed{\frac{10!}{3!\cdot 2!\cdot 2!} = \frac{3{,}628{,}800}{24} = 151{,}200}$
+
+\subsubsection*{Problem 12}
+Arrange 15 math, 16 informatics, 12 physics books on a shelf (books of the same subject are indistinguishable). Total $15+16+12=43$ books.
+
+$\boxed{\frac{43!}{15!\cdot 16!\cdot 12!} = \binom{43}{15,\,16,\,12}}$
+
+\subsubsection*{Problem 13}
+Coefficient of $x_1^4 x_2^3 x_3^2$ in $(x_1+x_2+x_3)^9$.
+
+By the multinomial theorem: $\dfrac{9!}{4!\,3!\,2!}$.
+
+$\boxed{\frac{9!}{4!\,3!\,2!} = \frac{362880}{24\cdot 6\cdot 2} = 1260}$

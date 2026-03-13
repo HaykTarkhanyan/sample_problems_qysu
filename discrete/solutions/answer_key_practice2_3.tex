@@ -1,0 +1,471 @@
+\section*{Practice 2--3: Relations}
+
+%% ============================================================
+%%  1. Relations
+%% ============================================================
+
+\subsection*{Problem 1.1}
+
+\textbf{(a)} Divisors of 12 in $\mathbb{N}$:
+\[
+  \boxed{\{(1,12),(2,12),(3,12),(4,12),(6,12),(12,12)\}}
+\]
+
+\textbf{(b)} Pairs $(d,n)$ with $d,n\in\{2,3,4,5,6\}$ and $d\mid n$:
+\[
+  \boxed{\{(2,2),(2,4),(2,6),(3,3),(3,6),(4,4),(5,5),(6,6)\}}
+\]
+
+\textbf{(c)} Triples $(x,y,z)$ with $x=y+z$, all in $\{1,2,3\}$:
+\[
+  \boxed{\{(2,1,1),(3,1,2),(3,2,1)\}}
+\]
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 1.2}
+
+\textbf{(a)} $\boxed{D=\{a,c,d\},\quad R=\{1,2,4,5\}}$.
+
+\textbf{(b)} Pattern $(n,2n)$: $\boxed{D=\mathbb{N},\quad R=2\mathbb{N}}$.
+
+\textbf{(c)} $x=y^2$: $\boxed{D=[0,+\infty),\quad R=\mathbb{R}}$.
+
+\textbf{(d)} $x^2+y^2\le 16$: $\boxed{D=[-4,4],\quad R=[-4,4]}$.
+
+\textbf{(e)} $(x,y)\in\mathbb{N}^2,\; x\le y$: $\boxed{D=\mathbb{N},\quad R=\mathbb{N}}$.
+
+\textbf{(f)} $(x,y)\in\mathbb{N}^2,\; y\le x$: $\boxed{D=\mathbb{N},\quad R=\mathbb{N}}$.
+
+\textbf{(g)} $x+y\ge 0$ on $\mathbb{R}^2$: $\boxed{D=\mathbb{R},\quad R=\mathbb{R}}$.
+
+\textbf{(h)} $2x\ge 3y$ on $\mathbb{R}^2$: $\boxed{D=\mathbb{R},\quad R=\mathbb{R}}$.
+
+%% ============================================================
+%%  2. Representation of Relations
+%% ============================================================
+
+\subsection*{Problem 2.1}
+
+On $A=\{a,b,c,d,e\}$.
+
+\textbf{(a)} Symmetric; undirected edges: $a$--$b$, $a$--$c$, $b$--$c$, $d$--$e$.
+\[
+  M = \begin{pmatrix}
+  0&1&1&0&0\\1&0&1&0&0\\1&1&0&0&0\\0&0&0&0&1\\0&0&0&1&0
+  \end{pmatrix}
+\]
+
+\textbf{(b)} Undirected edges: $a$--$b$, $a$--$c$, $b$--$c$, $c$--$d$. Vertex $e$ isolated.
+\[
+  M = \begin{pmatrix}
+  0&1&1&0&0\\1&0&1&0&0\\1&1&0&1&0\\0&0&1&0&0\\0&0&0&0&0
+  \end{pmatrix}
+\]
+
+\textbf{(c)} Identical to part (b); same graph and matrix.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 2.2}
+
+On $A=\{a,b,c,d,e,f\}$.  Rows/columns in order $a,b,c,d,e,f$.
+
+\textbf{(a)} Directed edges: $a\!\to\!b,\; b\!\to\!c,\; a\!\to\!c,\; b\!\to\!e,\; c\!\to\!f,\; c\!\to\!d,\; d\!\to\!f,\; f\!\to\!e$.
+\[
+  M = \begin{pmatrix}
+  0&1&1&0&0&0\\0&0&1&0&1&0\\0&0&0&1&0&1\\0&0&0&0&0&1\\0&0&0&0&0&0\\0&0&0&0&1&0
+  \end{pmatrix}
+\]
+
+\textbf{(b)} Directed edges: $a\!\to\!b,\; b\!\to\!c,\; d\!\to\!c,\; d\!\to\!e,\; f\!\to\!e,\; f\!\to\!a,\; b\!\to\!e$.
+\[
+  M = \begin{pmatrix}
+  0&1&0&0&0&0\\0&0&1&0&1&0\\0&0&0&0&0&0\\0&0&1&0&1&0\\0&0&0&0&0&0\\1&0&0&0&1&0
+  \end{pmatrix}
+\]
+
+\textbf{(c)} Directed edges: $a\!\to\!c,\; c\!\to\!c,\; c\!\to\!d,\; c\!\to\!e,\; e\!\to\!c,\; e\!\to\!e,\; e\!\to\!f,\; a\!\to\!e$. Vertex $b$ isolated.
+\[
+  M = \begin{pmatrix}
+  0&0&1&0&1&0\\0&0&0&0&0&0\\0&0&1&1&1&0\\0&0&0&0&0&0\\0&0&1&0&1&1\\0&0&0&0&0&0
+  \end{pmatrix}
+\]
+
+%% ============================================================
+%%  3. Operations on Relations
+%% ============================================================
+
+\subsection*{Problem 3.1}
+
+\emph{Proof sketch} (standard properties of ${}^{-1}$ and $\circ$):
+
+(i) $(\rho^{-1})^{-1}=\rho$: $(x,y)\in(\rho^{-1})^{-1}\Leftrightarrow (y,x)\in\rho^{-1}\Leftrightarrow (x,y)\in\rho$.
+
+(ii) $(\rho\circ\sigma)^{-1}=\sigma^{-1}\circ\rho^{-1}$: $(z,x)\in(\rho\circ\sigma)^{-1} \Leftrightarrow \exists y\!:\,(x,y)\in\rho\land(y,z)\in\sigma \Leftrightarrow \exists y\!:\,(z,y)\in\sigma^{-1}\land(y,x)\in\rho^{-1} \Leftrightarrow (z,x)\in\sigma^{-1}\circ\rho^{-1}$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 3.2}
+
+$\rho=\{(x,y)\mid y=x^2+5\}$, $\sigma=\{(x,y)\mid y=3x\}$ on $\mathbb{R}$.
+
+$\boxed{\rho^{-1}=\{(x,y)\mid x=y^2+5\}}$ (i.e.\ $y=\pm\sqrt{x-5}$, defined for $x\ge 5$).
+
+$\boxed{\sigma^{-1}=\{(x,y)\mid y=x/3\}}$.
+
+$\rho\circ\sigma$: $x\xrightarrow{\rho}x^2+5\xrightarrow{\sigma}3(x^2+5)$. \;$\boxed{\rho\circ\sigma=\{(x,\,3x^2+15)\}}$.
+
+$\sigma\circ\rho$: $x\xrightarrow{\sigma}3x\xrightarrow{\rho}9x^2+5$. \;$\boxed{\sigma\circ\rho=\{(x,\,9x^2+5)\}}$.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 3.3}
+
+$\rho=\{(x,x+2)\}$, $\sigma=\{(x,x-2)\}$ on $\mathbb{Z}$.
+
+$\rho\circ\sigma$: $x\xrightarrow{\rho}x+2\xrightarrow{\sigma}x$. \;$\boxed{\rho\circ\sigma=\Delta_{\mathbb{Z}}}$ (identity).
+
+$\sigma\circ\rho$: $x\xrightarrow{\sigma}x-2\xrightarrow{\rho}x$. \;$\boxed{\sigma\circ\rho=\Delta_{\mathbb{Z}}}$.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 3.4}
+
+$\rho=\{(x,y)\in\mathbb{Z}^2\mid x+y \text{ is odd}\}$.
+
+For $\rho^2$: need $z$ with $x+z$ odd and $z+y$ odd, so $x\equiv y\pmod{2}$.
+$\boxed{\rho^2=\{(x,y)\in\mathbb{Z}^2\mid x+y \text{ is even}\}}$.
+
+$\boxed{\rho^3=\rho}$, and in general $\rho^{2k}=\rho^2$, $\rho^{2k+1}=\rho$.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 3.5}
+
+$\rho=\{(x,x+1)\mid x\in\mathbb{N}\}$.
+
+\[\boxed{\rho^k=\{(x,\,x+k)\mid x\in\mathbb{N}\},\quad k\ge 1.}\]
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 3.6}
+
+$\rho=\{(1,2),(2,3),(3,4),(4,5)\}$.
+
+$\boxed{\rho^2=\{(1,3),(2,4),(3,5)\}}$.
+
+$\boxed{\rho^3=\{(1,4),(2,5)\}}$.
+
+$\boxed{\rho^4=\{(1,5)\}}$.
+
+$\boxed{\rho^5=\varnothing}$.
+
+%% ============================================================
+%%  4. Properties of Relations
+%% ============================================================
+
+\subsection*{Problem 4.1}
+
+\begin{tabular}{l|cccc}
+& Refl. & Symm. & Antisymm. & Trans. \\\hline
+(a) $x^2+y^2=1$, $\mathbb{R}$ & No & Yes & No & No \\
+(b) $x^2=y^2$, $\mathbb{R}$   & Yes & Yes & No & Yes \\
+(c) $x\le y$, $\mathbb{Z}$    & Yes & No  & Yes & Yes \\
+(d) $x\le y$, $\mathbb{N}$    & Yes & No  & Yes & Yes \\
+(e) $\gcd=1$, $\mathbb{N}$    & No  & Yes & No  & No \\
+(f) $\gcd=1$, $\mathbb{Z}$    & No  & Yes & No  & No
+\end{tabular}
+
+\smallskip
+(b) is an equivalence relation; (c) and (d) are linear (total) orders.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 4.2}
+
+$\rho=\{(x,y)\in\mathbb{Z}^2\mid |x-y|\text{ is even}\}$.
+
+Reflexive -- Yes; Symmetric -- Yes; Antisymmetric -- No; Transitive -- Yes.
+
+$\boxed{\text{Equivalence relation. Classes: even integers and odd integers.}}$
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 4.3}
+
+Preservation of \textbf{reflexivity} ($R,S$ reflexive on $A$):
+
+(a) $R\cap S$: \textbf{True.} \quad
+(b) $R\cup S$: \textbf{True.} \quad
+(c) $R\circ S$: \textbf{True.}
+
+(d) $R\setminus S$: \textbf{False} ($(x,x)\in R\cap S$ so $(x,x)\notin R\setminus S$). \quad
+(e) $R\oplus S$: \textbf{False} (same reason).
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 4.4}
+
+Preservation of \textbf{symmetry} ($R,S$ symmetric):
+
+(a) $R\cap S$: \textbf{True.} \quad
+(b) $R\cup S$: \textbf{True.}
+
+(c) $R\circ S$: \textbf{False.} ($R=\{(1,2),(2,1)\}$, $S=\{(2,3),(3,2)\}$: $(1,3)\in R\circ S$ but $(3,1)\notin R\circ S$.)
+
+(d) $R\setminus S$: \textbf{True.} \quad
+(e) $R\oplus S$: \textbf{True.}
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 4.5}
+
+Preservation of \textbf{antisymmetry} ($R,S$ antisymmetric):
+
+(a) $R\cap S$: \textbf{True.} \quad
+(b) $R\cup S$: \textbf{False} ($R=\{(1,2)\}$, $S=\{(2,1)\}$).
+
+(c) $R\circ S$: \textbf{False.} \quad
+(d) $R\setminus S$: \textbf{True} ($R\setminus S\subseteq R$).
+
+(e) $R\oplus S$: \textbf{False} (same counterexample as (b)).
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 4.6}
+
+Preservation of \textbf{transitivity} ($R,S$ transitive):
+
+(a) $R\cap S$: \textbf{True.}
+
+(b) $R\cup S$: \textbf{False} ($R=\{(1,2)\}$, $S=\{(2,3)\}$; $(1,3)\notin R\cup S$).
+
+(c) $R\circ S$: \textbf{False.}
+
+(d) $R\setminus S$: \textbf{False} ($R=\{(1,2),(2,3),(1,3)\}$, $S=\{(1,3)\}$; $R\setminus S=\{(1,2),(2,3)\}$, not transitive).
+
+(e) $R\oplus S$: \textbf{False.}
+
+%% ============================================================
+%%  5. Order Relations
+%% ============================================================
+
+\subsection*{Problem 5.1}
+
+Construct a poset with a unique minimal element but no least element.
+
+\emph{Note:} In any \emph{finite} poset a unique minimal element is automatically a least element, so we need an infinite poset.
+
+$\boxed{\text{Example: }A=\{m\}\cup\{a_1,a_2,a_3,\ldots\},\text{ with }a_1<a_2<a_3<\cdots}$
+and $m$ incomparable to every $a_i$. Every $a_i$ has $a_{i-1}<a_i$, so no $a_i$ is minimal. Hence $m$ is the unique minimal element. But $m\not\le a_i$ for any $i$, so $m$ is not a least element.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 5.2}
+
+\emph{Proof sketch.} Let $\rho$ be a partial order on $A$. Show $\rho^{-1}$ is reflexive, antisymmetric, transitive.
+Reflexive: $(x,x)\in\rho\Rightarrow(x,x)\in\rho^{-1}$.
+Antisymmetric: $(x,y),(y,x)\in\rho^{-1}\Rightarrow(y,x),(x,y)\in\rho\Rightarrow x=y$.
+Transitive: $(x,y),(y,z)\in\rho^{-1}\Rightarrow(z,y),(y,x)\in\rho\Rightarrow(z,x)\in\rho\Rightarrow(x,z)\in\rho^{-1}$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 5.3}
+
+\emph{Proof sketch.} Let $\{\rho_i\}$ be partial orders on $A$, $\rho=\bigcap_i\rho_i$.
+Reflexive: $(x,x)\in\rho_i$ for all $i$.
+Antisymmetric: $(x,y),(y,x)\in\rho\subseteq\rho_i\Rightarrow x=y$.
+Transitive: $(x,y),(y,z)\in\rho\subseteq\rho_i\Rightarrow(x,z)\in\rho_i$ for all $i\Rightarrow(x,z)\in\rho$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 5.4}
+
+\emph{Proof sketch.} $\rho_A=\rho\cap(A\times A)$ inherits reflexivity (for $x\in A$), antisymmetry, and transitivity from $\rho$ since $\rho_A\subseteq\rho$ and all elements in consideration belong to $A$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 5.5}
+
+$\boxed{\rho_1\cup\rho_2\text{ is a linear order iff }\rho_1\subseteq\rho_2\text{ or }\rho_2\subseteq\rho_1.}$
+
+If one contains the other, the union equals the larger one. Conversely, if neither contains the other, antisymmetry of the union can fail.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 5.6}
+
+\emph{Proof sketch.} Induction on $|A|=n$. Base $n=1$: trivial. Step: pick $a\in A$; by hypothesis $A\setminus\{a\}$ has a linear order $a_1<\cdots<a_n$. Insert $a$ at the end: $a_1<\cdots<a_n<a$. This is a linear order on $A$. \qed
+
+%% ============================================================
+%%  6. Equivalence Relations
+%% ============================================================
+
+\subsection*{Problem 6.1}
+
+\textbf{(a)} $xy>0$ on $\mathbb{Q}$: \textbf{No.} Not reflexive ($0\cdot 0=0\not>0$).
+
+\textbf{(b)} $xy\in\mathbb{Z}$ on $\mathbb{Q}$: \textbf{No.} Not transitive ($\tfrac{1}{6}\cdot 6\in\mathbb{Z}$, $6\cdot\tfrac{1}{2}\in\mathbb{Z}$, but $\tfrac{1}{6}\cdot\tfrac{1}{2}\notin\mathbb{Z}$).
+
+\textbf{(c)} $(a\mid b)\lor(a>b)$ on $\mathbb{N}$: \textbf{No.} Not symmetric ($(6,4)\in\rho$ since $6>4$, but $(4,6)\notin\rho$ since $4\nmid 6$ and $4<6$).
+
+\textbf{(d)} $|a-b|\le 2$ on $\mathbb{N}$: \textbf{No.} Not transitive ($|1-3|=2\le 2$, $|3-5|=2\le 2$, but $|1-5|=4>2$).
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 6.2}
+
+(Equivalence relation $\Leftrightarrow$ partition.)
+
+\emph{Proof sketch.}
+$(\Rightarrow)$ Classes cover $A$ (reflexivity: $x\in[x]$). If $[a]\cap[b]\ne\varnothing$, pick $c$ in both; then $a\rho c$ and $c\rho b$, so $a\rho b$ and $[a]=[b]$.
+$(\Leftarrow)$ Define $x\rho y$ iff $x,y$ are in the same block; reflexivity, symmetry, transitivity are immediate. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 6.3}
+
+\textbf{$\mathbb{Z}_2$:}
+\[
+\begin{array}{c|cc}
++ & [0] & [1] \\\hline
+{[0]} & [0] & [1] \\
+{[1]} & [1] & [0]
+\end{array}
+\qquad
+\begin{array}{c|cc}
+\cdot & [0] & [1] \\\hline
+{[0]} & [0] & [0] \\
+{[1]} & [0] & [1]
+\end{array}
+\]
+
+\textbf{$\mathbb{Z}_3$:}
+\[
+\begin{array}{c|ccc}
++ & [0] & [1] & [2] \\\hline
+{[0]} & [0] & [1] & [2] \\
+{[1]} & [1] & [2] & [0] \\
+{[2]} & [2] & [0] & [1]
+\end{array}
+\qquad
+\begin{array}{c|ccc}
+\cdot & [0] & [1] & [2] \\\hline
+{[0]} & [0] & [0] & [0] \\
+{[1]} & [0] & [1] & [2] \\
+{[2]} & [0] & [2] & [1]
+\end{array}
+\]
+
+\textbf{$\mathbb{Z}_4$:}
+\[
+\begin{array}{c|cccc}
++ & [0] & [1] & [2] & [3] \\\hline
+{[0]} & [0] & [1] & [2] & [3] \\
+{[1]} & [1] & [2] & [3] & [0] \\
+{[2]} & [2] & [3] & [0] & [1] \\
+{[3]} & [3] & [0] & [1] & [2]
+\end{array}
+\qquad
+\begin{array}{c|cccc}
+\cdot & [0] & [1] & [2] & [3] \\\hline
+{[0]} & [0] & [0] & [0] & [0] \\
+{[1]} & [0] & [1] & [2] & [3] \\
+{[2]} & [0] & [2] & [0] & [2] \\
+{[3]} & [0] & [3] & [2] & [1]
+\end{array}
+\]
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 6.4}
+
+$[a]\in\mathbb{Z}_n$ is invertible iff $\gcd(a,n)=1$.
+
+\emph{Proof sketch.}
+$(\Rightarrow)$ $ab\equiv 1\pmod{n}$ means $ab - kn = 1$, so $\gcd(a,n)=1$ by B\'ezout.
+$(\Leftarrow)$ $\gcd(a,n)=1$ implies $\exists\,b,k$: $ab+kn=1$, so $ab\equiv 1\pmod{n}$. \qed
+
+%% ============================================================
+%%  7. Operations on Equivalence Relations (Closures)
+%% ============================================================
+
+\subsection*{Problem 7.1}
+
+On $A=\{a,b,c\}$, $\Delta_A=\{(a,a),(b,b),(c,c)\}$.
+
+\textbf{(a)} $\rho=\{(a,b),(b,a)\}$.
+$r(\rho)=\rho\cup\Delta_A=\{(a,a),(b,b),(c,c),(a,b),(b,a)\}$.
+$s(\rho)=\rho$ (already symmetric).
+$t(\rho)=\{(a,b),(b,a),(a,a),(b,b)\}$.
+
+\textbf{(b)} $\rho=\{(a,b),(b,c)\}$.
+$r(\rho)=\{(a,a),(b,b),(c,c),(a,b),(b,c)\}$.
+$s(\rho)=\{(a,b),(b,a),(b,c),(c,b)\}$.
+$t(\rho)=\{(a,b),(b,c),(a,c)\}$.
+
+\textbf{(c)} $\rho=\{(a,a),(a,b),(c,b),(c,a)\}$.
+$r(\rho)=\rho\cup\{(b,b),(c,c)\}$.
+$s(\rho)=\rho\cup\{(b,a),(b,c),(a,c)\}$.
+$t(\rho)=\rho$ (already transitive: $(c,a)\circ(a,b)=(c,b)\in\rho$).
+
+\textbf{(d)} $\rho=\{(a,a),(a,c),(b,c)\}$.
+$r(\rho)=\rho\cup\{(b,b),(c,c)\}$.
+$s(\rho)=\rho\cup\{(c,a),(c,b)\}$.
+$t(\rho)=\rho$ (already transitive).
+
+\textbf{(e)} $\rho=\{(a,b),(c,a),(b,c)\}$.
+$r(\rho)=\rho\cup\Delta_A$.
+$s(\rho)=\{(a,b),(b,a),(c,a),(a,c),(b,c),(c,b)\}$.
+$t(\rho)=A\times A$ (the full cycle $a\to b\to c\to a$ generates all 9 pairs).
+
+\textbf{(f)} $\rho=\{(a,b),(c,b),(b,c)\}$.
+$r(\rho)=\rho\cup\Delta_A$.
+$s(\rho)=\{(a,b),(b,a),(c,b),(b,c)\}$.
+$t(\rho)=\{(a,b),(a,c),(b,c),(b,b),(c,b),(c,c)\}$.
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 7.2}
+
+$A=\{1,2,3,4\}$, $\rho=\{(1,2),(3,1),(3,2),(2,4)\}$.
+
+$\boxed{r(\rho)=\{(1,1),(2,2),(3,3),(4,4),(1,2),(2,4),(3,1),(3,2)\}}$.
+
+$\boxed{s(\rho)=\{(1,2),(2,1),(1,3),(3,1),(2,3),(3,2),(2,4),(4,2)\}}$.
+
+$\boxed{t(\rho)=\{(1,2),(1,4),(2,4),(3,1),(3,2),(3,4)\}}$.
+
+(New pairs from $\rho^2$: $(1,4)$ via $1\!\to\!2\!\to\!4$; $(3,4)$ via $3\!\to\!2\!\to\!4$; $(3,2)$ via $3\!\to\!1\!\to\!2$ already present. Vertex 4 is a sink, so $\rho^3$ adds nothing.)
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 7.3}
+
+\emph{Proof sketch.} $\tau=\rho\cap\sigma$ where $\rho,\sigma$ are equivalence relations.
+Reflexive: $(x,x)\in\rho\cap\sigma$.
+Symmetric: $(x,y)\in\tau\Rightarrow(y,x)\in\rho$ and $(y,x)\in\sigma\Rightarrow(y,x)\in\tau$.
+Transitive: $(x,y),(y,z)\in\tau\subseteq\rho\Rightarrow(x,z)\in\rho$; similarly $\in\sigma$; so $(x,z)\in\tau$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 7.4}
+
+$\rho\circ\theta$ is an equivalence relation iff $\rho\circ\theta=\theta\circ\rho$.
+
+\emph{Proof sketch.}
+$(\Rightarrow)$ $(\rho\circ\theta)^{-1}=\theta^{-1}\circ\rho^{-1}=\theta\circ\rho$. Since $\rho\circ\theta$ is symmetric, $\rho\circ\theta=\theta\circ\rho$.
+
+$(\Leftarrow)$ Reflexivity: $\Delta\subseteq\rho,\theta\Rightarrow\Delta\subseteq\rho\circ\theta$. Symmetry: $(\rho\circ\theta)^{-1}=\theta\circ\rho=\rho\circ\theta$. Transitivity: $(\rho\circ\theta)^2=\rho\circ(\theta\circ\rho)\circ\theta =\rho\circ(\rho\circ\theta)\circ\theta\subseteq\rho^2\circ\theta^2\subseteq\rho\circ\theta$. \qed
+
+%% ────────────────────────────────────────
+
+\subsection*{Problem 7.5}
+
+$\rho\cup\theta$ is an equivalence relation iff $\rho\circ\theta=\theta\circ\rho$.
+
+\emph{Proof sketch.}
+$(\Rightarrow)$ If $\rho\cup\theta$ is an equivalence (hence transitive), then $\rho\circ\theta\subseteq(\rho\cup\theta)\circ(\rho\cup\theta)\subseteq\rho\cup\theta$. Similarly $\theta\circ\rho\subseteq\rho\cup\theta$. Since $\rho\cup\theta\subseteq\rho\circ\theta$ (as $\rho=\rho\circ\Delta\subseteq\rho\circ\theta$), we get $\rho\cup\theta=\rho\circ\theta$, and by symmetry also $=\theta\circ\rho$.
+
+$(\Leftarrow)$ If $\rho\circ\theta=\theta\circ\rho$, then by Problem~7.4, $\rho\circ\theta$ is an equivalence relation. One shows $\rho\cup\theta=\rho\circ\theta$, which is then an equivalence relation. \qed

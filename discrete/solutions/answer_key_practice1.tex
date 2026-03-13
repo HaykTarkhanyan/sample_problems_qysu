@@ -1,0 +1,627 @@
+% ── Answer Key: Practice 1 — Set Theory ──────────────────────────
+% This file is meant to be \input{} into a master document.
+% It assumes amsmath, amssymb, amsthm are loaded and
+% \newcommand{\comp}[1]{\overline{#1}}, \newcommand{\symdiff}{\mathbin{\triangle}} exist.
+
+\section*{Practice 1: Set Theory}
+
+%======================================================================
+\subsection*{Problem 1}
+What does $\{\varnothing\}$ represent and how many elements does it have?
+
+$\{\varnothing\}$ is the set whose only element is the empty set. It has $\boxed{1}$ element.
+
+%======================================================================
+\subsection*{Problem 2}
+Which statements are true?
+
+\begin{itemize}
+  \item[2.1.] $\varnothing \in \{\varnothing, \{\varnothing\}\}$ --- \textbf{TRUE}. The set lists $\varnothing$ as an element.
+  \item[2.2.] $\{\varnothing\} \in \{\{\varnothing\}\}$ --- \textbf{TRUE}. The sole element of $\{\{\varnothing\}\}$ is $\{\varnothing\}$.
+  \item[2.3.] $\varnothing \in \{\{\varnothing\}\}$ --- \textbf{FALSE}. The sole element is $\{\varnothing\} \neq \varnothing$.
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 3}
+How many elements does $\{\{\varnothing\}\}$ have?
+
+$\boxed{1}$. Its only element is $\{\varnothing\}$.
+
+%======================================================================
+\subsection*{Problem 4}
+How many elements do the following sets have?
+
+\begin{itemize}
+  \item[4.1.] $\{1,2,1\}$: $\boxed{2}$ (duplicates are ignored; the set is $\{1,2\}$).
+  \item[4.2.] $\{1,2,\{1,2\}\}$: $\boxed{3}$ (elements: $1$, $2$, $\{1,2\}$).
+  \item[4.3.] $\{\{2\}\}$: $\boxed{1}$ (element: $\{2\}$).
+  \item[4.4.] $\{1,\{1\}\}$: $\boxed{2}$ (elements: $1$ and $\{1\}$; these are distinct).
+  \item[4.5.] $\{1,\varnothing\}$: $\boxed{2}$ (elements: $1$ and $\varnothing$).
+  \item[4.6.] $\{\{\varnothing\},\varnothing\}$: $\boxed{2}$ (elements: $\{\varnothing\}$ and $\varnothing$).
+  \item[4.7.] $\{\{\varnothing\},\{\varnothing\}\}$: $\boxed{1}$ (duplicate; the set is $\{\{\varnothing\}\}$).
+  \item[4.8.] $\{x \mid 2x=1\}$ where $x \in \mathbb{R}$: $\boxed{1}$ (the set is $\{\tfrac{1}{2}\}$).
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 5}
+Is $\{1,2\} \in \{1,2,\{1,3\},\{1,2,3\}\}$?
+
+\textbf{NO.} The elements of the right-hand set are $1$, $2$, $\{1,3\}$, and $\{1,2,3\}$. None of these equals $\{1,2\}$.
+
+%======================================================================
+\subsection*{Problem 6}
+Give examples of sets that are elements of themselves.
+
+In standard ZFC set theory (with the Axiom of Regularity), no set is an element of itself. However, in naive set theory or theories without regularity, the ``set of all sets'' $V = \{x \mid x = x\}$ would satisfy $V \in V$. Another classic example: if we define $S$ as ``the set of all sets that are not sets of numbers,'' then $S \in S$ (Russell-type construction). In ZFC, \textbf{no such set exists}.
+
+%======================================================================
+\subsection*{Problem 7}
+Give examples of $A, B, C$ with $A \in B$, $B \in C$, but $A \notin C$.
+
+Let $A = 1$, $B = \{1,2\}$, $C = \{\{1,2\},3\}$.
+Then $1 \in \{1,2\}$, $\{1,2\} \in \{\{1,2\},3\}$, but $1 \notin \{\{1,2\},3\}$ since the elements of $C$ are $\{1,2\}$ and $3$.
+
+%======================================================================
+\subsection*{Problem 8}
+Prove: $\{\{a\},\{a,b\}\} = \{\{c\},\{c,d\}\} \iff a=c$ and $b=d$.
+
+\textit{Proof.}
+($\Leftarrow$) Trivial by substitution.
+($\Rightarrow$) From the equality, $\{a\}$ must equal either $\{c\}$ or $\{c,d\}$.
+If $\{a\} = \{c,d\}$ then $c = d = a$, and then $\{a,b\} = \{c\} = \{a\}$ forces $b = a = c = d$.
+If $\{a\} = \{c\}$ then $a = c$, and the remaining element gives $\{a,b\} = \{c,d\} = \{a,d\}$, so $b = d$. \qed
+
+%======================================================================
+\subsection*{Problem 9}
+Prove three set equalities/inclusions.
+
+\textbf{(a)} $\{x \in \mathbb{Z} \mid \exists y,\, x = 6y\} = \{x \in \mathbb{Z} \mid \exists u,v,\, x = 2u \text{ and } x = 3v\}$.
+
+\textit{Proof.} ($\subseteq$) If $x = 6y$ then $x = 2(3y)$ and $x = 3(2y)$.
+($\supseteq$) If $x = 2u$ and $x = 3v$, then $x$ is divisible by both 2 and 3, hence by $\mathrm{lcm}(2,3) = 6$. \qed
+
+\textbf{(b)} $\{x \in \mathbb{R} \mid \exists y,\, x = y^2\} = \{x \in \mathbb{R} \mid x \ge 0\}$.
+
+\textit{Proof.} ($\subseteq$) $x = y^2 \ge 0$.
+($\supseteq$) If $x \ge 0$, take $y = \sqrt{x}$, then $x = y^2$. \qed
+
+\textbf{(c)} $\{x \in \mathbb{Z} \mid \exists y,\, x = 6y\} \subset \{x \in \mathbb{Z} \mid \exists y,\, x = 2y\}$.
+
+\textit{Proof.} If $x = 6y$ then $x = 2(3y)$, so $\subseteq$ holds. The inclusion is strict since $2 = 2 \cdot 1$ is in the right set but $2$ is not a multiple of 6. \qed
+
+%======================================================================
+\subsection*{Problem 10}
+Prove transitivity properties of $\subseteq$ and $\subset$.
+
+\textbf{(a)} If $A \subseteq B$ and $B \subseteq C$, then $A \subseteq C$.
+
+\textit{Proof.} Let $x \in A$. Then $x \in B$ (since $A \subseteq B$), then $x \in C$ (since $B \subseteq C$). \qed
+
+\textbf{(b)} If $A \subseteq B$ and $B \subset C$, then $A \subset C$.
+
+\textit{Proof.} By (a), $A \subseteq C$. Since $B \subset C$, there exists $z \in C \setminus B$. If $A = C$, then $z \in A \subseteq B$, contradiction. So $A \neq C$, giving $A \subset C$. \qed
+
+\textbf{(c)} If $A \subset B$ and $B \subseteq C$, then $A \subset C$.
+
+\textit{Proof.} By (a), $A \subseteq C$. Since $A \subset B$, there exists $z \in B \setminus A$, and $z \in C$ since $B \subseteq C$. So $z \in C \setminus A$, hence $A \neq C$. \qed
+
+\textbf{(d)} If $A \subset B$ and $B \subset C$, then $A \subset C$.
+
+\textit{Proof.} Follows from (c) since $B \subset C$ implies $B \subseteq C$. \qed
+
+%======================================================================
+\subsection*{Problem 11}
+Give examples of $A, B, C, D, E$ with $A \subseteq B$, $B \in C$, $C \subseteq D$, $D \subseteq E$.
+
+$A = \{1\}$, $B = \{1,2\}$, $C = \{\{1,2\},3\}$, $D = \{\{1,2\},3,4\}$, $E = \{\{1,2\},3,4,5\}$.
+
+%======================================================================
+\subsection*{Problem 12}
+Which statements are true for all sets $A, B, C$?
+
+\begin{itemize}
+  \item[(a)] If $A \notin B$ and $B \notin C$, then $A \notin C$. --- \textbf{FALSE.}
+    Counterexample: $A = 1$, $B = \{2\}$, $C = \{1\}$. Then $1 \notin \{2\}$ and $\{2\} \notin \{1\}$, but $1 \in \{1\}$.
+  \item[(b)] If $A \neq B$ and $B \neq C$, then $A \neq C$. --- \textbf{FALSE.}
+    Counterexample: $A = C = \{1\}$, $B = \{2\}$.
+  \item[(c)] If $A \in B$ and $B \subseteq C$, then $A \in C$. --- \textbf{TRUE.}
+    Since $A \in B$ and every element of $B$ is in $C$, we get $A \in C$.
+  \item[(d)] If $A \subseteq B$ and $B \subseteq C$, then $C \subseteq A$? --- \textbf{FALSE.}
+    Counterexample: $A = \varnothing$, $B = C = \{1\}$.
+  \item[(e)] If $A \subseteq B$ and $B \in C$, does $A \notin C$? --- \textbf{FALSE} (not necessarily).
+    Counterexample: $A = \{1\}$, $B = \{1,2\}$, $C = \{\{1\},\{1,2\}\}$. Then $A \subseteq B$, $B \in C$, and also $A \in C$.
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 13}
+Give examples of sets where every element is a subset of the set (transitive sets).
+
+$\varnothing$ (vacuously true). Also $\{\varnothing\}$: its only element $\varnothing \subseteq \{\varnothing\}$.
+Also $\{\varnothing, \{\varnothing\}\}$: $\varnothing \subseteq \{\varnothing, \{\varnothing\}\}$ and $\{\varnothing\} \subseteq \{\varnothing, \{\varnothing\}\}$.
+In general, any ordinal number is a transitive set.
+
+%======================================================================
+\subsection*{Problem 14}
+List the elements of $2^A$.
+
+\begin{itemize}
+  \item[14.1.] $A = \varnothing$: $\boxed{2^A = \{\varnothing\}}$ (1 element).
+  \item[14.2.] $A = \{x\}$: $\boxed{2^A = \{\varnothing, \{x\}\}}$ (2 elements).
+  \item[14.3.] $A = \{1,a\}$: $\boxed{2^A = \{\varnothing, \{1\}, \{a\}, \{1,a\}\}}$ (4 elements).
+  \item[14.4.] $A = \{\varnothing, \{1\}, \{2\}\}$: $2^A$ has $2^3 = 8$ elements:
+    \begin{align*}
+      2^A = \bigl\{&\varnothing,\;\{\varnothing\},\;\{\{1\}\},\;\{\{2\}\},\\
+      &\{\varnothing,\{1\}\},\;\{\varnothing,\{2\}\},\;\{\{1\},\{2\}\},\;\{\varnothing,\{1\},\{2\}\}\bigr\}
+    \end{align*}
+  \item[14.5.] $A = \{1, \{3\}, \{1,2\}\}$: $2^A$ has $2^3 = 8$ elements:
+    \begin{align*}
+      2^A = \bigl\{&\varnothing,\;\{1\},\;\{\{3\}\},\;\{\{1,2\}\},\\
+      &\{1,\{3\}\},\;\{1,\{1,2\}\},\;\{\{3\},\{1,2\}\},\;\{1,\{3\},\{1,2\}\}\bigr\}
+    \end{align*}
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 15}
+Prove $\varnothing \subseteq A \cap B \subseteq A \cup B$.
+
+\textit{Proof.} $\varnothing \subseteq S$ for any set $S$ (vacuous truth). If $x \in A \cap B$, then $x \in A$, so $x \in A \cup B$. Hence $A \cap B \subseteq A \cup B$. \qed
+
+%======================================================================
+\subsection*{Problem 16}
+Describe sets with $U = \mathbb{Z}$, $A = \{2k \mid k \in \mathbb{Z}^+\}$ (positive evens), $B = \{2k-1 \mid k \in \mathbb{Z}^+\}$ (positive odds), $C = \{x \in \mathbb{Z} \mid x < 10\}$.
+
+\begin{itemize}
+  \item $\boxed{\overline{A} = \{x \in \mathbb{Z} \mid x \le 0 \text{ or } x \text{ is odd}\}}$
+  \item $\boxed{A \triangle B = \mathbb{Z}^+}$ \quad (since $A \cap B = \varnothing$ and $A \cup B = \mathbb{Z}^+$)
+  \item $\boxed{\overline{C} = \{x \in \mathbb{Z} \mid x \ge 10\}}$
+  \item $\boxed{A \setminus C = \{10, 12, 14, \ldots\}}$ \quad (positive evens $\ge 10$)
+  \item $\boxed{C \setminus (A \triangle B) = \{\ldots, -2, -1, 0\}}$ \quad (non-positive integers)
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 17}
+$A$ = positive evens, $B$ = positive odds, $C$ = positive multiples of 3.
+
+\textbf{(a)}
+\begin{itemize}
+  \item $A \cap C = \{6, 12, 18, \ldots\}$ = positive multiples of 6.
+  \item $B \cup C = \{n \in \mathbb{Z}^+ \mid n \text{ is odd or } 3 \mid n\} = \{1,3,5,6,7,9,11,12,13,\ldots\}$.
+  \item $B \setminus C = \{1, 5, 7, 11, 13, 17, \ldots\}$ = positive odd integers not divisible by 3.
+\end{itemize}
+
+\textbf{(b)} Yes, the distributive law $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ holds for all sets. Since $A \cap B = \varnothing$ (no positive integer is both even and odd), we get $A \cap (B \cup C) = \varnothing \cup (A \cap C) = A \cap C$ = positive multiples of 6. Independently, $A \cap (B \cup C)$ consists of positive even integers that are odd or divisible by 3; the ``odd'' part is impossible, so this is positive evens divisible by 3, i.e., multiples of 6. Both sides agree. $\checkmark$
+
+%======================================================================
+\subsection*{Problem 18}
+For any set $A$:
+
+$\boxed{A \cap \varnothing = \varnothing}$, \quad $\boxed{A \cup \varnothing = A}$, \quad $\boxed{A \setminus \varnothing = A}$, \quad $\boxed{A \setminus A = \varnothing}$, \quad $\boxed{\varnothing \setminus A = \varnothing}$.
+
+%======================================================================
+\subsection*{Problem 19}
+Compute:
+
+\begin{itemize}
+  \item $\varnothing \setminus \{\varnothing\} = \boxed{\varnothing}$ \quad (nothing to remove from the empty set).
+  \item $\{\varnothing\} \setminus \{\varnothing\} = \boxed{\varnothing}$ \quad (the sole element $\varnothing$ is removed).
+  \item $\{\varnothing, \{\varnothing\}\} \setminus \varnothing = \boxed{\{\varnothing, \{\varnothing\}\}}$ \quad (nothing is removed).
+  \item $\{\varnothing, \{\varnothing\}\} \setminus \{\varnothing\} = \boxed{\{\{\varnothing\}\}}$ \quad (the element $\varnothing$ is removed; $\{\varnothing\}$ remains).
+\end{itemize}
+
+%======================================================================
+\subsection*{Problem 20}
+Prove equivalent characterizations.
+
+\textbf{Part 1:} $A \subseteq B \iff A \cup B = B \iff A \cap B = A$.
+
+\textit{Proof sketch.} $(A \subseteq B) \Rightarrow (A \cup B = B)$: every element of $A$ is already in $B$, so $A \cup B = B$.
+$(A \cup B = B) \Rightarrow (A \cap B = A)$: if $x \in A$ then $x \in A \cup B = B$, so $x \in A \cap B$.
+$(A \cap B = A) \Rightarrow (A \subseteq B)$: if $x \in A = A \cap B$ then $x \in B$. \qed
+
+\textbf{Part 2:} $A \cap B = \varnothing \iff A \subseteq \overline{B} \iff B \subseteq \overline{A}$.
+
+\textit{Proof sketch.} Disjointness means every element of $A$ is outside $B$ (i.e.\ in $\overline{B}$), and symmetrically every element of $B$ is outside $A$. Cyclic implications close the loop. \qed
+
+\textbf{Part 3:} $A \cup B = U \iff \overline{A} \subseteq B \iff \overline{B} \subseteq A$.
+
+\textit{Proof sketch.} If $A \cup B = U$ and $x \notin A$, then $x \in B$; so $\overline{A} \subseteq B$. If $\overline{A} \subseteq B$ and $x \notin B$, then $x \notin \overline{A}$, i.e.\ $x \in A$; so $\overline{B} \subseteq A$. If $\overline{B} \subseteq A$ then for any $x \in U$, either $x \in B$ or $x \in \overline{B} \subseteq A$, so $A \cup B = U$. \qed
+
+%======================================================================
+\subsection*{Problem 21}
+Prove $(A \setminus B) \setminus C = A \setminus (B \cup C)$. Is $C \subseteq A$ equivalent?
+
+\textit{Proof.} $x \in (A \setminus B) \setminus C \iff x \in A \land x \notin B \land x \notin C \iff x \in A \land x \notin (B \cup C) \iff x \in A \setminus (B \cup C)$. \qed
+
+The condition $C \subseteq A$ is \textbf{not} equivalent to this identity. The identity $(A \setminus B) \setminus C = A \setminus (B \cup C)$ holds for \emph{all} sets $A, B, C$, regardless of whether $C \subseteq A$.
+
+%======================================================================
+\subsection*{Problem 22}
+Prove $(A \setminus B) \setminus C = (A \setminus C) \setminus (B \setminus C)$.
+
+\textit{Proof.}
+$x \in (A \setminus C) \setminus (B \setminus C) \iff x \in A \land x \notin C \land \lnot(x \in B \land x \notin C)$.
+Since $x \notin C$, the condition $\lnot(x \in B \land x \notin C)$ reduces to $x \notin B$.
+So this equals $x \in A \land x \notin B \land x \notin C = x \in (A \setminus B) \setminus C$. \qed
+
+%======================================================================
+\subsection*{Problem 23}
+Prove $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.
+
+\textit{Proof.} Base: $n=1$: $1 = \frac{1 \cdot 2}{2}$. Inductive step: assume true for $n=k$. Then
+$\sum_{i=1}^{k+1} i = \frac{k(k+1)}{2} + (k+1) = \frac{k(k+1)+2(k+1)}{2} = \frac{(k+1)(k+2)}{2}$. \qed
+
+%======================================================================
+\subsection*{Problem 24}
+Prove $1^2 + 2^2 + \cdots + n^2 = \frac{n(n+1)(2n+1)}{6}$.
+
+\textit{Proof.} Base: $n=1$: $1 = \frac{1 \cdot 2 \cdot 3}{6}$. Inductive step: assume for $k$. Then
+$\frac{k(k+1)(2k+1)}{6} + (k+1)^2 = \frac{(k+1)[k(2k+1)+6(k+1)]}{6} = \frac{(k+1)(2k^2+7k+6)}{6} = \frac{(k+1)(k+2)(2k+3)}{6}$. \qed
+
+%======================================================================
+\subsection*{Problem 25}
+Prove $1 + 4 + 7 + \cdots + (3n-2) = \frac{n(3n-1)}{2}$.
+
+\textit{Proof.} Base: $n=1$: $1 = \frac{1 \cdot 2}{2}$. Inductive step:
+$\frac{k(3k-1)}{2} + (3(k+1)-2) = \frac{k(3k-1) + 2(3k+1)}{2} = \frac{3k^2+5k+2}{2} = \frac{(k+1)(3k+2)}{2} = \frac{(k+1)(3(k+1)-1)}{2}$. \qed
+
+%======================================================================
+\subsection*{Problem 26}
+Prove $\sum_{i=1}^{n} \frac{1}{(2i-1)(2i+1)} = \frac{n}{2n+1}$.
+
+\textit{Proof.} Base: $n=1$: $\frac{1}{1 \cdot 3} = \frac{1}{3}$. Inductive step:
+$\frac{k}{2k+1} + \frac{1}{(2k+1)(2k+3)} = \frac{k(2k+3)+1}{(2k+1)(2k+3)} = \frac{2k^2+3k+1}{(2k+1)(2k+3)} = \frac{(k+1)(2k+1)}{(2k+1)(2k+3)} = \frac{k+1}{2k+3}$. \qed
+
+%======================================================================
+\subsection*{Problem 27}
+Prove $1 + 2 + 2^2 + \cdots + 2^{n-1} = 2^n - 1$.
+
+\textit{Proof.} Base: $n=1$: $1 = 2^1 - 1$. Inductive step:
+$(2^k - 1) + 2^k = 2 \cdot 2^k - 1 = 2^{k+1} - 1$. \qed
+
+%======================================================================
+\subsection*{Problem 28}
+Prove $1 + r + r^2 + \cdots + r^{n-1} = \frac{1-r^n}{1-r}$ for $r \neq 1$.
+
+\textit{Proof.} Base: $n=1$: $1 = \frac{1-r}{1-r}$. Inductive step:
+$\frac{1-r^k}{1-r} + r^k = \frac{1-r^k + r^k(1-r)}{1-r} = \frac{1 - r^{k+1}}{1-r}$. \qed
+
+%======================================================================
+\subsection*{Problem 29}
+Prove $1 + 3 + 5 + \cdots + (2n-1) = n^2$.
+
+\textit{Proof.} Base: $n=1$: $1 = 1^2$. Inductive step:
+$k^2 + (2(k+1)-1) = k^2 + 2k + 1 = (k+1)^2$. \qed
+
+%======================================================================
+\subsection*{Problem 30}
+Prove $2 + 4 + 6 + \cdots + 2n = n^2 + n$.
+
+\textit{Proof.} Base: $n=1$: $2 = 1 + 1$. Inductive step:
+$(k^2 + k) + 2(k+1) = k^2 + 3k + 2 = (k+1)^2 + (k+1)$. \qed
+
+%======================================================================
+\subsection*{Problem 31}
+Prove by induction: $a^{m+n} = a^m \cdot a^n$.
+
+\textit{Proof.} Fix $m$; induct on $n$. Base: $n=0$: $a^{m+0} = a^m = a^m \cdot 1 = a^m \cdot a^0$.
+Inductive step: $a^{m+(k+1)} = a^{(m+k)+1} = a^{m+k} \cdot a = (a^m \cdot a^k) \cdot a = a^m \cdot a^{k+1}$. \qed
+
+%======================================================================
+\subsection*{Problem 32}
+Prove by induction: $(ab)^k = a^k b^k$.
+
+\textit{Proof.} Base: $k=0$: $(ab)^0 = 1 = a^0 b^0$. (Or $k=1$: $(ab)^1 = ab = a^1 b^1$.)
+Inductive step: $(ab)^{k+1} = (ab)^k \cdot ab = a^k b^k \cdot ab = a^{k+1} b^{k+1}$ (using commutativity of multiplication). \qed
+
+%======================================================================
+\subsection*{Problem 33}
+Prove $n^2 > 2n + 1$ for $n \ge 3$.
+
+\textit{Proof.} Base: $n=3$: $9 > 7$. Inductive step: assume $k^2 > 2k+1$ for some $k \ge 3$.
+$(k+1)^2 = k^2 + 2k + 1 > (2k+1) + 2k + 1 = 4k + 2 \ge 2(k+1) + 1 + (2k-1) > 2(k+1)+1$
+since $2k - 1 \ge 5 > 0$. \qed
+
+%======================================================================
+\subsection*{Problem 34}
+Prove $2^n > n^2$ for $n \ge 5$.
+
+\textit{Proof.} Base: $n=5$: $32 > 25$. Inductive step: assume $2^k > k^2$ for $k \ge 5$.
+$2^{k+1} = 2 \cdot 2^k > 2k^2$. We need $2k^2 \ge (k+1)^2 = k^2 + 2k + 1$, i.e., $k^2 - 2k - 1 \ge 0$, which holds for $k \ge 3$. \qed
+
+%======================================================================
+\subsection*{Problem 35}
+Prove $a^3 > 3a^2 + 3a + 1$ for $a \ge 4$; equivalently $(a+1)^3 < (2a)^3$... Actually, restate: prove $a^3 > 3a^2 + 3a + 1$ for $a \ge 4$.
+
+\textit{Proof.} Base: $a=4$: $64 > 48 + 12 + 1 = 61$. $\checkmark$
+
+Inductive step: assume $k^3 > 3k^2 + 3k + 1$ for $k \ge 4$. We show $(k+1)^3 > 3(k+1)^2 + 3(k+1) + 1$.
+$(k+1)^3 = k^3 + 3k^2 + 3k + 1 > (3k^2 + 3k + 1) + 3k^2 + 3k + 1 = 6k^2 + 6k + 2$.
+We need $6k^2 + 6k + 2 \ge 3k^2 + 9k + 7$, i.e., $3k^2 - 3k - 5 \ge 0$, which holds for $k \ge 2$. \qed
+
+%======================================================================
+\subsection*{Problem 36}
+Prove $5^{2n} + 3 \cdot 2^{5n-2}$ is divisible by 7 for $n \in \mathbb{N}$.
+
+\textit{Proof.} Base: $n=1$: $25 + 3 \cdot 8 = 25 + 24 = 49 = 7 \cdot 7$. $\checkmark$
+
+Inductive step: assume $7 \mid (5^{2k} + 3 \cdot 2^{5k-2})$. Then
+$5^{2(k+1)} + 3 \cdot 2^{5(k+1)-2} = 25 \cdot 5^{2k} + 32 \cdot 3 \cdot 2^{5k-2}$
+$= 25 \cdot 5^{2k} + 25 \cdot 3 \cdot 2^{5k-2} + 7 \cdot 3 \cdot 2^{5k-2}$
+$= 25(5^{2k} + 3 \cdot 2^{5k-2}) + 7 \cdot 3 \cdot 2^{5k-2}$.
+Both terms are divisible by 7. \qed
+
+%======================================================================
+\subsection*{Problem 37}
+Prove $3^{n+2} + 4^{2n+1}$ is divisible by 13 for $n \in \mathbb{N}$.
+
+\textit{Proof.} Base: $n=0$: $9 + 4 = 13$. $\checkmark$ (Or $n=1$: $27 + 64 = 91 = 7 \cdot 13$.)
+
+Inductive step: assume $13 \mid (3^{k+2} + 4^{2k+1})$. Then
+$3^{k+3} + 4^{2k+3} = 3 \cdot 3^{k+2} + 16 \cdot 4^{2k+1}$
+$= 3(3^{k+2} + 4^{2k+1}) + 13 \cdot 4^{2k+1}$.
+Both terms are divisible by 13. \qed
+
+%======================================================================
+\subsection*{Problem 38}
+Prove $5^{2n} + 7$ is divisible by 8 for $n \in \mathbb{N}$.
+
+\textit{Proof.} $5^{2n} = 25^n \equiv 1^n = 1 \pmod{8}$, so $5^{2n} + 7 \equiv 1 + 7 = 8 \equiv 0 \pmod{8}$.
+
+Alternatively by induction: Base: $n=1$: $25 + 7 = 32 = 8 \cdot 4$.
+Inductive step: $5^{2(k+1)} + 7 = 25 \cdot 5^{2k} + 7 = 25(5^{2k}+7) - 25 \cdot 7 + 7 = 25(5^{2k}+7) - 168$.
+Both $25(5^{2k}+7)$ and $168 = 8 \cdot 21$ are divisible by 8. \qed
+
+%======================================================================
+\subsection*{Problem 39}
+Prove $3^{3n+1} + 2^{n+1}$ is divisible by 5 for $n \in \mathbb{N}$.
+
+\textit{Proof.} Base: $n=0$: $3 + 2 = 5$. $\checkmark$
+
+Inductive step: $3^{3(k+1)+1} + 2^{k+2} = 27 \cdot 3^{3k+1} + 2 \cdot 2^{k+1}$
+$= 27 \cdot 3^{3k+1} + 27 \cdot 2^{k+1} - 25 \cdot 2^{k+1}$
+$= 27(3^{3k+1} + 2^{k+1}) - 25 \cdot 2^{k+1}$.
+By hypothesis $5 \mid 27(3^{3k+1} + 2^{k+1})$ (since $5$ divides the inner expression) and $5 \mid 25 \cdot 2^{k+1}$. \qed
+
+%======================================================================
+\subsection*{Problem 40}
+Prove $9^n - 1$ is divisible by 8 for $n \in \mathbb{N}$.
+
+\textit{Proof.} $9^n - 1 = (9-1)(9^{n-1} + 9^{n-2} + \cdots + 1) = 8 \cdot \sum_{i=0}^{n-1} 9^i$.
+
+Alternatively: $9 \equiv 1 \pmod{8}$, so $9^n \equiv 1 \pmod{8}$. \qed
+
+%======================================================================
+\subsection*{Problem 41}
+Prove $10^n - 1$ is divisible by 9 for $n \in \mathbb{N}$.
+
+\textit{Proof.} $10 \equiv 1 \pmod{9}$, so $10^n \equiv 1 \pmod{9}$, hence $9 \mid (10^n - 1)$.
+
+Alternatively: $10^n - 1 = \underbrace{99\ldots9}_{n} = 9 \cdot \underbrace{11\ldots1}_{n}$. \qed
+
+%======================================================================
+\subsection*{Problem 42}
+Prove $n^2 - 1$ is divisible by 4 for all odd natural numbers.
+
+\textit{Proof.} Let $n = 2m+1$ for $m \ge 0$. Then $n^2 - 1 = (2m+1)^2 - 1 = 4m^2 + 4m = 4m(m+1)$, which is divisible by 4. \qed
+
+(No induction needed; a direct proof suffices.)
+
+%======================================================================
+\subsection*{Problem 43}
+Find and prove: $3 + 7 + 11 + \cdots + (4n-1)$.
+
+The sum is $\boxed{n(2n+1)}$.
+
+\textit{Proof.} Base: $n=1$: $3 = 1 \cdot 3$. $\checkmark$
+
+Inductive step: $k(2k+1) + (4(k+1)-1) = 2k^2 + k + 4k + 3 = 2k^2 + 5k + 3 = (k+1)(2k+3) = (k+1)(2(k+1)+1)$. \qed
+
+%======================================================================
+\subsection*{Problem 44}
+Find and prove: $1 + 5 + 9 + \cdots + (4n-3)$.
+
+The sum is $\boxed{n(2n-1)}$.
+
+\textit{Proof.} Base: $n=1$: $1 = 1 \cdot 1$. $\checkmark$
+
+Inductive step: $k(2k-1) + (4(k+1)-3) = 2k^2 - k + 4k + 1 = 2k^2 + 3k + 1 = (k+1)(2k+1) = (k+1)(2(k+1)-1)$. \qed
+
+%======================================================================
+\subsection*{Problem 45}
+Find and prove the sum $1\cdot 2 + 3\cdot 4 + 5\cdot 6 + \cdots + (2n-1)\cdot 2n$.
+
+(Interpreting the unclear original as $\sum_{k=1}^{n}(2k-1)(2k)$.)
+
+The sum is $\boxed{\dfrac{n(n+1)(4n-1)}{3}}$.
+
+\textit{Proof.} Base: $n=1$: $1 \cdot 2 = 2$ and $\frac{1 \cdot 2 \cdot 3}{3} = 2$. $\checkmark$
+
+Inductive step: $\frac{k(k+1)(4k-1)}{3} + (2k+1)(2k+2) = \frac{k(k+1)(4k-1) + 6(2k+1)(k+1)}{3}$
+$= \frac{(k+1)[k(4k-1)+6(2k+1)]}{3} = \frac{(k+1)(4k^2+11k+6)}{3} = \frac{(k+1)(k+2)(4k+3)}{3}$. \qed
+
+%======================================================================
+\subsection*{Problem 46}
+Find and prove: $1\cdot 3 + 5\cdot 7 + \cdots + (4n-3)(4n-1)$.
+
+The general term is $(4k-3)(4k-1)$ for $k=1,\ldots,n$. The sum is $\boxed{\dfrac{n(16n^2 - 7)}{3}}$.
+
+\textit{Proof.} Base: $n=1$: $1 \cdot 3 = 3 = \frac{1 \cdot 9}{3}$. $\checkmark$
+
+Inductive step: $\frac{k(16k^2-7)}{3} + (4(k+1)-3)(4(k+1)-1) = \frac{k(16k^2-7)}{3} + (4k+1)(4k+3)$.
+Both sides of the target identity $\frac{(k+1)(16(k+1)^2-7)}{3}$ expand to $\frac{16k^3+48k^2+41k+9}{3}$ (routine algebra). \qed
+
+%======================================================================
+\subsection*{Problem 47}
+Prove $2^n > n^3$ and $n! > 100^n$ for large $n$.
+
+\textbf{(a)} $2^n > n^3$ for $n \ge 10$.
+
+\textit{Proof.} Base: $n=10$: $1024 > 1000$. Inductive step: assume $2^k > k^3$ for $k \ge 10$. Then $2^{k+1} = 2 \cdot 2^k > 2k^3$. We need $2k^3 \ge (k+1)^3$, i.e., $(1+1/k)^3 \le 2$. For $k \ge 10$: $(1+1/k)^3 \le (1.1)^3 = 1.331 < 2$. $\checkmark$ \qed
+
+\textbf{(b)} $n! > 100^n$ for $n \ge 200$ (for instance).
+
+\textit{Proof.} Once $k \ge 200$, we have $k + 1 > 100$, so $(k+1)! = (k+1) \cdot k! > 100 \cdot 100^k = 100^{k+1}$. The base case $200! > 100^{200}$ can be verified using Stirling's approximation. \qed
+
+%======================================================================
+\subsection*{Problem 48}
+Tower of Hanoi: prove $n$ disks can be moved in $2^n - 1$ moves.
+
+\textit{Proof.} Base: $n=1$: move the single disk directly (1 move $= 2^1 - 1$).
+Inductive step: to move $k+1$ disks from peg $A$ to peg $C$, first move the top $k$ disks from $A$ to $B$ ($2^k - 1$ moves by hypothesis), then move the largest disk from $A$ to $C$ (1 move), then move $k$ disks from $B$ to $C$ ($2^k - 1$ moves). Total: $2(2^k-1)+1 = 2^{k+1}-1$. \qed
+
+%======================================================================
+\subsection*{Problem 49}
+Bernoulli's inequality: $(1+h)^n \ge 1 + nh$ for $h > -1$, $n \in \mathbb{N}$.
+
+\textit{Proof.} Base: $n=1$: $1+h \ge 1+h$. $\checkmark$
+
+Inductive step: $(1+h)^{k+1} = (1+h)^k(1+h) \ge (1+kh)(1+h) = 1 + (k+1)h + kh^2 \ge 1 + (k+1)h$
+since $kh^2 \ge 0$. (We used $1+h > 0$ to preserve the inequality direction when multiplying.) \qed
+
+%======================================================================
+\subsection*{Problem 50}
+Prove Theorem 1 (basic set algebra laws) using membership relation.
+
+``Theorem 1'' typically refers to the fundamental identities:
+\begin{enumerate}
+  \item Commutativity: $A \cup B = B \cup A$, $A \cap B = B \cap A$.
+  \item Associativity: $(A \cup B) \cup C = A \cup (B \cup C)$, similarly for $\cap$.
+  \item Distributivity: $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$, $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
+  \item Identity: $A \cup \varnothing = A$, $A \cap U = A$.
+  \item Complement: $A \cup \overline{A} = U$, $A \cap \overline{A} = \varnothing$.
+  \item Idempotency: $A \cup A = A$, $A \cap A = A$.
+  \item De Morgan: $\overline{A \cup B} = \overline{A} \cap \overline{B}$, $\overline{A \cap B} = \overline{A} \cup \overline{B}$.
+\end{enumerate}
+
+\textit{Proof sketch.} Each identity is proved by showing $x \in \text{LHS} \iff x \in \text{RHS}$ for arbitrary $x$, translating set operations to logical connectives ($\cup \to \lor$, $\cap \to \land$, $\overline{\cdot} \to \lnot$) and applying standard propositional logic laws. \qed
+
+%======================================================================
+\subsection*{Problem 51}
+Prove Theorem 2 using membership relation.
+
+``Theorem 2'' typically includes additional identities such as:
+absorption ($A \cup (A \cap B) = A$, $A \cap (A \cup B) = A$), involution ($\overline{\overline{A}} = A$), domination ($A \cup U = U$, $A \cap \varnothing = \varnothing$), and $\overline{U} = \varnothing$, $\overline{\varnothing} = U$.
+
+\textit{Proof sketch.} As in Problem 50, each is proved via element-chasing, reducing to tautologies of propositional logic. For example, absorption: $x \in A \cup (A \cap B) \iff x \in A \lor (x \in A \land x \in B) \iff x \in A$. \qed
+
+%======================================================================
+\subsection*{Problem 52}
+Prove Theorem 2 using Theorem 1 identities as axioms (algebraic proofs, no element-chasing).
+
+\textit{Proof sketch.} For example, absorption: $A \cup (A \cap B) = (A \cap U) \cup (A \cap B) = A \cap (U \cup B) = A \cap U = A$, using identity, distributivity, domination, and identity laws from Theorem 1. Each Theorem 2 identity can be derived purely algebraically from Theorem 1. \qed
+
+%======================================================================
+\subsection*{Problem 53}
+Using Theorems 1 \& 2, prove identities. (Note: the problem text is partially illegible; representative sub-problems are addressed.)
+
+\textbf{(1)} $(A \cap \overline{B} \cap \overline{X}) \cup (A \cap \overline{B} \cap \overline{C} \cap \overline{X} \cap \overline{Y}) \cup (A \cap \overline{X} \cap \overline{A}) = A \cap \overline{B} \cap \overline{X}$.
+
+\textit{Proof sketch.} The third term contains $A \cap \overline{A} = \varnothing$, so it vanishes. The second term is a subset of the first (it has extra constraints $\overline{C}$ and $\overline{Y}$), so $\text{first} \cup \text{second} = \text{first}$, by absorption. Result: $A \cap \overline{B} \cap \overline{X}$. \qed
+
+(The remaining sub-problems follow similarly by applying idempotency, absorption, and complement laws.)
+
+%======================================================================
+\subsection*{Problem 54}
+Prove/verify set identities. Representative items:
+
+\textbf{(1)} $A \setminus (B \setminus C) = (A \setminus B) \cup C$ --- \textbf{FALSE in general.}
+
+Counterexample: $A = \{1\}$, $B = \varnothing$, $C = \{2\}$. LHS $= \{1\} \setminus \varnothing = \{1\}$. RHS $= \{1\} \cup \{2\} = \{1,2\}$. LHS $\neq$ RHS.
+
+The correct identity is $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$.
+
+\textbf{(3)} $(A \cup B) \setminus C = (A \setminus C) \cup (B \setminus C)$.
+
+\textit{Proof.} $x \in (A \cup B) \setminus C \iff (x \in A \lor x \in B) \land x \notin C \iff (x \in A \land x \notin C) \lor (x \in B \land x \notin C) \iff x \in (A\setminus C) \cup (B \setminus C)$. \qed
+
+\textbf{(11)} $A \cap (B \mathbin{\triangle} C) = (A \cap B) \mathbin{\triangle} (A \cap C)$.
+
+\textit{Proof.} Both sides reduce to $(x \in A \land x \in B \land x \notin C) \lor (x \in A \land x \notin B \land x \in C)$. \qed
+
+(Other sub-problems in 54 follow the same element-chasing technique, translating $\setminus$ as $\cap\;\overline{(\cdot)}$ and using propositional logic equivalences.)
+
+%======================================================================
+\subsection*{Problem 55}
+Show $A \cup (B \setminus C) \neq (A \cup B) \setminus (A \cup C)$ in general.
+
+Counterexample: $A = \{1\}$, $B = \{1,2\}$, $C = \{1\}$.
+LHS: $B \setminus C = \{2\}$, so $A \cup (B \setminus C) = \{1,2\}$.
+RHS: $A \cup B = \{1,2\}$, $A \cup C = \{1\}$, so $(A \cup B) \setminus (A \cup C) = \{2\}$.
+$\{1,2\} \neq \{2\}$. \qed
+
+%======================================================================
+\subsection*{Problem 56}
+Prove $A \mathbin{\triangle} X = B$ has a unique solution.
+
+The unique solution is $\boxed{X = A \mathbin{\triangle} B}$.
+
+\textit{Proof.}
+\textbf{Existence:} Let $X = A \mathbin{\triangle} B$. Then $A \mathbin{\triangle} X = A \mathbin{\triangle} (A \mathbin{\triangle} B) = (A \mathbin{\triangle} A) \mathbin{\triangle} B = \varnothing \mathbin{\triangle} B = B$. $\checkmark$
+
+\textbf{Uniqueness:} If $A \mathbin{\triangle} X = B$, apply $A \mathbin{\triangle}$ to both sides: $A \mathbin{\triangle} (A \mathbin{\triangle} X) = A \mathbin{\triangle} B$, giving $X = A \mathbin{\triangle} B$. (We used associativity of $\triangle$ and $A \mathbin{\triangle} A = \varnothing$, $\varnothing \mathbin{\triangle} X = X$.) \qed
+
+%======================================================================
+\subsection*{Problem 57}
+Do there exist sets $A, B$ such that $|A \times B|$ equals:
+
+\textbf{57.1.} 12 elements? \textbf{YES.} For example $A = \{1,2,3\}$, $B = \{a,b,c,d\}$; $|A| \cdot |B| = 3 \cdot 4 = 12$.
+
+\textbf{57.2.} 13 elements? \textbf{YES.} Since $13$ is prime, $|A| \cdot |B| = 13$ forces $|A|=1, |B|=13$ or vice versa. For example $A=\{1\}$, $B$ any 13-element set.
+
+$\boxed{\text{57.1: Yes (e.g., } 3 \times 4 = 12\text{). \quad 57.2: Yes (e.g., } 1 \times 13 = 13\text{).}}$
+
+%======================================================================
+\subsection*{Problem 58}
+Prove $A \times B = B \times A \implies A = B$ (assuming both non-empty).
+
+\textit{Proof.} Assume $A, B \neq \varnothing$ and $A \times B = B \times A$.
+To show $A \subseteq B$: let $a \in A$, pick any $b \in B$. Then $(a,b) \in A \times B = B \times A$, so $a \in B$.
+To show $B \subseteq A$: let $b \in B$, pick any $a \in A$. Then $(b,a) \in B \times A = A \times B$, so $b \in A$.
+Hence $A = B$. (If either set is empty, both products are $\varnothing$ regardless of $A = B$.) \qed
+
+%======================================================================
+\subsection*{Problem 59}
+List elements of $A \times B$ for $A = \{a,b\}$, $B = \{1,2,3,4\}$.
+
+\[
+  \boxed{A \times B = \{(a,1),(a,2),(a,3),(a,4),(b,1),(b,2),(b,3),(b,4)\}}
+\]
+(8 elements.)
+
+%======================================================================
+\subsection*{Problem 60}
+Prove Cartesian product distributes over set operations.
+
+\textbf{(1)} $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
+
+\textit{Proof.} $(x,y) \in A \times (B \cup C) \iff x \in A \land (y \in B \lor y \in C) \iff (x \in A \land y \in B) \lor (x \in A \land y \in C) \iff (x,y) \in (A\times B) \cup (A \times C)$. \qed
+
+\textbf{(2)} $(B \cup C) \times A = (B \times A) \cup (C \times A)$. Same proof on the first component.
+
+\textbf{(3)} $A \times (B \cap C) = (A \times B) \cap (A \times C)$.
+
+\textit{Proof.} $(x,y) \in \text{LHS} \iff x \in A \land y \in B \land y \in C \iff (x \in A \land y \in B) \land (x \in A \land y \in C)$. \qed
+
+\textbf{(4)} $(B \cap C) \times A = (B \times A) \cap (C \times A)$. Mirror of (3).
+
+\textbf{(5)} $A \times (B \setminus C) = (A \times B) \setminus (A \times C)$.
+
+\textit{Proof.} $(x,y) \in \text{LHS} \iff x \in A \land y \in B \land y \notin C$. $(x,y) \in \text{RHS} \iff (x \in A \land y \in B) \land \lnot(x \in A \land y \in C)$. Given $x \in A$, the second condition reduces to $y \notin C$. \qed
+
+\textbf{(6)} $(B \setminus C) \times A = (B \times A) \setminus (C \times A)$. Mirror of (5).
+
+%======================================================================
+\subsection*{Problem 61}
+Prove $(A \cap B) \times (C \cap D) = (A \times C) \cap (B \times D)$.
+
+\textit{Proof.}
+$(x,y) \in (A \cap B) \times (C \cap D)$
+$\iff x \in A \land x \in B \land y \in C \land y \in D$
+$\iff (x \in A \land y \in C) \land (x \in B \land y \in D)$
+$\iff (x,y) \in (A \times C) \cap (B \times D)$. \qed
+
+%======================================================================
+\subsection*{Problem 62}
+Prove $A \subseteq B \land C \subseteq D \implies A \times C \subseteq B \times D$.
+
+\textit{Proof.} Let $(x,y) \in A \times C$. Then $x \in A \subseteq B$ gives $x \in B$, and $y \in C \subseteq D$ gives $y \in D$. So $(x,y) \in B \times D$. \qed
