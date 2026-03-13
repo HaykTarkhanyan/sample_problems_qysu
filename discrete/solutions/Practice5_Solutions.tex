@@ -1,0 +1,496 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, arrows.meta, fit, patterns, decorations.pathreplacing}
+\usepackage{geometry}
+\geometry{margin=2.4cm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ── Colours ───────────────────────────────────────────────────────
+\definecolor{setA}{RGB}{66, 133, 244}   % blue
+\definecolor{setB}{RGB}{234, 67, 53}    % red
+\definecolor{setC}{RGB}{251, 188, 4}    % yellow
+\definecolor{theoryBg}{RGB}{232, 245, 253}
+\definecolor{theoryFrame}{RGB}{66, 133, 244}
+\definecolor{stmtBg}{RGB}{255, 243, 224}
+\definecolor{stmtFrame}{RGB}{230, 126, 34}
+\definecolor{ansBg}{RGB}{232, 250, 232}
+\definecolor{ansFrame}{RGB}{39, 174, 96}
+
+% ── Environments ──────────────────────────────────────────────────
+\newtcolorbox{theorybox}[1][]{%
+  colback=theoryBg, colframe=theoryFrame,
+  fonttitle=\bfseries, title={\small Theory Recap: #1},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{problembox}{%
+  colback=stmtBg, colframe=stmtFrame,
+  fonttitle=\bfseries, title={\small Problem Statement},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{answerbox}{%
+  colback=ansBg, colframe=ansFrame,
+  arc=2mm, left=5pt, right=5pt, top=3pt, bottom=3pt
+}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\powset}[1]{2^{#1}}
+\newcommand{\comp}[1]{\overline{#1}}
+\newcommand{\symdiff}{\mathbin{\triangle}}
+
+% ── Title ─────────────────────────────────────────────────────────
+\title{\textbf{Practice 5 --- Combinatorics (Basic Rules)}\\[4pt]
+       \large Solutions to Selected Problems\\[2pt]
+       \normalsize \S1: Problems 3, 5, 10 \quad \S2: Problems 5, 10, 12}
+\author{Discrete Mathematics --- QYSU}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════
+\part*{Section 1: Fundamental Rules (Sum and Product Rules)}
+\addcontentsline{toc}{part}{Section 1: Fundamental Rules}
+% ══════════════════════════════════════════════════════════════════
+
+% ══════════════════════════════════════════════════════════════════
+\section{Problem 3 --- Choosing Two Books of Different Subjects}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Sum and Product Rules]
+The two most fundamental counting principles:
+
+\begin{itemize}[nosep]
+  \item \textbf{Sum Rule (Rule of Alternatives):}
+    If a task can be performed in one of $k$ mutually exclusive ways,
+    and way $i$ can be done in $n_i$ ways, then the total number of
+    ways is $n_1 + n_2 + \cdots + n_k$.
+
+  \item \textbf{Product Rule (Rule of Sequential Choices):}
+    If a task consists of $k$ sequential steps, where step $i$ can be
+    performed in $n_i$ ways (independently of the choices in other steps),
+    then the total number of ways is $n_1 \cdot n_2 \cdots n_k$.
+\end{itemize}
+
+\medskip
+\textbf{Combined usage.}\;
+When a task can be decomposed into several \emph{cases} (sum rule),
+each of which involves \emph{sequential choices} (product rule),
+we compute the count for each case using the product rule, then
+add the results.
+\end{theorybox}
+
+\begin{problembox}
+In how many ways can you choose two books of different subjects
+if there are 15 books on Informatics, 12 on Mathematics, and 10 on Physics?
+\end{problembox}
+
+\subsection*{Solution}
+
+Since the two chosen books must be on \emph{different} subjects,
+we enumerate all possible pairs of subjects.
+There are three cases (sum rule), and within each case we apply
+the product rule:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Case} & \textbf{Subject 1} & \textbf{Subject 2} & \textbf{Count} \\
+\midrule
+Informatics + Mathematics & 15 choices & 12 choices & $15 \cdot 12 = 180$ \\
+Informatics + Physics     & 15 choices & 10 choices & $15 \cdot 10 = 150$ \\
+Mathematics + Physics     & 12 choices & 10 choices & $12 \cdot 10 = 120$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+By the sum rule (the three cases are mutually exclusive), the total is:
+\[
+  15 \cdot 12 \;+\; 15 \cdot 10 \;+\; 12 \cdot 10
+  \;=\; 180 + 150 + 120
+  \;=\; 450.
+\]
+
+\begin{answerbox}
+\centering
+There are $\boxed{450}$ ways to choose two books of different subjects.
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\section{Problem 5 --- Natural Numbers Less Than 700 Divisible by 5 and/or 3}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Counting Multiples in a Range]
+The number of positive multiples of $d$ that are less than or equal to $N$ is
+$\left\lfloor \frac{N}{d} \right\rfloor$.
+
+More precisely, the multiples of $d$ in $\{1, 2, \ldots, N\}$ are
+$d, 2d, 3d, \ldots, \lfloor N/d \rfloor \cdot d$,
+so there are exactly $\lfloor N/d \rfloor$ of them.
+
+\medskip
+\textbf{``Less than $N$'' vs.\ ``at most $N$''.}\;
+The natural numbers less than $N$ are $\{1, 2, \ldots, N-1\}$.
+The number of multiples of $d$ among these is
+$\left\lfloor \frac{N-1}{d} \right\rfloor$.
+\end{theorybox}
+
+\begin{problembox}
+How many natural numbers less than 700 are divisible by 5?
+How many of those are divisible by 3?
+How many are divisible by both 3 and 5?
+\end{problembox}
+
+\subsection*{Solution}
+
+We consider the set $S = \{1, 2, 3, \ldots, 699\}$ (natural numbers less than 700).
+
+\paragraph{(a) Divisible by 5.}
+The multiples of 5 in $S$ are $5, 10, 15, \ldots, 695$.
+The number of such multiples is:
+\[
+  \left\lfloor \frac{699}{5} \right\rfloor = \lfloor 139.8 \rfloor = 139.
+\]
+
+\paragraph{(b) Divisible by 3 (among natural numbers less than 700).}
+The multiples of 3 in $S$ are $3, 6, 9, \ldots, 699$.
+The number of such multiples is:
+\[
+  \left\lfloor \frac{699}{3} \right\rfloor = 233.
+\]
+
+\paragraph{(c) Divisible by both 3 and 5.}
+A number divisible by both 3 and 5 is divisible by $\mathrm{lcm}(3,5) = 15$.
+The multiples of 15 in $S$ are $15, 30, 45, \ldots, 690$.
+The number of such multiples is:
+\[
+  \left\lfloor \frac{699}{15} \right\rfloor = \lfloor 46.6 \rfloor = 46.
+\]
+
+\begin{answerbox}
+\centering
+Divisible by 5: $\boxed{139}$. \qquad
+Divisible by 3: $\boxed{233}$. \qquad
+Divisible by both 3 and 5: $\boxed{46}$.
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\section{Problem 10 --- 7-Digit Numbers with Alternating Parity}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Product Rule for Digit Counting]
+When counting numbers with digit-by-digit constraints, the product rule
+is applied position by position.
+
+\medskip
+\textbf{Key consideration:}\;
+The \emph{leading digit} (leftmost position) of an $n$-digit number
+\textbf{cannot be 0}, since that would reduce the number of digits.
+This restriction must always be accounted for separately.
+
+\medskip
+\textbf{Even digits:} $\{0, 2, 4, 6, 8\}$ --- five digits.\\
+\textbf{Odd digits:} $\{1, 3, 5, 7, 9\}$ --- five digits.
+\end{theorybox}
+
+\begin{problembox}
+Find the number of 7-digit numbers where the even-numbered positions
+contain odd digits and the odd-numbered positions contain even digits.
+\end{problembox}
+
+\subsection*{Solution}
+
+We label positions $1, 2, 3, 4, 5, 6, 7$ from left to right.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{ccccccc}
+\toprule
+Pos.\ 1 & Pos.\ 2 & Pos.\ 3 & Pos.\ 4 & Pos.\ 5 & Pos.\ 6 & Pos.\ 7 \\
+\midrule
+\textit{odd} & \textit{even} & \textit{odd} & \textit{even} & \textit{odd} & \textit{even} & \textit{odd} \\
+(position) & (position) & (position) & (position) & (position) & (position) & (position) \\
+\midrule
+even digit & odd digit & even digit & odd digit & even digit & odd digit & even digit \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Even positions (2, 4, 6):}
+These must contain \textbf{odd} digits from $\{1, 3, 5, 7, 9\}$.
+Each position has $5$ choices, giving $5^3$ combinations.
+
+\paragraph{Odd positions (1, 3, 5, 7):}
+These must contain \textbf{even} digits from $\{0, 2, 4, 6, 8\}$.
+Each position has $5$ choices \emph{in general}, \textbf{except}
+position 1 (the leading digit), which \textbf{cannot be 0}.
+
+\begin{itemize}[nosep]
+  \item Position 1: $\{2, 4, 6, 8\}$ --- \textbf{4 choices}.
+  \item Positions 3, 5, 7: $\{0, 2, 4, 6, 8\}$ --- $5$ choices each, giving $5^3$.
+\end{itemize}
+
+\paragraph{Applying the product rule.}
+Since the choices at each position are independent:
+\[
+  \underbrace{4}_{\text{pos.\ 1}}
+  \;\times\;
+  \underbrace{5^3}_{\text{pos.\ 2, 4, 6}}
+  \;\times\;
+  \underbrace{5^3}_{\text{pos.\ 3, 5, 7}}
+  \;=\; 4 \times 125 \times 125
+  \;=\; 4 \times 15{,}625
+  \;=\; 62{,}500.
+\]
+
+\begin{answerbox}
+\centering
+There are $\boxed{62{,}500}$ such 7-digit numbers.
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\part*{Section 2: Permutations and Arrangements}
+\addcontentsline{toc}{part}{Section 2: Permutations and Arrangements}
+% ══════════════════════════════════════════════════════════════════
+
+% ══════════════════════════════════════════════════════════════════
+\section{Problem 5 --- Boys and Girls in a Line}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Permutations with Positional Constraints]
+When certain positions in a line are constrained (e.g., ``the first
+and last positions must be occupied by specific types of people''),
+we use the following strategy:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Fill the constrained positions first},
+        counting the number of ways to choose who goes there.
+  \item \textbf{Fill the remaining positions} with the remaining people,
+        who can stand in any order.
+  \item \textbf{Multiply} the counts (product rule).
+\end{enumerate}
+
+\medskip
+Recall that the number of ways to arrange $n$ distinct objects in a line
+is $n! = n \cdot (n-1) \cdot (n-2) \cdots 2 \cdot 1$.
+\end{theorybox}
+
+\begin{problembox}
+In how many ways can 6 boys and 7 girls stand in a line such that
+the first and last positions are occupied by boys?
+\end{problembox}
+
+\subsection*{Solution}
+
+There are $6 + 7 = 13$ people in total.
+
+\paragraph{Step 1: Fill the constrained positions.}
+\begin{itemize}[nosep]
+  \item \textbf{First position:} must be a boy.
+        There are 6 boys to choose from, so $6$ choices.
+  \item \textbf{Last position:} must be a boy (different from the first).
+        There are $6 - 1 = 5$ remaining boys, so $5$ choices.
+\end{itemize}
+
+\paragraph{Step 2: Fill the remaining positions.}
+After placing two boys at the ends, there are $13 - 2 = 11$ people left
+(4 boys and 7 girls). These 11 people can stand in the remaining
+11 positions (positions 2 through 12) in any order:
+\[
+  11! \text{ ways.}
+\]
+
+\paragraph{Step 3: Apply the product rule.}
+The choices at each step are independent, so:
+\[
+  6 \times 5 \times 11!
+  \;=\; 30 \times 11!.
+\]
+
+\begin{answerbox}
+\centering
+The total number of arrangements is $\boxed{30 \times 11! = 30 \times 39{,}916{,}800 = 1{,}197{,}504{,}000}$.
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\section{Problem 10 --- Ramsey's Theorem $R(3,3) = 6$}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Pigeonhole Principle and Ramsey Theory]
+\textbf{Pigeonhole Principle.}\;
+If $n$ objects are placed into $k$ boxes and $n > k$, then at least
+one box contains more than one object.
+
+More generally: if $n$ objects are placed into $k$ boxes, then at least
+one box contains $\lceil n/k \rceil$ objects.
+
+\medskip
+\textbf{Ramsey Theory} (informal statement).
+In any sufficiently large structure, order must appear.
+The Ramsey number $R(s,t)$ is the smallest $n$ such that every
+2-colouring (say, red and blue) of the edges of the complete graph
+$K_n$ contains either a red $K_s$ or a blue $K_t$.
+
+\medskip
+The classical result $R(3,3) = 6$ states: in any group of 6 people,
+there are always 3 mutual friends or 3 mutual strangers.
+\end{theorybox}
+
+\begin{problembox}
+Prove that in any group of 6 people, there are either 3 mutual
+friends or 3 mutual strangers.
+\end{problembox}
+
+\subsection*{Solution (Proof)}
+
+We model the situation as a 2-colouring of the complete graph $K_6$.
+Each person is a vertex, and each edge is coloured \textbf{red}
+(friends) or \textbf{blue} (strangers).
+We must show that there exists a monochromatic triangle.
+
+\paragraph{Step 1: Apply the Pigeonhole Principle.}
+Pick any vertex $A$. Vertex $A$ is connected to the other 5 vertices
+by 5 edges, each coloured red or blue.
+By the pigeonhole principle (5 edges into 2 colours),
+at least $\lceil 5/2 \rceil = 3$ edges from $A$ have the same colour.
+
+Without loss of generality, assume $A$ has at least 3 \textbf{red}
+edges. Let the other endpoints of these red edges be $B$, $C$, $D$.
+(The case with 3 blue edges is handled symmetrically by swapping
+``friend'' and ``stranger.'')
+
+\paragraph{Step 2: Examine the edges among $B$, $C$, $D$.}
+Consider the three edges $BC$, $BD$, $CD$.
+There are two cases:
+
+\textbf{Case 1:} At least one of $BC$, $BD$, $CD$ is \textbf{red}.\\
+Suppose (WLOG) $BC$ is red. Then $A$, $B$, $C$ form a red triangle:
+edges $AB$, $AC$, and $BC$ are all red.
+Thus we have 3 mutual \textbf{friends}.
+
+\textbf{Case 2:} None of $BC$, $BD$, $CD$ is red, i.e., all three
+are \textbf{blue}.\\
+Then $B$, $C$, $D$ form a blue triangle: edges $BC$, $BD$, $CD$
+are all blue.
+Thus we have 3 mutual \textbf{strangers}.
+
+\medskip
+In both cases, a monochromatic triangle exists. \qed
+
+\paragraph{Why 5 people are not enough.}
+To show that $R(3,3) > 5$, we exhibit a 2-colouring of $K_5$
+with no monochromatic triangle: arrange 5 vertices in a regular
+pentagon and colour the edges of the pentagon red and the diagonals
+blue (or vice versa). One can verify that no triangle is monochromatic.
+
+\begin{answerbox}
+\centering
+In any group of 6 people, there are always 3 mutual friends
+or 3 mutual strangers. This proves $R(3,3) = 6$.
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\section{Problem 12 --- Divisibility Among $7, 77, 777, \ldots$}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Pigeonhole Principle for Divisibility]
+A powerful application of the pigeonhole principle in number theory:
+
+\medskip
+If we have $n+1$ integers and consider their remainders modulo $n$,
+then by the pigeonhole principle, at least two of them share the
+same remainder. Their \emph{difference} is therefore divisible by $n$.
+
+\medskip
+\textbf{Repunit-like sequences.}\;
+The sequence $7, 77, 777, 7777, \ldots$ can be written in closed form.
+The $k$-th term is:
+\[
+  a_k = \underbrace{77\ldots7}_{k \text{ sevens}}
+      = 7 \cdot \underbrace{11\ldots1}_{k}
+      = 7 \cdot \frac{10^k - 1}{9}.
+\]
+\end{theorybox}
+
+\begin{problembox}
+Prove that among the first 2014 terms of the sequence
+$7,\; 77,\; 777,\; 7777,\; \ldots$
+there is one divisible by 2013.
+\end{problembox}
+
+\subsection*{Solution (Proof)}
+
+Let $a_k = \underbrace{77\ldots7}_{k}$ for $k = 1, 2, \ldots, 2014$.
+
+Consider the 2014 remainders $r_k = a_k \bmod 2013$ for $k = 1, 2, \ldots, 2014$.
+
+\paragraph{Case 1: Some $r_k = 0$.}
+If $r_k = 0$ for some $k$, then $a_k$ is divisible by 2013, and we are done.
+
+\paragraph{Case 2: No $r_k = 0$.}
+Then each $r_k \in \{1, 2, \ldots, 2012\}$.
+We have 2014 remainders taking values in a set of size 2012.
+By the \textbf{pigeonhole principle}, there exist indices $i < j$
+(with $1 \le i < j \le 2014$) such that $r_i = r_j$, i.e.,
+\[
+  a_j \equiv a_i \pmod{2013}.
+\]
+Therefore $2013 \mid (a_j - a_i)$.
+
+\paragraph{Analysing $a_j - a_i$.}
+We compute:
+\[
+  a_j - a_i
+  = \underbrace{77\ldots7}_{j} - \underbrace{77\ldots7}_{i}
+  = \underbrace{77\ldots7}_{j-i} \cdot 10^i
+  = a_{j-i} \cdot 10^i.
+\]
+So $2013 \mid a_{j-i} \cdot 10^i$.
+
+Now, $2013 = 3 \times 11 \times 61$. Since $\gcd(10, 2013) = 1$
+(as 2013 has no factors of 2 or 5), it follows that $\gcd(10^i, 2013) = 1$.
+
+Therefore $2013 \mid a_{j-i}$.
+
+Since $1 \le j - i \le 2013 < 2014$, the term $a_{j-i}$ is indeed
+among the first 2014 terms of the sequence.
+
+\medskip
+In both cases, there exists a term in $\{a_1, a_2, \ldots, a_{2014}\}$
+that is divisible by 2013. \qed
+
+\begin{answerbox}
+\centering
+By the pigeonhole principle, among $a_1, a_2, \ldots, a_{2014}$,
+there is at least one term divisible by $2013$.
+\end{answerbox}
+
+\end{document}
