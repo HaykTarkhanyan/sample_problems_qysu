@@ -147,3 +147,37 @@ This glossary contains key terms found in the solution files, translated into Ar
 - **Formula:** Բանաձև 
 - **Equation:** Հավասարում 
 - **Inequality:** Անհավասարում 
+
+## 8. Translation Guidelines & Lessons Learned (Թարգմանչական ուղեցույց)
+
+Based on feedback and corrections, here are key guidelines for future translations to ensure academic precision and natural Armenian flow.
+
+### Punctuation (Կետադրություն)
+*   **Full Stop:** Use the Armenian full stop `։` (verjaket) instead of the Latin period `.`.
+    *   *Incorrect:* `...արժեքներն են.`
+    *   *Correct:* `...արժեքներն են։`
+*   **Headings:** Even in headings or list items, if it's a complete thought, end with `։`.
+
+### Mathematical Terminology Improvements
+| English Context | Initial / Literal Translation | Correct Mathematical Term |
+| :--- | :--- | :--- |
+| **Repeated/Multiple Root** | Կրկնվող արմատ | **Պատիկ արմատ** (Patik armat) |
+| **System of Linear Equations** | Գծային համակարգ | **Գծային հավասարումների համակարգ** |
+| **Principle of Inclusion-Exclusion** | Լրացման եղանակ (Complementary method) | **Լրացման սկզբունք** (Principle of ...) |
+| **Derivation / Justification** | Հիմնավորում | **Դուրսբերում** (Derivation) |
+| **Remark / Observation** | Դիտարկում | **Դիտողություն** (Remark) |
+
+### Sentence Structure & Style (Շարադասություն)
+*   **Subject-Object-Verb Flow:** Avoid direct word-for-word translation of English S-V-O sentences.
+    *   *English:* "Substitute $x$ into the equation to get $y$."
+    *   *Literal:* "Տեղադրենք $x$-ը հավասարման մեջ՝ ստանալու համար $y$-ը։"
+    *   *Natural:* "Հավասարման մեջ $x$-ը տեղադրելով՝ կստանանք $y$-ը։"
+*   **Passive vs. Active:** Prefer active or impersonal constructions for mathematical steps.
+    *   *English:* "$\alpha$ is determined by..."
+    *   *Natural:* "$\alpha$-ն որոշվում է... միջոցով։"
+*   **Clarification:** When a phrase is ambiguous, add clarifying words.
+    *   *English:* "Contains two consecutive zeros"
+    *   *Translation:* "Պարունակում է **առնվազն** երկու հաջորդական զրո" (Contains *at least* two...).
+*   **"If... then..." structures:**
+    *   *English:* "If it starts with 1, the rest is..."
+    *   *Natural:* "Եթե տողը սկսվում է 1-ով, **ապա** մնացած մասը..." 

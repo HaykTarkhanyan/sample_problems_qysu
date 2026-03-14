@@ -1,0 +1,462 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{Sylfaen} % Or any other font that supports Armenian (e.g., GHEA Mariam, Arial)
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, arrows.meta, fit, patterns, decorations.pathreplacing}
+\usepackage{geometry}
+\geometry{margin=2.4cm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ── Colours ───────────────────────────────────────────────────────
+\definecolor{setA}{RGB}{66, 133, 244}   % blue
+\definecolor{setB}{RGB}{234, 67, 53}    % red
+\definecolor{setC}{RGB}{251, 188, 4}    % yellow
+\definecolor{theoryBg}{RGB}{232, 245, 253}
+\definecolor{theoryFrame}{RGB}{66, 133, 244}
+\definecolor{stmtBg}{RGB}{255, 243, 224}
+\definecolor{stmtFrame}{RGB}{230, 126, 34}
+\definecolor{ansBg}{RGB}{232, 250, 232}
+\definecolor{ansFrame}{RGB}{39, 174, 96}
+
+% ── Environments ──────────────────────────────────────────────────
+\newtcolorbox{theorybox}[1][]{%
+  colback=theoryBg, colframe=theoryFrame,
+  fonttitle=\bfseries, title={\small Տեսական Ակնարկ. #1},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{problembox}{%
+  colback=stmtBg, colframe=stmtFrame,
+  fonttitle=\bfseries, title={\small Խնդրի Պայմանը},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{answerbox}{%
+  colback=ansBg, colframe=ansFrame,
+  arc=2mm, left=5pt, right=5pt, top=3pt, bottom=3pt
+}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\powset}[1]{2^{#1}}
+\newcommand{\comp}[1]{\overline{#1}}
+\newcommand{\symdiff}{\mathbin{\triangle}}
+
+% ── Title ─────────────────────────────────────────────────────────
+\title{\textbf{Գործնական 8 — Անդրադարձ առնչություններ}\\[4pt]
+       \large Ընտրված խնդիրների լուծումներ\\[2pt]
+       \normalsize Խնդիրներ 2, 6}
+\author{Դիսկրետ Մաթեմատիկա — QYSU}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════
+\section{Խնդիր 2 — Երկրորդ կարգի գծային անդրադարձ առնչության լուծում}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Հաստատուն գործակիցներով երկրորդ կարգի գծային անդրադարձ առնչություններ]
+\textbf{Հաստատուն գործակիցներով երկրորդ կարգի գծային անդրադարձ առնչությունն} ունի հետևյալ տեսքը՝
+\[
+  a_n = c_1\, a_{n-1} + c_2\, a_{n-2}, \qquad n \ge 2,
+\]
+որտեղ $c_1, c_2$ հաստատուններ են, իսկ $a_0, a_1$ (կամ $a_1, a_2$) տրված սկզբնական արժեքներն են։
+
+\medskip
+\textbf{Բնութագրիչ հավասարման մեթոդ։}\;
+Առնչության մեջ տեղադրելով $a_n = r^n$ փորձնական լուծումը՝ կստանանք \textbf{բնութագրիչ հավասարումը}.
+\[
+  r^2 - c_1\, r - c_2 = 0.
+\]
+
+Ընդհանուր լուծման տեսքը կախված է $r_1, r_2$ արմատներից։
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{lll}
+\toprule
+\textbf{Դեպք} & \textbf{Արմատներ} & \textbf{Ընդհանուր Լուծում} \\
+\midrule
+Տարբեր իրական արմատներ & $r_1 \neq r_2$, երկուսն էլ իրական
+  & $a_n = \alpha\, r_1^n + \beta\, r_2^n$ \\
+Պատիկ իրական արմատներ & $r_1 = r_2 = r$
+  & $a_n = (\alpha + \beta\, n)\, r^n$ \\
+Կոմպլեքս համալուծ արմատներ & $r_{1,2} = \rho\, e^{\pm i\theta}$
+  & $a_n = \rho^n\bigl(\alpha \cos n\theta + \beta \sin n\theta\bigr)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+$\alpha$ և $\beta$ հաստատունները որոշվում են ընդհանուր լուծման մեջ սկզբնական պայմանները տեղադրելու և ստացված $2 \times 2$ գծային հավասարումների համակարգը լուծելու միջոցով։
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small, node distance=1.6cm]
+  \node[draw, rounded corners=4pt, fill=stmtBg, minimum width=2.8cm,
+        align=center, font=\small] (rec) {Առնչություն\\$a_n = c_1 a_{n-1} + c_2 a_{n-2}$};
+  \node[draw, rounded corners=4pt, fill=theoryBg, minimum width=2.8cm,
+        align=center, font=\small, right=2.6cm of rec] (char)
+    {Բնութագրիչ հավ.\\$r^2 - c_1 r - c_2 = 0$};
+  \node[draw, rounded corners=4pt, fill=setC!15, minimum width=2.8cm,
+        align=center, font=\small, right=2.6cm of char] (gen)
+    {Ընդհանուր լուծում\\$a_n = \alpha r_1^n + \beta r_2^n$};
+  \node[draw, rounded corners=4pt, fill=ansBg, minimum width=2.8cm,
+        align=center, font=\small, below=1.4cm of gen] (sol)
+    {Մասնավոր լուծում\\(սկզբն. պայմաններ)};
+
+  \draw[->, thick] (rec) -- (char)
+    node[midway, above=3pt, font=\scriptsize]{տեղադրել $a_n = r^n$};
+  \draw[->, thick] (char) -- (gen)
+    node[midway, above=3pt, font=\scriptsize]{գտնել արմատները};
+  \draw[->, thick] (gen) -- (sol)
+    node[midway, right=3pt, font=\scriptsize]{գտնել $\alpha, \beta$};
+\end{tikzpicture}
+\end{center}
+\end{theorybox}
+
+\begin{problembox}
+Լուծել գծային անդրադարձ առնչությունը.
+\[
+  a_n = 5a_{n-1} - 6a_{n-2}, \qquad n \ge 3,
+\]
+տրված $a_1 = 2$ և $a_2 = 10$ սկզբնական պայմաններով։
+\end{problembox}
+
+\subsection*{Լուծում}
+
+\textbf{Ո՞ր դեպքն է։}\; Բնութագրիչ հավասարման արմատները գտնելուց հետո ընտրում ենք ընդհանուր լուծման ձևը.
+\begin{itemize}[nosep]
+  \item Տարբեր իրական արմատներ $r_1 \neq r_2$. $a_n = \alpha\, r_1^n + \beta\, r_2^n$.
+  \item Պատիկ իրական արմատներ $r_1 = r_2 = r$. $a_n = (\alpha + \beta\, n)\, r^n$.
+  \item Կոմպլեքս համալուծ արմատներ $\rho\, e^{\pm i\theta}$. $a_n = \rho^n(\alpha \cos n\theta + \beta \sin n\theta)$.
+\end{itemize}
+
+\medskip
+\textbf{Քայլ 1. Գրել բնութագրիչ հավասարումը։}
+
+$a_n - 5a_{n-1} + 6a_{n-2} = 0$ առնչության բնութագրիչ հավասարումն է՝
+\[
+  r^2 - 5r + 6 = 0.
+\]
+
+\textbf{Քայլ 2. Գտնել արմատները։}
+
+Վերլուծելով արտադրիչների՝
+\[
+  r^2 - 5r + 6 = (r - 2)(r - 3) = 0
+  \qquad\Longrightarrow\qquad r_1 = 2, \quad r_2 = 3.
+\]
+Քանի որ արմատներն իրական են և իրարից տարբեր, մենք գործ ունենք \textbf{առաջին դեպքի} հետ։
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small]
+  % Parabola for r^2 - 5r + 6
+  \draw[->, thick] (-0.5, 0) -- (5.5, 0) node[right]{$r$};
+  \draw[->, thick] (0, -1.5) -- (0, 4) node[above]{$r^2 - 5r + 6$};
+
+  \draw[thick, setA, domain=0.5:4.5, samples=60]
+    plot (\x, {(\x - 2)*(\x - 3)});
+
+  % Roots
+  \fill[setB] (2, 0) circle (3pt) node[below left=3pt, font=\footnotesize]{$r_1 = 2$};
+  \fill[setB] (3, 0) circle (3pt) node[below right=3pt, font=\footnotesize]{$r_2 = 3$};
+
+  % Tick marks
+  \foreach \x in {1, 2, 3, 4} {
+    \draw (\x, 0.08) -- (\x, -0.08);
+  }
+  \node[below, font=\tiny] at (1, -0.08) {$1$};
+  \node[below, font=\tiny] at (4, -0.08) {$4$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Քայլ 3. Գրել ընդհանուր լուծումը։}
+
+Քանի որ $r_1 = 2$ և $r_2 = 3$ տարբեր իրական արմատներ են՝
+\[
+  a_n = \alpha \cdot 2^n + \beta \cdot 3^n.
+\]
+
+\textbf{Քայլ 4. Կիրառել սկզբնական պայմանները։}
+
+Տեղադրելով $n = 1$ և $n = 2$՝
+\[
+  \begin{cases}
+    a_1 = 2\alpha + 3\beta = 2 \\[3pt]
+    a_2 = 4\alpha + 9\beta = 10
+  \end{cases}
+\]
+
+\textbf{Նշում.}\; Սա $2 \times 2$ գծային հավասարումների համակարգ է։
+
+Առաջին հավասարումից՝
+\[
+  \alpha = \frac{2 - 3\beta}{2} = 1 - \frac{3\beta}{2}.
+\]
+
+Տեղադրելով երկրորդ հավասարման մեջ՝
+\[
+  4\!\left(1 - \frac{3\beta}{2}\right) + 9\beta = 10
+  \quad\Longrightarrow\quad
+  4 - 6\beta + 9\beta = 10
+  \quad\Longrightarrow\quad
+  3\beta = 6
+  \quad\Longrightarrow\quad
+  \beta = 2.
+\]
+
+Այդ դեպքում $\alpha = 1 - \dfrac{3 \cdot 2}{2} = 1 - 3 = -2$.
+
+\textbf{Քայլ 5. Գրել մասնավոր լուծումը։}
+
+\[
+  a_n = -2 \cdot 2^n + 2 \cdot 3^n = \boxed{2\bigl(3^n - 2^n\bigr)}.
+\]
+
+\textbf{Քայլ 6. Ստուգել։}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cccc}
+\toprule
+$n$ & $2(3^n - 2^n)$ & Սպասվող & Համընկնում \\
+\midrule
+$1$ & $2(3 - 2) = 2$ & $a_1 = 2$ & $\checkmark$ \\
+$2$ & $2(9 - 4) = 10$ & $a_2 = 10$ & $\checkmark$ \\
+$3$ & $2(27 - 8) = 38$ & $5(10) - 6(2) = 38$ & $\checkmark$ \\
+$4$ & $2(81 - 16) = 130$ & $5(38) - 6(10) = 130$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{answerbox}
+\centering
+$a_n = 2\bigl(3^n - 2^n\bigr)$
+\end{answerbox}
+
+% ══════════════════════════════════════════════════════════════════
+\newpage
+\section{Խնդիր 6 — Երկու Հաջորդական Զրո Պարունակող Բինար Տողեր}
+% ══════════════════════════════════════════════════════════════════
+
+\begin{theorybox}[Լրացման սկզբունք և անդրադարձ առնչություններ սահմանափակումներով]
+\textbf{Հաշվարկ լրացման սկզբունքով։}\;
+Երբեմն $P$ հատկությանը բավարարող օբյեկտների քանակը հաշվելիս ավելի հեշտ է լինում հաշվել այն օբյեկտները, որոնք \emph{չեն} բավարարում այդ պայմանին։
+\[
+  |P| = |\text{ընդհանուր}| - |\text{ոչ } P|.
+\]
+
+\textbf{Անդրադարձ առնչությունների կառուցում սահմանափակումներով տողերի համար։}\;
+$n$ երկարությամբ բինար տողեր հաշվելու համար, որոնք բավարարում են (կամ չեն բավարարում) որևէ պայմանի՝
+\begin{enumerate}[nosep]
+  \item Սահմանենք հաջորդականություն. թող $b_n$-ը լինի $n$ երկարությամբ \emph{թույլատրելի} տողերի քանակը։
+  \item \textbf{Դիտարկենք առաջին (կամ վերջին) նիշը։}\;
+        Յուրաքանչյուր նիշի ընտրություն սահմանափակում է հաջորդող նիշերի տարբերակները՝ հանգեցնելով անդրադարձ առնչության։
+  \item Լուծենք՝ օգտագործելով բազային դեպքերը։
+\end{enumerate}
+
+\medskip
+\textbf{Օրինակ՝ տողեր առանց «$00$» ենթատողի։}\;
+Դիտարկենք $n$ երկարությամբ տողեր, որտեղ չկան երկու հաջորդական $0$-ներ.
+\begin{itemize}[nosep]
+  \item Եթե տողը սկսվում է \texttt{1}-ով, ապա մնացած $n-1$ նիշերը կարող են կազմել ցանկացած թույլատրելի տող $\longrightarrow$ $b_{n-1}$ տարբերակ։
+  \item Եթե տողը սկսվում է \texttt{0}-ով, ապա հաջորդ նիշը \emph{պարտադիր} պետք է լինի \texttt{1} (որպեսզի չլինի «$00$»), իսկ մնացած $n-2$ նիշերը կարող են կազմել ցանկացած թույլատրելի տող $\longrightarrow$ $b_{n-2}$ տարբերակ։
+\end{itemize}
+Սա տալիս է Ֆիբոնաչիի տիպի անդրադարձ առնչություն՝ $b_n = b_{n-1} + b_{n-2}$։
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small,
+  level distance=2.0cm, sibling distance=5.0cm,
+  edge from parent/.style={draw, thick, ->, >=Stealth},
+  every node/.style={align=center}]
+  \node[draw, rounded corners, fill=theoryBg, minimum width=2.0cm]
+    {$n$ երկարության\\տող}
+    child {
+      node[draw, rounded corners, fill=setA!12, minimum width=2.0cm]
+        {Սկսվում է \texttt{1}-ով\\մնացածը՝ $b_{n-1}$}
+      edge from parent node[left=4pt, font=\footnotesize] {առաջին բիթ = \texttt{1}}
+    }
+    child {
+      node[draw, rounded corners, fill=setB!12, minimum width=2.0cm]
+        {Սկսվում է \texttt{01}-ով\\մնացածը՝ $b_{n-2}$}
+      edge from parent node[right=4pt, font=\footnotesize] {առաջին բիթ = \texttt{0}}
+    };
+\end{tikzpicture}
+\end{center}
+\end{theorybox}
+
+\begin{problembox}
+10 երկարությամբ քանի՞ բինար տող կա, որ պարունակում է երկու հաջորդական զրո:
+\end{problembox}
+
+\subsection*{Լուծում}
+
+Օգտագործենք \textbf{լրացման սկզբունքը}։
+
+\textbf{Քայլ 1. Հաշվել 10 երկարությամբ բոլոր բինար տողերը։}
+
+Յուրաքանչյուր դիրք ունի 2 հնարավորություն, ուստի ընդհանուր քանակը $2^{10} = 1024$ է։
+
+\textbf{Քայլ 2. Հաշվել 10 երկարությամբ այն բինար տողերը, որոնք \emph{չեն պարունակում} երկու հաջորդական զրոներ։}
+
+Թող $b_n$-ը լինի $n$ երկարությամբ այն բինար տողերի քանակը, որոնք չեն պարունակում երկու հաջորդական $0$-ներ։
+
+\textbf{Պարզաբանում.}\; «Պարունակում է երկու հաջորդական զրո» նշանակում է, որ տողում կա \emph{առնվազն մեկ} «$00$» ենթատող։
+
+\textbf{Առնչության դուրսբերումը։}\; $n = 3$-ի համար թույլատրելի (առանց «$00$») տողերն են՝
+\texttt{010}, \texttt{011}, \texttt{101}, \texttt{110}, \texttt{111} — ճիշտ $5 = b_3$։
+Ստուգում. \texttt{1}-ով սկսվող ցանկացած տող թողնում է 2 դիրք ($b_2 = 3$ թույլատրելի), իսկ \texttt{01}-ով սկսվող ցանկացած տող թողնում է 1 դիրք ($b_1 = 2$ թույլատրելի), տալով $3 + 2 = 5$։ \checkmark
+
+\medskip
+\textbf{Որոշումների ծառ $n = 3$-ի համար։}\;
+Հետևյալ ծառը ցույց է տալիս 3-բիթանոց տողի բոլոր հնարավոր ընտրությունները՝ նշելով «$00$» պարունակող ճյուղերը որպես անթույլատրելի (\textcolor{setB}{\textsf{X}})։
+Թույլատրելի տողերը (առանց «$00$») ցույց են տրված մնացած տերևներում։
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small,
+  level 1/.style={sibling distance=6.4cm, level distance=1.6cm},
+  level 2/.style={sibling distance=3.2cm, level distance=1.6cm},
+  level 3/.style={sibling distance=1.6cm, level distance=1.6cm},
+  edge from parent/.style={draw, thick, ->, >=Stealth},
+  every node/.style={align=center},
+  valid/.style={draw, rounded corners=3pt, fill=ansBg, minimum width=1.1cm,
+                font=\small\ttfamily},
+  invalid/.style={draw, rounded corners=3pt, fill=setB!15, minimum width=1.1cm,
+                  font=\small\ttfamily, text=black!50},
+  killed/.style={font=\bfseries\sffamily, text=setB}]
+  \node[draw, rounded corners=4pt, fill=theoryBg] {սկիզբ}
+    child { node[draw, rounded corners=3pt, fill=setA!10] {0\,\_\,\_}
+      child { node[draw, rounded corners=3pt, fill=setB!15] {00\,\_}
+        child { node[invalid] {000}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[invalid] {001}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[left, font=\scriptsize] {0}
+        node[killed, right=6pt, yshift=-2pt]
+          {\textcolor{setB}{\textsf{X}\;\scriptsize անթույլատրելի}}
+      }
+      child { node[draw, rounded corners=3pt, fill=setA!10] {01\,\_}
+        child { node[valid] {010}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[valid] {011}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[right, font=\scriptsize] {1}
+      }
+      edge from parent node[left=3pt, font=\scriptsize] {0}
+    }
+    child { node[draw, rounded corners=3pt, fill=setA!10] {1\,\_\,\_}
+      child { node[draw, rounded corners=3pt, fill=setA!10] {10\,\_}
+        child { node[invalid] {100}
+                edge from parent node[left, font=\scriptsize] {0}
+                node[killed, right=3pt] {\textcolor{setB}{\textsf{X}}} }
+        child { node[valid] {101}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[left, font=\scriptsize] {0}
+      }
+      child { node[draw, rounded corners=3pt, fill=setA!10] {11\,\_}
+        child { node[valid] {110}
+                edge from parent node[left, font=\scriptsize] {0} }
+        child { node[valid] {111}
+                edge from parent node[right, font=\scriptsize] {1} }
+        edge from parent node[right, font=\scriptsize] {1}
+      }
+      edge from parent node[right=3pt, font=\scriptsize] {1}
+    };
+\end{tikzpicture}
+\end{center}
+
+\noindent
+\textbf{Մնացած տերևները} (կանաչ)՝ \texttt{010}, \texttt{011}, \texttt{101},
+\texttt{110}, \texttt{111} — ճիշտ $\boxed{b_3 = 5}$, ինչը հաստատում է
+$b_3 = b_2 + b_1 = 3 + 2 = 5$ առնչությունը։
+
+\medskip
+\textbf{Առնչության դուրսբերումը։}\;
+Դիտարկենք $n$ երկարությամբ թույլատրելի տող.
+\begin{itemize}[nosep]
+  \item Եթե տողը սկսվում է \texttt{1}-ով, ապա մնացած $n-1$ նիշերը կարող են կազմել $n-1$ երկարությամբ ցանկացած թույլատրելի տող՝ $b_{n-1}$ տարբերակ։
+  \item Եթե տողը սկսվում է \texttt{0}-ով, ապա հաջորդ նիշը պետք է լինի \texttt{1} (այլապես կունենանք «$00$»), և մնացած $n-2$ նիշերը կարող են կազմել $n-2$ երկարությամբ ցանկացած թույլատրելի տող՝ $b_{n-2}$ տարբերակ։
+\end{itemize}
+
+Հետևաբար՝
+\[
+  \boxed{b_n = b_{n-1} + b_{n-2}}, \qquad n \ge 3.
+\]
+
+\textbf{Բազային դեպքեր.}
+\begin{itemize}[nosep]
+  \item $b_1 = 2$: տողերն են \texttt{0} և \texttt{1}։
+  \item $b_2 = 3$: թույլատրելի տողերն են \texttt{01}, \texttt{10}, \texttt{11}
+        (բացառելով \texttt{00}-ն)։
+\end{itemize}
+
+\textbf{Քայլ 3. Հաշվել $b_n$-ը $n = 3, 4, \ldots, 10$ արժեքների համար։}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c l}
+\toprule
+$n$ & $b_n$ & \textbf{Ստուգում}\; ($b_{n-1} + b_{n-2}$) \\
+\midrule
+$1$  & $2$   & (բազային դեպք՝ \texttt{0}, \texttt{1}) \\
+$2$  & $3$   & (բազային դեպք՝ \texttt{01}, \texttt{10}, \texttt{11}) \\
+\midrule
+$3$  & $5$   & $b_2 + b_1 = 3 + 2 = 5$\;\checkmark \\
+$4$  & $8$   & $b_3 + b_2 = 5 + 3 = 8$\;\checkmark \\
+$5$  & $13$  & $b_4 + b_3 = 8 + 5 = 13$\;\checkmark \\
+$6$  & $21$  & $b_5 + b_4 = 13 + 8 = 21$\;\checkmark \\
+$7$  & $34$  & $b_6 + b_5 = 21 + 13 = 34$\;\checkmark \\
+$8$  & $55$  & $b_7 + b_6 = 34 + 21 = 55$\;\checkmark \\
+$9$  & $89$  & $b_8 + b_7 = 55 + 34 = 89$\;\checkmark \\
+$10$ & $144$ & $b_9 + b_8 = 89 + 55 = 144$\;\checkmark \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Դիտողություն.}\; $b_n = 2, 3, 5, 8, 13, 21, 34, 55, 89, 144$ արժեքները
+Ֆիբոնաչիի թվերն են՝ $F_3, F_4, \ldots, F_{12}$։
+Ընդհանուր դեպքում՝
+\[
+  \boxed{b_n = F_{n+2}}, \qquad \text{որտեղ } F_1 = 1,\; F_2 = 1,\; F_3 = 2,\; \ldots
+\]
+
+\textbf{Քայլ 4. Կիրառել լրացման սկզբունքը։}
+
+\[
+  \text{«$00$» պարունակող} = \text{Ընդհանուր} - \text{«$00$» չպարունակող}
+  = 1024 - 144 = \boxed{880}.
+\]
+
+\textbf{Ստուգում փոքր արժեքների համար.}\;
+$n = 2$-ի համար. ընդհանուր $= 4$, «$00$» չպարունակող $= 3$ (\texttt{01, 10, 11}),
+ուստի «$00$» պարունակող $= 1$ (միայն \texttt{00})։ \checkmark
+
+$n = 3$-ի համար. ընդհանուր $= 8$, $b_3 = 5$ (\texttt{010, 011, 101, 110, 111}),
+ուստի «$00$» պարունակող $= 3$ (\texttt{001, 100, 000})։ \checkmark
+
+\begin{answerbox}
+\centering
+10 երկարությամբ բինար տողերի քանակը, որոնք պարունակում են երկու հաջորդական զրո, \(\boxed{880}\) է։
+\end{answerbox}
+
+\end{document}
