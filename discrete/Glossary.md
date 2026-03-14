@@ -1,14 +1,13 @@
 # Glossary of Discrete Mathematics Terms (English - Armenian)
 
-This glossary contains key terms found in the solution files, translated into Armenian. 
-**Note:** Some translations are standard mathematical terms, while others (marked with ❓) are literal translations or context-based inferences.
+This glossary contains key terms found in the solution files, translated into Armenian. It reflects the specific terminology and stylistic preferences established during the localization of the "Discrete Mathematics" practice series.
 
 ## 1. Set Theory (Բազմությունների տեսություն)
 
 | English Term | Armenian Translation | Notes |
 | :--- | :--- | :--- |
 | Set | Բազմություն | |
-| Element | Տարր | |
+| Element | Տարր | Avoid "էլեմենտ" |
 | Subset | Ենթաբազմություն | $A \subseteq B$ |
 | Empty Set | Դատարկ բազմություն | $\varnothing$ |
 | Power Set | Բոլոր ենթաբազմությունների բազմություն | $2^A$ or $\mathcal{P}(A)$ |
@@ -17,9 +16,13 @@ This glossary contains key terms found in the solution files, translated into Ar
 | Difference | Տարբերություն | $A \setminus B$ |
 | Symmetric Difference | Սիմետրիկ տարբերություն | $A \mathbin{\triangle} B$ |
 | Complement | Լրացում | $\overline{A}$ |
+| Universe / Universal Set | Ունիվերսալ բազմություն (Տիեզերք) | The set determining the context |
 | Cartesian Product | Դեկարտյան արտադրյալ | $A \times B$ |
 | Cardinality | Հզորություն | Number of elements, $|A|$ |
 | Disjoint | Չհատվող | Sets with no common elements |
+| Partition of a Set | Բազմության տրոհում | Breaking set into disjoint blocks |
+| Block (of a partition) | Դաս / Բլոկ | |
+| Partition Structure | Տրոհման կառուցվածք | e.g. type $\{3,1,1\}$ |
 
 ## 2. Relations (Հարաբերություններ)
 
@@ -49,9 +52,10 @@ This glossary contains key terms found in the solution files, translated into Ar
 | Injective (One-to-one) | Ինյեկտիվ / Միարժեք | Distinct inputs $\to$ distinct outputs |
 | Surjective (Onto) | Սյուրյեկտիվ / Վերարտադրող | Covers the entire codomain |
 | Bijective (One-to-one correspondence) | Բիյեկտիվ / Փոխմիարժեք | Both injective and surjective |
-| Codomain | Ժամանման տիրույթ ❓ | The target set $Y$ in $f: X \to Y$ |
+| Codomain | Ժամանման տիրույթ | The target set $Y$ in $f: X \to Y$ |
 | Image | Պատկեր | |
 | Preimage | Նախապատկեր | |
+| WLOG (Without Loss of Generality) | ԱԸԽ (Առանց Ընդհանրությունը Խախտելու) | Standard proof abbreviation |
 
 ## 4. Combinatorics (Կոմբինատորիկա)
 
@@ -60,14 +64,17 @@ This glossary contains key terms found in the solution files, translated into Ar
 | Sum Rule | Գումարման կանոն | |
 | Product Rule | Արտադրյալի կանոն | |
 | Permutation | Տեղափոխություն | Ordering matters ($P(n,k)$) |
+| Permutation with Repetition | Կրկնություններով տեղափոխություն | Distinguishable arrangements of multi-sets |
 | Combination | Զուգորդություն | Order doesn't matter ($C(n,k)$) |
 | Factorial | Ֆակտորիալ | $n!$ |
 | Binomial Coefficient | Բինոմիալ գործակից | $\binom{n}{k}$ |
-| Lattice Path | Ցանցային ուղի ❓ | Paths on a grid |
+| Multinomial Coefficient | Բազմանդամային գործակից | $\binom{n}{n_1, n_2, \dots}$ |
+| Lattice Path | Ցանցային ճանապարհ | Paths on a grid (Problem 6, 8) |
 | Inclusion-Exclusion Principle | Ներառման-բացառման սկզբունք | |
-| Partition of a Set | Բազմության տրոհում | Breaking set into disjoint blocks |
-| Stirling Numbers (2nd kind) | Ստիռլինգի թվեր | |
-| Pigeonhole Principle | Դիրիխլեի սկզբունք | Literally "Principle of Dirichlet" in Armenian math tradition |
+| Stirling Numbers (2nd kind) | Երկրորդ սեռի Ստիռլինգի թվեր | $S(n,k)$ |
+| Pigeonhole Principle | Աղավնաբների սկզբունք | Also "Դիրիխլեի սկզբունք" |
+| Integer Partition | Բնական թվի տրոհում | $n = \lambda_1 + \dots + \lambda_k$ |
+| Distinct Configurations / Ways | Տարբերակներ | Preferred over "Եղանակներ" for counts of distinct items |
 
 ## 5. Recurrence Relations (Անդրադարձ առնչություններ)
 
@@ -75,13 +82,22 @@ This glossary contains key terms found in the solution files, translated into Ar
 | :--- | :--- | :--- |
 | Recurrence Relation | Անդրադարձ առնչություն | |
 | Initial Conditions | Սկզբնական պայմաններ | |
-| Characteristic Equation | Բնութագրիչ հավասարում | |
+| Characteristic Equation | Բնութագրիչ հավասարում | Used for solving linear recurrences |
 | Root | Արմատ | |
 | General Solution | Ընդհանուր լուծում | |
+| Particular Solution | Մասնավոր լուծում | |
 | Homogeneous | Համասեռ | |
 | Linear | Գծային | |
 
-## 6. Logic & Proofs (Տրամաբանություն և Ապացույցներ)
+## 6. Number Theory & Misc (Թվերի տեսություն և Այլ)
+
+| English Term | Armenian Translation | Notes |
+| :--- | :--- | :--- |
+| GCD (Greatest Common Divisor) | ԱԸԲ (Ամենամեծ Ընդհանուր Բաժանարար) | Operator: `\armgcd` |
+| Repunit | Միասեռ (ռեպյունիտ) | Numbers like $111\dots1$ |
+| Ambiguity | Խնդրի պայմանի ճշգրտում | Preferred over "Երկիմաստության նշում" |
+
+## 7. Logic & Proofs (Տրամաբանություն և Ապացույցներ)
 
 | English Term | Armenian Translation | Notes |
 | :--- | :--- | :--- |
@@ -98,86 +114,3 @@ This glossary contains key terms found in the solution files, translated into Ar
 | Necessary and Sufficient | Անհրաժեշտ և բավարար | |
 | By Induction | Ինդուկցիայով | |
 | Contradiction | Հակասություն | |
-
-## 7. Common Academic & Problem Solving Terms (Ընդհանուր տերմիններ)
-
-| English Term | Armenian Translation | Notes |
-| :--- | :--- | :--- |
-| Determine / Find | Որոշել / Գտնել | |
-| Calculate | Հաշվել | |
-| Evaluate | Գնահատել / Հաշվել | |
-| Simplify | Պարզեցնել | |
-| Express (in terms of) | Արտահայտել (...-ի միջոցով) | |
-| Assume / Suppose | Ենթադրենք / Դիցուք | |
-| Consider | Դիտարկենք | |
-| Let | Դիցուք | e.g. "Let x be..." |
-| Hence / Therefore | Հետևաբար / Ուստի | |
-| Thus | Այսպիսով | |
-| Verify / Check | Ստուգել | |
-| Justify | Հիմնավորել | |
-| Conclusion | Եզրակացություն | |
-| Note | Նշում | |
-| Remark | Դիտողություն | |
-| Case | Դեպք | e.g. "Case 1" |
-| Step | Քայլ | |
-| Value | Արժեք | |
-| Variable | Փոփոխական | |
-| Constant | Հաստատուն | |
-| Condition | Պայման | |
-| Property | Հատկություն | |
-| Respectively | Համապատասխանաբար | |
-| Distinct | Տարբեր / Իրարից տարբեր | |
-| Arbitrary | Կամայական | |
-| Given | Տրված է | |
-| Represents | Ներկայացնում է | |
-| Defined by | Որոշված է / Տրված է | |
-| Satisfies | Բավարարում է | |
-| Since | Քանի որ | |
-| Pairwise disjoint | Զույգ առ զույգ չհատվող | |
-
-## General Terms
-
-- **Theory:** Տեսություն 
-- **Problem:** Խնդիր 
-- **Solution:** Լուծում 
-- **Example:** Օրինակ 
-- **Theorem:** Թեորեմ 
-- **Lemma:** Լեմմա 
-- **Definition:** Սահմանում 
-- **Formula:** Բանաձև 
-- **Equation:** Հավասարում 
-- **Inequality:** Անհավասարում 
-
-## 8. Translation Guidelines & Lessons Learned (Թարգմանչական ուղեցույց)
-
-Based on feedback and corrections, here are key guidelines for future translations to ensure academic precision and natural Armenian flow.
-
-### Punctuation (Կետադրություն)
-*   **Full Stop:** Use the Armenian full stop `։` (verjaket) instead of the Latin period `.`.
-    *   *Incorrect:* `...արժեքներն են.`
-    *   *Correct:* `...արժեքներն են։`
-*   **Headings:** Even in headings or list items, if it's a complete thought, end with `։`.
-
-### Mathematical Terminology Improvements
-| English Context | Initial / Literal Translation | Correct Mathematical Term |
-| :--- | :--- | :--- |
-| **Repeated/Multiple Root** | Կրկնվող արմատ | **Պատիկ արմատ** (Patik armat) |
-| **System of Linear Equations** | Գծային համակարգ | **Գծային հավասարումների համակարգ** |
-| **Principle of Inclusion-Exclusion** | Լրացման եղանակ (Complementary method) | **Լրացման սկզբունք** (Principle of ...) |
-| **Derivation / Justification** | Հիմնավորում | **Դուրսբերում** (Derivation) |
-| **Remark / Observation** | Դիտարկում | **Դիտողություն** (Remark) |
-
-### Sentence Structure & Style (Շարադասություն)
-*   **Subject-Object-Verb Flow:** Avoid direct word-for-word translation of English S-V-O sentences.
-    *   *English:* "Substitute $x$ into the equation to get $y$."
-    *   *Literal:* "Տեղադրենք $x$-ը հավասարման մեջ՝ ստանալու համար $y$-ը։"
-    *   *Natural:* "Հավասարման մեջ $x$-ը տեղադրելով՝ կստանանք $y$-ը։"
-*   **Passive vs. Active:** Prefer active or impersonal constructions for mathematical steps.
-    *   *English:* "$\alpha$ is determined by..."
-    *   *Natural:* "$\alpha$-ն որոշվում է... միջոցով։"
-*   **Clarification:** When a phrase is ambiguous, add clarifying words.
-    *   *English:* "Contains two consecutive zeros"
-    *   *Translation:* "Պարունակում է **առնվազն** երկու հաջորդական զրո" (Contains *at least* two...).
-*   **"If... then..." structures:**
-    *   *English:* "If it starts with 1, the rest is..."
-    *   *Natural:* "Եթե տողը սկսվում է 1-ով, **ապա** մնացած մասը..." 
