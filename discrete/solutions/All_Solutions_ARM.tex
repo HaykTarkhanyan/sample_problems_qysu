@@ -1,0 +1,138 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{Arial}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, arrows.meta, fit, patterns, decorations.pathreplacing, shapes.geometric}
+\usepackage{geometry}
+\geometry{margin=2.4cm}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+\usepackage{booktabs}
+\usepackage{docmute} % Allows including standalone documents
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    pdftitle={Discrete Mathematics Solutions},
+    pdfauthor={YSU}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ── Colours ───────────────────────────────────────────────────────
+\definecolor{setA}{RGB}{66, 133, 244}   % blue
+\definecolor{setB}{RGB}{234, 67, 53}    % red
+\definecolor{setC}{RGB}{251, 188, 4}    % yellow
+\definecolor{theoryBg}{RGB}{232, 245, 253}
+\definecolor{theoryFrame}{RGB}{66, 133, 244}
+\definecolor{stmtBg}{RGB}{255, 243, 224}
+\definecolor{stmtFrame}{RGB}{230, 126, 34}
+\definecolor{ansBg}{RGB}{232, 250, 232}
+\definecolor{ansFrame}{RGB}{39, 174, 96}
+
+% Extra colors from Practice 2-3
+\definecolor{newEdge}{RGB}{39, 174, 96} % green for added edges
+\definecolor{diagGray}{gray}{0.85}      % matrix diagonal shading
+\definecolor{mirrorBlue}{RGB}{173,216,230}  % mirrored pair highlight (light blue)
+\definecolor{mirrorRose}{RGB}{255,204,204}  % mirrored pair highlight (light rose)
+
+% ── Environments ──────────────────────────────────────────────────
+\newtcolorbox{theorybox}[1][]{%
+  colback=theoryBg, colframe=theoryFrame,
+  fonttitle=\bfseries, title={\small Տեսության ամփոփում. #1},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{problembox}{%
+  colback=stmtBg, colframe=stmtFrame,
+  fonttitle=\bfseries, title={\small Խնդրի դրվածք},
+  breakable, enhanced, arc=2mm,
+  left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+
+\newtcolorbox{answerbox}{%
+  colback=ansBg, colframe=ansFrame,
+  arc=2mm, left=5pt, right=5pt, top=3pt, bottom=3pt
+}
+
+% ── Commands ──────────────────────────────────────────────────────
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\N}{\mathbb{N}}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\powset}[1]{2^{#1}}
+\providecommand{\comp}[1]{\overline{#1}}
+\providecommand{\symdiff}{\mathbin{\triangle}}
+\DeclareMathOperator{\armgcd}{ԱԸԲ}
+\renewcommand\proofname{Ապացույց}
+
+% ── Title ─────────────────────────────────────────────────────────
+\title{\textbf{Դիսկրետ Մաթեմատիկա}\\[4pt]
+       \large Գործնական պարապմունքների ընտրված խնդիրների լուծումներ}
+\author{Երևանի Պետական Համալսարան}
+\date{\today}
+
+% ── Redefine maketitle/toc to avoid repetition in subfiles ───────
+% Note: docmute ignores preambles, so title/author in subfiles are ignored.
+% maketitle in subfiles will execute. We redefine it to do nothing.
+\let\oldmaketitle\maketitle
+\renewcommand{\maketitle}{}
+
+\let\oldtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{}
+
+\begin{document}
+
+% ── Main Title Page ──────────────────────────────────────────────
+\oldmaketitle
+\newpage
+
+% ── Main Table of Contents ───────────────────────────────────────
+\oldtableofcontents
+\newpage
+
+% ── Practice 1 ───────────────────────────────────────────────────
+\section{Գործնական 1 — Բազմությունների տեսություն}
+\input{Practice1_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 2-3 ─────────────────────────────────────────────────
+\section{Գործնական 2-3 — Հարաբերություններ}
+\input{Practice2_3_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 4 ───────────────────────────────────────────────────
+\section{Գործնական 4 — Ֆունկցիաներ}
+\input{Practice4_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 5 ───────────────────────────────────────────────────
+\section{Գործնական 5 — Կոմբինատորիկա (հիմնական կանոններ)}
+\input{Practice5_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 6 ───────────────────────────────────────────────────
+\section{Գործնական 6 — Զուգորդություններ}
+\input{Practice6_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 7 ───────────────────────────────────────────────────
+\section{Գործնական 7 — Տրոհումներ}
+\input{Practice7_Solutions_ARM.tex}
+\newpage
+
+% ── Practice 8 ───────────────────────────────────────────────────
+\section{Գործնական 8 — Անդրադարձ առնչություններ}
+\input{Practice8_Solutions_ARM.tex}
+
+\end{document}
