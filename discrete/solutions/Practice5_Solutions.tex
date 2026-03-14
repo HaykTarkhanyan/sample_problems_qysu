@@ -140,8 +140,8 @@ There are $\boxed{450}$ ways to choose two books of different subjects.
 \end{answerbox}
 
 \textbf{Alternative (complement method).}\;
-Total handshakes among all $15+12+10=37$ people: $\binom{37}{2}$.
-Subtract handshakes within each group (same subject): $\binom{15}{2} + \binom{12}{2} + \binom{10}{2}$.
+Total pairs of books among all $15+12+10=37$ books: $\binom{37}{2}$.
+Subtract pairs within each group (same subject): $\binom{15}{2} + \binom{12}{2} + \binom{10}{2}$.
 Result: $\binom{37}{2} - \binom{15}{2} - \binom{12}{2} - \binom{10}{2} = 666 - 105 - 66 - 45 = 450$.
 Both methods agree. \checkmark
 
@@ -275,7 +275,7 @@ Since the choices at each position are independent:
   \;=\; 62{,}500.
 \]
 
-\textbf{Example.}\; $2\,143\,658$ is a valid 7-digit number (leading digit $\neq 0$). But $0\,143\,658$ is not, because it would be a 6-digit number. The leading-digit restriction removes exactly $\frac{1}{10}$ of all 7-character strings.
+\textbf{Example.}\; $2\,143\,658$ is a valid 7-digit number (leading digit $\neq 0$). But $0\,143\,658$ is not, because it would be a 6-digit number. The leading-digit restriction removes exactly $\frac{1}{5}$ of all valid 7-character strings (position~1 is constrained to even digits $\{0,2,4,6,8\}$, and excluding~0 removes 1 out of 5 choices).
 
 \begin{answerbox}
 \centering

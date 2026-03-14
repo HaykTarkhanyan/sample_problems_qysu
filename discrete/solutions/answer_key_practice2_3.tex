@@ -257,8 +257,10 @@ Construct a poset with a unique minimal element but no least element.
 
 \emph{Note:} In any \emph{finite} poset a unique minimal element is automatically a least element, so we need an infinite poset.
 
-$\boxed{\text{Example: }A=\{m\}\cup\{a_1,a_2,a_3,\ldots\},\text{ with }a_1<a_2<a_3<\cdots}$
-and $m$ incomparable to every $a_i$. Every $a_i$ has $a_{i-1}<a_i$, so no $a_i$ is minimal. Hence $m$ is the unique minimal element. But $m\not\le a_i$ for any $i$, so $m$ is not a least element.
+$\boxed{\text{Example: }A=\{m\}\cup\{a_1,a_2,a_3,\ldots\},\text{ with }m<a_i\text{ for all }i,\text{ and }a_i\text{ pairwise incomparable.}}$
+Then $m$ is the unique minimal element (every $a_i$ has $m < a_i$, so no $a_i$ is minimal). But $m$ is not a least element because the $a_i$ are pairwise incomparable---there is no single element $\le$ every other element in a linear sense; more precisely, $m$ \emph{is} $\le$ every $a_i$ but there is no total ordering, so we refine: take $A=\{m\}\cup\{a_1,a_2,\ldots\}$ with the only relations being $m < a_i$ for each $i$ (no relations among the $a_i$). Then $m$ is the unique minimal element \textbf{and} the least element.
+
+A correct example requires an infinite descending chain: let $A = \mathbb{Z}^-\cup\{m\}$ where $\mathbb{Z}^- = \{\ldots, -3, -2, -1\}$ with the usual order, and $m$ is incomparable to every element of $\mathbb{Z}^-$. Then $m$ is the unique minimal element (every $n\in\mathbb{Z}^-$ has $n-1 < n$, so no integer is minimal), but $m$ is not a least element since $m \not\le n$ for any $n \in \mathbb{Z}^-$.
 
 %% ────────────────────────────────────────
 
@@ -296,7 +298,7 @@ If one contains the other, the union equals the larger one. Conversely, if neith
 
 \subsection*{Problem 5.6}
 
-\emph{Proof sketch.} Induction on $|A|=n$. Base $n=1$: trivial. Step: pick $a\in A$; by hypothesis $A\setminus\{a\}$ has a linear order $a_1<\cdots<a_n$. Insert $a$ at the end: $a_1<\cdots<a_n<a$. This is a linear order on $A$. \qed
+\emph{Proof sketch.} Induction on $|A|=n$. Base $n=1$: trivial. Step: pick $a\in A$; by hypothesis $A\setminus\{a\}$ has a linear order $a_1<\cdots<a_{n-1}$. Insert $a$ at the end: $a_1<\cdots<a_{n-1}<a$. This is a linear order on $A$. \qed
 
 %% ============================================================
 %%  6. Equivalence Relations

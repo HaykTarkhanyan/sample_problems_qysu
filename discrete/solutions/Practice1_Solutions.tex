@@ -230,7 +230,7 @@ $\subseteq$ \textbf{is} transitive:
 $A \subseteq B \land B \subseteq C \;\Longrightarrow\; A \subseteq C$.
 
 $\in$ is \textbf{not}:
-$A \in B \land B \in C \;\not\!\!\!\Longrightarrow\; A \in C$.
+$A \in B \land B \in C \;\not\Longrightarrow\; A \in C$.
 
 \medskip
 \textbf{Why?}\; $\in$ crosses one ``level'' of nesting.
@@ -480,7 +480,7 @@ Symmetric diff. & $A \symdiff B$ &
     \draw[thick, setB] (0.55,0) circle (1);
     \node[font=\small\bfseries, setA!70!black] at (-1.15,0) {$A$};
     \node[font=\small\bfseries, setB!70!black] at (1.15,0) {$B$};
-    \node[font=\scriptsize] at (0, 0) {\color{gray}$\varnothing$};
+    \node[font=\scriptsize, gray] at (0, 0) {excluded};
     \node[font=\footnotesize\bfseries] at (0,-2.0) {$A \symdiff B$};
   \end{scope}
 
@@ -1025,9 +1025,10 @@ To build the Venn diagram for $A \cap (B \symdiff C)$ from scratch, follow these
   \item \textbf{Shade $B \symdiff C$:}\;
         Shade all regions that belong to exactly one of $B$ or $C$
         (i.e.\ $B$-only and $C$-only regions, but \emph{not} the $B \cap C$ overlap).
-        This gives regions $\{2, 4, 6\}$ in $B$-only and $\{3, 5, 6\}$ in $C$-only:
-        specifically regions $\{2, 4\}$ (in $B$ not $C$) and $\{3, 5\}$ (in $C$ not $B$).
-        So $B \symdiff C$ covers regions $\{2, 3, 4, 5\}$.
+      Using the region numbering from the previous problem (8 regions for three sets):
+      $B$ occupies regions $\{2,4,6,7\}$ and $C$ occupies regions $\{3,5,6,7\}$.
+      Therefore $B\setminus C = \{2,4\}$ and $C\setminus B = \{3,5\}$, so
+      $B \symdiff C = (B\setminus C) \cup (C\setminus B)$ covers regions $\{2,3,4,5\}$.
 
   \item \textbf{Identify $A$:}\;
         The regions inside $A$ are $\{1, 4, 5, 7\}$.

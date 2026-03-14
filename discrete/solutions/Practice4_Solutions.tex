@@ -223,12 +223,7 @@ To find the range, set $y = \frac{1}{x^2 - 2}$ and solve for $x^2$:
 \]
 We need $y \neq 0$ and $x^2 = \frac{1+2y}{y} \ge 0$.
 
-Analyzing the sign of $\frac{1+2y}{y}$:
-\begin{itemize}[nosep]
-  \item $y > 0$: need $1 + 2y > 0$, which holds for all $y > 0$. So $y \in (0, +\infty)$.
-  \item $y < 0$: need $1 + 2y < 0$ (numerator and denominator both negative), i.e.\ $y < -\frac{1}{2}$. So $y \in (-\infty, -\frac{1}{2})$.
-\end{itemize}
-\textbf{Sign analysis.}\; Solving $x^2 = \frac{1+2y}{y} \ge 0$ requires the numerator and denominator to have the same sign. For $y > 0$: $1+2y > 0$ automatically, so all $y > 0$ work. For $y < 0$: we need $1+2y < 0$, i.e.\ $y < -\frac{1}{2}$. Hence $y \in (-\infty, -\tfrac{1}{2}) \cup (0, +\infty)$, plus we must check the boundary.
+\textbf{Sign analysis.}\; Solving $x^2 = \frac{1+2y}{y} \ge 0$ requires the numerator and denominator to have the same sign. For $y > 0$: $1+2y > 0$ automatically, so all $y > 0$ work. For $y < 0$: we need $1+2y < 0$, i.e.\ $y < -\tfrac{1}{2}$. Hence $y \in (-\infty, -\tfrac{1}{2}) \cup (0, +\infty)$, plus we must check the boundary.
 
 At $x = 0$: $f(0) = \frac{1}{-2} = -\frac{1}{2}$, so $y = -\frac{1}{2}$ is attained.
 \[
@@ -317,7 +312,7 @@ $(f \circ g)(x) = \sqrt{x^4 + 6x^2 + 11}, \qquad (g \circ f)(x) = x^2 + 5.$
   (g \circ f)(x) = g(f(x)) = g\!\left(\frac{1}{x}\right) = \frac{2}{x} + 3 = \frac{2 + 3x}{x}, \qquad x \neq 0.
 \]
 
-\textbf{Domain check.}\; After computing the formula, verify where it is defined---the domain of a composition $(g \circ f)(x)$ requires $x \in \operatorname{dom}(f)$ and $f(x) \in \operatorname{dom}(g)$.
+\textbf{Domain check.}\; After computing the formula, verify where it is defined---the domain of a composition $(g \circ f)(x)$ requires $x \in \operatorname{Dom}(f)$ and $f(x) \in \operatorname{dom}(g)$.
 
 \begin{answerbox}
 $(f \circ g)(x) = \dfrac{1}{2x+3}\;(x \neq -\frac{3}{2}), \qquad

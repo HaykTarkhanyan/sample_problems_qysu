@@ -179,31 +179,31 @@ $D_\alpha = [-4,\, 4], \qquad R_\alpha = [-4,\, 4].$
 \end{center}
 
 %────────────────────────────────────────
-\subsection*{(e)\; $\alpha = \{(x,y) \in \N^2 \mid x \mid y\}$}
+\subsection*{(e)\; $\alpha = \{(x,y) \in \N^2 \mid x \le y\}$}
 
-Here $x \mid y$ means ``$x$ divides $y$.''
-Every $x \in \N$ divides some $y$ (e.g.\ $y = x$), so $D_\alpha = \N$.
-Every $y \in \N$ is divided by some $x$ (e.g.\ $x = 1$), so $R_\alpha = \N$.
-
-\begin{answerbox}
-$D_\alpha = \N, \quad R_\alpha = \N.$
-\end{answerbox}
-
-%────────────────────────────────────────
-\subsection*{(f)\; $\alpha = \{(x,y) \in \N^2 \mid y \mid x\}$}
-
-This is the inverse of part~(e).  By the same reasoning:
+Every $x \in \N$ relates to at least $y=x$, so $D_\alpha = \N$.
+Every $y \in \N$ appears as a second coordinate (take $x=y$), so $R_\alpha = \N$.
 
 \begin{answerbox}
 $D_\alpha = \N, \quad R_\alpha = \N.$
 \end{answerbox}
 
 %────────────────────────────────────────
-\subsection*{(g)\; $\alpha = \{(x,y) \in \R^2 \mid x + y \le 0\}$}
+\subsection*{(f)\; $\alpha = \{(x,y) \in \N^2 \mid y \le x\}$}
 
-This is the half-plane below and including the line $y = -x$.
-For any $x \in \R$, choose $y = -x - 1$; then $x + y = -1 \le 0$.
-For any $y \in \R$, choose $x = -y - 1$.
+Similarly, every $x \in \N$ relates to $y=x$, so $D_\alpha = \N$;
+and every $y \in \N$ is hit by $x=y$, so $R_\alpha = \N$.
+
+\begin{answerbox}
+$D_\alpha = \N, \quad R_\alpha = \N.$
+\end{answerbox}
+
+%────────────────────────────────────────
+\subsection*{(g)\; $\alpha = \{(x,y) \in \R^2 \mid x + y \ge 0\}$}
+
+This is the half-plane above and including the line $y = -x$.
+For any $x \in \R$, choose $y = -x + 1$; then $x + y = 1 \ge 0$.
+For any $y \in \R$, choose $x = -y + 1$.
 
 \begin{answerbox}
 $D_\alpha = \R, \quad R_\alpha = \R.$
@@ -212,13 +212,13 @@ $D_\alpha = \R, \quad R_\alpha = \R.$
 \begin{center}
 \begin{tikzpicture}[scale=0.55]
   % Shaded half-plane
-  \fill[setA!12] (-3.5,3.5) -- (3.5,-3.5) -- (3.5,-3.8) -- (-3.8,-3.8) -- (-3.8,3.8) -- (-3.5,3.5);
+  \fill[setA!12] (-3.5,3.5) -- (3.5,-3.5) -- (3.5,3.8) -- (-3.8,3.8) -- (-3.5,3.5);
   % Boundary line
   \draw[setA, very thick] (-3.5,3.5) -- (3.5,-3.5);
   % Axes
   \draw[->, thick] (-4,0) -- (4,0) node[right] {$x$};
   \draw[->, thick] (0,-4) -- (0,4) node[above] {$y$};
-  \node[setA] at (-1.8, -1.5) {$x+y \le 0$};
+  \node[setA] at (1.8, 1.5) {$x+y \ge 0$};
   \node[setA, above right] at (2, -2.5) {\small $y=-x$};
 \end{tikzpicture}
 \end{center}
@@ -561,7 +561,7 @@ Read left-to-right: first go through $\alpha$ (from $x$ to some $y$), then throu
 Let $\alpha$ and $\beta$ be relations on $\Z$:
 \[
   \alpha = \{(x,\, x+2) \mid x \in \Z\}, \qquad
-  \beta  = \{(x,\, x^2) \mid x \in \Z\}.
+  \beta  = \{(x,\, x-2) \mid x \in \Z\}.
 \]
 Find $\alpha \circ \beta$ and $\beta \circ \alpha$.
 \end{problembox}
@@ -575,24 +575,23 @@ Find $\alpha \circ \beta$ and $\beta \circ \alpha$.
 We apply $\alpha$ first, then $\beta$:
 \begin{itemize}[nosep]
   \item $(x, y) \in \alpha \;\Longrightarrow\; y = x + 2$.
-  \item $(y, z) \in \beta  \;\Longrightarrow\; z = y^2 = (x+2)^2$.
+  \item $(y, z) \in \beta  \;\Longrightarrow\; z = y - 2 = (x+2)-2 = x$.
 \end{itemize}
 
 \begin{answerbox}
-$\alpha \circ \beta = \{\,(x,\; (x+2)^2) \mid x \in \Z\,\}
-                    = \{\,(x,\; x^2 + 4x + 4) \mid x \in \Z\,\}.$
+$\alpha \circ \beta = \{\,(x,\; x) \mid x \in \Z\,\} = \Delta_{\Z}.$
 \end{answerbox}
 
 \subsection*{Finding $\beta \circ \alpha$}
 
 We apply $\beta$ first, then $\alpha$:
 \begin{itemize}[nosep]
-  \item $(x, y) \in \beta  \;\Longrightarrow\; y = x^2$.
-  \item $(y, z) \in \alpha \;\Longrightarrow\; z = y + 2 = x^2 + 2$.
+  \item $(x, y) \in \beta  \;\Longrightarrow\; y = x - 2$.
+  \item $(y, z) \in \alpha \;\Longrightarrow\; z = y + 2 = (x-2)+2 = x$.
 \end{itemize}
 
 \begin{answerbox}
-$\beta \circ \alpha = \{\,(x,\; x^2 + 2) \mid x \in \Z\,\}.$
+$\beta \circ \alpha = \{\,(x,\; x) \mid x \in \Z\,\} = \Delta_{\Z}.$
 \end{answerbox}
 
 \subsection*{Verification and comparison}
@@ -601,24 +600,24 @@ $\beta \circ \alpha = \{\,(x,\; x^2 + 2) \mid x \in \Z\,\}.$
 \renewcommand{\arraystretch}{1.1}
 \begin{tabular}{r c c}
   \toprule
-  $x$ & $\alpha \circ \beta$: $(x+2)^2$ & $\beta \circ \alpha$: $x^2+2$ \\
+  $x$ & $\alpha \circ \beta$ & $\beta \circ \alpha$ \\
   \midrule
-  $-2$ & $0$ & $6$ \\
-  $0$  & $4$ & $2$ \\
-  $1$  & $9$ & $3$ \\
-  $3$  & $25$ & $11$ \\
+  $-2$ & $-2$ & $-2$ \\
+  $0$  & $0$  & $0$  \\
+  $1$  & $1$  & $1$  \\
+  $3$  & $3$  & $3$  \\
   \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{Key observation:} $\boxed{\alpha \circ \beta \ne \beta \circ \alpha}$\,--- composition of relations is \emph{not commutative} in general.
+\textbf{Key observation:} Here both compositions equal the identity relation $\Delta_{\Z}$. This is a special case; composition is \emph{not} commutative in general.
 
 \begin{center}
 \begin{tikzpicture}[>=Stealth, font=\small, node distance=2.2cm]
   % alpha then beta
   \node (x1) {$x$};
   \node[right=of x1] (y1) {$x+2$};
-  \node[right=of y1] (z1) {$(x+2)^2$};
+  \node[right=of y1] (z1) {$x$};
   \draw[->, thick, setA] (x1) -- node[above]{$\alpha$} (y1);
   \draw[->, thick, setB] (y1) -- node[above]{$\beta$} (z1);
   \node[below=3pt of y1] {\small $\alpha \circ \beta$};
@@ -626,8 +625,8 @@ $\beta \circ \alpha = \{\,(x,\; x^2 + 2) \mid x \in \Z\,\}.$
   % beta then alpha
   \begin{scope}[yshift=-1.8cm]
   \node (x2) {$x$};
-  \node[right=of x2] (y2) {$x^2$};
-  \node[right=of y2] (z2) {$x^2+2$};
+  \node[right=of x2] (y2) {$x-2$};
+  \node[right=of y2] (z2) {$x$};
   \draw[->, thick, setB] (x2) -- node[above]{$\beta$} (y2);
   \draw[->, thick, setA] (y2) -- node[above]{$\alpha$} (z2);
   \node[below=3pt of y2] {\small $\beta \circ \alpha$};
@@ -644,9 +643,9 @@ Let $X = \{1,2,3\}$, $Y = \{a,b\}$, $Z = \{p,q\}$, with
   \qquad
   S = \{(a,p),\;(b,q)\} \subseteq Y \times Z.
 \]
-Then $S \circ R$ connects each $x \in X$ to every $z \in Z$ reachable via some intermediate $y$:
+Then $R \circ S$ connects each $x \in X$ to every $z \in Z$ reachable via some intermediate $y$:
 \[
-  \boxed{S \circ R = \{(1,p),\;(2,q),\;(3,p)\}.}
+  \boxed{R \circ S = \{(1,p),\;(2,q),\;(3,p)\}.}
 \]
 
 \begin{center}
@@ -681,15 +680,15 @@ Then $S \circ R$ connects each $x \in X$ to every $z \in Z$ reachable via some i
 
   % Composition paths (dashed, green)
   \draw[->, thick, newEdge, dashed, bend left=35]
-    (x1) to node[above, pos=0.5]{\tiny $S\!\circ\!R$} (zp);
+    (x1) to node[above, pos=0.5]{\tiny $R\!\circ\!S$} (zp);
   \draw[->, thick, newEdge, dashed, bend right=0]
-    (x2) to node[below, pos=0.5]{\tiny $S\!\circ\!R$} (zq);
+    (x2) to node[below, pos=0.5]{\tiny $R\!\circ\!S$} (zq);
   \draw[->, thick, newEdge, dashed, bend right=35]
-    (x3) to node[below, pos=0.5]{\tiny $S\!\circ\!R$} (zp);
+    (x3) to node[below, pos=0.5]{\tiny $R\!\circ\!S$} (zp);
 \end{tikzpicture}
 \end{center}
 
-{\small\textbf{Reading the diagram:} Solid blue arrows are~$R$, solid red arrows are~$S$, and dashed green arrows are the composed pairs in $S \circ R$.  Each dashed arrow represents a connected path through some intermediate vertex in~$Y$.}
+{\small\textbf{Reading the diagram:} Solid blue arrows are~$R$, solid red arrows are~$S$, and dashed green arrows are the composed pairs in $R \circ S$.  Each dashed arrow represents a connected path through some intermediate vertex in~$Y$.}
 
 % ══════════════════════════════════════════════════════════════════
 \newpage
@@ -795,20 +794,18 @@ Equivalence classes: $[x] = \{x, -x\}$ for each $x \in \R$.
 \textbf{Induced partition:}\; $\R$ is partitioned into blocks $\{x,-x\}$.  For $x=0$ the block is $\{0\}$; for $x\ne 0$ each block has exactly two elements.
 
 %────────────────────────────────────────
-\subsection*{(c)\; $\alpha = \{(x,y) \in \Z^2 \mid x \mid y\}$}
+\subsection*{(c)\; $\alpha = \{(x,y) \in \Z^2 \mid x \le y\}$}
 
-Here $x \mid y$ means ``$x$ divides $y$,'' i.e.\ $\exists\, k \in \Z:\; y = kx$.
+\textbf{Reflexive?} Yes.  $x \le x$ for all $x \in \Z$. \checkmark
 
-\textbf{Reflexive?} Yes.  $x = 1 \cdot x$, so $x \mid x$ for all $x \in \Z$. \checkmark
+\textbf{Symmetric?} No.  $1 \le 2$ but $2 \nleq 1$.
 
-\textbf{Symmetric?} No.  $1 \mid 2$ but $2 \nmid 1$.
+\textbf{Antisymmetric?} Yes.  If $x \le y$ and $y \le x$, then $x=y$. \checkmark
 
-\textbf{Antisymmetric?} No (on $\Z$!).  We have $2 \mid (-2)$ and $(-2) \mid 2$, but $2 \ne -2$.
-
-\textbf{Transitive?} Yes.  If $y = kx$ and $z = \ell y$, then $z = \ell k x$, so $x \mid z$. \checkmark
+\textbf{Transitive?} Yes.  If $x \le y$ and $y \le z$, then $x \le z$. \checkmark
 
 \begin{answerbox}
-Reflexive and transitive, but \emph{not} antisymmetric on $\Z$ (due to sign).
+Reflexive, antisymmetric, transitive --- a \textbf{partial order}. In fact, it is a \textbf{linear (total) order} on $\Z$.
 \end{answerbox}
 
 \begin{center}
@@ -817,33 +814,31 @@ Reflexive and transitive, but \emph{not} antisymmetric on $\Z$ (due to sign).
   \toprule
   \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
   \midrule
-  Reflexive      & Yes & $x = 1\cdot x$ \\
-  Symmetric      & No  & $1\mid 2$ but $2\nmid 1$ \\
-  Antisymmetric  & No  & $2\mid(-2)$ and $(-2)\mid 2$, but $2\ne -2$ \\
-  Transitive     & Yes & $y=kx,\; z=\ell y \Rightarrow z=\ell k x$ \\
+  Reflexive      & Yes & $x \le x$ \\
+  Symmetric      & No  & $1\le 2$ but $2\nleq 1$ \\
+  Antisymmetric  & Yes & $x\le y\land y\le x \Rightarrow x=y$ \\
+  Transitive     & Yes & $x\le y\le z \Rightarrow x\le z$ \\
   \midrule
-  \textbf{Classification} & \multicolumn{2}{l}{Preorder (reflexive + transitive), not a partial order} \\
+  \textbf{Classification} & \multicolumn{2}{l}{Linear (total) order on $\Z$} \\
   \bottomrule
 \end{tabular}
 \end{center}
 
 %────────────────────────────────────────
-\subsection*{(d)\; $\alpha = \{(x,y) \in \N^2 \mid x \mid y\}$}
+\subsection*{(d)\; $\alpha = \{(x,y) \in \N^2 \mid x \le y\}$}
 
-Same as (c) but restricted to $\N = \{1, 2, 3, \dots\}$ (positive integers).
+Same as part~(c), but restricted to $\N = \{1, 2, 3, \dots\}$.
 
-\textbf{Reflexive?} Yes.  $x = 1 \cdot x$. \checkmark
+\textbf{Reflexive?} Yes.  $x \le x$. \checkmark
 
-\textbf{Symmetric?} No.  $1 \mid 2$ but $2 \nmid 1$.
+\textbf{Symmetric?} No.  $1 \le 2$ but $2 \nleq 1$.
 
-\textbf{Antisymmetric?} Yes.  If $x \mid y$ and $y \mid x$ with $x, y > 0$: then $y = kx$ and $x = \ell y$ with $k, \ell \ge 1$, so $x = k\ell\, x$ giving $k\ell = 1$, hence $k = \ell = 1$ and $x = y$. \checkmark
+\textbf{Antisymmetric?} Yes.  If $x \le y$ and $y \le x$, then $x=y$. \checkmark
 
-\textbf{Transitive?} Yes (same argument as~(c)). \checkmark
+\textbf{Transitive?} Yes.  If $x \le y$ and $y \le z$, then $x \le z$. \checkmark
 
 \begin{answerbox}
-Reflexive, antisymmetric, transitive --- this is a \textbf{partial order}.
-
-Compare with (c): restricting from $\Z$ to $\N$ restores antisymmetry.
+Reflexive, antisymmetric, transitive --- a \textbf{partial order}. In fact, it is a \textbf{linear (total) order} on $\N$.
 \end{answerbox}
 
 \begin{center}
@@ -852,12 +847,12 @@ Compare with (c): restricting from $\Z$ to $\N$ restores antisymmetry.
   \toprule
   \textbf{Property} & \textbf{Holds?} & \textbf{Justification} \\
   \midrule
-  Reflexive      & Yes & $x = 1\cdot x$ \\
-  Symmetric      & No  & $1\mid 2$ but $2\nmid 1$ \\
-  Antisymmetric  & Yes & $x\mid y,\; y\mid x$ with $x,y>0 \Rightarrow x=y$ \\
-  Transitive     & Yes & $y=kx,\; z=\ell y \Rightarrow z=\ell k x$ \\
+  Reflexive      & Yes & $x \le x$ \\
+  Symmetric      & No  & $1\le 2$ but $2\nleq 1$ \\
+  Antisymmetric  & Yes & $x\le y\land y\le x \Rightarrow x=y$ \\
+  Transitive     & Yes & $x\le y\le z \Rightarrow x\le z$ \\
   \midrule
-  \textbf{Classification} & \multicolumn{2}{l}{\textbf{Partial order} $(\N, \mid)$} \\
+  \textbf{Classification} & \multicolumn{2}{l}{Linear (total) order on $\N$} \\
   \bottomrule
 \end{tabular}
 \end{center}
@@ -931,8 +926,8 @@ Symmetric only.
   \midrule
   (a)\; $x^2+y^2=1$ on $\R$    & ---  & \checkmark & ---  & --- & --- \\
   (b)\; $x^2=y^2$ on $\R$      & \checkmark & \checkmark & --- & \checkmark & equivalence \\
-  (c)\; $x \mid y$ on $\Z$     & \checkmark & --- & --- & \checkmark & preorder \\
-  (d)\; $x \mid y$ on $\N$     & \checkmark & --- & \checkmark & \checkmark & partial order \\
+  (c)\; $x \le y$ on $\Z$     & \checkmark & --- & \checkmark & \checkmark & linear order \\
+  (d)\; $x \le y$ on $\N$     & \checkmark & --- & \checkmark & \checkmark & linear order \\
   (e)\; $\gcd=1$ on $\N$       & ---  & \checkmark & --- & --- & --- \\
   (f)\; $\gcd=1$ on $\Z$       & ---  & \checkmark & --- & --- & --- \\
   \bottomrule
