@@ -103,18 +103,40 @@ The lattice path model implicitly assumes only right (R) and up (U) steps. State
 
 ---
 
-## 4. Group Theory Specific Notes
+## 4. Group Theory (Practice 10) — Detailed Notes
 
 ### Strengths
-- All 14 problems fully solved with correct proofs
+- All 14 problems fully solved with correct results
 - Cayley tables, subgroup lattices, and complex plane diagrams are excellent visual aids
-- The S₃/A₄/S₄ indecomposability proof is particularly well-structured with case analysis
+- The S₃/A₄/S₄ indecomposability proof is well-structured with case analysis
 - The Q₈ solution using the subgroup lattice is clean and convincing
 - Problem 13 (groups of order 200) correctly identifies all 6 non-isomorphic abelian groups
 
-### Minor improvements
-- **Problem 9 (order 385):** The factorization 385 = 5 × 7 × 11 is square-free, making the Fundamental Theorem application straightforward. Worth noting *why* square-free matters — compare with order 12 = 2² × 3 where the decomposition is not unique.
-- **Problem 14 (subgroups of ℤ₃ ⊕ ℤ₃):** The enumeration finds 6 subgroups. It would help to note that this differs from ℤ₉ (which has only 3 subgroups: {0}, ℤ₃, ℤ₉), illustrating how the structure of the group affects its subgroup lattice.
+### Proof Rigor Gaps (no wrong results, but some steps need justification)
+
+**Problem 2 (S₄ indecomposable):** The claim "the only proper non-trivial normal subgroups of S₄ are A₄ and V₄" is stated without proof. This is non-trivial — justify via conjugacy class analysis, or at minimum cite where it was established in the course. Also, the (2,2,3) case for A₄ is dismissed too quickly; explicitly connect it to the already-ruled-out (4,3) case.
+
+**Problem 2 (A₄ has no order-6 subgroup):** Stated as fact without justification. Add: *"If H had order 6, then [A₄:H] = 2, so H ◁ A₄. But A₄'s only normal subgroups are {e}, V₄, and A₄ itself."*
+
+**Problem 3 (ℚ indecomposable):** The proof uses "β·a" meaning integer scalar multiplication. Clarify that this works for any integer β (including negative) since subgroups are closed under inverses.
+
+**Problem 7 (Center of direct product):** The forward direction has a quantifier gap. The hypothesis is (g,h)(x,y) = (x,y)(g,h) for all pairs (x,y). To get gx = xg for all x ∈ G, you must **choose y = e_H**. State this explicitly. Also, the induction claim to n factors is asserted without proof — either sketch the inductive step or remove it.
+
+**Problem 8 (Commutator of direct product):** The reverse inclusion silently uses that [G,G] × [H,H] is a subgroup (hence closed under products of commutators). State this.
+
+**Problem 9 (Order 385):** The elementary proof checks pairwise trivial intersections but never states that the subgroups are normal in G. Since G is abelian this is automatic, but it must be said (as was done carefully in other problems). The notation "A ⊕ B ⊕ C" is used before establishing the direct sum — use "ABC" first, then conclude it's a direct sum.
+
+**Problem 12 (Order 18 subgroups):** The kernel-counting method is powerful but the key claim — *"two surjections share a kernel iff they differ by a unit in ℤ₃*"* — is stated without proof. Students need to see: if ker φ = ker ψ, then ψ = α ∘ φ for some automorphism α of ℤ₃, and Aut(ℤ₃) ≅ ℤ₃* = {1,2}.
+
+### Inconsistent Rigor Level
+Problem 1 (V₄) spells out every detail meticulously, while Problems 7-8 (center/commutator) are quite terse for results students find tricky. The kernel technique in Problems 11-12 is sophisticated and deserves more scaffolding.
+
+### Missing Pedagogical Connections
+
+- **Problem 9 (order 385):** Note *why* square-free order matters — compare with order 12 = 2²×3 where decomposition is not unique.
+- **Problem 13 (order 200):** Only elementary divisor form given. Showing invariant factor form for one example would be valuable.
+- **Problem 14 (ℤ₃ ⊕ ℤ₃ subgroups):** This group is a 2D vector space over 𝔽₃. The order-3 subgroups are 1D subspaces, counted by |ℙ¹(𝔽₃)| = (9−1)/(3−1) = 4. This beautiful connection to linear algebra over finite fields is worth mentioning.
+- **Problem 10 (Z₆, Z₁₂, Z₆₀):** No discussion of whether decomposition into indecomposable cyclic summands is unique. Reference the Fundamental Theorem or Krull-Schmidt.
 
 ---
 
@@ -140,4 +162,4 @@ The Armenian versions maintain mathematical rigor. The `\armtext{}` macro in `10
 | Problem coverage | ★★☆☆☆ | **Major gap** — add induction, equivalence relations, repeated/complex roots |
 | Pedagogical design | ★★★★☆ | Add derivations for "magic formulas," clarify ambiguities |
 | Visual aids | ★★★★★ | TikZ diagrams are excellent throughout |
-| Group theory | ★★★★★ | Complete coverage, correct proofs, good visuals |
+| Group theory | ★★★★☆ | Complete coverage; tighten ~7 proof gaps, add pedagogical connections |
