@@ -2,7 +2,7 @@
 
 ## Overall Assessment
 
-All solutions are **mathematically correct** — no wrong answers or broken proofs were found. The pedagogical design is strong (theory boxes, multiple methods, visual diagrams). The main improvement opportunities are: **coverage gaps** (many problems unsolved), **missing derivations** in a few places, and some **ambiguities** that could confuse students.
+The pedagogical design is strong (theory boxes, multiple methods, visual diagrams) and no wrong final answers were found. However, there is one **likely content mismatch** (Practice 1, Problem 54.11 solves a different identity than assigned), a **composition convention conflict** between Practice 2-3 and Practice 4, and **major coverage gaps** (most problems unsolved, zero induction examples). Details below.
 
 ---
 
@@ -12,15 +12,19 @@ The biggest issue across the repository is that most problems are unsolved. Addi
 
 ### Practice 1 (Sets): 8 of 62 problems solved
 - **Missing: Induction problems (23-49)** — This is a huge gap. 27 induction problems with zero solutions. Students need at least 3-4 worked examples covering: basic sum formulas, divisibility proofs, and inequality proofs.
-- **Missing: Power set problems (14)** — Straightforward but conceptually important for beginners.
-- **Missing: Problem 8 (Kuratowski pairs)** — A beautiful proof that connects set theory to the foundations of ordered pairs. High pedagogical value.
+- **Missing: Problem 8 (Kuratowski pairs)** — One of the most important foundational proofs. Students will need heavy guidance.
+- **Missing: Problem 6 (sets that are elements of themselves)** — Philosophically rich, connects to Russell's paradox.
+- **Missing: Problem 9 (set equality via double inclusion)** — The bread-and-butter technique for the entire course.
+- **Missing: Problem 56 (unique solution to A △ X = B)** — Elegant algebraic proof students rarely discover on their own.
 
 ### Practice 2-3 (Relations): 6 of ~40 problems solved
-- **Missing: Equivalence relation problems (6.1-6.4)** — Core topic. Students need worked examples of verifying reflexivity/symmetry/transitivity.
-- **Missing: Closure problems (7.1)** — Reflexive, symmetric, transitive closures are standard exam material.
-- **Missing: Problem 4.1 (property checking)** — Students need practice determining which properties a relation has. At minimum solve parts (a)-(d).
+- **Missing: Equivalence relation problems (6.1-6.4)** — Core topic. Problem 6.4 (invertibility in ℤₙ) connects to number theory.
+- **Missing: Problem 5.1 (minimal vs minimum)** — Classic counterexample that clears up constant student confusion.
+- **Missing: Problems 4.3-4.6 (closure of properties under operations)** — Conceptually deep, require careful counterexamples. Students almost always get transitive closure wrong.
+- **Missing: Problem 7.4 (composition of equivalence relations)** — Beautiful and challenging result.
 
 ### Practice 4 (Functions): ~10 of 25 problems solved ✓ (best coverage)
+- Still missing: Problem 8 (equivalence of injectivity definitions), Problem 13 (modular bijection), Problems 15-16 (pigeonhole for finite sets), Problem 20 (companion to the solved Problem 19).
 
 ### Practice 5 (Combinatorics): 6 of 22 problems solved
 - **Missing: Problem 7 (4-digit numbers with repeated digits)** — Classic complement-counting problem. Would pair well with Problem 10 (alternating parity).
@@ -40,7 +44,29 @@ The biggest issue across the repository is that most problems are unsolved. Addi
 
 ---
 
-## 2. Mathematical Issues (Minor — No Errors Found, But Some Gaps in Rigor)
+## 2. Potential Errors and Consistency Issues
+
+### Practice 1, Problem 54.11 — LIKELY CONTENT MISMATCH (High Priority)
+The section titled "Problem 54.11" proves the identity **A ∩ (B △ C) = (A ∩ B) △ (A ∩ C)** (intersection distributes over symmetric difference). However, Problem 54 item 11 from the exercise sheet asks to prove **A ∩ (B \ C) = (A ∩ B) \ (A ∩ C)**. These are different identities. Verify against the original Armenian problem set and fix if mismatched.
+
+### Composition Convention Conflict Between Practices 2-3 and 4 (High Priority)
+Practice 2-3 defines composition **left-to-right** (diagrammatic order): α ∘ β means "apply α first, then β." Practice 4 uses standard **right-to-left** function composition: f ∘ g means "apply g first, then f." These are **opposite conventions in the same course's solution set**. This will confuse students. Either pick one convention consistently, or add very prominent warnings in both files.
+
+### Practice 1, Problem 58 — Empty set edge case is buried
+The proof of "A × B = B × A ⟹ A = B" correctly notes the empty-set exception, but it's a small italic footnote inside the problem box. On an exam, students who miss this case would lose points. Restructure the proof to **lead with** the case split: (1) one set is empty, (2) both are non-empty.
+
+### Practice 4, Problem 2(f) — Missing edge case verification
+The range computation derives x² = (1+2y)/y ≥ 0, concluding y ∈ (−∞, −1/2] ∪ (0, +∞). Should verify that no excluded domain point (x = ±√2) maps to an "attainable" y value. (It turns out (1+2y)/y = 2 ⟹ 1 = 0, contradiction, so the edge case doesn't arise — but this should be checked explicitly.)
+
+### Practice 4, Problem 6(e) — IVT in a discrete math course
+The surjectivity proof for f(x) = x³ − 4x invokes the Intermediate Value Theorem, which is a real analysis result. Note this explicitly, or provide an algebraic argument (odd-degree real polynomials are surjective).
+
+### Practice 4 — LaTeX typo
+Line 315: `\operatorname{Dom}` vs `\operatorname{dom}` (inconsistent capitalization) will render differently.
+
+---
+
+## 3. Mathematical Rigor Issues (No Wrong Answers, But Gaps in Justification)
 
 ### Practice 5, Problem 5 — Ambiguous "of those" phrasing
 The problem says: *"How many natural numbers less than 700 are divisible by 5? How many **of those** are divisible by 3?"*
@@ -101,6 +127,21 @@ The claim "λ₁ ≥ ⌈6/3⌉ = 2" is used without justification. Add: *"If λ�
 ### 3.8 Lattice path assumption (Practice 6, Problem 8)
 The lattice path model implicitly assumes only right (R) and up (U) steps. State this explicitly for students encountering lattice paths for the first time.
 
+### 3.9 Convention for ℕ is never stated
+Practice 1 uses ℕ without defining it. Practice 2-3 uses ℕ = {1, 2, 3, ...}. Practice 4 doesn't define it. Whether 0 ∈ ℕ affects answers (e.g., Practice 1 Problem 16: if ℤ⁺ includes 0, then 0 ∈ A, changing the complement). State the convention once and reference it.
+
+### 3.10 Practice 1, Problem 60 — Truth table is overkill
+The 8-row truth table "verifying" propositional equivalences takes significant space but adds no mathematical content beyond the algebraic proof already given. Students may think truth tables are an acceptable substitute for algebraic proofs. Consider removing or shrinking it.
+
+### 3.11 Practice 2-3 — Warshall's algorithm connection
+The transitive closure computation in Problem 7.2 is correct but misses the opportunity to mention Warshall's algorithm, which provides a systematic method. This is valuable since the course is CS-adjacent.
+
+### 3.12 Practice 4, Problem 5 — Inverse relation vs inverse function
+The theory box discusses f⁻¹ as an inverse function (requiring bijectivity), but the problem asks for the "inverse relation." The solution should explicitly distinguish: finding the inverse *relation* always works (swap x and y); the inverse *function* requires injectivity. This distinction is central to the course.
+
+### 3.13 Practice 4, Problem 25 — Companion fact stated without proof
+The solution ends with "Companion fact: X ⊆ f⁻¹(f(X)) always holds, with equality iff f is injective." This is essentially another problem on the sheet (Problem 23). Either prove it or mark it as "see Problem XX."
+
 ---
 
 ## 4. Group Theory (Practice 10) — Detailed Notes
@@ -157,9 +198,10 @@ The Armenian versions maintain mathematical rigor. The `\armtext{}` macro in `10
 
 | Area | Rating | Top Action Item |
 |------|--------|----------------|
-| Math correctness | ★★★★★ | No errors found |
-| Proof rigor | ★★★★☆ | Add justifications for 3-4 claims stated without proof |
+| Math correctness | ★★★★☆ | Fix likely Problem 54.11 mismatch; fix composition convention conflict |
+| Proof rigor | ★★★★☆ | Add justifications for ~10 claims stated without proof |
 | Problem coverage | ★★☆☆☆ | **Major gap** — add induction, equivalence relations, repeated/complex roots |
 | Pedagogical design | ★★★★☆ | Add derivations for "magic formulas," clarify ambiguities |
+| Cross-file consistency | ★★★☆☆ | Unify composition convention, define ℕ, match problem numbering |
 | Visual aids | ★★★★★ | TikZ diagrams are excellent throughout |
 | Group theory | ★★★★☆ | Complete coverage; tighten ~7 proof gaps, add pedagogical connections |
