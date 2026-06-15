@@ -11,9 +11,9 @@
    b) $\rho = \{ (1, 2), (2, 4), (3, 6), (4, 8), \dots \}$
    c) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x = y^2 \}$
    d) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x^2 + y^2 \le 16 \}$
-   e) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid x \le y \}$
-   f) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid y \le x \}$
-   g) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x + y \ge 0 \}$
+   e) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid y \mid x \}$ ($x$ is divisible by $y$)
+   f) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid x \mid y \}$ ($y$ is divisible by $x$)
+   g) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x + y \le 0 \}$
    h) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid 2x \ge 3y \}$
 
 ## 2. Representation of Relations
@@ -37,7 +37,7 @@
 
 3.3. Let $\rho, \sigma$ be relations on $\mathbb{Z}$:
    $\rho = \{ (x, x+2) \mid x \in \mathbb{Z} \}$
-   $\sigma = \{ (x, x-2) \mid x \in \mathbb{Z} \}$
+   $\sigma = \{ (x, x^2) \mid x \in \mathbb{Z} \}$
    Find $\rho \circ \sigma$ and $\sigma \circ \rho$.
 
 3.4. Find $\rho^2, \rho^3$ where $\rho = \{ (x, y) \in \mathbb{Z}^2 \mid x + y \in 2\mathbb{N} + 1 \}$ (sum is odd).
@@ -102,7 +102,7 @@
 6.1. Are the following equivalence relations?
    a) $\rho = \{ (x, y) \in \mathbb{Q}^2 \mid xy > 0 \}$
    b) $\rho = \{ (x, y) \in \mathbb{Q}^2 \mid xy \in \mathbb{Z} \}$
-   c) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid (a|b) \lor (a>b) \}$
+   c) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid (x \le y) \lor (x > y) \}$ (note: this predicate always holds — the universal relation)
    d) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid |a-b| \le 2 \}$
 
 6.2. Prove Theorem 6.
@@ -126,4 +126,4 @@
 
 7.4. Prove that the composition of equivalence relations $\rho \circ \theta$ is an equivalence relation if and only if $\rho \circ \theta = \theta \circ \rho$.
 
-7.5. Prove that the union of equivalence relations is an equivalence relation if and only if $\rho \cup \theta = \dots$ (Condition unclear in orginal text, usually implies containment or specific structure).
+7.5.\* Prove that the union $\rho \cup \theta$ of two equivalence relations on the same set is an equivalence relation if and only if $\rho \cup \theta = \rho \circ \theta$ (the union equals the composition).

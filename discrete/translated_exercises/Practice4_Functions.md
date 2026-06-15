@@ -5,7 +5,7 @@
 
 2. Let $f : \mathbb{R} \to \mathbb{R}$. Find the domain and range of the following functions:
    (a) $f(x) = x^2 + 3$
-   (b) $f(x) = \sqrt{x+2}$
+   (b) $f(x) = \sqrt{x-2}$
    (c) $f(x) = \frac{1}{\sqrt{x-2}}$
    (d) $f(x) = |x|$
    (e) $f(x) = \frac{1}{x^2 + 2}$
@@ -54,7 +54,7 @@
 
 13. Let $f : \mathbb{Z}_{15} \to \mathbb{Z}_{15}$ be defined by $f(x) = 4x \pmod{15}$. Show that it is bijective and find its inverse.
 
-14. Let $f : \mathbb{Z}_{15} \to \mathbb{Z}_{15}$ be defined by $f(x) = 2x + 4 \pmod{15}$. Show that it is NOT bijective (implied, or check bijectivity).
+14. Let $f : \mathbb{Z}_{15} \to \mathbb{Z}_{15}$ be defined by $f(x) = 2x + 4 \pmod{15}$. Show that it is bijective and find its inverse.
 
 15. Prove that if set $A$ is finite, then $f : A \to A$ is bijective if and only if it is injective.
 

@@ -41,14 +41,14 @@
     d) If $A \subset B$ and $B \subset C$, then $A \subset C$.
 
 11. Give examples of sets $A, B, C, D, E$ that satisfy the following conditions:
-    $A \subseteq B, B \in C, C \subseteq D, D \subseteq E$.
+    $A \subset B, B \in C, C \subset D, D \subset E$.
 
-12. Which of the following statements are true for all sets $A, B, C$? (Original logic from Armenian text: "mari t" = true, "ke" = false. Questions asking which are true)
+12. Which of the following statements are true for all sets $A, B, C$? (For each false one, give a counterexample.)
     a) If $A \notin B$ and $B \notin C$, then $A \notin C$.
     b) If $A \neq B$ and $B \neq C$, then $A \neq C$.
-    c) If $A \in B$, and $B \subseteq C$, then $A \in C$. (Based on standard set theory logic)
-    d) If $A \subseteq B$ and $B \subseteq C$, then implies $C \subseteq A$?
-    e) If $A \subseteq B$ and $B \in C$, implies $A \notin C$?
+    c) If $A \in B$ and $B \subseteq C$, then $A \notin C$.
+    d) If $A \subset B$ and $B \subseteq C$, then $C \subseteq A$.
+    e) If $A \subseteq B$ and $B \in C$, then $A \notin C$.
 
 13. Give examples of sets where every element is a subset of it. (Transitive sets)
 
@@ -68,7 +68,7 @@
     $A = \{ x \in \mathbb{Z} \mid \exists y \in \mathbb{Z}^+, x = 2y \}$
     $B = \{ x \in \mathbb{Z} \mid \exists y \in \mathbb{Z}^+, x = 2y - 1 \}$
     $C = \{ x \in \mathbb{Z} \mid x < 10 \}$
-    Describe the following sets: $A', A \triangle B, C', A \setminus C, C \setminus (A \triangle B)$.
+    Describe the following sets: $\overline{A},\ \overline{A \cup B},\ \overline{C},\ A \setminus C,\ C \setminus (A \cup B)$.
 
 17. Consider the following sets:
     $A = \{ x \in \mathbb{Z}^+ \mid \exists y \in \mathbb{Z}, x = 2y \}$
@@ -83,11 +83,10 @@
 19. Determine the following sets:
     $\emptyset \setminus \{ \emptyset \}, \{ \emptyset \} \setminus \{ \emptyset \}, \{ \emptyset, \{ \emptyset \} \} \setminus \emptyset, \{ \emptyset, \{ \emptyset \} \} \setminus \{ \emptyset \}$.
 
-20. Prove that for any subsets $A, B$ of $U$, the conditions in each point are equivalent:
-    1) $A \subseteq B \iff A \cup B = B \iff A \cap B = A$
-    2) $A \cap B = \emptyset \iff A \subseteq B' \iff B \subseteq A'$
-    3) $A \cup B = U \iff A' \subseteq B \iff B' \subseteq A$
-    [Note: inferred symbols from context, original text had ' for complement]
+20. Prove that for any subsets $A, B$ of $U$, the conditions in each row are equivalent (overbar = complement):
+    1) $A \subseteq B \iff \overline{B} \subseteq \overline{A} \iff A \cup B = B \iff A \cap B = A$
+    2) $A \cap B = \emptyset \iff A \subseteq \overline{B} \iff B \subseteq \overline{A}$
+    3) $A \cup B = U \iff \overline{A} \subseteq B \iff \overline{B} \subseteq A$
 
 21. Prove that for sets $A, B, C$, $(A \setminus B) \setminus C = A \setminus (B \cup C)$. Is this condition equivalent to $C \subseteq A$?
 
@@ -140,9 +139,9 @@
 
 44. Find and prove the formula for the sum: $1 + 5 + 9 + \dots + (4n + 1)$.
 
-45. Find and prove the formula for the sum: $1 + 2 \cdot 3 + 4 \cdot (2n - 1) + 2n$. (Expression unclear)
+45. Find and prove the formula for the sum: $-1 + 2 - 3 + 4 - \dots - (2n - 1) + 2n$.
 
-46. Find and prove the formula for the sum: $1 \cdot 3 + 5 \cdot 7 + \dots + (4n - 3)(4n - 1)$.
+46. Find and prove the formula for the sum: $1 - 3 + 5 - 7 + \dots + (4n - 3) - (4n - 1)$.
 
 47. Prove that for large $n$ (determine the bound yourself), the inequalities hold: $2^n > n^3$, $n! > 100^n$.
 
@@ -158,15 +157,23 @@
 
 52. Prove Theorem 2 using Theorem 1 identities as axioms.
 
-53. Using Theorems 1 & 2 prove the following equalities are identities:
-    1) $(A \setminus B \setminus X) \cup (A \setminus B \setminus C \setminus X \setminus Y) \cup (A \setminus X \setminus A) = A \setminus B \setminus X$
-    2) ...
-    3) ...
+53. Using Theorems 1 & 2, prove the following equalities are identities (overbar = complement):
+    1) $(A \cap B \cap X) \cup (A \cap B \cap C \cap X \cap Y) \cup (A \cap X \cap \overline{A}) = A \cap B \cap X$
+    2) $(A \cap B \cap C) \cup (\overline{A} \cap B \cap C) \cup \overline{B} \cup \overline{C} = U$
+    3) $(A \cap B \cap C \cap \overline{X}) \cup (\overline{A} \cap C) \cup (\overline{B} \cap C) \cup (C \cap X) = C$
 
-54. Prove identities:
-    1) $A \setminus (B \setminus C) = (A \setminus B) \cup C$ (Check validity)
-    ...
-    11) $A \setminus (B \setminus C) = (A \setminus B) \setminus (A \setminus C)$
+54. Prove the following identities ($\triangle$ = symmetric difference, written $\div$ in the original):
+    1) $A \cap (B \setminus C) = (A \cap B) \setminus C$
+    2) $A \setminus (B \cup C) = (A \setminus B) \setminus C$
+    3) $(A \cup B) \setminus C = (A \setminus C) \cup (B \setminus C)$
+    4) $A \cap (B \setminus C) = (A \cap B) \setminus (A \cap C)$
+    5) $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$
+    6) $(A \setminus B) \setminus C = (A \setminus C) \setminus (B \setminus C)$
+    7) $A \triangle \emptyset = A$
+    8) $A \triangle B = B \triangle A$
+    9) $A \triangle (B \triangle C) = (A \triangle B) \triangle C$
+    10) $A \triangle A = \emptyset$
+    11) $A \cap (B \triangle C) = (A \cap B) \triangle (A \cap C)$
 
 55. Show that $A \cup (B \setminus C) \neq (A \cup B) \setminus (A \cup C)$.
 
@@ -182,9 +189,12 @@
 
 59. Determine elements of $A \times B$ if $A = \{ a, b \}, B = \{ 1, 2, 3, 4 \}$.
 
-60. Prove identities:
+60. Prove the following identities:
     1) $A \times (B \cup C) = (A \times B) \cup (A \times C)$
-    ...
+    2) $(B \cup C) \times A = (B \times A) \cup (C \times A)$
+    3) $A \times (B \cap C) = (A \times B) \cap (A \times C)$
+    4) $(B \cap C) \times A = (B \times A) \cap (C \times A)$
+    5) $A \times (B \setminus C) = (A \times B) \setminus (A \times C)$
     6) $(B \setminus C) \times A = (B \times A) \setminus (C \times A)$
 
 61. Prove identity:

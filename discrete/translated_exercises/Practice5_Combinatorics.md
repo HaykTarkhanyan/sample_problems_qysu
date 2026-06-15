@@ -2,9 +2,9 @@
 
 ## 1. Fundamental Rules of Combinatorics (Sum and Product Rules)
 
-1. Find the count of integers from 0 to 1000 that contain at least one digit 6.
+1. Find the count of integers from 0 to 1000 that contain exactly one digit 6.
 
-2. Find the count of integers from 0 to 1000 that contain one or more digits 6. (Seems duplicate of 1)
+2. Find the count of integers from 0 to 1000 that contain one or more digits 6 (i.e. at least one).
 
 3. In how many ways can you choose two books of different subjects if there are 15 books on Informatics, 12 on Mathematics, and 10 on Physics?
 
@@ -38,7 +38,7 @@
 
 7. In how many ways can 9 people be arranged in a line? ($9!$)
 
-8. How many 8-digit numbers can be formed using the digits of the number 23122313? (Check digits: 1, 2, 2, 3, 3...)
+8. How many 8-digit numbers can be formed using the digits of the number 23122313? (Digit multiset: '1'×2, '2'×3, '3'×3.)
 
 9. Find the number of words of length 6 formed from the alphabet $\{ a, b, g, d, e, z \}$ where two vowels are adjacent. (Determine vowels: a, e. Consonants: b, g, d, z)
 
