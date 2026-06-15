@@ -83,6 +83,8 @@
 \maketitle
 \vspace{-1.0cm}
 
+\begin{center}\small\itshape Covers the assigned subset of Practical 4: problems 2, 4, 5, 6, 10, 12, 19, 22, 24, 25.\end{center}
+
 \section*{Warm-up}
 
 A \emph{function} $f:A\to B$ is a rule that assigns to \textbf{each} input $x\in A$ exactly one
@@ -358,7 +360,8 @@ Hence $f^{-1}(x)=2x-4$.
 
 \textbf{Step 2 - Part (b).} Solve $y=x^3$: take the (real) cube root, $x=\sqrt[3]{y}$. Hence
 $f^{-1}(x)=\sqrt[3]{x}$. (Cube root is defined for all reals, including negatives, so this is a
-genuine inverse on all of $\R$.)
+genuine inverse on all of $\R$ - which works precisely because $x^3:\R\to\R$ is a bijection, as
+Problem 6(c) confirms.)
 
 \textbf{Step 3 - Part (c).} Solve $y=\tfrac{x-2}{x+3}$. Clear the denominator:
 $y(x+3)=x-2\Rightarrow yx+3y=x-2\Rightarrow x(y-1)=-2-3y$, so
@@ -686,7 +689,7 @@ of $\Q^+$ - including $1$ - is empty of values.
 \begin{axis}[
   width=12cm, height=6.2cm, axis lines=middle,
   xlabel={$x$}, ylabel={$y=f(x)$}, xmin=-0.3, xmax=12, ymin=-0.05, ymax=0.78,
-  ytick={0.5,1}, yticklabels={$\tfrac12$,$1$}, xtick={0,2,4,6,8,10},
+  ytick={0.5}, yticklabels={$\tfrac12$}, xtick={0,2,4,6,8,10},
   every axis x label/.style={at={(ticklabel* cs:1.0)},anchor=west},
   every axis y label/.style={at={(ticklabel* cs:1.0)},anchor=south}]
 % horizontal asymptote / ceiling
@@ -694,9 +697,7 @@ of $\Q^+$ - including $1$ - is empty of values.
 \node[font=\scriptsize, armRed, anchor=south west] at (axis cs:8.2,0.5) {ceiling $y=\tfrac12$ (never reached)};
 % the function
 \addplot[domain=0.001:12, samples=200, very thick, armBlue]{x/(2*x+1)};
-% target 1 unreachable
-\addplot[only marks, mark=*, mark size=1.5pt, armOrange] coordinates {(0,0.5)};
-% shade the unreachable band above 1/2 lightly via a thick band label
+% the unreachable band sits at and above the ceiling y=1/2
 \node[font=\scriptsize, anchor=west] at (axis cs:0.4,0.66) {unreachable target band: all $y\ge\tfrac12$ (e.g.\ $y=1$)};
 \node[font=\scriptsize, armBlue, anchor=west] at (axis cs:6,0.40) {range $\subset(0,\tfrac12)$};
 \end{axis}
@@ -741,8 +742,8 @@ but $f(A)\cap f(B)=\{f(a)\}\cap\{f(a')\}=\{f(a)\}\ne\varnothing$. The identity b
 
 \textbf{Step 4 - Always check on a concrete map.} $f(x)=x^2$, $A=\{1\}$, $B=\{-1\}$:
 $f(A\cap B)=f(\varnothing)=\varnothing$ but $f(A)\cap f(B)=\{1\}\cap\{1\}=\{1\}$. The strict gap is
-visible. Random finite tests confirm equality for an injective $f$ and the inclusion (only) for a
-non-injective $f$.
+visible, and it is exactly the non-injectivity ($1\neq-1$ but $f(1)=f(-1)$) that opens it; for an
+injective $f$, Step 2 forces equality.
 
 \answer{Exactly the \textbf{injective} functions. The inclusion $\subseteq$ always holds; equality
 holds for all $A,B$ iff $f$ is injective.}
@@ -784,9 +785,8 @@ singletons. (Union behaves better: $f(A\cup B)=f(A)\cup f(B)$ for \emph{every} $
 \section*{Problem 22 - Can disjoint nonempty $X_1,X_2$ have $f(X_1)=f(X_2)$?}
 
 \begin{problembox}[22]
-Is it true that for $f:A\to B$ and $X_1,X_2\subseteq A$ with $X_1\cap X_2=\varnothing$
-(disjoint, nonempty) one must have $f(X_1)=f(X_2)$? More usefully: \emph{can} two disjoint nonempty
-sets have equal images?
+For $f:A\to B$ and disjoint nonempty $X_1,X_2\subseteq A$ (so $X_1\cap X_2=\varnothing$),
+\emph{can} the images be equal, $f(X_1)=f(X_2)$?
 \end{problembox}
 
 \begin{ideabox}
@@ -879,8 +879,10 @@ x\in f^{-1}(Y_1)\cap f^{-1}(Y_2)
 So $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$ \emph{always}, and the disjoint case is the
 special instance $Y_1\cap Y_2=\varnothing\Rightarrow f^{-1}(\varnothing)=\varnothing$.
 
-\textbf{Step 4 - Always check on finite data.} 3000 random finite trials with $f(x)=x^2$ confirmed
-both the identity $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$ and the disjoint consequence.
+\textbf{Step 4 - Always check on a concrete map.} Step 3 proves the identity for every $f$; a
+concrete instance with $f(x)=x^2$ ($Y_1=\{1\}$, $Y_2=\{4\}$ giving disjoint preimages
+$\{\pm1\},\{\pm2\}$, whose union is $f^{-1}(\{1,4\})$) bears out both the identity
+$f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$ and the disjoint consequence.
 
 \answer{\textbf{Yes, always} (no hypothesis on $f$ needed). Indeed
 $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$, so disjoint $Y$'s give disjoint preimages.}
@@ -959,8 +961,8 @@ is dropped.
 
 \textbf{Step 3 - Always check the boundary condition.} Equality $f(f^{-1}(Y))=Y$ holds exactly when
 $Y\subseteq f(A)$ (every element of $Y$ is actually produced). Here $-1\notin f(\R)=[0,\infty)$, so
-strictness is forced. 3000 random finite trials confirmed $f(f^{-1}(Y))\subseteq Y$ with no
-violations.
+strictness is forced. Step 1 already proves $f(f^{-1}(Y))\subseteq Y$ for every $f$; the example
+above is a concrete instance of the strict drop.
 
 \answer{$f(f^{-1}(Y))\subseteq Y$ always. Strict example: $f(x)=x^2$, $Y=\{-1,1\}$ gives
 $f(f^{-1}(Y))=\{1\}\subsetneq Y$ (the value $-1$ is never an output).}

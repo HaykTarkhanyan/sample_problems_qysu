@@ -69,6 +69,8 @@
 \maketitle
 \vspace{-1.0cm}
 
+\begin{center}\small\itshape Covers the assigned subset of Practical 8: problems 2 and 6.\end{center}
+
 % =====================================================================
 \section*{Warm-up: what is a recurrence, and what are we asked to do?}
 
@@ -160,7 +162,12 @@ sequence also obeys $a_n=5a_{n-1}-6a_{n-2}$ and happens to agree with our formul
 consecutive indices. Then they must agree \emph{everywhere}: each next term is forced by the
 previous two (and the rule runs backwards as well, fixing the earlier terms). So a solution is
 pinned down completely by any two consecutive values, and the constants $C,D$ give exactly
-enough freedom to match $a_1$ and $a_2$. Once they are set, the formula \emph{is} the sequence.
+enough freedom to match $a_1$ and $a_2$. That matching always succeeds, and uniquely, because the
+two geometric pieces are independent: the linear system for $C,D$ below has determinant
+$2\cdot 9-3\cdot 4=6\neq 0$. In general this determinant is $r_1 r_2(r_2-r_1)$, nonzero exactly when
+the two roots are distinct and neither is $0$; here they are $2$ and $3$, so it is safely nonzero.
+(Equal roots would make it vanish - the case that needs the modified form in the method box.) Once
+$C,D$ are set, the formula \emph{is} the sequence.
 
 \textbf{Step 4 - Use the initial conditions.}
 \[

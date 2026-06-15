@@ -259,7 +259,10 @@ $n=8$.
 An upward triangle of side $k$ is fixed by the position of its top vertex. That vertex can sit
 anywhere that still leaves room for the side-$k$ triangle below it, and those positions form a
 triangular array of side $n-k$, which holds $1+2+\dots+(n-k+1)=\frac{(n-k+1)(n-k+2)}{2}$ points.
-Summing over all sizes $k=1,\dots,8$ telescopes to a single binomial coefficient:
+Each size count is itself a binomial, $\frac{(n-k+1)(n-k+2)}{2}=\binom{n-k+2}{2}$, so summing over
+all sizes $k=1,\dots,8$ is $\binom{2}{2}+\binom{3}{2}+\dots+\binom{9}{2}$. By the hockey-stick
+identity $\bigl(\sum_{m=2}^{n+1}\binom{m}{2}=\binom{n+2}{3}\bigr)$ this collapses to a single
+binomial coefficient:
 $$\sum_{k=1}^{8}\frac{(n-k+1)(n-k+2)}{2}=\binom{n+2}{3}=\binom{10}{3}=120.$$
 Term by term: $36,28,21,15,10,6,3,1$ for $k=1,\dots,8$, and $36+28+21+15+10+6+3+1=120$.
 

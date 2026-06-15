@@ -178,12 +178,55 @@ rm -f *.aux *.log *.out _pg*.png _v*.png
 - Keep everything inside the repo (per the repo `CLAUDE.md`). Write the solutions folder and any
   scratch files within the project; do not write outside it.
 - Default output folder is `discrete/solutions_opus_4_8/`. Confirm or change per the user.
-- This skill is English-only for now. An Armenian (XeLaTeX, `fontspec`, glossary terminology)
-  variant can be added later; do not silently switch languages.
+- Default language is English (pdflatex). An **Armenian variant** (XeLaTeX, `fontspec`, glossary
+  terminology) is supported - see the "Armenian variant (XeLaTeX)" section below. Do not silently
+  switch languages: produce Armenian only when the user asks, then follow that section's recipe.
 - `references/conventions.md` - the professor's notation, the left-to-right composition rule,
   `÷` = symmetric difference, where verified statements live, and the known translation soft spots.
 - `assets/solution_template.tex` - the ready-to-fill document skeleton (preamble + one worked
   example showing every box type and both an illustration and a pattern table).
+
+## Armenian variant (XeLaTeX)
+
+When the user asks for an Armenian version, **translate an existing English sheet** (do not
+re-derive). The math stays byte-identical; only prose and figure/label text become Armenian. Build
+it in a sibling `*_ARM/` folder (e.g. `discrete/solutions_opus_4_8_ARM/`), filename `*_ARM.tex`.
+
+**Engine: XeLaTeX, not pdflatex** (`fontspec` fails under pdflatex). Compile twice:
+`xelatex -interaction=nonstopmode -halt-on-error <file>_ARM.tex`.
+
+**Preamble changes vs the English template:**
+- Remove `\usepackage[utf8]{inputenc}`, `\usepackage[T1]{fontenc}`, `\usepackage{lmodern}`.
+- Add `\usepackage{fontspec}` and `\setmainfont{Sylfaen}` (Sylfaen carries Armenian glyphs on
+  Windows; `Arial` is the fallback). Keep `amsmath`/`amssymb` - math stays in the default math
+  font; do **not** add `unicode-math`.
+- Add `\tolerance=2000` and `\emergencystretch=3.5em`. Armenian has no hyphenation patterns under
+  plain XeLaTeX, so without this, long lines cannot break and run past the right margin (overfull
+  boxes). Required, not optional.
+- Translate the box titles: `Խնդիր` (Problem), `Գաղափարը` (The idea), `Հիշարժան մեթոդ` (Method to
+  remember), `Պատասխան` (Answer).
+
+**Terminology - faithful to the glossary.** Consult `discrete/glossary_discrete_focused.md` (topic
+sections) and the master `glossary_Apr.csv` before translating; render every math term in its
+glossary form (recurrence relation -> ռեկուրենտ առնչություն, characteristic equation -> բնութագրիչ
+հավասարում, determinant -> որոշիչ, superposition -> վերադրում, ...). One term per concept, used
+consistently throughout.
+
+**Armenian punctuation** (the ASCII-clean rule does NOT apply here - the source is necessarily
+Unicode):
+- Sentence-final full stop is the verjaket `։` (U+0589), never a Latin `.` and never the one-dot
+  leader `․` (U+2024).
+- The but-mark `՝` (U+055D) stands in for a colon or semicolon and introduces an
+  explanation/apposition. Use it wherever the English had `:` or `;` joining clauses.
+- The question mark `՞` (U+055E) sits over the stressed vowel of the question word (`ի՞նչ`,
+  `Ինչու՞`), not at sentence end.
+- Quotations use guillemets `« »`, replacing the English `\textquotedbl{}`.
+
+**Independent check (step 6, adapted):** dispatch a native-fluent Armenian reviewer agent to verify
+(1) terminology faithfulness against the glossary, (2) math fidelity vs the English source,
+(3) fluency, and (4) punctuation (`։`/`՝`/`՞`/`« »`, no stray Latin `.` as a terminator/clause-join).
+
+Reference example to copy: `discrete/solutions_opus_4_8_ARM/Practice8_Recurrence_Solutions_ARM.tex`.
 
 ## Deliverable checklist
 
@@ -192,8 +235,8 @@ Before declaring done, confirm each item honestly:
 - [ ] Every assigned problem is present, each with: verified statement, an idea box explaining the
       *why*, numbered steps, a check, an answer box, and (where it teaches a method) a method box.
 - [ ] Every numeric / counting / recurrence answer was independently recomputed and matched.
-- [ ] `pdflatex` ran twice with no errors, and the PDF was actually viewed (not assumed).
-- [ ] Source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`).
+- [ ] The compiler ran twice with no errors (`pdflatex` for English, **`xelatex`** for Armenian) and the PDF was actually viewed (not assumed).
+- [ ] English source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`). For Armenian, instead: full stops use `։`, clause-joins use `՝`, quotes use `« »`, and there are no stray Latin `.` terminators (see the Armenian variant section).
 - [ ] The independent check was done (or, if running as a subagent, the from-scratch re-derivation
       was done and flagged for a follow-up pass).
 - [ ] Only the `.tex` and `.pdf` remain in the folder (aux files and temp PNGs removed).

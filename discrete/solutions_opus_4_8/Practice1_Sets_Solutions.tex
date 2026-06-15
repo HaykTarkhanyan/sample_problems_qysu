@@ -82,6 +82,8 @@
 \maketitle
 \vspace{-1.0cm}
 
+\begin{center}\small\itshape Covers the assigned subset of Practical 1: problems 2, 7, 11, 16, 20, 54 (parts 3 and 11), 58, 60.\end{center}
+
 \section*{Warm-up}
 
 This sheet is mostly about \emph{proving} set statements, not computing numbers. Three kinds of
@@ -778,8 +780,9 @@ assumption.
 
 \textbf{Step 0 - The empty-set edge case.}
 Take $A=\varnothing$ and $B=\{1\}$. Then $A\times B=\varnothing$ and $B\times A=\varnothing$, so
-$A\times B=B\times A$ holds, yet $A\neq B$. Hence the implication is true only when both sets are
-nonempty; assume $A\neq\varnothing$ and $B\neq\varnothing$ from now on.
+$A\times B=B\times A$ holds, yet $A\neq B$. So the implication can fail only when \emph{exactly one}
+of $A,B$ is empty (if both are empty it holds trivially, since then $A=B=\varnothing$); assume
+$A\neq\varnothing$ and $B\neq\varnothing$ from now on, the only case left to argue.
 
 \textbf{Step 1 - Show $A\subseteq B$.}
 Let $a\in A$ be arbitrary. Since $B\neq\varnothing$, pick some $b\in B$. Then
