@@ -1,0 +1,804 @@
+% ============================================================================
+% Մանկավարժական լուծումներ - Դիսկրետ մաթեմատիկա, Գործնական 2-3 (Հարաբերություններ).
+% Խնդիրներ 1.2, 2.1, 2.2, 3.3, 4.1, 7.2. Հայերեն տարբերակ, XeLaTeX (fontspec + Sylfaen).
+% Կազմել՝ xelatex-ով երկու անգամ։ Տերմինաբանությունը՝ glossary-ի համաձայն։
+% ============================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---- Տառատեսակ (XeLaTeX) ----
+\usepackage{fontspec}
+\setmainfont{Sylfaen}
+
+% Հայերենը plain XeLaTeX-ում տողադարձման կանոններ չունի, ուստի թող TeX-ը ձգի բացատները։
+\tolerance=2000
+\emergencystretch=3.5em
+
+% ---- Մաթեմատիկա ----
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% ---- Դասավորություն ----
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% ---- Գրաֆիկա ----
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,shapes.misc,decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black}
+
+% ---- Գունապնակ (Հայաստանի դրոշի գույները) ----
+\definecolor{armRed}{HTML}{D90012}
+\definecolor{armBlue}{HTML}{0033A0}
+\definecolor{armOrange}{HTML}{F2A800}
+\definecolor{ink}{HTML}{22303C}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% ---- Մաթ. կրճատումներ ----
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\DeclareMathOperator{\Dom}{D}
+\DeclareMathOperator{\Ran}{R}
+
+% ---- Վանդակներ ----
+\newtcolorbox{problembox}[1][]{enhanced, breakable, sharp corners=south,
+  colback=armOrange!10, colframe=armOrange!75!black, boxrule=0.8pt, arc=2mm,
+  fonttitle=\bfseries\color{white}, coltitle=white,
+  attach boxed title to top left={xshift=4mm,yshift=-2.4mm},
+  boxed title style={colback=armOrange!85!black, arc=1mm},
+  title={Խնդիր #1}}
+
+\newtcolorbox{ideabox}{enhanced, breakable,
+  colback=armBlue!6, colframe=armBlue!70!black, boxrule=0.8pt, arc=2mm,
+  fonttitle=\bfseries\color{white}, coltitle=white,
+  attach boxed title to top left={xshift=4mm,yshift=-2.4mm},
+  boxed title style={colback=armBlue!75!black, arc=1mm},
+  title={Գաղափարը}}
+
+\newtcolorbox{methodbox}{enhanced, breakable,
+  colback=gray!8, colframe=gray!55!black, boxrule=0.7pt, arc=2mm,
+  fonttitle=\bfseries, title={$\bigstar$\ Հիշարժան մեթոդ}}
+
+\newtcolorbox{answerbox}{enhanced, sharp corners=south,
+  colback=green!8, colframe=green!50!black, boxrule=1pt, arc=2mm, left=4mm,right=4mm}
+\newcommand{\answer}[1]{\begin{answerbox}\centering\textbf{Պատասխան՝}\quad #1\end{answerbox}}
+
+% ---- Վերնագիր ----
+\title{\vspace{-1.2cm}\textbf{Դիսկրետ մաթեմատիկա - Գործնական 2-3}\\[2pt]
+\large Հարաբերություններ՝ մանրամասն լուծումներ\\[2pt]
+\normalsize\itshape դատողությունները՝ քայլ առ քայլ բացված}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.0cm}
+
+\section*{Նախապատրաստում՝ ի՞նչ է հարաբերությունը և ինչու՞ ենք այն գծում}
+
+(Երկտեղ) $\rho$ հարաբերությունը բազմությունների վրա պարզապես \emph{կարգավորված զույգերի բազմություն}
+է։ $(x,y)\in\rho$ գրելը (նաև՝ $x\,\rho\,y$) նշանակում է «$x$-ը կապված է $y$-ի հետ»։ Սա ամբողջ
+սահմանումն է՝ բայց զույգերի մերկ ցանկը թաքցնում է ամեն հետաքրքիրը, ուստի հարաբերությունը գրեթե միշտ
+ավելի լավ է հասկանալ որպես \textbf{պատկեր}՝
+
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item Վերջավոր բազմության վրա գծիր \textbf{գրաֆ}՝ կետ յուրաքանչյուր տարրի համար և $x\to y$ սլաք
+  յուրաքանչյուր $(x,y)\in\rho$ զույգի համար։ Եթե հարաբերությունը սիմետրիկ է, սլաքների գլխիկները հանում
+  ենք և գծում պարզ կողեր։
+\item Նույն տվյալները $0/1$ \textbf{հարևանության մատրից} $M$ են՝ դիր $M_{ij}=1$ հենց այն դեպքում, երբ
+  (տարր $i$, տարր $j$) $\in\rho$։ Գրաֆն ու մատրիցը մեկ օբյեկտի երկու տեսք են։
+\item $\R^2$-ում հարաբերությունը \textbf{հարթության տիրույթ կամ կոր} է՝ նրա որոշման և արժեքների
+  տիրույթներն այն ստվերներն են, որ այն գցում է $x$- և $y$-առանցքների վրա։
+\end{itemize}
+
+Ամենուր օգտագործում ենք դասընթացի պայմանավորվածությունները։ \textbf{Որոշման տիրույթը} առաջին
+կոորդինատների բազմությունն է՝ $\Dom_\rho=\{x:\exists y\,(x,y)\in\rho\}$, իսկ \textbf{արժեքների
+տիրույթը} երկրորդ կոորդինատների բազմությունն է՝ $\Ran_\rho=\{y:\exists x\,(x,y)\in\rho\}$։
+\textbf{Համադրույթը ձախից աջ է}՝ $\rho\cdot\sigma$ նշանակում է «նախ $\rho$, ապա $\sigma$», այսինքն
+$(x,z)\in\rho\cdot\sigma \iff \exists y:\ (x,y)\in\rho\ \text{և}\ (y,z)\in\sigma$։ (Սա հակառակ կարգն է
+այն $\circ$-ին, որ շատ գրքեր օգտագործում են, ուստի հետևի՛ր ուղղությանը։) Այստեղ $\N=\{1,2,3,\dots\}$։
+
+% ============================================================================
+\section*{Խնդիր 1.2 - Որոշման և արժեքների տիրույթ}
+% ============================================================================
+
+\begin{problembox}[1.2]
+Գտիր յուրաքանչյուր հարաբերության որոշման $\Dom_\rho$ և արժեքների $\Ran_\rho$ տիրույթը։
+\\[2pt]
+\begin{tabular}{@{}ll@{}}
+ա) $\{(a,1),(a,2),(c,1),(c,2),(c,4),(d,5)\}$ &
+ե) $\{(x,y)\in\N^2 : y\mid x\}$\ \ (աղբյուր՝ $x/y$)\\
+բ) $\{(1,2),(2,4),(3,6),(4,8),\dots\}=\{(n,2n)\}$ &
+զ) $\{(x,y)\in\N^2 : x\mid y\}$\ \ (աղբյուր՝ $y/x$)\\
+գ) $\{(x,y)\in\R^2 : x=y^2\}$ &
+է) $\{(x,y)\in\R^2 : x+y\le 0\}$\\
+դ) $\{(x,y)\in\R^2 : x^2+y^2\le 16\}$ &
+ը) $\{(x,y)\in\R^2 : 2x\ge 3y\}$
+\end{tabular}
+\\[3pt]
+\footnotesize Այստեղ թերթիկի $x/y$ նշանակումը բաժանելիության պրեդիկատն է՝ «$x$-ը $y$-ի վրա ամբողջ
+թիվ է», այսինքն $y\mid x$ (ե)-ում և $x\mid y$ (զ)-ում։
+\end{problembox}
+
+\begin{ideabox}
+Որոշման և արժեքների տիրույթները \textbf{ստվերներ} են։ Կանգնեցրու լույս կողքից և թող հարաբերությունն
+իր ստվերը գցի $x$-առանցքի վրա՝ այդ ստվերը որոշման տիրույթն է (որ $x$-արժեքներն են հանդես գալիս որպես
+առաջին կոորդինատ)։ Լուսավորիր ներքևից $y$-առանցքի վրա, և ստվերն արժեքների տիրույթն է։ Ուստի երբեք
+պետք չէ ամբողջ հարաբերությունը միանգամից՝ պարզապես հարցնում ես յուրաքանչյուր թեկնածու $x$-ի համար՝
+\textbf{«կա՞ արդյոք գոնե մեկ $y$, որ զուգընկերանա նրա հետ»}։ Եթե այո, $x$-ը որոշման տիրույթում է։ Նույն
+հարցը $x$-ի և $y$-ի դերերը փոխած տալիս է արժեքների տիրույթը։ Հարթության հարաբերությունների համար գծիր
+տիրույթը և կարդա երկու ստվերներն առանցքներից՝ դիսկրետների համար մեկ վկայող զուգընկեր որոշում է
+յուրաքանչյուր արժեքը։
+\end{ideabox}
+
+\textbf{(ա) Վերջավոր ցանկ՝ պարզապես կարդա այն։}
+Առաջին կոորդինատներ՝ $a,c,d$։ Երկրորդ կոորդինատներ՝ $1,2,4,5$։
+\[\Dom=\{a,c,d\},\qquad \Ran=\{1,2,4,5\}.\]
+
+\textbf{(բ) Կրկնապատկման $\{(n,2n)\}$ հարաբերությունը։}
+Յուրաքանչյուր $n\in\N$ առաջին կոորդինատ է, ուստի $\Dom=\N$։ Երկրորդ կոորդինատները հենց զույգ թվերն
+են, ուստի $\Ran=\{2,4,6,\dots\}=2\N$։
+
+\textbf{(գ), (դ), (է), (ը)՝ հարթության հարաբերությունները։} Գծիր յուրաքանչյուրը, ապա կարդա ստվերները։
+
+\begin{center}
+\begin{tikzpicture}[scale=0.62, font=\small, >=Stealth]
+% ---------- (գ) x = y^2 ----------
+\begin{scope}
+  \draw[->] (-1,0)--(5,0) node[right]{$x$};
+  \draw[->] (0,-3.2)--(0,3.2) node[above]{$y$};
+  \draw[armBlue,very thick,domain=-2.85:2.85,samples=80,variable=\t]
+        plot ({\t*\t/2.4},{\t});
+  \draw[armRed,line width=2.4pt] (0,-0.12)--(4.6,-0.12);
+  \node[armRed] at (3.0,-0.6) {$\Dom=[0,\infty)$};
+  \draw[armOrange!90!black,line width=2.4pt] (-0.13,-3)--(-0.13,3);
+  \node[armOrange!75!black,rotate=90] at (-0.62,0) {$\Ran=\R$};
+  \node at (2.2,3.0) {(գ)\ \ $x=y^2$};
+\end{scope}
+% ---------- (դ) disk ----------
+\begin{scope}[xshift=8.4cm]
+  \draw[->] (-3.4,0)--(3.4,0) node[right]{$x$};
+  \draw[->] (0,-3.4)--(0,3.4) node[above]{$y$};
+  \fill[armBlue!18] (0,0) circle (2.6);
+  \draw[armBlue,very thick] (0,0) circle (2.6);
+  \foreach \v in {-2.6,2.6}{
+     \draw[dashed,gray] (\v,-2.7)--(\v,2.7);
+     \draw[dashed,gray] (-2.7,\v)--(2.7,\v);}
+  \draw[armRed,line width=2.4pt] (-2.6,-0.12)--(2.6,-0.12);
+  \node[armRed] at (0,-3.05) {$\Dom=[-4,4]$};
+  \draw[armOrange!90!black,line width=2.4pt] (-0.13,-2.6)--(-0.13,2.6);
+  \node[armOrange!75!black,rotate=90] at (-0.7,0) {$\Ran=[-4,4]$};
+  \node at (0,3.15) {(դ)\ \ $x^2{+}y^2\le 16$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.62, font=\small, >=Stealth]
+% ---------- (է) x+y<=0 ----------
+\begin{scope}
+  \draw[->] (-3.4,0)--(3.4,0) node[right]{$x$};
+  \draw[->] (0,-3.4)--(0,3.4) node[above]{$y$};
+  \fill[armBlue!18] (-3,3)--(3,-3)--(3,-3.3)--(-3,-3.3)--cycle;
+  \draw[armBlue,very thick] (-3,3)--(3,-3) node[below right]{$x+y=0$};
+  \draw[armRed,line width=2.0pt] (-3,-0.12)--(3,-0.12);
+  \node[armRed] at (1.4,-3.05) {$\Dom=\R$};
+  \draw[armOrange!90!black,line width=2.0pt] (-0.13,-3)--(-0.13,3);
+  \node[armOrange!75!black,rotate=90] at (-0.7,0) {$\Ran=\R$};
+  \node at (0,3.15) {(է)\ \ $x+y\le 0$};
+\end{scope}
+% ---------- (ը) 2x>=3y ----------
+\begin{scope}[xshift=8.4cm]
+  \draw[->] (-3.4,0)--(3.4,0) node[right]{$x$};
+  \draw[->] (0,-3.4)--(0,3.4) node[above]{$y$};
+  \fill[armBlue!18] (-3,-2)--(3,2)--(3,-3.3)--(-3,-3.3)--cycle;
+  \draw[armBlue,very thick] (-3,-2)--(3,2) node[above left]{$2x=3y$};
+  \draw[armRed,line width=2.0pt] (-3,-0.12)--(3,-0.12);
+  \node[armRed] at (1.4,-3.05) {$\Dom=\R$};
+  \draw[armOrange!90!black,line width=2.0pt] (-0.13,-3)--(-0.13,3);
+  \node[armOrange!75!black,rotate=90] at (-0.7,0) {$\Ran=\R$};
+  \node at (0,3.15) {(ը)\ \ $2x\ge 3y$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\textbf{(գ) $x=y^2$։} Կորը պարաբոլ է՝ բացվող դեպի $x$-առանցքի դրական ուղղությունը։ $x$-ը հանդես է գալիս
+այն և միայն այն դեպքում, երբ $x=y^2$-ն ունի լուծում, այսինքն երբ $x\ge0$՝ ուստի $\Dom=[0,\infty)$։
+Ցանկացած իրական $y$ զուգընկերանում է $x=y^2$ կետի հետ, ուստի յուրաքանչյուր $y$ հանդես է գալիս՝
+$\Ran=\R$։
+
+\textbf{(դ) $x^2+y^2\le16$ շրջանը։} Շառավիղը՝ $\sqrt{16}=4$։ $x$ արժեքը հանդես է գալիս այն և միայն այն
+դեպքում, երբ ինչ-որ $y$ բավարարում է $x^2+y^2\le16$-ին՝ ամենահեշտ զուգընկերը $y=0$-ն է, որն աշխատում
+է, երբ $x^2\le16$, այսինքն $x\in[-4,4]$։ Սիմետրիայով $\Ran=[-4,4]$ նույնպես։
+
+\textbf{(է) $x+y\le0$։} Տիրույթը փակ կիսահարթությունն է $x+y=0$ ուղղի վրա և տակ։ Ցանկացած $x$-ի համար
+ընտրիր $y\le-x$ (օր.՝ $y=-x$)՝ ցանկացած $y$-ի համար ընտրիր $x\le-y$։ Երկու կողմից էլ ամեն իրական
+աշխատում է, ուստի $\Dom=\Ran=\R$։
+
+\textbf{(ը) $2x\ge3y$։} Կիսահարթություն $2x=3y$ ուղղի վրա և տակ (այսինքն $y=\tfrac23 x$)։ Ցանկացած $x$-ի
+համար վերցրու $y\le\tfrac{2x}{3}$՝ ցանկացած $y$-ի համար վերցրու $x\ge\tfrac{3y}{2}$։ Կրկին
+$\Dom=\Ran=\R$։
+
+\textbf{(ե), (զ)՝ բաժանելիությունը $\N$-ի վրա։} Հիշիր՝ $y\mid x$ նշանակում է $y$-ն բաժանում է $x$-ին։
+(ե)-ի համար ($y\mid x$)՝ յուրաքանչյուր $x\in\N$ բաժանվում է $y=1$-ի վրա, ուստի $x$-ը միշտ ունի
+զուգընկեր՝ $\Dom=\N$, և յուրաքանչյուր $y$ բաժանում է հենց $x=y$-ին, ուստի $y$-ն միշտ հանդես է գալիս՝
+$\Ran=\N$։ (զ)-ի համար ($x\mid y$) նույն փաստարկը $x,y$ փոխած տալիս է $\Dom=\N$ և $\Ran=\N$։
+
+\textbf{Ստուգում։} Համակարգչային թվարկումը $1\le x,y\le199$ վրայով (ե),(զ)-ի համար արտադրեց
+$1,\dots,199$ ամեն արժեքը թե՛ որոշման, թե՛ արժեքների տիրույթում, և սահմանափակ հարթության նմուշները
+հաստատեցին $\Dom_c=[0,\infty)$, $\Dom_d=\Ran_d=[-4,4]$ և $\Dom=\Ran=\R$ (է),(ը)-ի համար։ \checkmark
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c|cc@{}}
+\toprule
+ & $\Dom$ & $\Ran$\\
+\midrule
+ա) & $\{a,c,d\}$ & $\{1,2,4,5\}$\\
+բ) & $\N$ & $2\N=\{2,4,6,\dots\}$\\
+գ) & $[0,\infty)$ & $\R$\\
+դ) & $[-4,4]$ & $[-4,4]$\\
+ե) & $\N$ & $\N$\\
+զ) & $\N$ & $\N$\\
+է) & $\R$ & $\R$\\
+ը) & $\R$ & $\R$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\answer{Տե՛ս վերևի աղյուսակը՝ որոշման և արժեքների տիրույթները (ա)-ից (ը)։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} որոշման և արժեքների տիրույթները հարաբերության երկու առանցքային ստվերներն
+են։ $x_0$ արժեքը որոշման տիրույթում լինելը ստուգելու համար ամբողջ պատկերը պետք չէ՝ պարզապես ցույց
+տուր \emph{մեկ} զուգընկեր $y$՝ $(x_0,y)\in\rho$-ով։ $\R^2$-ի հարաբերությունների համար ուրվագծիր
+տիրույթը և բառացիորեն կարդա ստվերները՝ $x=f(y)$ հավասարման համար որոշման տիրույթը $f$-ի ելքերի
+բազմությունն է, իսկ արժեքների տիրույթը՝ $f$-ի մուտքերի բազմությունը։
+\end{methodbox}
+
+% ============================================================================
+\section*{Խնդիր 2.1 - Չկողմնորոշված գրաֆ և հարևանության մատրից}
+% ============================================================================
+
+\begin{problembox}[2.1]
+$A=\{a,b,c,d,e\}$-ի վրա կառուցիր յուրաքանչյուր հարաբերության գրաֆն ու հարևանության մատրիցը (տողերն ու
+սյունակները՝ $a,b,c,d,e$ կարգով)։
+\begin{itemize}[leftmargin=1.6em,nosep]
+\item[ա)] $\{(a,b),(b,a),(b,c),(c,b),(c,a),(a,c),(d,e),(e,d)\}$
+\item[բ)] $\{(a,b),(b,a),(b,c),(c,b),(c,d),(d,c),(c,a),(a,c)\}$
+\item[գ)] նույն բազմությունը, ինչ (բ)-ն աղբյուրում։
+\end{itemize}
+\end{problembox}
+
+\begin{ideabox}
+Հարաբերության յուրաքանչյուր $(i,j)$ զույգ մատրիցում մեկ $1$ է (տող $i$, սյունակ $j$) և գրաֆում մեկ
+$i\to j$ սլաք։ Այստեղ յուրաքանչյուր հարաբերություն \textbf{սիմետրիկ} է՝ երբ $(i,j)$ առկա է, $(j,i)$-ն
+նույնպես։ Սիմետրիան երևում է միանգամից երկու ձևով՝ մատրիցում որպես $M=M^{\mathsf T}$ (այն հայելային է
+անկյունագծի նկատմամբ), իսկ գրաֆում որպես «յուրաքանչյուր սլաք ունի իր հակառակը», ուստի կարող ենք ջնջել
+սլաքների գլխիկները և գծել մեկ չկողմնորոշված \textbf{կող} յուրաքանչյուր փոխադարձ զույգի համար։ Պատկերը
+կարդալն այդ դեպքում պարզապես կողերի հաշվում է՝ մատրիցը կարդալը՝ պարզապես հայելու ստուգում։
+\end{ideabox}
+
+\textbf{Քայլ 1 - Թվարկենք չկողմնորոշված կողերը։}
+(ա) Փոխադարձ զույգերը տալիս են $a\!-\!b$, $b\!-\!c$, $a\!-\!c$ կողերը ($a,b,c$-ի վրա եռանկյուն) և
+առանձին $d\!-\!e$ կող։ (բ) $a\!-\!b$, $b\!-\!c$, $a\!-\!c$ կողերը (կրկին եռանկյուն) գումարած $c\!-\!d$՝
+$e$ գագաթը կող չունի։ (գ)-ն նույնական է (բ)-ին։
+
+\textbf{Քայլ 2 - Գծիր և գրիր մատրիցը կողք կողքի։}
+
+\begin{center}
+\begin{tikzpicture}[font=\small,
+  vtx/.style={circle,draw,fill=armBlue!12,minimum size=6.5mm,inner sep=0pt}]
+\begin{scope}
+  \node[vtx] (a) at (0,1.6) {$a$};
+  \node[vtx] (b) at (-1.1,0) {$b$};
+  \node[vtx] (c) at (1.1,0) {$c$};
+  \node[vtx] (d) at (2.6,1.4) {$d$};
+  \node[vtx] (e) at (2.6,-0.1) {$e$};
+  \draw[armBlue,thick] (a)--(b)--(c)--(a);
+  \draw[armBlue,thick] (d)--(e);
+  \node at (0.7,-1.1) {\textbf{(ա)} $abc$ եռանկյուն $+$ $de$ կող};
+\end{scope}
+\node at (5.6,0.4) {$M_a=\begin{pmatrix}
+0&1&1&0&0\\ 1&0&1&0&0\\ 1&1&0&0&0\\ 0&0&0&0&1\\ 0&0&0&1&0
+\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[font=\small,
+  vtx/.style={circle,draw,fill=armBlue!12,minimum size=6.5mm,inner sep=0pt}]
+\begin{scope}
+  \node[vtx] (a) at (0,1.6) {$a$};
+  \node[vtx] (b) at (-1.1,0) {$b$};
+  \node[vtx] (c) at (1.1,0) {$c$};
+  \node[vtx] (d) at (2.7,0) {$d$};
+  \node[vtx] (e) at (2.7,1.6) {$e$};
+  \draw[armBlue,thick] (a)--(b)--(c)--(a);
+  \draw[armBlue,thick] (c)--(d);
+  \node at (0.8,-1.1) {\textbf{(բ)\,=\,(գ)} $abc$ եռանկյուն $+$ $cd$ կող՝ $e$-ն մեկուսացված};
+\end{scope}
+\node at (5.9,0.4) {$M_b=M_c=\begin{pmatrix}
+0&1&1&0&0\\ 1&0&1&0&0\\ 1&1&0&1&0\\ 0&0&1&0&0\\ 0&0&0&0&0
+\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Ստուգում։} Յուրաքանչյուր մատրից հայելային-սիմետրիկ է գլխավոր անկյունագծի նկատմամբ (ինչպես
+պետք է լինի սիմետրիկ հարաբերության համար), անկյունագիծն ամբողջովին $0$ է (ոչ մի $(x,x)$ զույգ
+թվարկված չէ), և $1$-երի քանակը հավասար է կողերի կրկնապատիկին՝ (ա) $8$ մեկ $=2\times4$ կող, (բ) $8$ մեկ
+$=2\times4$ կող։ Համակարգչային ստուգումը հաստատեց երկու մատրիցները վանդակ առ վանդակ և որ յուրաքանչյուրը
+սիմետրիկ է։ \checkmark
+
+\answer{(ա) $abc$ եռանկյուն $+$ $de$ կող;\ \ (բ)=(գ) $abc$ եռանկյուն $+$ $cd$ կող, $e$-ն մեկուսացված։
+Մատրիցները՝ ինչպես գծված է։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} սիմետրիկ հարաբերություն $\Leftrightarrow$ չկողմնորոշված գրաֆ
+$\Leftrightarrow$ սիմետրիկ $0/1$ մատրից։ $1$-երի քանակը $=2\cdot(\#\text{կող})$, և անկյունագիծը
+գրանցում է $(x,x)$ ակերը։ Ձեռքով գծված գրաֆը մատրիցի դեմ ստուգելու համար ստուգիր $M=M^{\mathsf T}$։
+\end{methodbox}
+
+% ============================================================================
+\section*{Խնդիր 2.2 - Կողմնորոշված գրաֆ (դիգրաֆ) և հարևանության մատրից}
+% ============================================================================
+
+\begin{problembox}[2.2]
+$A=\{a,b,c,d,e,f\}$-ի վրա կառուցիր յուրաքանչյուր հարաբերության դիգրաֆն ու հարևանության մատրիցը
+($a,b,c,d,e,f$ կարգով)։ $i\to j$ սլաք գնում է հենց այն դեպքում, երբ $(i,j)\in\rho$։
+\begin{itemize}[leftmargin=1.6em,nosep]
+\item[ա)] $\{(a,b),(b,c),(a,c),(b,e),(c,f),(c,d),(d,f),(f,e)\}$
+\item[բ)] $\{(a,b),(b,c),(d,c),(d,e),(f,e),(f,a),(b,e)\}$
+\item[գ)] $\{(a,c),(c,c),(c,d),(c,e),(e,c),(e,e),(e,f),(a,e)\}$
+\end{itemize}
+\end{problembox}
+
+\begin{ideabox}
+Ընդհանուր հարաբերությունը պարտադիր չէ սիմետրիկ լինի, ուստի պահում ենք \textbf{սլաքների գլխիկները}՝
+$(i,j)$-ն սլաք է $i$-\emph{ից} $j$, և պարտադիր չէ գա $j\to i$ հակառակ սլաքի հետ։ Մատրիցում սա նշանակում
+է, որ $M$-ն այլևս հայելային-սիմետրիկ չէ՝ $i$ տողն ասում է, թե որտեղ կարող ես գնալ $i$-\emph{ից},
+$j$ սյունակն ասում է, թե ինչ է ցույց տալիս $j$-\emph{ին}։ $(x,x)$ զույգը \textbf{ինքնակ} է $x$-ում և
+$1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ ձևն է տեսնելու այն կառուցվածքը, որ ցանկը թաքցնում է
+(«կա՞ ուղի $a$-ից $f$, ցի՞կլ»)։
+\end{ideabox}
+
+\textbf{Մատրիցները կարդա ցանկերից} (տող $=$ աղբյուր, սյունակ $=$ թիրախ)՝
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth,
+  vtx/.style={circle,draw,fill=armOrange!15,minimum size=6.5mm,inner sep=0pt}]
+  \node[vtx] (a) at (0,2) {$a$};
+  \node[vtx] (b) at (1.7,2.6) {$b$};
+  \node[vtx] (c) at (1.7,1.0) {$c$};
+  \node[vtx] (d) at (3.2,1.7) {$d$};
+  \node[vtx] (f) at (3.2,0.2) {$f$};
+  \node[vtx] (e) at (1.5,-0.5) {$e$};
+  \draw[armBlue,thick,->] (a)--(b);
+  \draw[armBlue,thick,->] (a)--(c);
+  \draw[armBlue,thick,->] (b)--(c);
+  \draw[armBlue,thick,->] (b)--(e);
+  \draw[armBlue,thick,->] (c)--(d);
+  \draw[armBlue,thick,->] (c)--(f);
+  \draw[armBlue,thick,->] (d)--(f);
+  \draw[armBlue,thick,->] (f)--(e);
+  \node at (1.6,-1.4) {\textbf{(ա)}};
+\node at (7.2,1.0) {$M_a=\begin{pmatrix}
+0&1&1&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&1&0&1\\ 0&0&0&0&0&1\\ 0&0&0&0&0&0\\ 0&0&0&0&1&0
+\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth,
+  vtx/.style={circle,draw,fill=armOrange!15,minimum size=6.5mm,inner sep=0pt}]
+  \node[vtx] (a) at (0,0) {$a$};
+  \node[vtx] (b) at (1.5,0.9) {$b$};
+  \node[vtx] (c) at (3.0,1.5) {$c$};
+  \node[vtx] (d) at (4.3,0.6) {$d$};
+  \node[vtx] (e) at (2.6,-0.8) {$e$};
+  \node[vtx] (f) at (0.4,-1.5) {$f$};
+  \draw[armBlue,thick,->] (a)--(b);
+  \draw[armBlue,thick,->] (b)--(c);
+  \draw[armBlue,thick,->] (b)--(e);
+  \draw[armBlue,thick,->] (d)--(c);
+  \draw[armBlue,thick,->] (d)--(e);
+  \draw[armBlue,thick,->] (f)--(a);
+  \draw[armBlue,thick,->] (f)--(e);
+  \node at (2.0,-2.2) {\textbf{(բ)}};
+\node at (8.2,0) {$M_b=\begin{pmatrix}
+0&1&0&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 1&0&0&0&1&0
+\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth,
+  vtx/.style={circle,draw,fill=armOrange!15,minimum size=6.5mm,inner sep=0pt}]
+  \node[vtx] (a) at (0,1.4) {$a$};
+  \node[vtx] (c) at (2.0,1.4) {$c$};
+  \node[vtx] (e) at (2.0,-0.5) {$e$};
+  \node[vtx] (d) at (4.0,1.9) {$d$};
+  \node[vtx] (f) at (4.0,-0.7) {$f$};
+  \draw[armBlue,thick,->] (a)--(c);
+  \draw[armBlue,thick,->] (a)--(e);
+  \draw[armBlue,thick,->] (c)--(d);
+  \draw[armBlue,thick,->] ([yshift=1mm]c.east) .. controls (3.0,1.0) .. ([xshift=-1mm]e.north east);
+  \draw[armBlue,thick,->] ([xshift=-2mm]e.north) .. controls (1.0,0.6) .. ([yshift=-1mm]c.west);
+  \draw[armBlue,thick,->] (e)--(f);
+  \draw[armRed,thick,->] (c) .. controls +(120:1.1) and +(60:1.1) .. (c);
+  \draw[armRed,thick,->] (e) .. controls +(200:1.1) and +(250:1.1) .. (e);
+  \node at (2.0,-1.7) {\textbf{(գ)} $c$-ի և $e$-ի ակեր (կարմիր)};
+\node at (8.0,0.4) {$M_c=\begin{pmatrix}
+0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 0&0&1&1&1&0\\ 0&0&0&0&0&0\\ 0&0&1&0&1&1\\ 0&0&0&0&0&0
+\end{pmatrix}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Ստուգում։} Հաշվիր սլաքները յուրաքանչյուր ցանկում՝ (ա) $8$, (բ) $7$, (գ) $8$՝ սրանք հավասար են
+համապատասխանաբար $M_a,M_b,M_c$-ի $1$-երի քանակին։ $M_c$-ի երկու անկյունագծային $1$-երը հենց $(c,c)$ և
+$(e,e)$ ակերն են, որ գծեցինք կարմիրով։ Համակարգչային ստուգումը հաստատեց բոլոր երեք մատրիցները վանդակ
+առ վանդակ և ակերի դիրքերը։ \checkmark
+
+\answer{Դիգրաֆները՝ ինչպես գծված է; մատրիցները՝ $M_a,M_b,M_c$ ինչպես ցույց է տրված։ Միայն (գ)-ն ունի
+ինքնակեր՝ $c$-ում և $e$-ում։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} ընդհանուր (կողմնորոշված) հարաբերության համար $M_{ij}=1\iff i\to j$։
+Հարաբերության անսիմետրիան $=$ $M$-ի անսիմետրիան՝ ինքնակ $=$ $1$ անկյունագծի վրա։ \emph{$i$ տողը}
+թվարկում է $i$-ի ելքային հարևանները՝ \emph{$j$ սյունակը} թվարկում է $j$-ի մուտքային հարևանները։ Արագ
+ստուգում՝ սլաքների քանակ $=$ $1$-երի քանակ։
+\end{methodbox}
+
+% ============================================================================
+\section*{Խնդիր 3.3 - Երկու հարաբերության համադրույթ}
+% ============================================================================
+
+\begin{problembox}[3.3]
+$\Z$-ի վրա դիցուք $\rho=\{(x,x+2):x\in\Z\}$ ($x\mapsto x+2$ արտապատկերումը) և
+$\sigma=\{(x,x^2):x\in\Z\}$ ($x\mapsto x^2$ արտապատկերումը)։ Գտիր $\rho\cdot\sigma$ և $\sigma\cdot\rho$։
+\end{problembox}
+
+\begin{ideabox}
+Համադրույթը շղթայում է երկու հարաբերություն \textbf{ընդհանուր միջանկյալ արժեքով}։ Դասընթացի ձախից-աջ
+կանոնով $\rho\cdot\sigma$ նշանակում է «նախ $\rho$, ապա $\sigma$»՝ սկսիր $x$-ից, թող $\rho$-ն քեզ տանի
+ինչ-որ $y$, ապա թող $\sigma$-ն $y$-ն տանի առաջ՝ $z$։ Միջին $y$-ն ծխնին է՝ ելքային հարաբերությունը
+զուգում է սկզբնական $x$-ը վերջնական $z$-ի հետ։ Քանի որ թե՛ $\rho$-ն, թե՛ $\sigma$-ն այստեղ
+\emph{ֆունկցիաներ} են (յուրաքանչյուր մուտք ունի ճիշտ մեկ ելք), համադրույթը պարզապես \textbf{ֆունկցիաների
+համադրույթ} է՝ և կարգը նշանակություն ունի, քանի որ $2$ ավելացնելն ապա քառակուսի բարձրացնելը նույնը չէ,
+ինչ քառակուսի բարձրացնելն ապա $2$ ավելացնելը։
+\end{ideabox}
+
+\textbf{Քայլ 1 - $\rho\cdot\sigma$ (նախ կիրառիր $\rho$)։}
+Սկսիր $x$-ից։ $\rho$-ն ուղարկում է $x\mapsto y=x+2$։ Ապա $\sigma$-ն ուղարկում է
+$y\mapsto z=y^2=(x+2)^2$։ Ուստի
+\[\rho\cdot\sigma=\{(x,(x+2)^2):x\in\Z\}.\]
+
+\textbf{Քայլ 2 - $\sigma\cdot\rho$ (նախ կիրառիր $\sigma$)։}
+Սկսիր $x$-ից։ $\sigma$-ն ուղարկում է $x\mapsto y=x^2$։ Ապա $\rho$-ն ուղարկում է $y\mapsto z=y+2=x^2+2$։
+Ուստի
+\[\sigma\cdot\rho=\{(x,x^2+2):x\in\Z\}.\]
+
+\textbf{Քայլ 3 - դրանք տարբեր են։} $(x+2)^2=x^2+4x+4\neq x^2+2$ ընդհանուր դեպքում։ Մեկ արժեքն
+ապացուցում է՝ $x=1$-ում $\rho\cdot\sigma$-ն տալիս է $(1,9)$, մինչդեռ $\sigma\cdot\rho$-ն տալիս է
+$(1,3)$։
+
+\textbf{Սլաքների դիագրամը։} $x=1$-ի հետևումն ընդհանուր միջանկյալ արժեքով տեսանելի է դարձնում
+անսիմետրիան՝
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth, node distance=10mm,
+  num/.style={circle,draw,minimum size=8mm,inner sep=0pt}]
+\begin{scope}
+  \node[num,fill=armBlue!12] (x1) at (0,0) {$1$};
+  \node[num,fill=armOrange!18] (m1) at (2.6,0) {$3$};
+  \node[num,fill=green!15] (z1) at (5.2,0) {$9$};
+  \draw[armBlue,thick,->] (x1) -- node[above]{$\rho:\,+2$} (m1);
+  \draw[armRed,thick,->] (m1) -- node[above]{$\sigma:\,(\,)^2$} (z1);
+  \node[anchor=east] at (-0.4,0) {$\rho\cdot\sigma$՝};
+  \node at (2.6,-0.95) {միջին $y=x+2$};
+\end{scope}
+\begin{scope}[yshift=-2.3cm]
+  \node[num,fill=armBlue!12] (x2) at (0,0) {$1$};
+  \node[num,fill=armOrange!18] (m2) at (2.6,0) {$1$};
+  \node[num,fill=green!15] (z2) at (5.2,0) {$3$};
+  \draw[armRed,thick,->] (x2) -- node[above]{$\sigma:\,(\,)^2$} (m2);
+  \draw[armBlue,thick,->] (m2) -- node[above]{$\rho:\,+2$} (z2);
+  \node[anchor=east] at (-0.4,0) {$\sigma\cdot\rho$՝};
+  \node at (2.6,-0.95) {միջին $y=x^2$};
+\end{scope}
+\node[align=left,anchor=west] at (6.6,-1.15)
+  {Նույն մեկնարկ $x=1$,\\ տարբեր ավարտ՝\\ $9\neq 3$։};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Ստուգում։} $-20\le x\le 20$ վրայով համակարգչային թվարկումը տվեց $\rho\cdot\sigma$ ելք $(x+2)^2$
+և $\sigma\cdot\rho$ ելք $x^2+2$ յուրաքանչյուր $x$-ի համար՝ համաձայն բանաձևերի, և գտավ դրանք անհավասար
+(առաջին անհամապատասխանությունն արդեն $x=1$-ում)։ \checkmark
+
+\answer{$\rho\cdot\sigma=\{(x,(x+2)^2):x\in\Z\}$ \quad և \quad $\sigma\cdot\rho=\{(x,x^2+2):x\in\Z\}$;
+\quad դրանք \emph{հավասար չեն} (օր.՝ $(1,9)$ ընդդեմ $(1,3)$)։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} ձախից աջ համադրելու համար ընդհանուր տարր անցկացրու \emph{առաջին}
+հարաբերության, ապա \emph{երկրորդի} միջով՝ անվանելով միջին արժեքը։ Ֆունկցիա-հարաբերությունների համար
+$\rho\cdot\sigma$-ն «$\sigma$ $\rho$-ից հետո» ֆունկցիան է, ուստի $(\rho\cdot\sigma)(x)=\sigma(\rho(x))$։
+Համադրույթն ընդհանուր առմամբ \textbf{կոմուտատիվ չէ}՝ միշտ ստուգիր մեկ կոնկրետ մուտքով։
+\end{methodbox}
+
+% ============================================================================
+\section*{Խնդիր 4.1 - Հարաբերությունների հիմնական հատկությունները}
+% ============================================================================
+
+\begin{problembox}[4.1]
+Որոշիր, թե ռեֆլեքսիվ (R), սիմետրիկ (S), անտիսիմետրիկ (AS), փոխանցական (T) հատկություններից որն ունի
+յուրաքանչյուր հարաբերությունը։
+\begin{itemize}[leftmargin=1.6em,nosep]
+\item[ա)] $\{(x,y)\in\R^2 : x^2+y^2=1\}$
+\item[բ)] $\{(x,y)\in\R^2 : x^2=y^2\}$
+\item[գ)] $\{(x,y)\in\Z^2 : x/y\}$\ \ (բաժանելիություն՝ $y\mid x$, այսինքն «$x$-ը $y$-ի վրա ամբողջ թիվ է»)
+\item[դ)] $\{(x,y)\in\N^2 : x/y\}$\ \ (նույն բաժանելիությունը՝ $\N$-ի վրա)
+\item[ե)] $\{(x,y)\in\N^2 : (x,y)=1\}$\ \ (փոխադարձաբար պարզ՝ $\gcd(x,y)=1$)
+\item[զ)] $\{(x,y)\in\Z^2 : (x,y)=1\}$\ \ (փոխադարձաբար պարզ՝ $\Z$-ի վրա)
+\end{itemize}
+\footnotesize Զգուշացում՝ աղբյուրը գրում է բաժանելիության պրեդիկատը որպես $x/y$ (գ),(դ)-ում՝ սա
+\emph{ոչ} թե $x\le y$ կարգի հարաբերությունն է։ Ստորև (գ),(դ)-ն դիտում ենք որպես բաժանելիություն,
+ինչպես թերթիկն է նշում։
+\end{problembox}
+
+\begin{ideabox}
+Չորս հատկությունները չորս փոքր \textbf{ձև են, որ փնտրում ես դիգրաֆում}։
+\textbf{Ռեֆլեքսիվ}՝ ակ յուրաքանչյուր գագաթում (անկյունագիծը լիքն է)։
+\textbf{Սիմետրիկ}՝ յուրաքանչյուր սլաք գալիս է իր հակառակի հետ (ուստի կարելի է գծել չկողմնորոշված)։
+\textbf{Անտիսիմետրիկ}՝ \emph{ոչ մի} 2-ցիկլ տարբեր գագաթների միջև՝ եթե $x\to y$ և $y\to x$, ապա $x=y$
+(թույլատրված միակ բացառությունն ակն է)։
+\textbf{Փոխանցական}՝ յուրաքանչյուր 2-քայլանի ուղի կարճ է փակվում ուղիղ սլաքով ($x\to y\to z$
+հարկադրում է $x\to z$)։ Հատկությունը \emph{հերքելու} համար բավական է մեկ վատ պատկեր՝ \emph{ապացուցելու}
+համար փաստարկում ես ընդհանուր դեպքում։ Անվանված համակցությունները արժե հիշել՝ R+S+T $=$
+\textbf{համարժեքություն}; R+AS+T $=$ \textbf{մասնակի կարգ}։
+\end{ideabox}
+
+\textbf{(ա) $x^2+y^2=1$ $\R^2$-ի վրա (միավոր շրջանագիծը)։}
+\begin{itemize}[leftmargin=1.4em,nosep]
+\item \emph{Ոչ ռեֆլեքսիվ}՝ $(x,x)$-ը պահանջում է $2x^2=1$, ճիշտ միայն $x=\pm\tfrac1{\sqrt2}$-ում, ոչ
+բոլոր $x$-երի համար։
+\item \emph{Սիմետրիկ}՝ $x^2+y^2$-ն չի փոխվում, երբ $x,y$ փոխվում են, ուստի $(x,y)\in\rho\Rightarrow(y,x)\in\rho$։
+\item \emph{Ոչ անտիսիմետրիկ}՝ $(1,0)$-ն և $(0,1)$-ը երկուսն էլ $\rho$-ում են, բայց $1\neq0$։
+\item \emph{Ոչ փոխանցական}՝ $(1,0),(0,1)\in\rho$, բայց $(1,1)$-ը պահանջում է $1+1=1$, սխալ։
+\end{itemize}
+$\Rightarrow$ միայն սիմետրիկ։
+
+\textbf{(բ) $x^2=y^2$ $\R^2$-ի վրա, այսինքն $|x|=|y|$։}
+Ռեֆլեքսիվ ($x^2=x^2$); սիմետրիկ ($x^2=y^2\iff y^2=x^2$); փոխանցական ($x^2=y^2=z^2$)։ Ոչ անտիսիմետրիկ՝
+$(1,-1)$-ն և $(-1,1)$-ը երկուսն էլ $\rho$-ում են՝ $1\neq-1$-ով։ R+S+T $\Rightarrow$
+\textbf{համարժեքության հարաբերություն} (նրա դասերը $\{x,-x\}$ զույգերն են)։
+
+\textbf{(գ) բաժանելիություն $\Z$-ի վրա ($y\mid x$)։}
+Ռեֆլեքսիվ ($x\mid x$); փոխանցական ($z\mid y,\ y\mid x\Rightarrow z\mid x$)։ Ոչ սիմետրիկ ($2\mid 4$,
+բայց $4\nmid 2$)։ \emph{Ոչ} անտիսիմետրիկ $\Z$-ի վրա՝ $2\mid(-2)$ և $(-2)\mid2$, սակայն $2\neq-2$։
+R+T, բայց ոչ AS, ոչ S $\Rightarrow$ \textbf{նախակարգ}, \emph{ոչ} մասնակի կարգ։
+
+\textbf{(դ) բաժանելիություն $\N$-ի վրա ($y\mid x$)։}
+Ռեֆլեքսիվ և փոխանցական՝ ինչպես վերևում; ոչ սիմետրիկ։ Հիմա այն \emph{է} անտիսիմետրիկ՝ դրական ամբողջ
+թվերի վրա $a\mid b$ և $b\mid a$ հարկադրում են $a=b$։ R+AS+T $\Rightarrow$ \textbf{մասնակի կարգ}։ Այն
+\emph{գծային} կարգ չէ՝ $2$-ը և $3$-ը անհամեմատելի են (ոչ մեկը մյուսին չի բաժանում)։
+
+\textbf{(ե),(զ) փոխադարձ պարզություն $\gcd(x,y)=1$։}
+Սիմետրիկ ($\gcd$-ն սիմետրիկ է)։ Ոչ ռեֆլեքսիվ՝ $\gcd(2,2)=2\neq1$։ Ոչ անտիսիմետրիկ՝ $(2,3)$-ն և $(3,2)$-ն
+երկուսն էլ փոխադարձաբար պարզ են, $2\neq3$։ Ոչ փոխանցական՝ $\gcd(2,3)=1$ և $\gcd(3,4)=1$, բայց
+$\gcd(2,4)=2\neq1$։ Ուստի միայն սիմետրիկ՝ թե՛ $\N$-ի (ե), թե՛ $\Z$-ի (զ) վրա։
+
+\textbf{Պատկերներ, որ տեսանելի են դարձնում եզրակացությունները։} (ա) 2-ցիկլ առանց ակերի և կոտրված
+եռանկյուն; (բ) ակեր ամենուր՝ հայելացված սլաքներով; (դ) բաժանելիություն $\{1,2,3,4,6\}$-ի վրա՝ գծված
+որպես Հասսեի ոճի կարգ; (ե) 2-ցիկլ, կրկին առանց ակերի։
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth,
+  vtx/.style={circle,draw,fill=armBlue!12,minimum size=7mm,inner sep=0pt}]
+\begin{scope}
+  \node[vtx] (p) at (0,1.0) {$\scriptstyle(1,0)$};
+  \node[vtx] (q) at (0,-1.0) {$\scriptstyle(0,1)$};
+  \draw[armBlue,thick,->] ([xshift=-1.3mm]p.south) -- ([xshift=-1.3mm]q.north);
+  \draw[armBlue,thick,->] ([xshift=1.3mm]q.north) -- ([xshift=1.3mm]p.south);
+  \node at (0,-1.95) {\textbf{(ա)} սիմ, առանց ակերի};
+  \node[gray] at (0,2.0) {ոչ $(1,1)$՝};
+  \node[gray] at (0,1.62) {ոչ փոխանցական};
+\end{scope}
+\begin{scope}[xshift=4.1cm]
+  \node[vtx] (u) at (0,1.0) {$1$};
+  \node[vtx] (v) at (0,-1.0) {$-1$};
+  \draw[armRed,thick,->] (u) .. controls +(150:0.95) and +(210:0.95) .. (u);
+  \draw[armRed,thick,->] (v) .. controls +(150:0.95) and +(210:0.95) .. (v);
+  \draw[armBlue,thick,->] ([xshift=-1.3mm]u.south) -- ([xshift=-1.3mm]v.north);
+  \draw[armBlue,thick,->] ([xshift=1.3mm]v.north) -- ([xshift=1.3mm]u.south);
+  \node at (0,-1.95) {\textbf{(բ)} R+S+T};
+  \node[gray] at (0,1.95) {համարժեքություն};
+\end{scope}
+\begin{scope}[xshift=8.7cm, yshift=-0.2cm]
+  \node[vtx] (n1) at (1.0,-1.0) {$1$};
+  \node[vtx] (n2) at (0.0,0.2) {$2$};
+  \node[vtx] (n3) at (2.0,0.2) {$3$};
+  \node[vtx] (n4) at (-0.2,1.5) {$4$};
+  \node[vtx] (n6) at (1.4,1.5) {$6$};
+  \draw[armBlue,thick] (n1)--(n2);
+  \draw[armBlue,thick] (n1)--(n3);
+  \draw[armBlue,thick] (n2)--(n4);
+  \draw[armBlue,thick] (n2)--(n6);
+  \draw[armBlue,thick] (n3)--(n6);
+  \node at (0.9,-1.75) {\textbf{(դ)} բաժանում $=$ մասնակի կարգ};
+  \node[gray] at (0.9,2.25) {$2,3$ անհամեմատելի};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Ստուգում։} Ուղիղ սկանավորումը հաշվեց բոլոր չորս հատկությունները ուղղակիորեն իրենց
+սահմանումներից վերջավոր նմուշների վրա ($\R$ դեպքերը՝ ներառյալ համապատասխան շրջանագծի/նշանի կետերը;
+(գ)-ն $\{-6,\dots,6\}\setminus\{0\}$-ի վրա; (դ)-ն $\{1,\dots,12\}$-ի վրա; (ե),(զ)-ն մինչև $14$)։
+Ստորև յուրաքանչյուր եզրակացություն համընկավ, ներառյալ AS-ի ձախողումը (գ)-ի համար $\Z$-ի վրա $2$-ի և
+$-2$-ի միջոցով, և AS-ի պահպանումը (դ)-ի համար $\N$-ի վրա։ \checkmark
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}clcccccl@{}}
+\toprule
+ & Հարաբերություն & R & S & AS & T & Եզրակացություն\\
+\midrule
+ա) & $x^2+y^2=1$ $\R^2$-ի վրա & $\times$ & $\checkmark$ & $\times$ & $\times$ & միայն սիմետրիկ\\
+բ) & $x^2=y^2$ $\R^2$-ի վրա & $\checkmark$ & $\checkmark$ & $\times$ & $\checkmark$ & \textbf{համարժեքություն}\\
+գ) & բաժանելիություն $\Z^2$-ի վրա & $\checkmark$ & $\times$ & $\times$ & $\checkmark$ & նախակարգ (ոչ անտիսիմ.)\\
+դ) & բաժանելիություն $\N^2$-ի վրա & $\checkmark$ & $\times$ & $\checkmark$ & $\checkmark$ & \textbf{մասնակի կարգ} (ոչ գծային)\\
+ե) & $\gcd(x,y)=1$ $\N^2$-ի վրա & $\times$ & $\checkmark$ & $\times$ & $\times$ & միայն սիմետրիկ\\
+զ) & $\gcd(x,y)=1$ $\Z^2$-ի վրա & $\times$ & $\checkmark$ & $\times$ & $\times$ & միայն սիմետրիկ\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\answer{ա) միայն S; բ) համարժեքություն (R,S,T); գ) բաժանելիություն $\Z$-ի վրա՝ R,T, բայց ոչ AS
+(նախակարգ); դ) բաժանելիություն $\N$-ի վրա՝ մասնակի կարգ (R,AS,T, ոչ գծային); ե),զ) միայն S։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} ստուգիր յուրաքանչյուր հատկությունը որպես պատկեր՝ ռեֆլեքսիվ $=$ բոլոր ակերը,
+սիմետրիկ $=$ բոլոր սլաքները հակադարձելի, անտիսիմետրիկ $=$ ոչ մի տարբեր 2-ցիկլ, փոխանցական $=$ կարճ
+ուղիներ առկա։ \emph{Մեկ} հակաօրինակը սպանում է հատկությունը։ Երկու հայտնի փաթեթ՝ R+S+T $=$
+համարժեքություն, R+AS+T $=$ մասնակի կարգ։ Նույն պրեդիկատը կարող է փոխել դասը հիմքի բազմության հետ՝
+բաժանելիությունը մասնակի կարգ է $\N$-ի վրա, բայց միայն նախակարգ՝ $\Z$-ի վրա (քանի որ $n$-ն և $-n$-ը
+բաժանում են իրար)։
+\end{methodbox}
+
+% ============================================================================
+\section*{Խնդիր 7.2 - Ռեֆլեքսիվ, սիմետրիկ, փոխանցական փակումներ}
+% ============================================================================
+
+\begin{problembox}[7.2]
+$A=\{1,2,3,4\}$-ի վրա դիցուք $\rho=\{(1,2),(3,1),(3,2),(2,4)\}$։ Գտիր ռեֆլեքսիվ փակումը $r(\rho)$,
+սիմետրիկ փակումը $s(\rho)$ և փոխանցական փակումը $t(\rho)$։
+\end{problembox}
+
+\begin{ideabox}
+\textbf{Փակումը} $\rho$-ի \emph{ամենափոքր} ընդլայնումն է, որ ձեռք է բերում ցանկալի հատկություն՝ առանց
+ավելորդ բան ավելացնելու։ Յուրաքանչյուր փակում ունի մեկտողանի բաղադրատոմս, որ ասում է, թե հենց որ
+սլաքներն են «հարկադրված»՝
+\begin{align*}
+r(\rho)&=\rho\cup\Delta_A && (\text{ավելացրու յուրաքանչյուր ակ}),\\
+s(\rho)&=\rho\cup\rho^{-1} && (\text{ավելացրու յուրաքանչյուր հակառակ}),\\
+t(\rho)&=\bigcup_{k\ge1}\rho^{\,k} && (\text{ավելացրու սլաք յուրաքանչյուր կողմնորոշված ուղու համար}).
+\end{align*}
+Դիգրաֆի վրա կարդալով՝ $r$-ը դրոշմում է ակ յուրաքանչյուր գագաթին; $s$-ը յուրաքանչյուր սլաք երկկողմանի է
+դարձնում; $t$-ն հարցնում է «ո՞ւր կարող եմ հասնել սլաքներով հետևելով» և գծում ուղիղ սլաք յուրաքանչյուր
+հասանելի գագաթի։ Փակումները միայն \emph{ավելացնում} են կողեր՝ սկզբնական սլաքները միշտ մնում են։
+\end{ideabox}
+
+\textbf{Քայլ 1 - Գծիր $\rho$-ն և գտիր, թե յուրաքանչյուր փակումն ինչ պետք է ավելացնի։}
+Հասանելիությունը $\rho$-ում՝ $1\to2\to4$, և $3\to1\to2\to4$ (նաև $3\to2\to4$)։ Ուստի նոր
+\emph{փոխանցական} սլաքները $1\to4$ ($1\to2\to4$ ուղի) և $3\to4$ ($3\to1\to2\to4$ ուղի) են՝ նկատի՛ր,
+որ $3\to2$-ն արդեն առկա է։
+
+\textbf{Քայլ 2 - Կիրառիր երեք բաղադրատոմսերը։}
+\begin{align*}
+r(\rho)&=\rho\cup\{(1,1),(2,2),(3,3),(4,4)\}\\
+&=\{(1,2),(3,1),(3,2),(2,4),\ (1,1),(2,2),(3,3),(4,4)\}.\\[3pt]
+s(\rho)&=\rho\cup\rho^{-1}
+=\{(1,2),(2,1),(3,1),(1,3),(3,2),(2,3),(2,4),(4,2)\}.\\[3pt]
+t(\rho)&=\rho\cup\{(1,4),(3,4)\}
+=\{(1,2),(2,4),(3,1),(3,2),\ (1,4),(3,4)\}.
+\end{align*}
+
+\textbf{Առաջ / հետո դիգրաֆի վրա} (սկզբնական սլաքները՝ կապույտ, \textcolor{armRed}{ավելացված սլաքները՝
+կարմիր})՝
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth, baseline,
+  vtx/.style={circle,draw,fill=armBlue!10,minimum size=7mm,inner sep=0pt}]
+\begin{scope}
+  \node[vtx] (1) at (0,1.5) {$1$};
+  \node[vtx] (2) at (1.5,1.5) {$2$};
+  \node[vtx] (3) at (0,0) {$3$};
+  \node[vtx] (4) at (1.5,0) {$4$};
+  \draw[armBlue,thick,->] (1)--(2);
+  \draw[armBlue,thick,->] (3)--(1);
+  \draw[armBlue,thick,->] (3)--(2);
+  \draw[armBlue,thick,->] (2)--(4);
+  \node at (0.75,-1.0) {\textbf{$\rho$ (տրված)}};
+\end{scope}
+\begin{scope}[xshift=4.3cm]
+  \node[vtx] (1) at (0,1.5) {$1$};
+  \node[vtx] (2) at (1.5,1.5) {$2$};
+  \node[vtx] (3) at (0,0) {$3$};
+  \node[vtx] (4) at (1.5,0) {$4$};
+  \draw[armBlue,thick,->] (1)--(2);
+  \draw[armBlue,thick,->] (3)--(1);
+  \draw[armBlue,thick,->] (3)--(2);
+  \draw[armBlue,thick,->] (2)--(4);
+  \foreach \n in {1,2,3,4}
+    \draw[armRed,thick,->] (\n) .. controls +(160:0.85) and +(110:0.85) .. (\n);
+  \node at (0.75,-1.0) {\textbf{$r(\rho)$}՝ $+$ակեր};
+\end{scope}
+\begin{scope}[xshift=8.6cm]
+  \node[vtx] (1) at (0,1.5) {$1$};
+  \node[vtx] (2) at (1.5,1.5) {$2$};
+  \node[vtx] (3) at (0,0) {$3$};
+  \node[vtx] (4) at (1.5,0) {$4$};
+  \draw[armBlue,thick,->] ([yshift=0.6mm]1.east)--([yshift=0.6mm]2.west);
+  \draw[armBlue,thick,->] ([xshift=-0.6mm]3.north)--([xshift=-0.6mm]1.south);
+  \draw[armBlue,thick,->] (3)--(2);
+  \draw[armBlue,thick,->] ([xshift=0.6mm]2.south)--([xshift=0.6mm]4.north);
+  \draw[armRed,thick,->] ([yshift=-0.6mm]2.west)--([yshift=-0.6mm]1.east);
+  \draw[armRed,thick,->] ([xshift=0.6mm]1.south)--([xshift=0.6mm]3.north);
+  \draw[armRed,thick,->] (2)--(3);
+  \draw[armRed,thick,->] ([xshift=-0.6mm]4.north)--([xshift=-0.6mm]2.south);
+  \node at (0.75,-1.0) {\textbf{$s(\rho)$}՝ $+$հակադարձներ};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[font=\small, >=Stealth, baseline,
+  vtx/.style={circle,draw,fill=armBlue!10,minimum size=7mm,inner sep=0pt}]
+\begin{scope}
+  \node[vtx] (1) at (0,1.7) {$1$};
+  \node[vtx] (2) at (2.0,1.7) {$2$};
+  \node[vtx] (3) at (0,0) {$3$};
+  \node[vtx] (4) at (2.0,0) {$4$};
+  \draw[armBlue,thick,->] (1)--(2);
+  \draw[armBlue,thick,->] (3)--(1);
+  \draw[armBlue,thick,->] (3)--(2);
+  \draw[armBlue,thick,->] (2)--(4);
+  \draw[armRed,thick,->] (1) .. controls (1.2,0.9) .. (4);
+  \draw[armRed,thick,->] (3) .. controls (0.9,-0.9) and (2.0,-0.9) .. (4);
+  \node at (1.0,-1.6) {\textbf{$t(\rho)$}՝ $+\,(1,4)$ $1{\to}2{\to}4$-ով,\ $+\,(3,4)$ $3{\to}\cdots{\to}4$-ով};
+\end{scope}
+\node[align=left,anchor=west] at (4.0,0.8)
+ {Հասանելիություն՝\\[2pt]
+  $1\to2\to4$\\[2pt]
+  $3\to1\to2\to4$\\[2pt]
+  ուստի ավելացրու $(1,4)$ և $(3,4)$։};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Ստուգում։} Փոխանցական փակումը վերահաշվարկվեց Ուորշալի ալգորիթմով չորս հանգույցների վրա; այն
+վերադարձրեց ճիշտ $\{(1,2),(1,4),(2,4),(3,1),(3,2),(3,4)\}$՝ համընկնելով ձեռքով ստացված պատասխանին։
+Ռեֆլեքսիվ և սիմետրիկ փակումները ստուգվեցին ուղղակիորեն կիրառելով $\rho\cup\Delta_A$ և $\rho\cup\rho^{-1}$։
+\checkmark
+
+\answer{$r(\rho)=\rho\cup\{(1,1),(2,2),(3,3),(4,4)\}$;\quad
+$s(\rho)=\{(1,2),(2,1),(1,3),(3,1),(2,3),(3,2),(2,4),(4,2)\}$;\quad
+$t(\rho)=\{(1,2),(2,4),(3,1),(3,2),(1,4),(3,4)\}$։}
+
+\begin{methodbox}
+\textbf{Փոխանցելի տեխնիկա՝} փակումներն ունեն ֆիքսված բաղադրատոմսեր՝ $r=\rho\cup\Delta$,
+$s=\rho\cup\rho^{-1}$, $t=\bigcup_k\rho^k$՝ և յուրաքանչյուրը միայն \emph{ավելացնում} է կողեր։ $t$-ի
+համար մաքուր ձևը հասանելիությունն է՝ գծիր $x\to z$ սլաք, երբ կողմնորոշված ուղի գնում է $x$-ից $z$
+(Ուորշալի ալգորիթմը հենց սա է մեքենայացնում)։ Դիգրաֆի վրա՝ $r$-ը դրոշմում է յուրաքանչյուր ակ, $s$-ը
+կրկնապատկում յուրաքանչյուր սլաք, $t$-ն կարճ է փակում յուրաքանչյուր ուղի։
+\end{methodbox}
+
+\end{document}
