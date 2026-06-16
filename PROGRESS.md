@@ -30,6 +30,20 @@ The same P10 misread also lived in the **pedagogical** solution
 internal triangular grid and answered 170). Both are now rewritten to the real problem
 (answer 216) with a corrected TikZ figure, and recompile clean.
 
+### Scrub of `translated_exercises/*.md` (the unreliable statement source)
+Checked every statement file against the PDFs and fixed the errors that had propagated into
+solutions/keys (11 fixes across 5 files; Practice 1 and Practice 5 were already correct):
+- **Practice7:** P10 had the parallel condition \emph{inverted} ("sides parallel to ABC") and
+  omitted the corner exclusion - this was the root cause of the 170-vs-216 error; P11 threshold
+  1/2 -> 1 m^2.
+- **Practice2_3:** 3.2 restored to all 6 parts (with left-to-right dot); 4.1(c/d) `x<=y` ->
+  divisibility `x/y`; 6.1(b) `xy in Z` -> `x-y in Z`.
+- **Practice6:** P11 now uses the Armenian word «մաթեմատիկա» with a note that թ != տ (the Latin
+  "matematika" merged them); P9 disambiguated to the stars-and-bars reading.
+- **Practice4:** composition `∘` -> course left-to-right `·` in P1, P4 (the `.md` was otherwise
+  factually correct - the answer-key `√(x+2)` typo was independent).
+- **Practice8:** P7 "a and b are adjacent" -> "never adjacent" (matches the f(10)=8119 count).
+
 ## Done (committed and pushed to origin/main @ 78d6aa1)
 
 ### English pedagogical solutions - `discrete/solutions_opus_4_8/`

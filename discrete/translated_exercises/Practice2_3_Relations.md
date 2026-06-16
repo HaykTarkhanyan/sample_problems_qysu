@@ -33,7 +33,7 @@
 3.2. Let $\rho, \sigma$ be relations on $\mathbb{R}$:
    $\rho = \{ (x, y) \mid y = x^2 + 5 \}$
    $\sigma = \{ (x, y) \mid y = 3x \}$
-   Describe $\rho^{-1}, \sigma^{-1}, \rho \circ \sigma, \sigma \circ \rho$.
+   Describe $\rho\cdot\sigma$, $\sigma\cdot\rho$, $\rho^{-1}$, $\sigma^{-1}$, $\rho\cdot\sigma^{-1}$, and $\rho^{-1}\cdot\sigma$. (Composition is left-to-right: $\rho\cdot\sigma$ applies $\rho$ first.)
 
 3.3. Let $\rho, \sigma$ be relations on $\mathbb{Z}$:
    $\rho = \{ (x, x+2) \mid x \in \mathbb{Z} \}$
@@ -50,8 +50,8 @@
 4.1. Determine the properties (reflexive, symmetric, transitive, antisymmetric) of:
    a) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x^2 + y^2 = 1 \}$
    b) $\rho = \{ (x, y) \in \mathbb{R}^2 \mid x^2 = y^2 \}$
-   c) $\rho = \{ (x, y) \in \mathbb{Z}^2 \mid x \le y \}$
-   d) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid x \le y \}$
+   c) $\rho = \{ (x, y) \in \mathbb{Z}^2 \mid x / y \}$ (divisibility: $y \mid x$)
+   d) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid x / y \}$ (divisibility: $y \mid x$)
    e) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid (x, y) = 1 \}$ (coprime)
    f) $\rho = \{ (x, y) \in \mathbb{Z}^2 \mid (x, y) = 1 \}$
 
@@ -101,7 +101,7 @@
 ## 6. Equivalence Relations
 6.1. Are the following equivalence relations?
    a) $\rho = \{ (x, y) \in \mathbb{Q}^2 \mid xy > 0 \}$
-   b) $\rho = \{ (x, y) \in \mathbb{Q}^2 \mid xy \in \mathbb{Z} \}$
+   b) $\rho = \{ (x, y) \in \mathbb{Q}^2 \mid x - y \in \mathbb{Z} \}$
    c) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid (x \le y) \lor (x > y) \}$ (note: this predicate always holds — the universal relation)
    d) $\rho = \{ (x, y) \in \mathbb{N}^2 \mid |a-b| \le 2 \}$
 

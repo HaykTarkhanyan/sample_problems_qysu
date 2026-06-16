@@ -20,13 +20,13 @@
 
 ## 2.5. Combinations with Repetition
 
-9. Find the number of ways to partition the number 6 into three summands.
+9. Find the number of ways to partition the number 6 into three summands. (In this "combinations with repetition" section, the intended reading is an ordered sum of three non-negative integers $x_1+x_2+x_3=6$ — stars and bars.)
 
 10. A store sells three types of cakes. In how many ways can you buy 7 cakes?
 
 ## 3. Ordered Partitions and Multinomial Coefficients
 
-11. How many different words can be formed by rearranging the letters of "matematika"?
+11. How many different words can be formed by rearranging the letters of the Armenian word «մաթեմատիկա» (mathematics)? Note: in Armenian the two "t" sounds are different letters (թ and տ), so only «մ» (×2) and «ա» (×3) repeat; the Latin transliteration "matematika" wrongly merges the two t's.
 
 12. In how many ways can you arrange 15 math books, 16 informatics books, and 12 physics books on a shelf if books of the same subject are indistinguishable?
 

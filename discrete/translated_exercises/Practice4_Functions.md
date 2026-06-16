@@ -1,7 +1,7 @@
 # Practice 4: Functions (Mappings)
 
 ## 1. Mappings (Functions)
-1. If $f$ is a total function (defined everywhere) and $g$ is not, what can be said about $g \circ f$ and $f \circ g$?
+1. If $f$ is a total function (defined everywhere) and $g$ is not, what can be said about $g \cdot f$ and $f \cdot g$? (Composition is left-to-right: $f \cdot g$ applies $f$ first.)
 
 2. Let $f : \mathbb{R} \to \mathbb{R}$. Find the domain and range of the following functions:
    (a) $f(x) = x^2 + 3$
@@ -16,7 +16,7 @@
    (b) $\rho = \{ (x, 5) \mid x \in \mathbb{R} \}$
    (c) $\rho = \{ (7, y) \mid y \in \mathbb{R} \}$
 
-4. Let $f, g : \mathbb{R} \to \mathbb{R}$. Find $f \circ g$ and $g \circ f$ if:
+4. Let $f, g : \mathbb{R} \to \mathbb{R}$. Find $f \cdot g$ and $g \cdot f$ (composition left-to-right: $f \cdot g$ applies $f$ first) if:
    (a) $f(x) = x^2 + 1, g(x) = x + 3$
    (b) $f(x) = \sqrt{x^2+2}, g(x) = x^2 + 3$
    (c) $f(x) = \frac{1}{x}, g(x) = 2x + 3$

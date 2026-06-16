@@ -18,9 +18,9 @@
 
 9. In a class of 30 students, 20 know English, 12 know French, and 6 know both languages. How many students know neither language?
 
-10. Each side of triangle ABC is divided into 8 equal segments. How many triangles can be formed with vertices at these division points such that their sides are parallel to the sides of ABC?
+10. Each side of triangle ABC is divided into 8 equal segments. How many triangles can be formed with vertices at these division points, where the corners A, B, C are not used as vertices and none of the triangle's sides is parallel to a side of ABC?
 
-11. Three carpets of area 3 m² each are placed in a room of area 6 m². Prove that there exist two carpets that overlap by at least 1/2 m²? (Pigeonhole / Area principle).
+11. Three carpets of area 3 m² each are placed in a room of area 6 m². Prove that there exist two carpets that overlap by at least 1 m². (Pigeonhole / Area principle).
 
 12. Find the number of integer solutions to the system:
     $x_1 + x_2 + x_3 = 40$

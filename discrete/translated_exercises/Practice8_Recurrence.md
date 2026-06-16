@@ -20,4 +20,4 @@
 
 6. How many binary strings of length 10 are there that contain two consecutive zeros? (Complementary count: total - no consecutive zeros).
 
-7. How many words can be formed from letters $\{ a, b, c \}$ such that $a$ and $b$ are adjacent?
+7. How many words can be formed from letters $\{ a, b, c \}$ such that $a$ and $b$ are never adjacent?
