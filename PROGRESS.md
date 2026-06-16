@@ -25,6 +25,11 @@ Errors found and fixed (EN + ARM each):
   has answer **216**, not the grid-triangle 170; P11 overlap threshold is 1 m^2 not 1/2.
 - **P8:** verified fully correct, no changes.
 
+The same P10 misread also lived in the **pedagogical** solution
+`solutions_opus_4_8{,_ARM}/Practice7_Partitions_Solutions{,_ARM}.tex` (it had invented an
+internal triangular grid and answered 170). Both are now rewritten to the real problem
+(answer 216) with a corrected TikZ figure, and recompile clean.
+
 ## Done (committed and pushed to origin/main @ 78d6aa1)
 
 ### English pedagogical solutions - `discrete/solutions_opus_4_8/`

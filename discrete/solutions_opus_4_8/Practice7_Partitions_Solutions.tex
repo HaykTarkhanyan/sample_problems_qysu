@@ -230,139 +230,97 @@ $300+500-100=700$ and keep the $800$ outside.
 \end{center}
 
 % ============================================================================
-\section*{Problem 10 - Triangles in a side-8 subdivided triangle}
+\section*{Problem 10 - Triangles on the side-division points, no side parallel to $ABC$}
 
 \begin{problembox}[10]
-Each side of triangle $ABC$ is divided into $8$ equal parts, and through the division points all
-lines parallel to the three sides are drawn, producing a triangular grid. Count all triangles whose
-vertices are grid points (the corners $A,B,C$ count as grid points) and whose three sides are each
-parallel to a side of $ABC$. This includes triangles in the same orientation as $ABC$
-(\textbf{upward}) and the inverted ones (\textbf{downward}).
+Each side of triangle $ABC$ is divided into $8$ equal parts. How many different triangles have all
+three vertices among the division points, use \emph{none} of the corners $A,B,C$ as a vertex, and
+have \emph{no} side parallel to a side of $ABC$?
 \end{problembox}
 
 \begin{ideabox}
-\textquotedbl{}Sides parallel to $ABC$\textquotedbl{} means every triangle we count is similar to
-$ABC$ and sits squarely on the grid; there are only two possible orientations, \textbf{upward}
-(pointing the same way as $ABC$) and \textbf{downward} (inverted). The grid has small upward unit
-triangles and small downward unit triangles, and a bigger triangle of either orientation is just a
-union of small ones. So the plan is: count upward triangles of every size, count downward triangles
-of every size, and add.
+Only the side-division points matter: each side carries $7$ interior division points (the corners
+are barred), so there are $21$ candidate vertices and \emph{no} interior grid.
 
-Why split by orientation? Because the two families obey \emph{different} size limits. An upward
-triangle of side $k$ fits as long as $k\le n$. But a downward triangle of side $k$ needs room on all
-sides; it only fits when $k$ is at most $\lfloor n/2\rfloor$, which is why large inverted triangles
-simply do not exist. Keeping the two counts separate is what makes the problem manageable. Here
-$n=8$.
+The whole problem turns on the ``no side parallel'' condition. If two vertices lay on the
+\emph{same} side of $ABC$, the segment joining them would lie along that side --- parallel to it ---
+which is forbidden. So every admissible triangle takes \emph{exactly one vertex from each side}.
+That reduces the count to: pick one of the $7$ points on each side ($7^3=343$ ways), then discard
+the choices that still leave a side parallel to $ABC$.
 \end{ideabox}
 
-\textbf{Step 1 - Upward triangles of side $k$.}
-An upward triangle of side $k$ is fixed by the position of its top vertex. That vertex can sit
-anywhere that still leaves room for the side-$k$ triangle below it, and those positions form a
-triangular array of side $n-k$, which holds $1+2+\dots+(n-k+1)=\frac{(n-k+1)(n-k+2)}{2}$ points.
-Each size count is itself a binomial, $\frac{(n-k+1)(n-k+2)}{2}=\binom{n-k+2}{2}$, so summing over
-all sizes $k=1,\dots,8$ is $\binom{2}{2}+\binom{3}{2}+\dots+\binom{9}{2}$. By the hockey-stick
-identity $\bigl(\sum_{m=2}^{n+1}\binom{m}{2}=\binom{n+2}{3}\bigr)$ this collapses to a single
-binomial coefficient:
-$$\sum_{k=1}^{8}\frac{(n-k+1)(n-k+2)}{2}=\binom{n+2}{3}=\binom{10}{3}=120.$$
-Term by term: $36,28,21,15,10,6,3,1$ for $k=1,\dots,8$, and $36+28+21+15+10+6+3+1=120$.
+\textbf{Step 1 - Reduce to one vertex per side.}
+If two vertices share a side of $ABC$, the triangle has a side lying along (hence parallel to) that
+side --- excluded. So the survivors take one vertex from each side: $7\cdot 7\cdot 7=343$ choices.
+None is degenerate: a line meets the three \emph{sides} of a triangle internally in at most two
+points (Menelaus), so three points, one strictly inside each side, are never collinear.
 
-\textbf{Step 2 - Downward (inverted) triangles of side $k$.}
-A downward triangle of side $k$ exists only for $k\le\lfloor 8/2\rfloor=4$, and there are
-$\frac{(n-2k+1)(n-2k+2)}{2}$ of side $k$:
-$$k=1:\ \tfrac{7\cdot 8}{2}=28,\quad k=2:\ \tfrac{5\cdot 6}{2}=15,\quad
-  k=3:\ \tfrac{3\cdot 4}{2}=6,\quad k=4:\ \tfrac{1\cdot 2}{2}=1.$$
-Sum of downward triangles: $28+15+6+1=50$.
+\textbf{Step 2 - When is a side of the triangle parallel to a side of $ABC$?}
+Parallelism is affine-invariant, so place $A=(0,0)$, $B=(8,0)$, $C=(0,8)$ and label
+$$P_i=(i,0)\ \text{on }AB,\quad Q_j=(8-j,j)\ \text{on }BC,\quad R_k=(0,k)\ \text{on }CA,\qquad i,j,k\in\{1,\dots,7\}.$$
+For the triangle $P_iQ_jR_k$, checking each side against the three directions of $ABC$:
+\begin{itemize}[nosep]
+  \item $P_iQ_j \parallel CA$ (vertical) $\iff i+j=8$;
+  \item $P_iR_k \parallel BC$ (slope $-1$) $\iff i=k$;
+  \item $Q_jR_k \parallel AB$ (horizontal) $\iff j=k$.
+\end{itemize}
+Each condition leaves one index free, so each holds for $7\cdot 7=49$ of the $343$ triangles.
 
-\textbf{Step 3 - Total.}
-$$\underbrace{120}_{\text{upward}}+\underbrace{50}_{\text{downward}}=170.$$
+\textbf{Step 3 - Inclusion-exclusion.}
+The three ``parallel'' events have $|A_i|=49$. Any two together pin down all three indices
+(e.g.\ $i+j=8$ with $i=k$ forces $j=8-i,\ k=i$), so $|A_i\cap A_j|=7$; all three force $i=j=k=4$, so
+$|A_1\cap A_2\cap A_3|=1$. The triangles with \emph{at least one} side parallel to $ABC$ number
+$$3\cdot 49-3\cdot 7+1=147-21+1=127,$$
+and the admissible triangles are
+$$343-127=216.$$
 
-\textbf{Always check.} A direct computer enumeration over the triangular grid (test every triple of
-grid points forming an upward or a downward triangle of any size) returns $120$ upward and $50$
-downward, total $170$. A known closed form for a side-$n$ triangle also agrees: for $n=8$,
-$\big\lfloor \frac{n(n+2)(2n+1)}{8}\big\rfloor=\frac{8\cdot 10\cdot 17}{8}=170$. \checkmark
+\textbf{Always check.} A direct enumeration of all $\binom{21}{3}=1330$ vertex triples (discard the
+$3\binom{7}{3}=105$ collinear ones, then discard every triangle with a side parallel to $AB$, $BC$
+or $CA$) returns exactly $216$, all with one vertex per side --- confirming Step 1.
 
-\answer{$120\ (\text{upward})+50\ (\text{downward})=170$}
-
-\medskip
-\textbf{Important reading note.} If the intended count were only triangles \emph{similarly oriented}
-to $ABC$ (upward), the answer would be $120$. The statement asks for all grid triangles with sides
-parallel to $ABC$, which includes the inverted ones, so the full total is $\mathbf{170}$. We report
-the breakdown so either reading is covered.
+\answer{$343-127=216$}
 
 \begin{methodbox}
-\textbf{Transferable technique - count by size and by orientation.} In a triangular grid of side
-$n$: upward triangles total $\binom{n+2}{3}$ (sum of $\frac{(n-k+1)(n-k+2)}{2}$). Downward triangles
-of side $k$ exist only for $2k\le n$ and number $\frac{(n-2k+1)(n-2k+2)}{2}$. When a figure can
-appear in more than one orientation, split the count by orientation first - the orientations usually
-have different feasibility limits.
+\textbf{Transferable technique - forbid by direction, then inclusion-exclusion.} A ``no side
+parallel'' constraint is best used in two moves. First let it force \emph{structure} (here: one
+vertex per side), shrinking the candidate set. Then count the remaining bad cases by
+inclusion-exclusion with one event per forbidden direction; symmetry usually makes the single,
+double and triple overlaps equal across directions, so only three numbers are needed.
 \end{methodbox}
 
 \medskip
-\textbf{The grid (here drawn at side $4$ for clarity).} Upward triangles point up like $ABC$;
-the one shaded triangle is \emph{downward}. A downward triangle of side $k$ fits only when
-$2k\le n$ (it must sit inside an upward triangle of side $2k$), which is why the big inverted ones
-run out of room.
+\textbf{The picture.} Each side carries its $7$ division points (corners excluded). The blue
+triangle is admissible --- one vertex on each side, no side parallel to $ABC$. The red dashed
+segment joins two points at equal height: it is parallel to $BC$, exactly the kind of side an
+admissible triangle must avoid.
 
 \begin{center}
-\begin{tikzpicture}[scale=1.05, font=\small]
-  \def\nn{4}
-  % grid points P(i,j) = i*(1,0) + j*(0.5, h)
-  \pgfmathsetmacro{\hh}{sqrt(3)/2}
-  % draw the three families of grid lines for n=4
-  % lines parallel to base (horizontal), rows j=0..n
-  \foreach \j in {0,...,4}{
-    \pgfmathsetmacro{\xs}{\j*0.5}
-    \pgfmathsetmacro{\ys}{\j*\hh}
-    \pgfmathsetmacro{\xe}{(\nn-\j)+\j*0.5}
-    \draw[gray!55] (\xs,\ys) -- (\xe,\ys);
-  }
-  % lines parallel to left side: from base going up-right
-  \foreach \i in {0,...,4}{
-    \pgfmathsetmacro{\xs}{\i}
-    \pgfmathsetmacro{\xe}{\i+(\nn-\i)*0.5}
-    \pgfmathsetmacro{\ye}{(\nn-\i)*\hh}
-    \draw[gray!55] (\xs,0) -- (\xe,\ye);
-  }
-  % lines parallel to right side: from base going up-left
-  \foreach \i in {0,...,4}{
-    \pgfmathsetmacro{\xs}{\i}
-    \pgfmathsetmacro{\xe}{\i*0.5}
-    \pgfmathsetmacro{\ye}{\i*\hh}
-    \draw[gray!55] (\xs,0) -- (\xe,\ye);
-  }
-  % outline ABC
-  \draw[very thick, ink] (0,0) -- (4,0) -- (2,{4*\hh}) -- cycle;
+\begin{tikzpicture}[scale=0.8, font=\small]
+  \pgfmathsetmacro{\hh}{4*sqrt(3)}
+  \coordinate (A) at (4,\hh);
+  \draw[very thick, ink] (4,\hh) -- (0,0) -- (8,0) -- cycle;
+  \node[above] at (4,\hh) {$A$};
   \node[below left] at (0,0) {$B$};
-  \node[below right] at (4,0) {$C$};
-  \node[above] at (2,{4*\hh}) {$A$};
-  % a shaded downward unit triangle: vertices P(1,0),P(2,0) up-pointing? choose a downward one.
-  % downward unit triangle with vertices P(1,1),P(2,0)? Let's pick:
-  % downward unit: (i+1,j),(i,j+1),(i+1,j+1) for i=1,j=0 -> P(2,0),P(1,1),P(2,1)
-  \pgfmathsetmacro{\hh}{sqrt(3)/2}
-  \coordinate (d1) at (2,0);
-  \coordinate (d2) at ({1+0.5},{\hh});
-  \coordinate (d3) at ({2+0.5},{\hh});
-  \fill[armRed!30] (d1) -- (d2) -- (d3) -- cycle;
-  \draw[armRed!75!black, thick] (d1) -- (d2) -- (d3) -- cycle;
-  \node[armRed!75!black] at (3.55,1.0) {downward};
-  % an upward triangle of side 2 outlined in blue
-  \draw[armBlue!75!black, very thick]
-     (1,0) -- (3,0) -- (2,{2*\hh}) -- cycle;
-  \node[armBlue!75!black] at (2,-0.35) {upward, side $2$};
+  \node[below right] at (8,0) {$C$};
+  % 7 division points on each side
+  \foreach \k in {1,...,7}{
+    \pgfmathsetmacro{\f}{\k/8}
+    \fill ({4*\f},{\hh*\f}) circle (1.7pt);        % on AB (B->A)
+    \fill ({8*\f},0) circle (1.7pt);               % on BC (B->C)
+    \fill ({8-4*\f},{\hh*\f}) circle (1.7pt);      % on CA (C->A)
+  }
+  % admissible triangle (blue): AB@2/8, BC@4/8, CA@6/8
+  \coordinate (P) at ({4*0.25},{\hh*0.25});
+  \coordinate (Q) at ({8*0.5},0);
+  \coordinate (R) at ({8-4*0.75},{\hh*0.75});
+  \draw[armBlue!80!black, very thick] (P) -- (Q) -- (R) -- cycle;
+  \fill[armBlue!80!black] (P) circle (2.2pt) (Q) circle (2.2pt) (R) circle (2.2pt);
+  % excluded segment (red dashed) parallel to BC: AB@4/8 and CA@4/8 are at equal height
+  \coordinate (S) at ({4*0.5},{\hh*0.5});
+  \coordinate (T) at ({8-4*0.5},{\hh*0.5});
+  \draw[armRed!80!black, very thick, dashed] (S) -- (T);
+  \node[armRed!80!black, above] at ({4},{\hh*0.5}) {$\parallel BC$ (excluded)};
 \end{tikzpicture}
-\end{center}
-
-\textbf{Counts by size for $n=8$ (what we actually summed):}
-\begin{center}
-\small
-\begin{tabular}{@{}c|cccccccc|c@{}}
-\toprule
-side $k$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & total\\
-\midrule
-upward   & 36 & 28 & 21 & 15 & 10 & 6 & 3 & 1 & \textbf{120}\\
-downward & 28 & 15 & 6  & 1  & 0 & 0 & 0 & 0 & \textbf{50}\\
-\bottomrule
-\end{tabular}
 \end{center}
 
 % ============================================================================
