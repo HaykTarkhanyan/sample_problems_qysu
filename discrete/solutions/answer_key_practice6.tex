@@ -73,11 +73,9 @@ $O\to P(3,4)$: $\binom{7}{3}=35$ paths. $P\to A$: $\binom{8}{4}=70$ paths.
 $\boxed{35\times 70 = 2450}$
 
 \subsubsection*{Problem 9}
-Number of ways to partition 6 into three summands.
-
-\textbf{Ordered} (compositions, parts $\ge 1$): $\binom{5}{2}=\boxed{10}$.
-
-\textbf{Unordered} (integer partitions into 3 parts): $4+1+1$, $3+2+1$, $2+2+2$. Total: $\boxed{3}$.
+Number of ways to write 6 as an ordered sum of three non-negative summands, $x_1+x_2+x_3=6$ (this is in the sheet's ``combinations with repetition'' section). By stars and bars:
+\[ \binom{6+3-1}{3-1} = \binom{8}{2} = \boxed{28}. \]
+(If the parts are required to be $\ge 1$ it is $\binom{5}{2}=10$; the \emph{unordered} partitions $4{+}1{+}1,\,3{+}2{+}1,\,2{+}2{+}2$ number $3$.)
 
 \subsubsection*{Problem 10}
 Buy 7 cakes from 3 types (combinations with repetition).
@@ -85,9 +83,9 @@ Buy 7 cakes from 3 types (combinations with repetition).
 $\boxed{\binom{7+3-1}{3-1} = \binom{9}{2} = 36}$
 
 \subsubsection*{Problem 11}
-Rearrangements of ``matematika'' (10 letters: a$\times 3$, m$\times 2$, t$\times 2$, e$\times 1$, i$\times 1$, k$\times 1$).
+Distinct rearrangements of the Armenian word for ``mathematics'' (10 letters, \textit{matematika} by sound). In Armenian script the two ``t'' sounds are written with \emph{different} letters, so the only repeats are m ($\times 2$) and a ($\times 3$); the other five letters are all distinct.
 
-$\boxed{\frac{10!}{3!\cdot 2!\cdot 2!} = \frac{3{,}628{,}800}{24} = 151{,}200}$
+$\boxed{\frac{10!}{2!\,3!} = \frac{3{,}628{,}800}{12} = 302{,}400}$
 
 \subsubsection*{Problem 12}
 Arrange 15 math, 16 informatics, 12 physics books on a shelf (books of the same subject are indistinguishable). Total $15+16+12=43$ books.

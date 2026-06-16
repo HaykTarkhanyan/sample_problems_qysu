@@ -63,7 +63,7 @@ ZFC բազմությունների ստանդարտ տեսությունում (
 
 %======================================================================
 \subsection*{Խնդիր 8}
-Ապացուցել․ $\{\{a\},\{a,b\}\} = \{\{c\},\{c,d\}\} \iff a=c$ և $b=d$։
+Ապացուցել՝ $\{\{a\},\{a,b\}\} = \{\{c\},\{c,d\}\} \iff a=c$ և $b=d$։
 
 \textit{Ապացույց.}
 ($\Leftarrow$) Ակնհայտ է տեղադրմամբ։
@@ -168,14 +168,15 @@ $\varnothing$ (դատարկ պայման)։ Նաև $\{\varnothing\}$՝ իր մի
 
 %======================================================================
 \subsection*{Խնդիր 16}
-Նկարագրեք բազմությունները, եթե $U = \mathbb{Z}$, $A = \{2k \mid k \in \mathbb{Z}^+\}$ (դրական զույգ թվեր), $B = \{2k-1 \mid k \in \mathbb{Z}^+\}$ (դրական կենտ թվեր), $C = \{x \in \mathbb{Z} \mid x < 10\}$։
+Նկարագրեք $\overline{A},\ \overline{A\cup B},\ \overline{C},\ A\setminus C,\ C\setminus(A\cup B)$, եթե $U = \mathbb{Z}$, $A = \{2k \mid k \in \mathbb{Z}^+\}$ (դրական զույգ թվեր), $B = \{2k-1 \mid k \in \mathbb{Z}^+\}$ (դրական կենտ թվեր), $C = \{x \in \mathbb{Z} \mid x < 10\}$։
 
+Այստեղ $A \cap B = \varnothing$ և $A \cup B = \mathbb{Z}^+$ (յուրաքանչյուր դրական ամբողջ թիվ զույգ է կամ կենտ)։
 \begin{itemize}
   \item $\boxed{\overline{A} = \{x \in \mathbb{Z} \mid x \le 0 \text{ կամ } x \text{-ը կենտ է}\}}$
-  \item $\boxed{A \triangle B = \mathbb{Z}^+}$ \quad (քանի որ $A \cap B = \varnothing$ և $A \cup B = \mathbb{Z}^+$)
+  \item $\boxed{\overline{A \cup B} = \{x \in \mathbb{Z} \mid x \le 0\} = \{0,-1,-2,\ldots\}}$
   \item $\boxed{\overline{C} = \{x \in \mathbb{Z} \mid x \ge 10\}}$
   \item $\boxed{A \setminus C = \{10, 12, 14, \ldots\}}$ \quad (զույգ թվեր $\ge 10$)
-  \item $\boxed{C \setminus (A \triangle B) = \{\ldots, -2, -1, 0\}}$ \quad (ոչ դրական ամբողջ թվեր)
+  \item $\boxed{C \setminus (A \cup B) = \{x \in \mathbb{Z} \mid x \le 0\} = \{\ldots, -2, -1, 0\}}$
 \end{itemize}
 
 %======================================================================
@@ -212,11 +213,13 @@ $\boxed{A \cap \varnothing = \varnothing}$, \quad $\boxed{A \cup \varnothing = A
 \subsection*{Խնդիր 20}
 Ապացուցել համարժեք նկարագրությունները։
 
-\textbf{Մաս 1:} $A \subseteq B \iff A \cup B = B \iff A \cap B = A$։
+\textbf{Մաս 1:} $A \subseteq B \iff \overline{B} \subseteq \overline{A} \iff A \cup B = B \iff A \cap B = A$։
 
-\textit{Ապացույցի ուրվագիծ.} $(A \subseteq B) \Rightarrow (A \cup B = B)$: $A$-ի յուրաքանչյուր տարր արդեն $B$-ում է, ուստի $A \cup B = B$։
+\textit{Ապացույցի ուրվագիծ.} Փակում ենք ցիկլը՝ $A \subseteq B \Rightarrow A \cup B = B \Rightarrow A \cap B = A \Rightarrow \overline{B} \subseteq \overline{A} \Rightarrow A \subseteq B$։
+$(A \subseteq B) \Rightarrow (A \cup B = B)$: $A$-ի յուրաքանչյուր տարր արդեն $B$-ում է, ուստի $A \cup B = B$։
 $(A \cup B = B) \Rightarrow (A \cap B = A)$: եթե $x \in A$, ապա $x \in A \cup B = B$, ուստի $x \in A \cap B$։
-$(A \cap B = A) \Rightarrow (A \subseteq B)$: եթե $x \in A = A \cap B$, ապա $x \in B$։ \qed
+$(A \cap B = A) \Rightarrow (\overline{B} \subseteq \overline{A})$: $A \cap B = A$-ն տալիս է $A \subseteq B$; եթե $x \notin B$, ապա $x \notin A$, այսինքն $\overline{B} \subseteq \overline{A}$։
+$(\overline{B} \subseteq \overline{A}) \Rightarrow (A \subseteq B)$: կոնտրապոզիցիա --- եթե $x \in A$, ապա $x \notin \overline{A}$, ուստի $x \notin \overline{B}$, այսինքն $x \in B$։ \qed
 
 \textbf{Մաս 2:} $A \cap B = \varnothing \iff A \subseteq \overline{B} \iff B \subseteq \overline{A}$։
 
@@ -418,37 +421,30 @@ $= 27(3^{3k+1} + 2^{k+1}) - 25 \cdot 2^{k+1}$։
 
 %======================================================================
 \subsection*{Խնդիր 44}
-Գտնել և ապացուցել՝ $1 + 5 + 9 + \cdots + (4n-3)$։
+Գտնել և ապացուցել՝ $1 + 5 + 9 + \cdots + (4n+1)$։
 
-Գումարն է՝ $\boxed{n(2n-1)}$։
+Վերջին $4n+1$ անդամը $1,5,9,\ldots$ հաջորդականության $(n+1)$-րդ անդամն է, ուստի գումարն ունի $n+1$ անդամ և հավասար է $\boxed{(n+1)(2n+1)}$-ի։
 
-\textit{Ապացույց.} Հենք՝ $n=1$: $1 = 1 \cdot 1$։ $\checkmark$
-
-Ինդուկցիոն քայլ՝ $k(2k-1) + (4(k+1)-3) = 2k^2 - k + 4k + 1 = 2k^2 + 3k + 1 = (k+1)(2k+1) = (k+1)(2(k+1)-1)$։ \qed
+\textit{Ապացույց.} $\displaystyle\sum_{k=1}^{n+1}(4k-3) = 4\cdot\frac{(n+1)(n+2)}{2} - 3(n+1) = (n+1)\bigl[2(n+2)-3\bigr] = (n+1)(2n+1)$։
+Ստուգում՝ $n=1$: $1+5 = 6 = 2\cdot 3$;\; $n=2$: $1+5+9 = 15 = 3\cdot 5$։ $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Խնդիր 45}
-Գտնել և ապացուցել գումարը՝ $1\cdot 2 + 3\cdot 4 + 5\cdot 6 + \cdots + (2n-1)\cdot 2n$։
+Գտնել և ապացուցել՝ $-1 + 2 - 3 + 4 - \cdots - (2n-1) + 2n$։
 
-(Մեկնաբանելով ոչ հստակ բնօրինակը որպես $\sum_{k=1}^{n}(2k-1)(2k)$։)
+Գումարն է՝ $\boxed{n}$։
 
-Գումարն է՝ $\boxed{\dfrac{n(n+1)(4n-1)}{3}}$։
-
-\textit{Ապացույց.} Հենք՝ $n=1$: $1 \cdot 2 = 2$ և $\frac{1 \cdot 2 \cdot 3}{3} = 2$։ $\checkmark$
-
-Ինդուկցիոն քայլ՝ $\frac{k(k+1)(4k-1)}{3} + (2k+1)(2k+2) = \frac{k(k+1)(4k-1) + 6(2k+1)(k+1)}{3}$
-$= \frac{(k+1)[k(4k-1)+6(2k+1)]}{3} = \frac{(k+1)(4k^2+11k+6)}{3} = \frac{(k+1)(k+2)(4k+3)}{3}$։ \qed
+\textit{Ապացույց.} Խմբավորենք $n$ զույգով՝ $\bigl(-(2k-1) + 2k\bigr) = 1$ $k = 1, \ldots, n$-ի համար։ Ուստի ընդհանուրը $n \cdot 1 = n$ է։
+Ստուգում՝ $-1+2 = 1$;\; $-1+2-3+4 = 2$;\; $-1+2-3+4-5+6 = 3$։ $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Խնդիր 46}
-Գտնել և ապացուցել՝ $1\cdot 3 + 5\cdot 7 + \cdots + (4n-3)(4n-1)$։
+Գտնել և ապացուցել՝ $1 - 3 + 5 - 7 + \cdots + (4n-3) - (4n-1)$։
 
-Ընդհանուր անդամն է $(4k-3)(4k-1)$ $k=1,\ldots,n$ արժեքների համար։ Գումարն է՝ $\boxed{\dfrac{n(16n^2 - 7)}{3}}$։
+Գումարն է՝ $\boxed{-2n}$։
 
-\textit{Ապացույց.} Հենք՝ $n=1$: $1 \cdot 3 = 3 = \frac{1 \cdot 9}{3}$։ $\checkmark$
-
-Ինդուկցիոն քայլ՝ $\frac{k(16k^2-7)}{3} + (4(k+1)-3)(4(k+1)-1) = \frac{k(16k^2-7)}{3} + (4k+1)(4k+3)$։
-Նույնության $\frac{(k+1)(16(k+1)^2-7)}{3}$ աջ մասը բացելիս ստացվում է $\frac{16k^3+48k^2+41k+9}{3}$, ինչը համընկնում է ձախ մասի ձևափոխության հետ։ \qed
+\textit{Ապացույց.} Խմբավորենք $n$ զույգով՝ $\bigl((4k-3) - (4k-1)\bigr) = -2$ $k = 1, \ldots, n$-ի համար։ Ուստի ընդհանուրը $-2n$ է։
+Ստուգում՝ $1-3 = -2$;\; $1-3+5-7 = -4$;\; $1-3+5-7+9-11 = -6$։ $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Խնդիր 47}
@@ -482,7 +478,7 @@ $= \frac{(k+1)[k(4k-1)+6(2k+1)]}{3} = \frac{(k+1)(4k^2+11k+6)}{3} = \frac{(k+1)(
 \subsection*{Խնդիր 50}
 Ապացուցել Թեորեմ 1-ը (բազմությունների հանրահաշվի հիմնական օրենքները)՝ օգտվելով պատկանելության հարաբերությունից։
 
-«Թեորեմ 1»-ը սովորաբար վերաբերում է հիմնական նույնություններին․
+«Թեորեմ 1»-ը սովորաբար վերաբերում է հիմնական նույնություններին՝
 \begin{enumerate}
   \item Տեղափոխականություն՝ $A \cup B = B \cup A$, $A \cap B = B \cap A$։
   \item Զուգորդականություն՝ $(A \cup B) \cup C = A \cup (B \cup C)$, նմանապես $\cap$-ի համար։
@@ -498,3 +494,148 @@ $= \frac{(k+1)[k(4k-1)+6(2k+1)]}{3} = \frac{(k+1)(4k^2+11k+6)}{3} = \frac{(k+1)(
 %======================================================================
 \subsection*{Խնդիր 51}
 Ապացուցել Թեորեմ 2-ը՝ օգտվելով պատկանելության հարաբերությունից։
+
+«Թեորեմ 2»-ը սովորաբար ներառում է լրացուցիչ նույնություններ՝ կլանում ($A \cup (A \cap B) = A$, $A \cap (A \cup B) = A$), ինվոլյուցիա ($\overline{\overline{A}} = A$), գերակայություն ($A \cup U = U$, $A \cap \varnothing = \varnothing$), և $\overline{U} = \varnothing$, $\overline{\varnothing} = U$։
+
+\textit{Ապացույցի ուրվագիծ.} Ինչպես Խնդիր 50-ում, յուրաքանչյուրն ապացուցվում է տարր առ տարր՝ վերածվելով ասույթային տրամաբանության նույնաբանությունների։ Օրինակ՝ կլանում՝ $x \in A \cup (A \cap B) \iff x \in A \lor (x \in A \land x \in B) \iff x \in A$։ \qed
+
+%======================================================================
+\subsection*{Խնդիր 52}
+Ապացուցել Թեորեմ 2-ը՝ օգտվելով Թեորեմ 1-ի նույնություններից որպես աքսիոմներ (հանրահաշվական ապացույց, առանց տարր առ տարր)։
+
+\textit{Ապացույցի ուրվագիծ.} Օրինակ՝ կլանում՝ $A \cup (A \cap B) = (A \cap U) \cup (A \cap B) = A \cap (U \cup B) = A \cap U = A$, օգտվելով Թեորեմ 1-ի նույնության, բաշխականության և գերակայության օրենքներից։ Թեորեմ 2-ի յուրաքանչյուր նույնություն կարելի է ստանալ զուտ հանրահաշվորեն Թեորեմ 1-ից։ \qed
+
+%======================================================================
+\subsection*{Խնդիր 53}
+Թեորեմ 1-ի և 2-ի օգնությամբ ապացուցել նույնությունները։
+
+\textbf{(1)} $(A \cap B \cap X) \cup (A \cap B \cap C \cap X \cap Y) \cup (A \cap X \cap \overline{A}) = A \cap B \cap X$.
+
+\textit{Ապացույցի ուրվագիծ.} Երրորդ անդամը պարունակում է $A \cap \overline{A} = \varnothing$, ուստի այն անհետանում է։ Երկրորդ անդամն առաջինի ենթաբազմություն է (ունի լրացուցիչ $C$ և $Y$ պայմաններ), ուստի առաջին $\cup$ երկրորդ $=$ առաջին՝ կլանմամբ։ Արդյունք՝ $A \cap B \cap X$։ \qed
+
+\textbf{(2)} $(A \cap B \cap C) \cup (\overline{A} \cap B \cap C) \cup \overline{B} \cup \overline{C} = U$.
+
+\textit{Ապացույցի ուրվագիծ.} $(A \cap B \cap C) \cup (\overline{A} \cap B \cap C) = (A \cup \overline{A}) \cap B \cap C = B \cap C$, ուստի ձախ կողմը $(B \cap C) \cup \overline{B} \cup \overline{C} = (B \cap C) \cup \overline{B \cap C} = U$ է (Դե Մորգան)։ \qed
+
+\textbf{(3)} $(A \cap B \cap C \cap \overline{X}) \cup (\overline{A} \cap C) \cup (\overline{B} \cap C) \cup (C \cap X) = C$.
+
+\textit{Ապացույցի ուրվագիծ.} Դուրս բերենք $C$-ն՝ ձախ կողմը $C \cap \bigl[(A \cap B \cap \overline{X}) \cup \overline{A} \cup \overline{B} \cup X\bigr]$ է։ $S = A \cap B \cap \overline{X}$-ով՝ $\overline{A} \cup \overline{B} \cup X = \overline{S}$, ուստի փակագիծը $S \cup \overline{S} = U$ է։ Հետևաբար արդյունքը $C \cap U = C$ է։ \qed
+
+%======================================================================
+\subsection*{Խնդիր 54}
+Ապացուցել բազմությունների նույնությունները (բոլորը ճիշտ; յուրաքանչյուրը՝ տարր առ տարր, $\setminus$-ը գրելով որպես $\cap\,\overline{(\cdot)}$, իսկ $A \triangle B$-ն՝ «$x$-ը $A, B$-ից ճիշտ մեկում»)։
+
+\textbf{(1)} $A \cap (B \setminus C) = (A \cap B) \setminus C$. \\
+Երկու կողմում էլ՝ $x \in A \land x \in B \land x \notin C$։ \checkmark
+
+\textbf{(2)} $A \setminus (B \cup C) = (A \setminus B) \setminus C$. \\
+Երկու կողմում էլ՝ $x \in A \land x \notin B \land x \notin C$։ \checkmark
+
+\textbf{(3)} $(A \cup B) \setminus C = (A \setminus C) \cup (B \setminus C)$. \\
+$(x \in A \lor x \in B) \land x \notin C \iff (x \in A \land x \notin C) \lor (x \in B \land x \notin C)$։ \checkmark
+
+\textbf{(4)} $A \cap (B \setminus C) = (A \cap B) \setminus (A \cap C)$. \\
+$x \in A$-ի դեպքում $\lnot(x \in A \land x \in C)$-ն վերածվում է $x \notin C$-ի; երկու կողմն էլ՝ $x \in A \land x \in B \land x \notin C$։ \checkmark
+
+\textbf{(5)} $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$. \\
+$x \in A \land (x \notin B \lor x \in C) \iff (x \in A \land x \notin B) \lor (x \in A \land x \in C)$։ \checkmark
+
+\textbf{(6)} $(A \setminus B) \setminus C = (A \setminus C) \setminus (B \setminus C)$. \\
+$x \notin C$-ի դեպքում $B \setminus C$-ն վերածվում է $B$-ի; երկու կողմն էլ՝ $x \in A \land x \notin B \land x \notin C$ (հմմտ.\ Խնդիր 22)։ \checkmark
+
+\textbf{(7)} $A \triangle \varnothing = A$. \quad $(A \setminus \varnothing) \cup (\varnothing \setminus A) = A \cup \varnothing = A$։ \checkmark
+
+\textbf{(8)} $A \triangle B = B \triangle A$. \quad «$A, B$-ից ճիշտ մեկում»-ը սիմետրիկ է $A, B$-ի նկատմամբ։ \checkmark
+
+\textbf{(9)} $A \triangle (B \triangle C) = (A \triangle B) \triangle C$. \quad Երկու կողմն էլ ճիշտ են, երբ $x$-ը պատկանում է $A, B, C$-ից \emph{կենտ} թվով բազմության (զույգությունն ասոցիատիվ է)։ \checkmark
+
+\textbf{(10)} $A \triangle A = \varnothing$. \quad $(A \setminus A) \cup (A \setminus A) = \varnothing$։ \checkmark
+
+\textbf{(11)} $A \cap (B \triangle C) = (A \cap B) \triangle (A \cap C)$. \\
+Երկու կողմն էլ վերածվում են $(x \in A \land x \in B \land x \notin C) \lor (x \in A \land x \notin B \land x \in C)$-ի։ \checkmark
+
+%======================================================================
+\subsection*{Խնդիր 55}
+Ցույց տալ, որ $A \cup (B \setminus C) \neq (A \cup B) \setminus (A \cup C)$ ընդհանուր դեպքում։
+
+Հակաօրինակ՝ $A = \{1\}$, $B = \{1,2\}$, $C = \{1\}$։
+Ձախ՝ $B \setminus C = \{2\}$, ուստի $A \cup (B \setminus C) = \{1,2\}$։
+Աջ՝ $A \cup B = \{1,2\}$, $A \cup C = \{1\}$, ուստի $(A \cup B) \setminus (A \cup C) = \{2\}$։
+$\{1,2\} \neq \{2\}$։ \qed
+
+%======================================================================
+\subsection*{Խնդիր 56}
+Ապացուցել, որ $A \triangle X = B$-ն ունի միակ լուծում։
+
+Միակ լուծումն է՝ $\boxed{X = A \triangle B}$։
+
+\textit{Ապացույց.}
+\textbf{Գոյություն:} Դիցուք $X = A \triangle B$։ Ապա $A \triangle X = A \triangle (A \triangle B) = (A \triangle A) \triangle B = \varnothing \triangle B = B$։ $\checkmark$
+
+\textbf{Միակություն:} Եթե $A \triangle X = B$, երկու կողմին կիրառենք $A \triangle$՝ $A \triangle (A \triangle X) = A \triangle B$, որից $X = A \triangle B$։ (Օգտվեցինք $\triangle$-ի ասոցիատիվությունից և $A \triangle A = \varnothing$, $\varnothing \triangle X = X$-ից։) \qed
+
+%======================================================================
+\subsection*{Խնդիր 57}
+Գոյություն ունե՞ն $A, B$ բազմություններ, որ $|A \times B|$ հավասար է՝
+
+\textbf{57.1.} 12 տարր։ \textbf{ԱՅՈ։} Օրինակ՝ $A = \{1,2,3\}$, $B = \{a,b,c,d\}$; $|A| \cdot |B| = 3 \cdot 4 = 12$։
+
+\textbf{57.2.} 13 տարր։ \textbf{ԱՅՈ։} Քանի որ $13$-ը պարզ է, $|A| \cdot |B| = 13$ պահանջում է $|A|=1, |B|=13$ կամ հակառակը։ Օրինակ՝ $A=\{1\}$, $B$՝ ցանկացած 13-տարրանոց բազմություն։
+
+$\boxed{\text{57.1: Այո (օր.\ } 3 \times 4 = 12\text{)։ \quad 57.2: Այո (օր.\ } 1 \times 13 = 13\text{)։}}$
+
+%======================================================================
+\subsection*{Խնդիր 58}
+Ապացուցել, որ $A \times B = B \times A \implies A = B$ (ենթադրելով երկուսն էլ ոչ դատարկ)։
+
+\textit{Ապացույց.} Ենթադրենք $A, B \neq \varnothing$ և $A \times B = B \times A$։
+Ցույց տալու համար $A \subseteq B$՝ դիցուք $a \in A$, ընտրենք ցանկացած $b \in B$։ Ապա $(a,b) \in A \times B = B \times A$, ուստի $a \in B$։
+Ցույց տալու համար $B \subseteq A$՝ դիցուք $b \in B$, ընտրենք ցանկացած $a \in A$։ Ապա $(b,a) \in B \times A = A \times B$, ուստի $b \in A$։
+Հետևաբար $A = B$։ (Եթե որևէ բազմություն դատարկ է, երկու արտադրյալներն էլ $\varnothing$ են՝ անկախ $A = B$-ից։) \qed
+
+%======================================================================
+\subsection*{Խնդիր 59}
+Թվարկել $A \times B$-ի տարրերը՝ $A = \{a,b\}$, $B = \{1,2,3,4\}$-ի համար։
+
+\[
+  \boxed{A \times B = \{(a,1),(a,2),(a,3),(a,4),(b,1),(b,2),(b,3),(b,4)\}}
+\]
+(8 տարր։)
+
+%======================================================================
+\subsection*{Խնդիր 60}
+Ապացուցել, որ դեկարտյան արտադրյալը բաշխվում է բազմությունների գործողությունների վրա։
+
+\textbf{(1)} $A \times (B \cup C) = (A \times B) \cup (A \times C)$.
+
+\textit{Ապացույց.} $(x,y) \in A \times (B \cup C) \iff x \in A \land (y \in B \lor y \in C) \iff (x \in A \land y \in B) \lor (x \in A \land y \in C) \iff (x,y) \in (A\times B) \cup (A \times C)$։ \qed
+
+\textbf{(2)} $(B \cup C) \times A = (B \times A) \cup (C \times A)$. Նույն ապացույցը՝ առաջին բաղադրիչի վրա։
+
+\textbf{(3)} $A \times (B \cap C) = (A \times B) \cap (A \times C)$.
+
+\textit{Ապացույց.} $(x,y) \in$ ձախ $\iff x \in A \land y \in B \land y \in C \iff (x \in A \land y \in B) \land (x \in A \land y \in C)$։ \qed
+
+\textbf{(4)} $(B \cap C) \times A = (B \times A) \cap (C \times A)$. (3)-ի հայելին։
+
+\textbf{(5)} $A \times (B \setminus C) = (A \times B) \setminus (A \times C)$.
+
+\textit{Ապացույց.} $(x,y) \in$ ձախ $\iff x \in A \land y \in B \land y \notin C$։ $(x,y) \in$ աջ $\iff (x \in A \land y \in B) \land \lnot(x \in A \land y \in C)$։ $x \in A$-ի դեպքում երկրորդ պայմանը վերածվում է $y \notin C$-ի։ \qed
+
+\textbf{(6)} $(B \setminus C) \times A = (B \times A) \setminus (C \times A)$. (5)-ի հայելին։
+
+%======================================================================
+\subsection*{Խնդիր 61}
+Ապացուցել $(A \cap B) \times (C \cap D) = (A \times C) \cap (B \times D)$։
+
+\textit{Ապացույց.}
+$(x,y) \in (A \cap B) \times (C \cap D)$
+$\iff x \in A \land x \in B \land y \in C \land y \in D$
+$\iff (x \in A \land y \in C) \land (x \in B \land y \in D)$
+$\iff (x,y) \in (A \times C) \cap (B \times D)$։ \qed
+
+%======================================================================
+\subsection*{Խնդիր 62}
+Ապացուցել $A \subseteq B \land C \subseteq D \implies A \times C \subseteq B \times D$։
+
+\textit{Ապացույց.} Դիցուք $(x,y) \in A \times C$։ Ապա $x \in A \subseteq B$ տալիս է $x \in B$, իսկ $y \in C \subseteq D$ տալիս է $y \in D$։ Ուստի $(x,y) \in B \times D$։ \qed

@@ -168,14 +168,15 @@ Prove $\varnothing \subseteq A \cap B \subseteq A \cup B$.
 
 %======================================================================
 \subsection*{Problem 16}
-Describe sets with $U = \mathbb{Z}$, $A = \{2k \mid k \in \mathbb{Z}^+\}$ (positive evens), $B = \{2k-1 \mid k \in \mathbb{Z}^+\}$ (positive odds), $C = \{x \in \mathbb{Z} \mid x < 10\}$.
+Describe $\overline{A},\ \overline{A\cup B},\ \overline{C},\ A\setminus C,\ C\setminus(A\cup B)$ with $U = \mathbb{Z}$, $A = \{2k \mid k \in \mathbb{Z}^+\}$ (positive evens), $B = \{2k-1 \mid k \in \mathbb{Z}^+\}$ (positive odds), $C = \{x \in \mathbb{Z} \mid x < 10\}$.
 
+Here $A \cap B = \varnothing$ and $A \cup B = \mathbb{Z}^+$ (every positive integer is even or odd).
 \begin{itemize}
   \item $\boxed{\overline{A} = \{x \in \mathbb{Z} \mid x \le 0 \text{ or } x \text{ is odd}\}}$
-  \item $\boxed{A \triangle B = \mathbb{Z}^+}$ \quad (since $A \cap B = \varnothing$ and $A \cup B = \mathbb{Z}^+$)
+  \item $\boxed{\overline{A \cup B} = \{x \in \mathbb{Z} \mid x \le 0\} = \{0,-1,-2,\ldots\}}$
   \item $\boxed{\overline{C} = \{x \in \mathbb{Z} \mid x \ge 10\}}$
   \item $\boxed{A \setminus C = \{10, 12, 14, \ldots\}}$ \quad (positive evens $\ge 10$)
-  \item $\boxed{C \setminus (A \triangle B) = \{\ldots, -2, -1, 0\}}$ \quad (non-positive integers)
+  \item $\boxed{C \setminus (A \cup B) = \{x \in \mathbb{Z} \mid x \le 0\} = \{\ldots, -2, -1, 0\}}$
 \end{itemize}
 
 %======================================================================
@@ -212,11 +213,13 @@ Compute:
 \subsection*{Problem 20}
 Prove equivalent characterizations.
 
-\textbf{Part 1:} $A \subseteq B \iff A \cup B = B \iff A \cap B = A$.
+\textbf{Part 1:} $A \subseteq B \iff \overline{B} \subseteq \overline{A} \iff A \cup B = B \iff A \cap B = A$.
 
-\textit{Proof sketch.} $(A \subseteq B) \Rightarrow (A \cup B = B)$: every element of $A$ is already in $B$, so $A \cup B = B$.
+\textit{Proof sketch.} Close the cycle $A \subseteq B \Rightarrow A \cup B = B \Rightarrow A \cap B = A \Rightarrow \overline{B} \subseteq \overline{A} \Rightarrow A \subseteq B$.
+$(A \subseteq B) \Rightarrow (A \cup B = B)$: every element of $A$ is already in $B$, so $A \cup B = B$.
 $(A \cup B = B) \Rightarrow (A \cap B = A)$: if $x \in A$ then $x \in A \cup B = B$, so $x \in A \cap B$.
-$(A \cap B = A) \Rightarrow (A \subseteq B)$: if $x \in A = A \cap B$ then $x \in B$. \qed
+$(A \cap B = A) \Rightarrow (\overline{B} \subseteq \overline{A})$: $A \cap B = A$ gives $A \subseteq B$; if $x \notin B$ then $x \notin A$, i.e.\ $\overline{B} \subseteq \overline{A}$.
+$(\overline{B} \subseteq \overline{A}) \Rightarrow (A \subseteq B)$: contrapositive --- if $x \in A$ then $x \notin \overline{A}$, so $x \notin \overline{B}$, i.e.\ $x \in B$. \qed
 
 \textbf{Part 2:} $A \cap B = \varnothing \iff A \subseteq \overline{B} \iff B \subseteq \overline{A}$.
 
@@ -418,37 +421,30 @@ Inductive step: $k(2k+1) + (4(k+1)-1) = 2k^2 + k + 4k + 3 = 2k^2 + 5k + 3 = (k+1
 
 %======================================================================
 \subsection*{Problem 44}
-Find and prove: $1 + 5 + 9 + \cdots + (4n-3)$.
+Find and prove: $1 + 5 + 9 + \cdots + (4n+1)$.
 
-The sum is $\boxed{n(2n-1)}$.
+The last term $4n+1$ is the $(n+1)$-th term of $1,5,9,\ldots$, so the sum has $n+1$ terms and equals $\boxed{(n+1)(2n+1)}$.
 
-\textit{Proof.} Base: $n=1$: $1 = 1 \cdot 1$. $\checkmark$
-
-Inductive step: $k(2k-1) + (4(k+1)-3) = 2k^2 - k + 4k + 1 = 2k^2 + 3k + 1 = (k+1)(2k+1) = (k+1)(2(k+1)-1)$. \qed
+\textit{Proof.} $\displaystyle\sum_{k=1}^{n+1}(4k-3) = 4\cdot\frac{(n+1)(n+2)}{2} - 3(n+1) = (n+1)\bigl[2(n+2)-3\bigr] = (n+1)(2n+1)$.
+Check: $n=1$: $1+5 = 6 = 2\cdot 3$;\; $n=2$: $1+5+9 = 15 = 3\cdot 5$. $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Problem 45}
-Find and prove the sum $1\cdot 2 + 3\cdot 4 + 5\cdot 6 + \cdots + (2n-1)\cdot 2n$.
+Find and prove: $-1 + 2 - 3 + 4 - \cdots - (2n-1) + 2n$.
 
-(Interpreting the unclear original as $\sum_{k=1}^{n}(2k-1)(2k)$.)
+The sum is $\boxed{n}$.
 
-The sum is $\boxed{\dfrac{n(n+1)(4n-1)}{3}}$.
-
-\textit{Proof.} Base: $n=1$: $1 \cdot 2 = 2$ and $\frac{1 \cdot 2 \cdot 3}{3} = 2$. $\checkmark$
-
-Inductive step: $\frac{k(k+1)(4k-1)}{3} + (2k+1)(2k+2) = \frac{k(k+1)(4k-1) + 6(2k+1)(k+1)}{3}$
-$= \frac{(k+1)[k(4k-1)+6(2k+1)]}{3} = \frac{(k+1)(4k^2+11k+6)}{3} = \frac{(k+1)(k+2)(4k+3)}{3}$. \qed
+\textit{Proof.} Group in $n$ pairs: $\bigl(-(2k-1) + 2k\bigr) = 1$ for $k = 1, \ldots, n$. Hence the total is $n \cdot 1 = n$.
+Check: $-1+2 = 1$;\; $-1+2-3+4 = 2$;\; $-1+2-3+4-5+6 = 3$. $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Problem 46}
-Find and prove: $1\cdot 3 + 5\cdot 7 + \cdots + (4n-3)(4n-1)$.
+Find and prove: $1 - 3 + 5 - 7 + \cdots + (4n-3) - (4n-1)$.
 
-The general term is $(4k-3)(4k-1)$ for $k=1,\ldots,n$. The sum is $\boxed{\dfrac{n(16n^2 - 7)}{3}}$.
+The sum is $\boxed{-2n}$.
 
-\textit{Proof.} Base: $n=1$: $1 \cdot 3 = 3 = \frac{1 \cdot 9}{3}$. $\checkmark$
-
-Inductive step: $\frac{k(16k^2-7)}{3} + (4(k+1)-3)(4(k+1)-1) = \frac{k(16k^2-7)}{3} + (4k+1)(4k+3)$.
-Both sides of the target identity $\frac{(k+1)(16(k+1)^2-7)}{3}$ expand to $\frac{16k^3+48k^2+41k+9}{3}$ (routine algebra). \qed
+\textit{Proof.} Group in $n$ pairs: $\bigl((4k-3) - (4k-1)\bigr) = -2$ for $k = 1, \ldots, n$. Hence the total is $-2n$.
+Check: $1-3 = -2$;\; $1-3+5-7 = -4$;\; $1-3+5-7+9-11 = -6$. $\checkmark$ \qed
 
 %======================================================================
 \subsection*{Problem 47}
@@ -514,31 +510,50 @@ Prove Theorem 2 using Theorem 1 identities as axioms (algebraic proofs, no eleme
 \subsection*{Problem 53}
 Using Theorems 1 \& 2, prove identities.
 
-\textbf{(1)} $(A \cap \overline{B} \cap \overline{X}) \cup (A \cap \overline{B} \cap \overline{C} \cap \overline{X} \cap \overline{Y}) \cup (A \cap \overline{X} \cap \overline{A}) = A \cap \overline{B} \cap \overline{X}$.
+\textbf{(1)} $(A \cap B \cap X) \cup (A \cap B \cap C \cap X \cap Y) \cup (A \cap X \cap \overline{A}) = A \cap B \cap X$.
 
-\textit{Proof sketch.} The third term contains $A \cap \overline{A} = \varnothing$, so it vanishes. The second term is a subset of the first (it has extra constraints $\overline{C}$ and $\overline{Y}$), so $\text{first} \cup \text{second} = \text{first}$, by absorption. Result: $A \cap \overline{B} \cap \overline{X}$. \qed
+\textit{Proof sketch.} The third term contains $A \cap \overline{A} = \varnothing$, so it vanishes. The second term is a subset of the first (it has extra constraints $C$ and $Y$), so $\text{first} \cup \text{second} = \text{first}$, by absorption. Result: $A \cap B \cap X$. \qed
 
-(The remaining sub-problems follow similarly by applying idempotency, absorption, and complement laws.)
+\textbf{(2)} $(A \cap B \cap C) \cup (\overline{A} \cap B \cap C) \cup \overline{B} \cup \overline{C} = U$.
+
+\textit{Proof sketch.} $(A \cap B \cap C) \cup (\overline{A} \cap B \cap C) = (A \cup \overline{A}) \cap B \cap C = B \cap C$, so the left side is $(B \cap C) \cup \overline{B} \cup \overline{C} = (B \cap C) \cup \overline{B \cap C} = U$ (De Morgan). \qed
+
+\textbf{(3)} $(A \cap B \cap C \cap \overline{X}) \cup (\overline{A} \cap C) \cup (\overline{B} \cap C) \cup (C \cap X) = C$.
+
+\textit{Proof sketch.} Factor out $C$: the left side is $C \cap \bigl[(A \cap B \cap \overline{X}) \cup \overline{A} \cup \overline{B} \cup X\bigr]$. With $S = A \cap B \cap \overline{X}$, note $\overline{A} \cup \overline{B} \cup X = \overline{S}$, so the bracket is $S \cup \overline{S} = U$. Hence the result is $C \cap U = C$. \qed
 
 %======================================================================
 \subsection*{Problem 54}
-Prove/verify set identities. Representative items:
+Prove the set identities (all true; each by element-chasing, translating $\setminus$ as $\cap\,\overline{(\cdot)}$ and $A \triangle B$ as ``$x$ in exactly one of $A, B$'').
 
-\textbf{(1)} $A \setminus (B \setminus C) = (A \setminus B) \cup C$ --- \textbf{FALSE in general.}
+\textbf{(1)} $A \cap (B \setminus C) = (A \cap B) \setminus C$. \\
+$x \in A \land x \in B \land x \notin C$ on both sides. \checkmark
 
-Counterexample: $A = \{1\}$, $B = \varnothing$, $C = \{2\}$. LHS $= \{1\} \setminus \varnothing = \{1\}$. RHS $= \{1\} \cup \{2\} = \{1,2\}$. LHS $\neq$ RHS.
+\textbf{(2)} $A \setminus (B \cup C) = (A \setminus B) \setminus C$. \\
+$x \in A \land x \notin B \land x \notin C$ on both sides. \checkmark
 
-The correct identity is $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$.
+\textbf{(3)} $(A \cup B) \setminus C = (A \setminus C) \cup (B \setminus C)$. \\
+$(x \in A \lor x \in B) \land x \notin C \iff (x \in A \land x \notin C) \lor (x \in B \land x \notin C)$. \checkmark
 
-\textbf{(3)} $(A \cup B) \setminus C = (A \setminus C) \cup (B \setminus C)$.
+\textbf{(4)} $A \cap (B \setminus C) = (A \cap B) \setminus (A \cap C)$. \\
+Given $x \in A$, $\lnot(x \in A \land x \in C)$ reduces to $x \notin C$; both sides are $x \in A \land x \in B \land x \notin C$. \checkmark
 
-\textit{Proof.} $x \in (A \cup B) \setminus C \iff (x \in A \lor x \in B) \land x \notin C \iff (x \in A \land x \notin C) \lor (x \in B \land x \notin C) \iff x \in (A\setminus C) \cup (B \setminus C)$. \qed
+\textbf{(5)} $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$. \\
+$x \in A \land (x \notin B \lor x \in C) \iff (x \in A \land x \notin B) \lor (x \in A \land x \in C)$. \checkmark
 
-\textbf{(11)} $A \cap (B \mathbin{\triangle} C) = (A \cap B) \mathbin{\triangle} (A \cap C)$.
+\textbf{(6)} $(A \setminus B) \setminus C = (A \setminus C) \setminus (B \setminus C)$. \\
+Given $x \notin C$, $B \setminus C$ reduces to $B$; both sides are $x \in A \land x \notin B \land x \notin C$ (cf.\ Problem 22). \checkmark
 
-\textit{Proof.} Both sides reduce to $(x \in A \land x \in B \land x \notin C) \lor (x \in A \land x \notin B \land x \in C)$. \qed
+\textbf{(7)} $A \triangle \varnothing = A$. \quad $(A \setminus \varnothing) \cup (\varnothing \setminus A) = A \cup \varnothing = A$. \checkmark
 
-(Other sub-problems in 54 follow the same element-chasing technique, translating $\setminus$ as $\cap\;\overline{(\cdot)}$ and using propositional logic equivalences.)
+\textbf{(8)} $A \triangle B = B \triangle A$. \quad ``In exactly one of $A, B$'' is symmetric in $A, B$. \checkmark
+
+\textbf{(9)} $A \triangle (B \triangle C) = (A \triangle B) \triangle C$. \quad Both sides hold iff $x$ lies in an \emph{odd} number of $A, B, C$ (parity is associative). \checkmark
+
+\textbf{(10)} $A \triangle A = \varnothing$. \quad $(A \setminus A) \cup (A \setminus A) = \varnothing$. \checkmark
+
+\textbf{(11)} $A \cap (B \triangle C) = (A \cap B) \triangle (A \cap C)$. \\
+Both sides reduce to $(x \in A \land x \in B \land x \notin C) \lor (x \in A \land x \notin B \land x \in C)$. \checkmark
 
 %======================================================================
 \subsection*{Problem 55}

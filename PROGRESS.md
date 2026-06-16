@@ -3,6 +3,28 @@
 Status of the QYSU discrete-math solution work. Scope is `discrete/` only;
 `group_theory/` is intentionally untouched. Last updated 2026-06-16.
 
+## Comprehensive answer-key verification pass (2026-06-16)
+
+Verified and fixed the **brief answer keys** (`discrete/solutions/answer_key_practiceN*.tex`,
+EN + ARM) that cover **every** problem on each sheet (not just the cherry-picked subset in
+`solutions_opus_4_8/`). Each sheet was re-checked against the **original exercise PDF** (glyphs
+rendered with PyMuPDF where the romanized text is ambiguous) and the verified pedagogical
+solution. Key lesson: `translated_exercises/*.md` is **not** a reliable source - it had real
+statement errors. Both combined keys recompile clean (EN `Answer_Key.pdf` 35 pp via pdflatex,
+ARM `Answer_Key_ARM.pdf` 38 pp via xelatex, 0 errors, 0 missing-char).
+
+Errors found and fixed (EN + ARM each):
+- **P2-3:** 3.2 expanded to all 6 parts; 3.3 `σ={(x,x^2)}`; 4.1(c/d) are divisibility not `x≤y`
+  (4.1c antisymmetry fixed -> preorder); 5.1 replaced self-contradictory example; 6.1(b)
+  `x−y∈Z` (equivalence); 6.1(c) `(a≤b)∨(a>b)` = universal relation.
+- **P4:** composition relabeled to course left-to-right `f·g=g(f(x))` (P1, P4); P2(b) `√(x−2)`.
+- **P5:** P1 = "exactly one 6" (243); P2 = "at least one 6" (271); P5(b) = of-those-div-by-5
+  also div-by-3 = 46.
+- **P6:** P9 = stars-and-bars `C(8,2)=28`; P11 word «մաթեմատիկա» has distinct թ/տ -> `10!/(2!3!)=302400`.
+- **P7:** P10 fully rewritten - the real problem (corners excluded, no side parallel to ABC)
+  has answer **216**, not the grid-triangle 170; P11 overlap threshold is 1 m^2 not 1/2.
+- **P8:** verified fully correct, no changes.
+
 ## Done (committed and pushed to origin/main @ 78d6aa1)
 
 ### English pedagogical solutions - `discrete/solutions_opus_4_8/`

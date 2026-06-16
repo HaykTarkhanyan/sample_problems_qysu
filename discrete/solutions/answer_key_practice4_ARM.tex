@@ -2,17 +2,17 @@
 
 % ============================================================
 \subsection*{Խնդիր 1}
-Եթե $f$-ը ամբողջական է, իսկ $g$-ն՝ ոչ (այսինքն՝ $g$-ն մասնակի ֆունկցիա է).
+$f$-ը ամբողջական է, $g$-ն՝ մասնակի: Կոմպոզիցիան կարդացվում է ձախից աջ՝ $(f\cdot g)(x)=g(f(x))$.
 \begin{itemize}[nosep]
-  \item $g \circ f$-ը կարող է լինել մասնակի. այն որոշված է $x$-ում միայն այն դեպքում, երբ $f(x) \in \operatorname{Dom}(g)$:
-  \item $f \circ g$-ն որոշված է $x$-ում միայն այն դեպքում, երբ $g(x)$-ը որոշված է, բայց որտեղ $g(x)$-ը որոշված է, $f(g(x))$-ը նույնպես որոշված է, քանի որ $f$-ը ամբողջական է: Այսպիսով՝ $\operatorname{Dom}(f \circ g) = \operatorname{Dom}(g)$:
+  \item $g\cdot f$ (սկզբում՝ $g$). որոշված է $x$-ում միայն այն դեպքում, երբ $g(x)$-ը որոշված է; որտեղ $g(x)$-ը որոշված է, $f(g(x))$-ը նույնպես որոշված է, քանի որ $f$-ը ամբողջական է: Ուստի $\operatorname{Dom}(g\cdot f)=\operatorname{Dom}(g)$:
+  \item $f\cdot g$ (սկզբում՝ $f$). $f(x)$-ը միշտ որոշված է, բայց $g(f(x))$-ը պահանջում է $f(x)\in\operatorname{Dom}(g)$: Ուստի $f\cdot g$-ն կարող է լինել մասնակի՝ որոշված է $x$-ում միայն այն դեպքում, երբ $f(x)\in\operatorname{Dom}(g)$:
 \end{itemize}
 
 % ============================================================
 \subsection*{Խնդիր 2}
 \begin{enumerate}[label=(\alph*), nosep]
   \item $f(x)=x^2+3$:\quad $D_f = \mathbb{R}$,\; $R_f = [3,+\infty)$:
-  \item $f(x)=\sqrt{x+2}$:\quad $D_f = [-2,+\infty)$,\; $R_f = [0,+\infty)$:
+  \item $f(x)=\sqrt{x-2}$:\quad $D_f = [2,+\infty)$,\; $R_f = [0,+\infty)$:
   \item $f(x)=\frac{1}{\sqrt{x-2}}$:\quad $D_f = (2,+\infty)$,\; $R_f = (0,+\infty)$:
   \item $f(x)=|x|$:\quad $D_f = \mathbb{R}$,\; $R_f = [0,+\infty)$:
   \item $f(x)=\frac{1}{x^2+2}$:\quad $D_f = \mathbb{R}$,\; $R_f = \bigl(0,\,\tfrac{1}{2}\bigr]$:
@@ -29,18 +29,19 @@
 
 % ============================================================
 \subsection*{Խնդիր 4}
+(Ձախից աջ՝ $(f\cdot g)(x)=g(f(x))$, սկզբում կիրառվում է $f$-ը:)
 \begin{enumerate}[label=(\alph*), nosep]
   \item $f(x)=x^2+1$, $g(x)=x+3$:
     \[
-      (f\circ g)(x) = x^2+6x+10, \qquad (g\circ f)(x) = x^2+4:
+      (f\cdot g)(x) = x^2+4, \qquad (g\cdot f)(x) = x^2+6x+10:
     \]
   \item $f(x)=\sqrt{x^2+2}$, $g(x)=x^2+3$:
     \[
-      (f\circ g)(x) = \sqrt{x^4+6x^2+11}, \qquad (g\circ f)(x) = x^2+5:
+      (f\cdot g)(x) = x^2+5, \qquad (g\cdot f)(x) = \sqrt{x^4+6x^2+11}:
     \]
   \item $f(x)=\frac{1}{x}$, $g(x)=2x+3$:
     \[
-      (f\circ g)(x) = \frac{1}{2x+3}\;(x\neq -\tfrac{3}{2}), \qquad (g\circ f)(x) = \frac{2+3x}{x}\;(x\neq 0):
+      (f\cdot g)(x) = \frac{2+3x}{x}\;(x\neq 0), \qquad (g\cdot f)(x) = \frac{1}{2x+3}\;(x\neq -\tfrac{3}{2}):
     \]
 \end{enumerate}
 

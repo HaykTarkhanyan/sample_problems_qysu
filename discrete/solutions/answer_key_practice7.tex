@@ -79,19 +79,18 @@ $|E\cup F|=20+12-6=26$. Know neither:
 $\boxed{30-26=4}$
 
 \subsubsection*{Problem 10}
-Triangles in a triangular grid with $n=8$.
+Each side of $\triangle ABC$ is divided into 8 equal parts. Count triangles whose vertices are division points, with $A,B,C$ \emph{not} used as vertices and \emph{no} side parallel to a side of $ABC$.
 
-Upward-pointing (side $s$, $1\le s\le 8$): $\sum_{s=1}^{8}\binom{10-s}{2} = 36+28+21+15+10+6+3+1=120$.
+Vertices come from the $7$ interior division points on each side ($21$ points in all). If two vertices lay on the same side, that side of the triangle would be parallel to a side of $ABC$; so a valid triangle has \emph{exactly one vertex on each side} --- $7^3=343$ triangles (none degenerate).
 
-Downward-pointing (side $s$, $1\le s\le 4$): $\sum_{s=1}^{4}\binom{10-2s}{2}=28+15+6+1=50$.
-
-$\boxed{120+50=170}$
+Now subtract those with a side parallel to $ABC$. A triangle's side is parallel to one specific side of $ABC$ in $7\cdot 7=49$ cases (one vertex free, the other two constrained to match). By inclusion--exclusion over the three side-directions ($\,|A_i|=49,\ |A_i\cap A_j|=7,\ |A_1\cap A_2\cap A_3|=1$):
+\[ 343 - \bigl(3\cdot 49 - 3\cdot 7 + 1\bigr) = 343 - 127 = \boxed{216}. \]
 
 \subsubsection*{Problem 11}
-Three carpets of area 3~m$^2$ each in a room of area 6~m$^2$. Prove two overlap by $\ge \frac{1}{2}$~m$^2$.
+Three carpets of area 3~m$^2$ each in a room of area 6~m$^2$. Prove two of them overlap by $\ge 1$~m$^2$.
 
 \textit{Proof sketch.}
-Total carpet area $= 9$~m$^2$, room area $= 6$~m$^2$, so the total overlap (counted with multiplicity) is $\ge 9-6=3$~m$^2$. There are $\binom{3}{2}=3$ pairs of carpets. By the Pigeonhole Principle, at least one pair overlaps by $\ge 3/3 = 1$~m$^2 \ge \frac{1}{2}$~m$^2$. \qed
+Total carpet area $= 9$~m$^2$, room area $= 6$~m$^2$, so the total overlap (counted with multiplicity) is $\ge 9-6=3$~m$^2$. There are $\binom{3}{2}=3$ pairs of carpets. By the Pigeonhole Principle, at least one pair overlaps by $\ge 3/3 = 1$~m$^2$. \qed
 
 \subsubsection*{Problem 12}
 Integer solutions of $x_1+x_2+x_3=40$ with $4\le x_1\le 15$, $9\le x_2\le 18$, $5\le x_3\le 16$.

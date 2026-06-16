@@ -8,7 +8,13 @@
 \subsection*{Section 1: Sum and Product Rules}
 
 \subsubsection*{Problem 1}
-Count of integers from 0 to 1000 containing at least one digit 6.
+Count of integers from 0 to 1000 whose digits contain \emph{exactly one} 6.
+
+Write each integer $0$--$999$ as a 3-digit string with leading zeros (leading zeros add no 6's). Exactly one of the three digits is a 6: choose its position ($3$ ways), set it to 6, and fill the other two with non-6 digits ($9$ each). The number $1000$ has no 6.
+\[ \binom{3}{1}\cdot 9^2 = 3\cdot 81 = \boxed{243} \]
+
+\subsubsection*{Problem 2}
+Count of integers from 0 to 1000 whose digits contain \emph{one or more} 6 (at least one).
 
 Complement: count integers with \emph{no} digit 6.
 \begin{itemize}
@@ -17,15 +23,9 @@ Complement: count integers with \emph{no} digit 6.
   \item 3-digit numbers (100--999): $8\cdot9\cdot9=648$.
   \item The number 1000 contains no 6: 1 more.
 \end{itemize}
-No-six total: $9+72+648+1=730$.
-All integers from 0 to 1000: $1001$.
+No-six total: $9+72+648+1=730$; all integers from 0 to 1000: $1001$.
 
 $\boxed{1001 - 730 = 271}$
-
-\subsubsection*{Problem 2}
-Same problem as Problem 1 (the exercise sheet notes the apparent duplication).
-
-$\boxed{271}$
 
 \subsubsection*{Problem 3}
 Choose two books of different subjects from 15 Informatics, 12 Math, 10 Physics.
@@ -47,9 +47,9 @@ Natural numbers less than 700 ($\{1,\dots,699\}$):
 
 (a) Divisible by 5: $\lfloor 699/5\rfloor = \boxed{139}$.
 
-(b) Divisible by 3: $\lfloor 699/3\rfloor = \boxed{233}$.
+(b) Of those (divisible by 5), how many are also divisible by 3? They are exactly the multiples of $\operatorname{lcm}(3,5)=15$: $\lfloor 699/15\rfloor = \boxed{46}$.
 
-(c) Divisible by both 3 and 5 (i.e.\ by 15): $\lfloor 699/15\rfloor = \boxed{46}$.
+(c) Of those, how many are divisible by both 3 and 5 (i.e.\ by 15): $\lfloor 699/15\rfloor = \boxed{46}$.
 
 \subsubsection*{Problem 6}
 Yerevan $\to$ Moscow: 15 flights. Moscow $\to$ London: 20 flights.
