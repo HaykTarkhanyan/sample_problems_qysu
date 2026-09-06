@@ -1,0 +1,58 @@
+title = "Armenian fluency + pedagogy pass over all 7 pedagogical solution sheets"
+date = "2026-09-06"
+time = "22:00"  # approximate session start; work ran into 2026-09-07 ~03:00
+
+areas = [
+  "discrete/solutions_opus_4_8_ARM",
+  "_learnings",
+  "_work_sessions",
+]
+
+done = [
+  "Surveyed the repo with fresh eyes; diagnosed the Opus-4.8 Armenian sheets as math-solid but full of translationese (calques, singular imperatives, wrong ՞ placement, Latin semicolons).",
+  "User decisions: pedagogy update with fluency fixed along the way; reader address normalized to PLURAL/first-person-plural everywhere.",
+  "Rewrote all 7 ARM sheets in order P6, P8, P7, P5, P2-3, P1, P4: killed calques, normalized imperatives, fixed ինչու՞→ինչո՞ւ, Latin ; → mijaket, ը/ն article slips, այսինքն՝.",
+  "Terminology aligned to the glossary: PIE unified to կցման-արտաքսման (ԿԱՍ) incl. P10 which still used the deprecated ներառման-բացառման; միապաղաղ→մոնոտոն; այլասերված→վերասերված; տեղադրություն (bars)→տեղաբաշխում; singleton→մեկկետանոց; ասույթների տրամաբանություն.",
+  "Real content fixes beyond wording: P6 stars-and-bars 'in the gaps' described the C(n-1,k-1) model (3 spots); P8 boxed recurrence got its n>=3 range + new small-case check step; P7 Stirling-table neighbor rule (upper, not left) and both degrees-of-freedom justifications in Problem 10 (events renamed B1,B2,B3); P5 figure red dots moved to 15/30/45 and the broken product-rule sentence; P1 false 'contrapositive of (գ)' claim and the false mirror-only-on-diagonal claim in P58; P2-3 4.1(ա) digraph vertices relabeled from pairs to elements 1,0 and the inverted light/shadow metaphor in 1.2.",
+  "Pedagogy additions: P6 path-word caption (RURUURU/RURRUURU) + three-readings table (28/10/3); P8 check step (n=3 gives 000,001,100; brute-force 880).",
+  "Every number re-verified by tiny deterministic Python before editing (paths 2450, S(5,3)=25 table row, 800, 55, 216, 62500 via digit-analogs, 1197504000, R(3,3) both directions over 2^15 colorings, a_60 for 2013, all set identities brute-forced).",
+  "One adversarial reviewer subagent per sheet (7 total), each recomputing everything incl. TikZ decoding; all findings triaged and applied or consciously rejected.",
+  "All 7 sheets recompiled clean with xelatex x2: 0 errors, 0 overfull, 0 missing chars (P1 13pp, P2-3 10pp, P4 15pp, P5 8pp, P6 5pp, P7 7pp, P8 5pp); pages visually checked via pdftoppm.",
+  "Wrote 4 learning files in _learnings/ and this session log.",
+]
+
+pending = [
+  "P4 reviewer findings applied at commit time (see commit); if its verdict listed take-or-leave items they are triaged in the commit message context.",
+]
+
+next = [
+  "Optionally port the same content fixes (stars-and-bars wording, P8 n>=3, P7 DOF prose, P5 figure dots, P1 contrapositive/mirror claims, P2-3 vertex labels) back to the ENGLISH sheets in solutions_opus_4_8/ - they share the defects.",
+  "Cross-sheet consistency sweep for take-or-leave terms left as-is: կրկնությամբ vs կրկնություններով զուգորդություններ (answer keys use the latter), ձողիկ vs գծիկ, ֆիքսել family, դասավորություն vs տեղադրություն for full permutations, bare այսինքն in sheets other than P1.",
+  "Add project-only terms to glossary_discrete_focused.md as † rows: կոնտրապոզիցիա, կոնյունկցիա, զույգություն (parity), նախակարգ, Ուորշալ.",
+]
+
+files = [
+  "discrete/solutions_opus_4_8_ARM/Practice1_Sets_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice2-3_Relations_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice4_Functions_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice5_Combinatorics_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice6_Combinations_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice7_Partitions_Solutions_ARM.tex (+pdf)",
+  "discrete/solutions_opus_4_8_ARM/Practice8_Recurrence_Solutions_ARM.tex (+pdf)",
+  "_learnings/2026-09-07-0243_glossary-changed-terms-invert-instinct.md",
+  "_learnings/2026-09-07-0244_decode-tikz-figures-captions-lie.md",
+  "_learnings/2026-09-07-0245_adversarial-review-is-load-bearing.md",
+  "_learnings/2026-09-07-0246_armenian-qa-is-scriptable.md",
+]
+
+commits = [
+  "Polish all 7 Armenian pedagogical sheets: fluency, plural address, verified fixes (this session's single commit on main)",
+]
+
+notes = """
+Model switched to Fable 5 at session start; sheets were authored by Opus 4.8.
+Key process that worked: verify numbers -> rewrite prose -> compile+view -> one
+adversarial reviewer per sheet -> triage -> recompile. Reviewer prompts must demand
+TikZ decoding and justification-logic checks, not just number recomputation.
+PROGRESS.md intentionally left untouched this session; session logs now live here.
+"""
