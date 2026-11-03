@@ -104,7 +104,7 @@
 \begin{tcolorbox}[colback=armRed!6,colframe=armRed!70!black,boxrule=0.8pt,arc=2mm,
   title={\bfseries Մի պայմանավորվածություն, որ պետք է ֆիքսել մյուս ամեն ինչից առաջ՝ համադրումը ձախից աջ է},
   fonttitle=\bfseries\color{white},coltitle=white]
-Այս դասընթացում ֆունկցիաների կետային արտադրյալը կարդացվում է \textbf{ձախից աջ}՝ $f\cdot g$ նշանակում է
+Այս դասընթացում ֆունկցիաների համադրույթը (կետով գրվող արտադրյալը) կարդացվում է \textbf{ձախից աջ}՝ $f\cdot g$ նշանակում է
 «նախ՝ $f$, ապա՝ $g$», ուստի
 \[
   (f\cdot g)(x) \;=\; g\bigl(f(x)\bigr)։
@@ -156,8 +156,8 @@ $g(f(x))$։ Ստորև ամենուր օգտագործում ենք դասընթ
 \end{ideabox}
 
 \textbf{Քայլ 1 - Որոշման տիրույթներ (գտնենք արգելված կետերը)։}
-(ա),(դ),(ե) չունեն ոչ արմատ, ոչ հայտարար, և $x^2+2\ge2>0$, ուստի օրինական են ամենուր՝
-որոշման տիրույթը $\R$ է։ (բ) $\sqrt{x-2}$-ի համար պետք է $x-2\ge0$, այսինքն՝ $x\ge2$։ (գ)
+(ա) և (դ) բանաձևերը չունեն ոչ արմատ, ոչ հայտարար, իսկ (ե)-ի հայտարարն երբեք զրո չէ, քանի որ
+$x^2+2\ge2>0$։ Ուստի երեքն էլ օրինական են ամենուր՝ որոշման տիրույթը $\R$ է։ (բ) $\sqrt{x-2}$-ի համար պետք է $x-2\ge0$, այսինքն՝ $x\ge2$։ (գ)
 $\tfrac1{\sqrt{x-2}}$-ի համար արմատը պետք է լինի օրինական \emph{և} ոչ զրոյական, ուստի $x-2>0$,
 այսինքն՝ $x>2$։ (զ) $\tfrac1{x^2-2}$-ի համար պետք է $x^2-2\ne0$, այսինքն՝ $x\ne\pm\sqrt2$։
 
@@ -295,6 +295,8 @@ $f\cdot g$-ում քառակուսին և քառակուսի արմատը մաք
 (f\cdot g)(x)=g(f(x))=2\cdot\tfrac1x+3=\tfrac2x+3,\qquad
 (g\cdot f)(x)=f(g(x))=\tfrac{1}{2x+3}.
 \]
+(Նկատենք՝ $f(x)=\tfrac1x$-ը որոշված չէ $x=0$-ում, ուստի $f\cdot g$-ն իմաստ ունի $x\ne0$-ի համար, իսկ
+$g\cdot f$-ը՝ $x\ne-\tfrac32$-ի համար, քանի որ $x=-\tfrac32$-ում $2x+3=0$։)
 
 \textbf{Քայլ 5 - Միշտ ստուգենք մեկ կետում։} (ա) $x=1$-ում՝ $f(1)=2$, $g(2)=5$, և
 $1^2+4=5$։ \checkmark\ $g\cdot f$-ի համար՝ $g(1)=4$, $f(4)=17$, և $1+6+10=17$։ \checkmark\ Երեք
@@ -312,7 +314,7 @@ $1^2+4=5$։ \checkmark\ $g\cdot f$-ի համար՝ $g(1)=4$, $f(4)=17$, և $1+6+
 
 \begin{center}
 \begin{tikzpicture}[font=\small,>=Stealth, node distance=14mm,
-  val/.style={draw,circle,inner sep=1.6pt,fill=white},
+  val/.style={draw,rounded corners=7pt,inner sep=3pt,fill=white},
   op/.style={midway,above,font=\scriptsize}]
 % f.g : x -> f -> g
 \node (a0) at (0,1.4) {$x=1$};
@@ -321,7 +323,7 @@ $1^2+4=5$։ \checkmark\ $g\cdot f$-ի համար՝ $g(1)=4$, $f(4)=17$, և $1+6+
 \node[anchor=west] at (9.2,1.4) {$=(f\cdot g)(1)$};
 \draw[->,thick,armBlue] (a0) -- node[op]{կիրառենք $f$} (a1);
 \draw[->,thick,armBlue] (a1) -- node[op]{կիրառենք $g$} (a2);
-\node[armBlue,font=\scriptsize,anchor=east] at (-0.2,1.4) {$f\cdot g$:};
+\node[armBlue,font=\scriptsize,anchor=east] at (-0.6,1.4) {$f\cdot g$:};
 % g.f : x -> g -> f
 \node (b0) at (0,0) {$x=1$};
 \node[val] (b1) at (3.2,0) {$g(1)=4$};
@@ -329,7 +331,7 @@ $1^2+4=5$։ \checkmark\ $g\cdot f$-ի համար՝ $g(1)=4$, $f(4)=17$, և $1+6+
 \node[anchor=west] at (9.2,0) {$=(g\cdot f)(1)$};
 \draw[->,thick,armRed] (b0) -- node[op]{կիրառենք $g$} (b1);
 \draw[->,thick,armRed] (b1) -- node[op]{կիրառենք $f$} (b2);
-\node[armRed,font=\scriptsize,anchor=east] at (-0.2,0) {$g\cdot f$:};
+\node[armRed,font=\scriptsize,anchor=east] at (-0.6,0) {$g\cdot f$:};
 \end{tikzpicture}
 \end{center}
 Նույն մեկնարկը $x=1$, տարբեր ավարտներ ($5\neq17$)՝ համադրումը կոմուտատիվ չէ, և
@@ -498,7 +500,7 @@ $\Rightarrow$ ոչ ինյեկտիվ։ \textbf{Միայն սյուրյեկտիվ�
   \draw[->,armBlue,thick] (La) -- (Rp);
   \draw[->,armBlue,thick] (Lb) -- (Rq);
   \draw[->,armBlue,thick] (Lc) -- (Rr);
-  \node[armRed] at (\dx+0.7,-0.4) {բաց թողնված};
+  \node[armRed,anchor=west] at (\dx+0.45,-0.4) {բաց թողնված};
   \node at (0,-1.0) {տարբեր $\to$ տարբեր,};
   \node at (0,-1.4) {բայց $s$-ին չհասանք};
 \end{scope}
@@ -637,11 +639,11 @@ $f(1)=f(2)=f(3)=p$, $f(4)=f(5)=q$, $f(6)=r$։ Միջուկը տրոհում է �
   \node[font=\small\itshape] at (0.1,1.7) {$B$};
 \end{scope}
 % arrows
-\draw[->,armBlue]   (n1) to[out=0,in=170] (bp);
-\draw[->,armBlue]   (n2) to[out=0,in=175] (bp);
-\draw[->,armBlue]   (n3) to[out=0,in=185] (bp);
+\draw[->,armBlue]   (n1) to[out=15,in=165] (bp);
+\draw[->,armBlue]   (n2) to[out=25,in=175] (bp);
+\draw[->,armBlue]   (n3) to[out=15,in=185] (bp);
 \draw[->,armRed]    (n4) to[out=0,in=170] (bq);
-\draw[->,armRed]    (n5) to[out=0,in=190] (bq);
+\draw[->,armRed]    (n5) to[out=35,in=190] (bq);
 \draw[->,armOrange!80!black] (n6) to[out=0,in=200] (br);
 \end{tikzpicture}
 \end{center}
@@ -685,7 +687,7 @@ $(0,\tfrac12)$-ից դուրս է և չի կարող լինել $f$-ի արժե�
 $x=2x+1$, այսինքն՝ $x=-1\notin\Q^+$։) Հետևաբար $f$-ն \emph{ոչ} սյուրյեկտիվ է։
 
 \textbf{Քայլ 4 - Ստուգենք, որ $\tfrac12$ սահմանը սուր է, բայց չի ընդունվում։} Երբ $x\to\infty$,
-$f(x)=\tfrac{x}{2x+1}\to\tfrac12$ ներքևից (օրինակ՝ $f(10000)\approx0.49998$), ուստի $\tfrac12$-ը
+$f(x)=\tfrac{x}{2x+1}\to\tfrac12$ ներքևից (օրինակ՝ $f(10000)\approx0{,}49998$), ուստի $\tfrac12$-ը
 ճշգրիտ վերին եզրն է, բայց երբեք չի ընդունվում որպես արժեք՝ հաստատելով, որ արժեքների տիրույթն
 ամբողջությամբ $(0,\tfrac12)$-ում է։
 
@@ -844,7 +846,7 @@ $\{-2,-1,1,2\}$-ի վրա՝ սիմետրիկ զույգերը $\{1,2\}$-ը և $\
 \node[dot,label=left:$-1$] (m1) at (0,-0.8) {};
 \node[dot,label=left:$-2$] (m2) at (0,-1.6) {};
 \node[draw,rounded corners,fill=armOrange!18,minimum width=1.4cm,minimum height=1.7cm] at (5,0) {};
-\node[font=\scriptsize] at (6.0,0.9) {ընդհանուր պատկեր $\{1,4\}$};
+\node[font=\scriptsize,anchor=west] at (5.85,0) {ընդհանուր պատկեր $\{1,4\}$};
 \node[dot,label=right:$1$] (v1) at (5,0.4) {};
 \node[dot,label=right:$4$] (v2) at (5,-0.4) {};
 \draw[->,armBlue,thick] (p1) to[out=0,in=160] (v1);
@@ -998,7 +1000,7 @@ $f(f^{-1}(Y))=\{1\}\subsetneq Y$ ($-1$ արժեքը երբեք ելք չէ)։}
 \node[font=\scriptsize] at (5.5,1.35) {$Y=\{-1,1\}$};
 \node[dot,label=right:$1$]  (y1) at (5.5,-0.4) {};
 \node[dot,label=right:$-1$] (ym) at (5.5,0.55) {};
-\node[font=\scriptsize,armRed,anchor=west] at (6.1,0.55) {(ոչ մի սլաք ներս՝ դուրս գցված)};
+\node[font=\scriptsize,armRed,anchor=west] at (6.5,0.55) {(ոչ մի սլաք ներս՝ դուրս գցված)};
 \draw[->,armBlue,thick] (n) to[out=0,in=170] (y1);
 \draw[->,armBlue,thick] (p) to[out=0,in=190] (y1);
 \node[font=\scriptsize,anchor=north] at (2.7,-1.4) {$f(f^{-1}(Y))=\{1\}\subsetneq Y$};
@@ -1006,9 +1008,9 @@ $f(f^{-1}(Y))=\{1\}\subsetneq Y$ ($-1$ արժեքը երբեք ելք չէ)։}
 \end{center}
 
 \begin{methodbox}
-\textbf{Փոխանցելի տեխնիկա՝} երկու «շրջապտույտները» գնում են հակառակ ուղղություններով։ Հրելը, ապա քաշելը
+\textbf{Փոխանցելի տեխնիկա՝} երկու «շրջապտույտները» գնում են հակառակ ուղղություններով։ Քաշելը, ապա հրելը (նախ $f^{-1}$, ապա $f$)
 \emph{փոքրացնում է կամ պահում նույնը}՝ $f(f^{-1}(Y))\subseteq Y$ (հավասարություն այն և միայն այն դեպքում,
-երբ $Y\subseteq f(A)$)։ Քաշելն ապա հրելը \emph{մեծացնում է կամ պահում նույնը}՝
+երբ $Y\subseteq f(A)$)։ Հրելը, ապա քաշելը (նախ $f$, ապա $f^{-1}$) \emph{մեծացնում է կամ պահում նույնը}՝
 $X\subseteq f^{-1}(f(X))$ (հավասարություն բոլոր $X$-երի համար այն և միայն այն դեպքում, երբ $f$-ն
 ինյեկտիվ է)։ Ամեն
 $\subseteq$-ի ուղղությունը հիշեք՝ հարցնելով «արդյո՞ք արժեք/կետ կարող է կորչել կամ

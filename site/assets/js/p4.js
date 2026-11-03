@@ -307,9 +307,9 @@
       const badges = $('[data-out="badges"]');
       badges.replaceChildren();
       const badge = (cls, html) => { const b = Q.el("span", { class: "p4-badge " + cls }); b.innerHTML = html; Q.math(b); badges.appendChild(b); };
-      if (s.multi) badge("no", `Ինյեկտիվ՝ ոչ ($y=${numTex(s.multi.c)}$ ուղիղը հատում է ${s.multi.k === Infinity ? "անվերջ շատ" : `$${s.multi.k}$`} անգամ)`);
+      if (s.multi) badge("no", `Ինյեկտիվ՝ ոչ ($y=${numTex(s.multi.c)}$ ուղիղը գրաֆիկը հատում է ${s.multi.k === Infinity ? "անվերջ շատ" : `$${s.multi.k}$`} անգամ)`);
       else badge("open", "Ինյեկտիվ՝ բախում դեռ չենք գտել");
-      if (s.zero !== null) badge("no", `Սյուրյեկտիվ՝ ոչ ($y=${numTex(s.zero)}$ ուղիղը չի հատում)`);
+      if (s.zero !== null) badge("no", `Սյուրյեկտիվ՝ ոչ ($y=${numTex(s.zero)}$ ուղիղը գրաֆիկը չի հատում)`);
       else badge("open", "Սյուրյեկտիվ՝ բաց թողնված արժեք դեռ չենք գտել");
     }
     function setC(v) {

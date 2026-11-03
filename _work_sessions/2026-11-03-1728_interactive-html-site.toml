@@ -1,0 +1,66 @@
+title = "Interactive Armenian HTML site for the 7 discrete-math sheets, deployed to GitHub Pages"
+date = "2026-11-03"
+time = "17:28"  # local (WEST); work ran to ~23:40
+
+areas = [
+  "site",
+  "tools",
+  ".github/workflows",
+  "discrete/solutions_opus_4_8_ARM",
+  "_learnings",
+  "_work_sessions",
+]
+
+done = [
+  "User decisions (asked up front, then user left): Armenian only; skeleton + all 7 sheets; hand-port each sheet; KaTeX; shared vendored assets (overrides the global single-file HTML rule for this site); GitHub Actions deploy from site/; commit+push+enable Pages allowed; up to 3 subagents in parallel, later more for one hour.",
+  "Built site/: index + 7 pages, shared site.css (light/dark tokens, Armenian-flag palette, PDF box styles), site.js (KaTeX auto-render with shared macros, try-yourself mode, theme toggle, TOC highlight, QYSU widget helpers), vendored KaTeX 0.19.1 and Noto Serif/Sans Armenian 5.3.0 (armenian+latin, 400/700).",
+  "Wrote P6 myself as the reference page (lattice paths with movable checkpoint and Pascal counts, stars-and-bars bijection with all 28 solutions, multiset word widget showing the 2!*3! overcount and the Latin matematika trap).",
+  "Ported the other 6 sheets with subagents (P8, P7, P5, P2-3, P1, P4), each followed by an independent adversarial reviewer that recomputed numbers, decoded SVGs against TikZ, drove widgets in jsdom and copy-edited the new Armenian; reviewers applied clear-cut fixes and returned .tex mirror lists. 28 widgets in total.",
+  "tools/check_site.mjs: QA gate run locally and in CI - renders every static formula with KaTeX (2784 at the end), fails on unclosed delimiters, guillemets inside math, block elements inside <p>, broken anchors/TOC/files, and lints Armenian punctuation in prose AND in widget JS string literals.",
+  "Content fixes found while porting/reviewing, mirrored into the .tex and PDFs rebuilt (P1, P2-3, P4, P5, P7, P8): P1 P60 coordinate sentence (math error), P1 P58 non-empty condition, P1 P20 wording/labels/row-3 panel, P5 2.5 method box n vs m, P5 1.3 cross-check, P5 lcm wording, P5 2.10 figure caption/legend overlap, P7 inclusion-exclusion sentence, P7 N' definition, P8 Step 2 justification, decimal commas, P2-3 b->e arrow through c, missing vertex b, overlapping 3<->2 arcs, P2-3 converse and loop-count fixes, P4 warm-up term (pointwise product -> composition), P4 P2 denominator claim, P4 P25 push/pull swap, P4 P10/P6/P22/P25/P4 figure fixes.",
+  "Browser QA with Playwright on every page (desktop + 390 px, both themes, console): fixed label clipping, inline-flex whitespace bug, dark-mode contrast of filled controls, long pair-list overflow on phones (auto-render preProcess adds \\allowbreak between pairs).",
+  "Enabled GitHub Pages (build_type=workflow); commit d5ff4c5 deployed by run 41730204392 (success); live site verified: all pages/PDFs/assets 200, fonts load, 0 KaTeX errors, clean console.",
+  "DECISIONS.md (7 entries), CONVENTIONS.md (Armenian rules + site authoring spec), DEFERRED_TODO.md, 3 learnings.",
+]
+
+pending = [
+  "Final commit with the P4 review fixes + P4 .tex/PDF mirror + this log (being made at the end of the session).",
+  "Scratch/build files left in place on purpose (no deletes after the user flagged rm operations): .aux/.log/.out in discrete/solutions_opus_4_8_ARM (gitignored), site/pdf/ (gitignored local copy), .playwright-mcp/ (gitignored), scratchpad folders. Clean up only by exact name after the user approves a list.",
+]
+
+next = [
+  "Decide the ը/ն article house rule before ե/ո-initial words and math symbols (corpus mixed: ~48 -ը vs ~119 -ն); then one sweep over .tex and site.",
+  "Optional polish from reviewers: P1 w-prod widget judged redundant; P6 lattice not keyboard accessible; P8 (1,1) preset term order; P2-3 (դ) Hasse orientation caption; aria-labels and answer boxes using Latin '.' after Armenian; P4 pgfplots y-label/title crowding (J3/J4); P22 figure now starts a new PDF page.",
+  "English pages (DEFERRED_TODO): port the content fixes into solutions_opus_4_8/ first.",
+  "Maybe set the repo homepage URL to the Pages site.",
+]
+
+files = [
+  "site/ (index.html, p1-sets, p2-3-relations, p4-functions, p5-combinatorics, p6-combinations, p7-partitions, p8-recurrence .html; assets/site.css, site.js, js/p*.js, katex/, fonts/)",
+  "tools/check_site.mjs",
+  ".github/workflows/pages.yml",
+  ".gitignore (site/pdf/, .playwright-mcp/)",
+  "DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md",
+  "discrete/solutions_opus_4_8_ARM/Practice{1,2-3,4,5,7,8}_*_ARM.tex + .pdf",
+  "_learnings/2026-11-03-2313_no-deletes-in-subagent-prompts.md",
+  "_learnings/2026-11-03-2314_katex-site-gotchas.md",
+  "_learnings/2026-11-03-2315_porting-to-new-medium-is-a-review.md",
+]
+
+commits = [
+  "d5ff4c5 Add interactive Armenian HTML site for the 7 discrete-math sheets",
+  "(final) P4 review fixes, P4 .tex/PDF mirror, session log",
+]
+
+notes = """
+Live: https://hayktarkhanyan.github.io/sample_problems_qysu/
+Process that worked: reference page by the orchestrator + CONVENTIONS spec -> porting agents
+(max 3 in parallel) -> one adversarial reviewer per page that may fix clear-cut issues and
+returns an exact-string .tex mirror script writing a scratch copy -> orchestrator copies it in
+(CRLF checked), rebuilds PDFs, browser QA, commit.
+The user flagged 'dangerous rm operations' mid-session: git showed no tracked deletions; the only
+known deletes were six build files I had told a mirror agent to remove. Rule since then: no
+deletes in subagent prompts at all (see _learnings/2026-11-03-2313).
+Subagent transcripts are not readable from the session's tasks/ folder (0-byte files), so
+subagent shell commands cannot be audited from the orchestrator.
+"""
