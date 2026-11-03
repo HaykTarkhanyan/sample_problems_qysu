@@ -24,13 +24,21 @@ done = [
 ]
 
 pending = [
-  "Final commit with the P4 review fixes + P4 .tex/PDF mirror + this log (being made at the end of the session).",
-  "Scratch/build files left in place on purpose (no deletes after the user flagged rm operations): .aux/.log/.out in discrete/solutions_opus_4_8_ARM (gitignored), site/pdf/ (gitignored local copy), .playwright-mcp/ (gitignored), scratchpad folders. Clean up only by exact name after the user approves a list.",
+  "Armenian language review deferred by the user (DEFERRED_TODO): ը/ն rule before ե/ո and math symbols, the ASCII '.' mijaket convention, native read of agent-written widget text.",
+]
+
+polish_after_user_ok = [
+  "User approved cleanup (2026-11-04): deleted by exact name 15 .aux/.log/.out in discrete/solutions_opus_4_8_ARM, 7 PDF copies in site/pdf + the empty folder, and .playwright-mcp/ (Playwright recreates it; gitignored).",
+  "P6 lattice keyboard access: grid is one tab stop, arrows move a focus ring, Enter/Space sets the checkpoint (verified in browser: P(3,4) -> P(4,5), clamps at the corner, 6435).",
+  "P1: removed the redundant P60 product widget (w-prod) and the helpers only it used.",
+  "P2-3: editor hint explains the (դ) layout (1 at the bottom, arrows point from multiple to divisor).",
+  "P4 PDF: titles shifted above the y-labels, y=5 label moved off the axis, 2-ticks removed where (0,2)/(2,0) are labelled, legend moved to the empty quadrant.",
+  "Not done on purpose: aria-label/answer-box '.' (it is the house mijaket convention; part of the deferred language review).",
 ]
 
 next = [
-  "Decide the ը/ն article house rule before ե/ո-initial words and math symbols (corpus mixed: ~48 -ը vs ~119 -ն); then one sweep over .tex and site.",
-  "Optional polish from reviewers: P1 w-prod widget judged redundant; P6 lattice not keyboard accessible; P8 (1,1) preset term order; P2-3 (դ) Hasse orientation caption; aria-labels and answer boxes using Latin '.' after Armenian; P4 pgfplots y-label/title crowding (J3/J4); P22 figure now starts a new PDF page.",
+  "Armenian language review (deferred, see pending).",
+  "Small leftovers: P8 (1,1) preset term order; P22 figure starts a new PDF page; P2-3 dashed 'missing' arcs not clickable; 3.3 hint could mention the ρ·σ right column collapsing.",
   "English pages (DEFERRED_TODO): port the content fixes into solutions_opus_4_8/ first.",
   "Maybe set the repo homepage URL to the Pages site.",
 ]

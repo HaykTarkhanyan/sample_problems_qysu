@@ -11,7 +11,7 @@
     const W = 7, H = 8, CELL = 36, OX = 62, OY = 28 + H * CELL;
     const X = i => OX + i * CELL, Y = j => OY - j * CELL;
     const host = root.querySelector(".lattice-svg");
-    const svg = Q.svg("svg", { viewBox: "0 0 380 360", width: 380, role: "img",
+    const svg = Q.svg("svg", { viewBox: "0 0 380 360", width: 380, role: "group",
       "aria-label": "Ցանց 0..7 x 0..8, ստուգակետով ճանապարհ" });
     host.appendChild(svg);
 
@@ -38,6 +38,27 @@
       Q.svg("title", { text: `(${i},${j})` }, hit);
       hit.addEventListener("click", () => { P = [i, j]; randomWords(); render(true); });
     }
+
+    // Keyboard: the grid is one tab stop; arrows move a focus ring, Enter/Space sets the checkpoint.
+    let cur = P.slice();
+    const ring = Q.svg("circle", { r: 10, fill: "none", class: "s-blue", "stroke-width": 2,
+      "stroke-dasharray": "3 2", visibility: "hidden", "pointer-events": "none" }, svg);
+    const showRing = () => { ring.setAttribute("cx", X(cur[0])); ring.setAttribute("cy", Y(cur[1])); };
+    svg.setAttribute("tabindex", "0");
+    svg.setAttribute("aria-label", "Ցանց 0..7 x 0..8։ Սլաքներով շարժվեք կետից կետ, Enter-ով դրեք ստուգակետը։");
+    svg.addEventListener("focus", () => { cur = P.slice(); showRing(); ring.setAttribute("visibility", "visible"); });
+    svg.addEventListener("blur", () => ring.setAttribute("visibility", "hidden"));
+    svg.addEventListener("keydown", e => {
+      const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[e.key];
+      if (d) {
+        e.preventDefault();
+        cur = [Math.min(W, Math.max(0, cur[0] + d[0])), Math.min(H, Math.max(0, cur[1] + d[1]))];
+        showRing();
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        P = cur.slice(); randomWords(); render(true);
+      }
+    });
 
     function randomWords() {
       const [a, b] = P;

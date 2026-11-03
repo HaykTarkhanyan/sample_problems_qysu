@@ -400,8 +400,8 @@ x=\frac{-2-3y}{y-1}=\frac{3y+2}{1-y}.
   width=8.4cm, height=8.4cm, axis equal image,
   axis lines=middle, xlabel={$x$}, ylabel={$y$},
   xmin=-6, xmax=6, ymin=-6, ymax=6,
-  xtick={-4,-2,2,4}, ytick={-4,-2,2,4},
-  legend pos=north west, legend style={font=\scriptsize, draw=none, fill=none},
+  xtick={-4,-2,4}, ytick={-4,-2,4}, % no 2-ticks: the labelled points (0,2), (2,0) sit there
+  legend pos=south east, legend style={font=\scriptsize, draw=none, fill=none},
   every axis x label/.style={at={(ticklabel* cs:1.0)},anchor=west},
   every axis y label/.style={at={(ticklabel* cs:1.0)},anchor=south}]
 \addplot[domain=-6:6, samples=2, dashed, gray]{x};
@@ -538,20 +538,20 @@ $\Rightarrow$ ոչ ինյեկտիվ։ \textbf{Միայն սյուրյեկտիվ�
 \begin{tikzpicture}
 \begin{axis}[
   name=p1, width=7.2cm, height=5.6cm, axis lines=middle,
-  xlabel={$x$}, ylabel={$y$}, xmin=-3.2, xmax=3.2, ymin=-1, ymax=12,
-  title={(բ) $x^2+4$՝ $y=5$ ուղիղը կտրում է երկու անգամ}, title style={font=\scriptsize},
+  xlabel={$x$}, ylabel={$y$}, xmin=-3.2, xmax=3.2, ymin=-1, ymax=12, ytick={10},
+  title={(բ) $x^2+4$՝ $y=5$ ուղիղը կտրում է երկու անգամ}, title style={font=\scriptsize, yshift=6pt},
   every axis x label/.style={at={(ticklabel* cs:1.0)},anchor=west},
   every axis y label/.style={at={(ticklabel* cs:1.0)},anchor=south}]
 \addplot[domain=-2.8:2.8, samples=80, very thick, armBlue]{x^2+4};
 \addplot[domain=-3.2:3.2, samples=2, armRed, thick]{5};
 \addplot[only marks, mark=*, mark size=1.4pt, armRed] coordinates {(-1,5)(1,5)};
-\node[font=\scriptsize, armRed, anchor=south] at (axis cs:0,5.1) {$y=5$};
+\node[font=\scriptsize, armRed, anchor=south] at (axis cs:-2.4,5.1) {$y=5$};
 \end{axis}
 \begin{axis}[
   name=p2, at={($(p1.east)+(1.8cm,0)$)}, anchor=west,
   width=7.2cm, height=5.6cm, axis lines=middle,
   xlabel={$x$}, ylabel={$y$}, xmin=-3, xmax=3, ymin=-12, ymax=18,
-  title={(գ) $x^3+6$՝ յուրաքանչյուր ուղիղ կտրում է մեկ անգամ}, title style={font=\scriptsize},
+  title={(գ) $x^3+6$՝ յուրաքանչյուր ուղիղ կտրում է մեկ անգամ}, title style={font=\scriptsize, yshift=6pt},
   every axis x label/.style={at={(ticklabel* cs:1.0)},anchor=west},
   every axis y label/.style={at={(ticklabel* cs:1.0)},anchor=south}]
 \addplot[domain=-2.6:2.6, samples=80, very thick, armBlue]{x^3+6};

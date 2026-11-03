@@ -2,6 +2,11 @@
 
 Topics cut from current work so they are not lost.
 
+- **Armenian language review of .tex + site (user: "later").** Decide one house rule for the
+  ը/ն article before ե/ո-initial words and before math symbols (corpus mixed: ~48 -ը vs ~119 -ն),
+  then sweep both. Same pass: whether the ASCII "." used as mijaket (answer boxes, aria-labels,
+  widget hints) should become ։ or ՝, and a native read of all widget text written by agents.
+  (2026-11-04)
 - **English site pages.** Port the content fixes from the Armenian pass into the English sheets in
   `discrete/solutions_opus_4_8/` first (stars-and-bars gaps wording, P8 n>=3, P7 DOF prose and
   Stirling rule, P5 red dots 15/30/45, P1 contrapositive and mirror claims, P2-3 vertex labels),

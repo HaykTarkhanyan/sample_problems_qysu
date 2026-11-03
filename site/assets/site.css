@@ -316,3 +316,4 @@ body.try-mode .reveal-btn:not(.hidden) { display: inline-block; }
   :root:not([data-theme="light"]) .btn.primary,
   :root:not([data-theme="light"]) .chip.on { color: #0e1420; }
 }
+.widget svg:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 6px; }

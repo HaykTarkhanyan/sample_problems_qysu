@@ -389,24 +389,6 @@
     if (b !== undefined) return { pair: [A[0], b], step: 2 };
     return null;
   }
-  const SETOP = { 1: (X, Y) => uniq(X.concat(Y)), 3: (X, Y) => X.filter(v => Y.includes(v)), 5: (X, Y) => X.filter(v => !Y.includes(v)) };
-  const PAIROP = {
-    1: (P, R) => P.concat(R.filter(r => !P.some(p => pk(p) === pk(r)))),
-    3: (P, R) => P.filter(p => R.some(r => pk(r) === pk(p))),
-    5: (P, R) => P.filter(p => !R.some(r => pk(r) === pk(p)))
-  };
-  const OPTEX = { 1: "\\cup", 3: "\\cap", 5: "\\setdiff" };
-  /** Both sides of P60 identity k (1, 3, 5); mirror = the matching (2), (4), (6). */
-  function prodSides(k, A, B, C, mirror) {
-    const L = mirror ? prod(SETOP[k](B, C), A) : prod(A, SETOP[k](B, C));
-    const R = mirror ? PAIROP[k](prod(B, A), prod(C, A)) : PAIROP[k](prod(A, B), prod(A, C));
-    return { L, R };
-  }
-  function idTex(k, mirror) {
-    const o = OPTEX[k];
-    return mirror ? `(B${o} C)\\times A=(B\\times A)${o}(C\\times A)` : `A\\times(B${o} C)=(A\\times B)${o}(A\\times C)`;
-  }
-
   function gridSvg(host, label) {
     const S = 40, OX = 46, OY = 270;
     const X = i => OX + S * i, Y = j => OY - S * j;
@@ -499,78 +481,17 @@
     render();
   }
 
-  function setupProd(root) {
-    const G = gridSvg(root.querySelector(".p1-grid"), "P60-ի նույնության երկու կողմերը 5×5 ցանցում");
-    const st = { A: [2, 3, 4], B: [1, 2, 3], C: [3, 4] };
-    let k = 1, mirror = false, sel = null;
-    const sync = toggleRows(root.querySelector('[data-out="togs"]'), ["A", "B", "C"], (n, v) => { st[n] = flip(st[n], v); render(); });
-    const idBtns = Array.from(root.querySelectorAll("[data-id]"));
-    idBtns.forEach(b => b.addEventListener("click", () => { k = Number(b.dataset.id); render(); }));
-    const mBtn = root.querySelector('[data-act="mirror"]');
-    mBtn.addEventListener("click", () => { mirror = !mirror; render(); });
-    const legend = root.querySelector('[data-out="legend"]');
-    const outI = root.querySelector('[data-out="identity"]'), outC = root.querySelector('[data-out="count"]'), outP = root.querySelector('[data-out="point"]');
-    VALS.forEach(p => VALS.forEach(q => {
-      const h = Q.svg("rect", { x: G.X(p) - 20, y: G.Y(q) - 20, width: 40, height: 40, fill: "transparent", class: "hit" }, G.layers.hit);
-      Q.svg("title", { text: `(${p},${q})` }, h);
-      h.addEventListener("click", () => { sel = [p, q]; render(); });
-    }));
-    const mem = (v, n) => `${v}${st[n].includes(v) ? "\\in" : "\\notin"} ${n}`;
-    function render() {
-      const { A, B, C } = st;
-      sync(st);
-      idBtns.forEach(b => {
-        const id = Number(b.dataset.id);
-        b.setAttribute("aria-pressed", String(id === k));
-        b.textContent = `(${mirror ? id + 1 : id})`;
-      });
-      mBtn.setAttribute("aria-pressed", String(mirror));
-      const { L, R } = prodSides(k, A, B, C, mirror);
-      const has = (P, p) => P.some(x => pk(x) === pk(p));
-      if (!VALS.every(p => VALS.every(q => has(L, [p, q]) === has(R, [p, q])))) console.error("P60: sides differ", k, mirror, st);
-      const bg = G.layers.bg, mk = G.layers.marks, pts = G.layers.pts;
-      bg.replaceChildren(); mk.replaceChildren(); pts.replaceChildren(); G.layers.sel.replaceChildren();
-      const cells = (P, cls) => P.forEach(([p, q]) => Q.svg("rect", { x: G.X(p) - 15, y: G.Y(q) - 15, width: 30, height: 30, rx: 4, class: cls }, bg));
-      cells(mirror ? prod(B, A) : prod(A, B), "f-red-soft");
-      cells(mirror ? prod(C, A) : prod(A, C), "f-blue-soft");
-      const onX = (vals, cls, dy) => vals.forEach(v => Q.svg("line", { x1: G.X(v) - 13, y1: G.Y(0) + dy, x2: G.X(v) + 13, y2: G.Y(0) + dy, class: cls, "stroke-width": 4, "stroke-linecap": "round" }, mk));
-      const onY = (vals, cls, dx) => vals.forEach(v => Q.svg("line", { x1: G.X(0) - dx, y1: G.Y(v) - 13, x2: G.X(0) - dx, y2: G.Y(v) + 13, class: cls, "stroke-width": 4, "stroke-linecap": "round" }, mk));
-      if (mirror) { onY(A, "s-orange", 7); onX(B, "s-red", 7); onX(C, "s-blue", 13); }
-      else { onX(A, "s-orange", 7); onY(B, "s-red", 7); onY(C, "s-blue", 13); }
-      R.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 9.5, class: "s-orange f-none", "stroke-width": 2.2 }, pts));
-      L.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 5, class: "f-ink" }, pts));
-
-      const pA = mirror ? "B\\times A" : "A\\times B", pC = mirror ? "C\\times A" : "A\\times C";
-      legend.innerHTML = `<span><span class="p1-sw r"></span>$${pA}$</span><span><span class="p1-sw b"></span>$${pC}$</span>` +
-        `<span>● ձախ կողմ</span><span><span class="c-orange">○</span> աջ կողմ</span>` +
-        `<span>առանցքներին՝ <span class="c-orange">▬</span>$\\,A$ <span class="c-red">▬</span>$\\,B$ <span class="c-blue">▬</span>$\\,C$</span>`;
-      outI.innerHTML = `$$${idTex(k, mirror)}$$`;
-      outC.innerHTML = `Ձախ կողմ՝ $${L.length}$ զույգ, աջ կողմ՝ $${R.length}$ զույգ։ Բոլոր $25$ կետում ձախն ու աջը համընկնում են $\\checkmark$`;
-      if (sel) {
-        const [p, q] = sel, iL = has(L, sel), iR = has(R, sel);
-        Q.svg("rect", { x: G.X(p) - 19, y: G.Y(q) - 19, width: 38, height: 38, rx: 5, class: "s-green f-none", "stroke-width": 2, "stroke-dasharray": "4 3" }, G.layers.sel);
-        const ms = mirror ? `$${mem(q, "A")}$, $${mem(p, "B")}$, $${mem(p, "C")}$` : `$${mem(p, "A")}$, $${mem(q, "B")}$, $${mem(q, "C")}$`;
-        outP.innerHTML = `Կետ $(${p},${q})$՝ ${ms}։ Այն ${iL ? "պատկանում է" : "չի պատկանում"} ձախ կողմին և ${iR ? "պատկանում է" : "չի պատկանում"} աջ կողմին։`;
-      } else {
-        outP.innerHTML = "Սեղմեք ցանցի որևէ կետի վրա՝ տեսնելու նրա կոորդինատների պատկանելությունը։";
-      }
-      Q.math(legend); Q.math(outI); Q.math(outC); Q.math(outP);
-    }
-    render();
-  }
-
   Q.ready(() => {
     const m = document.getElementById("w-member"); if (m) setupMember(m);
     const l = document.getElementById("w-line"); if (l) setupLine(l);
     const v = document.getElementById("w-venn"); if (v) setupVenn(v);
     const r = document.getElementById("w-mirror"); if (r) setupMirror(r);
-    const p = document.getElementById("w-prod"); if (p) setupProd(p);
   });
   // exported for node checks
   window.P1 = {
     canon, isElem, isSubset, depthIn, texOf, plainOf, OBJ, PRESETS,
     inA16, inB16, inC16, P16, p16Agree,
     REGIONS, VENN, vennMismatches, VC, VRAD, VPTS, inCircle,
-    prod, sameSet, witness, prodSides, idTex
+    prod, sameSet, witness
   };
 })();
