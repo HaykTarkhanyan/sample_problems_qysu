@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 3 3%27%3E%3Crect width=%273%27 height=%271%27 fill=%27%23D90012%27/%3E%3Crect y=%271%27 width=%273%27 height=%271%27 fill=%27%230033A0%27/%3E%3Crect y=%272%27 width=%273%27 height=%271%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գործնական 5 - Կոմբինատորիկա</title>
+<meta name="description" content="Դիսկրետ մաթեմատիկա, գործնական 5՝ գումարման և արտադրյալի կանոններ, բաժանելիություն, Դիրիխլեի սկզբունք, երեք փոխադարձ ընկերներ։ Մանրամասն լուծումներ ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Page-only widget styles (Practice 5). */
+.widget .range-label { display: inline-flex; align-items: center; gap: .4rem; }
+.widget input[type="range"] { width: 10rem; max-width: 45vw; }
+#w-row .chip:disabled { opacity: .4; cursor: default; }
+#w-row .chip.used { opacity: .2; text-decoration: line-through; }
+#w-ramsey .hit-edge { stroke: transparent; stroke-width: 16; cursor: pointer; }
+#w-ramsey .hit-edge:hover, #w-ramsey .hit-edge:focus { stroke: color-mix(in srgb, var(--orange) 35%, transparent); outline: none; }
+.mod-tiles .cell-btn { flex-direction: column; height: auto; min-width: 3rem; padding: .2rem .3rem; font-size: 1rem; gap: .05rem; }
+.mod-tiles .cell-btn small { font-family: var(--sans); font-size: .68rem; color: var(--muted); }
+.mod-tiles .zero { background: var(--answer-bg); border-color: var(--answer-line); border-width: 2px; }
+.mod-tiles .rep { border-color: var(--red); border-width: 2px; }
+.mod-tiles .tgt { border-color: var(--orange); border-width: 2px; border-style: dashed; }
+</style>
+<script defer src="assets/katex/katex.min.js"></script>
+<script defer src="assets/katex/auto-render.min.js"></script>
+<script defer src="assets/site.js"></script>
+<script defer src="assets/js/p5.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Դիսկրետ մաթեմատիկա</a>
+  <div class="header-actions">
+    <a class="btn" href="pdf/Practice5_Combinatorics_Solutions_ARM.pdf" title="Նույն լուծումները PDF տարբերակով">PDF</a>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գործնական 5</div>
+    <h1>Կոմբինատորիկա, հաշվման հիմնական կանոնները</h1>
+    <p class="subtitle">Մանրամասն լուծումներ՝ դատողությունները քայլ առ քայլ բացված</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#warmup">Նախապատրաստում</a></li>
+        <li><a href="#p1-3">Խնդիր 1.3 - Տարբեր առարկաների երկու գիրք</a></li>
+        <li><a href="#p1-5">Խնդիր 1.5 - 700-ից փոքր թվերը և բաժանելիությունը</a></li>
+        <li><a href="#p1-10">Խնդիր 1.10 - Յոթանիշ թվեր՝ զույգ-կենտ օրինաչափությամբ</a></li>
+        <li><a href="#p2-5">Խնդիր 2.5 - Վեց տղա և յոթ աղջիկ շարքում, ծայրերը՝ տղաներ</a></li>
+        <li><a href="#p2-10">Խնդիր 2.10 - Երեք փոխադարձ ընկերներ կամ երեք փոխադարձ անծանոթներ</a></li>
+        <li><a href="#p2-12">Խնդիր 2.12 - $7,77,777,\dots$-ից մեկը բաժանվում է $2013$-ի վրա</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="warmup" open>
+<summary><h2>Նախապատրաստում</h2></summary>
+<div class="sec-body">
+<p>Այս թերթիկն <em>առանց թվարկելու հաշվելու</em> մասին է։ Այստեղ գրեթե ամեն ինչ հենվում է երկու կանոնի վրա։
+<strong>Արտադրյալի կանոնը</strong>՝ եթե առաջին ընտրությունը կարելի է կատարել $a$ տարբերակով, իսկ երկրորդը՝
+առաջինից անկախ, $b$ տարբերակով, ապա ընդամենը կա $a\cdot b$ տարբերակ ($a$ շարք և $b$ սյունակ ունեցող ցանց)։
+<strong>Գումարման կանոնը</strong>՝ եթե ինչ-որ բան բաժանվում է առանձին, չհատվող դեպքերի, որոնք ունեն $a$ և $b$
+տարբերակ, ապա ընդամենը կա $a+b$ տարբերակ։</p>
+<p>Հետո երկու խնդիր ավելացնում են <strong>Դիրիխլեի սկզբունքը</strong>՝ եթե $n+1$ առարկա դնենք $n$ արկղում, ապա
+որևէ արկղում կհայտնվի առնվազն երկու առարկա։ Հաշվումը տեսանելի է՝ նկարեք դիրքերը, դեպքերը կամ արկղերը, և
+բանաձևը հենց նկարից կկարդացվի։ Լուծում ենք 1 և 2 բաժինների 1.3, 1.5, 1.10, 2.5, 2.10, 2.12 համարակալված
+խնդիրները։</p>
+<p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
+փորձեք լուծել։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1-3" open>
+<summary><h2>Խնդիր 1.3 - Տարբեր առարկաների երկու գիրք</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 1.3</div>
+<p>Դարակն ունի $15$ ինֆորմատիկայի գիրք, $12$ մաթեմատիկայի գիրք և $10$ ֆիզիկայի գիրք (բոլորը տարբեր)։
+Քանի՞ տարբերակով կարելի է ընտրել <strong>երկու</strong> <strong>տարբեր</strong> առարկայի գիրք։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>«Տարբեր առարկաներ»-ը նշանակում է, որ երկու գրքերը վերցվում են երկու տարբեր խմբից։ Այսպիսով՝ նախ
+որոշենք, թե <em>երեք առարկայից որ երկուսն</em> է օգտագործում զույգը՝ կա այդպիսի երեք առարկա-զույգ՝
+ինֆորմատիկա+մաթ, ինֆորմատիկա+ֆիզիկա, մաթ+ֆիզիկա։ Այս երեք դեպքերը երբեք չեն հատվում (զույգը
+պատկանում է հենց դրանցից մեկին), ուստի <strong>գումարման կանոնով</strong> գումարում ենք դրանց քանակները։
+Մեկ դեպքի ներսում, ասենք ինֆորմատիկա+մաթ, երկու ընտրություններն անկախ են՝ $15$ ինֆորմատիկայի
+գրքից յուրաքանչյուրը $12$ մաթ գրքից յուրաքանչյուրի հետ, ինչը $15\cdot 12$ է <strong>արտադրյալի
+կանոնով</strong>։ Այսպիսով՝ ամբողջ պատասխանը երեք արտադրյալի մեկ գումար է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Բաժանենք երեք առարկա-զույգերի (գումարման կանոն)</h3>
+<p>Վավեր զույգն օգտագործում է հենց դրանցից մեկը՝ $\{\text{ինֆ, մաթ}\}$, $\{\text{ինֆ, ֆիզ}\}$, $\{\text{մաթ, ֆիզ}\}$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Հաշվենք յուրաքանչյուր զույգը (արտադրյալի կանոն)</h3>
+$$\underbrace{15\cdot 12}_{\text{ինֆ, մաթ}}=180,\qquad
+\underbrace{15\cdot 10}_{\text{ինֆ, ֆիզ}}=150,\qquad
+\underbrace{12\cdot 10}_{\text{մաթ, ֆիզ}}=120 .$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Գումարենք դեպքերը</h3>
+$$180+150+120 = 450 .$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Զույգերը չկարգավորված են, բայց յուրաքանչյուր $15\cdot 12$ արտադրյալն արդեն հաշվում է <em>չկարգավորված</em>
+զույգը մեկ անգամ՝ «ինֆորմատիկայի գիրք և մաթ գիրք»-ը թվարկվում է մեկ անգամ, ոչ թե երկու, քանի որ երկու
+գրքերը վերցվում են տարբեր խմբերից։ Կրկնակի հաշվում չկա, և երեք դեպքերը չհատվող են։ Մեկ այլ ճանապարհով՝
+բոլոր $37$ գրքից երկուսն ընտրելու $\binom{37}{2}=666$ տարբերակից հանենք նույն առարկայի զույգերը՝
+$\binom{15}{2}+\binom{12}{2}+\binom{10}{2}=105+66+45=216$, և կմնա $666-216=450$։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$15\cdot12+15\cdot10+12\cdot10 = 180+150+120 = \mathbf{450}$</div>
+
+<figure class="fig">
+<svg viewBox="0 0 380 194" width="380" role="img" aria-label="Երեք խումբ գիրք, երեք առարկա-զույգի արտադրյալները և դրանց գումարը">
+<line x1="61.6" y1="44" x2="70.8" y2="90" class="s-red" stroke-width="1.8"/>
+<line x1="163.9" y1="44" x2="97.2" y2="90" class="s-blue" stroke-width="1.8"/>
+<line x1="87.7" y1="44" x2="163.6" y2="90" class="s-red" stroke-width="1.8"/>
+<line x1="292.3" y1="44" x2="216.4" y2="90" class="s-orange" stroke-width="1.8"/>
+<line x1="216.1" y1="44" x2="282.8" y2="90" class="s-blue" stroke-width="1.8"/>
+<line x1="318.4" y1="44" x2="309.2" y2="90" class="s-orange" stroke-width="1.8"/>
+<line x1="103" y1="122" x2="155.7" y2="151.1" class="s-ink" stroke-width="1.2"/>
+<polygon class="f-ink" points="161,154 153.1,153.8 156.6,147.5"/>
+<line x1="190" y1="122" x2="190" y2="148" class="s-ink" stroke-width="1.2"/>
+<polygon class="f-ink" points="190,154 186.4,147 193.6,147"/>
+<line x1="277" y1="122" x2="224.3" y2="151.1" class="s-ink" stroke-width="1.2"/>
+<polygon class="f-ink" points="219,154 223.4,147.5 226.9,153.8"/>
+<rect x="8" y="8" width="100" height="36" rx="3" class="f-red-soft s-ink" stroke-width="1"/>
+<text x="58" y="23" text-anchor="middle" style="font-size:13px">Ինֆորմատիկա</text>
+<text x="58" y="39" text-anchor="middle" font-weight="700" style="font-size:13px">15</text>
+<rect x="140" y="8" width="100" height="36" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="190" y="23" text-anchor="middle" style="font-size:13px">Մաթ</text>
+<text x="190" y="39" text-anchor="middle" font-weight="700" style="font-size:13px">12</text>
+<rect x="272" y="8" width="100" height="36" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="322" y="23" text-anchor="middle" style="font-size:13px">Ֆիզիկա</text>
+<text x="322" y="39" text-anchor="middle" font-weight="700" style="font-size:13px">10</text>
+<rect x="28" y="90" width="92" height="32" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="74" y="103" text-anchor="middle" style="font-size:12px">ինֆ × մաթ</text>
+<text x="74" y="118" text-anchor="middle" style="font-size:12px">15·12 = 180</text>
+<rect x="144" y="90" width="92" height="32" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="190" y="103" text-anchor="middle" style="font-size:12px">ինֆ × ֆիզ</text>
+<text x="190" y="118" text-anchor="middle" style="font-size:12px">15·10 = 150</text>
+<rect x="260" y="90" width="92" height="32" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="306" y="103" text-anchor="middle" style="font-size:12px">մաթ × ֆիզ</text>
+<text x="306" y="118" text-anchor="middle" style="font-size:12px">12·10 = 120</text>
+<rect x="20" y="154" width="340" height="32" rx="3" class="f-green-soft s-ink" stroke-width="1"/>
+<text x="190" y="175" text-anchor="middle" style="font-size:13px">գումարման կանոն՝ 180 + 150 + 120 = <tspan font-weight="700">450</tspan></text>
+</svg>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> <em>բազմապատկեք դեպքի ներսում, գումարեք դեպքերի միջև։</em> Երբ առարկաները
+բաժանվում են չհատվող տեսակների, յուրաքանչյուր տեսակը հաշվեք արտադրյալի կանոնով, ապա գումարեք
+տեսակների քանակները (գումարման կանոն)։ Երեք խմբից երկուսն ընտրելը միշտ տալիս է հենց $\binom{3}{2}=3$ դեպք։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1-5" open>
+<summary><h2>Խնդիր 1.5 - 700-ից փոքր թվերը և բաժանելիությունը</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 1.5</div>
+<p>$700$-ից փոքր բնական թվերի մեջ՝ քանի՞սն են բաժանվում $5$-ի վրա։ Դրանցից քանի՞սն են բաժանվում նաև
+$3$-ի վրա։ Քանի՞սն են բաժանվում և՛ $3$-ի, և՛ $5$-ի վրա։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Տրված սահմանից փոքր $d$-ի բազմապատիկները հավասարաչափ բաշխված են՝ $d,2d,3d,\dots$։ Ուստի «քանի՞ $d$-ի
+բազմապատիկ կա, որոնք չեն գերազանցում $N$-ը» պարզապես $\lfloor N/d\rfloor$ է՝ $N$-ի մեջ տեղավորում ենք $d$ չափի
+այնքան ամբողջ քայլ, որքան հնարավոր է։ «$700$-ից փոքր»-ը նշանակում է $1,2,\dots,699$, ուստի $N=699$։
+Միակ նրբությունը վերջին հարցն է՝ «բաժանվում է և՛ $3$-ի, և՛ $5$-ի վրա»-ն նույնն է, ինչ «բաժանվում է
+$\operatorname{lcm}(3,5)$-ի (ամենափոքր ընդհանուր բազմապատիկի) վրա», որը $3\cdot 5=15$ է, քանի որ $3$-ը և $5$-ը
+փոխադարձաբար պարզ են։ Իսկ «բաժանվում է $5$-ի վրա և նաև $3$-ի վրա»-ն ճիշտ նույն պայմանն է, ուստի
+երկրորդ և երրորդ պատասխանները համընկնում են։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ամրագրենք միջակայքը</h3>
+<p>$700$-ից փոքր բնական թվերն են $1,2,\dots,699$, ուստի օգտագործում ենք $N=699$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $5$-ի վրա բաժանվողները</h3>
+$$\left\lfloor \tfrac{699}{5}\right\rfloor = 139 \qquad(\text{սրանք են } 5,10,15,\dots,695).$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Դրանցից նաև $3$-ի վրա բաժանվողները</h3>
+<p>$5$-ի վրա և $3$-ի վրա բաժանվող թիվը բաժանվում է $\operatorname{lcm}(3,5)$-ի վրա, իսկ $\operatorname{lcm}(3,5)=15$, քանի որ
+$\gcd(3,5)=1$։ Ուստի հաշվում ենք $15$-ի բազմապատիկները՝</p>
+$$\left\lfloor \tfrac{699}{15}\right\rfloor = 46 \qquad(\text{սրանք են } 15,30,\dots,690).$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Ե՛վ $3$-ի, և՛ $5$-ի վրա բաժանվողները</h3>
+<p>Սա բառացիորեն նույն պայմանն է՝ $15$-ի վրա բաժանվող լինելը, ուստի քանակը կրկին $46$ է։</p>
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+$695 = 5\cdot 139 \le 699$ և հաջորդ բազմապատիկը՝ $700>699$, ուստի $139$-ը ճիշտ է։
+$690 = 15\cdot 46 \le 699$ և $15\cdot 47 = 705 > 699$, ուստի $46$-ը ճիշտ է։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\lfloor 699/5\rfloor = \mathbf{139}$-ը՝ $5$-ի վրա բաժանվող. &ensp;դրանցից $\lfloor 699/15\rfloor = \mathbf{46}$-ը՝
+նաև $3$-ի վրա. &ensp;$\mathbf{46}$-ը՝ և՛ $3$-ի, և՛ $5$-ի վրա։</div>
+
+<figure class="fig">
+<svg viewBox="0 0 412 122" width="412" role="img" aria-label="Թվային առանցք, 5-ի և 15-ի բազմապատիկների լեգենդ և 5-ից 45 բազմապատիկների շարք">
+<line x1="12" y1="46" x2="368.5" y2="46" class="s-ink" stroke-width="1.2"/>
+<polygon class="f-ink" points="374.5,46 367.5,49.6 367.5,42.4"/>
+<line x1="12" y1="42.5" x2="12" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="70" y1="42.5" x2="70" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="128" y1="42.5" x2="128" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="186" y1="42.5" x2="186" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="244" y1="42.5" x2="244" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="302" y1="42.5" x2="302" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<line x1="357.1" y1="42.5" x2="357.1" y2="49.5" class="s-ink" stroke-width="1.2"/>
+<text x="12" y="62.4" text-anchor="middle" style="font-size:12px">0</text>
+<text x="186" y="62.4" text-anchor="middle" style="font-size:12px">∼</text>
+<text x="357.1" y="63.2" text-anchor="middle" style="font-size:12px">695</text>
+<text x="379.5" y="50" text-anchor="start" style="font-size:12px">&lt;700</text>
+<circle cx="41" cy="30.1" r="3" class="f-blue"/>
+<text x="47.3" y="34.1" text-anchor="start" style="font-size:12px">5-ի բազմապատիկ (139 հատ)</text>
+<circle cx="41" cy="15.5" r="3.8" class="f-red"/>
+<text x="47.3" y="19.5" text-anchor="start" style="font-size:12px">15-ի բազմապատիկ = 5-ի և 3-ի (46 հատ)</text>
+<text x="12" y="81.9" text-anchor="start" style="font-size:11.5px">5-ի բազմապատիկների մեջ ամեն <tspan font-style="italic">երրորդն</tspan> է նաև 3-ի բազմապատիկ՝</text>
+<circle cx="12" cy="98.2" r="2.8" class="f-blue"/>
+<text x="12" y="113.6" text-anchor="middle" style="font-size:11px">5</text>
+<circle cx="51.2" cy="98.2" r="2.8" class="f-blue"/>
+<text x="51.2" y="113.6" text-anchor="middle" style="font-size:11px">10</text>
+<circle cx="90.3" cy="98.2" r="4.2" class="f-red"/>
+<text x="90.3" y="113.6" text-anchor="middle" style="font-size:11px">15</text>
+<circle cx="129.5" cy="98.2" r="2.8" class="f-blue"/>
+<text x="129.5" y="113.6" text-anchor="middle" style="font-size:11px">20</text>
+<circle cx="168.6" cy="98.2" r="2.8" class="f-blue"/>
+<text x="168.6" y="113.6" text-anchor="middle" style="font-size:11px">25</text>
+<circle cx="207.8" cy="98.2" r="4.2" class="f-red"/>
+<text x="207.8" y="113.6" text-anchor="middle" style="font-size:11px">30</text>
+<circle cx="246.9" cy="98.2" r="2.8" class="f-blue"/>
+<text x="246.9" y="113.6" text-anchor="middle" style="font-size:11px">35</text>
+<circle cx="286.1" cy="98.2" r="2.8" class="f-blue"/>
+<text x="286.1" y="113.6" text-anchor="middle" style="font-size:11px">40</text>
+<circle cx="325.2" cy="98.2" r="4.2" class="f-red"/>
+<text x="325.2" y="113.6" text-anchor="middle" style="font-size:11px">45</text>
+</svg>
+<figcaption>(կարմիր $=$ նաև $\div 3$՝ $15,30,45,\dots$)։ Հարաբերությունը՝ $139/3\approx 46$, համընկնում է
+$\lfloor 699/15\rfloor=46$-ի հետ։</figcaption>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> $\{1,\dots,N\}$-ում $d$-ի բազմապատիկների քանակը
+$\lfloor N/d\rfloor$ է։ «$a$-ի և $b$-ի վրա բաժանվող»-ը հանգում է
+«$\operatorname{lcm}(a,b)$-ի վրա բաժանվող»-ին, իսկ փոխադարձաբար պարզ $a,b$-ի դեպքում դա
+պարզապես $a\cdot b$ է։</p>
+</div>
+
+<h3>Բազմապատիկները՝ տող առ տող</h3>
+<p>Եթե $1,2,\dots,699$ թվերը գրենք $15$-ական թվով տողերում, բազմապատիկները դասավորվում են ուղղահայաց
+սյունակներով, և $\lfloor N/d\rfloor$ բանաձևը կարդացվում է հենց նկարից՝</p>
+
+<div class="widget" id="w-grid">
+  <div class="widget-head">Բազմապատիկները՝ 15-ական թվով տողերում</div>
+  <p class="widget-hint">Ցանցի յուրաքանչյուր տողում $15$ հաջորդական թիվ է։ Միացրեք կամ անջատեք $5$-ի և $3$-ի
+  բազմապատիկները, իսկ $N$ վերին սահմանը փոխեք սահիչով կամ սեղմելով ցանցի որևէ թվի վրա։ Նկատեք, որ
+  յուրաքանչյուր լրիվ տողում կա $5$-ի ճիշտ $3$, $3$-ի ճիշտ $5$ և $15$-ի ճիշտ $1$ բազմապատիկ (տողի վերջին
+  թիվը), ուստի քանակները հաշվվում են լրիվ տողերով՝ գումարած վերջին, թերի տողը։</p>
+  <div class="grid-svg"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="m5" aria-pressed="true">$5$-ի բազմապատիկները</button>
+    <button class="btn" type="button" data-act="m3" aria-pressed="true">$3$-ի բազմապատիկները</button>
+    <label class="range-label">$N$՝ <input type="range" min="1" max="720" value="699" aria-label="Վերին սահմանը՝ N"></label>
+    <strong data-out="n">699</strong>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ $N=699$-ին</button>
+  </div>
+  <div class="widget-out" data-out="counts"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1-10" open>
+<summary><h2>Խնդիր 1.10 - Յոթանիշ թվեր՝ զույգ-կենտ օրինաչափությամբ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 1.10</div>
+<p>Քանի՞ յոթանիշ թիվ ունի <strong>կենտ</strong> թվանշան յուրաքանչյուր <strong>զույգ</strong> դիրքում և
+<strong>զույգ</strong> թվանշան յուրաքանչյուր <strong>կենտ</strong> դիրքում։ ($1$-ին դիրքն առաջատար թվանշանն է և չի
+կարող լինել $0$։)</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Յոթանիշ թիվը պարզապես ձախից աջ լրացված յոթ դիրք է, և յուրաքանչյուր դիրքի թվանշանն ընտրվում է
+մյուսներից <em>անկախ</em>, ուստի սա մաքուր արտադրյալի կանոնի հաշվարկ է՝ բազմապատկում ենք յուրաքանչյուր
+դիրքում թույլատրելի թվանշանների քանակը։ Կարդանք կանոնը դիրք առ դիրք։ Կենտ դիրքերը՝ $1,3,5,7$,
+պահանջում են <em>զույգ</em> թվանշան, որից կա հինգը՝ $\{0,2,4,6,8\}$։ Զույգ դիրքերը՝ $2,4,6$, պահանջում
+են <em>կենտ</em> թվանշան, նույնպես հինգը՝ $\{1,3,5,7,9\}$։ Միակ խոչընդոտը հենց առաջին դիրքն է՝ այն
+կենտ դիրք է, ուստի պահանջում է զույգ թվանշան, բայց չի կարող լինել $0$ (այլապես թիվն իրականում
+յոթանիշ չէ)։ Դա հանում է հենց մեկ տարբերակ՝ մնում է $\{2,4,6,8\}$, այսինքն՝ $4$ ընտրություն։ Մյուս
+բոլոր դիրքերում մնում է ամբողջ $5$ տարբերակը։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Դասակարգենք դիրքերը</h3>
+<p>$1$-ից $7$ դիրքերը։ <em>Կենտ</em> դիրքերը՝ $\{1,3,5,7\}$, վերցնում են զույգ թվանշան, իսկ <em>զույգ</em>
+դիրքերը՝ $\{2,4,6\}$, վերցնում են կենտ թվանշան։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Հաշվենք յուրաքանչյուր դիրքի ընտրությունները</h3>
+<p>Զույգ թվանշանները $\{0,2,4,6,8\}$-ն են՝ $5$ տարբերակ։ Կենտ թվանշանները $\{1,3,5,7,9\}$-ն են՝ նույնպես $5$։
+$1$-ին դիրքը հատուկ է՝ զույգ թվանշան, բայց ոչ $0$, ուստի $\{2,4,6,8\}$, ընդամենը $4$ ընտրություն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Բազմապատկենք (արտադրյալի կանոն)</h3>
+<p>$4$ ընտրությամբ մեկ դիրք ($1$-ին դիրքը) և մյուս վեց դիրքերը՝ $5$-ական ընտրությամբ՝</p>
+$$\underbrace{4}_{\text{դիրք }1}\;\cdot\;\underbrace{5\cdot5\cdot5}_{\text{դիրք }3,5,7}\;\cdot\;\underbrace{5\cdot5\cdot5}_{\text{դիրք }2,4,6}
+= 4\cdot 5^{6} = 4\cdot 15625 = 62500 .$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Եթե $1$-ին դիրքում թույլատրվեր նաև $0$, կստանայինք $5^7=78125$՝ առաջատար $0$-ի արգելքը հանում է հենց այն
+թվերը, որոնք $1$-ին դիրքում ունեն $0$, ինչն ամբողջի $\tfrac{1}{5}$-ն է, և մնում է
+$\tfrac{4}{5}\cdot 5^7 = 4\cdot 5^6 = 62500$։ Նույն թիվը՝ ստացված երկրորդ ճանապարհով։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $4\cdot 5^{6} = \mathbf{62500}$</div>
+
+<figure class="fig">
+<svg viewBox="0 0 418 122" width="418" role="img" aria-label="Յոթ դիրք, յուրաքանչյուրի թույլատրելի թվանշանները և դրանց քանակների արտադրյալը">
+<rect x="8.1" y="19" width="55.8" height="46" rx="3" class="f-red-soft s-ink" stroke-width="2.4"/>
+<text x="36" y="34" text-anchor="middle" style="font-size:12px">զույգ,</text>
+<text x="36" y="48" text-anchor="middle" style="font-size:12px">ոչ 0</text>
+<text x="36" y="62" text-anchor="middle" font-weight="700" style="font-size:14px">4</text>
+<text x="36" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 1</text>
+<text x="36" y="78" text-anchor="middle" style="font-size:10px">{2,4,6,8}</text>
+<rect x="65.7" y="19" width="55.8" height="46" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="93.6" y="39" text-anchor="middle" style="font-size:12px">կենտ</text>
+<text x="93.6" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="93.6" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 2</text>
+<text x="93.6" y="78" text-anchor="middle" style="font-size:10px">{1,3,5,7,9}</text>
+<rect x="123.3" y="19" width="55.8" height="46" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="151.2" y="39" text-anchor="middle" style="font-size:12px">զույգ</text>
+<text x="151.2" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="151.2" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 3</text>
+<text x="151.2" y="78" text-anchor="middle" style="font-size:10px">{0,2,4,6,8}</text>
+<rect x="180.9" y="19" width="55.8" height="46" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="208.8" y="39" text-anchor="middle" style="font-size:12px">կենտ</text>
+<text x="208.8" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="208.8" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 4</text>
+<text x="208.8" y="78" text-anchor="middle" style="font-size:10px">{1,3,5,7,9}</text>
+<rect x="238.5" y="19" width="55.8" height="46" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="266.4" y="39" text-anchor="middle" style="font-size:12px">զույգ</text>
+<text x="266.4" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="266.4" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 5</text>
+<text x="266.4" y="78" text-anchor="middle" style="font-size:10px">{0,2,4,6,8}</text>
+<rect x="296.1" y="19" width="55.8" height="46" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="324" y="39" text-anchor="middle" style="font-size:12px">կենտ</text>
+<text x="324" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="324" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 6</text>
+<text x="324" y="78" text-anchor="middle" style="font-size:10px">{1,3,5,7,9}</text>
+<rect x="353.7" y="19" width="55.8" height="46" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="381.6" y="39" text-anchor="middle" style="font-size:12px">զույգ</text>
+<text x="381.6" y="57" text-anchor="middle" font-weight="700" style="font-size:14px">5</text>
+<text x="381.6" y="14" text-anchor="middle" font-weight="700" style="font-size:10.5px">դիրք 7</text>
+<text x="381.6" y="78" text-anchor="middle" style="font-size:10px">{0,2,4,6,8}</text>
+<text x="208.8" y="112.6" text-anchor="middle" style="font-size:13px">4 × 5 × 5 × 5 × 5 × 5 × 5 = 4 · 5<tspan dy="-6" style="font-size:9px">6</tspan><tspan dy="6"> = </tspan><tspan font-weight="700">62 500</tspan></text>
+</svg>
+<figcaption>Կապույտ $=$ կենտ դիրք (զույգ թվանշան), նարնջագույն $=$ զույգ դիրք (կենտ թվանշան), կարմիր $=$
+առաջատար դիրք։</figcaption>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> դիրքերի լրացման տիպի խնդիրների համար, որտեղ յուրաքանչյուր դիրք ընտրվում
+է անկախ, բազմապատկեք ամեն դիրքի ընտրությունների քանակները։ Առաջատար թվանշանի «ոչ $0$» սահմանափակումը
+հաշվի առեք՝ նվազեցնելով այդ մեկ դիրքի տարբերակների քանակը։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2-5" open>
+<summary><h2>Խնդիր 2.5 - Վեց տղա և յոթ աղջիկ շարքում, ծայրերը՝ տղաներ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2.5</div>
+<p>Վեց տղա և յոթ աղջիկ ($13$ տարբեր մարդ) շարվում են մեկ շարքում։ Քանի՞ տարբերակով կարող են
+շարվել այնպես, որ <strong>առաջին և վերջին</strong> տեղերը երկուսն էլ զբաղեցնեն տղաներ։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Կարգը կարևոր է (շարք), ուստի սա դասավորությունների հաշվարկ է։ Ամենապարզ մոտեցումն է <em>նախ
+լրացնել սահմանափակված դիրքերը</em>՝ ամեն ինչից առաջ զբաղեցնենք երկու ծայրային դիրքերը, որոնք պարտադիր
+տղաների են։ Ընտրենք ձախ ծայրի տղային ($6$ ընտրություն), ապա աջ ծայրինը (մնում է $5$ ընտրություն)՝
+$6\cdot 5$ տարբերակ երկու ծայրերի համար։ Այժմ ծայրերը լրացված են, և սահմանափակումն ամբողջությամբ
+հաշվի է առնված՝ մնացած $11$ մարդը (մյուս $4$ տղան և բոլոր $7$ աղջիկները) լրիվ ազատ են լրացնելու
+միջին $11$ տեղերը ցանկացած կարգով, ինչը $11!$ տարբերակ է։ Բազմապատկում ենք անկախ փուլերը։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Լրացնենք ծայրերը (միակ սահմանափակումը)</h3>
+<p>Ձախ ծայր՝ $6$ տղայից յուրաքանչյուրը։ Աջ ծայր՝ մնացած $5$ տղայից յուրաքանչյուրը։ Դա $6\cdot 5 = 30$
+կարգավորված տարբերակ է՝ սա $A_6^2 = 6\cdot 5$ դասավորությունն է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Լրացնենք միջինն ազատ</h3>
+<p>Ծայրերը ֆիքսելուց հետո $11$ տարբեր մարդ է մնում $11$ միջին տեղերի համար՝ $11!$ դասավորություն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Բազմապատկենք (արտադրյալի կանոն)</h3>
+$$6\cdot 5\cdot 11! = 30\cdot 39\,916\,800 = 1\,197\,504\,000 .$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Առանց սահմանափակման ընդհանուր դասավորությունները կլինեին $13!$։ Մեր պայմանը հարկադրում է, որ երկու
+ծայրերը լինեն $6$ տղաների մեջ՝ բոլոր $13!$ շարքերի այն մասնաբաժինը, որտեղ երկու ծայրում էլ տղա է,
+$\tfrac{6}{13}\cdot\tfrac{5}{12}$ է, ինչը տալիս է $13!\cdot\tfrac{6\cdot5}{13\cdot12} = \tfrac{13!}{156}\cdot30$։
+Քանի որ $13! = 6\,227\,020\,800$, սա $6\,227\,020\,800\cdot\tfrac{30}{156}=1\,197\,504\,000$ է։ Նույն թիվը։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$6\cdot 5\cdot 11! = 30\cdot 11! = \mathbf{1\,197\,504\,000}$</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> <em>նախ լրացրեք սահմանափակված դիրքերը</em>, ապա մնացածը դասավորեք ազատ։
+Եթե շարքում կա $n$ մարդ, և $k$ անվանված դիրքը կարող են զբաղեցնել միայն նրանցից $m$-ը, ապա այդ դիրքերը
+լրացվում են $A_m^k = m(m-1)\cdots(m-k+1)$ տարբերակով, իսկ մնացած $n-k$ մարդը մնացած դիրքերը լրացնում է
+$(n-k)!$ տարբերակով՝ ընդամենը $A_m^k\cdot(n-k)!$ (այստեղ՝ $A_6^2\cdot 11!$)։</p>
+</div>
+
+<h3>Շարքը՝ տեղ առ տեղ</h3>
+<p>Ստորև շարքը լրացվում է տեղ առ տեղ՝ նախ ծայրերը, ապա մեջտեղը, և յուրաքանչյուր տեղի տակ գրվում է, թե
+քանի տարբերակ կար այդ պահին՝</p>
+$$\underbrace{6\cdot 5}_{\text{երկու տղա-ծայրեր}}\;\cdot\;\underbrace{11!}_{\text{միջին}}=\mathbf{1\,197\,504\,000}.$$
+
+<div class="widget" id="w-row">
+  <div class="widget-head">Նախ ծայրերը, թե՞ ձախից աջ</div>
+  <p class="widget-hint">Հաջորդ տեղը նշված է նարնջագույն շրջանակով, իսկ ներքևում ակտիվ են միայն այն մարդիկ,
+  որոնց կարելի է դնել այնտեղ (Տ՝ տղա, Ա՝ աղջիկ)։ Սեղմեք նրանցից մեկի վրա կամ սեղմեք «Հաջորդ տեղը»՝
+  պատահական ընտրության համար։ Համեմատեք երկու հերթականությունները՝ «Նախ ծայրերը» դեպքում թվերը միշտ նույնն
+  են, իսկ «Ձախից աջ» դեպքում վերջին տեղի տարբերակների քանակը կախված է նախորդ ընտրություններից։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-mode="ends" aria-pressed="true">Նախ ծայրերը</button>
+    <button class="btn" type="button" data-mode="ltr" aria-pressed="false">Ձախից աջ</button>
+  </div>
+  <div class="row-svg"></div>
+  <div class="chips" data-out="pool" role="group" aria-label="Մարդիկ"></div>
+  <div class="widget-controls">
+    <button class="btn primary" type="button" data-act="step">Հաջորդ տեղը</button>
+    <button class="btn" type="button" data-act="fill">Լրացնել մինչև վերջ</button>
+    <button class="btn" type="button" data-act="reset">Սկզբից</button>
+  </div>
+  <div class="widget-out" data-out="product"></div>
+  <div class="widget-out" data-out="note"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2-10" open>
+<summary><h2>Խնդիր 2.10 - Երեք փոխադարձ ընկերներ կամ երեք փոխադարձ անծանոթներ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2.10</div>
+<p>$6$ մարդանոց սենյակում նրանցից ցանկացած երկուսը կա՛մ <strong>ընկերներ</strong> են, կա՛մ
+<strong>անծանոթներ</strong>։ Ապացուցեք, որ միշտ կա երեք մարդ, որոնք զույգ առ զույգ ընկերներ են, կամ երեք
+մարդ, որոնք զույգ առ զույգ անծանոթներ են։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Մոդելավորենք խնդիրը որպես լրիվ գրաֆ $K_6$՝ $6$ գագաթ, յուրաքանչյուր զույգի միջև մեկ կող, յուրաքանչյուր
+կող ներկված <strong>կարմիր</strong> (ընկերներ) կամ <strong>կապույտ</strong> (անծանոթներ)։ Պնդումն այն է, որ ինչ-որ
+եռանկյուն միագույն է։ Հնարքն այն է, որ կենտրոնանանք <em>մեկ</em> մարդու՝ $P$-ի վրա։ $P$-ն ունի $5$ կող, երկու գույն՝
+<strong>Դիրիխլեի սկզբունքով</strong> դրանցից առնվազն $\lceil 5/2\rceil = 3$-ն ունեն նույն գույնը՝ ասենք $P$-ն
+ընկեր է (կարմիր) երեք մարդկանց՝ $A,B,C$-ի հետ։ Հիմա ամեն ինչ կախված է $A,B,C$ եռանկյունից։
+Եթե $AB,BC,CA$ զույգերից թեկուզ մեկը կարմիր է, ապա այդ զույգը գումարած $P$-ն ամբողջովին կարմիր
+եռանկյուն է (երեք փոխադարձ ընկերներ)։ Եթե դրանցից <em>ոչ մեկը</em> կարմիր չէ, ապա $AB,BC,CA$-ն բոլորը
+կապույտ են, ուստի $A,B,C$-ն իրենք ամբողջովին կապույտ եռանկյուն են (երեք փոխադարձ անծանոթներ)։
+Այլ ելք չկա։ Սա հենց $R(3,3)\le 6$ պնդումն է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Կառուցենք մոդելը</h3>
+<p>Գագաթներ $=$ $6$ մարդ՝ ներկենք $\binom{6}{2}=15$ կողերից յուրաքանչյուրը կարմիր (ընկերներ) կամ
+կապույտ (անծանոթներ)։ «Երեք փոխադարձ ընկերներ» $=$ կարմիր եռանկյուն, «երեք
+փոխադարձ անծանոթներ» $=$ կապույտ եռանկյուն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Դիրիխլե մեկ գագաթում</h3>
+<p>Ընտրենք ցանկացած մարդ՝ $P$։ $P$-ից դուրս եկող $5$ կողերը ներկված են $2$ գույնով, և
+$\lceil 5/2\rceil=3$, ուստի Դիրիխլեի սկզբունքով դրանցից առնվազն $3$-ն ունեն նույն գույնը։ Առանց
+ընդհանրությունը խախտելու՝ $P$-ն <strong>կարմիրով</strong> միացած է երեք մարդկանց՝ $A,B,C$-ի (եթե փոխարենը
+մեծամասնության գույնը կապույտ է, ամենուր փոխեք «ընկերներ»/«անծանոթներ» բառերը՝
+դատողությունը նույնն է)։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Քննենք $A,B,C$ եռանկյունը (երկու դեպք)</h3>
+<ul>
+  <li><em>$A,B,C$-ի մեջ ինչ-որ կող կարմիր է</em>, ասենք $AB$։ Այդ դեպքում $P\!A$, $P\!B$, $AB$-ն բոլորը կարմիր են՝
+  $P,A,B$-ն երեք փոխադարձ ընկերներ են։ Ավարտ։</li>
+  <li><em>$A,B,C$-ի մեջ ոչ մի կող կարմիր չէ։</em> Այդ դեպքում $AB$, $BC$, $CA$-ն բոլորը կապույտ են, ուստի $A,B,C$-ն
+  երեք փոխադարձ անծանոթներ են։ Ավարտ։</li>
+</ul>
+<p>Երկու դեպքերից մեկը պարտադիր տեղի է ունենում, ուստի միագույն եռանկյունը միշտ գոյություն ունի։ $\blacksquare$</p>
+</div>
+
+<div class="check"><span class="check-label">Ստուգում (արդյո՞ք $6$-ը ճիշտ թիվն է)։</span>
+$5$ մարդու դեպքում պնդումը կարող է ձախողվել՝ ներկենք $K_5$-ը որպես կարմիր $5$-ցիկլ և կապույտ $5$-ցիկլ
+(«հնգանկյունն ու հնգաստղը»), և ոչ մի եռանկյուն միագույն չի լինի։ Ուստի $5$-ը բավարար չէ, և $6$-ը նվազագույն
+արժեքն է՝ ահա թե ինչու է խնդիրը տալիս հենց $6$ թիվը։ (Ուղիղ համակարգչային ստուգումը հաստատում է՝ $K_6$-ի
+բոլոր $2^{15}$ ներկումներից <em>ոչ մեկը</em> չի խուսափում միագույն եռանկյունից, մինչդեռ $K_5$-ն ունի խուսափող
+ներկումներ։) $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Այդպիսի միագույն եռանկյունը միշտ գոյություն ունի՝ սա $R(3,3)\le 6$ է։</div>
+
+<figure class="fig">
+<svg viewBox="0 0 394 192" width="394" role="img" aria-label="Ձախում՝ P-ն իր 5 կողով, որոնցից 3-ը կարմիր են։ Աջում՝ P, A, B, C և երկու դեպքը">
+<line x1="83.8" y1="87" x2="83.8" y2="18.6" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="83.8" y1="87" x2="18.7" y2="65.9" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="83.8" y1="87" x2="43.6" y2="142.3" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="83.8" y1="87" x2="124" y2="142.3" class="s-blue" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="83.8" y1="87" x2="148.9" y2="65.9" class="s-blue" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="321.4" y1="33" x2="267.4" y2="108.6" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="321.4" y1="33" x2="375.4" y2="108.6" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="321.4" y1="33" x2="321.4" y2="155.4" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="267.4" y1="108.6" x2="375.4" y2="108.6" class="s-red" stroke-width="3" stroke-linecap="round"/>
+<line x1="375.4" y1="108.6" x2="321.4" y2="155.4" class="s-blue" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="321.4" y1="155.4" x2="267.4" y2="108.6" class="s-blue" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="294.4" y="102.6" text-anchor="middle" style="font-size:11px">կարմի՞ր</text>
+<circle cx="83.8" cy="87" r="11" class="f-bg s-ink" stroke-width="1.2"/><circle cx="83.8" cy="87" r="11" class="f-orange-soft s-ink" stroke-width="1.2"/><text x="83.8" y="92" text-anchor="middle" class="m" font-weight="700">P</text>
+<circle cx="83.8" cy="18.6" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="83.8" y="23.6" text-anchor="middle" class="m" font-weight="700">A</text>
+<circle cx="18.7" cy="65.9" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="18.7" y="70.9" text-anchor="middle" class="m" font-weight="700">B</text>
+<circle cx="43.6" cy="142.3" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="43.6" y="147.3" text-anchor="middle" class="m" font-weight="700">C</text>
+<circle cx="124" cy="142.3" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="124" y="147.3" text-anchor="middle" class="m" font-weight="700">D</text>
+<circle cx="148.9" cy="65.9" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="148.9" y="70.9" text-anchor="middle" class="m" font-weight="700">E</text>
+<circle cx="321.4" cy="33" r="11" class="f-bg s-ink" stroke-width="1.2"/><circle cx="321.4" cy="33" r="11" class="f-orange-soft s-ink" stroke-width="1.2"/><text x="321.4" y="38" text-anchor="middle" class="m" font-weight="700">P</text>
+<circle cx="267.4" cy="108.6" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="267.4" y="113.6" text-anchor="middle" class="m" font-weight="700">A</text>
+<circle cx="375.4" cy="108.6" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="375.4" y="113.6" text-anchor="middle" class="m" font-weight="700">B</text>
+<circle cx="321.4" cy="155.4" r="11" class="f-bg s-ink" stroke-width="1.2"/><text x="321.4" y="160.4" text-anchor="middle" class="m" font-weight="700">C</text>
+<line x1="20" y1="180" x2="46" y2="180" class="s-red" stroke-width="3"/>
+<text x="51" y="184" text-anchor="start" style="font-size:11.5px">կարմիր = ընկերներ</text>
+<line x1="172" y1="180" x2="198" y2="180" class="s-blue" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="203" y="184" text-anchor="start" style="font-size:11.5px">կապույտ (կետագիծ) = անծանոթներ</text>
+</svg>
+<figcaption>Ձախում՝ $5$ կող, $2$ գույն $\Rightarrow$ $\ge 3$-ն ունեն նույն գույնը (այստեղ կարմիր՝ $A,B,C$)։
+Աջում՝ եթե $AB,BC,CA$-ից որևէ մեկը կարմիր է՝ կարմիր եռանկյուն $P$-ի հետ, եթե բոլոր երեքը կապույտ են՝
+$A,B,C$ ամբողջովին կապույտ եռանկյուն։</figcaption>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա (Ռամսեյ Դիրիխլեի միջոցով)՝</strong> կառուցվածք հարկադրելու համար կենտրոնացեք մեկ
+գագաթի վրա, Դիրիխլեով գտեք դրա կողերի մեծամասնության գույնը, ապա ստուգեք այն փոքր խումբը, որ
+կազմում է մեծամասնությունը։ Ապացույցի առանցքը երկու դեպքի բաժանումն է՝ «ներսում ինչ-որ կող $X$
+գույնի է» կամ «ոչ մի կող»։ Սա ապացուցում է $R(3,3)\le 6$։</p>
+</div>
+
+<h3>Փորձեք խուսափել միագույն եռանկյունից</h3>
+<p>Պնդումն ավելի համոզիչ է դառնում, երբ ինքներդ փորձում եք այն հերքել՝</p>
+
+<div class="widget" id="w-ramsey">
+  <div class="widget-head">Ներկեք կողերը՝ առանց միագույն եռանկյան</div>
+  <p class="widget-hint">Սեղմեք կողի վրա, և նրա գույնը կփոխվի՝ բարակ մոխրագույն (դեռ չներկված) → կարմիր
+  (ընկերներ) → կապույտ կետագիծ (անծանոթներ) → մոխրագույն։ Միագույն եռանկյունն անմիջապես ընդգծվում է։
+  $K_5$-ում «Հնգանկյուն և հնգաստղ» ներկումը ցույց է տալիս, որ $5$ մարդու դեպքում կարելի է խուսափել
+  միագույն եռանկյունից։ $K_6$-ում նույն կոճակն այդպես է ներկում $A,B,C,D,E$ մարդկանց միջև կողերը, իսկ
+  $P$-ի $5$ կողը թողնում է ձեզ՝ փորձեք ներկել դրանք առանց միագույն եռանկյան։ «Ապացույցը» կոճակը նույն
+  դատողությունը կիրառում է ձեր ներկման վրա։</p>
+  <div class="ramsey-svg"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-n="6" aria-pressed="true">$K_6$՝ 6 մարդ</button>
+    <button class="btn" type="button" data-n="5" aria-pressed="false">$K_5$՝ 5 մարդ</button>
+    <button class="btn" type="button" data-act="penta">Հնգանկյուն և հնգաստղ</button>
+    <button class="btn" type="button" data-act="random">Պատահական ներկում</button>
+    <button class="btn" type="button" data-act="clear">Մաքրել</button>
+    <button class="btn" type="button" data-act="proof" aria-pressed="false">Ապացույցը</button>
+  </div>
+  <div class="widget-out" data-out="status"></div>
+  <div class="widget-out" data-out="proof"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2-12" open>
+<summary><h2>Խնդիր 2.12 - $7,77,777,\dots$-ից մեկը բաժանվում է $2013$-ի վրա</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2.12</div>
+<p>Դիտարկեք $7,\,77,\,777,\,7777,\dots$ հաջորդականությունը ($n$-րդ անդամը $n$ յոթերով գրված թիվն է)։
+Ապացուցեք, որ նրա առաջին $2014$ անդամների մեջ առնվազն մեկը բաժանվում է $2013$-ի վրա։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Հնարավոր չէ առանց հաշվելու մատնանշել, թե որ անդամն է աշխատում, բայց դրա կարիքն էլ չկա՝ բավական է
+ապացուցել, որ այդպիսին <em>գոյություն ունի</em>։ Գործիքը <strong>Դիրիխլեի սկզբունքն</strong> է՝ կիրառված
+մնացորդների վրա։ Նայենք առաջին $2014$ անդամներին $2013$ մոդուլով։ $2013$ մոդուլով մնացորդը
+$\{0,1,\dots,2012\}$ $2013$ արժեքներից մեկն է՝ դա $2013$ «արկղ» է։ Բայց ունենք $2014$ անդամ,
+ուստի երկու անդամ անպայման ընկնում են նույն արկղը, այսինքն՝ ունենում են նույն մնացորդը։ Դրանց
+<em>տարբերությունն</em> այդ դեպքում բաժանվում է $2013$-ի վրա։ Վերջին քայլն այն տեսնելն է, որ այս
+տարբերությունն ինքնին ճիշտ ձևի թիվ է (յոթեր, որոնց հաջորդում են զրոներ), և զրոները ($10$-ի աստիճան)
+կարելի է հեռացնել, քանի որ $2013$-ը փոխադարձաբար պարզ է $10$-ի հետ։ Մնում է հաջորդականության այն
+անդամը, որ բաժանվում է $2013$-ի վրա։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Կառուցենք արկղերն ու առարկաները</h3>
+<p>Թող $a_n = \underbrace{77\cdots7}_{n\text{ յոթ}}$։ Նայենք մնացորդներին՝
+$a_1 \bmod 2013,\ a_2\bmod 2013,\ \dots,\ a_{2014}\bmod 2013$։ Յուրաքանչյուր մնացորդ $0,1,\dots,2012$
+$2013$ արժեքներից մեկն է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Դիրիխլե</h3>
+<p>Ունենք $2014$ մնացորդ, բայց ընդամենը $2013$ հնարավոր արժեք, ուստի դրանցից երկուսը հավասար են՝</p>
+$$a_i \equiv a_j \pmod{2013},\qquad \text{ինչ-որ } 1\le i \lt j \le 2014 \text{-ի համար} .$$
+<p>(Եթե փոխարենը մնացորդներից մեկն արդեն $0$ է, ապա այդ անդամը բաժանվում է $2013$-ի վրա, և մենք
+անմիջապես ավարտում ենք։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Տարբերությունը բաժանվում է $2013$-ի վրա</h3>
+<p>$a_i\equiv a_j$-ից ստանում ենք $2013 \mid (a_j - a_i)$։ Գրենք տարբերությունը բացահայտ՝</p>
+$$a_j - a_i = \underbrace{77\cdots7}_{j} - \underbrace{77\cdots7}_{i}
+= \underbrace{77\cdots7}_{\,j-i\,}\underbrace{00\cdots0}_{\,i\,}
+= a_{\,j-i}\cdot 10^{\,i}.$$
+<p>(Առջևի $j-i$ յոթերը մնում են, վերջի $i$ թվանշանները զրոյանում են։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Հեռացնենք $10$-ի աստիճանը</h3>
+<p>$2013 = 3\cdot 11\cdot 61$, որը $10=2\cdot 5$-ի հետ ընդհանուր արտադրիչ չունի, ուստի $\gcd(2013,10^{\,i})=1$։
+Քանի որ $2013 \mid a_{\,j-i}\cdot 10^{\,i}$ և $2013$-ը փոխադարձաբար պարզ է $10^{\,i}$-ի հետ, այն պետք է
+բաժանի մյուս արտադրիչը՝</p>
+$$2013 \mid a_{\,j-i}.$$
+<p>Վերջապես $1 \le j-i \le 2013 \lt 2014$, ուստի $a_{\,j-i}$-ն առաջին $2014$ անդամներից մեկն է։ $\blacksquare$</p>
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Ապացույցը երաշխավորում է միայն <em>գոյությունը</em>՝ ուղիղ հաշվարկը ցույց է տալիս, որ իրականում աշխատող
+առաջին անդամը $a_{60}$-ն է (վաթսուն $7$-ով գրված թիվը), և իսկապես $60 \le 2014$։ Այսինքն՝ որոնելի անդամը
+հայտնվում է շատ ավելի շուտ, քան երաշխավորում է ապացույցը։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Ինչ-որ $a_{j-i}$, որտեղ $1\le j-i\le 2013$, բաժանվում է $2013$-ի վրա՝ իրականում $a_{60}$-ն արդեն բաժանվում է։</div>
+
+<figure class="fig">
+<svg viewBox="0 0 408 166" width="408" role="img" aria-label="2014 անդամ և 2013 մնացորդ-արկղ, երկու անդամ ընկնում են նույն r արկղը">
+<text x="221" y="16.7" text-anchor="middle" style="font-size:11px">2014 աղավնի 2013 բնում ⇒ բախում</text>
+<text x="65.2" y="45.2" text-anchor="end" style="font-size:11px">2014 անդամ՝</text>
+<text x="63.3" y="117.4" text-anchor="end" style="font-size:11px">2013 արկղ՝</text>
+<path d="M240,54.5 Q247.7,77.4 259.1,91.6" fill="none" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="262.8,96.3 255.6,93.1 261.2,88.6"/>
+<path d="M308.4,54.5 Q292.4,82.8 268.3,93.8" fill="none" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="262.8,96.3 267.7,90.1 270.7,96.7"/>
+<rect x="68" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="86" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px">1</tspan></text>
+<rect x="109.8" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="127.8" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px">2</tspan></text>
+<rect x="151.6" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="169.6" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px">3</tspan></text>
+<rect x="220" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="238" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px;font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic">i</tspan></text>
+<rect x="288.4" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="306.4" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px;font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic">j</tspan></text>
+<rect x="360.6" y="28.2" width="40" height="26" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="378.6" y="44.2" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">a</tspan><tspan dy="4" style="font-size:9px">2014</tspan></text>
+<text x="202" y="45.2" text-anchor="middle" style="font-size:13px">…</text>
+<text x="272.3" y="45.2" text-anchor="middle" style="font-size:13px">…</text>
+<text x="340.7" y="45.2" text-anchor="middle" style="font-size:13px">…</text>
+<rect x="66" y="96.4" width="44" height="34" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="88" y="118.4" text-anchor="middle" style="font-size:13px">0</text>
+<rect x="111.6" y="96.4" width="44" height="34" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="133.6" y="118.4" text-anchor="middle" style="font-size:13px">1</text>
+<rect x="157.2" y="96.4" width="44" height="34" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="179.2" y="118.4" text-anchor="middle" style="font-size:13px">2</text>
+<rect x="240.8" y="96.4" width="44" height="34" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="262.8" y="118.4" text-anchor="middle" style="font-size:13px"><tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">r</tspan></text>
+<rect x="332" y="96.4" width="44" height="34" rx="3" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="354" y="118.4" text-anchor="middle" style="font-size:13px">2012</text>
+<text x="217.2" y="117.4" text-anchor="middle" style="font-size:13px">…</text>
+<text x="300.8" y="117.4" text-anchor="middle" style="font-size:13px">…</text>
+<text x="262.8" y="159.2" text-anchor="middle" class="f-red" style="font-size:11px">երկու անդամ, նույն մնացորդը՝ <tspan style="font-family:KaTeX_Math,'Times New Roman',serif;font-style:italic;font-size:15px">r</tspan></text>
+</svg>
+<figcaption>$\Rightarrow 2013\mid(a_j-a_i)=a_{j-i}\cdot 10^{\,i}$, և $\gcd(2013,10)=1\Rightarrow 2013\mid a_{j-i}$։</figcaption>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> «ինչ-որ անդամ բաժանվում է $m$-ի վրա» ցույց տալու համար վերցրեք $m+1$
+թեկնածու և Դիրիխլեով բաշխեք դրանց մնացորդները $m$ մոդուլով՝ կրկնությունը տալիս է $m$-ի վրա բաժանվող
+տարբերություն։ Եթե տարբերությունն ունի $10^{k}$ արտադրիչ, հեռացրեք այն՝ օգտվելով $\gcd(m,10)=1$ պայմանից։</p>
+</div>
+
+<h3>Մնացորդները՝ անդամ առ անդամ</h3>
+<p>Ապացույցը չի ասում, թե <em>որ</em> անդամն է աշխատում։ Հաշվենք մնացորդներն ուղղակի և տեսնենք, թե երբ է
+առաջին անգամ որևէ արկղ ստանում երկրորդ անդամը՝</p>
+
+<div class="widget" id="w-mod">
+  <div class="widget-head">Ե՞րբ է կրկնվում մնացորդը</div>
+  <p class="widget-hint">Ամեն քայլում վերցնում ենք հաջորդ անդամը և գտնում նրա $r_n$ մնացորդը $m$-ի վրա բաժանելիս։
+  Հսկա թվեր հաշվել պետք չէ՝ $a_{n+1}=10a_n+7$, ուստի հաջորդ մնացորդը $(10r_n+7) \bmod m$ է։ Հետևեք, թե երբ
+  է առաջին անգամ կրկնվում մնացորդը (երկու անդամ՝ նույն արկղում)։ Դիրիխլեի սկզբունքը երաշխավորում է, որ դա
+  տեղի կունենա ամենաուշը $(m+1)$-րդ անդամում։ Փորձեք նաև $m=8$-ը, որը փոխադարձաբար պարզ չէ $10$-ի հետ։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-m="2013" aria-pressed="true">$m=2013$</button>
+    <button class="btn" type="button" data-m="13" aria-pressed="false">$m=13$</button>
+    <button class="btn" type="button" data-m="21" aria-pressed="false">$m=21$</button>
+    <button class="btn" type="button" data-m="8" aria-pressed="false">$m=8$</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn primary" type="button" data-act="step">Հաջորդ անդամը</button>
+    <button class="btn" type="button" data-act="run">Մինչև կրկնությունը</button>
+    <button class="btn" type="button" data-act="reset">Սկզբից</button>
+  </div>
+  <div class="cells mod-tiles" data-out="tiles"></div>
+  <div class="widget-out" data-out="status"></div>
+  <div class="widget-out" data-out="explain"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թերթիկներ">
+        <a class="btn" href="p4-functions.html">← Գործնական 4</a>
+        <a class="btn" href="index.html">Բոլոր թերթիկները</a>
+        <a class="btn" href="p6-combinations.html">Գործնական 6 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Լուծումները գրվել են արհեստական բանականության օգնությամբ, իսկ թվային պատասխանները ստուգվել են
+  համակարգչային թվարկմամբ։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

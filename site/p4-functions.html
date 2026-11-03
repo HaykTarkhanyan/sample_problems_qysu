@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 3 3%27%3E%3Crect width=%273%27 height=%271%27 fill=%27%23D90012%27/%3E%3Crect y=%271%27 width=%273%27 height=%271%27 fill=%27%230033A0%27/%3E%3Crect y=%272%27 width=%273%27 height=%271%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գործնական 4 - Ֆունկցիաներ</title>
+<meta name="description" content="Դիսկրետ մաթեմատիկա, գործնական 4՝ որոշման և արժեքների տիրույթ, համադրույթ, հակադարձ ֆունկցիա, ինյեկտիվ և սյուրյեկտիվ արտապատկերումներ, պատկեր և նախապատկեր։ Մանրամասն լուծումներ ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script defer src="assets/katex/katex.min.js"></script>
+<script defer src="assets/katex/auto-render.min.js"></script>
+<script defer src="assets/site.js"></script>
+<script defer src="assets/js/p4.js"></script>
+<style>
+/* p4 only: composition-convention box, math letters in SVG tspans, figure rows,
+   step lists, pipeline chains, property badges, drag handles, kernel buttons */
+svg tspan.m { font-family: "KaTeX_Math", "Times New Roman", serif; font-style: italic; }
+.f-orange-ink { fill: var(--orange-ink); }
+.box.conv { background: color-mix(in srgb, var(--red) 7%, var(--surface)); border-color: color-mix(in srgb, var(--red) 70%, #000); padding-top: .8rem; }
+.box.conv .box-title { position: static; display: inline-block; margin: 0 0 .35rem; background: color-mix(in srgb, var(--red) 80%, #000); }
+.p4-pair { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: .6rem 1.4rem; }
+.p4-pair svg { margin: 0; }
+.p4-parts { list-style: none; padding-left: .3rem; margin: .4rem 0; }
+.p4-parts li { margin: .35rem 0; }
+.widget-controls label { display: inline-flex; align-items: center; gap: .4rem; }
+.widget-controls output { font-weight: 700; min-width: 2.2em; }
+.widget input[type="range"] { width: 11rem; max-width: 45vw; }
+.p4-chain { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .35rem .45rem; margin: .8rem 0 .1rem; }
+.p4-chain .lab { font-weight: 700; min-width: 2.6rem; text-align: right; }
+.p4-chain.fg .lab { color: var(--blue); } .p4-chain.gf .lab { color: var(--red); }
+.p4-node { border: 1.5px solid var(--line); border-radius: 999px; padding: .05rem .65rem; background: var(--surface); }
+.p4-chain.fg .p4-node { border-color: var(--blue); } .p4-chain.gf .p4-node { border-color: var(--red); }
+.p4-chain .p4-node.bad { border-style: dashed; color: var(--red); }
+.p4-arr { display: inline-flex; flex-direction: column; align-items: center; font-family: var(--sans); font-size: .74rem; color: var(--muted); line-height: 1.15; }
+.p4-arr::after { content: "→"; font-size: 1.25rem; color: var(--ink); line-height: 1; }
+.p4-check { text-align: center; font-size: .92rem; color: var(--muted); }
+.p4-badges { display: flex; flex-wrap: wrap; gap: .4rem .5rem; justify-content: center; margin: .6rem 0 .2rem; }
+.p4-badge { font-family: var(--sans); font-size: .86rem; line-height: 1.45; border-radius: 6px; padding: .15rem .55rem; border: 1.5px solid var(--line); background: var(--surface); }
+.p4-badge.yes { border-color: var(--answer-line); background: var(--answer-bg); }
+.p4-badge.no { border-color: var(--red); background: color-mix(in srgb, var(--red) 10%, var(--surface)); }
+.p4-badge.open { color: var(--muted); border-style: dashed; }
+.p4-drag { cursor: ns-resize; touch-action: none; }
+.cell-btn.p4-kbtn { font-family: var(--sans); font-size: .95rem; min-width: 4.4rem; border-width: 2px; }
+.cell-btn.p4-kbtn.g1 { border-color: var(--blue); } .cell-btn.p4-kbtn.g2 { border-color: var(--red); } .cell-btn.p4-kbtn.g3 { border-color: var(--orange); }
+#w-arrows .widget-controls, #w-kernel .widget-controls { justify-content: center; }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Դիսկրետ մաթեմատիկա</a>
+  <div class="header-actions">
+    <a class="btn" href="pdf/Practice4_Functions_Solutions_ARM.pdf" title="Նույն լուծումները PDF տարբերակով">PDF</a>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գործնական 4</div>
+    <h1>Ֆունկցիաներ</h1>
+    <p class="subtitle">Մանրամասն լուծումներ՝ դատողությունները քայլ առ քայլ բացված</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#warmup">Նախապատրաստում</a></li>
+        <li><a href="#p2">Խնդիր 2 - Որոշման և արժեքների տիրույթը բանաձևից</a></li>
+        <li><a href="#p4">Խնդիր 4 - Համադրույթներ $f\cdot g$ և $g\cdot f$</a></li>
+        <li><a href="#p5">Խնդիր 5 - Հակադարձ ֆունկցիաներ</a></li>
+        <li><a href="#p6">Խնդիր 6 - Ինյեկտիվ, սյուրյեկտիվ, բիյեկտիվ</a></li>
+        <li><a href="#p10">Խնդիր 10 - $\Ker(f)$-ը համարժեքության հարաբերություն է</a></li>
+        <li><a href="#p12">Խնդիր 12 - $\tfrac{x}{2x+1}$-ը ինյեկտիվ է, բայց ոչ սյուրյեկտիվ</a></li>
+        <li><a href="#p19">Խնդիր 19 - Ե՞րբ է $f(A\cap B)=f(A)\cap f(B)$</a></li>
+        <li><a href="#p22">Խնդիր 22 - Չհատվող բազմություններ, հավասար պատկերներ</a></li>
+        <li><a href="#p24">Խնդիր 24 - Չհատվող $Y$-երի նախապատկերները</a></li>
+        <li><a href="#p25">Խնդիր 25 - $f(f^{-1}(Y))\subseteq Y$՝ խիստ օրինակով</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="warmup" open>
+<summary><h2>Նախապատրաստում</h2></summary>
+<div class="sec-body">
+<p class="muted">Ընդգրկում է Գործնական 4-ի հանձնարարված խնդիրները՝ 2, 4, 5, 6, 10, 12, 19, 22, 24, 25։</p>
+<p><em>Ֆունկցիան</em> $f:A\to B$ կանոն է, որը <strong>յուրաքանչյուր</strong> մուտքին $x\in A$ վերագրում է ճիշտ
+մեկ ելք $f(x)\in B$։ $A$ բազմությունը <strong>որոշման տիրույթն</strong> է (որտեղ կանոնին թույլատրվում է
+գործել), իսկ իրականում արտադրված արժեքների բազմությունը՝ $\{f(x):x\in A\}$, <strong>արժեքների
+տիրույթն</strong> է (կամ պատկերը)։ Այս թերթիկը չորս տեսակի հարց է տալիս։ (1) <strong>Որոշման և արժեքների
+տիրույթը կարդալ</strong> բանաձևից (խնդիր 2)՝ որտեղ է բանաձևն օրինական, և ինչ արժեքներ են դուրս գալիս։
+(2) <strong>Համադրել</strong> երկու ֆունկցիա և գտնել <strong>հակադարձներ</strong> (խնդիրներ 4, 5)։ (3) Ֆունկցիան
+<strong>դասակարգել</strong> որպես ինյեկտիվ, սյուրյեկտիվ կամ բիյեկտիվ (խնդիրներ 6, 12)։ (4) <strong>Դատել
+բազմությունների պատկերների և նախապատկերների մասին</strong> (խնդիրներ 10, 19, 22, 24, 25), որտեղ ամեն ինչ
+որոշվում է նրանով, թե $f$-ն ինյեկտիվ է, թե ոչ։</p>
+
+<div class="box conv"><div class="box-title">Մի պայմանավորվածություն, որ պետք է ֆիքսել մյուս ամեն ինչից առաջ՝ համադրումը ձախից աջ է</div>
+<p>Այս դասընթացում ֆունկցիաների համադրույթը (կետով գրվող արտադրյալը) կարդացվում է <strong>ձախից աջ</strong>՝
+$f\cdot g$ նշանակում է «նախ՝ $f$, ապա՝ $g$», ուստի</p>
+$$(f\cdot g)(x) \;=\; g\bigl(f(x)\bigr)\text{։}$$
+<p>Սա <em>հակառակն</em> է $\circ$ նշանի, որ թերևս տեսել եք, որտեղ $g\circ f$ նշանակում է
+$g(f(x))$։ Ստորև ամենուր օգտագործում ենք դասընթացի պայմանավորվածությունը՝ խնդիր 4-ում այս
+տարբերությունը որոշիչ է, ուստի հետևեք կարգին։ Պատկերացրեք այն որպես խողովակաշար՝ մուտքը նախ հոսում է
+<em>ձախ</em> արկղով։</p>
+</div>
+
+<figure class="fig">
+<svg viewBox="0 0 432 78" width="432" role="img" aria-label="Խողովակաշար. x-ը նախ անցնում է f արկղով, ապա g արկղով, և ելքը g(f(x)) = (f·g)(x) է">
+<rect x="78" y="14" width="60" height="32" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<rect x="190" y="14" width="60" height="32" rx="3" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="20" y="35" text-anchor="middle" class="mr"><tspan class="m">x</tspan></text>
+<text x="108" y="35" text-anchor="middle" class="mr"><tspan class="m">f</tspan></text>
+<text x="220" y="35" text-anchor="middle" class="mr"><tspan class="m">g</tspan></text>
+<text x="296" y="35" text-anchor="start" class="mr"><tspan class="m">g</tspan>(<tspan class="m">f</tspan>(<tspan class="m">x</tspan>)) = (<tspan class="m">f</tspan>·<tspan class="m">g</tspan>)(<tspan class="m">x</tspan>)</text>
+<line x1="29" y1="30" x2="72" y2="30" class="s-ink" stroke-width="1.6"/><polygon class="f-ink" points="78,30 70,33.6 70,26.4"/>
+<line x1="138" y1="30" x2="184" y2="30" class="s-ink" stroke-width="1.6"/><polygon class="f-ink" points="190,30 182,33.6 182,26.4"/>
+<text x="164" y="23" text-anchor="middle" class="mr" style="font-size:13px"><tspan class="m">f</tspan>(<tspan class="m">x</tspan>)</text>
+<line x1="250" y1="30" x2="284" y2="30" class="s-ink" stroke-width="1.6"/><polygon class="f-ink" points="290,30 282,33.6 282,26.4"/>
+<text x="164" y="70" text-anchor="middle" class="f-red" style="font-size:12px" font-style="italic">ձախ արկղը նախ է գործում</text>
+</svg>
+</figure>
+
+<p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
+փորձեք լուծել։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2" open>
+<summary><h2>Խնդիր 2 - Որոշման և արժեքների տիրույթը բանաձևից</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2</div>
+<p>Դիցուք $f\subseteq\R\times\R$։ Գտեք որոշման և արժեքների տիրույթը յուրաքանչյուր բանաձևի համար՝</p>
+$$\text{(ա) } x^2+3,\quad \text{(բ) } \sqrt{x-2},\quad \text{(գ) } \tfrac{1}{\sqrt{x-2}},\quad
+\text{(դ) } |x|,\quad \text{(ե) } \tfrac{1}{x^2+2},\quad \text{(զ) } \tfrac{1}{x^2-2}.$$
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Երկու առանձին հարց, որ կարդացվում են գրաֆիկից։ <strong>Որոշման տիրույթը</strong> «Որտե՞ղ է բանաձևն
+օրինական» հարցն է՝ պետք է խուսափել միայն երկու վտանգից՝ <em>քառակուսի արմատի տակ բացասական արժեքից</em>
+և <em>հայտարարում զրոյից</em>՝ մնացած ամեն ինչ թույլատրելի է, ուստի որոշման տիրույթը ողջ $\R$-ն է՝
+հանած այդ արգելված կետերը։ <strong>Արժեքների տիրույթը</strong> «Ի՞նչ բարձրությունների է հասնում գրաֆիկը»
+հարցն է՝ կառուցենք այն ներսից դեպի դուրս։ $\tfrac{1}{x^2-2}$-ի նման բանաձևի համար նախ տեսնենք, թե ինչ
+կարող է լինել $u=x^2-2$-ը, ապա տեսնենք, թե $\tfrac1u$-ն ինչ է անում այդ բազմությանը։ Հակադարձ արժեքը
+շրջում է միջակայքի կարգը և $0$-ին մոտ արժեքներն ուղարկում $\pm\infty$, ինչը ճիշտ պատճառն է, որ (զ)-ի
+արժեքների տիրույթը բաժանվում է երկու կտորի։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Որոշման տիրույթներ (գտնենք արգելված կետերը)</h3>
+<p>(ա) և (դ) բանաձևերը չունեն ոչ արմատ, ոչ հայտարար, իսկ (ե)-ի հայտարարն երբեք զրո չէ, քանի որ
+$x^2+2\ge2>0$։ Ուստի երեքն էլ օրինական են ամենուր՝ որոշման տիրույթը $\R$ է։ (բ) $\sqrt{x-2}$-ի համար
+պետք է $x-2\ge0$, այսինքն՝ $x\ge2$։ (գ) $\tfrac1{\sqrt{x-2}}$-ի համար արմատը պետք է լինի օրինական
+<em>և</em> ոչ զրոյական, ուստի $x-2>0$, այսինքն՝ $x>2$։ (զ) $\tfrac1{x^2-2}$-ի համար պետք է $x^2-2\ne0$,
+այսինքն՝ $x\ne\pm\sqrt2$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Արժեքների տիրույթներ (աշխատենք ներսից դեպի դուրս)</h3>
+<ul class="p4-parts">
+  <li>(ա) $x^2\ge0\Rightarrow x^2+3\ge3$, $\ge3$ ամեն արժեքին հասնում ենք, արժեքների տիրույթը $[3,\infty)$ է։</li>
+  <li>(բ) $\sqrt{\,\cdot\,}\ge0$ և անսահման աճում է, արժեքների տիրույթը $[0,\infty)$ է։</li>
+  <li>(գ) $\tfrac1{\sqrt{x-2}}>0$՝ երբ $x\to2^+$, այն անսահման աճում է, երբ $x\to\infty$, ձգտում է $0$-ի (առանց
+  երբևէ հասնելու դրան), արժեքների տիրույթը $(0,\infty)$ է։</li>
+  <li>(դ) $|x|\ge0$, արժեքների տիրույթը $[0,\infty)$ է։</li>
+  <li>(ե) $x^2+2\in[2,\infty)$, ուստի $\tfrac1{x^2+2}\in(0,\tfrac12]$՝ առավելագույնը՝ $\tfrac12$, $x=0$-ում է,
+  և արժեքները փոքրանում են դեպի $0$, երբ $|x|\to\infty$։ Արժեքների տիրույթը՝ $\bigl(0,\tfrac12\bigr]$։</li>
+  <li>(զ) Դիցուք $u=x^2-2$, ուստի $u\in[-2,\infty)\setminus\{0\}$։ $u\in[-2,0)$-ի վրա հակադարձ արժեքը տալիս է
+  $\tfrac1u\in(-\infty,-\tfrac12]$ ($-\tfrac12$ արժեքը գալիս է $u=-2$-ից, այսինքն՝ $x=0$-ից), իսկ
+  $u\in(0,\infty)$-ի վրա այն տալիս է $\tfrac1u\in(0,\infty)$։ Արժեքների տիրույթը՝
+  $\bigl(-\infty,-\tfrac12\bigr]\cup(0,\infty)$։</li>
+</ul>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Միշտ ստուգենք եզրային արժեքները</h3>
+<p>(ե) $x=0$-ում՝ $\tfrac1{0+2}=\tfrac12$։ $\checkmark$ (զ) $x=0$-ում՝ $\tfrac1{0-2}=-\tfrac12$, բացասական
+ճյուղի գագաթը։ $\checkmark$ Թվային ընտրանքը խիտ ցանցի վրա հաստատում է վերևի յուրաքանչյուր մինիմում/մաքսիմում։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+(ա) $\dom=\R$, արժ. տիրույթ $[3,\infty)$.&nbsp;&nbsp;
+(բ) $\dom=[2,\infty)$, արժ. տիրույթ $[0,\infty)$.&nbsp;&nbsp;
+(գ) $\dom=(2,\infty)$, արժ. տիրույթ $(0,\infty)$.<br>
+(դ) $\dom=\R$, արժ. տիրույթ $[0,\infty)$.&nbsp;&nbsp;
+(ե) $\dom=\R$, արժ. տիրույթ $\bigl(0,\tfrac12\bigr]$.&nbsp;&nbsp;
+(զ) $\dom=\R\setminus\{\pm\sqrt2\}$, արժ. տիրույթ $\bigl(-\infty,-\tfrac12\bigr]\cup(0,\infty)$։</div>
+
+<h3>Որոշման և արժեքների տիրույթը նկարից կարդալը</h3>
+<p>Երկու ամենապարզ դեպքերը՝ (բ) և (զ)։ (բ)-ի համար որոշման տիրույթը $x$ առանցքի վրա փակագիծն է
+($x\ge2$), իսկ արժեքների տիրույթը $y$ առանցքի վրա փակագիծն է ($y\ge0$)։ (զ)-ի համար կորն ունի ուղղաձիգ
+ասիմպտոտներ $x=\pm\sqrt2$-ում, և $y$ առանցքի վրա արժեքները բաժանվում են հենց արժեքների տիրույթի երկու
+կտորի։</p>
+
+<figure class="fig"><div class="p4-pair">
+<svg viewBox="0 0 318 246" width="318" role="img" aria-label="Գրաֆիկ y = √(x − 2). Որոշման տիրույթը x առանցքի վրա [2, ∞) է, արժեքների տիրույթը y առանցքի վրա [0, ∞)">
+<text x="160" y="16" text-anchor="middle" class="mr" style="font-size:14px">(բ) <tspan class="m">f</tspan>(<tspan class="m">x</tspan>) = √(<tspan class="m">x</tspan> − 2)</text>
+<line x1="16" y1="186" x2="286" y2="186" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="292,186 285,189 285,183"/>
+<line x1="52" y1="227.6" x2="52" y2="36" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="52,30 55,37 49,37"/>
+<text x="297" y="191" text-anchor="start"><tspan class="m">x</tspan></text>
+<text x="52" y="24" text-anchor="middle"><tspan class="m">y</tspan></text>
+<line x1="112" y1="183" x2="112" y2="189" class="s-ink" stroke-width="1"/><text x="112" y="202" text-anchor="middle" class="mr" style="font-size:12px">2</text>
+<text x="47" y="200" text-anchor="end" class="mr" style="font-size:12px">0</text>
+<polyline points="112,186 112.1,183.7 112.2,182 112.4,180.3 112.6,178.6 112.9,177 113.2,175.6 113.6,174.1 114,172.6 114.4,171.3 114.9,169.9 115.4,168.4 116,167.1 116.6,165.7 117.2,164.4 117.8,163.1 118.5,161.8 119.2,160.5 119.9,159.3 120.7,158 121.5,156.8 122.3,155.6 123.1,154.4 123.9,153.2 124.8,152.1 125.7,150.9 126.6,149.7 127.5,148.6 128.4,147.5 129.4,146.4 130.4,145.3 131.3,144.3 132.3,143.2 133.3,142.2 134.3,141.1 135.3,140.1 136.4,139.1 137.4,138.2 138.5,137.2 139.5,136.2 140.6,135.2 141.7,134.3 142.8,133.3 143.9,132.4 144.9,131.5 146.1,130.6 147.2,129.7 148.4,128.8 149.5,127.9 150.6,127 151.8,126.1 152.9,125.3 154.1,124.4 155.2,123.6 156.3,122.8 157.5,121.9 158.7,121.1 159.9,120.3 161.1,119.4 162.3,118.6 163.5,117.8 164.7,117.1 165.9,116.3 167.1,115.5 168.3,114.7 169.5,114 170.7,113.2 171.9,112.5 173.1,111.8 174.3,111 175.6,110.3 176.9,109.5 178.1,108.8 179.4,108.1 180.6,107.3 181.9,106.6 183.2,105.9 184.4,105.2 185.7,104.5 186.9,103.8 188.2,103.1 189.5,102.4 190.7,101.8 192,101.1 193.2,100.4 194.5,99.8 195.8,99.1 197,98.5 198.3,97.8 199.5,97.2 200.8,96.5 202.1,95.9 203.3,95.3 204.6,94.7 205.8,94 207.1,93.4 208.4,92.8 209.7,92.2 211,91.5 212.3,90.9 213.6,90.3 215,89.7 216.3,89.1 217.6,88.4 218.9,87.8 220.2,87.2 221.6,86.6 222.9,86 224.2,85.4 225.5,84.8 226.8,84.3 228.2,83.7 229.5,83.1 230.8,82.5 232.1,81.9 233.4,81.4 234.8,80.8 236.1,80.2 237.4,79.7 238.7,79.1 240,78.6 241.4,78 242.7,77.5 244,76.9 245.3,76.4 246.6,75.8 248,75.3 249.3,74.8 250.6,74.2 251.9,73.7 253.2,73.2 254.6,72.6 255.9,72.1 257.2,71.6 258.5,71.1 259.8,70.6 261.2,70.1 262.5,69.5 263.8,69 265.1,68.5 266.4,68 267.8,67.5 269.1,67 270.4,66.5 271.7,66 273,65.5 274.4,65 275.7,64.5 277,64 278.3,63.6 279.6,63.1 281,62.6 282.3,62.1 283.6,61.6 284.9,61.2 286.2,60.7 287.6,60.2 288.9,59.7 290.2,59.3 291.5,58.8 292,58.6" fill="none" class="s-blue" stroke-width="2.6" stroke-linejoin="round"/>
+<circle cx="112" cy="186" r="3.2" class="f-blue"/>
+<line x1="112" y1="209.4" x2="286" y2="209.4" class="s-red" stroke-width="3"/>
+<text x="151" y="226.2" text-anchor="start" class="f-red" style="font-size:11.5px">որոշ. տիրույթ [2, ∞)</text>
+<line x1="35.5" y1="186" x2="35.5" y2="40.4" class="s-orange" stroke-width="3"/>
+<text x="0" y="0" text-anchor="middle" class="f-orange-ink" style="font-size:11.5px" transform="translate(28.5,113.2) rotate(-90)">արժ. տիրույթ [0, ∞)</text>
+</svg>
+<svg viewBox="0 0 318 252" width="318" role="img" aria-label="Գրաֆիկ y = 1/(x² − 2)՝ ուղղաձիգ ասիմպտոտներով x = ±√2-ում. արժեքները բաժանվում են (−∞, −½] և (0, ∞) կտորների">
+<text x="158" y="16" text-anchor="middle" class="mr" style="font-size:14px">(զ) <tspan class="m">f</tspan>(<tspan class="m">x</tspan>) = 1 / (<tspan class="m">x</tspan>² − 2)</text>
+<line x1="94.6" y1="234" x2="94.6" y2="30" class="s-muted" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="219" y1="234" x2="219" y2="30" class="s-muted" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="16" y1="132" x2="291.6" y2="132" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="297.6,132 290.6,135 290.6,129"/>
+<line x1="156.8" y1="234" x2="156.8" y2="36" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="156.8,30 159.8,37 153.8,37"/>
+<text x="302.6" y="137" text-anchor="start"><tspan class="m">x</tspan></text>
+<text x="156.8" y="24" text-anchor="middle"><tspan class="m">y</tspan></text>
+<line x1="94.6" y1="129" x2="94.6" y2="135" class="s-ink" stroke-width="1"/><text x="94.6" y="148" text-anchor="middle" class="mr" style="font-size:12px">−√2</text>
+<line x1="219" y1="129" x2="219" y2="135" class="s-ink" stroke-width="1"/><text x="219" y="148" text-anchor="middle" class="mr" style="font-size:12px">√2</text>
+<line x1="153.8" y1="149" x2="159.8" y2="149" class="s-ink" stroke-width="1"/>
+<text x="161.8" y="166" text-anchor="start" class="mr" style="font-size:12px">−½</text>
+<polyline points="224,30 224.1,31.5 224.2,33 224.2,34.5 224.3,35.9 224.4,37.7 224.5,39.5 224.6,41.2 224.7,42.8 224.8,44.4 224.9,45.9 225,47.4 225.1,48.8 225.2,50.6 225.3,52.2 225.5,53.8 225.6,55.4 225.7,56.8 225.8,58.3 226,59.9 226.1,61.5 226.3,63 226.4,64.4 226.6,65.8 226.7,67.4 226.9,68.9 227.1,70.3 227.3,71.9 227.5,73.3 227.7,74.8 227.9,76.3 228.1,77.7 228.4,79.2 228.6,80.7 228.9,82.2 229.1,83.6 229.4,85.1 229.7,86.5 230,87.9 230.4,89.3 230.8,90.8 231.1,92.2 231.5,93.5 231.9,94.9 232.4,96.2 232.8,97.5 233.4,98.9 233.9,100.2 234.5,101.5 235.1,102.8 235.7,104.1 236.4,105.3 237.2,106.5 237.9,107.7 238.8,108.9 239.7,110 240.6,111.1 241.6,112.1 242.6,113.1 243.6,114.1 244.7,115 245.9,115.8 247,116.6 248.2,117.3 249.5,118 250.7,118.7 252,119.3 253.3,119.9 254.6,120.4 255.9,120.9 257.2,121.4 258.6,121.9 259.9,122.3 261.3,122.7 262.7,123 264,123.4 265.4,123.7 266.8,124 268.2,124.3 269.6,124.6 271,124.8 272.4,125.1 273.8,125.3 275.2,125.5 276.6,125.7 278,125.9 279.3,126.1 280.7,126.3 282.1,126.4 283.5,126.6 284.9,126.8 286.3,126.9 287.7,127 289.1,127.2 290.5,127.3 291.9,127.4 293.3,127.5 294.7,127.7 296.1,127.8 297.5,127.9 297.6,127.9" fill="none" class="s-blue" stroke-width="2.6" stroke-linejoin="round"/>
+<polyline points="16,127.9 17.4,127.8 18.8,127.7 20.2,127.5 21.6,127.4 23,127.3 24.4,127.2 25.8,127 27.2,126.9 28.6,126.8 30,126.6 31.4,126.4 32.8,126.3 34.2,126.1 35.6,125.9 37,125.7 38.4,125.5 39.8,125.3 41.2,125.1 42.6,124.8 44,124.6 45.4,124.3 46.7,124 48.1,123.7 49.5,123.4 50.9,123 52.2,122.7 53.6,122.3 54.9,121.9 56.3,121.4 57.6,121 58.9,120.5 60.2,119.9 61.5,119.4 62.8,118.7 64.1,118.1 65.3,117.4 66.5,116.6 67.7,115.8 68.8,115 69.9,114.1 70.9,113.2 72,112.2 73,111.2 73.9,110.1 74.8,109 75.6,107.8 76.4,106.6 77.1,105.4 77.8,104.2 78.5,102.9 79.1,101.6 79.7,100.3 80.2,99 80.7,97.6 81.2,96.2 81.7,94.9 82.1,93.5 82.5,92.2 82.8,90.8 83.2,89.3 83.6,87.9 83.9,86.5 84.2,85.1 84.5,83.6 84.7,82.2 85,80.7 85.2,79.2 85.5,77.7 85.7,76.3 85.9,74.8 86.1,73.3 86.3,71.9 86.5,70.3 86.7,68.9 86.9,67.4 87,65.8 87.2,64.4 87.3,63 87.5,61.5 87.6,59.9 87.8,58.3 87.9,56.8 88,55.4 88.1,53.8 88.3,52.2 88.4,50.6 88.5,48.8 88.6,47.4 88.7,45.9 88.8,44.4 88.9,42.8 89,41.2 89.1,39.5 89.2,37.7 89.3,35.9 89.4,34.5 89.4,33 89.5,31.5 89.6,30" fill="none" class="s-blue" stroke-width="2.6" stroke-linejoin="round"/>
+<polyline points="100,234 100.1,232 100.2,230.1 100.3,228.2 100.5,226.5 100.6,224.8 100.7,223.1 100.8,221.6 100.9,220 101,218.6 101.1,217.1 101.3,215.3 101.4,213.6 101.6,211.9 101.7,210.3 101.9,208.8 102,207.4 102.2,206 102.4,204.3 102.6,202.7 102.8,201.2 103,199.7 103.1,198.3 103.4,196.7 103.6,195.2 103.8,193.8 104.1,192.2 104.4,190.7 104.6,189.3 104.9,187.8 105.2,186.3 105.6,184.8 105.9,183.4 106.3,181.9 106.7,180.5 107.1,179 107.5,177.7 107.9,176.3 108.4,174.9 109,173.5 109.5,172.2 110.1,170.8 110.8,169.5 111.5,168.2 112.2,167 112.9,165.8 113.7,164.6 114.6,163.5 115.5,162.4 116.5,161.3 117.5,160.3 118.6,159.3 119.7,158.4 120.8,157.6 122,156.8 123.2,156 124.4,155.3 125.7,154.7 127,154.1 128.3,153.5 129.6,153 130.9,152.6 132.3,152.1 133.7,151.7 135,151.4 136.4,151 137.8,150.8 139.2,150.5 140.6,150.2 142,150 143.4,149.8 144.8,149.7 146.2,149.5 147.6,149.4 149,149.3 150.4,149.2 151.8,149.1 153.2,149.1 154.6,149 156,149 157.4,149 158.8,149 160.2,149.1 161.6,149.1 163,149.2 164.4,149.3 165.8,149.4 167.2,149.5 168.6,149.6 170,149.8 171.4,150 172.8,150.2 174.2,150.4 175.6,150.7 177,151 178.4,151.3 179.8,151.7 181.1,152.1 182.5,152.5 183.8,153 185.2,153.5 186.5,154 187.8,154.6 189.1,155.3 190.3,155.9 191.5,156.7 192.7,157.5 193.8,158.3 194.9,159.2 196,160.2 197,161.2 198,162.2 198.9,163.3 199.7,164.5 200.6,165.7 201.3,166.9 202.1,168.1 202.7,169.4 203.4,170.7 204,172 204.6,173.4 205.1,174.7 205.6,176.1 206,177.4 206.5,178.9 206.9,180.3 207.3,181.7 207.7,183.2 208,184.6 208.3,186.1 208.6,187.6 208.9,189.1 209.2,190.5 209.5,192 209.7,193.6 210,195 210.2,196.5 210.4,198 210.6,199.7 210.8,201.2 211,202.7 211.2,204.3 211.4,206 211.6,207.4 211.7,208.8 211.9,210.3 212,211.9 212.2,213.6 212.3,215.3 212.5,217.1 212.6,218.6 212.7,220 212.8,221.6 212.9,223.1 213,224.8 213.1,226.5 213.3,228.2 213.4,230.1 213.5,232 213.6,234" fill="none" class="s-blue" stroke-width="2.6" stroke-linejoin="round"/>
+<circle cx="156.8" cy="149" r="3.2" class="f-blue"/>
+<line x1="24.8" y1="234" x2="24.8" y2="149" class="s-orange" stroke-width="3"/>
+<line x1="24.8" y1="131.3" x2="24.8" y2="30" class="s-red" stroke-width="3"/>
+<text x="165.6" y="54.4" text-anchor="start" class="mr" style="font-size:12.5px">(0, ∞)</text>
+<text x="165.6" y="221" text-anchor="start" class="mr" style="font-size:12.5px">(−∞, −½]</text>
+</svg>
+</div></figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> որոշման տիրույթ $=$ «բոլոր $x$-երը, բացի այնտեղ, որտեղ արմատը դառնում է
+բացասական կամ հայտարարը՝ զրո»։ Արժեքների տիրույթ $=$ կառուցեք արժեքների բազմությունը <em>ներսից դեպի
+դուրս</em>՝ հետևեք, թե ինչ կարող է լինել ներքին արտահայտությունը ($x^2$, $x-2$, $x^2-2$), ապա կիրառեք
+արտաքին գործողությունը ($+3$, $\sqrt{\;}$, հակադարձ արժեք)։ Ամենազգույշը հակադարձ արժեքի հետ է՝ այն ուղարկում է
+$(0,M]$-ը $[\tfrac1M,\infty)$, իսկ $0$-ն շրջապատող բազմությունը՝ երկու առանձին կտորի։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p4" open>
+<summary><h2>Խնդիր 4 - Համադրույթներ $f\cdot g$ և $g\cdot f$</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 4</div>
+<p>Դիցուք $f,g:\R\to\R$։ Գտեք $f\cdot g$-ն և $g\cdot f$-ը (դասընթացի պայմանավորվածությունը՝
+$(f\cdot g)(x)=g(f(x))$, նախ կիրառվում է $f$-ը)՝</p>
+$$\text{(ա) } f(x)=x^2+1,\ g(x)=x+3;\qquad \text{(բ) } f(x)=\sqrt{x^2+2},\ g(x)=x^2+3;$$
+$$\text{(գ) } f(x)=\tfrac1x,\ g(x)=2x+3.$$
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Համադրումը պարզապես մեկ մեքենայի ելքը հաջորդ մեքենայի մեջ դնելն է։ Միակ բանը, որ պետք է ճիշտ անել,
+<em>ո՞ր մեքենան է առաջինն աշխատում</em>-ն է։ Դասընթացի ձախից-աջ կանոնով $f\cdot g$-ն նախ աշխատեցնում է
+$f$-ը՝ վերցնենք $x$, հաշվենք $f(x)$, ապա այն փոխանցենք $g$-ին՝ ստանալով $g(f(x))$։ Ուստի $f\cdot g$
+կառուցելու համար գրենք $g(\square)$ և յուրաքանչյուր $\square$ փոխարինենք $f(x)$-ի ողջ բանաձևով։ Կարգը
+կարևոր է՝ ընդհանուր դեպքում $f\cdot g\ne g\cdot f$, և (ա) մասը դա ցույց է տալիս ակնառու կերպով։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ֆիքսենք բաղադրատոմսը</h3>
+<p>$(f\cdot g)(x)=g(f(x))$ ($f$-ը տեղադրվում է $g$-ի մեջ)՝ $(g\cdot f)(x)=f(g(x))$ ($g$-ն տեղադրվում է
+$f$-ի մեջ)։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - (ա) մաս</h3>
+<p>$f(x)=x^2+1$, $g(x)=x+3$։</p>
+$$(f\cdot g)(x)=g(f(x))=\underbrace{(x^2+1)}_{f(x)}+3=x^2+4,\qquad
+(g\cdot f)(x)=f(g(x))=\underbrace{(x+3)}_{g(x)}{}^2+1=x^2+6x+10.$$
+<p>Երկուսը տարբեր են ($x^2+4\ne x^2+6x+10$)՝ այս խնդրի գլխավոր դասը։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - (բ) մաս</h3>
+<p>$f(x)=\sqrt{x^2+2}$, $g(x)=x^2+3$։</p>
+$$(f\cdot g)(x)=g(f(x))=\bigl(\sqrt{x^2+2}\bigr)^2+3=(x^2+2)+3=x^2+5,$$
+$$(g\cdot f)(x)=f(g(x))=\sqrt{(x^2+3)^2+2}.$$
+<p>$f\cdot g$-ում քառակուսին և քառակուսի արմատը մաքուր կերպով չեղարկվում են, քանի որ $x^2+2\ge0$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - (գ) մաս</h3>
+<p>$f(x)=\tfrac1x$, $g(x)=2x+3$։</p>
+$$(f\cdot g)(x)=g(f(x))=2\cdot\tfrac1x+3=\tfrac2x+3,\qquad
+(g\cdot f)(x)=f(g(x))=\tfrac{1}{2x+3}.$$
+<p>(Նկատենք՝ $f(x)=\tfrac1x$-ը որոշված չէ $x=0$-ում, ուստի $f\cdot g$-ն իմաստ ունի $x\ne0$-ի համար, իսկ
+$g\cdot f$-ը՝ $x\ne-\tfrac32$-ի համար, որտեղ $2x+3=0$։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 5</span> - Միշտ ստուգենք մեկ կետում</h3>
+<p>(ա) $x=1$-ում՝ $f(1)=2$, $g(2)=5$, և $1^2+4=5$։ $\checkmark$ $g\cdot f$-ի համար՝ $g(1)=4$, $f(4)=17$, և
+$1+6+10=17$։ $\checkmark$ Երեք մասերն էլ ու երկու կարգերն էլ թվային կերպով հաստատվեցին բազմաթիվ կետերում։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+(ա) $f\cdot g=x^2+4$, $\ g\cdot f=x^2+6x+10$.&nbsp;&nbsp;
+(բ) $f\cdot g=x^2+5$, $\ g\cdot f=\sqrt{(x^2+3)^2+2}$.&nbsp;&nbsp;
+(գ) $f\cdot g=\tfrac2x+3$, $\ g\cdot f=\tfrac1{2x+3}$։</div>
+
+<h3>Սլաքների շղթան, որ կարգն անվրեպ է դարձնում</h3>
+<p>(ա)-ի համար $x=1$ ընտրանքի կետում երկու համադրույթները հետևում են տարբեր ուղիների։ Վերին շարքը
+$f\cdot g$-ն է (դասընթացի կարգը, նախ $f$)՝ ստորին շարքը $g\cdot f$-ն է։</p>
+
+<div class="widget" id="w-pipe">
+  <div class="widget-head">Խողովակաշար՝ նախ աշխատում է ձախ արկղը</div>
+  <p class="widget-hint">Ընտրեք մասը և $x$-ի արժեքը։ Վերին շարքը $f\cdot g$-ն է (նախ $f$, ապա $g$), ստորինը՝
+  $g\cdot f$-ը (նախ $g$, ապա $f$)։ Յուրաքանչյուր շարքի տակ նույն արժեքը հաշվված է նաև պատասխանի բանաձևով։
+  Փորձեք նաև $x=-1$ արժեքը՝ (ա) և (գ) մասերում, և $x=0$ արժեքը՝ (գ) մասում։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-part="a" aria-pressed="true">(ա)</button>
+    <button class="btn" type="button" data-part="b" aria-pressed="false">(բ)</button>
+    <button class="btn" type="button" data-part="c" aria-pressed="false">(գ)</button>
+    <label>$x=$ <input type="range" min="-5" max="5" step="1" value="1" data-in="x" aria-label="x-ի արժեքը"> <output data-out="x">1</output></label>
+  </div>
+  <div class="widget-out" data-out="defs" style="text-align:center"></div>
+  <div class="p4-chain fg" data-out="fg"></div>
+  <div class="p4-check" data-out="fgcheck"></div>
+  <div class="p4-chain gf" data-out="gf"></div>
+  <div class="p4-check" data-out="gfcheck"></div>
+  <div class="widget-out" data-out="verdict"></div>
+</div>
+
+<p>Նույն մեկնարկը $x=1$, տարբեր ավարտներ ($5\neq17$)՝ համադրումը կոմուտատիվ չէ, և ձախից-աջ կանոնն ասում է,
+թե որ արկղն է առաջինը գործում։</p>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> $f\cdot g$ կառուցելու համար (դասընթացի կարգ) գրեք <em>երկրորդ</em>
+ֆունկցիան $g(\square)$ և $\square$-ի փոխարեն տեղադրեք ողջ <em>առաջին</em> բանաձևը։ Միշտ կատարեք
+ստուգում մեկ թվի վրա՝ բառացիորեն անցնելով խողովակաշարով։ Եթե երկու համադրույթները ստացվում են
+հավասար ֆունկցիաների սովորական զույգի համար, գրեթե հաստատ կարգը շփոթել եք։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p5" open>
+<summary><h2>Խնդիր 5 - Հակադարձ ֆունկցիաներ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 5</div>
+<p>Գտեք հակադարձ ֆունկցիան յուրաքանչյուրի համար՝</p>
+$$\text{(ա) } f(x)=\frac{x+4}{2},\qquad \text{(բ) } f(x)=x^3,\qquad \text{(գ) } f(x)=\frac{x-2}{x+3}.$$
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Հակադարձը $f^{-1}$ չեղարկում է $f$-ը՝ եթե $f$-ն ուղարկում է $x$-ը $y$-ի, ապա $f^{-1}$-ն ուղարկում է
+$y$-ը հետ $x$-ի։ Բանաձև գտնելու համար պարզապես <em>լուծենք $y=f(x)$-ը $x$-ի նկատմամբ</em>։ Ինչ էլ որ
+ստացվի, $x=(\text{արտահայտություն }y\text{-ով})$, դա $f^{-1}(y)$-ն է. վերջում կարելի է $y$-ը
+վերանվանել $x$։ Երկրաչափորեն հակադարձը <strong>գրաֆիկի հայելային պատկերն է $y=x$ ուղղի
+նկատմամբ</strong>, որովհետև մուտքի և ելքի դերերը փոխանակելը փոխանակում է երկու առանցքները։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - (ա) մաս</h3>
+<p>Լուծենք $y=\tfrac{x+4}{2}$-ը՝ բազմապատկենք $2$-ով, $2y=x+4$, ուստի $x=2y-4$։
+Հետևաբար $f^{-1}(x)=2x-4$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - (բ) մաս</h3>
+<p>Լուծենք $y=x^3$-ը՝ վերցնենք (իրական) խորանարդ արմատը, $x=\sqrt[3]{y}$։ Հետևաբար
+$f^{-1}(x)=\sqrt[3]{x}$։ (Խորանարդ արմատը որոշված է բոլոր իրականների համար, ներառյալ բացասականները,
+ուստի սա իսկական հակադարձ է ողջ $\R$-ի վրա՝ ինչը հենց աշխատում է, քանի որ $x^3:\R\to\R$-ը բիյեկցիա է՝
+ճիշտ նույն դատողությամբ, ինչ $x^3+6$-ը Խնդիր 6(գ)-ում)։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - (գ) մաս</h3>
+<p>Լուծենք $y=\tfrac{x-2}{x+3}$-ը։ Ազատվենք հայտարարից՝
+$y(x+3)=x-2\Rightarrow yx+3y=x-2\Rightarrow x(y-1)=-2-3y$, ուստի</p>
+$$x=\frac{-2-3y}{y-1}=\frac{3y+2}{1-y}.$$
+<p>Հետևաբար $f^{-1}(x)=\dfrac{3x+2}{1-x}$ (որոշված է $x\ne1$-ի համար՝ $1$ արժեքը հենց այն բարձրությունն է,
+որին գրաֆիկը երբեք չի հասնում՝ իր հորիզոնական ասիմպտոտը)։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Միշտ ստուգենք՝ $f^{-1}$-ն իսկապես չեղարկում է $f$-ը</h3>
+<p>(ա) $f^{-1}(f(x))=2\cdot\tfrac{x+4}{2}-4=(x+4)-4=x$։ $\checkmark$
+(գ) վերցնենք $x=0$՝ $f(0)=\tfrac{-2}{3}$, ապա $f^{-1}\!\bigl(-\tfrac23\bigr)
+=\tfrac{3(-2/3)+2}{1-(-2/3)}=\tfrac{0}{5/3}=0$։ $\checkmark$ Երկու ուղղություններն էլ ստուգված են
+թվային կերպով։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+(ա) $f^{-1}(x)=2x-4$.&nbsp;&nbsp; (բ) $f^{-1}(x)=\sqrt[3]{x}$.&nbsp;&nbsp;
+(գ) $f^{-1}(x)=\dfrac{3x+2}{1-x}$ ($x\ne1$-ի համար)։</div>
+
+<h3>Հակադարձը $y=x$-ի նկատմամբ արտացոլում է</h3>
+<p>Ահա (ա) մասը՝ $f(x)=\tfrac{x+4}{2}$ ուղիղը և իր հակադարձը $f^{-1}(x)=2x-4$-ը հայելային պատկերներ են
+գծիկավոր անկյունագծի նկատմամբ։ Ընտրեք ցանկացած կետ մի գրաֆիկի վրա, փոխանակեք դրա կոորդինատները, և
+կհայտնվեք մյուսի վրա։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 304 300" width="304" role="img" aria-label="f(x) = (x+4)/2 և f⁻¹(x) = 2x − 4 ուղիղները հայելային են y = x անկյունագծի նկատմամբ. (0,2) և (2,0) կետերը համապատասխան զույգ են">
+<line x1="20" y1="152" x2="278" y2="152" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="284,152 277,155 277,149"/>
+<line x1="152" y1="284" x2="152" y2="26" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="152,20 155,27 149,27"/>
+<text x="289" y="157" text-anchor="start"><tspan class="m">x</tspan></text>
+<text x="152" y="14" text-anchor="middle"><tspan class="m">y</tspan></text>
+<line x1="64" y1="149" x2="64" y2="155" class="s-ink" stroke-width="1"/><text x="64" y="168" text-anchor="middle" class="mr" style="font-size:12px">−4</text>
+<line x1="149" y1="240" x2="155" y2="240" class="s-ink" stroke-width="1"/><text x="146" y="244" text-anchor="end" class="mr" style="font-size:12px">−4</text>
+<line x1="108" y1="149" x2="108" y2="155" class="s-ink" stroke-width="1"/><text x="108" y="168" text-anchor="middle" class="mr" style="font-size:12px">−2</text>
+<line x1="149" y1="196" x2="155" y2="196" class="s-ink" stroke-width="1"/><text x="146" y="200" text-anchor="end" class="mr" style="font-size:12px">−2</text>
+<line x1="196" y1="149" x2="196" y2="155" class="s-ink" stroke-width="1"/><text x="196" y="168" text-anchor="middle" class="mr" style="font-size:12px">2</text>
+<line x1="149" y1="108" x2="155" y2="108" class="s-ink" stroke-width="1"/><text x="146" y="112" text-anchor="end" class="mr" style="font-size:12px">2</text>
+<line x1="240" y1="149" x2="240" y2="155" class="s-ink" stroke-width="1"/><text x="240" y="168" text-anchor="middle" class="mr" style="font-size:12px">4</text>
+<line x1="149" y1="64" x2="155" y2="64" class="s-ink" stroke-width="1"/><text x="146" y="68" text-anchor="end" class="mr" style="font-size:12px">4</text>
+<line x1="20" y1="284" x2="284" y2="20" class="s-muted" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="20" y1="174" x2="284" y2="42" class="s-blue" stroke-width="2.6"/>
+<line x1="130" y1="284" x2="262" y2="20" class="s-red" stroke-width="2.6"/>
+<line x1="152" y1="108" x2="196" y2="152" class="s-muted" stroke-width="1.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+<circle cx="152" cy="108" r="3.6" class="f-blue"/>
+<circle cx="196" cy="152" r="3.6" class="f-red"/>
+<text x="148" y="100" text-anchor="end" class="f-blue mr" style="font-size:12px">(0, 2)</text>
+<text x="206" y="146" text-anchor="start" class="f-red mr" style="font-size:12px">(2, 0)</text>
+<line x1="26" y1="28" x2="46" y2="28" class="s-muted" stroke-width="1.2" stroke-dasharray="5 4"/><text x="51" y="32" text-anchor="start" class="mr" style="font-size:11.5px"><tspan class="m">y</tspan> = <tspan class="m">x</tspan></text>
+<line x1="26" y1="43" x2="46" y2="43" class="s-blue" stroke-width="2.6"/><text x="51" y="47" text-anchor="start" class="mr" style="font-size:11.5px"><tspan class="m">f</tspan>(<tspan class="m">x</tspan>) = (<tspan class="m">x</tspan> + 4)/2</text>
+<line x1="26" y1="58" x2="46" y2="58" class="s-red" stroke-width="2.6"/><text x="51" y="62" text-anchor="start" class="mr" style="font-size:11.5px"><tspan class="m">f</tspan>⁻¹(<tspan class="m">x</tspan>) = 2<tspan class="m">x</tspan> − 4</text>
+</svg>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> հակադարձելու համար <em>լուծեք $y=f(x)$-ը $x$-ի նկատմամբ</em>։
+$\tfrac{ax+b}{cx+d}$ կոտորակի համար խաչաձև բազմապատկեք և բոլոր $x$ անդամները հավաքեք մի կողմ։ Ստուգեք
+համադրելով՝ $f^{-1}(f(x))$-ը պետք է պարզեցվի $x$-ի։ Հակադարձի գրաֆիկը միշտ $f$-ի արտացոլումն է
+$y=x$-ի նկատմամբ։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p6" open>
+<summary><h2>Խնդիր 6 - Ինյեկտիվ, սյուրյեկտիվ, բիյեկտիվ ($f:\R\to\R$)</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 6</div>
+<p>Որոշեք, թե $f:\R\to\R$ արտապատկերումներից որոնք են ինյեկտիվ, սյուրյեկտիվ կամ բիյեկտիվ՝</p>
+$$\text{(ա) } |x|,\quad \text{(բ) } x^2+4,\quad \text{(գ) } x^3+6,\quad \text{(դ) } x+|x|,\quad
+\text{(ե) } x(x-2)(x+2).$$
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Երկու անկախ հարց, և յուրաքանչյուրն ունի մեկտողանոց նկար-թեստ։
+<strong>Ինյեկտիվ</strong> («միարժեք») նշանակում է, որ <em>տարբեր մուտքերը տալիս են տարբեր ելքեր</em>՝
+ոչ մի երկու $x$ արժեք չեն ստանում նույն ելքը։ Նկար-թեստ՝ յուրաքանչյուր <strong>հորիզոնական
+ուղիղ</strong> հատում է գրաֆիկն <em>առավելագույնը մեկ անգամ</em>։ Եթե թեկուզ մեկ հորիզոնական ուղիղ կտրում է
+գրաֆիկը երկու անգամ, ինյեկտիվությունը ձախողվում է։ <strong>Սյուրյեկտիվ</strong> («$\R$-ի վրա») նշանակում է, որ
+<em>ամեն</em> թիրախ-բարձրության հասնում ենք՝ արժեքների տիրույթը ողջ $\R$-ն է։ Նկար-թեստ՝ յուրաքանչյուր
+հորիզոնական ուղիղ հատում է գրաֆիկն <em>առնվազն մեկ անգամ</em>։ <strong>Բիյեկտիվ</strong> $=$ երկուսն էլ $=$
+յուրաքանչյուր հորիզոնական ուղիղ հատում է <em>ճիշտ մեկ անգամ</em> (և այդ դեպքում $f$-ն ունի հակադարձ)։
+Դասական խոչընդոտները՝ $|x|$-ը կամ զույգ աստիճանը «ծալում» է թվային ուղիղը (խախտելով և՛
+ինյեկտիվությունը, և՛ սյուրյեկտիվությունը)՝ $x^3$-ի նման կենտ աստիճանը մաքուր աճող կոր է (բիյեկտիվ)։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Հորիզոնական ուղղի թեստը՝ ֆունկցիա առ ֆունկցիա</h3>
+<ul class="p4-parts">
+  <li>(ա) $|x|$՝ $y=1$ ուղիղը հատում է այն $x=\pm1$-ում (երկու կետ) $\Rightarrow$ <em>ոչ</em>
+  ինյեկտիվ՝ $y=-1$ ուղիղը ոչ մի տեղ չի հանդիպում դրան ($|x|\ge0$) $\Rightarrow$ <em>ոչ</em> սյուրյեկտիվ։
+  <strong>Ոչ մեկը։</strong></li>
+  <li>(բ) $x^2+4$՝ $f(1)=f(-1)=5$ $\Rightarrow$ ոչ ինյեկտիվ՝ արժեքների տիրույթը $[4,\infty)$ է, ուստի $y=0$-ին
+  երբեք չենք հասնում $\Rightarrow$ ոչ սյուրյեկտիվ։ <strong>Ոչ մեկը։</strong></li>
+  <li>(գ) $x^3+6$՝ խիստ աճող է (եթե $x_1\lt x_2$, ապա $x_1^3\lt x_2^3$), ուստի յուրաքանչյուր հորիզոնական
+  ուղիղ հանդիպում է դրան առավելագույնը մեկ անգամ $\Rightarrow$ ինյեկտիվ՝ երբ $x\to\pm\infty$, արժեքն
+  անցնում է ողջ $\R$-ով, ուստի յուրաքանչյուր ուղիղ հանդիպում է դրան առնվազն մեկ անգամ $\Rightarrow$
+  սյուրյեկտիվ։ <strong>Բիյեկտիվ</strong>, հակադարձով $f^{-1}(x)=\sqrt[3]{x-6}$։</li>
+  <li>(դ) $x+|x|$՝ $x\le0$-ի համար սա $x+(-x)=0$ է, ուստի ողջ $x\le0$ ճառագայթն արտապատկերվում է $0$-ի
+  $\Rightarrow$ խիստ ոչ ինյեկտիվ՝ ելքը երբեք բացասական չէ (այն հավասար է $0$-ի կամ $2x>0$-ի)
+  $\Rightarrow$ արժեքների տիրույթը $[0,\infty)$ է, ոչ սյուրյեկտիվ։ <strong>Ոչ մեկը։</strong></li>
+  <li>(ե) $x(x-2)(x+2)=x^3-4x$՝ խորանարդ է, ուստի երբ $x\to\pm\infty$, այն ծածկում է ողջ $\R$-ը
+  $\Rightarrow$ սյուրյեկտիվ, բայց $f(0)=f(2)=f(-2)=0$, ուստի $y=0$ ուղիղը հանդիպում է դրան երեք անգամ
+  $\Rightarrow$ ոչ ինյեկտիվ։ <strong>Միայն սյուրյեկտիվ։</strong></li>
+</ul>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Միշտ ստուգենք վկաներին</h3>
+<p>Ոչ-ինյեկտիվ վճիռներից յուրաքանչյուրը հենվում է կոնկրետ բախման վրա՝ $|{-1}|=|1|$, $(-1)^2+4=1^2+4$,
+$f(-2)=f(0)$ (դ)-ում, և $(-2)(-4)(0)=0=2\cdot0\cdot4$ (ե)-ում։ Ոչ-սյուրյեկտիվ վճիռները հենվում են բաց
+թողնված թիրախի վրա ($y=-1$ (ա)-ի համար, $y=0$ (բ)/(դ)-ի համար)։ (գ)-ի համար խորանարդ-արմատի բանաձևն
+ակնհայտորեն տալիս է նախապատկեր ամեն թիրախի համար։ Ամենը հաստատված է խիտ ընտրանքով։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+(ա) ոչ մեկը.&nbsp;&nbsp; (բ) ոչ մեկը.&nbsp;&nbsp; <strong>(գ) բիյեկտիվ</strong>.&nbsp;&nbsp;
+(դ) ոչ մեկը.&nbsp;&nbsp; (ե) սյուրյեկտիվ, բայց ոչ ինյեկտիվ։</div>
+
+<h3>Ցուցադրությունը՝ սլաք-դիագրամներ և հորիզոնական ուղղի թեստ</h3>
+<p>Նախ՝ երեք նկարները, որ յուրաքանչյուր ուսանող պետք է կրի գլխում։ Ձախ կողմի կետերը մուտքերն են, աջ
+կողմի կետերը՝ թիրախները՝ սլաքն $x\mapsto f(x)$-ն է։</p>
+
+<figure class="fig"><div class="p4-pair">
+<svg viewBox="0 0 236 196" width="236" role="img" aria-label="Ինյեկտիվ, ոչ սյուրյեկտիվ. a→p, b→q, c→r, իսկ s-ին ոչ մի սլաք չի հասնում">
+<text x="94" y="16" text-anchor="middle" style="font-size:13px" font-weight="700">Ինյեկտիվ,</text>
+<text x="94" y="32" text-anchor="middle" style="font-size:13px" font-weight="700">ոչ սյուրյեկտիվ</text>
+<circle cx="50" cy="48" r="3.5" class="f-ink"/>
+<text x="43" y="53" text-anchor="end" class="mr"><tspan class="m">a</tspan></text>
+<circle cx="50" cy="80" r="3.5" class="f-ink"/>
+<text x="43" y="85" text-anchor="end" class="mr"><tspan class="m">b</tspan></text>
+<circle cx="50" cy="112" r="3.5" class="f-ink"/>
+<text x="43" y="117" text-anchor="end" class="mr"><tspan class="m">c</tspan></text>
+<circle cx="138" cy="48" r="3.5" class="f-ink"/>
+<text x="145" y="53" text-anchor="start" class="mr"><tspan class="m">p</tspan></text>
+<circle cx="138" cy="80" r="3.5" class="f-ink"/>
+<text x="145" y="85" text-anchor="start" class="mr"><tspan class="m">q</tspan></text>
+<circle cx="138" cy="112" r="3.5" class="f-ink"/>
+<text x="145" y="117" text-anchor="start" class="mr"><tspan class="m">r</tspan></text>
+<circle cx="138" cy="144" r="3.5" class="f-ink"/>
+<text x="145" y="149" text-anchor="start" class="mr"><tspan class="m">s</tspan></text>
+<line x1="56" y1="48" x2="126" y2="48" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,48 124,51.6 124,44.4"/>
+<line x1="56" y1="80" x2="126" y2="80" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,80 124,83.6 124,76.4"/>
+<line x1="56" y1="112" x2="126" y2="112" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,112 124,115.6 124,108.4"/>
+<text x="158" y="148" text-anchor="start" class="f-red" style="font-size:11.5px">բաց թողնված</text>
+<text x="94" y="172" text-anchor="middle" style="font-size:11.5px">տարբեր → տարբեր,</text><text x="94" y="188" text-anchor="middle" style="font-size:11.5px">բայց <tspan class="m">s</tspan>-ին չհասանք</text>
+</svg>
+<svg viewBox="0 0 190 196" width="190" role="img" aria-label="Սյուրյեկտիվ, ոչ ինյեկտիվ. չորս մուտք, երկու թիրախ, յուրաքանչյուր թիրախին հասնում է երկու սլաք">
+<text x="94" y="16" text-anchor="middle" style="font-size:13px" font-weight="700">Սյուրյեկտիվ,</text>
+<text x="94" y="32" text-anchor="middle" style="font-size:13px" font-weight="700">ոչ ինյեկտիվ</text>
+<circle cx="50" cy="48" r="3.5" class="f-ink"/>
+<circle cx="50" cy="80" r="3.5" class="f-ink"/>
+<circle cx="50" cy="112" r="3.5" class="f-ink"/>
+<circle cx="50" cy="144" r="3.5" class="f-ink"/>
+<circle cx="138" cy="64" r="3.5" class="f-ink"/>
+<circle cx="138" cy="104" r="3.5" class="f-ink"/>
+<line x1="55.9" y1="49.1" x2="126.2" y2="61.9" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132.1,62.9 123.6,65 124.9,58"/>
+<line x1="55.9" y1="78.9" x2="126.2" y2="66.1" class="s-red" stroke-width="1.6"/><polygon class="f-red" points="132.1,65.1 124.9,70 123.6,63"/>
+<line x1="56" y1="111.5" x2="126" y2="105.1" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,104.5 124.4,108.9 123.7,101.7"/>
+<line x1="55.5" y1="141.5" x2="127.1" y2="109" class="s-red" stroke-width="1.6"/><polygon class="f-red" points="132.5,106.5 126.7,113.1 123.8,106.5"/>
+<text x="94" y="172" text-anchor="middle" style="font-size:11.5px">ամեն թիրախին հասանք,</text><text x="94" y="188" text-anchor="middle" style="font-size:11.5px">բայց երկու սլաք բախվում են</text>
+</svg>
+<svg viewBox="0 0 190 196" width="190" role="img" aria-label="Բիյեկտիվ. երեք մուտք, երեք թիրախ, ամեն թիրախին ճիշտ մեկ սլաք">
+<text x="94" y="26" text-anchor="middle" style="font-size:13px" font-weight="700">Բիյեկտիվ</text>
+<circle cx="50" cy="48" r="3.5" class="f-ink"/>
+<circle cx="138" cy="48" r="3.5" class="f-ink"/>
+<line x1="56" y1="48" x2="126" y2="48" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,48 124,51.6 124,44.4"/>
+<circle cx="50" cy="80" r="3.5" class="f-ink"/>
+<circle cx="138" cy="80" r="3.5" class="f-ink"/>
+<line x1="56" y1="80" x2="126" y2="80" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,80 124,83.6 124,76.4"/>
+<circle cx="50" cy="112" r="3.5" class="f-ink"/>
+<circle cx="138" cy="112" r="3.5" class="f-ink"/>
+<line x1="56" y1="112" x2="126" y2="112" class="s-blue" stroke-width="1.6"/><polygon class="f-blue" points="132,112 124,115.6 124,108.4"/>
+<text x="94" y="172" text-anchor="middle" style="font-size:11.5px">կատարյալ զուգակցում՝</text><text x="94" y="188" text-anchor="middle" style="font-size:11.5px">մեկ սլաք ներս, մեկը՝ դուրս</text>
+</svg>
+</div></figure>
+
+<div class="widget" id="w-arrows">
+  <div class="widget-head">Կառուցեք ձեր սեփական ֆունկցիան</div>
+  <p class="widget-hint">Սեղմեք ձախ սյան որևէ կետի վրա՝ նրա սլաքը հաջորդ թիրախին տեղափոխելու համար։
+  Կոճակներով ավելացրեք կամ հեռացրեք մուտքեր և թիրախներ, կամ բեռնեք վերևի երեք նկարներից մեկը։ Կարմիրով
+  նշվում են վկաները՝ բախվող սլաքները և բաց թողնված թիրախները։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-preset="inj">Ինյեկտիվ, ոչ սյուրյեկտիվ</button>
+    <button class="btn" type="button" data-preset="surj">Սյուրյեկտիվ, ոչ ինյեկտիվ</button>
+    <button class="btn" type="button" data-preset="bij">Բիյեկտիվ</button>
+  </div>
+  <div class="p4-arrows-svg"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="m+">+ մուտք</button>
+    <button class="btn" type="button" data-act="m-">− մուտք</button>
+    <button class="btn" type="button" data-act="n+">+ թիրախ</button>
+    <button class="btn" type="button" data-act="n-">− թիրախ</button>
+  </div>
+  <div class="p4-badges" data-out="badges"></div>
+  <div class="widget-out muted" data-out="note" style="text-align:center;font-size:.92rem"></div>
+</div>
+
+<p>Հիմա հորիզոնական ուղղի թեստը՝ կիրառված այս խնդրի գրաֆիկներին։ Սկսեք երկու հակադրվող գրաֆիկներից՝
+$x^2+4$ (ծալված, ուղիղը կարող է երկու անգամ կտրել) և $x^3+6$ (մոնոտոն, յուրաքանչյուր ուղիղ կտրում է ճիշտ
+մեկ անգամ), ապա ստուգեք մնացած երեքը։</p>
+
+<div class="widget" id="w-hline">
+  <div class="widget-head">Հորիզոնական ուղղի թեստ</div>
+  <p class="widget-hint">Ընտրեք ֆունկցիան և քաշեք կարմիր $y=c$ ուղիղը վեր կամ վար (կամ սեղմեք գրաֆիկի որևէ
+  կետի վրա, կամ օգտագործեք սահիչը)։ Նարնջագույն կետերը հատման կետերն են։ Ներքևում հավաքվում են վկաները՝
+  երկու և ավելի հատում տվող ուղիղը հերքում է ինյեկտիվությունը, իսկ գրաֆիկը չհատող ուղիղը՝
+  սյուրյեկտիվությունը։ Եթե վկա չենք գտել, դա դեռ ապացույց չէ՝ ապացույցը Քայլ 1-ում է (օրինակ՝ (գ)-ի խիստ
+  աճը)։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-fn="a" aria-pressed="false">(ա) $|x|$</button>
+    <button class="btn" type="button" data-fn="b" aria-pressed="true">(բ) $x^2+4$</button>
+    <button class="btn" type="button" data-fn="c" aria-pressed="false">(գ) $x^3+6$</button>
+    <button class="btn" type="button" data-fn="d" aria-pressed="false">(դ) $x+|x|$</button>
+    <button class="btn" type="button" data-fn="e" aria-pressed="false">(ե) $x(x-2)(x+2)$</button>
+  </div>
+  <div class="p4-plot"></div>
+  <div class="widget-controls">
+    <label>$c=$ <input type="range" min="-1" max="12" step="0.1" value="5" data-in="c" aria-label="Հորիզոնական ուղղի բարձրությունը"> <output data-out="c">5</output></label>
+  </div>
+  <div class="widget-out" data-out="count"></div>
+  <div class="p4-badges" data-out="badges"></div>
+</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> ինյեկտիվությունը հերքելու համար ցույց տվեք մեկ բախում $f(a)=f(b)$՝
+$a\ne b$-ով։ Սյուրյեկտիվությունը հերքելու համար ցույց տվեք մեկ չհասած թիրախ։ Իրական ֆունկցիայի
+բիյեկտիվությունն ապացուցելու համար ցույց տվեք, որ այն խիստ մոնոտոն է (ինյեկտիվ) և անցնում է
+$-\infty$-ից $+\infty$ (սյուրյեկտիվ)՝ ապա այն ունի հակադարձ։ Զույգ աստիճանները և $|x|$-ը ծալում են՝
+կենտ աստիճանները՝ ոչ։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p10" open>
+<summary><h2>Խնդիր 10 - $\Ker(f)$-ը համարժեքության հարաբերություն է</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 10</div>
+<p>Ցույց տվեք, որ ցանկացած $f:A\to B$ ֆունկցիայի համար նրա <strong>միջուկը</strong>
+$\Ker(f)=\{(x,y)\in A\times A: f(x)=f(y)\}$ համարժեքության հարաբերություն է $A$-ի վրա։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Միջուկը կապում է երկու մուտք հենց այն ժամանակ, երբ դրանք ունեն <em>նույն ելքը</em>։ Բայց «նույն
+արժեքն ունենալը» կառուցված է ուղիղ այդ արժեքների <em>հավասարությունից</em> ($=$), իսկ հավասարությունը
+համարժեքության հարաբերության ամենամաքուր օրինակն է՝ ամեն ինչ հավասար է ինքն իրեն, հավասարությունը
+սիմետրիկ է, և այն շղթայվում է։ Ուստի $\Ker(f)$-ը ժառանգում է $=$-ի բոլոր երեք հատկություններն
+ինքնաբերաբար։ Հիմնական պատկերը՝ $\Ker(f)$-ը կտրում է որոշման տիրույթը <strong>շերտերի</strong>՝ մեկ շերտ ելքի
+ամեն արժեքի համար, որտեղ $f^{-1}(b)$ շերտը բոլոր այն մուտքերն են, որ $f$-ն ուղարկում է $b$-ի։
+Համարժեքության դասերը $=$ շերտեր։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ռեֆլեքսիվ</h3>
+<p>Ցանկացած $x\in A$-ի համար $f(x)=f(x)$ ակնհայտորեն, ուստի $(x,x)\in\Ker(f)$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Սիմետրիկ</h3>
+<p>Եթե $(x,y)\in\Ker(f)$, ապա $f(x)=f(y)$՝ հավասարությունը սիմետրիկ է, ուստի $f(y)=f(x)$, հետևաբար
+$(y,x)\in\Ker(f)$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Փոխանցական</h3>
+<p>Եթե $(x,y),(y,z)\in\Ker(f)$, ապա $f(x)=f(y)$ և $f(y)=f(z)$՝ հավասարությունները շղթայելով՝ $f(x)=f(z)$,
+հետևաբար $(x,z)\in\Ker(f)$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Եզրակացություն և շերտերի պատկերը</h3>
+<p>Բոլոր երեքն էլ տեղի ունեն, ուստի $\Ker(f)$-ը համարժեքության հարաբերություն է։ $x$-ի համարժեքության դասն է
+$\{y:f(y)=f(x)\}=f^{-1}(f(x))$՝ շերտը $f(x)$ արժեքի վրա։ Այս շերտերը տրոհում են $A$-ն՝ ամեն մուտք ընկնում է
+ճիշտ մեկ շերտում (իր սեփական ելքը), և տարբեր ելքի արժեքները տալիս են չհատվող շերտեր։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\Ker(f)$-ը ռեֆլեքսիվ է, սիմետրիկ և փոխանցական ($B$-ի վրա $=$-ից ժառանգված), հետևաբար համարժեքության
+հարաբերություն է $A$-ի վրա՝ նրա դասերը $f^{-1}(b)$ շերտերն են։</div>
+
+<h3>Շերտերի տրոհումը</h3>
+<p>Վերցնենք պարզ օրինակ՝ $f:\{1,2,3,4,5,6\}\to\{p,q,r\}$՝ $f(1)=f(2)=f(3)=p$, $f(4)=f(5)=q$, $f(6)=r$։
+Միջուկը տրոհում է որոշման տիրույթը երեք շերտի՝ մեկը՝ ամեն արժեքի համար։ Երկու մուտք $\Ker(f)$-ով կապված
+են այն և միայն այն դեպքում, երբ գտնվում են նույն ստվերավորված շերտում։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 346 296" width="346" role="img" aria-label="f-ը {1,...,6}-ից {p,q,r}. 1, 2, 3 կետերը p-ի վրա շերտում են, 4 և 5 կետերը q-ի վրա շերտում, 6-ը r-ի վրա շերտում">
+<text x="159" y="24" text-anchor="middle" style="font-size:12.5px" font-style="italic">որոշման տիրույթ <tspan class="m">A</tspan>՝ Ker(<tspan class="m">f</tspan>)-ով տրոհված</text>
+<text x="318" y="24" text-anchor="middle" class="mr"><tspan class="m">B</tspan></text>
+<rect x="122" y="44" width="74" height="102" rx="6" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="114" y="99" text-anchor="end" style="font-size:12px">շերտ <tspan class="m">p</tspan>-ի վրա</text>
+<circle cx="172" cy="62" r="3.5" class="f-ink"/>
+<text x="164" y="67" text-anchor="end" class="mr">1</text>
+<path d="M178,62 C230.6,62 248.1,84.9 306.1,93.3" fill="none" class="s-blue" stroke-width="1.5"/><polygon class="f-blue" points="312.1,94.1 303.6,96.6 304.7,89.4"/>
+<circle cx="172" cy="95" r="3.5" class="f-ink"/>
+<text x="164" y="100" text-anchor="end" class="mr">2</text>
+<path d="M178,95 C229.2,95 248.8,95 306,95" fill="none" class="s-blue" stroke-width="1.5"/><polygon class="f-blue" points="312,95 304,98.6 304,91.4"/>
+<circle cx="172" cy="128" r="3.5" class="f-ink"/>
+<text x="164" y="133" text-anchor="end" class="mr">3</text>
+<path d="M178,128 C230.6,128 248.1,105.1 306.1,96.7" fill="none" class="s-blue" stroke-width="1.5"/><polygon class="f-blue" points="312.1,95.9 304.7,100.6 303.6,93.4"/>
+<circle cx="318" cy="95" r="3.5" class="f-ink"/>
+<text x="326" y="100" text-anchor="start" class="mr"><tspan class="m">p</tspan></text>
+<rect x="122" y="158" width="74" height="72" rx="6" class="f-red-soft s-ink" stroke-width="1"/>
+<text x="114" y="198" text-anchor="end" style="font-size:12px">շերտ <tspan class="m">q</tspan>-ի վրա</text>
+<circle cx="172" cy="178" r="3.5" class="f-ink"/>
+<text x="164" y="183" text-anchor="end" class="mr">4</text>
+<path d="M178,178 C229.5,178 248.7,189.2 306,193.2" fill="none" class="s-red" stroke-width="1.5"/><polygon class="f-red" points="312,193.6 303.8,196.6 304.3,189.4"/>
+<circle cx="172" cy="210" r="3.5" class="f-ink"/>
+<text x="164" y="215" text-anchor="end" class="mr">5</text>
+<path d="M178,210 C229.5,210 248.7,198.8 306,194.8" fill="none" class="s-red" stroke-width="1.5"/><polygon class="f-red" points="312,194.4 304.3,198.6 303.8,191.4"/>
+<circle cx="318" cy="194" r="3.5" class="f-ink"/>
+<text x="326" y="199" text-anchor="start" class="mr"><tspan class="m">q</tspan></text>
+<rect x="122" y="242" width="74" height="44" rx="6" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="114" y="268" text-anchor="end" style="font-size:12px">շերտ <tspan class="m">r</tspan>-ի վրա</text>
+<circle cx="172" cy="264" r="3.5" class="f-ink"/>
+<text x="164" y="269" text-anchor="end" class="mr">6</text>
+<path d="M178,264 C229.2,264 248.8,264 306,264" fill="none" class="s-orange" stroke-width="1.5"/><polygon class="f-orange" points="312,264 304,267.6 304,260.4"/>
+<circle cx="318" cy="264" r="3.5" class="f-ink"/>
+<text x="326" y="269" text-anchor="start" class="mr"><tspan class="m">r</tspan></text>
+</svg>
+</figure>
+
+<div class="widget" id="w-kernel">
+  <div class="widget-head">Միջուկը որպես մատրից</div>
+  <p class="widget-hint">Սեղմեք $f(1),\dots,f(6)$ կոճակներից որևէ մեկի վրա՝ արժեքը փոխելու համար
+  ($p\to q\to r\to p$)։ Մատրիցի $(x,y)$ վանդակը ներկված է այն և միայն այն դեպքում, երբ $f(x)=f(y)$,
+  այսինքն՝ $(x,y)\in\Ker(f)$։ Ինչ էլ որ ընտրեք, անկյունագիծը լիքն է (ռեֆլեքսիվություն), մատրիցը համաչափ է
+  անկյունագծի նկատմամբ (սիմետրիկություն), իսկ «Դասավորել ըստ շերտերի» կոճակից հետո ներկված վանդակները
+  կազմում են լրիվ քառակուսիներ՝ մեկը յուրաքանչյուր շերտի համար (փոխանցականություն)։</p>
+  <div class="cells" data-out="vals" role="group" aria-label="f(1)-ից f(6) արժեքները"></div>
+  <div class="p4-kmat"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="sort" aria-pressed="false">Դասավորել ըստ շերտերի</button>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ օրինակին</button>
+  </div>
+  <div class="widget-out" data-out="classes"></div>
+  <div class="p4-badges" data-out="props"></div>
+</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> ցանկացած «$x\sim y$ այն և միայն այն դեպքում, երբ $g(x)=g(y)$» («ինչ-որ
+մեծության նույն արժեքը») ձևի հարաբերություն ինքնաբերաբար համարժեքության հարաբերություն է, քանի որ այն
+ստացվում է $=$-ից։ Նրա դասերն $g$-ի մակարդակային բազմություններն / շերտերն են։ Սա ամենատարածված եղանակն
+է, որով համարժեքության հարաբերություններն առաջանում են։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p12" open>
+<summary><h2>Խնդիր 12 - $f(x)=\tfrac{x}{2x+1}$-ը $\Q^+$-ի վրա ինյեկտիվ է, բայց ոչ սյուրյեկտիվ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 12</div>
+<p>Դիցուք $f:\Q^+\to\Q^+$ լինի $f(x)=\dfrac{x}{2x+1}$։ Ցույց տվեք, որ $f$-ն ինյեկտիվ է, բայց ոչ սյուրյեկտիվ։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p><strong>Ինյեկտիվությունը</strong> մաքուր հանրահաշիվ է՝ ենթադրենք, որ երկու մուտք տալիս է նույն ելքը, և
+պարզեցնենք հավասարումը, մինչև այն հարկադրի, որ մուտքերը հավասար լինեն։ <strong>Ոչ սյուրյեկտիվությունը</strong>
+պահանջում է թիրախ առանց նախապատկերի, և այն գտնելու մաքուր եղանակն արժեքների տիրույթը <em>սահմանափակելն</em> է։
+Դրական $x$-ի համար հայտարարը՝ $2x+1$-ը, մի փոքր մեծ է $2x$-ից, ուստի $\tfrac{x}{2x+1}$-ը փոքր-ինչ
+պակաս է $\tfrac{x}{2x}=\tfrac12$-ից։ Ուստի ամեն ելք խիստ փոքր է $\tfrac12$-ից։ Այսպիսով, $\ge\tfrac12$ ամեն
+ինչ (օրինակ՝ $1$ արժեքը, որ $\Q^+$-ում է) անհասանելի է՝ սյուրյեկտիվությունը ձախողվում է ակնհայտորեն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ինյեկտիվ</h3>
+<p>Ենթադրենք $f(x)=f(y)$, այսինքն՝ $\dfrac{x}{2x+1}=\dfrac{y}{2y+1}$։ Խաչաձև բազմապատկենք (երկու հայտարարներն
+էլ դրական են)՝ $x(2y+1)=y(2x+1)$, ուստի $2xy+x=2xy+y$, հետևաբար $x=y$։ Տարբեր մուտքերը չեն կարող ունենալ
+նույն ելքը, ուստի $f$-ն ինյեկտիվ է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Սահմանափակենք արժեքների տիրույթը</h3>
+<p>$x\in\Q^+$-ի համար ունենք $x>0$, ուստի $2x+1>2x>0$ և հետևաբար</p>
+$$f(x)=\frac{x}{2x+1}\lt \frac{x}{2x}=\frac12.$$
+<p>Նաև $f(x)>0$։ Ուստի ողջ արժեքների տիրույթը գտնվում է $\bigl(0,\tfrac12\bigr)$ բաց միջակայքի ներսում։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Ցույց տանք բաց թողնված թիրախ</h3>
+<p>$1\in\Q^+$ թիվը բավարարում է $1\ge\tfrac12$, ուստի այն $(0,\tfrac12)$-ից դուրս է և չի կարող լինել $f$-ի
+արժեք։ (Հանրահաշվորեն՝ $\tfrac{x}{2x+1}=1$ հարկադրում է $x=2x+1$, այսինքն՝ $x=-1\notin\Q^+$։) Հետևաբար $f$-ն
+<em>ոչ</em> սյուրյեկտիվ է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Ստուգենք, որ $\tfrac12$ սահմանը սուր է, բայց չի ընդունվում</h3>
+<p>Երբ $x\to\infty$, $f(x)=\tfrac{x}{2x+1}\to\tfrac12$ ներքևից (օրինակ՝ $f(10000)\approx0.49998$), ուստի
+$\tfrac12$-ը ճշգրիտ վերին եզրն է, բայց երբեք չի ընդունվում որպես արժեք՝ հաստատելով, որ արժեքների տիրույթն
+ամբողջությամբ $(0,\tfrac12)$-ում է։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Ինյեկտիվ՝ $f(x)=f(y)\Rightarrow x=y$։ Ոչ սյուրյեկտիվ՝ ամեն արժեք $\lt\tfrac12$ է, ուստի օրինակ $1$-ը (և
+$\ge\tfrac12$ ամեն արժեք) նախապատկեր չունի։</div>
+
+<h3>Արժեքների տիրույթը գտնվում է $y=\tfrac12$-ից ցածր</h3>
+<p>$f$-ը $x>0$-ի համար գծագրելով՝ կորը բարձրանում է $0$-ից, բայց միշտ մնում է գծիկավոր առաստաղի՝
+$y=\tfrac12$-ի տակ։ $\Q^+$-ի ողջ թիրախ-գոտին՝ $\bigl[\tfrac12,\infty\bigr)$-ը, ներառյալ $1$-ը, արժեքներ չի
+պարունակում։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 440 292" width="440" role="img" aria-label="Գրաֆիկ y = x/(2x+1) դրական x-երի համար. կորը մնում է y = ½ գծիկավոր առաստաղի տակ">
+<rect x="29.6" y="22" width="384" height="84" class="f-red-soft"/>
+<line x1="20" y1="256" x2="407.6" y2="256" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="413.6,256 406.6,259 406.6,253"/>
+<line x1="29.6" y1="271" x2="29.6" y2="28" class="s-ink" stroke-width="1"/>
+<polygon class="f-ink" points="29.6,22 32.6,29 26.6,29"/>
+<text x="418.6" y="261" text-anchor="start"><tspan class="m">x</tspan></text>
+<text x="29.6" y="16" text-anchor="middle"><tspan class="m">y</tspan> = <tspan class="m">f</tspan>(<tspan class="m">x</tspan>)</text>
+<line x1="93.6" y1="253" x2="93.6" y2="259" class="s-ink" stroke-width="1"/><text x="93.6" y="272" text-anchor="middle" class="mr" style="font-size:12px">2</text>
+<line x1="157.6" y1="253" x2="157.6" y2="259" class="s-ink" stroke-width="1"/><text x="157.6" y="272" text-anchor="middle" class="mr" style="font-size:12px">4</text>
+<line x1="221.6" y1="253" x2="221.6" y2="259" class="s-ink" stroke-width="1"/><text x="221.6" y="272" text-anchor="middle" class="mr" style="font-size:12px">6</text>
+<line x1="285.6" y1="253" x2="285.6" y2="259" class="s-ink" stroke-width="1"/><text x="285.6" y="272" text-anchor="middle" class="mr" style="font-size:12px">8</text>
+<line x1="349.6" y1="253" x2="349.6" y2="259" class="s-ink" stroke-width="1"/><text x="349.6" y="272" text-anchor="middle" class="mr" style="font-size:12px">10</text>
+<text x="24.6" y="270" text-anchor="end" class="mr" style="font-size:12px">0</text>
+<line x1="26.6" y1="106" x2="32.6" y2="106" class="s-ink" stroke-width="1"/><text x="23.6" y="110" text-anchor="end" class="mr" style="font-size:12px">½</text>
+<line x1="29.6" y1="106" x2="413.6" y2="106" class="s-red" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="413.6" y="100" text-anchor="end" class="f-red" style="font-size:11.5px">առաստաղ <tspan class="m">y</tspan> = ½ (երբեք չի հասնում)</text>
+<polyline points="29.6,255.7 29.9,253.3 30.1,251.1 30.4,248.9 30.7,246.7 30.9,244.6 31.2,242.6 31.4,240.7 31.7,238.7 31.9,236.9 32.2,235.1 32.4,233.3 32.7,231.6 33,230 33.2,228.4 33.5,226.8 33.7,225.2 34,223.7 34.2,222.3 34.5,220.9 34.8,219.5 35.1,217.4 35.5,215.5 35.9,213.6 36.3,211.8 36.7,210 37.1,208.3 37.4,206.7 37.8,205.1 38.2,203.5 38.6,202 39,200.6 39.4,199.2 39.7,197.8 40.3,196 40.8,194.3 41.3,192.7 41.8,191.1 42.3,189.6 42.8,188.1 43.3,186.7 43.8,185.4 44.4,184 45,182.5 45.6,180.9 46.3,179.5 46.9,178 47.6,176.7 48.2,175.4 48.8,174.1 49.6,172.7 50.4,171.3 51.1,169.9 51.9,168.7 52.7,167.4 53.4,166.2 54.3,164.9 55.2,163.7 56.1,162.4 57,161.3 57.9,160.2 58.9,158.9 60,157.8 61,156.6 62,155.6 63,154.5 64.1,153.6 65.2,152.5 66.4,151.5 67.5,150.5 68.7,149.6 69.8,148.7 71,147.8 72.1,147 73.4,146.1 74.7,145.3 76,144.5 77.2,143.7 78.5,143 79.8,142.3 81.1,141.6 82.4,140.9 83.6,140.3 84.9,139.6 86.2,139.1 87.5,138.5 88.9,137.9 90.3,137.3 91.7,136.7 93.1,136.2 94.5,135.7 95.9,135.2 97.3,134.7 98.7,134.2 100.2,133.7 101.6,133.3 103,132.9 104.4,132.4 105.8,132 107.2,131.6 108.6,131.3 110,130.9 111.4,130.5 112.8,130.2 114.2,129.8 115.6,129.5 117,129.2 118.5,128.9 119.9,128.6 121.3,128.3 122.7,128 124.1,127.7 125.5,127.4 126.9,127.2 128.3,126.9 129.7,126.7 131.1,126.4 132.5,126.2 133.9,125.9 135.4,125.7 136.8,125.5 138.2,125.3 139.6,125.1 141,124.8 142.4,124.6 143.8,124.4 145.2,124.2 146.6,124 148,123.9 149.4,123.7 150.8,123.5 152.2,123.3 153.7,123.1 155.1,123 156.5,122.8 157.9,122.6 159.3,122.5 160.7,122.3 162.1,122.2 163.5,122 164.9,121.9 166.3,121.7 167.7,121.6 169.1,121.4 170.5,121.3 172,121.2 173.4,121 174.8,120.9 176.2,120.8 177.6,120.6 179,120.5 180.4,120.4 181.8,120.3 183.2,120.1 184.6,120 186,119.9 187.4,119.8 188.9,119.7 190.3,119.6 191.7,119.5 193.1,119.4 194.5,119.3 195.9,119.2 197.3,119.1 198.7,119 200.1,118.9 201.5,118.8 202.9,118.7 204.3,118.6 205.7,118.5 207.2,118.4 208.6,118.3 210,118.2 211.4,118.1 212.8,118 214.2,118 215.6,117.9 217,117.8 218.4,117.7 219.8,117.6 221.2,117.6 222.6,117.5 224,117.4 225.5,117.3 226.9,117.3 228.3,117.2 229.7,117.1 231.1,117 232.5,117 233.9,116.9 235.3,116.8 236.7,116.8 238.1,116.7 239.5,116.6 240.9,116.6 242.4,116.5 243.8,116.4 245.2,116.4 246.6,116.3 248,116.2 249.4,116.2 250.8,116.1 252.2,116.1 253.6,116 255,115.9 256.4,115.9 257.8,115.8 259.2,115.8 260.7,115.7 262.1,115.7 263.5,115.6 264.9,115.6 266.3,115.5 267.7,115.4 269.1,115.4 270.5,115.3 271.9,115.3 273.3,115.2 274.7,115.2 276.1,115.1 277.5,115.1 279,115 280.4,115 281.8,114.9 283.2,114.9 284.6,114.9 286,114.8 287.4,114.8 288.8,114.7 290.2,114.7 291.6,114.6 293,114.6 294.4,114.5 295.8,114.5 297.3,114.5 298.7,114.4 300.1,114.4 301.5,114.3 302.9,114.3 304.3,114.3 305.7,114.2 307.1,114.2 308.5,114.1 309.9,114.1 311.3,114.1 312.7,114 314.2,114 315.6,113.9 317,113.9 318.4,113.9 319.8,113.8 321.2,113.8 322.6,113.8 324,113.7 325.4,113.7 326.8,113.7 328.2,113.6 329.6,113.6 331,113.6 332.5,113.5 333.9,113.5 335.3,113.5 336.7,113.4 338.1,113.4 339.5,113.4 340.9,113.3 342.3,113.3 343.7,113.3 345.1,113.2 346.5,113.2 347.9,113.2 349.3,113.1 350.8,113.1 352.2,113.1 353.6,113.1 355,113 356.4,113 357.8,113 359.2,112.9 360.6,112.9 362,112.9 363.4,112.9 364.8,112.8 366.2,112.8 367.7,112.8 369.1,112.8 370.5,112.7 371.9,112.7 373.3,112.7 374.7,112.6 376.1,112.6 377.5,112.6 378.9,112.6 380.3,112.5 381.7,112.5 383.1,112.5 384.5,112.5 386,112.4 387.4,112.4 388.8,112.4 390.2,112.4 391.6,112.3 393,112.3 394.4,112.3 395.8,112.3 397.2,112.3 398.6,112.2 400,112.2 401.4,112.2 402.8,112.2 404.3,112.1 405.7,112.1 407.1,112.1 408.5,112.1 409.9,112.1 411.3,112 412.7,112 413.6,112" fill="none" class="s-blue" stroke-width="2.6" stroke-linejoin="round"/>
+<text x="42.4" y="62" text-anchor="start" style="font-size:11.5px">անհասանելի թիրախ-գոտի՝ բոլոր <tspan class="m">y</tspan> ≥ ½ (օր. <tspan class="m">y</tspan> = 1)</text>
+<text x="221.6" y="140" text-anchor="start" class="f-blue" style="font-size:12px">արժ. տիրույթ ⊂ (0, ½)</text>
+</svg>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> «ոչ սյուրյեկտիվ» ցույց տալու համար <em>սահմանափակեք արժեքների
+տիրույթը</em> և նշեք մեկ թիրախ՝ սահմանից դուրս։ $\tfrac{x}{2x+1}\lt\tfrac{x}{2x}$ գնահատականը (հայտարարից դեն
+նետեք $+1$-ը) կոտորակային ֆունկցիաների հիմնական աշխատող հնարքն է։ Նման ֆունկցիայի ինյեկտիվության
+ստուգումը սովորաբար մեկ տողանոց խաչաձև բազմապատկում է։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p19" open>
+<summary><h2>Խնդիր 19 - Ե՞րբ է $f(A\cap B)=f(A)\cap f(B)$</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 19</div>
+<p>Ո՞ր ֆունկցիաների դեպքում է $f(A\cap B)=f(A)\cap f(B)$ տեղի ունենում բոլոր $A,B$ բազմությունների համար։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Մեկ պարունակումը միշտ ճիշտ է, մյուսի համար պահանջվում է ինյեկտիվություն։ <em>Հեշտ ուղղություն</em>՝ եթե
+$x\in A\cap B$, ապա $f(x)$-ը և՛ $f(A)$-ում է, և՛ $f(B)$-ում, ուստի $f(A\cap B)\subseteq f(A)\cap f(B)$
+<em>միշտ</em>։ Հակառակը կարող է ձախողվել, որովհետև $f(A)\cap f(B)$-ն հավաքում է <strong>ընդհանուր ելքի
+արժեքները</strong>, որոնք կարող են գալ <em>տարբեր</em> մուտքերից՝ մեկ մուտք $A$-ում, մյուսը՝ $B$-ում՝ որոնք
+պարտադիր չէ, որ հանդիպեն $A\cap B$-ում։ Հենց երբ $f$-ն <strong>ինյեկտիվ</strong> է, ընդհանուր ելքը հարկադրում
+է ընդհանուր մուտք, և երկու կողմերը դառնում են հավասար։ Ուստի նույնությունը տեղի է ունենում բոլոր $A,B$-ի
+համար <strong>այն և միայն այն դեպքում, երբ $f$-ն ինյեկտիվ է</strong>։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Միշտ ճիշտ պարունակումը</h3>
+<p>Դիցուք $y\in f(A\cap B)$, ուստի $y=f(x)$՝ $x\in A\cap B$-ով։ Ապա $x\in A$ տալիս է $y\in f(A)$, և
+$x\in B$ տալիս է $y\in f(B)$, ուստի $y\in f(A)\cap f(B)$։ Հետևաբար $f(A\cap B)\subseteq f(A)\cap f(B)$
+<em>ամեն</em> $f$-ի համար։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Եթե $f$-ն ինյեկտիվ է, հակառակ պարունակումն էլ է տեղի ունենում</h3>
+<p>Դիցուք $y\in f(A)\cap f(B)$, ուստի $y=f(a)=f(b)$՝ $a\in A$-ով և $b\in B$-ով։ Ինյեկտիվությունը հարկադրում է
+$a=b$, և այս ընդհանուր կետն ընկած է $A\cap B$-ում։ Այսպիսով $y=f(a)\in f(A\cap B)$։ Ուստի
+$f(A)\cap f(B)\subseteq f(A\cap B)$, և Քայլ 1-ի հետ զուգակցելով՝ ստանում ենք հավասարություն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Եթե $f$-ն ինյեկտիվ չէ, նույնությունը ձախողվում է որոշ $A,B$-ի համար</h3>
+<p>Ընտրենք $a\ne a'$՝ $f(a)=f(a')$-ով, և դնենք $A=\{a\}$, $B=\{a'\}$։ Ապա $A\cap B=\varnothing$, ուստի
+$f(A\cap B)=\varnothing$, բայց $f(A)\cap f(B)=\{f(a)\}\cap\{f(a')\}=\{f(a)\}\ne\varnothing$։ Նույնությունը
+կոտրվում է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Ստուգենք կոնկրետ օրինակի վրա</h3>
+<p>$f(x)=x^2$, $A=\{1\}$, $B=\{-1\}$՝ $f(A\cap B)=f(\varnothing)=\varnothing$, բայց
+$f(A)\cap f(B)=\{1\}\cap\{1\}=\{1\}$։ Ճեղքը տեսանելի է, և այն բացողը հենց ոչ-ինյեկտիվությունն է
+($1\neq-1$, բայց $f(1)=f(-1)$)՝ ինյեկտիվ $f$-ի համար Քայլ 2-ը հարկադրում է հավասարություն։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Հենց <strong>ինյեկտիվ</strong> ֆունկցիաները։ $\subseteq$ պարունակումը միշտ տեղի է ունենում՝ հավասարությունը տեղի
+է ունենում բոլոր $A,B$-ի համար այն և միայն այն դեպքում, երբ $f$-ն ինյեկտիվ է։</div>
+
+<h3>Ինչո՞ւ է ոչ-ինյեկտիվությունը կոտրում այն</h3>
+<p>Երկու տարբեր մուտքեր $a\in A$ և $a'\in B$ միաձուլվում են <em>նույն</em> ելքին՝ $v$-ին։ Այդ ելքն ընկնում է
+և՛ $f(A)$-ում, և՛ $f(B)$-ում, ուստի այն հայտնվում է աջ կողմի հատման մեջ, թեև $A$-ն և $B$-ն ընդհանուր մուտք
+չունեն, ուստի $f(A\cap B)$-ն դատարկ է։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 420 170" width="420" role="img" aria-label="a ∈ A և a′ ∈ B տարբեր կետերը f-ով գնում են նույն v արժեքին, ուստի v ∈ f(A)∩f(B), բայց f(A∩B) = ∅">
+<ellipse cx="74" cy="53.99999999999999" rx="48" ry="30" class="f-blue-soft s-ink" stroke-width="1"/>
+<ellipse cx="74" cy="134" rx="48" ry="30" class="f-red-soft s-ink" stroke-width="1"/>
+<text x="14" y="59" text-anchor="middle" class="f-blue mr"><tspan class="m">A</tspan></text>
+<text x="14" y="139" text-anchor="middle" class="f-red mr"><tspan class="m">B</tspan></text>
+<circle cx="74" cy="54" r="3.5" class="f-ink"/>
+<text x="74" y="45" text-anchor="middle" class="mr"><tspan class="m">a</tspan></text>
+<circle cx="74" cy="134" r="3.5" class="f-ink"/>
+<text x="74" y="154" text-anchor="middle" class="mr"><tspan class="m">a</tspan>′</text>
+<text x="74" y="98" text-anchor="middle" class="mr" style="font-size:12.5px"><tspan class="m">A</tspan> ∩ <tspan class="m">B</tspan> = ∅</text>
+<path d="M80,54 C156.9,54 234.5,11.8 276,83.6" fill="none" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="279,88.8 271.9,83.7 278.1,80.1"/>
+<path d="M80,134 C156.9,134 234.5,176.2 276,104.4" fill="none" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="279,99.2 278.1,107.9 271.9,104.3"/>
+<circle cx="282" cy="94" r="3.5" class="f-ink"/>
+<text x="290" y="99" text-anchor="start" class="mr" style="font-size:13.5px"><tspan class="m">v</tspan> = <tspan class="m">f</tspan>(<tspan class="m">a</tspan>) = <tspan class="m">f</tspan>(<tspan class="m">a</tspan>′)</text>
+<text x="282" y="58" text-anchor="middle" style="font-size:12px">փոփոխման տիրույթ</text>
+<text x="290" y="126" text-anchor="middle" class="mr" style="font-size:12.5px"><tspan class="m">v</tspan> ∈ <tspan class="m">f</tspan>(<tspan class="m">A</tspan>) ∩ <tspan class="m">f</tspan>(<tspan class="m">B</tspan>)</text>
+<text x="290" y="146" text-anchor="middle" style="font-size:12.5px">բայց <tspan class="m">v</tspan> ∉ <tspan class="m">f</tspan>(<tspan class="m">A</tspan> ∩ <tspan class="m">B</tspan>) = ∅</text>
+</svg>
+</figure>
+
+<div class="widget" id="w-image">
+  <div class="widget-head">Պատկերներ և հատում</div>
+  <p class="widget-hint">Սեղմեք ձախ սյան կետերի վրա։ Ամեն սեղմում կետը տեղափոխում է հաջորդ վիճակ՝ ոչ մի
+  տեղ, $A$, $B$, երկուսում էլ։ Համեմատեք $f(A\cap B)$-ն և $f(A)\cap f(B)$-ը (նարնջագույն օղակը նշում է այն
+  արժեքները, որոնք $f(A)\cap f(B)$-ում են, բայց ոչ $f(A\cap B)$-ում)։ $x^2$-ի դեպքում փորձեք կոտրել
+  հավասարությունը, ապա անցեք ինյեկտիվ $x^3$-ին և փորձեք նորից։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-fn="sq" aria-pressed="true">$f(x)=x^2$</button>
+    <button class="btn" type="button" data-fn="cube" aria-pressed="false">$f(x)=x^3$</button>
+    <button class="btn" type="button" data-act="clear">Մաքրել</button>
+  </div>
+  <div class="p4-sets-svg"></div>
+  <div class="widget-out" data-out="sets" style="text-align:center"></div>
+  <div class="widget-out" data-out="verdict"></div>
+</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> պատկերի օրենքների համար այն պարունակումը, որ վարկած չի պահանջում, միշտ
+«հատման պատկերը $\subseteq$ պատկերների հատում»-ն է։ Հակառակը պահանջում է ինյեկտիվություն, և հակաօրինակը
+միշտ երկու բախվող կետ է՝ դրված տարբեր մեկկետանոց բազմությունների մեջ։ (Միավորման հետ ամեն ինչ ավելի
+պարզ է՝ $f(A\cup B)=f(A)\cup f(B)$ <em>ամեն</em> $f$-ի համար։)</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p22" open>
+<summary><h2>Խնդիր 22 - Կարո՞ղ են չհատվող ոչ դատարկ $X_1,X_2$ ունենալ $f(X_1)=f(X_2)$</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 22</div>
+<p>$f:A\to B$-ի և չհատվող ոչ դատարկ $X_1,X_2\subseteq A$-ի համար (ուստի $X_1\cap X_2=\varnothing$),
+<em>կարո՞ղ</em> են պատկերները հավասար լինել՝ $f(X_1)=f(X_2)$։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Պատկերները ելքի <em>արժեքների</em> մասին են, ոչ թե այն մասին, թե որ մուտքերն են դրանք արտադրել։ Երկու
+բոլորովին առանձին մուտքի բազմություններ կարող են, այնուամենայնիվ, հասնել ճիշտ նույն ելքերի
+բազմությանը, պայմանով, որ $f$-ն իրար սոսնձի դրանց կետերը։ Ուստի հենց որ $f$-ն ոչ ինյեկտիվ է,
+պատասխանը <strong>այո է, հավասար պատկերները հնարավոր են</strong>։ (Նկատենք հարցի ճիշտ ընթերցումը՝
+հավասար պատկերները <em>հարկադրված</em> չեն՝ վերցնենք $X_1=\{1\}$, $X_2=\{2\}$ նույնական արտապատկերման
+տակ՝ կստանանք անհավասար պատկերներ, բայց դրանք <em>կարող են</em> պատահել, ինչը հարցի բուն իմաստն է։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Կառուցենք օրինակ</h3>
+<p>Վերցնենք $f:\R\to\R$, $f(x)=x^2$, և չհատվող մեկկետանոց բազմությունները $X_1=\{1\}$, $X_2=\{-1\}$։ Դրանք
+ոչ դատարկ են, և $X_1\cap X_2=\varnothing$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Հաշվենք պատկերները</h3>
+<p>$f(X_1)=\{1^2\}=\{1\}$ և $f(X_2)=\{(-1)^2\}=\{1\}$։ Ուստի $f(X_1)=f(X_2)=\{1\}$՝ հավասար պատկերներ
+չհատվող բազմություններից։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Ստուգենք տրամաբանությունը</h3>
+<p>Հնարքը հենց ոչ-ինյեկտիվությունն է՝ $f$-ն ուղարկում է տարբեր $1$ և $-1$ կետերը նույն արժեքին։ Ավելի մեծ
+օրինակով՝ $X_1=\{1,2\}$, $X_2=\{-1,-2\}$ տալիս է $f(X_1)=\{1,4\}=f(X_2)$ նույնպես։ (Եթե $f$-ն
+<em>ինյեկտիվ</em> <em>լիներ</em>, չհատվող ոչ դատարկ բազմությունները միշտ կունենային անհավասար (իրականում՝
+չհատվող) պատկերներ։)</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+<strong>Այո</strong>, հնարավոր է։ Օրինակ՝ $f(x)=x^2$, $X_1=\{1\}$, $X_2=\{-1\}$ չհատվող են, սակայն
+$f(X_1)=f(X_2)=\{1\}$։ (Հավասար պատկերները հարկադրված չեն, բայց կարող են պատահել, երբ $f$-ն ոչ ինյեկտիվ է։)</div>
+
+<h3>Պատկեր՝ երկու չհատվող բազմություն, մեկ ընդհանուր պատկեր</h3>
+<p>$f(x)=x^2$-ի սլաք-դիագրամը $\{-2,-1,1,2\}$-ի վրա՝ սիմետրիկ զույգերը $\{1,2\}$-ը և $\{-1,-2\}$-ը
+արտապատկերվում են նույն արժեքների բազմությանը $\{1,4\}$։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 390 196" width="390" role="img" aria-label="f(x) = x². X₁ = {1, 2} և X₂ = {−1, −2} չհատվող բազմությունները գնում են նույն {1, 4} պատկերին">
+<rect x="34" y="24.000000000000007" width="56" height="68" rx="5" class="f-blue-soft s-ink" stroke-width="1"/>
+<rect x="34" y="120" width="56" height="68" rx="5" class="f-red-soft s-ink" stroke-width="1"/>
+<rect x="234" y="72" width="56" height="68" rx="5" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="14" y="63" text-anchor="middle" class="f-blue mr"><tspan class="m">X</tspan>₁</text>
+<text x="14" y="159" text-anchor="middle" class="f-red mr"><tspan class="m">X</tspan>₂</text>
+<text x="296" y="68" text-anchor="start" style="font-size:12px">ընդհանուր</text>
+<text x="296" y="83" text-anchor="start" style="font-size:12px">պատկեր {1, 4}</text>
+<circle cx="62" cy="42" r="3.5" class="f-ink"/>
+<text x="54" y="47" text-anchor="end" class="mr">1</text>
+<path d="M68,42 C142.5,42 175.1,58.4 250.7,85.9" fill="none" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="256.4,87.9 247.6,88.6 250.1,81.8"/>
+<circle cx="62" cy="74" r="3.5" class="f-ink"/>
+<text x="54" y="79" text-anchor="end" class="mr">2</text>
+<path d="M68,74 C142.5,74 170.9,105.9 250.2,119.9" fill="none" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="256.1,121 247.6,123.1 248.8,116"/>
+<circle cx="62" cy="138" r="3.5" class="f-ink"/>
+<text x="54" y="143" text-anchor="end" class="mr">−1</text>
+<path d="M68,138 C142.5,138 175.1,121.6 250.7,94.1" fill="none" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="256.4,92.1 250.1,98.2 247.6,91.4"/>
+<circle cx="62" cy="170" r="3.5" class="f-ink"/>
+<text x="54" y="175" text-anchor="end" class="mr">−2</text>
+<path d="M68,170 C142.5,170 170.9,138.1 250.2,124.1" fill="none" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="256.1,123 248.8,128 247.6,120.9"/>
+<circle cx="262" cy="90" r="3.5" class="f-ink"/>
+<text x="270" y="95" text-anchor="start" class="mr">1</text>
+<circle cx="262" cy="122" r="3.5" class="f-ink"/>
+<text x="270" y="127" text-anchor="start" class="mr">4</text>
+</svg>
+</figure>
+
+<p class="muted">Նույնը կարող եք փորձել Խնդիր 19-ի <a href="#w-image">«Պատկերներ և հատում»</a> վանդակում՝
+ընտրեք $A=\{1,2\}$ և $B=\{-1,-2\}$։</p>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> «բազմության պատկերը» մոռանում է կրկնություններն ու ծագումը։ Երբ որևէ
+հատկություն միայն պատկերների մասին է, ոչ-ինյեկտիվ $f$-ը (ծալող արտապատկերում՝ $x^2$-ի կամ $|x|$-ի նման)
+անակնկալների գլխավոր աղբյուրն է։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p24" open>
+<summary><h2>Խնդիր 24 - Արդյո՞ք $Y_1\cap Y_2=\varnothing$-ը հարկադրում է $f^{-1}(Y_1)\cap f^{-1}(Y_2)=\varnothing$</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 24</div>
+<p>Ճի՞շտ է, որ $f:A\to B$-ի և $Y_1,Y_2\subseteq B$-ի համար, եթե $Y_1\cap Y_2=\varnothing$, ապա
+$f^{-1}(Y_1)\cap f^{-1}(Y_2)=\varnothing$։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Նախապատկերներն իրենց պահում են <em>կատարյալ</em>՝ պատկերներից շատ ավելի լավ, քանի որ ամեն մուտք $x$ ունի
+ճիշտ <em>մեկ</em> ելք $f(x)$, ուստի «արդյո՞ք $x$-ը $f^{-1}(Y)$-ում է» հարցնելը պարզապես «արդյո՞ք
+միակ արժեքը՝ $f(x)$-ը, $Y$-ում է» հարցնելն է։ Եթե $x$-ը երկու նախապատկերներում էլ լիներ, միակ արժեքը՝
+$f(x)$-ը, պետք է լիներ միաժամանակ և՛ $Y_1$-ում, և՛ $Y_2$-ում՝ անհնար է, երբ դրանք չհատվող
+են։ Ինյեկտիվություն պետք չէ՝ սա <strong>միշտ</strong> ճիշտ է։ Ավելի խորը փաստն այն է, որ
+$f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$ ամեն $f$-ի համար։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ենթադրենք, որ հատումը ոչ դատարկ է, և բերենք հակասության</h3>
+<p>Դիցուք $x\in f^{-1}(Y_1)\cap f^{-1}(Y_2)$։ Ապա $f(x)\in Y_1$ և $f(x)\in Y_2$, ուստի $f(x)\in Y_1\cap Y_2$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Օգտագործենք, որ $Y_1$-ը և $Y_2$-ը չեն հատվում</h3>
+<p>Բայց $Y_1\cap Y_2=\varnothing$, ուստի $f(x)$-ը պատկանում է դատարկ բազմությանը՝ անհնարին։ Հետևաբար
+այդպիսի $x$ գոյություն չունի, և $f^{-1}(Y_1)\cap f^{-1}(Y_2)=\varnothing$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Մաքուր պատճառը (ընդհանուր նույնություն)</h3>
+<p>Ցանկացած $x$-ի համար՝</p>
+$$x\in f^{-1}(Y_1)\cap f^{-1}(Y_2) \iff f(x)\in Y_1 \text{ և } f(x)\in Y_2 \iff f(x)\in Y_1\cap Y_2
+\iff x\in f^{-1}(Y_1\cap Y_2).$$
+<p>Ուստի $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$ <em>միշտ</em>, և չհատվող դեպքը հատուկ դեպքն է՝
+$Y_1\cap Y_2=\varnothing\Rightarrow f^{-1}(\varnothing)=\varnothing$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Ստուգենք կոնկրետ օրինակի վրա</h3>
+<p>Քայլ 3-ն ապացուցում է նույնությունն ամեն $f$-ի համար՝ $f(x)=x^2$-ով կոնկրետ դեպքը ($Y_1=\{1\}$,
+$Y_2=\{4\}$՝ տալով չհատվող նախապատկերներ $\{\pm1\},\{\pm2\}$, որոնց միավորումը $f^{-1}(\{1,4\})$ է)
+հաստատում է և՛ նույնությունը $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$, և՛ չհատվող հետևանքը։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+<strong>Այո, միշտ</strong> ($f$-ի վրա վարկած պետք չէ)։ Իրականում $f^{-1}(Y_1)\cap f^{-1}(Y_2)=f^{-1}(Y_1\cap Y_2)$,
+ուստի չհատվող $Y$-երը տալիս են չհատվող նախապատկերներ։</div>
+
+<h3>Ինչո՞ւ նախապատկերները չեն կարող այստեղ համընկնել</h3>
+<p>Ամեն մուտք ունի միակ ելք, ուստի այն կարող է նստել միայն այն թիրախ-բլոկի նախապատկերում, որ պարունակում է
+այդ միակ արժեքը։ Չհատվող թիրախ-բլոկներ $\Rightarrow$ ամեն մուտք կարող է պատկանել առավելագույնը մեկին
+$\Rightarrow$ ոչ մի մուտք ընդհանուր չէ։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 380 220" width="380" role="img" aria-label="x₁, x₂ գնում են Y₁ բլոկ, x₃, x₄ գնում են Y₂ բլոկ. չհատվող բլոկների նախապատկերները չհատվող են">
+<rect x="30" y="42" width="80" height="128" rx="6" class="f-muted s-ink" fill-opacity=".1" stroke-width="1"/>
+<text x="70" y="34" text-anchor="middle" style="font-size:12px">որոշման տիրույթ <tspan class="m">A</tspan></text>
+<rect x="238" y="42" width="64" height="56" rx="6" class="f-blue-soft s-ink" stroke-width="1"/>
+<rect x="238" y="114" width="64" height="56" rx="6" class="f-red-soft s-ink" stroke-width="1"/>
+<text x="270" y="38" text-anchor="middle" class="f-blue mr"><tspan class="m">Y</tspan>₁</text>
+<text x="270" y="188" text-anchor="middle" class="f-red mr"><tspan class="m">Y</tspan>₂</text>
+<circle cx="66" cy="66" r="3.5" class="f-ink"/>
+<text x="58" y="71" text-anchor="end" class="mr"><tspan class="m">x</tspan>₁</text>
+<circle cx="270" cy="58" r="3.5" class="f-ink"/>
+<line x1="72" y1="65.8" x2="258" y2="58.5" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="264,58.2 256.2,62.1 255.9,55"/>
+<circle cx="66" cy="98" r="3.5" class="f-ink"/>
+<text x="58" y="103" text-anchor="end" class="mr"><tspan class="m">x</tspan>₂</text>
+<circle cx="270" cy="86" r="3.5" class="f-ink"/>
+<line x1="72" y1="97.6" x2="258" y2="86.7" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="264,86.4 256.2,90.4 255.8,83.2"/>
+<circle cx="66" cy="130" r="3.5" class="f-ink"/>
+<text x="58" y="135" text-anchor="end" class="mr"><tspan class="m">x</tspan>₃</text>
+<circle cx="270" cy="130" r="3.5" class="f-ink"/>
+<line x1="72" y1="130" x2="258" y2="130" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="264,130 256,133.6 256,126.4"/>
+<circle cx="66" cy="162" r="3.5" class="f-ink"/>
+<text x="58" y="167" text-anchor="end" class="mr"><tspan class="m">x</tspan>₄</text>
+<circle cx="270" cy="154" r="3.5" class="f-ink"/>
+<line x1="72" y1="161.8" x2="258" y2="154.5" class="s-red" stroke-width="1.8"/><polygon class="f-red" points="264,154.2 256.2,158.1 255.9,151"/>
+<text x="14" y="210" text-anchor="start" class="f-blue mr" style="font-size:13px"><tspan class="m">f</tspan>⁻¹(<tspan class="m">Y</tspan>₁) = {<tspan class="m">x</tspan>₁, <tspan class="m">x</tspan>₂}</text>
+<text x="190" y="210" text-anchor="start" class="f-red mr" style="font-size:13px"><tspan class="m">f</tspan>⁻¹(<tspan class="m">Y</tspan>₂) = {<tspan class="m">x</tspan>₃, <tspan class="m">x</tspan>₄} (չհատվող)</text>
+</svg>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> նախապատկերը համատեղելի է <em>բոլոր</em> գործողությունների՝ հատման,
+միավորման և լրացման հետ՝ <em>ամեն</em> ֆունկցիայի համար՝ $f^{-1}(Y_1\cap Y_2)=f^{-1}(Y_1)\cap f^{-1}(Y_2)$,
+նմանապես $\cup$-ի և լրացման համար։ Սա այն պատճառով, որ նախապատկերը որոշվում է մեկ պատկանելության
+ստուգումով՝ միակ $f(x)$ արժեքի վրա։ Պատկերները քմահաճ ուղղությունն են, նախապատկերները՝ հուսալին։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p25" open>
+<summary><h2>Խնդիր 25 - $f(f^{-1}(Y))\subseteq Y$՝ խիստ օրինակով</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 25</div>
+<p>Ցույց տվեք, որ $f(f^{-1}(Y))\subseteq Y$ ամեն $f:A\to B$-ի և $Y\subseteq B$-ի համար։ Բերեք օրինակ, որտեղ
+պարունակումը խիստ է։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Կարդանք երկու գործողություններն ուղիղ իմաստով։ $f^{-1}(Y)$ նախապատկերը «բոլոր մուտքերն են, որոնց
+ելքն ընկնում է $Y$-ում»։ Կիրառենք $f$-ն այդ բազմությանը և կստանանք ելքեր, որոնք, ըստ
+կառուցման, արդեն $Y$-ում էին։ Ուստի կարելի է հայտնվել միայն $Y$-ի ներսում՝ դրանից դուրս գալ հնարավոր
+չէ։ Իսկ ինչո՞ւ կարող է ողջ $Y$-ը չլցվել։ Որովհետև $Y$-ը կարող է պարունակել թիրախ-արժեքներ, որ $f$-ն <em>երբեք
+չի արտադրում</em> (արժեքների տիրույթից դուրս արժեքներ)։ Դրանք չունեն դեպի իրենց ուղղված մուտքեր, ուստի
+$f(f^{-1}(Y))$-ը բաց է թողնում դրանք՝ դարձնելով պարունակումը խիստ։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ապացուցենք պարունակումը</h3>
+<p>Դիցուք $y\in f(f^{-1}(Y))$։ Ապա $y=f(x)$ որոշ $x\in f^{-1}(Y)$-ի համար։ Բայց $x\in f^{-1}(Y)$ նշանակում է
+հենց, որ $f(x)\in Y$։ Ուստի $y=f(x)\in Y$։ Քանի որ $y$-ը կամայական էր, $f(f^{-1}(Y))\subseteq Y$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Կառուցենք խիստ օրինակ</h3>
+<p>Վերցնենք $f:\R\to\R$, $f(x)=x^2$, և $Y=\{-1,1\}$։ Ապա</p>
+$$f^{-1}(Y)=\{x:x^2\in\{-1,1\}\}=\{x:x^2=1\}=\{-1,1\}$$
+<p>(ոչ մի իրական $x$ չունի $x^2=-1$), և կիրառելով $f$՝</p>
+$$f\bigl(\{-1,1\}\bigr)=\{1\}.$$
+<p>Ուստի $f(f^{-1}(Y))=\{1\}\subsetneq\{-1,1\}=Y$։ $-1\in Y$ արժեքն $f$-ի արժեքների տիրույթից դուրս է, ուստի
+այն դուրս է գցվում։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Ստուգենք հավասարության պայմանը</h3>
+<p>Հավասարությունը $f(f^{-1}(Y))=Y$ տեղի է ունենում հենց այն ժամանակ, երբ $Y\subseteq f(A)$ ($Y$-ի ամեն տարր
+իրականում արտադրվում է)։ Այստեղ $-1\notin f(\R)=[0,\infty)$, ուստի խստությունը հարկադրված է։ Քայլ 1-ն
+արդեն ապացուցում է $f(f^{-1}(Y))\subseteq Y$ ամեն $f$-ի համար՝ վերևի օրինակը խիստ դուրսմղման կոնկրետ
+դեպքն է։</p>
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$f(f^{-1}(Y))\subseteq Y$ միշտ։ Խիստ օրինակ՝ $f(x)=x^2$, $Y=\{-1,1\}$ տալիս է $f(f^{-1}(Y))=\{1\}\subsetneq Y$
+($-1$ արժեքը երբեք ելք չէ)։</div>
+
+<h3>Պատկեր՝ անհասանելի թիրախը դուրս է գցվում</h3>
+<p>Քաշենք $Y=\{-1,1\}$-ը հետ՝ դեպի նախապատկերը, ապա հրենք առաջ։ Միայն $1$-ն է մնում, որովհետև $-1$-ին ոչ մի
+սլաք չի մտնում։</p>
+
+<figure class="fig">
+<svg viewBox="0 0 420 168" width="420" role="img" aria-label="Y = {−1, 1}. Նախապատկերը {−1, 1} է, երկուսն էլ գնում են 1-ին, իսկ −1-ին ոչ մի սլաք չի հասնում">
+<rect x="20" y="52" width="60" height="68" rx="5" class="f-blue-soft s-ink" stroke-width="1"/>
+<text x="50" y="40" text-anchor="middle" class="mr"><tspan class="m">f</tspan>⁻¹(<tspan class="m">Y</tspan>)</text>
+<circle cx="50" cy="70" r="3.5" class="f-ink"/>
+<text x="42" y="75" text-anchor="end" class="mr">−1</text>
+<circle cx="50" cy="102" r="3.5" class="f-ink"/>
+<text x="42" y="107" text-anchor="end" class="mr">1</text>
+<rect x="234" y="48" width="72" height="76" rx="5" class="f-orange-soft s-ink" stroke-width="1"/>
+<text x="270" y="36" text-anchor="middle" class="mr"><tspan class="m">Y</tspan> = {−1, 1}</text>
+<circle cx="270" cy="102" r="3.5" class="f-ink"/>
+<text x="278" y="107" text-anchor="start" class="mr">1</text>
+<circle cx="270" cy="64" r="3.5" class="f-ink"/>
+<text x="278" y="69" text-anchor="start" class="mr">−1</text>
+<text x="314" y="61" text-anchor="start" class="f-red" style="font-size:11.5px">ոչ մի սլաք ներս՝</text>
+<text x="314" y="76" text-anchor="start" class="f-red" style="font-size:11.5px">դուրս գցված</text>
+<path d="M56,70 C137,70 172.5,84.8 258.2,99.9" fill="none" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="264.1,101 255.6,103.1 256.8,96"/>
+<path d="M56,102 C136.1,102 173.4,119 258.2,104.1" fill="none" class="s-blue" stroke-width="1.8"/><polygon class="f-blue" points="264.1,103 256.8,108 255.6,100.9"/>
+<text x="158" y="158" text-anchor="middle" class="mr"><tspan class="m">f</tspan>(<tspan class="m">f</tspan>⁻¹(<tspan class="m">Y</tspan>)) = {1} ⊊ <tspan class="m">Y</tspan></text>
+</svg>
+</figure>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> երկու «շրջապտույտները» գնում են հակառակ ուղղություններով։ Քաշելը,
+ապա հրելը (նախ $f^{-1}$, ապա $f$) <em>փոքրացնում է կամ պահում նույնը</em>՝ $f(f^{-1}(Y))\subseteq Y$
+(հավասարություն այն և միայն այն դեպքում, երբ $Y\subseteq f(A)$)։ Հրելը, ապա քաշելը (նախ $f$, ապա $f^{-1}$)
+<em>մեծացնում է կամ պահում նույնը</em>՝ $X\subseteq f^{-1}(f(X))$ (հավասարություն բոլոր $X$-երի համար այն
+և միայն այն դեպքում, երբ $f$-ն ինյեկտիվ է)։ Ամեն $\subseteq$-ի ուղղությունը հիշեք՝ հարցնելով «արդյո՞ք
+արժեք/կետ կարող է կորչել կամ ավելանալ»։</p>
+</div>
+
+<div class="widget" id="w-round">
+  <div class="widget-head">Երկու շրջապտույտները</div>
+  <p class="widget-hint">Այստեղ $f(x)=x^2$ ֆունկցիան արտապատկերում է $\{-2,-1,0,1,2\}$-ը $\{-1,0,1,2,4\}$-ի
+  մեջ։ Առաջին ռեժիմում սեղմեք աջ սյան կետերի վրա՝ $Y$-ն ընտրելու համար, և տեսեք $f^{-1}(Y)$-ը (կապույտ) և
+  $f(f^{-1}(Y))$-ը (կանաչ)։ Երկրորդ ռեժիմում ընտրեք $X$-ը ձախ սյունում և տեսեք $f(X)$-ը (կապույտ) և
+  $f^{-1}(f(X))$-ը (կանաչ)։ Նկատեք՝ առաջին շրջապտույտը կարող է միայն կորցնել կետեր, երկրորդը՝ միայն
+  ավելացնել։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-mode="Y" aria-pressed="true">$f(f^{-1}(Y))$</button>
+    <button class="btn" type="button" data-mode="X" aria-pressed="false">$f^{-1}(f(X))$</button>
+  </div>
+  <div class="p4-sets-svg"></div>
+  <div class="widget-out" data-out="sets" style="text-align:center"></div>
+  <div class="widget-out" data-out="verdict"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թերթիկներ">
+        <a class="btn" href="p2-3-relations.html">← Գործնական 2-3</a>
+        <a class="btn" href="index.html">Բոլոր թերթիկները</a>
+        <a class="btn" href="p5-combinatorics.html">Գործնական 5 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Լուծումները գրվել են արհեստական բանականության օգնությամբ, իսկ թվային պատասխանները ստուգվել են
+  համակարգչային թվարկմամբ։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

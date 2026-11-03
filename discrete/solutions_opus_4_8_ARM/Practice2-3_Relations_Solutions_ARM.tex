@@ -219,7 +219,8 @@ $\Ran=\R$։
 
 \textbf{(դ) $x^2+y^2\le16$ շրջանը։} Շառավիղը՝ $\sqrt{16}=4$։ $x$ արժեքը հանդես է գալիս այն և միայն այն
 դեպքում, երբ ինչ-որ $y$ բավարարում է $x^2+y^2\le16$-ին՝ ամենահեշտ ընտրությունը $y=0$-ն է, որն աշխատում
-է, երբ $x^2\le16$, այսինքն՝ $x\in[-4,4]$։ Սիմետրիայով $\Ran=[-4,4]$ նույնպես։
+է, երբ $x^2\le16$, այսինքն՝ $x\in[-4,4]$։ Իսկ եթե $|x|>4$, ապա ոչ մի $y$ չի աշխատում, քանի որ
+$x^2+y^2\ge x^2>16$։ Սիմետրիայով $\Ran=[-4,4]$ նույնպես։
 
 \textbf{(է) $x+y\le0$։} Տիրույթը փակ կիսահարթությունն է $x+y=0$ ուղղի վրա և տակ։ Ցանկացած $x$-ի համար
 ընտրենք $y\le-x$ (օր.՝ $y=-x$)՝ ցանկացած $y$-ի համար ընտրենք $x\le-y$։ Երկու դեպքում էլ ցանկացած
@@ -345,7 +346,7 @@ $e$ գագաթը կող չունի։ (գ)-ն նույնական է (բ)-ին։
 
 \begin{methodbox}
 \textbf{Փոխանցելի տեխնիկա՝} սիմետրիկ հարաբերություն $\Leftrightarrow$ չկողմնորոշված գրաֆ
-$\Leftrightarrow$ սիմետրիկ $0/1$ մատրից։ $1$-երի քանակը $=2\cdot(\#\text{կող})$, և անկյունագիծը
+$\Leftrightarrow$ սիմետրիկ $0/1$ մատրից։ Անկյունագծից դուրս $1$-երի քանակը $=2\cdot(\#\text{կող})$, և անկյունագիծը
 գրանցում է $(x,x)$ ակերը։ Սիմետրիկ հարաբերության մատրիցի արագ ստուգումն է $M=M^{\mathsf T}$ պայմանը։
 \end{methodbox}
 
@@ -386,7 +387,7 @@ $1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ
   \draw[armBlue,thick,->] (a)--(b);
   \draw[armBlue,thick,->] (a)--(c);
   \draw[armBlue,thick,->] (b)--(c);
-  \draw[armBlue,thick,->] (b)--(e);
+  \draw[armBlue,thick,->] (b) .. controls (0.75,1.0) .. (e);
   \draw[armBlue,thick,->] (c)--(d);
   \draw[armBlue,thick,->] (c)--(f);
   \draw[armBlue,thick,->] (d)--(f);
@@ -395,7 +396,8 @@ $1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ
 \node at (7.2,1.0) {$M_a=\begin{pmatrix}
 0&1&1&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&1&0&1\\ 0&0&0&0&0&1\\ 0&0&0&0&0&0\\ 0&0&0&0&1&0
 \end{pmatrix}$};
-\end{tikzpicture}
+\end{tikzpicture}\\[2pt]
+{\small $b\to e$ սլաքը շրջանցում է $c$ գագաթը. այն $c$-ով \emph{չի} անցնում ($(c,e)\notin\rho$)։}
 \end{center}
 
 \begin{center}
@@ -429,6 +431,7 @@ $1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ
   \node[vtx] (e) at (2.0,-0.5) {$e$};
   \node[vtx] (d) at (4.0,1.9) {$d$};
   \node[vtx] (f) at (4.0,-0.7) {$f$};
+  \node[vtx] (b) at (0,-0.5) {$b$};
   \draw[armBlue,thick,->] (a)--(c);
   \draw[armBlue,thick,->] (a)--(e);
   \draw[armBlue,thick,->] (c)--(d);
@@ -441,7 +444,8 @@ $1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ
 \node at (8.0,0.4) {$M_c=\begin{pmatrix}
 0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 0&0&1&1&1&0\\ 0&0&0&0&0&0\\ 0&0&1&0&1&1\\ 0&0&0&0&0&0
 \end{pmatrix}$};
-\end{tikzpicture}
+\end{tikzpicture}\\[2pt]
+{\small $b$ գագաթը (գ)-ում մեկուսացված է՝ $M_c$-ի $b$ տողն ու սյունակը զրոյական են։}
 \end{center}
 
 \textbf{Ստուգում։} Հաշվենք սլաքները յուրաքանչյուր ցանկում՝ (ա) $8$, (բ) $7$, (գ) $8$՝ սրանք հավասար են
@@ -587,6 +591,11 @@ $(1,-1)$-ն և $(-1,1)$-ն երկուսն էլ $\rho$-ում են՝ $1\neq-1$-ո
 բայց $4\nmid 2$)։ \emph{Ոչ} անտիսիմետրիկ $\Z$-ի վրա՝ $2\mid(-2)$ և $(-2)\mid2$, սակայն $2\neq-2$։
 R+T, բայց ոչ AS, ոչ S $\Rightarrow$ \textbf{նախակարգ}, \emph{ոչ} մասնակի կարգ։
 
+{\small \emph{Նշում՝} $x=0$-ում ռեֆլեքսիվությունը պահանջում է $0\mid 0$։ Սա ճիշտ է
+$y\mid x\iff \exists k\in\Z:\ x=ky$ սահմանմամբ ($0=1\cdot 0$)։ Իսկ «$x/y$ քանորդն ամբողջ է» բառացի
+ընթերցմամբ $0/0$ արտահայտությունը որոշված չէ, ուստի $(0,0)\notin\rho$, և ռեֆլեքսիվությունը կխախտվեր
+միայն այդ մեկ կետում։\par}
+
 \textbf{(դ) բաժանելիություն $\N$-ի վրա ($y\mid x$)։}
 Ռեֆլեքսիվ և փոխանցական՝ ինչպես վերևում. ոչ սիմետրիկ։ Այստեղ այն արդեն իրոք անտիսիմետրիկ է՝ դրական ամբողջ
 թվերի վրա $a\mid b$ և $b\mid a$ հարկադրում են $a=b$։ R+AS+T $\Rightarrow$ \textbf{մասնակի կարգ}։ Այն
@@ -701,7 +710,7 @@ t(\rho)&=\bigcup_{k\ge1}\rho^{\,k} && (\text{ավելացրեք սլաք յու�
 \textbf{Քայլ 1 - Գծենք $\rho$-ն և գտնենք, թե յուրաքանչյուր փակումն ինչ պետք է ավելացնի։}
 Հասանելիությունը $\rho$-ում՝ $1\to2\to4$, և $3\to1\to2\to4$ (նաև $3\to2\to4$)։ Ուստի նոր
 \emph{փոխանցական} սլաքները $1\to4$ ($1\to2\to4$ ուղի) և $3\to4$ ($3\to1\to2\to4$ ուղի) են՝ նկատե՛ք,
-որ $3\to2$-ն արդեն առկա է։
+որ $3\to1\to2$ ուղու պահանջած $3\to2$ սլաքն արդեն առկա է։
 
 \textbf{Քայլ 2 - Կիրառենք երեք բաղադրատոմսերը։}
 \begin{align*}
@@ -748,14 +757,14 @@ t(\rho)&=\rho\cup\{(1,4),(3,4)\}
   \node[vtx] (2) at (1.5,1.5) {$2$};
   \node[vtx] (3) at (0,0) {$3$};
   \node[vtx] (4) at (1.5,0) {$4$};
-  \draw[armBlue,thick,->] ([yshift=0.6mm]1.east)--([yshift=0.6mm]2.west);
-  \draw[armBlue,thick,->] ([xshift=-0.6mm]3.north)--([xshift=-0.6mm]1.south);
-  \draw[armBlue,thick,->] (3)--(2);
-  \draw[armBlue,thick,->] ([xshift=0.6mm]2.south)--([xshift=0.6mm]4.north);
-  \draw[armRed,thick,->] ([yshift=-0.6mm]2.west)--([yshift=-0.6mm]1.east);
-  \draw[armRed,thick,->] ([xshift=0.6mm]1.south)--([xshift=0.6mm]3.north);
-  \draw[armRed,thick,->] (2)--(3);
-  \draw[armRed,thick,->] ([xshift=-0.6mm]4.north)--([xshift=-0.6mm]2.south);
+  \draw[armBlue,thick,->] ([yshift=0.9mm]1.east)--([yshift=0.9mm]2.west);
+  \draw[armBlue,thick,->] ([xshift=-0.9mm]3.north)--([xshift=-0.9mm]1.south);
+  \draw[armBlue,thick,->] ([shift={(-0.64mm,0.64mm)}]3.45)--([shift={(-0.64mm,0.64mm)}]2.225);
+  \draw[armBlue,thick,->] ([xshift=0.9mm]2.south)--([xshift=0.9mm]4.north);
+  \draw[armRed,thick,->] ([yshift=-0.9mm]2.west)--([yshift=-0.9mm]1.east);
+  \draw[armRed,thick,->] ([xshift=0.9mm]1.south)--([xshift=0.9mm]3.north);
+  \draw[armRed,thick,->] ([shift={(0.64mm,-0.64mm)}]2.225)--([shift={(0.64mm,-0.64mm)}]3.45);
+  \draw[armRed,thick,->] ([xshift=-0.9mm]4.north)--([xshift=-0.9mm]2.south);
   \node at (0.75,-1.0) {\textbf{$s(\rho)$}՝ $+$հակադարձներ};
 \end{scope}
 \end{tikzpicture}

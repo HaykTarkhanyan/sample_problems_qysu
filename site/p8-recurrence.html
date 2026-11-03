@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 3 3%27%3E%3Crect width=%273%27 height=%271%27 fill=%27%23D90012%27/%3E%3Crect y=%271%27 width=%273%27 height=%271%27 fill=%27%230033A0%27/%3E%3Crect y=%272%27 width=%273%27 height=%271%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գործնական 8 - Ռեկուրենտ առնչություններ</title>
+<meta name="description" content="Դիսկրետ մաթեմատիկա, գործնական 8՝ գծային ռեկուրենտ առնչության լուծում բնութագրիչ հավասարմամբ, ռեկուրենտ առնչության կառուցում երկուական տողեր հաշվելու համար։ Մանրամասն լուծումներ ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script defer src="assets/katex/katex.min.js"></script>
+<script defer src="assets/katex/auto-render.min.js"></script>
+<script defer src="assets/site.js"></script>
+<script defer src="assets/js/p8.js"></script>
+<style>
+  /* p8 only: math letters inside SVG tspans, plot legend, slider labels, binary-string chips */
+  svg tspan.m { font-family: "KaTeX_Math", "Times New Roman", serif; font-style: italic; }
+  .seq-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: .15rem 1.1rem; font-size: .92rem; margin: .3rem 0 .1rem; }
+  .seq-legend .sw { display: inline-block; width: 1.3rem; height: .25rem; border-radius: 2px; vertical-align: middle; margin-right: .4rem; }
+  .widget-controls label { display: inline-flex; align-items: center; gap: .35rem; margin-right: .5rem; }
+  .widget-controls output { font-weight: 700; min-width: 1.7em; }
+  .bs-groups { display: grid; gap: .6rem; margin: .7rem 0 .2rem; }
+  .bs-group { border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 8px; padding: .4rem .6rem .5rem; }
+  .bs-group.g-a { border-left-color: var(--red); }
+  .bs-group.g-b { border-left-color: var(--orange); }
+  .bs-title { font-family: var(--sans); font-size: .9rem; font-weight: 700; margin-bottom: .3rem; }
+  .bs-list { display: flex; flex-wrap: wrap; gap: .25rem; max-height: 14rem; overflow-y: auto; }
+  .bs { font-family: Consolas, "Courier New", monospace; font-size: .88rem; letter-spacing: .05em; line-height: 1.5;
+        border: 1px solid var(--line); border-radius: 5px; padding: 0 .25rem; background: var(--surface); }
+  .bs .pre { background: color-mix(in srgb, var(--blue) 14%, transparent); }
+  .bs .e1 { background: color-mix(in srgb, var(--red) 18%, transparent); }
+  .bs .e0 { background: color-mix(in srgb, var(--orange) 30%, transparent); }
+  .bs .zz { color: var(--red); font-weight: 700; }
+  .chip.bs-p1 { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+  .chip.bs-p2 { border-color: var(--orange); box-shadow: inset 0 0 0 1px var(--orange); }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Դիսկրետ մաթեմատիկա</a>
+  <div class="header-actions">
+    <a class="btn" href="pdf/Practice8_Recurrence_Solutions_ARM.pdf" title="Նույն լուծումները PDF տարբերակով">PDF</a>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գործնական 8</div>
+    <h1>Ռեկուրենտ առնչություններ</h1>
+    <p class="subtitle">Մանրամասն լուծումներ՝ դատողությունները քայլ առ քայլ բացված</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#warmup">Նախապատրաստում</a></li>
+        <li><a href="#p2">Խնդիր 2 - Գծային ռեկուրենտ առնչության լուծում</a></li>
+        <li><a href="#p6">Խնդիր 6 - Ռեկուրենտ առնչության կառուցում հաշվելու համար</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="warmup" open>
+<summary><h2>Նախապատրաստում՝ ի՞նչ է ռեկուրենտ առնչությունը և ի՞նչ է պահանջվում</h2></summary>
+<div class="sec-body">
+<p class="muted">Ընդգրկում է Գործնական 8-ի հանձնարարված խնդիրները՝ 2 և 6։</p>
+<p><strong>Ռեկուրենտ առնչությունը</strong> սահմանում է հաջորդականություն՝ յուրաքանչյուր անդամն
+արտահայտելով <em>նախորդ</em> անդամներով, մի քանի <strong>սկզբնական պայմանների</strong> հետ միասին։ Օրինակ՝
+$a_{n}=a_{n-1}+a_{n-2}$-ը $a_0=a_1=1$ պայմաններով Ֆիբոնաչիի կանոնն է։</p>
+<p>Այս գործնականում հանդիպում է երկու բոլորովին տարբեր տիպի առաջադրանք, և ստորև բերված խնդիրները
+յուրաքանչյուրից մեկական օրինակ են՝</p>
+<ul>
+  <li><strong>Լուծել</strong> ռեկուրենտ առնչությունը - գտնել $a_n$-ի <em>փակ բանաձև</em>, որը չի հենվում
+      նախորդ անդամների վրա (Խնդիր 2)։ Գործիքը <em>բնութագրիչ հավասարումն</em> է։</li>
+  <li><strong>Կառուցել</strong> ռեկուրենտ առնչություն - <em>հաշվարկային</em> հարցը թարգմանել
+      ռեկուրենտ առնչության, ապա կիրառել այն (Խնդիր 6)։ Գործիքը խելացի <em>դեպքերի բաժանումն</em> է։</li>
+</ul>
+<p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
+փորձեք լուծել։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2" open>
+<summary><h2>Խնդիր 2 - Գծային ռեկուրենտ առնչության լուծում</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2</div>
+<p>Լուծել ռեկուրենտ առնչությունը</p>
+$$a_n = 5a_{n-1} - 6a_{n-2},\qquad n&gt;2,$$
+<p>$a_1=2,\ a_2=10$ սկզբնական պայմաններով։ («Լուծել»-ը նշանակում է գտնել $a_n$-ի փակ բանաձևը։)</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Նախ՝ անվանենք կառուցվածքը։ Այս ռեկուրենտ առնչությունը <strong>գծային</strong> է (յուրաքանչյուր $a_i$
+հանդես է գալիս առաջին աստիճանով, ոչ թե $a_i^2$ կամ $a_ia_j$ տեսքով), <strong>համասեռ</strong> է (աջ կողմում
+ոչինչ չի ավելացվում) և ունի <strong>հաստատուն գործակիցներ</strong> ($5$-ը և $-6$-ը երբեք չեն փոխվում
+$n$-ի հետ)։ Հենց այս տեսակի ռեկուրենտ առնչության համար ճիշտ ենթադրությունը երկրաչափական
+հաջորդականությունն է՝ $a_n=r^n$։ Այս ընտրությունը կամայական չէ՝ երեք դիտարկում պարտադրում է այն։</p>
+<p><strong>(i) Ամենապարզ ռեկուրենտ առնչությունն արդեն երկրաչափական է։</strong> Առաջին կարգի $a_n=b\,a_{n-1}$
+կանոնն ամեն քայլում բազմապատկում է նույն $b$ հաստատունով, ուստի</p>
+$$a_n=b\,a_{n-1}=b^2a_{n-2}=\cdots=a_0\,b^{\,n}.$$
+<p>Կրկնվող հաստատուն բազմապատկիչը <em>հենց</em> երկրաչափական աճ է։ Մեր երկրորդ կարգի կանոնը պարզապես
+երկու այդպիսի աճի խառնուրդ է, ուստի սպասում ենք երկրաչափական բաղադրիչներ։</p>
+<p><strong>(ii) Երկրաչափականը միակ ձևն է, որտեղ մեկ քայլ ետ գնալը նշանակում է հաստատունով
+բազմապատկում։</strong> Եթե $a_n=r^n$, ապա $a_{n-1}=\tfrac1r\,a_n$ և $a_{n-2}=\tfrac1{r^2}\,a_n$։
+Հաստատուն գործակիցներով ռեկուրենտ առնչությունը հենց սա է անում՝ այն կապում է անդամը նախորդ
+հարևանների հետ ֆիքսված թվերի միջոցով։ Երկրաչափական հաջորդականությունը կառուցված է հենց այդ
+քայլին համապատասխանելու համար։</p>
+<p><strong>(iii) Այն անվերջ շատ պահանջները վերածում է մեկ հավասարման։</strong> Ռեկուրենտ առնչությունը պետք է
+ճիշտ լինի <em>ամեն</em> $n$-ի համար միաժամանակ, ինչն անվերջ շատ պահանջ է։ Տեղադրելով $a_n=r^n$՝ ամեն
+անդամում ստանում ենք ընդհանուր $r^{\,n-2}$ արտադրիչ, իսկ այն կրճատելուց հետո $n$ ինդեքսն
+ամբողջությամբ անհետանում է՝ մնում է միակ $r^2=5r-6$ հավասարումը։ Այսպիսով՝ մեկ լավ ընտրված $r$
+թիվը բավարարում է կանոնին $3$-րդ, $4$-րդ, $100$-րդ քայլում և այդպես շարունակ՝ միաժամանակ։
+<em>Ահա</em> ենթադրության աշխատելու իրական պատճառը՝ երկրաչափական ձևը միակն է, որը ստիպում է
+հաստատուն գործակիցներով ռեկուրենտ առնչությանն ամեն քայլում ասել ճիշտ նույն բանը։ Համապատասխանող
+$r$-երի արժեքները ռեկուրենտ առնչության մեջ թաքնված աճի տեմպերն են։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Տեղադրենք ենթադրությունը</h3>
+<p>$a_n=r^n$-ը տեղադրենք $a_n=5a_{n-1}-6a_{n-2}$-ի մեջ՝</p>
+$$r^n = 5r^{\,n-1} - 6r^{\,n-2}.$$
+<p>Բաժանենք ամենափոքր $r^{\,n-2}$ աստիճանի վրա (թույլատրելի է, քանի որ $r=0$-ն տալիս է միայն
+տրիվիալ հաջորդականությունը)՝</p>
+$$r^2 = 5r - 6 \quad\Longleftrightarrow\quad \boxed{\,r^2 - 5r + 6 = 0\,}.$$
+<p>Սա <strong>բնութագրիչ հավասարումն</strong> է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Լուծենք այն</h3>
+$$r^2-5r+6=(r-2)(r-3)=0 \quad\Longrightarrow\quad r_1=2,\quad r_2=3.$$
+<p>Գտանք <em>երկու</em> տարբեր երկրաչափական լուծում՝ $2^n$ և $3^n$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Միավորենք դրանք (վերադրում)</h3>
+<p>Քանի որ ռեկուրենտ առնչությունը գծային է և համասեռ, լուծումների <em>ցանկացած գծային</em> կոմբինացիա
+նորից լուծում է։ Երկու տարբեր արմատների դեպքում ընդհանուր լուծումն է</p>
+$$a_n = C\cdot 2^n + D\cdot 3^n,$$
+<p>որտեղ $C,D$-ն հաստատուններ են։ Ունենք ճիշտ երկու անհայտ՝ մեր երկու սկզբնական պայմաններին
+համապատասխանելու համար, և դա պատահականություն չէ։</p>
+<p><strong>Ինչո՞ւ են <em>բոլոր</em> լուծումները $C\cdot2^n+D\cdot3^n$ տեսքի, ոչ թե միայն մի մասը։</strong>
+Ենթադրենք մեկ այլ հաջորդականություն ևս բավարարում է $a_n=5a_{n-1}-6a_{n-2}$-ին և պատահաբար
+համընկնում է մեր բանաձևի հետ երկու հաջորդական ինդեքսում։ Այդ դեպքում նրանք պետք է համընկնեն
+<em>ամենուր</em>՝ յուրաքանչյուր հաջորդ անդամը որոշվում է նախորդ երկուսով (և քանի որ $a_{n-2}$-ի գործակիցը՝ $-6$-ը, զրո չէ,
+կանոնը գործում է նաև հակառակ ուղղությամբ՝ որոշելով նախորդ անդամները)։ Ուստի լուծումը լիովին որոշվում է ցանկացած
+երկու հաջորդական արժեքով, և $C,D$ հաստատունները տալիս են հենց այնքան ազատություն, որքան անհրաժեշտ
+է $a_1$-ին և $a_2$-ին համապատասխանելու համար։ Այդ համապատասխանեցումը միշտ հաջողվում է, և
+միարժեքորեն, քանի որ երկու երկրաչափական բաղադրիչներն անկախ են՝ ստորև $C,D$-ի համար կազմված
+գծային համակարգի որոշիչը $2\cdot 9-3\cdot 4=6\neq 0$ է։ Ընդհանուր դեպքում այս որոշիչը
+$r_1 r_2(r_2-r_1)$ է՝ ոչ զրո հենց այն դեպքում, երբ երկու արմատները տարբեր են և ոչ մեկը $0$ չէ։
+Այստեղ դրանք $2$ և $3$ են, ուստի որոշիչն անկասկած զրո չէ։ (Հավասար արմատների դեպքում որոշիչը
+զրո կդառնար. հենց այդ դեպքի համար է մեթոդի վանդակում բերված ձևափոխված տեսքը։) Երբ $C,D$-ն որոշված
+են, բանաձևը <em>հենց</em> հաջորդականությունն է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Օգտագործենք սկզբնական պայմանները</h3>
+$$\begin{cases}
+a_1=2: & 2C+3D=2,\\[2pt]
+a_2=10: & 4C+9D=10.
+\end{cases}$$
+<p>Առաջին հավասարումը բազմապատկենք $2$-ով և հանենք երկրորդից՝</p>
+$$(4C+9D)-(4C+6D)=10-4 \;\Longrightarrow\; 3D=6 \;\Longrightarrow\; D=2,$$
+<p>ապա $2C+3(2)=2\Rightarrow C=-2$։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 5</span> - Գրենք փակ բանաձևը</h3>
+$$a_n=-2\cdot 2^n+2\cdot 3^n = 2\cdot 3^n - 2^{\,n+1}.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 6</span> - Միշտ ստուգենք</h3>
+$$a_1=2\cdot3-2^2=6-4=2\ \checkmark\qquad
+a_2=2\cdot9-2^3=18-8=10\ \checkmark$$
+$$a_3 \stackrel{\text{բանաձև}}{=} 2\cdot27-2^4=38
+\qquad\text{և}\qquad
+a_3 \stackrel{\text{ռեկուրենտ}}{=} 5\cdot10-6\cdot2=38\ \checkmark$$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\displaystyle a_n = 2\cdot 3^n - 2^{\,n+1}$</div>
+
+<h3>Բանաձևը տեսնելը</h3>
+<p>Հաջորդականությունը երկու երկրաչափական բաղադրիչի տարբերությունն է։ Գերիշխողը $2\cdot3^n$-ն է
+(կապույտ), իսկ $2^{\,n+1}$-ը (կարմիր) ուղղող անդամ է, որի հարաբերական կշիռն արագ նվազում է։ Ուստի
+$a_n$-ի (նարնջագույն) աճը $n$-ի մեծացման հետ գնալով ավելի է նմանվում $2\cdot3^n$-ի աճին։</p>
+
+<div class="widget" id="w-seq">
+  <div class="widget-head">Սկզբնական պայմաններից՝ փակ բանաձև</div>
+  <p class="widget-hint">Փոխեք $a_1$ և $a_2$ սկզբնական արժեքները կամ ընտրեք պատրաստի զույգ։ $C$-ն և $D$-ն
+  ամեն անգամ նորից են որոշվում Քայլ 4-ի համակարգից, իսկ աղյուսակը համեմատում է ռեկուրենտ առնչությամբ
+  քայլ առ քայլ հաշված անդամները փակ բանաձևի արժեքների հետ։ Գրաֆիկում կապույտը $D\cdot 3^n$ բաղադրիչն է,
+  կարմիրը՝ հանվող $-C\cdot 2^n$ բաղադրիչը, իսկ նարնջագույնը՝ $a_n$-ը, որը դրանց տարբերությունն է։
+  Երկարացրեք հաջորդականությունը՝ օգտագործելով $n\le$ սահիչը, և նկատեք, թե որ բաղադրիչն է գերիշխում և ինչի է
+  մոտենում $a_n/a_{n-1}$ հարաբերությունը, հատկապես երբ $D=0$։</p>
+  <div class="widget-controls">
+    <label>$a_1=$ <input type="range" min="-5" max="10" step="1" value="2" data-in="a1" aria-label="a1"> <output data-out="a1">2</output></label>
+    <label>$a_2=$ <input type="range" min="-10" max="30" step="1" value="10" data-in="a2" aria-label="a2"> <output data-out="a2">10</output></label>
+    <label>$n\le$ <input type="range" min="3" max="8" step="1" value="5" data-in="N" aria-label="n max"> <output data-out="N">5</output></label>
+  </div>
+  <div class="chips" data-out="presets"></div>
+  <div class="seq-plot"></div>
+  <div class="seq-legend" data-out="legend"></div>
+  <div class="widget-out" data-out="cd"></div>
+  <div class="table-wrap"><table class="tbl" data-out="table"></table></div>
+  <div class="widget-out" data-out="ratio"></div>
+</div>
+
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$n$</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th><th class="num">6</th></tr></thead>
+<tbody>
+<tr><td>$a_n$</td><td class="num">2</td><td class="num">10</td><td class="num">38</td><td class="num">130</td><td class="num">422</td><td class="num">1330</td></tr>
+<tr><td>$a_n/a_{n-1}$</td><td class="num"></td><td class="num">$5$</td><td class="num">$3{,}80$</td><td class="num">$3{,}42$</td><td class="num">$3{,}25$</td><td class="num">$3{,}15$</td></tr>
+</tbody></table></div>
+
+<p>Նայեք ստորին տողին. հարևան անդամների հարաբերությունը՝ $a_n/a_{n-1}$, մոտենում է $3$-ին՝ մեծ
+բնութագրիչ արմատին։ Մեծ $n$-երի համար $3^n$ անդամը գերակշռում է $2^{\,n+1}$ անդամին, ուստի
+հաջորդականությունն ի վերջո աճում է գրեթե ճիշտ $3^n$-ի պես։ Սա նույն պատկերն է՝ դիտված հակառակ
+կողմից. մեր գտած արմատներն իրականում այն աճի տեմպերն են, որոնք ի սկզբանե թաքնված էին ռեկուրենտ
+առնչության մեջ։</p>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p>Երկրորդ կարգի գծային համասեռ $a_n=p\,a_{n-1}+q\,a_{n-2}$ ռեկուրենտ առնչության համար՝</p>
+<ol>
+  <li>Գրեք $r^2=pr+q$ բնութագրիչ հավասարումը։</li>
+  <li><strong>Երկու տարբեր արմատ</strong> $r_1\neq r_2$՝ ընդհանուր լուծում $a_n=C r_1^n+D r_2^n$։</li>
+  <li><strong>Կրկնակի արմատ</strong> $r_1=r_2=r$՝ ընդհանուր լուծում $a_n=(C+Dn)\,r^n$
+      (լրացուցիչ $n$ արտադրիչն անհրաժեշտ է, քանի որ այս դեպքում $r^n$-ը միայն մեկ լուծում է տալիս)։</li>
+  <li>Գտեք $C,D$-ն երկու սկզբնական արժեքներից, ապա ստուգեք։</li>
+</ol>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p6" open>
+<summary><h2>Խնդիր 6 - Ռեկուրենտ առնչության կառուցում հաշվելու համար</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 6</div>
+<p>$10$ երկարության քանի՞ երկուական տող ($0$-երից և $1$-երից կազմված տողեր) է պարունակում
+<strong>երկու հաջորդական զրո</strong> (այսինքն՝ ինչ-որ տեղ հանդիպում է «$00$» բլոկը)։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>«$00$» <em>պարունակող</em> տողերն ուղղակիորեն հաշվելը դժվար է՝ բլոկը կարող է հայտնվել բազմաթիվ,
+երբեմն իրար վրա ընկնող դիրքերում, և հեշտ է կրկնակի հաշվել այն տողերը, որոնցում այն հանդիպում է
+մեկից ավելի անգամ։</p>
+<p><strong>Լրացման միջոցով հաշվում։</strong> Շատ ավելի հեշտ է հաշվել <em>հակառակը</em>՝ «$00$»
+<strong>չպարունակող</strong> տողերը, և հանել ընդհանուրից՝</p>
+$$\#(\text{պարունակում է }00) \;=\; \underbrace{2^{10}}_{\text{բոլոր տողերը}} \;-\; \#(\text{խուսափում է }00).$$
+<p>Իսկ «$00$-ից խուսափելը» հենց այնպիսի հատկություն է, որը հարմար է ստուգել տողը նշան առ նշան
+կառուցելիս, ուստի այն բնական ձևով նկարագրվում է ռեկուրենտ առնչությամբ։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Սահմանենք այն, ինչ իրականում հաշվում ենք</h3>
+<p>Դիցուք</p>
+$$f(n) = \#\{n \text{ երկարության երկուական տողեր՝ առանց երկու կից } 0\text{-ի}\}.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Գտնենք ռեկուրենտ առնչություն՝ նայելով <em>վերջին</em> նշանին</h3>
+<p>Վերցնենք $n$ երկարության ցանկացած «լավ» տող և նայենք, թե ինչով է այն վերջանում։ Կա ճիշտ երկու
+իրարամերժ դեպք, և յուրաքանչյուր դեպքում տողը ստացվում է ավելի կարճ լավ տողին ֆիքսված
+վերջավորություն կցելով՝</p>
+
+<figure class="fig">
+<svg viewBox="0 0 470 126" width="470" role="img" aria-label="Երկու դեպք՝ վերջում 1 (n-1 երկարության լավ տող և 1) կամ վերջում 0 (n-2 երկարության լավ տող, 1 և 0)">
+  <!-- TikZ decoded at 40 px/cm: x_px = 84 + 40 x, case rows at y = 0 and y = -1.5 cm (px 26 and 86) -->
+  <g class="s-ink" stroke-width="1">
+    <rect x="100" y="9" width="176" height="34" rx="3" class="f-blue-soft"/>
+    <rect x="280.8" y="9" width="32" height="34" rx="3" class="f-red-soft"/>
+    <rect x="100" y="69" width="136" height="34" rx="3" class="f-blue-soft"/>
+    <rect x="240.8" y="69" width="32" height="34" rx="3" class="f-red-soft"/>
+    <rect x="277.6" y="69" width="32" height="34" rx="3" class="f-orange-soft"/>
+  </g>
+  <text x="72" y="30.5" text-anchor="end">վերջ՝ <tspan font-weight="700">1</tspan></text>
+  <text x="188" y="30.5" text-anchor="middle"><tspan class="m">n</tspan>−1 երկ. լավ տող</text>
+  <text x="296.8" y="31" text-anchor="middle" class="mr">1</text>
+  <text x="332.8" y="30.5">→ <tspan class="m">f</tspan>(<tspan class="m">n</tspan>−1) տարբերակ</text>
+
+  <text x="72" y="90.5" text-anchor="end">վերջ՝ <tspan font-weight="700">0</tspan></text>
+  <text x="168" y="90.5" text-anchor="middle"><tspan class="m">n</tspan>−2 երկ. լավ տող</text>
+  <text x="256.8" y="91" text-anchor="middle" class="mr">1</text>
+  <text x="293.6" y="91" text-anchor="middle" class="mr">0</text>
+  <text x="329.6" y="90.5">→ <tspan class="m">f</tspan>(<tspan class="m">n</tspan>−2) տարբերակ</text>
+
+  <text x="228" y="119" text-anchor="middle" class="f-red" style="font-size:12px;font-style:italic">վերջին 0-ից առաջ նշանը պետք է լինի 1, այլապես կստեղծվի «00»</text>
+</svg>
+</figure>
+
+<ul>
+  <li><strong>Վերջանում է $1$-ով</strong>՝ ինչ էլ որ լինի դրանից առաջ՝ կարող է լինել <em>ցանկացած</em>
+      $n-1$ երկարության լավ տող ($1$ ավելացնելը երբեք չի ստեղծում «$00$»)։ Սա տալիս է
+      $f(n-1)$ տող։</li>
+  <li><strong>Վերջանում է $0$-ով</strong>՝ «$00$»-ից խուսափելու համար անմիջապես առջևի նշանը պետք է
+      լինի $1$, ուստի տողը վերջանում է «$10$»-ով։ Ինչ էլ որ լինի դրանից առաջ՝ ցանկացած
+      $n-2$ երկարության լավ տող է («$10$» կցելը նույնպես երբեք չի ստեղծում «$00$»՝ նոր $0$-ի միակ
+      հարևանը $1$-ն է)։ Սա տալիս է $f(n-2)$ տող։</li>
+</ul>
+<p>Երկու դեպքերն իրարամերժ են և միասին ընդգրկում են բոլոր լավ տողերը, ուստի</p>
+$$\boxed{\,f(n) = f(n-1) + f(n-2),\qquad n\ge 3\,}.$$
+<p>Սա <strong>Ֆիբոնաչիի կանոնն</strong> է՝ հաշվարկն ինքն է այն բացահայտում։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Բազային դեպքեր (փոքր տողերը հաշվել ձեռքով)</h3>
+$$\begin{aligned}
+n=1:\ \{\,0,\ 1\,\} &\Rightarrow f(1)=2,\\
+n=2:\ \{\,01,\ 10,\ 11\,\}\ (\text{ոչ } 00) &\Rightarrow f(2)=3,\\
+n=3:\ \{\,010,\ 011,\ 101,\ 110,\ 111\,\} &\Rightarrow f(3)=5.
+\end{aligned}$$
+<p>(Նկատենք՝ $5=3+2$, ինչը հաստատում է ռեկուրենտ առնչությունը։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Կիրառենք ռեկուրենտ առնչությունը մինչև $n=10$</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$n$</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th><th class="num">6</th><th class="num">7</th><th class="num">8</th><th class="num">9</th><th class="num">10</th></tr></thead>
+<tbody>
+<tr><td>$f(n)$</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">13</td><td class="num">21</td><td class="num">34</td><td class="num">55</td><td class="num">89</td><td class="num"><strong>144</strong></td></tr>
+</tbody></table></div>
+<p>Այսպիսով՝ կա $10$ երկարության $f(10)=144$ տող, որը <em>չի պարունակում</em> «$00$»։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 5</span> - Լրացման հաշվարկ</h3>
+$$\#(\text{պարունակում է } 00) = 2^{10} - f(10) = 1024 - 144 = 880.$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Փոքր դեպքով՝ $n=3$-ի համար բանաձևը տալիս է $2^3-f(3)=8-5=3$, և իրոք «$00$»
+պարունակող $3$ երկարության տողերը ճիշտ երեքն են՝ $000,\ 001,\ 100$։ Իսկ $n=10$-ի համար բոլոր $1024$
+տողերի ուղիղ համակարգչային թվարկումը նույնպես տալիս է $880$։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$10$ երկարության $880$ երկուական տող պարունակում է երկու հաջորդական զրո։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Երկու փոխանցելի հնարք՝</strong></p>
+<ol>
+  <li><em>Լրացման միջոցով հաշվում</em> - երբ «առնվազն մեկ անգամ հանդիպում է վատ բլոկը» պայմանը
+      խճճված է, հաշվեք դրանից զերծ տողերը և հանեք ընդհանուրից։</li>
+  <li><em>Ըստ վերջին նշանի դեպքերի բաժանում</em> - արգելված բլոկից խուսափող տողերի ռեկուրենտ
+      առնչությունը կառուցելու համար դեպքերը բաժանեք ըստ տողի վերջի՝ յուրաքանչյուր դեպքում
+      ավելի կարճ վավեր տողին կցվում է ֆիքսված վերջավորություն։</li>
+</ol>
+</div>
+
+<h3>Դեպքերի բաժանումը՝ իրական տողերի վրա</h3>
+<p>Ստորև Քայլ 2-ի երկու դեպքը երևում է իրական տողերի վրա, իսկ ռեկուրենտ առնչության արդյունքը
+համեմատվում է ուղիղ թվարկման հետ։</p>
+
+<div class="widget" id="w-strings">
+  <div class="widget-head">Լավ տողերը՝ ըստ վերջին նշանի</div>
+  <p class="widget-hint">Ընտրեք $n$ երկարությունը սահիչով կամ $f(n)$ կոճակներով։ Ներքևում թվարկված են
+  $n$ երկարության բոլոր լավ տողերը (առանց «$00$»-ի)՝ բաժանված Քայլ 2-ի երկու դեպքի. կապույտ մասն
+  ավելի կարճ լավ տող է, իսկ կարմիր $1$-ը և նարնջագույն $0$-ն ֆիքսված վերջավորությունն են։ Նկատեք, որ
+  խմբերի չափերը նախորդ երկու $f$ արժեքներն են (կարմիր և նարնջագույն շրջանակով կոճակները)։
+  $n=3$-ի դեպքում «$00$» պարունակող տողերը ճիշտ Ստուգման երեք տողերն են։</p>
+  <div class="widget-controls">
+    <label>$n=$ <input type="range" min="1" max="10" step="1" value="3" data-in="n" aria-label="n"> <output data-out="n">3</output></label>
+    <button class="btn" type="button" data-act="bad" aria-pressed="false">Ցույց տալ «00» պարունակողները</button>
+  </div>
+  <div class="chips" data-out="fseq"></div>
+  <div class="widget-out" data-out="summary"></div>
+  <div class="bs-groups" data-out="groups"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թերթիկներ">
+        <a class="btn" href="p7-partitions.html">← Գործնական 7</a>
+        <a class="btn" href="index.html">Բոլոր թերթիկները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Լուծումները գրվել են արհեստական բանականության օգնությամբ, իսկ թվային պատասխանները ստուգվել են
+  համակարգչային թվարկմամբ։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

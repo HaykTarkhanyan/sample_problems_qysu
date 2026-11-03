@@ -265,7 +265,9 @@ $$D=\{\,\{1,2\},\,3,\,4\,\},\qquad E=\{\,\{1,2\},\,3,\,4,\,5\,\}.$$
 Այդ դեպքում $C\subset D$ ($C$-ն ամբողջությամբ $D$-ում է, և $4\in D\setminus C$) և $D\subset E$ (և
 $5\in E\setminus D$)։ Երկուսն էլ խիստ։ \checkmark
 
-\textbf{Շղթան՝ $\in$-ը և $\subset$-ը տարբեր կերպ գծված։} Ներդրումը (մեկ օվալ/արկղ մյուսի ներսում)
+\textbf{Շղթան՝ $\in$-ը և $\subset$-ը տարբեր կերպ գծված։} Այստեղ, ի տարբերություն Խնդիր 7-ի արկղերի, օվալներն ու արկղերը \emph{տիրույթներ} են,
+որոնց ներսում, ինչպես Վեննի դիագրամում, ընկած են բազմության տարրերը (միակ բացառությունը $C$-ի ներսի
+$B$ օվալն է, որը մեկ տարր է)։ Ներդրումը (մեկ օվալ/արկղ մյուսի ներսում)
 նշանակում է $\subseteq$. բազմությունը՝ որպես մեկ \emph{առանձին տարր} ցանկում, նշանակում է $\in$։ Միակ
 $\in$ օղակն այն է, որ $B$-ն հանդես է գալիս որպես $C$-ի մեկ տարր՝
 
@@ -296,8 +298,8 @@ $\in$ օղակն այն է, որ $B$-ն հանդես է գալիս որպես $C
 \node[anchor=north east] at (D.north east) {$D$};
 \node[bx, fill=armOrange!10, minimum width=3.2cm, minimum height=1.05cm] (C) at (-0.75,-0.18) {\scriptsize $\{\,B,\,3\,\}$};
 \node[anchor=north east] at (C.north east) {$C$};
-\node[anchor=west] at (2.6,0.35) {\scriptsize $4\in D\setminus C$};
-\node[anchor=west] at (2.6,-0.35) {\scriptsize $5\in E\setminus D$};
+\node[anchor=west] at (3.25,0.35) {\scriptsize $4\in D\setminus C$};
+\node[anchor=west] at (3.25,-0.35) {\scriptsize $5\in E\setminus D$};
 \node[anchor=north] at (0,-1.25) {$C\subset D\subset E$ (ներդրում, յուրաքանչյուրն ավելացնում է մեկ տարր)};
 \end{tikzpicture}
 \end{center}
@@ -337,7 +339,7 @@ $C\setminus(A\cup B)$ բազմությունները։
 տարբերությունը՝ «պահել, ապա հեռացնել»։ Դրանք թվային առանցքից կարդալը պատասխաններն ակնհայտ է դարձնում։
 \end{ideabox}
 
-\textbf{Քայլ 1 - Երկու հիմնական միավորումները։}
+\textbf{Քայլ 1 - Հիմնական միավորումը։}
 $A\cup B$-ն բոլոր դրական զույգերն են բոլոր դրական կենտերի հետ միասին, այսինքն՝ \emph{բոլոր դրական ամբողջ
 թվերը}՝ $A\cup B=\Z^{+}=\{1,2,3,\dots\}$։
 
@@ -435,20 +437,20 @@ $$P_1\Rightarrow P_2\Rightarrow P_3\Rightarrow P_4\Rightarrow P_1.$$
 \textbf{Տող 1 - ցիկլը
 $A\subseteq B\Rightarrow A\cup B=B\Rightarrow A\cap B=A\Rightarrow \overline{B}\subseteq\overline{A}\Rightarrow A\subseteq B$.}
 
-\begin{enumerate}[label=(\alph*),leftmargin=1.2cm]
-\item $A\subseteq B\Rightarrow A\cup B=B$.\\
+\begin{enumerate}[leftmargin=1.2cm]
+\item[(ա)] $A\subseteq B\Rightarrow A\cup B=B$.\\
 Միշտ $B\subseteq A\cup B$։ Հակառակը, եթե $x\in A\cup B$, ապա $x\in A$ կամ $x\in B$. առաջին դեպքում
 $A\subseteq B$-ն տալիս է $x\in B$, երկրորդում $x\in B$ արդեն։ Ուստի $A\cup B\subseteq B$։ Երկու
 պարունակումները տալիս են $A\cup B=B$։
-\item $A\cup B=B\Rightarrow A\cap B=A$.\\
+\item[(բ)] $A\cup B=B\Rightarrow A\cap B=A$.\\
 $A\cup B=B$-ից և $A\subseteq A\cup B$-ից ստանում ենք $A\subseteq B$։ Ապա ցանկացած $x\in A$-ի համար նաև
 $x\in B$, ուստի $x\in A\cap B$. հետևաբար $A\subseteq A\cap B$։ Հակառակը՝ $A\cap B\subseteq A$, միշտ
 ճիշտ է։ Ուստի $A\cap B=A$։
-\item $A\cap B=A\Rightarrow \overline{B}\subseteq\overline{A}$.\\
+\item[(գ)] $A\cap B=A\Rightarrow \overline{B}\subseteq\overline{A}$.\\
 $A\cap B=A$-ն ասում է $A\subseteq B$ ($A$-ի յուրաքանչյուր տարր $A\cap B$-ում է, հետևաբար $B$-ում)։ Հիմա
 վերցնենք $x\in\overline{B}$, այսինքն՝ $x\notin B$։ Եթե $x$-ը $A$-ում լիներ, ապա $x\in B$՝ $A\subseteq B$-ով՝
 հակասություն։ Ուստի $x\notin A$, այսինքն՝ $x\in\overline{A}$։ Այսպիսով $\overline{B}\subseteq\overline{A}$։
-\item $\overline{B}\subseteq\overline{A}\Rightarrow A\subseteq B$.\\
+\item[(դ)] $\overline{B}\subseteq\overline{A}\Rightarrow A\subseteq B$.\\
 Այստեղ $A\subseteq B$-ն ստացվում է $\overline{B}\subseteq\overline{A}$ պայմանից կոնտրապոզիցիայով։ Վերցնենք $x\in A$։ Ապա $x\notin\overline{A}$. քանի որ
 $\overline{B}\subseteq\overline{A}$, նաև $x\notin\overline{B}$, այսինքն՝ $x\in B$։ Այսպիսով
 $A\subseteq B$։
@@ -464,8 +466,8 @@ A\cap B=\varnothing
 &\ \Longleftrightarrow\ \bigl(x\in A\Rightarrow x\in\overline{B}\bigr)
 \ \Longleftrightarrow\ A\subseteq\overline{B}.
 \end{aligned}$$
-Միջին «$x\in A\Rightarrow x\notin B$» հետևությունը սիմետրիկ է $A,B$-ի նկատմամբ (այն հավասար է
-«$x\in B\Rightarrow x\notin A$»-ին, այսինքն՝ $x\in B\Rightarrow x\in\overline{A}$, այսինքն
+Միջին «$x\in A\Rightarrow x\notin B$» հետևությունը սիմետրիկ է $A,B$-ի նկատմամբ (այն համարժեք է
+«$x\in B\Rightarrow x\notin A$»-ին, այսինքն՝ $x\in B\Rightarrow x\in\overline{A}$, այսինքն՝
 $B\subseteq\overline{A}$)։ Ուստի բոլոր երեքը համարժեք են։ $\blacksquare$
 
 \textbf{Տող 3 - $A\cup B=U\Leftrightarrow \overline{A}\subseteq B\Leftrightarrow \overline{B}\subseteq A$.}\\
@@ -549,13 +551,16 @@ $\overline{B}\subseteq A$ է։ Ուստի բոլոր երեքը համարժեք
 \node[anchor=east, font=\footnotesize\bfseries] at (4.6,0) {Տող 3՝};
 \begin{scope}[shift={(6.6,0)}]
   \fill[armOrange!38] (-1.15,-0.95) rectangle (1.15,0.95);
-  \draw[armRed!75!black, thick] (-0.42,0) circle (0.62);
-  \draw[armBlue!75!black, thick] (0.42,0) circle (0.62);
-  \node[armRed!75!black, font=\tiny] at (-0.6,0) {$A$};
-  \node[armBlue!75!black, font=\tiny] at (0.6,0) {$B$};
+  \begin{scope}
+    \clip (-1.15,-0.95) rectangle (1.15,0.95);
+    \draw[armRed!75!black, thick] (-0.5,0) ellipse [x radius=1.1, y radius=1.35];
+    \draw[armBlue!75!black, thick] (0.5,0) ellipse [x radius=1.1, y radius=1.35];
+  \end{scope}
+  \node[armRed!75!black, font=\tiny] at (-0.85,0) {$A$};
+  \node[armBlue!75!black, font=\tiny] at (0.85,0) {$B$};
   \draw (-1.15,-0.95) rectangle (1.15,0.95);
   \node[anchor=north east, font=\tiny] at (1.1,0.9) {$U$};
-  \node[anchor=south, align=center] at (0,-1.55) {$A\cup B=U$ (ծածկում է ողջ $U$-ն՝ սխեմատիկ)};
+  \node[anchor=south, align=center] at (0,-1.55) {$A\cup B=U$ (ծածկում է ողջ $U$-ն)};
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -775,9 +780,9 @@ $(b,a)$-ում)՝ ընկնում են \emph{տարբեր} կետերի վրա՝ 
 \end{scope}
 \end{tikzpicture}
 \end{center}
-Կարմիր և կապույտ կետերի բազմություններն անկյունագծի նկատմամբ իրար հայելային են։ $S\times T$
+Կարմիր և կապույտ կետերի բազմություններն անկյունագծի նկատմամբ իրար հայելային են։ Ոչ դատարկ $S\times T$
 ուղղանկյունը համընկնում է իր հայելային $T\times S$ պատկերի հետ միայն այն դեպքում, երբ կողմերի
-բազմությունները նույնն են, ուստի $A\times B=B\times A$-ն հնարավոր է միայն $A=B$-ի դեպքում։
+բազմությունները նույնն են, ուստի ոչ դատարկ $A,B$-ի համար $A\times B=B\times A$-ն հնարավոր է միայն $A=B$-ի դեպքում։
 
 \answer{Ոչ դատարկ $A,B$-ի համար՝ $A\times B=B\times A\Rightarrow A=B$, ապացուցված երկու պարունակումներով։
 Ոչ դատարկությունն անհրաժեշտ է՝ $A=\varnothing$, $B=\{1\}$ հակաօրինակ է առանց դրա։}
@@ -807,10 +812,10 @@ $A\subseteq B$ և $B\subseteq A$ առանձին («վերցրեք կամայակ
 
 \begin{ideabox}
 Արտադրյալի յուրաքանչյուր տարր կարգավորված զույգ է $(x,y)$, և «$(x,y)\in X\times Y$»-ն պարզապես
-«$x\in X$ \emph{և} $y\in Y$» կոնյունկցիան է։ Ուստի հենց որ գրում ենք $(x,y)$ և բացում ենք երկու կողմերը
+«$x\in X$ \emph{և} $y\in Y$» կոնյունկցիան է։ Ուստի հենց որ գրում ենք $(x,y)$ և բացում ենք երկու կողմերն
 առանձին $x$-ի և $y$-ի մասին պնդումների, յուրաքանչյուր նույնություն դառնում է ասույթների տրամաբանության
 փոքրիկ կտոր՝ $\cup$-ն «կամ» է $y$-մասի վրա, $\cap$-ն «և», $\setminus$-ը «և ոչ», իսկ ֆիքսված $x\in A$
-արտադրիչը պարզապես անփոփոխ ուղեկցում է։ Ապացուցենք (1), (3), (5)-ը այս կարգավորված-զույգ ${\iff}$
+արտադրիչը պարզապես անփոփոխ ուղեկցում է։ Ապացուցենք (1), (3), (5)-ն այս կարգավորված-զույգ ${\iff}$
 մեթոդով. (2), (4), (6)-ը \emph{նույն} ապացույցներն են արտադրյալը մյուս կողմում՝ փոխելով կոորդինատների
 դերերը։
 \end{ideabox}
@@ -846,7 +851,8 @@ $y\notin C$-ի։ Հետևաբար սա $x\in A$ և $y\in B$ և $y\notin C$ է՝ 
 բազմությունները հավասար են։ $\blacksquare$
 
 \textbf{(2), (4), (6) - հայելային պատկերները։}
-Սրանք (1), (3), (5)-ն են $A$ փոփոխական արտադրիչը \emph{առաջին} կոորդինատ տեղափոխած։ Կիրառենք նույն
+Սրանք (1), (3), (5)-ն են՝ փոփոխվող արտադրիչը (${B\cup C}$, ${B\cap C}$ կամ ${B\setminus C}$)
+\emph{առաջին} կոորդինատ տեղափոխած, իսկ $A$-ն՝ երկրորդ։ Կիրառենք նույն
 փաստարկը $(y,x)$ զույգի վրա $(y,x)\in X\times A\iff y\in X$ և $x\in A$-ով. ֆիքսված մասն այժմ $x\in A$ է
 երկրորդ դիրքում, և $\cup,\cap,\setminus$-ը բաշխվում են $y$-մասի վրա ճիշտ ինչպես առաջ։ Կոնկրետ՝
 \begin{align*}
