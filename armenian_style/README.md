@@ -8,9 +8,10 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
 |------|------------|
 | `GUIDE.md` | The rules: top-10 summary, then each rule as wrong -> right with reason, confidence and evidence, ordered by how often the mistake appears in LLM text. Start here. |
 | `POLISH_CHECKLIST.md` | The order in which to polish a text (lint, terms, negation, calques, rhythm, final check). |
-| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 35 open points (A1-A35), most impactful first, each answerable in a few words. |
+| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 36 points (A1-A36), most impactful first, each answerable in a few words. A status table at the top shows which are settled by sources (10) and which are still open (26, of which 8 are narrowed). |
+| `SOURCE_FINDINGS.md` | What the Language Committee recommendations, the ministry textbooks «Հայոց լեզու 7/11» and two academic sources say about each question, with citations; new rules from those sources. Added 2026-11-10. |
 | `GLOSSARY_REPORT.md` | Review of `glossary_Apr.csv` (read-only): 20 findings with row numbers and severity. |
-| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (39 cases). Not wired into CI or `check_site.mjs`. |
+| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (66 cases). Not wired into CI or `check_site.mjs`. |
 | `check_glossary.py` | Mechanical checks on the glossary CSV: `python -I armenian_style/check_glossary.py`. |
 | `_sources/` | Gitignored. Downloaded reference texts, my own paragraphs, analysis scripts and their outputs (see below). |
 
@@ -44,10 +45,11 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
 
 ## What failed or was not checked
 
-- **No official style source found online.** Searches for Language Committee (langcom.am) or NAS
-  Institute of Language guidance on «չ-/ոչ», the ե/ո article question, «հանդիսանալ» and
-  «իրենից ներկայացնել» returned only academic PDFs with garbled text. Those rules rest on UD,
-  Wiktionary, the glossary and corpus counts, and are marked accordingly.
+- **No official style source found online (first pass).** Searches for Language Committee
+  (langcom.am) or NAS Institute of Language guidance returned only academic PDFs with garbled text.
+  Superseded on 2026-11-10: the Committee recommendations (Wikipedia mirror), the ministry textbooks
+  and arar.sci.am sources were read; see `SOURCE_FINDINGS.md`. «հանդիսանալ» and «իրենից
+  ներկայացնել» are still not covered by any of them.
 - **A 2017 YSU article on punctuation** (Sargsyan) came back as an unreadable binary PDF; only its
   search abstract is used. The fetched copy was saved by the tool outside the repo and was not opened.
 - **The lecture/exercise PDFs do not extract as text.** `pdftotext` cannot open the Unicode paths on
@@ -66,3 +68,7 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
   pages); on the unpolished `discrete/solutions/Practice*_Solutions_ARM.tex` it reports 168 (380 with
   the answer keys and combined files). No false positives were left in either set after fixing three
   markup-cleaning bugs that showed up on the first run (TikZ `;`, `}։`, HTML tags gluing words).
+  Rerun 2026-11-10 with the source-backed rules (`article-n-before-yeo`, `qmark-on-aux`,
+  `mark-on-schwa`, `u-capital`): polished sheets + `site/discrete` + `p*.js` give 18 errors (10
+  `article-before-vowel`, 8 `article-n-before-yeo`, all genuine after adding «առնվազն» to the
+  natural-ն list). `site/probability/*.html`, `w10.js` and `w11.js` give 0.

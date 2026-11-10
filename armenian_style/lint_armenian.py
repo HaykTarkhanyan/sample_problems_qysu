@@ -19,14 +19,26 @@ ERROR rules are mechanical with a low false-positive rate on this repo's text:
   space-before-stop     a space between a word and ։                               [P1]
   mixed-script          one word mixing Armenian with Latin/Cyrillic letters (look-alikes: o/օ, h/հ, n/ո, u/ս)
   che-adjective         չ glued to an adjective/adverb from a closed list (չլավ -> ոչ լավ / վատ)   [N1]
-  article-before-vowel  definite -ը directly before a word starting with ա է ը ի օ ու
-                        (house rule: -ն there; ե/ո/և-initial words are NOT checked, see QUESTIONS A2) [A1]
+  article-before-vowel  definite -ը directly before a word starting with ա է ը ի օ ու, or before the
+                        auxiliaries եմ ենք եք են (said with է)  (house rule: -ն there)      [A1]
+  article-n-before-yeo  article -ն on a consonant-final word (or a symbol whose spoken name ends in a
+                        consonant: $x$, $f$, $n$, ...) directly before a word starting with ե, ո (not
+                        ու) or the conjunction և; they start with the sounds յ/վ, so -ը is required
+                        (textbook «Հայոց լեզու 7», p. 27: «Արամն եկավ», «Արամն որոշեց» are wrong).
+                        Auxiliaries եմ ես ենք եք են are exempt («տարրերն են»).          [A1, SOURCE_FINDINGS]
+  qmark-on-aux          ՞ on a positive auxiliary (քննարկել ե՞ք -> քննարկե՞լ եք; չե՞ք is fine)
+                        (Language Committee «Հարցական»)                                  [P2]
+  mark-on-schwa         ՞ ՛ ՜ right after ը (the article is never stressed: խո՞սքը, not խոսքը՞)
+                        (Language Committee «Հարցական», «Շեշտ»)                         [P2]
+  u-capital             ՈՒ before a lowercase letter (Ուջան) or Ու inside an all-caps word (ՏՈՒՆ)
+                        (Language Committee «Ու»)                                         [P5]
 
 STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
   calque phrases (հանդիսանում է, իրենից ներկայացնում է, Փոխանցելի տեխնիկա, հարկադրել, աշխատում է
   for "works", Ահա ..., կարևոր է նշել, հեշտ է տեսնել, պետք է նշել), filler (պարզապես, իրականում),
   redundant «մենք», passive «... կողմից», «ոչ մի / ոչինչ / երբեք» sentences with no negative verb,
-  and per-file density of «Ուստի» / «հենց» / sentence-initial «Սա».
+  «արդյունքում» (Russian «в результате»; Committee «Արդյունքում»), «իրականացնել» (overused;
+  Committee «Իրականացնել, կատարել, անել»), and per-file density of «Ուստի» / «հենց» / sentence-initial «Սա».
 """
 import re
 import sys
@@ -34,7 +46,18 @@ from pathlib import Path
 
 ARM = "\u0531-\u0556\u0561-\u0587"  # Armenian LETTERS only (U+055A-055F are punctuation: \u055b \u055c \u055d \u055e)
 VOWELS = "աեէըիոօԱԵԷԸԻՈՕև"
-CLEAR_VOWEL_START = r"(?:[աէըիօԱԷԸԻՕ]|[Ոո]ւ)"
+# word starts with a vowel SOUND: ա է ը ի օ ու, or an auxiliary եմ/ենք/եք/են (said էմ, էնք, ...).
+# «ես» is left out: it is also the pronoun "I" (said յէս).
+CLEAR_VOWEL_START = rf"(?:[աէըիօԱԷԸԻՕ]|[Ոո]ւ|(?:եմ|ենք|եք|են)(?![{ARM}]))"
+AUX = {"եմ", "ես", "ենք", "եք", "են"}
+# consonant letters that can precede a final article -ն (յ and ւ left out: այն, միայն, նույն, տուն are not articles)
+CONS_BEFORE_N = "բգդզթժլխծկհձղճմնշչպջռսվտրցփքֆ"
+# words whose final consonant + ն is part of the word, not an article
+NATURAL_N = {"մանրամասն", "ինքն", "երբեմն", "ուրեմն", "այլն", "ընդհակառակն", "դառն", "լեռն", "անձն",
+             "գառն", "բեռն", "ձեռն", "մատն", "առնվազն"}
+N_BEFORE_YEO = re.compile(rf"(?<![{ARM}])([{ARM}]*[{CONS_BEFORE_N}]ն)[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
+MATH_N_BEFORE_YEO = re.compile(rf"(?:\$([^$]{{1,24}})\$|\\\((.{{1,24}}?)\\\))-ն[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
+LATIN_CONS_NAMES = set("fhlmnrsxyzFHLMNRSXYZ")  # էֆ աշ էլ էմ էն էր էս իքս իգրեկ զետ; j is ambiguous (ժի / յոտ)
 # adjectives / adverbs that must be negated with «ոչ», not glued «չ» (closed list, extend with care)
 CHE_ADJ = ("լավ վատ դատարկ զրոյական բացասական դրական մեծ փոքր հավասար ճիշտ սխալ վերջավոր անվերջ կենտ զույգ "
            "պարզ ինյեկտիվ սյուրյեկտիվ բիյեկտիվ սիմետրիկ ռեֆլեքսիվ փոխանցական գծային անկախ կախյալ "
@@ -54,21 +77,25 @@ ERROR_RULES = [
     ("curly-quote", re.compile("[\u201c\u201d\u2018\u2019\u201e]")),
     ("space-before-stop", re.compile(rf"[{ARM}0-9)] +\u0589")),
     ("che-adjective", CHE_RE),
+    ("mark-on-schwa", re.compile("\u0568[\u055e\u055b\u055c]")),
+    ("u-capital", re.compile("\u0548\u0552[\u0561-\u0586]|\u0548\u0582(?=[\u0531-\u0556])|(?<=[\u0531-\u0556])\u0548\u0582")),
 ]
 
 STYLE_RULES = [
     ("calque-handisanal", re.compile(r"հանդիսան")),
-    ("calque-irenic-nerkayacnel", re.compile(r"իրենից ներկայացն")),
+    # «իրենից ներկայացնում է» (A28) and «Ահա» (A12) are allowed: owner / sources, 2026-11-10
     ("calque-transferable-technique", re.compile(r"Փոխանցելի տեխնիկա")),
     ("calque-force", re.compile(r"հարկադր")),
     ("calque-works", re.compile(r"(?<![\u0531-\u0587])(?:չի |չեն )?աշխատ(?:ում|ի|եց|ող)(?![\u0531-\u0587])")),
-    ("calque-here-is", re.compile(r"(?<![\u0531-\u0587])Ահա(?![\u0531-\u0587])")),
+    # removed (A12, «Ահա» is fine): ("calque-here-is", re.compile(r"(?<![\u0531-\u0587])Ահա(?![\u0531-\u0587])")),
     ("filler-important-to-note", re.compile(r"[Կկ]արևոր է (?:նշել|հասկանալ|նկատել)|[Պպ]ետք է նշել")),
     ("filler-easy-to-see", re.compile(r"[Հհ]եշտ է (?:տեսնել|նկատել|ստուգել)")),
     ("filler-simply", re.compile(r"պարզապես")),
     ("filler-actually", re.compile(r"իրականում")),
     ("redundant-menq", re.compile(r"(?<![\u0531-\u0587])[Մմ]ենք(?![\u0531-\u0587])")),
     ("passive-koxmic", re.compile(r"(?<![\u0531-\u0587])կողմից(?![\u0531-\u0587])")),
+    ("calque-ardyunqum", re.compile(rf"(?<![{ARM}])[Աա]րդյունքում(?![{ARM}])")),
+    ("overuse-irakanacnel", re.compile(rf"(?<![{ARM}])[Իի]րականաց")),
 ]
 DENSITY = [("density-usti", re.compile(r"(?<![\u0531-\u0587])[Ոո]ւստի(?![\u0531-\u0587])"), 30),
            ("density-henc", re.compile(r"(?<![\u0531-\u0587])հենց(?![\u0531-\u0587])"), 25),
@@ -118,6 +145,45 @@ def article_hits(line):
     return hits
 
 
+def symbol_name_ends_in_consonant(tok):
+    """How a short formula is read aloud: True if its spoken name ends in a consonant ($x$ իքս,
+    $f$ էֆ, $x_1$ ... մեկ), False if in a vowel ($A$ ա, $B$ բե, $0$ զրո), None if unknown
+    (anything longer than a letter/number with one subscript, j, numbers ending in 2 or 9; see A22)."""
+    tok = re.sub(r"\\(?:mathbf|mathrm|mathit|mathcal|bar|hat|tilde|overline)\{([^{}]*)\}", r"\1", tok.strip())
+    tok = re.sub(r"'+|\^\{?\\prime\}?", "", tok)
+    m = re.fullmatch(r"([A-Za-z]|\d+)(?:_\{?([A-Za-z]|\d+)\}?)?", tok)
+    if not m:
+        return None
+    last = m.group(2) or m.group(1)
+    if last.isdigit():
+        if last == "0":
+            return False
+        return None if last[-1] in "29" else True
+    if last in "jJ":
+        return None
+    return last in LATIN_CONS_NAMES
+
+
+def article_n_hits(line, raw):
+    """-ն after a consonant-final word or symbol right before a ե/ո/և word (not an auxiliary)."""
+    hits = []
+    for m in N_BEFORE_YEO.finditer(line):
+        if m.group(1).lower() in NATURAL_N or m.group(2) in AUX:
+            continue
+        hits.append(f"{m.group(1)} {m.group(2)}")
+    for m in MATH_N_BEFORE_YEO.finditer(raw):
+        tok = m.group(1) if m.group(1) is not None else m.group(2)
+        if m.group(3) in AUX or not symbol_name_ends_in_consonant(tok):
+            continue
+        hits.append(f"{m.group(0)}")
+    return hits
+
+
+def qmark_on_aux(line):
+    return [w for w in re.findall(rf"[{ARM}\u055e]+", line)
+            if "\u055e" in w and w.replace("\u055e", "") in AUX | {"է", "էի", "էիր", "էր", "էինք", "էիք", "էին"}]
+
+
 def lint_text(text, suffix=".txt", style=False):
     """Return list of (line_no, level, rule, snippet)."""
     out = []
@@ -142,6 +208,10 @@ def lint_text(text, suffix=".txt", style=False):
             out.append((i, "ERROR", "mixed-script", w))
         for h in article_hits(line):
             out.append((i, "ERROR", "article-before-vowel", f"{h}  (-> -ն)"))
+        for h in article_n_hits(line, raw):
+            out.append((i, "ERROR", "article-n-before-yeo", f"{h}  (-> -ը)"))
+        for w in qmark_on_aux(line):
+            out.append((i, "ERROR", "qmark-on-aux", f"{w}  (put ՞ on the main verb or the questioned word)"))
         if style:
             for rule, rx in STYLE_RULES:
                 for m in rx.finditer(line):
@@ -198,6 +268,33 @@ def selftest():
         (r"\textcolor{armRed}{ավելացված}", ".tex", None),     # colour name is not glued to the word
         ("Բացել<span>PDF</span>", ".html", None),             # tags separate words
         ("A՝ բազմություն", ".txt", None),                      # ՝ is punctuation, not a letter
+        # A1 settled by source (SOURCE_FINDINGS.md): -ը before ե/ո/և, -ն before auxiliaries
+        ("Արամն եկավ։", ".txt", "article-n-before-yeo"),       # textbook 7, p. 27: wrong
+        ("Արամն որոշեց։", ".txt", "article-n-before-yeo"),     # textbook 7, p. 27: wrong
+        ("Արամը եկավ։", ".txt", None),
+        ("Բազմությունն և նրա տարրերը", ".txt", "article-n-before-yeo"),
+        ("Տարրերն են՝ 1 և 2։", ".txt", None),                  # auxiliary: -ն is right
+        ("Տարրերը են 1 և 2", ".txt", "article-before-vowel"),  # auxiliary starts with the sound է
+        ("Առուն երկար է։", ".txt", None),                      # vowel-final word: -ն always
+        ("Ֆունկցիան որոշված է։", ".txt", None),
+        ("Այն և միայն այն դեպքում", ".txt", None),             # այն is not an article form
+        ("Արամն ու Անին", ".txt", None),                       # ու is a vowel
+        ("ուրեմն որոշենք", ".txt", None),                      # natural -մն word
+        ("առնվազն երկու տարր", ".txt", None),                  # natural -զն word (repo regression)
+        ("$x$-ն և $y$-ը", ".tex", "article-n-before-yeo"),     # x = իքս
+        ("$f$-ն ոչ միակն է", ".tex", "article-n-before-yeo"),  # f = էֆ
+        ("$x_1$-ն են", ".tex", None),                           # auxiliary
+        ("$B$-ն որպես $C$-ի տարր", ".tex", None),               # B = բե
+        ("$(1,0)$-ն և", ".tex", None),                          # unknown reading: not flagged
+        # punctuation rules from the Language Committee
+        ("Քննարկել ե՞ք հարցը։", ".txt", "qmark-on-aux"),
+        ("Քննարկե՞լ եք հարցը։", ".txt", None),
+        ("Դեռ չե՞ք եկել։", ".txt", None),                       # negative auxiliary takes ՞
+        ("Խոսքը՞ է այդպես։", ".txt", "mark-on-schwa"),
+        ("Խո՞սքը", ".txt", None),
+        ("ՈՒջան", ".txt", "u-capital"),
+        ("ՏՈւՆ", ".txt", "u-capital"),
+        ("Ուջան և ՏՈՒՆ", ".txt", None),
     ]
     style_cases = [
         ("Ոչ մի $y$ չի աշխատում։", ".tex", "calque-works"),
@@ -205,6 +302,8 @@ def selftest():
         ("Ոչ մի տարր չունի այն այստեղ։", ".txt", None),
         ("Մենք ստանում ենք պատասխանը։", ".txt", "redundant-menq"),
         ("Թիվը զույգ է, ուստի բաժանվում է։ " * 6, ".txt", "density-usti"),
+        ("Արդյունքում՝ ստանում ենք երեք տարր։", ".txt", "calque-ardyunqum"),
+        ("Ստուգում ենք իրականացնում։", ".txt", "overuse-irakanacnel"),
     ]
     failed = 0
     for text, suffix, expected in cases:

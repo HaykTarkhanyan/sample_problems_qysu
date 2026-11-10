@@ -4,6 +4,19 @@ Everything in GUIDE.md and GLOSSARY_REPORT.md that I could not settle from a sou
 ID, most impactful first. Each has candidate versions (a/b/c) and my guess. A reply like
 "A1: b, A2: a" is enough. IDs are stable: GUIDE.md and GLOSSARY_REPORT.md refer to them.
 
+On 2026-11-10 every item was checked against the Language Committee recommendations, the
+ministry textbooks «Հայոց լեզու 7» and «11», and two academic sources (details and citations in
+`SOURCE_FINDINGS.md`). Settled items keep their text and get a "Resolved by source" line; you only
+need to answer the open ones.
+
+## Status
+
+| status | IDs |
+|--------|-----|
+| **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
+| **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
+| **Open** | none |
+
 ## Grammar and punctuation house rules (affect hundreds of places)
 
 **A1. Article before words starting with ե, ո (not ու) and before «և».** The house rule says «-ն»
@@ -14,19 +27,29 @@ total).
 - b) «-ը» before all of them: «թիվը երկու անգամ», «բազմությունը որպես», «A-ը և B-ը»
 - c) «-ն» before ե/ո words, but «-ը» before «և»
 - My guess: b (they start with a consonant sound), but I have no source.
+- **Resolved by source:** b, except before the auxiliaries եմ/ես/ենք/եք/են, which take «-ն»
+  («տարրերն են») («Հայոց լեզու 7», pp. 26-27, crosses out «Արամն եկավ», «Արամն որոշեց»; Language
+  Committee «Ը-Ն» and «Ե»; Սուքիասյան p. 68; see SOURCE_FINDINGS.md). Note: «$A$-ն և» stays right
+  because «ա» ends in a vowel; the rule hits consonant-final names only («$x$-ը և», «$f$-ը ոչ»).
 
 **A2. The mijaket between clauses.** Our sheets use ASCII `.` 121 times («արկղը բազմություն է. նրա
 ...»); the lint bans U+2024 (`․`) entirely.
 - a) keep ASCII `.` as the mijaket
 - b) use U+2024 `․` for the mijaket and allow it in the lint
-- c) avoid the mijaket: split into two sentences with ։ or use ՝
+- c) house choice: no new mijakets (split with ։ or use ՝), although the mark itself is correct
 - My guess: c for new text (the mijaket is rare in modern prose), a is acceptable for old text.
+- **Source says:** the mijaket is a standard current mark («Հայոց լեզու 11», p. 126) and the
+  Language Committee uses it freely, so c can only be a style preference, not a correction. No
+  source settles the character: Unicode has no mijaket code point and the Committee mirror mixes `.`
+  and `․`. What is left is your choice of a, b or c.
 
 **A3. «Ուստի» frequency.** 330 uses in 14 files, about 117 per 10k words vs 0.8 in Wikipedia.
 - a) fine as it is
 - b) keep it, but vary: «հետևաբար», «ուրեմն», «որտեղից», a new sentence
 - c) it sounds bookish/odd in teaching text; replace most with «ուրեմն» / «հետևաբար»
 - My guess: b.
+- **Resolved by source:** b (Language Committee prose uses «ուստի» at 9.8 per 10k words, the grade-7
+  textbook at 1.7; ours is 117; see SOURCE_FINDINGS.md).
 
 **A4. Numeral + noun.** House rule: singular («երեք տարր»). The professor writes «Երկու
 բազմություններ», «երկու մասերից».
@@ -34,11 +57,17 @@ total).
 - b) singular by default; plural allowed when definite («այդ երեք բազմությունները») and with «էլ» («երկու քայլերն էլ»)
 - c) both are fine, drop the house rule
 - My guess: b.
+- **Resolved by source:** b («Հայոց լեզու 7», pp. 55-56: usually singular for units and when the
+  number is stressed, usually plural when definite: «Չորս զավակներն էլ», «Երկու սուրհանդակները»;
+  see SOURCE_FINDINGS.md).
 
 **A5. «հանդես է գալիս որպես» (22 uses).** «$B$-ն հանդես է գալիս որպես $C$-ի տարր»
-- a) fine
-- b) Russian calque, rewrite: «$B$-ն $C$-ի տարր է»
+- a) fine, keep it
+- b) allowed, but prefer the shorter «$B$-ն $C$-ի տարր է» where it fits
 - My guess: b.
+- **Source says:** the ministry textbook uses it in its own explanations («հանդես են գալիս որպես
+  նախադասության ... անդամներ», «Հայոց լեզու 7», p. 27), so it is not an error. Only the style
+  preference is left (see SOURCE_FINDINGS.md).
 
 **A6. «տեղի ունի» for "holds" (an equality/inclusion holds).** «$f(A\cap B)=f(A)\cap f(B)$ տեղի ունի»
 - a) fine, standard math register
@@ -56,6 +85,8 @@ total).
 - a) fine
 - b) overused; keep for real emphasis only
 - My guess: b.
+- **Resolved by source:** b (the Language Committee uses «հենց» for emphasis at 7.6 per 10k words,
+  the textbook at 2.6; ours is about 90; see SOURCE_FINDINGS.md).
 
 ## Calques in the current sheets (one decision fixes many lines)
 
@@ -75,38 +106,61 @@ total).
 - c) «Ինչ վերցնել այս խնդրից»
 - d) other: ...
 - My guess: b.
+- **Source says:** the Language Committee («Փոխանցել») gives the verb the senses "hand over, pass
+  on (also knowledge), convey". "Transferable to other problems" is not among them, so the title
+  reads as "a technique that can be handed over". This is weak support for b/c; the wording is yours
+  (see SOURCE_FINDINGS.md).
 
 **A12. «Ահա ...» for "Here is ...".** «Ահա (ա) մասը՝ ...», «Ահա ենթադրության աշխատելու իրական պատճառը»
 - a) fine
 - b) calque; «(ա) մասը՝ ...», «Ենթադրության բուն պատճառը ...»
 - My guess: b.
+- **Resolved by source:** a (the Language Committee writes «Ահա մամուլում ... հանդիպող սխալների
+  օրինակներ՝», «Ահա այս նախադասություններում ...»). The second example is still bad, but because of
+  «աշխատելու» (A9) and «իրական պատճառը», not «Ահա» (see SOURCE_FINDINGS.md).
 
 **A13. «Այն» as "it" for things, opening a sentence.** «Այն ավելանում է միայն $x$-ից աջ անցնելիս։»
 - a) fine
 - b) acceptable but overused; prefer repeating the noun or joining sentences
-- c) wrong for this use
+- ~~c) wrong for this use~~ (ruled out by source)
 - My guess: b (Wikipedia uses it too).
+- **Source says:** the Language Committee («այն բաղկացած է երկու գրանշանից») and the grade-7
+  textbook («Այն խորթ կհնչի ...») use «այն» for things, also at the start of a sentence, so c is
+  out. Left: a or b (see SOURCE_FINDINGS.md).
 
 **A14. «նրա» / «նրանց» for things (not people).** «Ω-ն ..., նրա տարրերը ...»
 - a) fine
 - b) prefer «դրա» / «դրանց» for things
 - My guess: a (Wikipedia and the professor use «նրա» for things).
+- **Resolved by source:** a (the Language Committee writes «նրան նախորդող բառը», «Նրա մեջ կա
+  դրական հետևանքի իմաստ» about a word; both «նրա» and «դրա» are common; see SOURCE_FINDINGS.md).
 
 **A15. «Օրինակ՝» or «Օրինակ,».** Wikipedia uses both (28 / 31); our sheets mostly «Օրինակ՝».
 - a) «Օրինակ՝» everywhere
 - b) either, consistent within a document
 - My guess: a.
+- **Resolved by source:** a for an example that follows («Օրինակ՝ ...»: Language Committee 54 vs 3,
+  textbook 74 vs 3). The comma form appears only mid-sentence as a parenthetical («..., օրինակ, ...»)
+  (see SOURCE_FINDINGS.md).
 
 **A16. Comma after «Հետևաբար» / «Այսպիսով» at the start of a sentence.** Our sheets: «Հետևաբար $0\lt x$ ...» (no comma, 14×); Wikipedia mostly with a comma.
-- a) no comma
-- b) comma
-- c) either
-- My guess: c.
+- For «Հետևաբար» at the start of a sentence:
+- a) no mark: «Հետևաբար $0\lt x$ ...»
+- b) comma: «Հետևաբար, $0\lt x$ ...»
+- c) ՝ like «Այսպիսով՝»: «Հետևաբար՝ $0\lt x$ ...»
+- My guess: a or b.
+- **Source says:** «Այսպիսով» takes ՝ at the start of a sentence («Այսպիսով՝ ...»: Language
+  Committee 2/2, textbook 2/2, never a comma), so that half is settled. No source has a
+  sentence-initial «Հետևաբար» (see SOURCE_FINDINGS.md).
 
 **A17. Adverbial participle at the start.** «Չլինելով բարդ՝ գրաֆների հիմնական գաղափարները շատ օգտակար են։»
-- a) fine
-- b) English pattern; «Գրաֆների հիմնական գաղափարները պարզ են, բայց շատ օգտակար»
+- a) fine as written
+- b) keep -ելով openers when the subject is shared, but rephrase concessive ones like this:
+  «Գրաֆների հիմնական գաղափարները պարզ են, բայց շատ օգտակար»
 - My guess: b.
+- **Source says:** the construction is native: the Language Committee writes «Հիմք ընդունելով
+  ասվածը՝ ...», «Ելնելով վերոգրյալից՝ ...». Only the concessive "Being simple, X is useful" use is
+  in question (see SOURCE_FINDINGS.md).
 
 **A18. Heading «Ստուգեք ձեզ» ("Check yourself", probability page).**
 - a) fine
@@ -129,6 +183,8 @@ total).
 - b) «Սա»
 - c) either
 - My guess: c, with a slight preference for a in proofs.
+- **Resolved by source:** c (the Language Committee uses both: «Սա ճիշտ չէ», «Դա են վկայում
+  բառարանները»; see SOURCE_FINDINGS.md).
 
 **A22. Article after a symbol follows how it is read aloud. Is that the rule, and how do we read
 these?** The sheets already write «$A$-ն» («ա») and «$x$-ը» («իքս») consistently. Unclear cases:
@@ -137,6 +193,12 @@ these?** The sheets already write «$A$-ն» («ա») and «$x$-ը» («իքս»
   a) «$2$-ն», «$Y_2$-ն» (read «երկու»)  b) «$2$-ը» is fine too  c) depends (ordinal «Քայլ 2» = «երկրորդ» -> «-ը»)
 - j: a) «ժի» -> «$j$-ն»  b) «յոտ» -> «$j$-ը»
 - My guess: numbers c; j a.
+- **Source says:** a bare number used as a noun declines with ս («երկուսը, երկուսի», «Հայոց լեզու
+  7», p. 56), so «$2$-ը» is right, and «$2$-ն» only before a vowel sound or an auxiliary («$2$-ն
+  էլ»). That settles bare numbers. Still open (see SOURCE_FINDINGS.md):
+  - **A22.1** indexed symbols and labels («$Y_2$», «Քայլ 2»): a) «-ը» (read «... երկուսը» or
+    «երկրորդ»)  b) «-ն» (read «իգրեկ երկու»)
+  - **A22.2** the letter j: a) «ժի» -> «$j$-ն»  b) «յոտ» -> «$j$-ը»
 
 ## Terminology (probability course is next, so these matter soon)
 
@@ -178,6 +240,10 @@ also "variation" (rows 88, 988, 1038).
 - a) fine, they help students
 - b) keep only for quotations, example names and terms
 - My guess: b.
+- **Source says:** the Language Committee («Չակերտ») lists quotes for names (organizations, papers,
+  works) and quoted speech, and allows italics, bold or nothing for a word mentioned as a word. No
+  source lists emphasis on ordinary words. This leans toward b without forbidding a (see
+  SOURCE_FINDINGS.md).
 
 **A30. Computability (row 172 «կարգընթացություն»).** I could not find this word anywhere else.
 - a) right
@@ -203,11 +269,17 @@ also "variation" (rows 88, 988, 1038).
 - a) «ոչ նվազող» is wrong
 - b) both fine, «չնվազող» preferred
 - My guess: b.
+- **Resolved by source:** write «չնվազող» (b's preference). չ- on a participle is the regular
+  form (Սուքիասյան p. 266; the Language Committee writes «չշահած», «չդրսևորված»). No source calls
+  «ոչ նվազող» wrong, and the «Չ» recommendation is about -չ- verbs (փախչել), not negation (see
+  SOURCE_FINDINGS.md).
 
 **A35. Armenian hyphen U+058A (֊).** Wikipedia uses it 65 times; our house rule is the plain hyphen.
 - a) keep the plain hyphen
 - b) switch to ֊
 - My guess: a.
+- **Resolved by source:** a (neither the Language Committee pages nor the grade-7 textbook use ֊
+  once; see SOURCE_FINDINGS.md).
 
 **A36. Heads / tails.** The owner (2026-11-10): heads and tails are «ղուշ» and «գիր», not «գերբ» (the
 problem book's word). Which is which? «ղուշ» means "bird" (the coat of arms side, like Russian орёл) and
