@@ -139,6 +139,15 @@ widget, etc.).
   exercises as `.box.problem` + `.solution` (try-mode).
 - Content is written in our own words with our own examples and exercises; the problem book is cited by
   problem number only (DECISIONS #12). End each page with a "Խնդրագրքի խնդիրներ" section.
+- Teaching pattern on every page (DECISIONS #13): `<body data-try-default data-two-step>`; open with a
+  "Երեք հիմնական գաղափար" box; a `.predict` block before each main widget (`<div class="predict"><p>
+  <strong>Կանխատեսեք։</strong> ...</p><div class="predict-opts"><button class="btn" type="button" data-ok>..`
+  `</button>...</div><div class="predict-why">...</div></div>`, the why-text names what the wrong options
+  would have been); `PROB.massPanel` under graphs of F; one visible worked example of the homework-type
+  computation; a "Տիպիկ սխալներ" box; exercises ordered easy -> hard with at least one non-example; a closing
+  `#exam` section (one-table summary, oral-exam checklist with proof ideas and links, sample oral questions,
+  what's next). Every widget gets a caption saying what the example is.
+- Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see `armenian_style/` A36 for which is which.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
   every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
   themes (no `.katex-display` overflow on phones), and one independent math review.

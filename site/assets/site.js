@@ -138,20 +138,30 @@
     const btn = document.getElementById("try-btn");
     const sols = Array.from(document.querySelectorAll(".solution"));
     if (!btn || !sols.length) { if (btn) btn.hidden = true; return; }
+    // Pages with <body data-two-step> offer "answer only" first, then the full solution.
+    const twoStep = document.body.hasAttribute("data-two-step");
     sols.forEach(sol => {
       const b = QYSU.el("button", { class: "btn primary reveal-btn", type: "button" }, "Ցույց տալ լուծումը");
-      b.addEventListener("click", () => { sol.classList.add("revealed"); b.classList.add("hidden"); });
+      b.addEventListener("click", () => { sol.classList.add("revealed"); sol.classList.remove("answer-only"); b.classList.add("hidden"); if (a) a.classList.add("hidden"); });
+      let a = null;
+      if (twoStep && sol.querySelector(":scope > .box.answer")) {
+        a = QYSU.el("button", { class: "btn reveal-btn", type: "button" }, "Միայն պատասխանը");
+        a.addEventListener("click", () => { sol.classList.add("answer-only"); a.classList.add("hidden"); });
+        sol.parentNode.insertBefore(a, sol);
+      }
       sol.parentNode.insertBefore(b, sol);
     });
     const apply = on => {
       document.body.classList.toggle("try-mode", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       if (!on) {
-        sols.forEach(s => s.classList.remove("revealed"));
+        sols.forEach(s => s.classList.remove("revealed", "answer-only"));
         document.querySelectorAll(".reveal-btn").forEach(b => b.classList.remove("hidden"));
       }
     };
-    apply(store("qysu-try") === "1");
+    // Default: off, unless the page sets <body data-try-default> (probability pages: solve first).
+    const saved = store("qysu-try");
+    apply(saved === null ? document.body.hasAttribute("data-try-default") : saved === "1");
     btn.addEventListener("click", () => {
       const on = !document.body.classList.contains("try-mode");
       store("qysu-try", on ? "1" : "0");

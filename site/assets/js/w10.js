@@ -14,7 +14,7 @@
   const EX = {
     die: { name: "Զառ", view: { x0: -0.5, x1: 7.5, xticks: [0, 1, 2, 3, 4, 5, 6, 7] },
       make: () => makeDist({ atoms: [1, 2, 3, 4, 5, 6].map(x => ({ x, p: 1 / 6 })), lo: 1, hi: 6 }) },
-    coins: { name: "Գերբերի քանակը 3 նետումում", view: { x0: -1, x1: 4, xticks: [-1, 0, 1, 2, 3, 4] },
+    coins: { name: "Քանի՞ ղուշ՝ 3 նետումում", view: { x0: -1, x1: 4, xticks: [-1, 0, 1, 2, 3, 4] },
       make: () => makeDist({ atoms: [{ x: 0, p: 1 / 8 }, { x: 1, p: 3 / 8 }, { x: 2, p: 3 / 8 }, { x: 3, p: 1 / 8 }], lo: 0, hi: 3 }) },
     dice2: { name: "Երկու զառի գումարը", view: { x0: 1, x1: 13, xticks: [2, 4, 6, 7, 8, 10, 12] },
       make: () => makeDist({ atoms: Array.from({ length: 11 }, (_, i) => ({ x: i + 2, p: (6 - Math.abs(i - 5)) / 36 })), lo: 2, hi: 12 }) },
@@ -48,16 +48,32 @@
     return best !== null ? best : Math.round(x * 20) / 20;
   }
   const isAtom = (d, x) => d.atoms.some(a => a.x === x);
+  const CAP = {
+    die: "Զառը նետում ենք մեկ անգամ, $\\xi$-ն ընկած թիվն է։",
+    coins: "Մետաղադրամը նետում ենք 3 անգամ, $\\xi$-ն ցույց է տալիս, թե քանի անգամ է ընկել ղուշ։",
+    dice2: "Նետում ենք երկու զառ, $\\xi$-ն ընկած թվերի գումարն է։",
+    light: "Սպասման ժամանակը լուսացույցի մոտ ($2$ րոպե կանաչ, $2$ րոպե կարմիր)։ Մանրամասները՝ «Թռիչքներ» բաժնում։",
+    expo: "Թռիչքներ չունեցող օրինակ՝ $F(x)=1-e^{-x}$, երբ $x\\gt0$ (ցուցչային բաշխում, կհանդիպի 12-րդ դասում)։",
+    gaps: "Խառը օրինակ՝ $\\tfrac12$ զանգված $(0,1)$-ում, $\\tfrac14$՝ $2$ կետում, $\\tfrac14$՝ $(3,4)$-ում։ Մնացած տեղերում $F$-ը հորիզոնական է։"
+  };
+  function caption(host, key) { if (!host) return; host.innerHTML = CAP[key]; Q.math(host); }
+  /** Interval endpoint glyph on the axis: [ ( ] ) instead of dots (dots on the graph mean value vs limit). */
+  function glyph(pl, x, closed, left, cls) {
+    pl.text(x, 0, left ? (closed ? "[" : "(") : (closed ? "]" : ")"), { "text-anchor": "middle", dy: 7, "font-size": 22, "font-weight": 700, class: cls });
+  }
 
   // ---------- w-build: distribution function from an experiment ----------
   function wBuild() {
     const w = document.getElementById("w-build"); if (!w) return;
     const $ = s => w.querySelector(`[data-out="${s}"]`);
-    let key = "die", x = 3.5, pl;
+    let key = "die", x = 3.5, pl, mass;
     const reset = { die: 3.5, coins: 1.5, dice2: 7.5, light: 1 };
     function setup() {
       const v = EX[key].view;
+      caption($("cap"), key);
       pl = basePlot($("plot"), key);
+      mass = P.massPanel($("mass"), dist(key), v);
+      P.onDrag(mass.pl, xx => { x = snap(dist(key), clamp(xx, v.x0, v.x1), 0.03 * (v.x1 - v.x0)); update(); });
       onDrag(pl, xx => { x = snap(dist(key), clamp(xx, v.x0, v.x1), 0.03 * (v.x1 - v.x0)); update(); });
       update();
     }
@@ -69,6 +85,8 @@
       pl.line(x, 0, x, 1.06, "s-orange", pl.main, { "stroke-width": 2, "stroke-dasharray": "5 4" });
       pl.line(pl.o.x0, Fx, x, Fx, "s-orange", pl.main, { "stroke-width": 1.2, "stroke-dasharray": "2 3" });
       pl.dot(x, Fx, true, "orange", pl.over, 5.2);
+      mass.draw({ left: x }, "orange");
+      mass.pl.line(x, 0, x, 1.2, "s-orange", mass.pl.over, { "stroke-width": 2, "stroke-dasharray": "5 4" });
       const cells = $("cells"); cells.innerHTML = "";
       let tex;
       if (key === "light") {
@@ -91,7 +109,8 @@
       Q.tex($("formula"), tex);
       const note = $("note");
       if (isAtom(d, x)) {
-        note.innerHTML = `$x=${numTex(x)}$ թռիչքի կետ է։ $\\xi=${numTex(x)}$ արժեքը $F(${numTex(x)})$-ի մեջ չի մտնում, քանի որ անհավասարությունը խիստ է։ Լցված կետը թռիչքի ստորին ծայրում է։`;
+        const c = numTex(x);
+        note.innerHTML = `$x=${c}$ թռիչքի կետ է՝ $F(${c})=${ft(d.F(x))}$ (թռիչքից առաջ, լցված կետ), $F(${c}+0)=${ft(d.Fplus(x))}$ (թռիչքից հետո), իսկ նրանց տարբերությունը $P(\\xi=${c})=${ft(d.jump(x))}$ է։ $\\xi=${c}$ արժեքը $F(${c})$-ի մեջ չի մտնում, քանի որ անհավասարությունը խիստ է։`;
         Q.math(note);
       } else note.textContent = "";
     }
@@ -110,24 +129,66 @@
     const w = document.getElementById("w-interval"); if (!w) return;
     const $ = s => w.querySelector(`[data-out="${s}"]`);
     const start = { light: [0, 1], die: [2, 4], coins: [1, 2], gaps: [0.5, 2] };
-    let key = "light", a = 0, b = 1, type = "[)", pl, dragging = "b";
+    let key = "light", a = 0, b = 1, type = "[)", pl, mass, dragging = "b", test = null;
+    const sa = w.querySelector('[data-in="a"]'), sb = w.querySelector('[data-in="b"]');
+    const setA = s => { a = Math.min(s, b - 0.05); }, setB = s => { b = Math.max(s, a + 0.05); };
+    const endTest = () => { if (test) { test = null; $("test").innerHTML = ""; } };
+    sa.addEventListener("input", () => { endTest(); setA(snap(dist(key), Number(sa.value), 0.06)); update(); });
+    sb.addEventListener("input", () => { endTest(); setB(snap(dist(key), Number(sb.value), 0.06)); update(); });
+    const KEYS = ["light", "die", "coins", "gaps"];
+    /** "Test yourself": random example, endpoints (often on a jump) and interval type; answer hidden. */
+    function newTest() {
+      key = KEYS[Q.randInt(KEYS.length)];
+      const d = dist(key), v = EX[key].view;
+      const cand = Array.from(new Set([...d.atoms.map(t => t.x), ...[0.5, 1, 1.5, 2.5, 3.5].filter(t => t > v.x0 && t < v.x1)])).sort((p, q) => p - q);
+      let i = Q.randInt(cand.length - 1), j = i + 1 + Q.randInt(cand.length - 1 - i);
+      a = cand[i]; b = cand[j];
+      type = Object.keys(TYPES)[Q.randInt(4)];
+      typeBtns.forEach((x, k) => x.setAttribute("aria-pressed", Object.keys(TYPES)[k] === type ? "true" : "false"));
+      chips($("chips"), KEYS, key, k => { key = k; [a, b] = start[k]; endTest(); setup(); });
+      test = { answer: 0 };
+      const box = $("test"); box.innerHTML = "";
+      const inp = Q.el("input", { type: "text", inputmode: "decimal", size: 8, placeholder: "3/4", "aria-label": "պատասխան" });
+      const out = Q.el("span", { class: "muted" });
+      const go = Q.el("button", { class: "btn primary", type: "button" }, "Ստուգել");
+      go.addEventListener("click", () => {
+        const s = inp.value.trim().replace(",", ".");
+        const m = s.match(/^(-?\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/);
+        const val = m ? Number(m[1]) / Number(m[2]) : Number(s);
+        if (!s || !isFinite(val)) { out.textContent = "Գրեք թիվ, օրինակ՝ 3/4 կամ 0,75։"; return; }
+        const ans = test.answer, ok = Math.abs(val - ans) < (m ? 1e-9 : 0.005);
+        endTest(); update();
+        $("test").append(Q.el("div", { class: "quiz-fb " + (ok ? "ok" : "bad") }, ok ? "Ճիշտ է։ Ներքևում՝ լուծումը։" : `Ոչ այնքան՝ ճիշտ պատասխանը ${P.frac(ans, 80) || num(ans)} է։ Ներքևում՝ լուծումը։`));
+      });
+      inp.addEventListener("keydown", e => { if (e.key === "Enter") go.click(); });
+      box.append(Q.el("div", { class: "widget-controls" }, Q.el("span", {}, "Ձեր պատասխանը՝"), inp, go, out));
+      setup();
+    }
+    w.querySelector("[data-act=test]").addEventListener("click", newTest);
     const typeBtns = Object.keys(TYPES).map(t => {
       const lab = { "[)": "[a,b)", "()": "(a,b)", "[]": "[a,b]", "(]": "(a,b]" }[t];
       const btn = Q.el("button", { class: "btn", type: "button", "aria-pressed": t === type ? "true" : "false" }, `$${lab}$`);
-      btn.addEventListener("click", () => { type = t; typeBtns.forEach(x => x.setAttribute("aria-pressed", x === btn ? "true" : "false")); update(); });
+      btn.addEventListener("click", () => { endTest(); type = t; typeBtns.forEach(x => x.setAttribute("aria-pressed", x === btn ? "true" : "false")); update(); });
       return btn;
     });
     $("types").append(...typeBtns);
     Q.math($("types"));
     function setup() {
       const v = EX[key].view, d = dist(key);
+      caption($("cap"), key);
       pl = basePlot($("plot"), key, { h: 290, pad: { l: 44, r: 16, t: 14, b: 52 } });
-      onDrag(pl, xx => {
+      mass = P.massPanel($("mass"), d, v);
+      [sa, sb].forEach(s => { s.min = v.x0; s.max = v.x1; s.step = 0.05; });
+      const drag = xx => {
         const s = snap(d, clamp(xx, v.x0, v.x1), 0.03 * (v.x1 - v.x0));
         // keep a < b strictly: F(b) - F(a+0) and friends hold only for a < b
-        if (dragging === "a") a = Math.min(s, b - 0.05); else b = Math.max(s, a + 0.05);
+        endTest();
+        if (dragging === "a") setA(s); else setB(s);
         update();
-      }, xx => { dragging = Math.abs(xx - a) < Math.abs(xx - b) ? "a" : "b"; });
+      };
+      const pick = xx => { dragging = Math.abs(xx - a) < Math.abs(xx - b) ? "a" : "b"; };
+      onDrag(pl, drag, pick);
+      onDrag(mass.pl, drag, pick);
       update();
     }
     function update() {
@@ -147,16 +208,30 @@
       // filled only when the level is F's value at that point; a hollow dot marks a limit F(x+0) at a jump
       pl.dot(a, loV, T.l || !isAtom(d, a), "red", pl.over, 4.4);
       pl.dot(b, hiV, !T.r || !isAtom(d, b), "orange", pl.over, 4.4);
-      // endpoint markers on the axis (filled = included)
-      pl.dot(a, 0, T.l, "red", pl.over, 5.5);
-      pl.dot(b, 0, T.r, "orange", pl.over, 5.5);
+      // endpoint types on the axis as bracket glyphs (dots on the graph mean "value" vs "limit")
+      glyph(pl, a, T.l, true, "f-red");
+      glyph(pl, b, T.r, false, "f-ink");
       pl.text(a, 0, "a", { "text-anchor": "middle", class: "m f-red", dy: 36 });
       pl.text(b, 0, "b", { "text-anchor": "middle", class: "m", dy: 36 });
+      mass.draw(test ? null : { a, b, l: T.l, r: T.r }, "green");
+      glyph(mass.pl, a, T.l, true, "f-red");
+      glyph(mass.pl, b, T.r, false, "f-ink");
+      sa.value = a; sb.value = b;
       const nums = T.rhs.replace(/b/g, numTex(b, 2)).replace(/\(a/g, "(" + numTex(a, 2)).replace(/F\(a\)/, `F(${numTex(a, 2)})`);
       const pr = Math.max(0, hiV - loV);
+      if (test) {
+        // hide the answer: no green bar, no levels; ask instead
+        pl.clear(pl.over); pl.clear(); pl.drawF(d);
+        glyph(pl, a, T.l, true, "f-red"); glyph(pl, b, T.r, false, "f-ink");
+        pl.text(a, 0, "a", { "text-anchor": "middle", class: "m f-red", dy: 36 });
+        pl.text(b, 0, "b", { "text-anchor": "middle", class: "m", dy: 36 });
+        test.answer = pr;
+        Q.tex($("formula"), `P(${T.lhs}) = \\ ?\\qquad a=${numTex(a, 2)},\\ b=${numTex(b, 2)}`, true);
+        return;
+      }
       Q.tex($("formula"), `\\begin{aligned}P(${T.lhs})&=${T.rhs}\\\\&=${nums}\\\\&=${ft(hiV)}-${ft(loV)}=${ft(pr)}\\end{aligned}`, true);
     }
-    chips($("chips"), ["light", "die", "coins", "gaps"], key, k => { key = k; [a, b] = start[k]; setup(); });
+    chips($("chips"), KEYS, key, k => { key = k; [a, b] = start[k]; endTest(); setup(); });
     setup();
   }
 
@@ -165,25 +240,41 @@
     const w = document.getElementById("w-count"); if (!w) return;
     const $ = s => w.querySelector(`[data-out="${s}"]`);
     const N = 40;
-    const atoms = Array.from({ length: N }, (_, i) => ({ x: 1 - 1 / (i + 1), p: Math.pow(2, -(i + 1)) }));
-    const d = makeDist({ atoms, lo: 0, hi: 1 });
+    const geo = Array.from({ length: N }, (_, i) => ({ x: 1 - 1 / (i + 1), p: Math.pow(2, -(i + 1)) }));
+    const dGeo = makeDist({ atoms: geo, lo: 0, hi: 1 });
+    let mode = "geo";
     const slider = w.querySelector("input[type=range]");
     const pl = plot($("plot"), { w: 560, h: 260, x0: -0.15, x1: 1.15, y0: 0, y1: 1.08, xlabel: "x", ylabel: "F(x)",
       xticks: [{ v: 0, label: "0" }, { v: 0.5, label: "1/2" }, { v: 0.75, label: "3/4" }, { v: 1, label: "1" }], yticks: YT });
     function update() {
       const k = Number(slider.value);
+      // "eq" mode: k-1 equal jumps of size 1/(k-1) > 1/k, so the bound "fewer than k" is reached exactly
+      const atoms = mode === "geo" ? geo : Array.from({ length: k - 1 }, (_, i) => ({ x: (i + 1) / k, p: 1 / (k - 1) }));
+      const d = mode === "geo" ? dGeo : makeDist({ atoms, lo: 0, hi: 1 });
       pl.clear(); pl.clear(pl.over);
       pl.drawF(d, { dots: false, jumps: false });
       const big = atoms.filter(a => a.p > 1 / k);
-      for (const a of big) {
+      big.forEach((a, i) => {
         pl.line(a.x, d.F(a.x), a.x, d.Fplus(a.x), "s-red", pl.over, { "stroke-width": 4 });
         pl.dot(a.x, d.F(a.x), true, "red", pl.over, 3.6);
-      }
+        if (mode === "geo" && big.length <= 8) pl.text(a.x, d.Fplus(a.x), String(i + 1), { dx: -4, dy: -6, "text-anchor": "end", "font-size": 11, class: "f-red" });
+      });
       Q.tex($("klabel"), `k=${k},\\ \\tfrac1k=${numTex(1 / k, 3)}`);
-      const sizes = big.map(a => `\\tfrac1{${Math.round(1 / a.p)}}`).join(",\\ ");
-      $("out").innerHTML = `$\\tfrac1{${k}}$-ից մեծ թռիչքներ՝ <strong>${big.length}</strong> հատ ($${big.length}\\lt ${k}$)${big.length ? `՝ $${sizes}$` : ""}։ Մնացած անվերջ թվով թռիչքներից ոչ մեկը $\\tfrac1{${k}}$-ից մեծ չէ։`;
+      if (mode === "geo") {
+        const sizes = big.map(a => `\\tfrac1{${Math.round(1 / a.p)}}`).join(",\\ ");
+        $("out").innerHTML = `$\\tfrac1{${k}}$-ից մեծ թռիչքներ՝ <strong>${big.length}</strong> հատ ($${big.length}\\lt ${k}$)${big.length ? `՝ $${sizes}$` : ""}։ Մնացած անվերջ թվով թռիչքներից ոչ մեկը $\\tfrac1{${k}}$-ից մեծ չէ։ Կարմիր համարները ցույց են տալիս թվարկման կարգը, ինչպես ապացույցում։`;
+      } else {
+        $("out").innerHTML = `$${k - 1}$ հավասար թռիչք, յուրաքանչյուրը $\\tfrac1{${k - 1}}$, բոլորը մեծ են $\\tfrac1{${k}}$-ից։ Ստացվեց <strong>${big.length}</strong> հատ, այսինքն՝ ճիշտ $k-1$։ «$k$-ից փոքր» գնահատականն ավելի լավացնել հնարավոր չէ։`;
+      }
       Q.math($("out"));
     }
+    const modeBtns = [["geo", "$2^{-n}$ թռիչքներ"], ["eq", "Հավասար թռիչքներ"]].map(([m, lab]) => {
+      const b = Q.el("button", { class: "chip" + (m === mode ? " on" : ""), type: "button" }, lab);
+      b.addEventListener("click", () => { mode = m; modeBtns.forEach(x => x.classList.toggle("on", x === b)); update(); });
+      return b;
+    });
+    $("modes").append(...modeBtns);
+    Q.math($("modes"));
     slider.addEventListener("input", update);
     update();
   }
@@ -193,7 +284,8 @@
     const w = document.getElementById("w-sample"); if (!w) return;
     const $ = s => w.querySelector(`[data-out="${s}"]`);
     let key = "light", xs = [], rnd = P.rng(509), pl, last = null, busy = false;
-    function setup() { pl = basePlot($("plot"), key); draw(); }
+    const su = w.querySelector('[data-in="u"]');
+    function setup() { caption($("cap"), key); pl = basePlot($("plot"), key); draw(); }
     function ecdfPoints() {
       const v = EX[key].view, s = xs.slice().sort((p, q) => p - q), n = s.length, pts = [[v.x0, 0]];
       let i = 0;
@@ -206,33 +298,27 @@
       pts.push([v.x1, i === n ? 1 : i / n]);
       return pts;
     }
-    function supDist() {
-      const d = dist(key), s = xs.slice().sort((p, q) => p - q), n = s.length;
-      let D = 0, i = 0;
-      const pts = new Set(s.concat(d.atoms.map(a => a.x)));
-      const sorted = [...pts].sort((p, q) => p - q);
-      for (const x of sorted) {
-        while (i < n && s[i] < x) i++;
-        let j = i; while (j < n && s[j] === x) j++;
-        D = Math.max(D, Math.abs(i / n - d.F(x)), Math.abs(j / n - d.Fplus(x)));
-      }
-      return D;
-    }
     function draw() {
       const d = dist(key);
       pl.clear(); pl.clear(pl.over);
+      // the band of u-values [F(c), F(c+0)] that lands on each atom c: its length is P(xi = c)
+      const xg = pl.o.x0 + 0.012 * (pl.o.x1 - pl.o.x0);
+      for (const a of d.atoms) if (a.x >= pl.o.x0 && a.x <= pl.o.x1) {
+        pl.line(xg, d.F(a.x), xg, d.Fplus(a.x), "s-red", pl.main, { "stroke-width": 7, "stroke-linecap": "butt", opacity: 0.35 });
+        pl.line(xg, d.F(a.x), a.x, d.F(a.x), "s-red", pl.main, { "stroke-width": 0.8, "stroke-dasharray": "2 3", opacity: 0.6 });
+        pl.line(xg, d.Fplus(a.x), a.x, d.Fplus(a.x), "s-red", pl.main, { "stroke-width": 0.8, "stroke-dasharray": "2 3", opacity: 0.6 });
+      }
       pl.drawF(d);
       if (xs.length) pl.poly(ecdfPoints(), "s-orange f-none", pl.main, { "stroke-width": 2 });
       if (last) {
         const { u, x } = last, xv = clamp(x, pl.o.x0, pl.o.x1);
         pl.line(pl.o.x0, u, xv, u, "s-red", pl.over, { "stroke-width": 1.6 });
         if (last.down) { pl.line(xv, u, xv, 0, "s-red", pl.over, { "stroke-width": 1.6, "stroke-dasharray": "4 3" }); pl.dot(xv, 0, true, "red", pl.over, 5); }
-        pl.text(pl.o.x0, u, "u", { dx: 6, dy: -5, class: "m" });
+        pl.text(pl.o.x0, u, "u", { dx: 10, dy: -5, class: "m" });
       }
       const n = xs.length;
       const parts = [`նետումներ՝ <strong>${Q.fmt(n)}</strong>`];
-      if (last && last.down) parts.push(`վերջին նետումը՝ $u=${numTex(last.u, 3)}\\ \\Rightarrow\\ \\xi=${numTex(last.x, 3)}$`);
-      if (n) parts.push(`էմպիրիկ և իրական $F$-երի ամենամեծ տարբերությունը՝ $${numTex(supDist(), 3)}$`);
+      if (last && last.down) parts.push(`${last.manual ? "ձեռքով ընտրված" : "վերջին նետումը՝"} $u=${numTex(last.u, 3)}\\ \\Rightarrow\\ \\xi=${numTex(last.x, 3)}$`);
       $("out").innerHTML = parts.join("<br>");
       Q.math($("out"));
     }
@@ -249,6 +335,7 @@
       for (let i = 0; i < m; i++) xs.push(d.q(rnd()));
       last = null; draw();
     }
+    su.addEventListener("input", () => { const u = Number(su.value); last = { u, x: dist(key).q(u), down: true, manual: true }; draw(); });
     w.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
       const act = b.dataset.act;
       if (act === "one") throwOne();
@@ -280,6 +367,10 @@
       pieces: [C(-1, 0, () => 0), C(0, 1, () => 0.5), C(1, 2, () => 1)], dots: [[0, 0, 0], [0, 0.5, 1], [1, 0.5, 0], [1, 1, 1]],
       x: [-1, 2], ans: "cont",
       expl: "Ոչ (մեր պայմանավորվածությամբ)։ $G(0)=\\tfrac12$, իսկ $G(0-0)=0$, ուստի $G$-ն ձախից անընդհատ չէ։ Այն աջից է անընդհատ և առաջին օրինակի մեծության $P(\\xi\\le x)$ ֆունկցիան է։ Սևաստյանովի պայմանավորվածությամբ սա բաշխման ֆունկցիա կլիներ։" },
+    { tex: "F(x)=\\begin{cases}0, & x\\lt0\\\\ \\tfrac14, & x=0\\\\ \\tfrac12, & 0\\lt x\\le1\\\\ 1, & x\\gt1\\end{cases}",
+      pieces: [C(-1, 0, () => 0), C(0, 1, () => 0.5), C(1, 2, () => 1)], dots: [[0, 0, 0], [0, 0.25, 1], [0, 0.5, 0], [1, 0.5, 1], [1, 1, 0]],
+      x: [-1, 2], ans: "cont",
+      expl: "Ոչ։ $F(0)=\\tfrac14$, իսկ $F(0-0)=0$, ուստի ձախից անընդհատ չէ։ Թռիչքի կետում բաշխման ֆունկցիայի արժեքը պետք է հավասար լինի ձախ սահմանին, այլ ոչ թե գտնվի թռիչքի «մեջտեղում»։ Աջից էլ անընդհատ չէ, ուստի ոչ մի պայմանավորվածությամբ բաշխման ֆունկցիա չէ։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le0\\\\ \\tfrac12\\left(1-e^{-x}\\right), & x\\gt0\\end{cases}",
       pieces: [C(-1, 0, () => 0), C(0, 6, x => 0.5 * (1 - Math.exp(-x)))], dots: [],
       x: [-1, 6], ans: "lim",
@@ -292,6 +383,10 @@
       pieces: [C(-8, 8, x => x / (1 + Math.abs(x)))], dots: [], y: [-1.08, 1.08],
       x: [-8, 8], ans: "lim",
       expl: "Ոչ։ $\\lim\\limits_{x\\to-\\infty}F(x)=-1$, և ֆունկցիան բացասական արժեքներ էլ է ընդունում, մինչդեռ հավանականությունը բացասական չի կարող լինել։ Այն աճող է և անընդհատ, խախտված են միայն սահմանները։" },
+    { tex: "F(x)=1-e^{-x},\\quad x\\in\\R",
+      pieces: [C(-1, 5, x => 1 - Math.exp(-x))], dots: [], y: [-1.85, 1.08], yt: [-1.5, -1, -0.5, 0, 0.5, 1],
+      x: [-1, 5], ans: "lim",
+      expl: "Ոչ։ Ֆունկցիան աճող է և անընդհատ, բայց $x\\to-\\infty$ դեպքում $F(x)\\to-\\infty$, և այն բացասական արժեքներ է ընդունում։ Իսկ $x\\gt0$ դեպքում $1-e^{-x}$ և $x\\le0$ դեպքում $0$ ֆունկցիան արդեն բաշխման ֆունկցիա է (ցուցչային բաշխում)։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le1\\\\ 1, & x\\gt1\\end{cases}",
       pieces: [C(-1, 1, () => 0), C(1, 3, () => 1)], dots: [[1, 0, 1], [1, 1, 0]],
       x: [-1, 3], ans: "yes",
@@ -315,7 +410,7 @@
       const c = QUIZ[i];
       Q.tex($("formula"), c.tex, true);
       const y = c.y || [0, 1.08];
-      const yt = y[0] < 0 ? [-1, -0.5, 0, 0.5, 1].map(v => ({ v, label: num(v) })) : YT;
+      const yt = c.yt ? c.yt.map(v => ({ v, label: num(v) })) : y[0] < 0 ? [-1, -0.5, 0, 0.5, 1].map(v => ({ v, label: num(v) })) : YT;
       const xt = [];
       const step = (c.x[1] - c.x[0]) > 6 ? 2 : (c.x[1] - c.x[0]) > 3 ? 1 : 0.5;
       for (let t = Math.ceil(c.x[0] / step) * step; t <= c.x[1] + 1e-9; t += step) xt.push(t);
@@ -381,6 +476,17 @@
     draw();
   }
 
-  Q.ready(() => { wBuild(); wInterval(); wCount(); wSample(); wQuiz(); wConv(); });
+  // ---------- static figure for the worked example in #intervals ----------
+  const EXAMPLE = () => makeDist({ atoms: [{ x: 1, p: 1 / 3 }, { x: 3, p: 1 / 3 }], cont: x => (x <= 0 ? 0 : x >= 1 ? 1 / 3 : x / 3), lo: 0, hi: 3 });
+  function wExample() {
+    const f = document.getElementById("fig-example"); if (!f) return;
+    const d = EXAMPLE(), v = { x0: -0.5, x1: 4, xticks: [0, 1, 2, 3, 4] };
+    const pl = plot(f.querySelector('[data-out="plot"]'), { w: 560, h: 230, x0: v.x0, x1: v.x1, y0: 0, y1: 1.08, xticks: v.xticks,
+      yticks: [0, 1 / 3, 2 / 3, 1].map(t => ({ v: t, label: P.frac(t) })), xlabel: "x", ylabel: "F(x)" });
+    pl.drawF(d);
+    P.massPanel(f.querySelector('[data-out="mass"]'), d, v).draw(null);
+  }
+
+  Q.ready(() => { wBuild(); wInterval(); wCount(); wSample(); wQuiz(); wConv(); wExample(); });
   window.W10 = { EX, dist, TYPES, QUIZ };
 })();

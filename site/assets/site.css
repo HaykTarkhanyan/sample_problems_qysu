@@ -353,3 +353,18 @@ details.deep > .inner, details.extra > .inner { padding: .2rem 1rem .7rem; }
 .slider-row input[type="range"] { flex: 1; min-width: 9rem; }
 .quiz-opts .btn:disabled { cursor: default; }
 .quiz-opts .btn.primary:disabled { opacity: 1; }
+/* Predict-then-check blocks (probability pages) */
+.predict { border-left: 3px solid var(--orange); background: color-mix(in srgb, var(--orange) 7%, var(--surface)); border-radius: 0 8px 8px 0; padding: .55rem .9rem .6rem; margin: 1.1rem 0; }
+.predict > p { margin: .1rem 0 .4rem; }
+.predict-opts { display: flex; flex-wrap: wrap; gap: .4rem; }
+.predict-opts .btn:disabled { cursor: default; }
+.predict-opts .btn.primary:disabled { opacity: 1; }
+.predict-opts .btn.picked:not(.primary) { text-decoration: line-through; }
+.predict-why { display: none; margin-top: .5rem; font-size: .96rem; }
+.predict.done .predict-why { display: block; }
+.predict.right .predict-why::before { content: "Ճիշտ է։ "; font-weight: 700; color: var(--green); font-family: var(--sans); }
+.predict.wrong .predict-why::before { content: "Ոչ այնքան։ "; font-weight: 700; color: var(--red); font-family: var(--sans); }
+.mass-cap { text-align: center; font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: -.1rem 0 .3rem; }
+/* Two-step reveal: answer box only, then the full solution */
+body.try-mode .solution.answer-only { display: block; }
+body.try-mode .solution.answer-only:not(.revealed) > :not(.box.answer) { display: none; }

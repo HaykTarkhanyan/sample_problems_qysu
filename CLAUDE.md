@@ -11,6 +11,16 @@ This rule overrides the global memory instructions in `~/.claude/CLAUDE.md`.
 If you need to persist memory, notes, or scratch state, create a `memory/` folder at the repo
 root and keep everything there. Do not touch the user's global `~/.claude/.../memory/` location.
 
+## Edit code with the Edit/Write tools, never a shell heredoc
+
+Change `.js`, `.html`, `.css`, `.tex` and `.py` files with the Edit or Write tool. Do not pipe code
+through Bash (`python - <<'EOF' ... EOF`, `cat > file <<EOF`, long `sed` scripts with code in them).
+JavaScript template literals (`${...}`, backticks) inside a heredoc make Claude Code's safety check
+unable to parse the command; it then shows "Dangerous rm operation not ruled out" and blocks or
+asks, even though nothing is deleted. Bash stays for running things (node, python scripts saved to
+a file, git, checks). (Learned 2026-11-10: a heredoc rewriting two widgets in `w10.js` was flagged
+and rejected.)
+
 ## What this repo is
 
 This is **not a software project**. It is a bilingual (Armenian / English) collection of

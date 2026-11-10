@@ -208,3 +208,12 @@ also "variation" (rows 88, 988, 1038).
 - a) keep the plain hyphen
 - b) switch to ֊
 - My guess: a.
+
+**A36. Heads / tails.** The owner (2026-11-10): heads and tails are «ղուշ» and «գիր», not «գերբ» (the
+problem book's word). Which is which? «ղուշ» means "bird" (the coat of arms side, like Russian орёл) and
+«գիր» means "writing" (the denomination side).
+- a) heads = ղուշ, tails = գիր
+- b) heads = գիր, tails = ղուշ
+- Also: is the plural «ղուշեր» fine («ղուշերի քանակը»), or rephrase as «քանի՞ անգամ է ընկել ղուշ»?
+- My guess: a; and the rephrasing reads more naturally. The site currently uses «Քանի՞ ղուշ՝ 3 նետումում»
+  and «քանի անգամ է ընկել ղուշ».

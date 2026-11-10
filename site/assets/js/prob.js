@@ -25,7 +25,7 @@
       return h;
     }
     const jump = x => Fplus(x) - F(x);  // P(X = x)
-    return { atoms, F, Fplus, q, jump, lo, hi, name, hasCont: !!cont };
+    return { atoms, F, Fplus, q, jump, lo, hi, name, hasCont: !!cont, C };
   }
 
   /** Probability of an interval with chosen endpoint types, from F only. */
@@ -177,6 +177,68 @@
     };
   }
 
+  /** "Where is the probability?" panel drawn under a graph of F: atoms as bars (height = p),
+      the continuous part as a shaded band whose height follows its density. Bars and band are
+      scaled separately (they are different units), so the panel has no y-axis numbers; atoms carry
+      their probability as a label. hl: {left: x} highlights the mass strictly left of x (= F(x));
+      {a, b, l, r} highlights the mass in the interval with the given endpoint types. */
+  function massPanel(host, d, view, opt = {}) {
+    const pl = plot(host, Object.assign({ w: 560, h: 130, x0: view.x0, x1: view.x1, y0: 0, y1: 1.25,
+      xticks: view.xticks, yticks: [], grid: false, pad: { l: 44, r: 16, t: 8, b: 26 } }, opt));
+    const maxP = Math.max(1e-9, ...d.atoms.map(a => a.p));
+    const N = 240, xs = [], ds = [];
+    if (d.hasCont) {
+      for (let i = 0; i <= N; i++) {
+        const t = view.x0 + (view.x1 - view.x0) * i / N, h = (view.x1 - view.x0) / N / 2;
+        xs.push(t); ds.push(Math.max(0, (d.C(t + h) - d.C(t - h)) / (2 * h)));
+      }
+    }
+    const maxD = Math.max(1e-9, ...ds);
+    const inside = (x, hl) => hl.left !== undefined ? x < hl.left
+      : (hl.l ? x >= hl.a : x > hl.a) && (hl.r ? x <= hl.b : x < hl.b);
+    const contIn = (t, hl) => hl.left !== undefined ? t < hl.left : t > hl.a && t < hl.b;
+    function draw(hl, cls = "orange") {
+      pl.clear(); pl.clear(pl.over);
+      if (d.hasCont) {
+        const band = (pred, fillCls) => {
+          let run = [];
+          const flush = () => {
+            if (run.length > 1) Q.svg("polygon", { points: [[run[0][0], 0], ...run, [run[run.length - 1][0], 0]].map(([a, b]) => `${pl.X(a).toFixed(1)},${pl.Y(b).toFixed(1)}`).join(" "), class: fillCls }, pl.main);
+            run = [];
+          };
+          xs.forEach((t, i) => { if (pred(t)) run.push([t, 0.75 * ds[i] / maxD]); else flush(); });
+          flush();
+        };
+        band(() => true, "f-blue-soft");
+        if (hl) band(t => contIn(t, hl), `f-${cls}-soft`);
+      }
+      for (const a of d.atoms) {
+        if (a.x < view.x0 || a.x > view.x1) continue;
+        const on = hl && inside(a.x, hl), hgt = 0.95 * a.p / maxP;
+        pl.line(a.x, 0, a.x, hgt, on ? `s-${cls}` : "s-blue", pl.main, { "stroke-width": 5, "stroke-linecap": "butt" });
+        const lab = frac(a.p) || num(a.p);
+        if (d.atoms.length <= 12) pl.text(a.x, hgt, lab, { "text-anchor": "middle", dy: -5, "font-size": 11 });
+      }
+    }
+    return { pl, draw };
+  }
+
+  /** Predict-then-check blocks: <div class="predict"><p>question</p><div class="predict-opts">
+      <button class="btn" data-ok>right</button><button class="btn">wrong</button></div>
+      <div class="predict-why">explanation</div></div>. The explanation shows after any answer. */
+  function setupPredict() {
+    document.querySelectorAll(".predict").forEach(box => {
+      const btns = Array.from(box.querySelectorAll(".predict-opts button"));
+      btns.forEach(b => b.addEventListener("click", () => {
+        if (box.classList.contains("done")) return;
+        box.classList.add("done", b.hasAttribute("data-ok") ? "right" : "wrong");
+        btns.forEach(x => { x.disabled = true; if (x.hasAttribute("data-ok")) x.classList.add("primary"); });
+        b.classList.add("picked");
+      }));
+    });
+  }
+  Q.ready(setupPredict);
+
   /** Header button #deep-btn opens or closes every details.deep (proof) box at once. */
   function setupDeep() {
     const btn = document.getElementById("deep-btn");
@@ -195,5 +257,5 @@
   }
   Q.ready(setupDeep);
 
-  window.PROB = { makeDist, intervalProb, num, numTex, frac, fracTex, plot, onDrag, rng, EPS };
+  window.PROB = { makeDist, intervalProb, num, numTex, frac, fracTex, plot, onDrag, rng, massPanel, EPS };
 })();

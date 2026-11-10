@@ -328,6 +328,12 @@ answered: do not add new mijakets; prefer ։ (two sentences) or ՝.
 - Also see `_learnings/2026-09-07-0243_glossary-changed-terms-invert-instinct.md`: the ⚠ rows of
   the focused glossary deliberately go against instinct.
 
+### T2. Everyday probability words (owner-confirmed terms)
+
+- Coin sides: **«ղուշ» / «գիր»**, never «գերբ» (owner, 2026-11-10). Which side is which: see A36
+  (likely heads = ղուշ). Prefer «քանի անգամ է ընկել ղուշ» over a plural noun.
+- Confidence: high for the words, needs native check for the mapping.
+
 ### W1. Openers built on an adverbial participle (needs native check)
 
 - «Չլինելով բարդ՝ գրաֆների հիմնական գաղափարները շատ օգտակար են» (my draft) -> «Գրաֆների հիմնական

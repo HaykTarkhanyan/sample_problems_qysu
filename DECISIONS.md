@@ -2,6 +2,19 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 13. Probability pages: solve first, predict first, two representations, oral-exam section
+- **Date** 2026-11-10 - **status** active (user: "do stuff that you think will help" after the pedagogy review)
+- **Why** Two reviews of lecture 10 (author + an independent cold read, `probability/reviews/`) agreed on the
+  main gaps: visible solutions invite reading instead of solving; widgets without a question become
+  decoration; F alone hides where the probability sits; nothing served the oral final (40%). So every page:
+  exercises hidden by default with a two-step reveal (`<body data-try-default data-two-step>`, answer first);
+  a `.predict` question before each main widget; a mass panel (`PROB.massPanel`) under graphs of F; a visible
+  worked example for the homework-type computation; a typical-mistakes box; and a closing "summary + oral
+  exam checklist + sample oral questions + what's next" section.
+- **Alternatives rejected** Keeping solutions visible (the discrete-site default; fine for reference sheets,
+  wrong for practice); free-exploration widgets only.
+- **What would change this** Student feedback that hidden solutions or predict prompts get in the way.
+
 ## 12. Probability pages: original explanations; the problem book is cited by problem number only
 - **Date** 2026-11-10 - **status** active
 - **Why** The course books (Sevastyanov, Gnedenko, Borovkov, the Aharonyan/Israelyan problem book) are

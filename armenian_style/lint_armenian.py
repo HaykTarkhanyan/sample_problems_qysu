@@ -112,7 +112,7 @@ def article_hits(line):
         word = m.group(1) + "ը"
         if m.group(1) == "" and not re.search(r"(?:-|X )$", line[:m.start()]):
             continue  # bare «ը» not attached to a word or math token
-        if word in NOT_ARTICLE:
+        if word.lower() in NOT_ARTICLE:  # sentence-initial «Խառը» too
             continue
         hits.append(f"{word} {m.group(2)}")
     return hits
