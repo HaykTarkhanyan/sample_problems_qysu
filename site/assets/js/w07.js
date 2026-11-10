@@ -180,7 +180,8 @@
         note += ms.length === 2
           ? `իսկ հաջողությունների ամենահավանական թվերը երկուսն են՝ $${ms[0]}$ և $${ms[1]}$ ($P_{${n}}(${ms[0]})${pTex(bernP(n, ms[0], p))}$)։`
           : `իսկ հաջողությունների ամենահավանական թիվը՝ $k^*=${ms[0]}$ ($P_{${n}}(${ms[0]})${pTex(bernP(n, ms[0], p))}$)։`;
-        if (ms[0] !== (p > 0.5 ? n : 0) || ms.length === 2) note += " Առանձին հաջորդականությունների և պատահույթների «ամենահավանականը» տարբեր են։";
+        // only when the count of the most probable sequence (n or 0) is not itself a most probable number
+        if (!ms.includes(p > 0.5 ? n : 0)) note += " Առանձին հաջորդականությունների և պատահույթների «ամենահավանականը» տարբեր են։";
       }
       caption($("note"), note);
     }
@@ -257,7 +258,10 @@
     function report() {
       const ms = modes(n, p);
       if (!N) {
-        caption($("out"), `Բաց թողեք գնդիկներ։ $n=${n}$, $p=${numTex(p, 2)}$ դեպքում ամենահավանական խցիկը $k^*=${ms.join("$ և $")}$-ն է՝ $P_{${n}}(${ms[0]})${pTex(bernP(n, ms[0], p))}$։`);
+        const pm = pTex(bernP(n, ms[0], p));
+        caption($("out"), `Բաց թողեք գնդիկներ։ $n=${n}$, $p=${numTex(p, 2)}$ դեպքում ` + (ms.length === 2
+          ? `ամենահավանական խցիկները երկուսն են՝ $k^*=${ms[0]}$ և $k^*=${ms[1]}$ ($P_{${n}}(${ms[0]})=P_{${n}}(${ms[1]})${pm}$)։`
+          : `ամենահավանական խցիկը $k^*=${ms[0]}$-ն է՝ $P_{${n}}(${ms[0]})${pm}$։`));
         return;
       }
       const k = last.reduce((a, b) => a + b, 0);
@@ -266,7 +270,7 @@
       let t = `Գնդիկներ՝ $${N}$։ Վերջին գնդիկի ճանապարհը՝ ${last.join("")} ($1$՝ աջ, $0$՝ ձախ). այն $${k}$ անգամ թեքվել է աջ և ընկել $k=${k}$ խցիկը։ ` +
         `Այդ ճանապարհի հավանականությունը $p^{${k}}q^{${n - k}}$ է, իսկ այդ խցիկ տանող ճանապարհների թիվը՝ $C_{${n}}^{${k}}=${binom(n, k)}$։ ` +
         `Խցիկում գնդիկների բաժինը՝ $${numTex(counts[k] / N, 3)}$, իսկ $P_{${n}}(${k})${pTex(bernP(n, k, p))}$։ Բաժինների և $P_n(k)$ թվերի ամենամեծ տարբերությունը $${numTex(dev, 3)}$ է`;
-      t += N < 2000 ? " (գնդիկներն ավելացնելիս այն փոքրանում է)։" : "։";
+      t += N < 2000 ? " (գնդիկներն ավելացնելիս այն, որպես կանոն, փոքրանում է)։" : "։";
       if (N >= GALTON_MAX) t += ` Գնդիկների առավելագույն թիվը՝ $${Q.fmtTex(GALTON_MAX)}$։`;
       caption($("out"), t);
     }
@@ -311,6 +315,14 @@
   const P_LIST = [0.01, 0.02, 1 / 36, 0.05, 0.1, 1 / 6, 0.2, 0.25, 0.3, 0.5];
   const G_LIST = [0.5, 0.8, 0.9, 0.95, 0.99, 0.999];
   const NICE = [6, 10, 15, 20, 30, 40, 50, 80, 100, 150, 200, 300, 400, 500, 800, 1000, 1500];
+  /** Decimals (4 to 8) so that v < g still looks smaller than g after rounding (0,94996, not 0,95). */
+  function belowDig(v, g) { let d = 4; while (d < 8 && Number(v.toFixed(d)) >= g) d++; return d; }
+  /** Decimals (2 to 6) so that a non-integer ratio is not shown as a whole number (8,004, not 8). */
+  function ratioDig(r) {
+    let d = 2;
+    while (d < 6 && Math.abs(r - Math.round(r)) > 1e-9 && Number(r.toFixed(d)) === Math.round(r)) d++;
+    return d;
+  }
   const pLab = p => (p === 1 / 36 ? "\\tfrac1{36}" : p === 1 / 6 ? "\\tfrac16" : numTex(p, 2));
   const qLab = p => (p === 1 / 36 ? "\\tfrac{35}{36}" : p === 1 / 6 ? "\\tfrac56" : numTex(1 - p, 2));
   function wAtLeast() {
@@ -340,12 +352,14 @@
       pl.dot(ns, ys, true, "orange", pl.over, 4.6);
       pl.text(ns, ys, `n* = ${ns}`, { dx: ns < nMax * 0.7 ? 8 : -62, dy: g > 0.9 ? 22 : -8, "font-size": 13 });
       pl.text(nMax, g, "γ", { dx: -14, dy: -6, class: "m", "font-size": 13 });
-      Q.tex($("formula"), `\\begin{gathered}1-q^n\\ge${numTex(g, 3)}\\\\ \\iff q^n\\le${numTex(1 - g, 3)}\\\\ \\iff n\\ge\\dfrac{\\ln${numTex(1 - g, 3)}}{\\ln${qLab(p)}}\\approx${numTex(ratio, 2)},\\\\ n^*=${ns}.\\end{gathered}`, true);
+      Q.tex($("formula"), `\\begin{gathered}1-q^n\\ge${numTex(g, 3)}\\\\ \\iff q^n\\le${numTex(1 - g, 3)}\\\\ \\iff n\\ge\\dfrac{\\ln${numTex(1 - g, 3)}}{\\ln${qLab(p)}}\\approx${numTex(ratio, ratioDig(ratio))},\\\\ n^*=${ns}.\\end{gathered}`, true);
+      const prev = 1 - Math.pow(q, ns - 1);
       let note = ns > 1
-        ? `Ստուգում՝ $1-q^{${ns - 1}}\\approx${numTex(1 - Math.pow(q, ns - 1), 4)}\\lt${numTex(g, 3)}$, իսկ $1-q^{${ns}}\\approx${numTex(ys, 4)}$։ `
+        ? `Ստուգում՝ $1-q^{${ns - 1}}\\approx${numTex(prev, belowDig(prev, g))}\\lt${numTex(g, 3)}$, իսկ $1-q^{${ns}}\\approx${numTex(ys, 4)}$։ `
         : `Այստեղ բավական է մեկ փորձ՝ $1-q=p\\ge\\gamma$։ `;
       if (nw < ns) note += `Սխալ «$np\\ge\\gamma$» պայմանը կտար $n=${nw}$, բայց այդքան փորձում գոնե մեկ հաջողության հավանականությունն ընդամենը $${numTex(1 - Math.pow(q, nw), 3)}$ է։`;
-      else note += "Այս դեպքում $np$-ն և $1-q^n$-ը տալիս են նույն պատասխանը, քանի որ $n=1$ դեպքում դրանք հավասար են։";
+      else if (ns === 1) note += "Այս դեպքում $np$-ն և $1-q^n$-ը տալիս են նույն պատասխանը, քանի որ $n=1$ դեպքում դրանք հավասար են։";
+      else note += `Այս դեպքում սխալ «$np\\ge\\gamma$» պայմանը պատահաբար տալիս է նույն պատասխանը՝ $n=${ns}$, բայց $np$ թիվը գոնե մեկ հաջողության հավանականությունը չէ՝ $n=${ns}$ դեպքում $np=${numTex(ns * p, 3)}$, իսկ $1-q^{${ns}}\\approx${numTex(ys, 3)}$։`;
       caption($("note"), note);
     }
     sp.addEventListener("input", draw);
@@ -544,5 +558,5 @@
 
   Q.ready(() => { wSeq(); wGalton(); wAtLeast(); wPoly(); figML(); wQuiz(); });
   window.W07 = { binom, seqProb, bernP, modes, minTrials, wrongTrials, multiCoef, multiP, sequencesWithK, galtonPath, pTex,
-    P_LIST, G_LIST, DICE, QUIZ, mlMaxDiff, phi };
+    belowDig, ratioDig, P_LIST, G_LIST, DICE, QUIZ, mlMaxDiff, phi };
 })();
