@@ -576,6 +576,9 @@
       const lines = [isMin
         ? `Մինիմումը ցուցչային է $\\lambda_1+\\lambda_2=${numTex(l1 + l2, 1)}$ պարամետրով. հաջորդական շղթան $${X}$ տարուց ավելի է աշխատում $\\approx${numTex(v, 3)}$ հավանականությամբ։`
         : `Զուգահեռ շղթան $${X}$ տարուց շուտ է փչանում $\\approx${numTex(v, 3)}$ հավանականությամբ։ Մաքսիմումի խտությունը $0$-ում $0$ է. երկու լամպի միանգամից արագ փչանալը քիչ հավանական է։`];
+      // the orange area for the minimum runs only up to the plot edge x = 5
+      const tail = MM.minSurv(5, l1, l2);
+      if (isMin && tail > 0.005) lines.push(`Նկարը հասնում է միայն $x=5$-ին, ուստի $P(\\min\\ge5)\\approx${numTex(tail, 3)}$ մասը նարնջագույն մակերեսում չի երևում։`);
       if (sim) {
         const share = sim.filter(([a, b]) => (isMin ? Math.min(a, b) >= x : Math.max(a, b) < x)).length / sim.length;
         const first = sim.filter(([a, b]) => a < b).length / sim.length;

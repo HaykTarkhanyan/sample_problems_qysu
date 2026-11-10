@@ -19,6 +19,8 @@
     return k === 0 ? "0" : `${k < 0 ? "-" : ""}\\tfrac{${Math.abs(k)}}{36}`;
   };
   const nt = v => (v === Infinity ? "+\\infty" : numTex(v, 2));
+  /** Separator between the arguments of F: "," normally, ";\," when a decimal comma would make "F(0,5,1)" ambiguous. */
+  const sepOf = (...a) => (a.some(s => s.includes("{,}")) ? ";\\," : ",");
   const snapTo = (v, s) => Number((Math.round(v / s) * s).toFixed(4));
   /** "1/6", "0,25", "0.25", "1" -> number (NaN if not a number). */
   function parseNum(s) {
@@ -189,7 +191,7 @@
         else if (s <= u) tail = `${nt(s)}^2=${ftx(val)}`;
         else tail = `2\\cdot${nt(u)}\\cdot${nt(s)}-${nt(u)}^2=${ftx(val)}`;
       }
-      Q.tex($("formula"), `\\begin{aligned}&F(${X},${Y})\\\\&=P(\\xi\\lt ${X},\\ \\eta\\lt ${Y})\\\\&=${tail}\\end{aligned}`, true);
+      Q.tex($("formula"), `\\begin{aligned}&F(${X}${sepOf(X, Y)}${Y})\\\\&=P(\\xi\\lt ${X},\\ \\eta\\lt ${Y})\\\\&=${tail}\\end{aligned}`, true);
       // notes
       const notes = [];
       if (key === "tri" && val > 0) notes.push("Նարնջագույն եռանկյան կամ բազմանկյան մակերեսը $S$ է, և $F(x,y)=2S$։");
@@ -291,10 +293,10 @@
       const f = m.fmt, Fn = key === "G" ? "G" : "F";
       const vals = [m.F(b1, b2), m.F(a1, b2), m.F(b1, a2), m.F(a1, a2)];
       const inc = rectInc(m.F, a1, b1, a2, b2);
-      const A1 = nt(a1), B1 = nt(b1), A2 = nt(a2), B2 = nt(b2);
+      const A1 = nt(a1), B1 = nt(b1), A2 = nt(a2), B2 = nt(b2), sp = sepOf(A1, B1, A2, B2);
       // symbols in the first line (the numbers are next to the sliders), so that no line is wider than a phone
       const head = key === "G" ? "" : "&P(a_1\\le\\xi\\lt b_1,\\ a_2\\le\\eta\\lt b_2)\\\\";
-      Q.tex($("formula"), `\\begin{aligned}${head}&${key === "G" ? "" : "="}${Fn}(${B1},${B2})-${Fn}(${A1},${B2})\\\\&\\quad-${Fn}(${B1},${A2})+${Fn}(${A1},${A2})\\\\&=${f(vals[0])}-${f(vals[1])}\\\\&\\quad-${f(vals[2])}+${f(vals[3])}\\\\&=${f(inc)}\\end{aligned}`, true);
+      Q.tex($("formula"), `\\begin{aligned}${head}&${key === "G" ? "" : "="}${Fn}(${B1}${sp}${B2})-${Fn}(${A1}${sp}${B2})\\\\&\\quad-${Fn}(${B1}${sp}${A2})+${Fn}(${A1}${sp}${A2})\\\\&=${f(vals[0])}-${f(vals[1])}\\\\&\\quad-${f(vals[2])}+${f(vals[3])}\\\\&=${f(inc)}\\end{aligned}`, true);
       const chk = $("check");
       if (key === "G") {
         chk.className = "quiz-fb " + (inc < 0 ? "bad" : "ok");
@@ -306,7 +308,7 @@
         const direct = m.rect(a1, b1, a2, b2);
         chk.innerHTML = key === "dice"
           ? `<span class="check-label">Ստուգում։</span> Ուղղանկյան մեջ ընկած կանաչ կետերի զանգվածների ուղղակի գումարը՝ $${t36(direct)}$։`
-          : `<span class="check-label">Ստուգում։</span> Ուղղանկյան և $T$-ի ընդհանուր մասի մակերեսը $S=${ftx(direct / 2)}$ է, և $2S=${ftx(direct)}$։`;
+          : `<span class="check-label">Ստուգում։</span> Ուղղանկյան և $T$-ի ընդհանուր մասի մակերեսը $S=${P.frac(direct / 2, 64) ? fracTex(direct / 2, 64) : numTex(direct / 2, 5)}$ է, և $2S=${ftx(direct)}$։`;
       }
       Q.math(chk);
     }
@@ -407,7 +409,7 @@
       msg.className = ""; msg.innerHTML = "";
       let Fv = 0;
       T.xs.forEach((xi, i) => T.ys.forEach((yj, j) => { if (xi < x && yj < y) Fv += vals[i][j]; }));
-      let tex = `\\begin{aligned}&F(${X},${Y})\\\\&=P(\\xi\\lt ${X},\\ \\eta\\lt ${Y})`;
+      let tex = `\\begin{aligned}&F(${X}${sepOf(X, Y)}${Y})\\\\&=P(\\xi\\lt ${X},\\ \\eta\\lt ${Y})`;
       if (y === Infinity && x !== Infinity) tex += `\\\\&=P(\\xi\\lt ${X})=F_\\xi(${X})`;
       if (x === Infinity && y !== Infinity) tex += `\\\\&=P(\\eta\\lt ${Y})=F_\\eta(${Y})`;
       tex += `\\\\&=${fmtP(Fv)}\\end{aligned}`;
@@ -484,19 +486,19 @@
     { id: "rect", label: "Ոչ՝ ուղղանկյան պայմանն է խախտված" }
   ];
   const QUIZ = [
-    { tex: "F(x,y)=\\Phi(x)\\,\\Phi(y)", ans: "yes",
-      expl: "Այո։ Սա միավոր քառակուսու մեջ նետված կետի կոորդինատների համատեղ բաշխման ֆունկցիան է՝ $P(U\\lt x,\\ V\\lt y)$-ն հավասար է $[0,\\Phi(x)]\\times[0,\\Phi(y)]$ ուղղանկյան մակերեսին։ Մարգինալների արտադրյալ լինելը նշանակում է անկախություն (դաս 16)։" },
+    { tex: "F(x,y)=F_U(x)\\,F_U(y)", ans: "yes",
+      expl: "Այո։ Սա միավոր քառակուսու մեջ նետված կետի կոորդինատների համատեղ բաշխման ֆունկցիան է՝ $P(U\\lt x,\\ V\\lt y)$-ն հավասար է $[0,F_U(x)]\\times[0,F_U(y)]$ ուղղանկյան մակերեսին։ Մարգինալների արտադրյալ լինելը նշանակում է անկախություն (դաս 16)։" },
     { tex: "G(x,y)=\\begin{cases}1, & x+y\\gt0\\\\ 0, & x+y\\le0\\end{cases}", ans: "rect",
       expl: "Ոչ։ (1)-(3)-ը տեղի ունեն, բայց $[0,1)\\times[0,1)$ քառակուսու համար $G(1,1)-G(0,1)-G(1,0)+G(0,0)=1-1-1+0=-1\\lt0$։" },
-    { tex: "F(x,y)=\\Phi(x)+\\Phi(y)", ans: "lim",
-      expl: "Ոչ։ $x\\to-\\infty$ դեպքում $F(x,y)\\to\\Phi(y)$, որը $y\\gt0$ դեպքում $0$ չէ, իսկ $x,y\\to+\\infty$ դեպքում $F\\to2$։ Ուղղանկյան աճն այստեղ միշտ $0$ է, այնպես որ խախտված են միայն սահմանները։" },
+    { tex: "F(x,y)=F_U(x)+F_U(y)", ans: "lim",
+      expl: "Ոչ։ $x\\to-\\infty$ դեպքում $F(x,y)\\to F_U(y)$, որը $y\\gt0$ դեպքում $0$ չէ, իսկ $x,y\\to+\\infty$ դեպքում $F\\to2$։ Ուղղանկյան աճն այստեղ միշտ $0$ է, այնպես որ խախտված են միայն սահմանները։" },
     { tex: "F(x,y)=\\begin{cases}1-e^{-x-y}, & x,y\\gt0,\\\\ 0, & \\text{այլ դեպքում}\\end{cases}", ans: "rect",
       expl: "Ոչ։ Ֆունկցիան չնվազող է, ձախից անընդհատ է և ունի ճիշտ սահմաններ, բայց դրական քառորդում ուղղանկյան աճը $-(e^{-a_1}-e^{-b_1})(e^{-a_2}-e^{-b_2})\\lt0$ է։ Օրինակ՝ $[1,2)\\times[1,2)$-ի համար այն մոտ $-0{,}054$ է։" },
     { tex: "F(x,y)=\\begin{cases}1, & x\\ge0,\\ y\\ge0,\\\\ 0, & \\text{այլ դեպքում}\\end{cases}", ans: "cont",
       expl: "Ոչ (մեր պայմանավորվածությամբ)։ $F(0,0)=1$, իսկ $x\\to0-0$ դեպքում $F(x,0)=0$, ուստի ըստ $x$-ի ձախից անընդհատ չէ։ Սա $\\xi=\\eta=0$ վեկտորի $P(\\xi\\le x,\\ \\eta\\le y)$ ֆունկցիան է (Սևաստյանովի պայմանավորվածությունը)։ Մեր պայմանավորվածությամբ նույն վեկտորի բաշխման ֆունկցիան $1$ է, երբ $x\\gt0$ և $y\\gt0$։" },
-    { tex: "F(x,y)=\\min\\bigl(\\Phi(x),\\,\\Phi(y)\\bigr)", ans: "yes",
-      expl: "Այո։ Եթե $U$-ն հավասարաչափ է $[0,1]$-ում, ապա $P(U\\lt x,\\ U\\lt y)=P\\bigl(U\\lt\\min(x,y)\\bigr)=\\min\\bigl(\\Phi(x),\\Phi(y)\\bigr)$, այսինքն՝ ստացանք $(U,U)$ վեկտորի բաշխման ֆունկցիան։ Ամբողջ հավանականությունը նստած է անկյունագծի վրա։" },
-    { tex: "F(x,y)=\\max\\bigl(\\Phi(x)+\\Phi(y)-1,\\ 0\\bigr)", ans: "yes",
+    { tex: "F(x,y)=\\min\\bigl(F_U(x),\\,F_U(y)\\bigr)", ans: "yes",
+      expl: "Այո։ Եթե $U$-ն հավասարաչափ է $[0,1]$-ում, ապա $P(U\\lt x,\\ U\\lt y)=P\\bigl(U\\lt\\min(x,y)\\bigr)=\\min\\bigl(F_U(x),F_U(y)\\bigr)$, այսինքն՝ ստացանք $(U,U)$ վեկտորի բաշխման ֆունկցիան։ Ամբողջ հավանականությունը նստած է անկյունագծի վրա։" },
+    { tex: "F(x,y)=\\max\\bigl(F_U(x)+F_U(y)-1,\\ 0\\bigr)", ans: "yes",
       expl: "Այո։ Սա $(U,1-U)$ վեկտորի բաշխման ֆունկցիան է՝ $P(U\\lt x,\\ 1-U\\lt y)=P(1-y\\lt U\\lt x)$։ Հավանականությունը նստած է $x+y=1$ հատվածի վրա։" }
   ];
   function wQuiz() {

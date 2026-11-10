@@ -260,14 +260,19 @@
       const small = prod && tot && coef <= 99999 && prod[1] <= 999999n && tot[1] <= 999999n;
       const last = small ? `=${Q.fmtTex(coef)}\\cdot${ratTex(prod)}=${ratTex(tot)}` + (tot[1] === 1n ? "" : `\\approx${approxTex(val)}`)
         : val === 0 ? "=0" : `\\approx${approxTex(val)}`;
-      Q.tex($("formula"), `\\begin{aligned}&P(\\xi_1=${ms[0]},\\ \\xi_2=${ms[1]},\\ \\xi_3=${m3})\\\\&=\\frac{${n}!}{${ms[0]}!\\,${ms[1]}!\\,${m3}!}\\,${powTex(p1, ms[0])}${powTex(p2, ms[1])}${powTex(p3, m3)}\\\\&${last}\\end{aligned}`, true);
+      // decimals get a \cdot between the powers (fractions are already in brackets)
+      const pows = [powTex(p1, ms[0]), powTex(p2, ms[1]), powTex(p3, m3)].join([p1, p2, p3].every(v => exact(v) && v > 0 && v < 1) ? "" : "\\cdot ");
+      Q.tex($("formula"), `\\begin{aligned}&P(\\xi_1=${ms[0]},\\ \\xi_2=${ms[1]},\\ \\xi_3=${m3})\\\\&=\\frac{${n}!}{${ms[0]}!\\,${ms[1]}!\\,${m3}!}\\,${pows}\\\\&${last}\\end{aligned}`, true);
       const marg = Array.from({ length: n + 1 }, (_, m) => T.cells.filter(c => c.m1 === m).reduce((s, c) => s + c.p, 0));
       const bin = P.pmf.binom(n, p1);
       P.bars($("bars"), { ks: marg.map((_, k) => k), ps: marg, overlay: bin, hl: new Set([sel.m1]), xlabel: "m", h: 210 });
       const mv = marg[sel.m1];
       Q.tex($("marg"), `\\begin{aligned}&P(\\xi_1=${sel.m1})=\\sum_{m_2=0}^{${n - sel.m1}}P(\\xi_1=${sel.m1},\\ \\xi_2=m_2)\\\\&=C_{${n}}^{${sel.m1}}\\,${powTex(p1, sel.m1)}\\bigl(1-${pTex(p1)}\\bigr)^{${n - sel.m1}}${exact(mv) ? "=" + vt(mv) : "\\approx" + approxTex(mv)}\\end{aligned}`, true);
-      const b = T.best;
-      html($("note"), `Ամենահավանական եռյակը՝ $(${b.m1},${b.m2},${b.m3})$, նրա հավանականությունը՝ $${rel(b.p) === "=" ? "" : "\\approx"}${vt(b.p)}$։ ` +
+      // all cells that tie with the maximum (e.g. three of them for equal p's and n = 4)
+      const b = T.best, top = T.cells.filter(c => Math.abs(c.p - b.p) <= 1e-9 * b.p), tri = c => `(${c.m1},${c.m2},${c.m3})`;
+      const head = top.length === 1 ? `Ամենահավանական եռյակը՝ $${tri(b)}$, նրա հավանականությունը՝`
+        : `Ամենահավանական եռյակները՝ $${top.map(tri).join(",\\ ")}$, նրանցից յուրաքանչյուրի հավանականությունը՝`;
+      html($("note"), `${head} $${rel(b.p) === "=" ? "" : "\\approx"}${vt(b.p)}$։ ` +
         `Համեմատեք $np_1,\\ np_2,\\ np_3$ թվերի հետ՝ $${numTex(n * p1, 2)},\\ ${numTex(n * p2, 2)},\\ ${numTex(n * p3, 2)}$։`);
     }
     draw();

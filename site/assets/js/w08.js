@@ -258,9 +258,11 @@
         vd.className = "quiz-fb ok";
         vd.innerHTML = "✓ $\\xi$-ն այս $\\mathcal F$-ի նկատմամբ <strong>պատահական մեծություն է</strong>՝ այն հաստատուն է ամեն ատոմի վրա, այնպես որ բոլոր $\\{\\xi\\lt x\\}$ բազմություններն ատոմների միավորումներ են։";
       } else {
-        const L = levels[bad], A = atoms.find(At => !inSigma(L.set, [At]));
+        // cite the row shown in the picture when it is a bad one, so the "red frame" pointer is true
+        const bi = sel >= 0 && !inSigma(levels[sel].set, atoms) ? sel : bad;
+        const L = levels[bi], A = atoms.find(At => !inSigma(L.set, [At]));
         vd.className = "quiz-fb bad";
-        vd.innerHTML = `✗ $\\xi$-ն այս $\\mathcal F$-ի նկատմամբ <strong>պատահական մեծություն չէ</strong>։ Օրինակ՝ $${intTex(L)}$ դեպքում $\\{\\xi\\lt x\\}=${setTex(L.set)}$, իսկ այն պարունակում է $${setTex(A)}$ ատոմի միայն մի մասը, հետևաբար $\\mathcal F$-ին չի պատկանում (նկարում՝ կարմիր շրջանակ)։`;
+        vd.innerHTML = `✗ $\\xi$-ն այս $\\mathcal F$-ի նկատմամբ <strong>պատահական մեծություն չէ</strong>։ Օրինակ՝ $${intTex(L)}$ դեպքում $\\{\\xi\\lt x\\}=${setTex(L.set)}$, իսկ այն պարունակում է $${setTex(A)}$ ատոմի միայն մի մասը, հետևաբար $\\mathcal F$-ին չի պատկանում${bi === sel ? " (նկարում՝ կարմիր շրջանակ)" : ""}։`;
       }
       Q.math(vd);
       // --- all the sets {xi < x} ---
