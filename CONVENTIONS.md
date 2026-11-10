@@ -141,8 +141,9 @@ widget, etc.).
 - One page per lecture week, `wNN-topic.html`, with page script `assets/js/wNN.js` loaded after
   `assets/js/prob.js` (shared: `PROB.makeDist`, `intervalProb`, `plot`, `drawF`, `onDrag`, `rng(509)`,
   `num`/`numTex` (decimal comma, `0{,}5` in TeX), `frac`/`fracTex`). Assets are `../assets/...`.
-- Convention: F(x) = P(ξ < x) (left-continuous), random variable ξ, F(x+0) for the right limit; pending
-  confirmation (DECISIONS #10). In HTML math write `\lt` / `\gt`, never raw `<` / `>`.
+- Convention: F(x) = P(ξ < x) (left-continuous), random variable ξ, F(x+0) for the right limit; confirmed
+  from a student's lecture notes (DECISIONS #10). Properties in the lecturer's order: 1) non-decreasing,
+  2) left-continuous, 3) limits. In HTML math write `\lt` / `\gt`, never raw `<` / `>`.
 - Levels of detail (DECISIONS #9): main text always open; `<details class="deep"><summary>Ճշգրիտ ձևակերպում
   և ապացույց</summary><div class="inner">...</div></details>` for proofs (header button `#deep-btn`);
   `<details class="extra"><summary>Ավելին՝ ...</summary><div class="inner">...</div></details>` for optional
@@ -159,6 +160,15 @@ widget, etc.).
   `#exam` section (one-table summary, oral-exam checklist with proof ideas and links, sample oral questions,
   what's next). Every widget gets a caption saying what the example is.
 - Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see `armenian_style/` A36 for which is which.
+- Probability terms fixed across pages (glossary first): countable additivity = «հաշվելի ադիտիվություն» /
+  «հաշվելիորեն ադիտիվ» (not «գումարելիություն»; «գումարելի» only for a summand); frequency =
+  «հաճախություն»; convolution = «փաթույթ»; mutual / pairwise independence = «ըստ համախմբության անկախ» /
+  «զույգ առ զույգ անկախ»; Lebesgue decomposition = «Լեբեգի վերլուծություն»; singular = «սինգուլյար» (course
+  syllabus); marginal = «մարգինալ (միաչափ)»; distribution law = «բաշխման օրենք».
+- Page file names: `site/probability/wNN-topic.html` with two-digit NN (`w01-events`, `w02-axioms`, `w03-continuity`,
+  `w04-classical-geometric`, `w05-conditional-independence`, `w06-total-bayes`, `w07-bernoulli`,
+  `w08-random-variable`, `w10-cdf-properties`, `w11-discrete`,
+  `w12-continuous`, `w13-singular`, `w14-random-vectors`, `w15-multivariate-types`, `w16-independence`).
 - Shared distribution code: `PROB.pmf.binom / poisson / geom (k >= 1) / hyper` and `PROB.bars(host, {ks, ps,
   overlay, hl})` for pmf bar charts with an overlay of red dots (comparisons, simulations).
 - Probability pages use the die favicon (blue rounded square, white-orange-white pips); discrete pages and the
@@ -168,4 +178,5 @@ widget, etc.).
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
   every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
-  themes (no `.katex-display` overflow on phones), and one independent math review.
+  themes (no `.katex-display` overflow on phones), and one independent math review (lectures 10-11 had it;
+  1-8 and 12-16 were published without it by the owner's choice, DECISIONS #13 revisited).

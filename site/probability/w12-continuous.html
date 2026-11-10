@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Ccircle cx=%279.5%27 cy=%279.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%273.6%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2722.5%27 cy=%2722.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<title>Դասախոսություն 12 - Բացարձակ անընդհատ բաշխումներ</title>
+<meta name="description" content="Հավանականությունների տեսություն, դասախոսություն 12՝ բացարձակ անընդհատ բաշխումներ, խտություն, հավասարաչափ, ցուցչային, նորմալ և Կոշիի բաշխումներ, պատահական մեծության ֆունկցիա։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/w12.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Հավանականությունների տեսություն</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Դասախոսություն 12</div>
+    <h1>Բացարձակ անընդհատ բաշխումներ</h1>
+    <p class="subtitle">Խտություն, հավանականությունը՝ որպես մակերես, և հիմնական բաշխումները՝ հավասարաչափ, ցուցչային, նորմալ և Կոշիի</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս դասի մասին</a></li>
+        <li><a href="#density">Խտություն և բացարձակ անընդհատ բաշխում</a></li>
+        <li><a href="#example">Լուծված օրինակ</a></li>
+        <li><a href="#hist">Խտությունը՝ նմուշից</a></li>
+        <li><a href="#uniform">Հավասարաչափ բաշխում</a></li>
+        <li><a href="#exponential">Ցուցչային բաշխում</a></li>
+        <li><a href="#normal">Նորմալ բաշխում</a></li>
+        <li><a href="#cauchy">Կոշիի բաշխում</a></li>
+        <li><a href="#others">Լապլասի և Սիմպսոնի բաշխումներ</a></li>
+        <li><a href="#functions">Պատահական մեծության ֆունկցիա</a></li>
+        <li><a href="#which">Ո՞ր բաշխումն է</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+        <li><a href="#book">Խնդրագրքի խնդիրներ</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս դասի մասին</h2></summary>
+<div class="sec-body">
+<p>10-րդ դասում տեսանք, որ բաշխման ֆունկցիան կարող է աճել երկու եղանակով՝ թռիչքներով և անընդհատ։ 11-րդ դասում
+դիտարկեցինք դիսկրետ բաշխումները, որոնց $F$-ն աճում է միայն թռիչքներով։ Այս դասում հակառակ դեպքն է՝ թռիչքներ չկան,
+և հավանականությունը «քսված» է առանցքի վրա, ինչպես ավազի բարակ շերտ։ Որտեղ շերտն ավելի հաստ է, այնտեղ $\xi$-ն ավելի
+հաճախ է հայտնվում։ Շերտի հաստությունը կոչվում է <strong>խտություն</strong>, իսկ միջակայքում հայտնվելու
+հավանականությունն այդ միջակայքի վրայի ավազի քանակն է, այսինքն՝ խտության գրաֆիկի տակ ընկած մակերեսը։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Հավանականությունը մակերես է՝</strong> $P(a\le\xi\lt b)=\int_a^b p(x)\,dx$, այսինքն՝ խտության գրաֆիկի տակ
+  $a$-ից մինչև $b$ ընկած մակերեսը։</li>
+  <li><strong>$F$-ը խտության ինտեգրալն է, իսկ խտությունը՝ $F$-ի ածանցյալը՝</strong> $F(x)=\int_{-\infty}^x p(t)\,dt$ և
+  $p=F'$ ($p$-ի անընդհատության կետերում)։</li>
+  <li><strong>Խտության արժեքը հավանականություն չէ՝</strong> $P(\xi=x)=0$ ամեն $x$-ի համար, իսկ $p(x)$-ը կարող է
+  $1$-ից մեծ լինել։ Այն «հավանականություն է միավոր երկարության վրա»՝ $P(x\le\xi\lt x+h)\approx p(x)\,h$։</li>
+</ol>
+</div>
+<div class="note"><strong>Պայմանավորվածություններ։</strong> Ինչպես նախորդ դասերում, $F(x)=P(\xi\lt x)$։ Խտություն ունեցող
+բաշխման $F$-ն անընդհատ է, այնպես որ $P(\xi\le x)=F(x)$ նույնպես, և այս դասում երկու պայմանավորվածությունները համընկնում
+են։ Խտությունը նշանակում ենք $p(x)$ (ինչպես Բ. Սևաստյանովի դասագրքում), իսկ դասընթացի խնդրագրքում այն $f(x)$ է։
+Ուշադրություն դարձրեք նաև նորմալ բաշխման աղյուսակին՝ խնդրագրքի $\Phi$-ն տարբերվում է այս էջի $\Phi$-ից $\tfrac12$-ով
+(<a href="#normal">մանրամասները</a>)։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="density" open>
+<summary><h2>Խտություն և բացարձակ անընդհատ բաշխում</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>$\xi$ պատահական մեծությունը (և նրա բաշխումը) կոչվում է <strong>բացարձակ անընդհատ</strong>, եթե գոյություն ունի
+$p(x)\ge0$ ֆունկցիա, որի համար ամեն իրական $x$-ի դեպքում
+$$F_\xi(x)=\int_{-\infty}^{x}p(t)\,dt.$$
+$p$-ն կոչվում է $\xi$-ի <strong>խտության ֆունկցիա</strong> կամ, կարճ, <strong>խտություն</strong>։</p>
+</div>
+<p class="muted">Սևաստյանովի դասագրքում սահմանումը տրված է միջակայքերով՝ ամեն $x_1\lt x_2$-ի համար
+$P(x_1\lt\xi\lt x_2)=\int_{x_1}^{x_2}p(x)\,dx$։ Երկու սահմանումները համարժեք են (տե՛ս ներքևի 2-րդ և 3-րդ
+հատկությունները)։</p>
+
+<p>Սահմանումից ստացվում են հիմնական հատկությունները՝</p>
+<ol>
+  <li><strong>Նորմավորում՝</strong> $\int_{-\infty}^{+\infty}p(x)\,dx=1$, քանի որ $F(+\infty)=1$։ Այսինքն՝ խտության
+  գրաֆիկի տակ ընկած ամբողջ մակերեսը $1$ է։</li>
+  <li><strong>Միջակայքի հավանականությունը մակերես է՝</strong> $P(a\le\xi\lt b)=F(b)-F(a)=\int_a^b p(x)\,dx$։</li>
+  <li><strong>$F$-ն անընդհատ է, և ամեն կետի հավանականությունը զրո է՝</strong> $P(\xi=x)=F(x+0)-F(x)=0$։ Հետևաբար,
+  միջակայքի ծայրակետերը նշանակություն չունեն՝ $P(a\le\xi\lt b)=P(a\lt\xi\lt b)=P(a\le\xi\le b)=P(a\lt\xi\le b)$։</li>
+  <li><strong>Խտությունը $F$-ի ածանցյալն է՝</strong> $p$-ի անընդհատության յուրաքանչյուր կետում $F'(x)=p(x)$։ Եթե $F$-ը
+  տրված է կտոր առ կտոր բանաձևով, $p$-ն ստանում ենք ամեն կտորն ածանցելով. կտորների միացման կետերում $p$-ի արժեքը
+  կարելի է վերցնել կամայական։</li>
+</ol>
+<p>Ճիշտ է նաև հակառակը՝ ցանկացած $p(x)\ge0$ ֆունկցիա, որի ինտեգրալն ամբողջ առանցքով $1$ է, ինչ-որ պատահական մեծության
+խտություն է։ Իսկապես, $F(x)=\int_{-\infty}^x p(t)\,dt$ ֆունկցիան չնվազող է, անընդհատ, և նրա սահմաններն են $0$ և $1$,
+այնպես որ 10-րդ դասի հակադարձ թեորեմով այն բաշխման ֆունկցիա է։ Այսպիսով՝ երբ պահանջվում է գտնել $c$ հաստատունը, որի
+դեպքում $p$-ն խտություն է, պետք է ստուգել <em>երկու</em> պայման՝ $p\ge0$ և $\int p=1$։</p>
+
+<div class="box idea"><div class="box-title">Խտության արժեքը հավանականություն չէ</div>
+<p>$p(x)$-ը կարելի է համեմատել ձողի գծային խտության հետ (կիլոգրամ մետրի վրա)։ Ձողի մեկ կետի զանգվածը զրո է, բայց $x$
+կետի մոտ $h$ երկարությամբ փոքր կտորի զանգվածը մոտավորապես $p(x)\,h$ է։ Նույնը՝ հավանականության համար՝
+$$P(x\le\xi\lt x+h)\approx p(x)\,h,$$
+երբ $h$-ը փոքր է ($p$-ի անընդհատության կետերում)։ Ուրեմն $p(x)$-ը հավանականություն է միավոր երկարության վրա։ Այն
+կարող է լինել $1$-ից մեծ (եթե հավանականությունը կենտրոնացած է կարճ միջակայքում) և նույնիսկ անսահմանափակ, միայն թե
+ամբողջ մակերեսը $1$ լինի։</p>
+</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $\xi$-ի խտությունը $[0,\tfrac12]$ միջակայքում $p(x)=2$ է, իսկ նրանից դուրս՝ $0$։ Ինչի՞
+է հավասար $P(\xi=0{,}3)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$0$</button><button class="btn" type="button">$2$</button><button class="btn" type="button">այդպիսի խտություն չի լինում, քանի որ $2\gt1$</button></div>
+<div class="predict-why">$0$։ Բացարձակ անընդհատ մեծության համար ամեն կետի հավանականությունը զրո է։ $2$-ը խտության
+արժեքն է, ոչ թե հավանականություն. այն ցույց է տալիս, որ, օրինակ, $P(0{,}3\le\xi\lt0{,}31)=2\cdot0{,}01=0{,}02$։ Իսկ
+$p$-ն իսկապես խտություն է՝ $p\ge0$, և ուղղանկյան մակերեսը $2\cdot\tfrac12=1$ է։ Ստուգեք ներքևի նկարում՝ ընտրեք
+«Հավասարաչափ [0, 1/2]»։</div>
+</div>
+
+<div class="widget" id="w-area">
+  <div class="widget-head">Մակերեսը խտության տակ և $F$-ի աճը</div>
+  <p class="widget-hint">Վերևում խտությունն է, ներքևում՝ բաշխման ֆունկցիան։ Քաշեք $a$ (կարմիր) և $b$ (նարնջագույն)
+  կետերը ցանկացած նկարի վրա կամ օգտվեք սահիչներից։ Նարնջագույն մակերեսը վերևում հավասար է կանաչ հատվածի երկարությանը
+  ներքևում, այսինքն՝ $F(b)-F(a)$-ին։ Նկատեք, որ խտության արժեքը կարող է $1$-ից մեծ լինել, իսկ մակերեսը՝ ոչ։ Ծայրակետերը
+  նշանակություն չունեն՝ $[a,b)$, $(a,b)$, $[a,b]$ և $(a,b]$ միջակայքերի հավանականությունները նույնն են։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="widget-out muted" data-out="cap"></div>
+  <div data-out="pdf"></div>
+  <div data-out="cdf"></div>
+  <div class="slider-row"><span>$a$</span><input type="range" data-in="a" aria-label="a"><span>$b$</span><input type="range" data-in="b" aria-label="b"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="note"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Պնդում 1։</strong> Եթե $\xi$-ն ունի $p$ խտություն, ապա $F$-ն անընդհատ է, և ամեն $x$-ի համար $P(\xi=x)=0$։</p>
+<p>Ամեն $h\gt0$-ի համար $0\le F(x+h)-F(x)=\int_x^{x+h}p(t)\,dt$։ Երբ $h\to0$, աջ մասը ձգտում է զրոյի (ինտեգրալի
+անընդհատությունն ըստ վերին սահմանի), ուստի $F(x+0)=F(x)$։ Ձախից $F$-ն անընդհատ է միշտ (10-րդ դաս)։ Ուրեմն $F$-ն
+անընդհատ է, և $P(\xi=x)=F(x+0)-F(x)=0$։</p>
+<p><strong>Պնդում 2։</strong> Եթե $p$-ն անընդհատ է $x_0$ կետում, ապա $F'(x_0)=p(x_0)$։</p>
+<p>Տրված $\varepsilon\gt0$-ի համար գտնենք այնպիսի $\delta\gt0$, որ $|t-x_0|\lt\delta$ դեպքում $|p(t)-p(x_0)|\lt\varepsilon$։
+Այդ դեպքում $0\lt|h|\lt\delta$-ի համար
+$$\begin{aligned}&\frac{F(x_0+h)-F(x_0)}{h}-p(x_0)\\&\ =\frac1h\int_{x_0}^{x_0+h}\bigl(p(t)-p(x_0)\bigr)\,dt,\end{aligned}$$
+և ինտեգրալի տակ $|p(t)-p(x_0)|\lt\varepsilon$, այնպես որ աջ մասի բացարձակ արժեքը չի գերազանցում $\varepsilon$-ը։
+Հետևաբար, $\tfrac{F(x_0+h)-F(x_0)}{h}\to p(x_0)$, երբ $h\to0$։ ∎</p>
+</div></details>
+
+<details class="extra"><summary>Ավելին՝ խտությունը միակը չէ, և ոչ ամեն անընդհատ $F$ ունի խտություն</summary><div class="inner">
+<p>Եթե $p$-ն փոխենք վերջավոր թվով կետերում (ավելի ընդհանուր՝ զրո երկարությամբ բազմության վրա), ինտեգրալները չեն փոխվի,
+և նոր ֆունկցիան նույնպես նույն $\xi$-ի խտություն է։ Դրա համար էլ առանձին կետում խտության արժեքը հավանականային
+իմաստ չունի. իմաստ ունեն միայն ինտեգրալները։ Ավելին՝ ցանկացած բորելյան $B$ բազմության համար
+$P(\xi\in B)=\int_B p(x)\,dx$, որտեղ ինտեգրալը Լեբեգի ինտեգրալն է։</p>
+<p>Մյուս կողմից՝ $F$-ի անընդհատությունը դեռ չի նշանակում, որ խտություն կա։ 13-րդ դասում կտեսնենք Կանտորի ֆունկցիան՝
+անընդհատ բաշխման ֆունկցիա, որը ոչ մի խտությամբ չի ներկայացվում (սինգուլյար բաշխում)։ Այսինքն՝ «բացարձակ» բառն
+այստեղ ավելորդ չէ։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="example" open>
+<summary><h2>Լուծված օրինակ՝ կտոր առ կտոր տրված խտություն</h2></summary>
+<div class="sec-body">
+<p>Տնային խնդիրների մեծ մասն այսպիսին է։ Դիցուք
+$$p(x)=\begin{cases}cx, & 0\lt x\lt1,\\ c, & 1\le x\lt2,\\ 0, & \text{այլ դեպքում}.\end{cases}$$
+Գտնենք $c$-ն, $F$-ը, $P(\tfrac12\le\xi\lt\tfrac32)$-ը, $P(\xi\gt1)$-ը և այն $m$ թիվը, որի համար $P(\xi\lt m)=\tfrac12$։</p>
+<figure class="fig" id="fig-example"><div data-out="pdf"></div><div data-out="cdf"></div>
+<figcaption>Վերևում՝ $p$-ն $c=\tfrac23$ արժեքով, ներքևում՝ $F$-ը։ Եռանկյան մակերեսը $\tfrac13$ է, ուղղանկյանը՝ $\tfrac23$։
+$F$-ն առաջին կտորում աճում է պարաբոլով, երկրորդում՝ ուղիղ գծով։</figcaption></figure>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $c$-ն նորմավորումից</h3>
+<p>Պետք է $p\ge0$, այսինքն՝ $c\ge0$, և ամբողջ մակերեսը պետք է $1$ լինի։ Գրաֆիկի տակ եռանկյուն է (հիմքը $1$, բարձրությունը
+$c$) և ուղղանկյուն (կողմերը $1$ և $c$)՝
+$$\begin{aligned}\int_{-\infty}^{+\infty}p(x)\,dx&=\frac c2+c\\&=\frac{3c}2=1,\end{aligned}$$
+որտեղից $c=\tfrac23$։</p></div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $F$-ը՝ կտոր առ կտոր ինտեգրելով</h3>
+<p>$F(x)=\int_{-\infty}^x p(t)\,dt$։ Երբ $x\le0$, $F(x)=0$։ Երբ $0\lt x\le1$, $F(x)=\int_0^x\tfrac23t\,dt=\tfrac{x^2}3$։
+Երբ $1\lt x\le2$, պետք է գումարել առաջին կտորի ամբողջ մակերեսը՝
+$F(x)=F(1)+\int_1^x\tfrac23\,dt=\tfrac13+\tfrac23(x-1)=\tfrac{2x-1}3$։ Երբ $x\gt2$, $F(x)=1$՝
+$$F(x)=\begin{cases}0, & x\le0,\\ \tfrac{x^2}3, & 0\lt x\le1,\\ \tfrac{2x-1}3, & 1\lt x\le2,\\ 1, & x\gt2.\end{cases}$$</p></div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - հավանականություններ</h3>
+$$\begin{aligned}P(\tfrac12\le\xi\lt\tfrac32)&=F(\tfrac32)-F(\tfrac12)\\&=\tfrac23-\tfrac1{12}=\tfrac7{12},\\ P(\xi\gt1)&=1-F(1)=\tfrac23.\end{aligned}$$
+<p>Քանի որ $F$-ն անընդհատ է, $P(\xi\gt1)=1-F(1+0)=1-F(1)$, և ծայրակետերի տեսակը նշանակություն չունի։</p></div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - $m$-ը, որի համար $P(\xi\lt m)=\tfrac12$</h3>
+<p>$F(1)=\tfrac13\lt\tfrac12$, ուստի $m$-ը երկրորդ կտորում է՝ $\tfrac{2m-1}3=\tfrac12$, որտեղից $m=\tfrac54$։ Այդպիսի $m$-ը
+կոչվում է բաշխման <strong>մեդիան</strong>՝ $\xi$-ն $\tfrac12$ հավանականությամբ փոքր է $m$-ից և $\tfrac12$
+հավանականությամբ մեծ։</p></div>
+
+<div class="check"><span class="check-label">Ստուգում։</span> $F'(x)=\tfrac{2x}3$, երբ $0\lt x\lt1$, և $F'(x)=\tfrac23$, երբ
+$1\lt x\lt2$, այսինքն՝ ստացանք $p$-ն։ $x=1$ կետում երկու բանաձևն էլ տալիս են $\tfrac13$, իսկ $x=2$-ում՝ $1$, հետևաբար $F$-ն
+անընդհատ է։ Եթե միացման կետում բանաձևերը տարբեր արժեքներ տան, ինչ-որ տեղ սխալ կա. խտություն ունեցող $F$-ը թռիչք չի
+կարող ունենալ։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="hist" open>
+<summary><h2>Խտությունը՝ նմուշից</h2></summary>
+<div class="sec-body">
+<p>Ինչպե՞ս «տեսնել» խտությունը։ Վերցնենք $\xi$-ի շատ անկախ արժեքներ (նմուշ), առանցքը բաժանենք $\Delta$ լայնությամբ փոքր
+միջակայքերի և ամեն միջակայքի վրա կառուցենք ուղղանկյուն, որի բարձրությունն այդ միջակայքում ընկած արժեքների մասն է՝
+բաժանած $\Delta$-ի վրա։ Ստացված նկարը կոչվում է <strong>հիստոգրամ</strong>։ Ուղղանկյան մակերեսը միջակայքում ընկած
+արժեքների մասն է, իսկ այն մոտավորապես հավասար է $P(x\le\xi\lt x+\Delta)\approx p(x)\,\Delta$-ին։ Հետևաբար, ուղղանկյան
+բարձրությունը մոտավորապես $p(x)$ է։ Նմուշը մեծացնելիս և $\Delta$-ն փոքրացնելիս հիստոգրամը մոտենում է խտության
+գրաֆիկին։</p>
+<p>Արժեքները ստանում ենք 10-րդ դասի հակադարձ ֆունկցիայի մեթոդով՝ $(0,1)$-ում հավասարաչափ բաշխված $u$ թվից
+$\xi=F^{-1}(u)$։ Օրինակ՝ ցուցչային բաշխման համար $F(x)=1-e^{-x}$, և $F^{-1}(u)=-\ln(1-u)$։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Ստանդարտ նորմալ բաշխումից ($p(0)\approx0{,}4$) վերցնում ենք $1000$ արժեք։ Մոտավորապես
+քանի՞սը կընկնի $[-0{,}1;\ 0{,}1)$ միջակայքում։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\approx80$</button><button class="btn" type="button">$\approx400$</button><button class="btn" type="button">$0$, քանի որ ամեն կետի հավանականությունը զրո է</button></div>
+<div class="predict-why">$\approx80$։ Միջակայքի երկարությունը $0{,}2$ է, ուրեմն $P(-0{,}1\le\xi\lt0{,}1)\approx p(0)\cdot0{,}2\approx0{,}08$,
+և $1000$ արժեքից մոտ $80$-ը կընկնի այնտեղ։ $400$-ը կստանայինք, եթե $p(0)$-ն համարեինք հավանականություն։ $0$-ն
+սխալ է, քանի որ միջակայքի հավանականությունը չի կարելի ստանալ նրա կետերի զրո հավանականությունները գումարելով. կետերն
+անհաշվելի են։ Ստուգեք ներքևում՝ ընտրեք «Նորմալ» և սեղմեք «+1000»։ Ընտրված սյունը հենց $[-0{,}1;\ 0{,}1)$-ն է։</div>
+</div>
+
+<div class="widget" id="w-hist">
+  <div class="widget-head">Հիստոգրամը մոտենում է խտությանը</div>
+  <p class="widget-hint">Ընտրեք բաշխումը և ավելացրեք արժեքներ։ Նարնջագույն սյուները հիստոգրամն են (սյան մակերեսը
+  նրանում ընկած արժեքների մասն է), կապույտ կորը՝ խտությունը։ Սեղմեք որևէ սյան վրա, և ներքևում կտեսնեք, թե
+  քանի արժեք է ընկել այդ միջակայքում և որքան է ճշգրիտ հավանականությունը։ Փոխեք սյուների քանակը՝ քիչ արժեքների դեպքում
+  նեղ սյուները շատ են «ցատկոտում»։ «Կոշիի» օրինակում նայեք նաև, թե քանի արժեք է ընկնում նկարից դուրս և ինչպես է
+  փոխվում նմուշի միջին թվաբանականը։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="widget-out muted" data-out="cap"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="10">+10</button>
+    <button class="btn primary" type="button" data-act="100">+100</button>
+    <button class="btn" type="button" data-act="1000">+1000</button>
+    <button class="btn" type="button" data-act="10000">+10000</button>
+    <button class="btn" type="button" data-act="reset">Զրոյացնել</button>
+  </div>
+  <div data-out="plot"></div>
+  <div class="legend"><span><i class="orange"></i>հիստոգրամ</span><span><i class="blue"></i>խտություն</span></div>
+  <div class="slider-row"><span>Սյուների քանակը</span><input type="range" data-in="bins" min="5" max="80" step="1" value="41" aria-label="սյուների քանակը"></div>
+  <div class="widget-out" data-out="out"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="uniform" open>
+<summary><h2>Հավասարաչափ բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> $\xi$-ն պատահական կետ է $[a,b]$ հատվածից, և հավասար երկարությամբ բոլոր ենթամիջակայքերում
+հայտնվելը հավասարահավանական է (երկրաչափական հավանականություն)։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$p(x)=\begin{cases}\dfrac1{b-a}, & a\le x\le b,\\[4pt] 0, & \text{այլ դեպքում},\end{cases}$$
+$$F(x)=\begin{cases}0, & x\le a,\\[2pt] \dfrac{x-a}{b-a}, & a\lt x\le b,\\[4pt] 1, & x\gt b.\end{cases}$$</p>
+</div>
+<p>$[a,b]$-ի ներսում ընկած ցանկացած $[c,d]$ միջակայքի համար $P(c\le\xi\le d)=\tfrac{d-c}{b-a}$՝ միջակայքի երկարության և
+ամբողջ հատվածի երկարության հարաբերությունը։ Խտության արժեքները $a$ և $b$ կետերում նշանակություն չունեն, ուստի $[a,b]$,
+$(a,b)$ և մյուս տարբերակները նույն բաշխումն են տալիս։ Եթե $b-a\lt1$, խտությունը $1$-ից մեծ է։</p>
+<p><strong>Օրինակ։</strong> Ավտոբուսը կանգառից մեկնում է ամեն $10$ րոպեն մեկ, և կանգառ ենք գալիս պատահական պահի։
+Սպասման ժամանակը հավասարաչափ է բաշխված $[0,10]$-ում, և $3$ րոպեից քիչ սպասելու հավանականությունը $\tfrac3{10}$ է,
+իսկ $7$ րոպեից ավելի սպասելունը՝ նույնպես $\tfrac3{10}$։</p>
+<p>Հավասարաչափ բաշխումը մյուսների «հումքն» է։ Եթե $u$-ն հավասարաչափ է $(0,1)$-ում, ապա $a+(b-a)u$-ն հավասարաչափ է
+$(a,b)$-ում, իսկ $F^{-1}(u)$-ն ունի $F$ բաշխման ֆունկցիան (տե՛ս <a href="#functions">պատահական մեծության ֆունկցիայի</a>
+բաժինը)։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exponential" open>
+<summary><h2>Ցուցչային բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> $\xi$-ն սպասման ժամանակն է մինչև ինչ-որ պատահույթ, որը «չի ծերանում»՝ ամեն պահի նրա
+տեղի ունենալու շանսը նույնն է, անկախ նրանից, թե արդեն որքան ենք սպասել։ Օրինակներ՝ ռադիոակտիվ ատոմի քայքայման պահը,
+սպասումը մինչև հաջորդ զանգը (11-րդ դասի Պուասոնի «պատմությունում»), սարքի աշխատանքի տևողությունը, եթե այն մաշվելուց չի
+փչանում։</p>
+<div class="box thm"><div class="box-title">Բանաձև ($\lambda\gt0$)</div>
+<p>$$p(x)=\begin{cases}\lambda e^{-\lambda x}, & x\ge0,\\ 0, & x\lt0,\end{cases}$$
+$$F(x)=\begin{cases}1-e^{-\lambda x}, & x\gt0,\\ 0, & x\le0,\end{cases}$$
+$$P(\xi\ge t)=e^{-\lambda t},\quad t\ge0.$$</p>
+</div>
+<p>Ինտեգրալը $1$ է՝ $\int_0^\infty\lambda e^{-\lambda x}\,dx=\bigl[-e^{-\lambda x}\bigr]_0^\infty=1$։ Մեծ $\lambda$-ի դեպքում
+խտությունն արագ է նվազում, և սպասումը կարճ է (մաթսպասման դասում կտեսնենք, որ միջին սպասումը $\tfrac1\lambda$ է)։</p>
+
+<h3>Հիշողության բացակայություն</h3>
+<p>Ամեն $s,t\ge0$-ի համար</p>
+$$P(\xi\ge s+t\mid\xi\ge s)=P(\xi\ge t).$$
+<p>Եթե արդեն սպասել ենք $s$ ժամանակ, մնացած սպասումն ունի նույն բաշխումը, ինչ սկզբում։ Սա 11-րդ դասի երկրաչափական
+բաշխման անընդհատ «երկվորյակն» է։ Ավելին՝ ցուցչայինը միակ անընդհատ բաշխումն է, որն այս հատկությունն ունի (վարժություն 7)։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Սարքի աշխատանքի տևողությունը (տարիներով) ցուցչային է՝ $\lambda=0{,}5$։ Նոր սարքը
+$2$ տարուց ավելի է աշխատում $e^{-1}\approx0{,}37$ հավանականությամբ։ Սարքն արդեն $3$ տարի աշխատել է։ Ո՞րն է
+հավանականությունը, որ այն կաշխատի ևս $2$ տարի։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\approx0{,}37$</button><button class="btn" type="button">$0{,}37$-ից փոքր, սարքն արդեն հին է</button><button class="btn" type="button">$e^{-2{,}5}\approx0{,}08$</button></div>
+<div class="predict-why">$\approx0{,}37$։ $P(\xi\ge5\mid\xi\ge3)=\tfrac{e^{-2{,}5}}{e^{-1{,}5}}=e^{-1}$։ $e^{-2{,}5}$-ը
+$P(\xi\ge5)$-ն է՝ <em>նոր</em> սարքի $5$ տարի աշխատելու հավանականությունը, իսկ արդեն գիտենք, որ առաջին $3$ տարին
+անցել է։ «Հին է» պատասխանը ճիշտ կլիներ մաշվող սարքի համար, բայց ցուցչային մոդելում մաշվածություն չկա։ Ստուգեք ներքևի
+նկարում՝ $\lambda=0{,}5$, $s=3$։</div>
+</div>
+
+<div class="widget" id="w-memo">
+  <div class="widget-head">Մնացած սպասման բաշխումը</div>
+  <p class="widget-hint">Կապույտ կորը $\xi$-ի խտությունն է։ Շարժեք $s$-ը՝ արդեն սպասված ժամանակը։ Կարմիր կետագիծը մնացած
+  սպասման ($\xi-s$) խտությունն է՝ այն պայմանով, որ $\xi\ge s$։ Այն ստացվում է $s$-ից աջ ընկած մասը (կապույտ ներկված) ձախ
+  տեղաշարժելով և $P(\xi\ge s)$-ի վրա բաժանելով։ Ցուցչային բաշխման դեպքում կարմիր կորը միշտ նստում է կապույտի վրա։
+  Համեմատեք հավասարաչափ բաշխման հետ՝ ավտոբուս, որը գալիս է առաջիկա $4$ րոպեում, պատահական պահի։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row" data-out="lamrow"><span>$\lambda$</span><input type="range" data-in="lam" min="0.25" max="2" step="0.05" value="0.5" aria-label="lambda"></div>
+  <div class="slider-row"><span>$s$</span><input type="range" data-in="s" min="0" max="3.5" step="0.1" value="1" aria-label="s"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="legend"><span><i class="blue"></i>$\xi$-ի խտությունը</span><span><i class="red"></i>$\xi-s$-ի խտությունը՝ $\xi\ge s$ պայմանով</span></div>
+  <div class="widget-out" data-out="out"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Քանի որ $\{\xi\ge s+t\}\subset\{\xi\ge s\}$,
+$$\begin{aligned}&P(\xi\ge s+t\mid\xi\ge s)\\&\quad=\frac{P(\xi\ge s+t)}{P(\xi\ge s)}=\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}}\\&\quad=e^{-\lambda t}=P(\xi\ge t).\qquad\blacksquare\end{aligned}$$</p>
+</div></details>
+<details class="extra"><summary>Ավելին՝ ցուցչայինը՝ որպես երկրաչափականի սահման</summary><div class="inner">
+<p>Ժամանակը բաժանենք $h$ երկարությամբ փոքր քայլերի, և դիցուք յուրաքանչյուր քայլում, մյուսներից անկախ, պատահույթը տեղի է
+ունենում $\lambda h$ հավանականությամբ։ Մինչև առաջին պատահույթն անցած քայլերի $N$ թիվը երկրաչափական է $\lambda h$
+պարամետրով, իսկ սպասման ժամանակը $hN$ է։ Այդ դեպքում
+$$\begin{aligned}P(hN\gt t)&=(1-\lambda h)^{\lfloor t/h\rfloor}\\&\longrightarrow e^{-\lambda t},\quad h\to0.\end{aligned}$$
+Այսինքն՝ ցուցչային բաշխումը երկրաչափական բաշխման սահմանն է, երբ քայլերը մանրանում են։ Դրա համար էլ երկուսն էլ
+հիշողություն չունեն։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="normal" open>
+<summary><h2>Նորմալ բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> Նորմալ (Գաուսի) բաշխումն առաջանում է այնտեղ, որտեղ մեծությունը շատ փոքր, իրարից անկախ
+ազդեցությունների գումար է՝ չափման սխալներ, մարդկանց հասակ, շատ զառերի գումար։ Այս փաստի ճշգրիտ ձևակերպումը
+կենտրոնական սահմանային թեորեմն է, որին կհանդիպենք դասընթացի վերջում։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}p(x)=\frac1{\sigma\sqrt{2\pi}}\,e^{-\frac{(x-a)^2}{2\sigma^2}},\\ x\in\R,\qquad a\in\R,\ \sigma\gt0.\end{gathered}$$</p>
+</div>
+<p>Նշանակումը՝ $\xi\sim N(a,\sigma^2)$։ $a$-ն սիմետրիայի կենտրոնն է (գրաֆիկի գագաթը), իսկ $\sigma$-ն (ստանդարտ շեղումը)
+ցույց է տալիս, թե որքան «լայն» է գրաֆիկը։ $N(0,1)$ բաշխումը կոչվում է <strong>ստանդարտ նորմալ</strong>, իսկ նրա
+խտությունը և բաշխման ֆունկցիան նշանակում են այսպես՝</p>
+$$\begin{gathered}\varphi(x)=\frac1{\sqrt{2\pi}}\,e^{-x^2/2},\\ \Phi(x)=\int_{-\infty}^x\varphi(t)\,dt.\end{gathered}$$
+<p>$\Phi$-ն տարրական ֆունկցիաներով չի արտահայտվում, և նրա արժեքները վերցնում են աղյուսակից կամ հաշվում համակարգչով։</p>
+
+<h3>Երեք կանոն</h3>
+<ol>
+  <li><strong>Սիմետրիա՝</strong> $\varphi(-x)=\varphi(x)$, ուստի $\Phi(-x)=1-\Phi(x)$։ Աղյուսակում բավական է ունենալ
+  $x\ge0$ արժեքները։</li>
+  <li><strong>Ստանդարտացում՝</strong> եթե $\xi\sim N(a,\sigma^2)$, ապա $\tfrac{\xi-a}\sigma\sim N(0,1)$, հետևաբար
+  $F_\xi(x)=\Phi\bigl(\tfrac{x-a}\sigma\bigr)$ և
+  $$\begin{aligned}&P(\alpha\le\xi\lt\beta)\\&\quad=\Phi\Bigl(\tfrac{\beta-a}\sigma\Bigr)-\Phi\Bigl(\tfrac{\alpha-a}\sigma\Bigr).\end{aligned}$$</li>
+  <li><strong>«Երեք սիգմայի» կանոն՝</strong> $P(|\xi-a|\lt\sigma)\approx0{,}6827$, $P(|\xi-a|\lt2\sigma)\approx0{,}9545$,
+  $P(|\xi-a|\lt3\sigma)\approx0{,}9973$։ Նորմալ մեծությունը $a$-ից ավելի քան $3\sigma$ հեռու է հայտնվում հազար դեպքից միայն մոտ $3$-ում։</li>
+</ol>
+
+<h3>Աղյուսակ և խնդրագրքի $\Phi$-ն</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$x$</th><th class="num">$\Phi(x)$</th><th class="num">$\Phi_0(x)=\Phi(x)-\tfrac12$</th></tr></thead>
+<tbody>
+<tr><td>$0$</td><td class="num">$0{,}5000$</td><td class="num">$0{,}0000$</td></tr>
+<tr><td>$0{,}5$</td><td class="num">$0{,}6915$</td><td class="num">$0{,}1915$</td></tr>
+<tr><td>$1$</td><td class="num">$0{,}8413$</td><td class="num">$0{,}3413$</td></tr>
+<tr><td>$1{,}28$</td><td class="num">$0{,}8997$</td><td class="num">$0{,}3997$</td></tr>
+<tr><td>$1{,}5$</td><td class="num">$0{,}9332$</td><td class="num">$0{,}4332$</td></tr>
+<tr><td>$1{,}645$</td><td class="num">$0{,}9500$</td><td class="num">$0{,}4500$</td></tr>
+<tr><td>$1{,}96$</td><td class="num">$0{,}9750$</td><td class="num">$0{,}4750$</td></tr>
+<tr><td>$2$</td><td class="num">$0{,}9772$</td><td class="num">$0{,}4772$</td></tr>
+<tr><td>$2{,}5$</td><td class="num">$0{,}9938$</td><td class="num">$0{,}4938$</td></tr>
+<tr><td>$3$</td><td class="num">$0{,}9987$</td><td class="num">$0{,}4987$</td></tr>
+</tbody></table></div>
+<div class="box method"><div class="box-title">Ուշադրություն՝ խնդրագրքի աղյուսակը</div>
+<p>Դասընթացի խնդրագրքի (և որոշ այլ գրքերի) աղյուսակում տրված է <strong>Լապլասի ֆունկցիան</strong>՝
+$\Phi_0(x)=\tfrac1{\sqrt{2\pi}}\int_0^x e^{-t^2/2}\,dt=\Phi(x)-\tfrac12$, և այնտեղ այն նույնպես նշանակված է $\Phi$-ով։
+Օրինակ՝ $\Phi_0(1)=0{,}3413$, իսկ $\Phi(1)=0{,}8413$։ Միջակայքի բանաձևը չի փոխվում (երկու $\tfrac12$-երը կրճատվում են),
+բայց $F_\xi(x)=\tfrac12+\Phi_0\bigl(\tfrac{x-a}\sigma\bigr)$ և $\Phi_0(-x)=-\Phi_0(x)$։ Աղյուսակից օգտվելուց առաջ նայեք,
+թե ինչի է հավասար նրա արժեքը $0$-ում՝ $0{,}5$-ի, թե $0$-ի։</p>
+</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Ենթադրենք՝ չափահաս տղամարդկանց հասակը (սանտիմետրերով) նորմալ է, $a=176$, $\sigma=7$։
+Տղամարդկանց մոտավորապես ո՞ր մասի հասակն է $162$-ից $190$ սմ։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\approx95\%$</button><button class="btn" type="button">$\approx68\%$</button><button class="btn" type="button">$\approx99{,}7\%$</button></div>
+<div class="predict-why">$162=a-2\sigma$ և $190=a+2\sigma$, այնպես որ պատասխանը $2\Phi(2)-1\approx0{,}9545$ է՝ մոտ $95\%$։
+$68\%$-ը $a\pm\sigma$ միջակայքինն է ($169$-ից $183$), իսկ $99{,}7\%$-ը՝ $a\pm3\sigma$-ինը ($155$-ից $197$)։ Ներքևի նկարում
+ընտրեք $k=2$ և փոխեք $a$-ն ու $\sigma$-ն. մակերեսը չի փոխվում։</div>
+</div>
+
+<div class="widget" id="w-normal">
+  <div class="widget-head">Նորմալ խտություն և $a\pm k\sigma$ միջակայքը</div>
+  <p class="widget-hint">Փոխեք $a$-ն, $\sigma$-ն և $k$-ն։ Նարնջագույն մակերեսը $\xi$-ի $(a-k\sigma,\ a+k\sigma)$ միջակայքում
+  հայտնվելու հավանականությունն է։ Կետագիծը ստանդարտ նորմալ խտությունն է՝ համեմատության համար։ Նկատեք՝ $a$-ն գրաֆիկը
+  տեղաշարժում է, $\sigma$-ն այն լայնացնում կամ նեղացնում է (գագաթի բարձրությունը $\tfrac1{\sigma\sqrt{2\pi}}$ է), իսկ
+  $a\pm k\sigma$ միջակայքի հավանականությունը կախված է միայն $k$-ից։</p>
+  <div class="slider-row"><span>$a$</span><input type="range" data-in="a" min="-3" max="3" step="0.1" value="0" aria-label="a">
+    <span>$\sigma$</span><input type="range" data-in="s" min="0.4" max="3" step="0.05" value="1" aria-label="sigma"></div>
+  <div class="slider-row"><span>$k$</span><input type="range" data-in="k" min="0.5" max="3" step="0.05" value="1" aria-label="k"><span data-out="lab"></span></div>
+  <div class="chips" data-out="chips"></div>
+  <div data-out="plot"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="out"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Ինտեգրալը $1$ է։</strong> Բավական է դիտարկել $N(0,1)$-ը (մյուսները ստացվում են $x=a+\sigma t$ փոխարինմամբ)։
+Դիցուք $I=\int_{-\infty}^{+\infty}e^{-x^2/2}\,dx$։ Անցնելով բևեռային կոորդինատների՝
+$$\begin{aligned}I^2&=\iint_{\R^2}e^{-(x^2+y^2)/2}\,dx\,dy\\&=\int_0^{2\pi}\!\!\int_0^{\infty}e^{-r^2/2}\,r\,dr\,d\theta\\&=2\pi\Bigl[-e^{-r^2/2}\Bigr]_0^{\infty}=2\pi,\end{aligned}$$
+այսինքն՝ $I=\sqrt{2\pi}$ (Էյլեր-Պուասոնի ինտեգրալ)։</p>
+<p><strong>Ստանդարտացում։</strong> $P\bigl(\tfrac{\xi-a}\sigma\lt x\bigr)=P(\xi\lt a+\sigma x)=\int_{-\infty}^{a+\sigma x}p(t)\,dt$, և
+$t=a+\sigma s$ փոխարինումից հետո ստացվում է $\int_{-\infty}^x\varphi(s)\,ds=\Phi(x)$։</p>
+<p><strong>Սիմետրիա։</strong> $\varphi$-ն զույգ է, հետևաբար $\Phi(-x)=\int_{-\infty}^{-x}\varphi=\int_x^{+\infty}\varphi=1-\Phi(x)$։ ∎</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="cauchy" open>
+<summary><h2>Կոշիի բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> Պատից $1$ մետր հեռավորության վրա լապտերն ուղղում ենք պատի կողմը պատահական $\theta$
+անկյունով, որը հավասարաչափ է բաշխված $(-\tfrac\pi2,\tfrac\pi2)$-ում (անկյունը հաշվում ենք պատին տարած ուղղահայացից)։
+Լույսի բծի դիրքը պատի վրա (ուղղահայացի հիմքից հաշված) $\operatorname{tg}\theta$ է, և նրա բաշխումը Կոշիի բաշխումն է (կարտածենք
+<a href="#functions">ֆունկցիաների բաժնում</a>)։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}p(x)=\frac1{\pi(1+x^2)},\quad x\in\R,\\ F(x)=\frac12+\frac1\pi\operatorname{arctg}x.\end{gathered}$$</p>
+</div>
+<p>Ընդհանուր դեպքում (տեղաշարժ $a$ և մասշտաբ $\lambda\gt0$) $p(x)=\tfrac1\pi\cdot\tfrac{\lambda}{\lambda^2+(x-a)^2}$։ Այս $F$-ն
+արդեն գտել ենք 10-րդ դասի 1-ին վարժությունում։</p>
+
+<h3>Ծանր պոչեր և «միջինի» բացակայություն</h3>
+<p>Կոշիի խտությունը նման է նորմալին՝ սիմետրիկ է և ունի գագաթ $0$-ում, բայց պոչերում նվազում է շատ դանդաղ՝ $x^{-2}$-ի պես,
+մինչդեռ նորմալինը՝ $e^{-x^2/2}$-ի պես։ Համեմատենք՝</p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th></th><th class="num">$P(|\xi|\gt3)$</th><th class="num">$P(|\xi|\gt10)$</th></tr></thead>
+<tbody>
+<tr><td>$N(0,1)$</td><td class="num">$0{,}0027$</td><td class="num">$\approx1{,}5\cdot10^{-23}$</td></tr>
+<tr><td>Կոշիի</td><td class="num">$0{,}2048$</td><td class="num">$0{,}0635$</td></tr>
+</tbody></table></div>
+<p>Ծանր պոչերի պատճառով Կոշիի մեծությունը «միջին արժեք» չունի։ Եթե վերցնենք նրա շատ անկախ արժեքներ և հաշվենք միջին
+թվաբանականը, այն չի կայունանա. ժամանակ առ ժամանակ հայտնվում է այնքան մեծ արժեք, որ միջինը կտրուկ փոխվում է։ Ճշգրիտ
+ձևակերպումը՝ $\int_{-\infty}^{+\infty}|x|\,p(x)\,dx=+\infty$, կտեսնենք մաթսպասման դասում։ Փորձեք
+<a href="#w-hist">հիստոգրամի նկարում</a>՝ ընտրեք «Կոշիի» և մի քանի անգամ սեղմեք «+1000»։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="others" open>
+<summary><h2>Լապլասի և Սիմպսոնի բաշխումներ</h2></summary>
+<div class="sec-body">
+<p>Խնդրագրքում հանդիպում են նաև հետևյալ բաշխումները՝</p>
+<ul>
+  <li><strong>Լապլասի բաշխում՝</strong> $p(x)=\tfrac12e^{-|x|}$, $x\in\R$։ Գրաֆիկը երկու ցուցչային խտություն է, որոնք
+  «կպցված» են մեջք մեջքի։ Ընդհանուր տեսքը՝ $\tfrac\lambda2e^{-\lambda|x-a|}$։</li>
+  <li><strong>Սիմպսոնի (եռանկյան) բաշխում՝</strong> $p(x)=1-|x|$, երբ $|x|\lt1$, և $0$՝ այլ դեպքում։ Գրաֆիկը
+  հավասարասրուն եռանկյուն է, որի մակերեսը $\tfrac12\cdot2\cdot1=1$ է։ Այս բաշխումն ունի $(-\tfrac12,\tfrac12)$-ում
+  հավասարաչափ բաշխված երկու անկախ մեծությունների գումարը (կապացուցենք պատահական վեկտորների դասերում)։ $[-a,a]$ հիմքով
+  եռանկյան դեպքը խնդրագրքի 321 խնդիրն է, իսկ ուղղանկյուն եռանկյանը՝ 320-ը։</li>
+  <li><strong>Գամմա բաշխում՝</strong> ցուցչայինի ընդհանրացում, $p(x)=\tfrac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}$,
+  երբ $x\gt0$։ $\alpha=1$ դեպքում ստացվում է ցուցչային բաշխումը։</li>
+</ul>
+<figure class="fig" id="fig-others"><div data-out="plot"></div>
+<div class="legend"><span><i class="blue"></i>Լապլասի</span><span><i class="orange"></i>Սիմպսոնի</span></div>
+<figcaption>Լապլասի խտությունը $0$-ում «սուր» գագաթ ունի, իսկ Սիմպսոնինը եռանկյուն է։ Երկու մակերեսներն էլ $1$ են։</figcaption></figure>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="functions" open>
+<summary><h2>Պատահական մեծության ֆունկցիա</h2></summary>
+<div class="sec-body">
+<p>Հաճախ գիտենք $\xi$-ի բաշխումը և պետք է գտնել $\eta=g(\xi)$-ի բաշխումը։ Ամենահուսալի ճանապարհը բաշխման ֆունկցիան է՝</p>
+$$\begin{aligned}F_\eta(y)&=P(g(\xi)\lt y)\\&=P\bigl(\xi\in\{x:\ g(x)\lt y\}\bigr).\end{aligned}$$
+<p>Ամեն $y$-ի համար գտնում ենք այն $x$-երի բազմությունը, որոնց համար $g(x)\lt y$, և հաշվում ենք $\xi$-ի այդ բազմությունում
+ընկնելու հավանականությունը։ Եթե ստացված $F_\eta$-ն կտոր առ կտոր դիֆերենցելի է, $p_\eta=F_\eta'$։</p>
+<div class="box thm"><div class="box-title">Թեորեմ</div>
+<p>Դիցուք $\xi$-ն ունի $p_\xi$ խտություն, $g$-ն խիստ մոնոտոն է և դիֆերենցելի $\xi$-ի արժեքների միջակայքում, իսկ $h$-ը
+$g$-ի հակադարձ ֆունկցիան է։ Այդ դեպքում $\eta=g(\xi)$-ն ունի խտություն՝
+$$p_\eta(y)=p_\xi\bigl(h(y)\bigr)\,\bigl|h'(y)\bigr|$$
+այն $y$-երի համար, որոնք $g$-ի արժեքներ են, և $p_\eta(y)=0$՝ մնացած $y$-երի համար։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Եթե $g$-ն աճող է, $\{g(\xi)\lt y\}=\{\xi\lt h(y)\}$, ուստի $F_\eta(y)=F_\xi(h(y))$, և շղթայի կանոնով
+$p_\eta(y)=p_\xi(h(y))\,h'(y)$, որտեղ $h'\ge0$։ Եթե $g$-ն նվազող է, $\{g(\xi)\lt y\}=\{\xi\gt h(y)\}$, ուստի
+$F_\eta(y)=1-F_\xi(h(y))$ ($F_\xi$-ն անընդհատ է, և «$+0$» պետք չէ), և $p_\eta(y)=-p_\xi(h(y))\,h'(y)$, որտեղ $h'\le0$։
+Երկու դեպքում էլ ստացվում է $p_\xi(h(y))\,|h'(y)|$։ ∎</p>
+</div></details>
+
+<h3>Երեք օրինակ</h3>
+<ol>
+  <li><strong>Գծային ֆունկցիա։</strong> $\eta=c\xi+d$, $c\ne0$-ի համար $h(y)=\tfrac{y-d}c$, և
+  $p_\eta(y)=\tfrac1{|c|}\,p_\xi\bigl(\tfrac{y-d}c\bigr)$։ Մասնավորապես, եթե $\zeta\sim N(0,1)$, ապա $a+\sigma\zeta\sim N(a,\sigma^2)$,
+  և հակառակը՝ $\tfrac{\xi-a}\sigma\sim N(0,1)$։ Այստեղից է ստանդարտացումը։</li>
+  <li><strong>Ցուցչայինը՝ հավասարաչափից։</strong> Եթե $u$-ն հավասարաչափ է $(0,1)$-ում և $\eta=-\tfrac1\lambda\ln u$, ապա $g$-ն
+  նվազող է, և $y\gt0$ դեպքում $F_\eta(y)=P(u\gt e^{-\lambda y})=1-e^{-\lambda y}$։ Այսպես են համակարգչով ստանում ցուցչային
+  բաշխմամբ արժեքներ (հակադարձ ֆունկցիայի մեթոդ, դաս 10)։</li>
+  <li><strong>Ոչ մոնոտոն ֆունկցիա՝ $\eta=\xi^2$։</strong> Դիցուք $\xi$-ն հավասարաչափ է $(-1,1)$-ում։ $0\lt y\le1$ դեպքում
+  $\{\xi^2\lt y\}=\{-\sqrt y\lt\xi\lt\sqrt y\}$, որտեղից $F_\eta(y)=\tfrac{2\sqrt y}2=\sqrt y$, և $p_\eta(y)=\tfrac1{2\sqrt y}$,
+  երբ $0\lt y\lt1$։ Թեորեմն այստեղ ուղղակիորեն չի կիրառվում, քանի որ $x^2$ ֆունկցիան $(-1,1)$-ում մոնոտոն չէ, բայց
+  բաշխման ֆունկցիայով մեթոդը միշտ ճիշտ է։ Նկատեք՝ $p_\eta$-ն անսահմանափակ է $0$-ի մոտ, իսկ մակերեսը
+  $\int_0^1\tfrac{dy}{2\sqrt y}=1$ է։</li>
+</ol>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $\xi$-ն հավասարաչափ է $(0,1)$-ում։ Հավասարաչա՞փ է արդյոք $\eta=\xi^2$-ն $(0,1)$-ում։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Ոչ, արժեքները կուտակվում են $0$-ի մոտ</button><button class="btn" type="button">Այո</button><button class="btn" type="button">Ոչ, արժեքները կուտակվում են $1$-ի մոտ</button></div>
+<div class="predict-why">$P(\eta\lt\tfrac14)=P(\xi\lt\tfrac12)=\tfrac12$, այսինքն՝ արժեքների կեսն ընկնում է $(0,\tfrac14)$-ում,
+որը միջակայքի ընդամենը քառորդն է։ Քառակուսի բարձրացնելիս $1$-ից փոքր թվերը փոքրանում են և «սեղմվում» դեպի $0$։
+Ներքևի նկարում ընտրեք «$\xi^2$, $\xi\in(0,1)$» և սեղմեք «Մոդելավորել»։</div>
+</div>
+
+<div class="widget" id="w-transform">
+  <div class="widget-head">$\eta=g(\xi)$-ի բաշխումը՝ բաշխման ֆունկցիայով</div>
+  <p class="widget-hint">Ամեն օրինակում $\xi$-ն հավասարաչափ է նշված միջակայքում։ Ընտրեք $g$-ն։ Վերևում $g$-ի գրաֆիկն է,
+  ներքևում՝ $\eta$-ի խտությունը։ Շարժեք $y$-ը (սահիչով կամ քաշելով որևէ նկարի վրա)։ Վերևում նարնջագույնով նշված է
+  $\{x:\ g(x)\lt y\}$ բազմությունը $\xi$-ի առանցքի վրա. նրա հավանականությունը $F_\eta(y)$-ն է, որը հավասար է ներքևի
+  նարնջագույն մակերեսին։ «Մոդելավորել» կոճակը ցույց է տալիս $g(\xi)$-ի $5000$ արժեքի հիստոգրամը։</p>
+  <div class="chips" data-out="chips"></div>
+  <div data-out="top"></div>
+  <div data-out="bot"></div>
+  <div class="legend"><span><i class="blue"></i>$\eta$-ի խտությունը</span><span><i class="orange"></i>$F_\eta(y)$՝ մակերեսը $y$-ից ձախ</span><span><i class="green"></i>մոդելավորում</span></div>
+  <div class="slider-row"><span>$y$</span><input type="range" data-in="y" aria-label="y"></div>
+  <div class="widget-controls"><button class="btn primary" type="button" data-act="sim">Մոդելավորել</button><span class="muted" data-out="sim"></span></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="note"></div>
+</div>
+
+<details class="extra"><summary>Ավելին՝ մի քանի նախապատկեր և ֆունկցիաներ առանց խտության</summary><div class="inner">
+<p>Եթե $y$ արժեքն ունի մի քանի նախապատկեր՝ $g(x_1)=\dots=g(x_k)=y$, և $g'(x_i)\ne0$, ապա
+$p_\eta(y)=\sum_i\tfrac{p_\xi(x_i)}{|g'(x_i)|}$։ $\xi^2$-ի օրինակում $x_{1,2}=\pm\sqrt y$, $p_\xi=\tfrac12$, $|g'|=2\sqrt y$,
+և $p_\eta(y)=2\cdot\tfrac{1/2}{2\sqrt y}=\tfrac1{2\sqrt y}$՝ նույն պատասխանը։</p>
+<p>$g(\xi)$-ն կարող է նույնիսկ խտություն չունենալ։ Եթե $\xi\sim N(0,1)$, ապա $\eta=\max(\xi,0)$-ն $\tfrac12$ հավանականությամբ
+հավասար է $0$-ի, այսինքն՝ $\eta$-ն խառը բաշխում ունի։ Իսկ $\operatorname{sign}\xi$-ն ընդհանրապես դիսկրետ է։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="which" open>
+<summary><h2>Ո՞ր բաշխումն է</h2></summary>
+<div class="sec-body">
+<h3>Ամփոփիչ աղյուսակ</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>Բաշխում</th><th>$p(x)$</th><th>Որտեղ</th><th>Պատմությունը</th></tr></thead>
+<tbody>
+<tr><td>հավասարաչափ ($a,b$)</td><td>$\tfrac1{b-a}$</td><td>$[a,b]$</td><td>պատահական կետ հատվածից</td></tr>
+<tr><td>ցուցչային ($\lambda$)</td><td>$\lambda e^{-\lambda x}$</td><td>$x\ge0$</td><td>«չծերացող» սպասում</td></tr>
+<tr><td>նորմալ ($a,\sigma^2$)</td><td>$\tfrac1{\sigma\sqrt{2\pi}}e^{-\frac{(x-a)^2}{2\sigma^2}}$</td><td>$\R$</td><td>շատ փոքր անկախ ազդեցությունների գումար</td></tr>
+<tr><td>Կոշիի</td><td>$\tfrac1{\pi(1+x^2)}$</td><td>$\R$</td><td>պատահական անկյան տանգենս, ծանր պոչեր</td></tr>
+<tr><td>Լապլասի</td><td>$\tfrac12e^{-|x|}$</td><td>$\R$</td><td>երկու ցուցչային խտություն՝ մեջք մեջքի</td></tr>
+<tr><td>Սիմպսոնի</td><td>$1-|x|$</td><td>$(-1,1)$</td><td>հավասարաչափ բաշխված երկու մեծության գումար</td></tr>
+</tbody></table></div>
+
+<div class="widget" id="w-which">
+  <div class="widget-head">Ո՞ր բաշխումն է, թե՞ խտություն չէ</div>
+  <p class="widget-hint">Կարդացեք բանաձևը կամ իրավիճակը և ընտրեք պատասխանը։ Բացատրության մեջ նշված են նաև պարամետրերը։</p>
+  <div class="widget-out" data-out="q"></div>
+  <div class="quiz-opts" data-out="opts"></div>
+  <div data-out="fb"></div>
+  <div class="widget-controls"><button class="btn" type="button" data-act="next">Հաջորդը →</button><span class="muted" data-out="score"></span></div>
+</div>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>Խտությունը համարել հավանականություն։</strong> $P(\xi=x)=0$, իսկ $p(x)$-ը կարող է լինել, օրինակ, $3$։
+  Հավանականություն է միայն մակերեսը՝ $\int_a^b p(x)\,dx$։</li>
+  <li><strong>$c$-ն գտնելիս ստուգել միայն $\int p=1$ պայմանը։</strong> Պետք է նաև $p\ge0$ (վարժություն 2)։</li>
+  <li><strong>Կտոր առ կտոր $F$ կառուցելիս մոռանալ նախորդ կտորների մակերեսը։</strong> Լուծված օրինակում $(1,2]$-ում
+  $F(x)=F(1)+\int_1^x p(t)\,dt$, ոչ թե $\int_1^x p(t)\,dt$։ Ստուգում՝ միացման կետերում $F$-ը պետք է անընդհատ լինի։</li>
+  <li><strong>$F$-ը գրել միայն այն միջակայքում, որտեղ $p\ne0$։</strong> Ձախում $F=0$, աջում $F=1$. դրանք էլ են պատասխանի մաս։</li>
+  <li><strong>Նորմալ բաշխման դեպքում բաժանել $\sigma^2$-ի վրա՝ $\sigma$-ի փոխարեն,</strong> կամ $\Phi$-ն շփոթել խնդրագրքի
+  $\Phi_0$-ի հետ։ $N(70,100)$-ի համար $\sigma=10$։</li>
+  <li><strong>$p_\xi(h(y))\,|h'(y)|$ բանաձևը կիրառել ոչ մոնոտոն $g$-ի համար։</strong> Այդ դեպքում օգտվեք բաշխման
+  ֆունկցիայից (վարժություն 6)։</li>
+  <li><strong>Կարծել, թե $g(\xi)$-ն միշտ խտություն ունի։</strong> Եթե $\xi\sim N(0,1)$, ապա $\max(\xi,0)$-ն $\tfrac12$
+  հավանականությամբ հավասար է $0$-ի, և նրա բաշխման ֆունկցիան թռիչք ունի։</li>
+</ul>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Լուծումները սկզբում թաքցված են։ Նախ փորձեք ինքներդ, ապա բացեք միայն պատասխանը, հետո՝ ամբողջ
+լուծումը։ Վարժությունները դասավորված են հեշտից դժվար, ★ նշանովն ամենադժվարն է։ Նորմալ բաշխման արժեքները վերցրեք
+<a href="#normal">աղյուսակից</a>։</p>
+
+<div class="box problem"><div class="box-title">Վարժություն 1</div>
+<p>$\xi$-ն հավասարաչափ է բաշխված $[-1,3]$ հատվածում։ Գրեք $p$-ն և $F$-ը։ Գտեք $P(0\le\xi\lt2)$-ը, $P(\xi\gt2{,}5)$-ը,
+$P(|\xi|\lt\tfrac12)$-ը և $P(\xi=1)$-ը։</p>
+</div>
+<div class="solution">
+<p>$p(x)=\tfrac14$, երբ $-1\le x\le3$, և $0$՝ այլ դեպքում։</p>
+$$F(x)=\begin{cases}0, & x\le-1,\\ \tfrac{x+1}4, & -1\lt x\le3,\\ 1, & x\gt3.\end{cases}$$
+<p>Հավանականությունը միջակայքի երկարությունն է՝ բաժանած $4$-ի վրա՝ $P(0\le\xi\lt2)=\tfrac24=\tfrac12$,
+$P(\xi\gt2{,}5)=\tfrac{0{,}5}4=\tfrac18$, $P(|\xi|\lt\tfrac12)=P(-\tfrac12\lt\xi\lt\tfrac12)=\tfrac14$, իսկ $P(\xi=1)=0$,
+ինչպես ցանկացած կետի համար։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\tfrac12;\ \tfrac18;\ \tfrac14;\ 0$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 2</div>
+<p>(ա) Գոյություն ունի՞ արդյոք $c$, որի դեպքում $p(x)=cx$, երբ $-1\le x\le2$, և $p(x)=0$՝ այլ դեպքում, խտություն է։
+(բ) Նույն հարցը $p(x)=\tfrac{c}{\sqrt x}$ ֆունկցիայի համար, երբ $0\lt x\le4$ (և $p(x)=0$՝ այլ դեպքում)։ Եթե այո, գտեք
+$F$-ը և $P(\xi\lt1)$-ը։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">(ա)</span> - այդպիսի $c$ չկա</h3>
+<p>Ինտեգրալից՝ $\int_{-1}^2cx\,dx=c\cdot\tfrac{4-1}2=\tfrac{3c}2=1$, այսինքն՝ $c=\tfrac23$։ Բայց այդ դեպքում
+$p(x)=\tfrac23x\lt0$, երբ $-1\le x\lt0$։ $c\lt0$ դեպքում $p$-ն բացասական է $(0,2]$-ում, իսկ $c=0$ դեպքում ինտեգրալը
+$0$ է։ Այսպիսով՝ $\int p=1$ պայմանից գտած միակ $c$-ն խախտում է $p\ge0$ պայմանը։</p></div>
+<div class="step"><h3><span class="step-num">(բ)</span> - $c=\tfrac14$</h3>
+<p>$\int_0^4\tfrac{c}{\sqrt x}\,dx=c\cdot2\sqrt x\,\Big|_0^4=4c=1$, որտեղից $c=\tfrac14\gt0$, և $p\ge0$։ Այդ դեպքում
+$$F(x)=\begin{cases}0, & x\le0,\\ \tfrac{\sqrt x}2, & 0\lt x\le4,\\ 1, & x\gt4,\end{cases}$$
+և $P(\xi\lt1)=F(1)=\tfrac12$։ Խտությունն անսահմանափակ է $0$-ի մոտ, բայց դա խնդիր չէ. կարևորն ինտեգրալն է։</p></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) չկա, (բ) $c=\tfrac14,\ P(\xi\lt1)=\tfrac12$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 3</div>
+<p>Սարքի աշխատանքի տևողությունը (տարիներով) ցուցչային է՝ $\lambda=0{,}2$։ Գտեք (ա) $P(\xi\gt5)$-ը,
+(բ) $P(\xi\gt8\mid\xi\gt3)$-ը, (գ) $P(2\le\xi\lt4)$-ը, (դ) այն $m$-ը, որի համար $P(\xi\lt m)=\tfrac12$։</p>
+</div>
+<div class="solution">
+<p>$P(\xi\gt t)=e^{-0{,}2t}$, երբ $t\ge0$։</p>
+$$\begin{aligned}P(\xi\gt5)&=e^{-1}\approx0{,}368,\\ P(\xi\gt8\mid\xi\gt3)&=\tfrac{e^{-1{,}6}}{e^{-0{,}6}}=e^{-1},\\ P(2\le\xi\lt4)&=e^{-0{,}4}-e^{-0{,}8}\\&\approx0{,}221.\end{aligned}$$
+<p>(բ)-ն հավասար է (ա)-ին՝ հիշողության բացակայության շնորհիվ։ (դ) $1-e^{-0{,}2m}=\tfrac12$, այսինքն՝
+$m=5\ln2\approx3{,}47$ տարի։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $e^{-1}\approx0{,}368;\ e^{-1};\ \approx0{,}221;\ 5\ln2\approx3{,}47$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 4</div>
+<p>Քննության միավորները մոտավորապես նորմալ են՝ $a=70$, $\sigma=10$։ Գտեք (ա) $P(\xi\gt85)$-ը, (բ) $P(60\lt\xi\lt80)$-ը,
+(գ) այն $x$ միավորը, որից բարձր է ստանում ուսանողների $10\%$-ը։</p>
+</div>
+<div class="solution">
+<p>Ստանդարտացնենք՝ $\tfrac{\xi-70}{10}\sim N(0,1)$։</p>
+$$\begin{aligned}P(\xi\gt85)&=1-\Phi(1{,}5)\\&\approx1-0{,}9332=0{,}0668,\\ P(60\lt\xi\lt80)&=\Phi(1)-\Phi(-1)\\&=2\Phi(1)-1\approx0{,}6826.\end{aligned}$$
+<p>(գ) Պետք է $P(\xi\gt x)=0{,}1$, այսինքն՝ $\Phi\bigl(\tfrac{x-70}{10}\bigr)=0{,}9$։ Աղյուսակից $\Phi(1{,}28)\approx0{,}8997\approx0{,}9$,
+ուստի $\tfrac{x-70}{10}\approx1{,}28$ և $x\approx82{,}8$։</p>
+<p class="muted">Խնդրագրքի աղյուսակով՝ $\Phi_0(1{,}5)=0{,}4332$, և $P(\xi\gt85)=\tfrac12-\Phi_0(1{,}5)=0{,}0668$՝ նույն պատասխանը։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\approx0{,}0668;\ \approx0{,}683;\ x\approx82{,}8$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 5</div>
+<p>$\xi$-ն հավասարաչափ է $(0,1)$-ում։ Գտեք $\eta=\sqrt\xi$-ի բաշխման ֆունկցիան և խտությունը, ինչպես նաև $P(\eta\lt\tfrac12)$-ը։</p>
+</div>
+<div class="solution">
+<p>$0\lt y\le1$ դեպքում $F_\eta(y)=P(\sqrt\xi\lt y)=P(\xi\lt y^2)=y^2$, իսկ $F_\eta(y)=0$, երբ $y\le0$, և $F_\eta(y)=1$, երբ
+$y\gt1$։ Ածանցելով՝ $p_\eta(y)=2y$, երբ $0\lt y\lt1$։ Նույնը տալիս է թեորեմը՝ $h(y)=y^2$ և $p_\eta(y)=1\cdot|h'(y)|=2y$։
+Վերջապես՝ $P(\eta\lt\tfrac12)=F_\eta(\tfrac12)=\tfrac14$։</p>
+<p class="muted">Արմատ հանելիս $1$-ից փոքր թվերը մեծանում են, և $\eta$-ի արժեքները կուտակվում են $1$-ի մոտ՝ $\xi^2$-ի
+ճիշտ հակառակը։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $p_\eta(y)=2y,\ 0\lt y\lt1;\quad P(\eta\lt\tfrac12)=\tfrac14$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 6</div>
+<p>$\xi$-ն հավասարաչափ է $(-1,2)$-ում, $\eta=\xi^2$։ Գտեք $F_\eta$-ն և $p_\eta$-ն, ինչպես նաև $P(\eta\lt\tfrac14)$-ը և
+$P(\eta\gt1)$-ը։</p>
+</div>
+<div class="solution">
+<p>$\xi$-ի խտությունը $\tfrac13$ է $(-1,2)$-ում, իսկ $\eta$-ն ընդունում է $[0,4)$-ի արժեքներ։
+$\{\xi^2\lt y\}=\{-\sqrt y\lt\xi\lt\sqrt y\}$, բայց այս միջակայքի ձախ ծայրը կարող է դուրս գալ $(-1,2)$-ից՝</p>
+<ul>
+  <li>$0\lt y\le1$ դեպքում ամբողջ $(-\sqrt y,\sqrt y)$ միջակայքը $(-1,2)$-ի մեջ է, և $F_\eta(y)=\tfrac{2\sqrt y}3$,</li>
+  <li>$1\lt y\le4$ դեպքում $-\sqrt y\le-1$, և $F_\eta(y)=P(-1\lt\xi\lt\sqrt y)=\tfrac{\sqrt y+1}3$։</li>
+</ul>
+$$F_\eta(y)=\begin{cases}0, & y\le0,\\ \tfrac{2\sqrt y}3, & 0\lt y\le1,\\ \tfrac{\sqrt y+1}3, & 1\lt y\le4,\\ 1, & y\gt4,\end{cases}$$
+$$p_\eta(y)=\begin{cases}\tfrac1{3\sqrt y}, & 0\lt y\lt1,\\ \tfrac1{6\sqrt y}, & 1\lt y\lt4,\end{cases}$$
+<p>և $p_\eta(y)=0$՝ այլ դեպքում։ Այժմ $P(\eta\lt\tfrac14)=F_\eta(\tfrac14)=\tfrac13$ և $P(\eta\gt1)=1-F_\eta(1)=\tfrac13$։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> $P(\eta\gt1)=P(1\lt\xi\lt2)=\tfrac13$։ $y=1$ կետում $F_\eta$-ի
+երկու բանաձևն էլ տալիս են $\tfrac23$, իսկ $y=4$-ում՝ $1$։ Խտությունը $1$-ում թռիչք ունի՝ $1$-ից ձախ $\xi^2$-ի արժեքները
+գալիս են երկու ճյուղից ($\pm\sqrt y$), իսկ աջում՝ միայն մեկից։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P(\eta\lt\tfrac14)=\tfrac13,\ P(\eta\gt1)=\tfrac13$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 7 ★</div>
+<p>Դիցուք $\xi\ge0$, $G(t)=P(\xi\gt t)$, $0\lt G(1)\lt1$, և ամեն $s,t\ge0$-ի համար $G(s+t)=G(s)\,G(t)$ (սա հիշողության
+բացակայությունն է՝ $P(\xi\gt s+t\mid\xi\gt s)=P(\xi\gt t)$)։ Ապացուցեք, որ $\xi$-ն ցուցչային բաշխում ունի։</p>
+</div>
+<div class="solution">
+<p>Քանի որ $G(0)=G(0)^2$ և $G(0)\ge G(1)\gt0$, ապա $G(0)=1$։ Դիցուք $q=G(1)\in(0,1)$ և $\lambda=-\ln q\gt0$։ Ինդուկցիայով
+$G(n)=q^n$ ամեն բնական $n$-ի համար։ $G(1)=G(\tfrac1m)^m$ հավասարությունից $G(\tfrac1m)=q^{1/m}$, իսկ այնուհետև
+$G(\tfrac nm)=q^{n/m}$։ Այսպիսով՝ բոլոր ոչ բացասական ռացիոնալ $r$-երի համար $G(r)=e^{-\lambda r}$։</p>
+<p>$G$-ն չաճող է։ Կամայական $t\gt0$-ի համար վերցնենք $r_1\lt t\lt r_2$ ռացիոնալ թվեր՝
+$e^{-\lambda r_2}=G(r_2)\le G(t)\le G(r_1)=e^{-\lambda r_1}$։ $r_1$-ը և $r_2$-ը ձգտեցնելով $t$-ի՝ ստանում ենք
+$G(t)=e^{-\lambda t}$։ Վերջապես, $\{\xi\gt s\}$ պատահույթները նվազելով ձգտում են $\{\xi\ge t\}$-ին, երբ $s\to t-0$, ուստի
+$P(\xi\ge t)=\lim_{s\to t-0}G(s)=e^{-\lambda t}$։ Հետևաբար, $t\gt0$ դեպքում $F(t)=P(\xi\lt t)=1-e^{-\lambda t}$, իսկ $t\le0$
+դեպքում $F(t)=0$, քանի որ $\xi\ge0$։ Սա ցուցչային բաշխումն է։ ∎</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<h3>Ամբողջ դասը մեկ աղյուսակում</h3>
+<div class="table-wrap"><table class="tbl">
+<tbody>
+<tr><td>սահմանում</td><td>$F(x)=\int_{-\infty}^x p(t)\,dt$, $p\ge0$</td></tr>
+<tr><td>նորմավորում</td><td>$\int_{-\infty}^{+\infty}p(x)\,dx=1$</td></tr>
+<tr><td>միջակայք</td><td>$P(a\le\xi\lt b)=\int_a^b p(x)\,dx$ (ծայրակետերը նշանակություն չունեն)</td></tr>
+<tr><td>մեկ կետ</td><td>$P(\xi=x)=0$</td></tr>
+<tr><td>$p$-ն՝ $F$-ից</td><td>$p=F'$ ($p$-ի անընդհատության կետերում)</td></tr>
+<tr><td>ֆունկցիա</td><td>$p_\eta(y)=p_\xi(h(y))\,|h'(y)|$, եթե $g$-ն խիստ մոնոտոն է. ընդհանուր դեպքում՝ $F_\eta(y)=P(g(\xi)\lt y)$</td></tr>
+<tr><td>բաշխումներ</td><td>«Ո՞ր բաշխումն է» բաժնի աղյուսակը և նորմալ բաշխման աղյուսակը</td></tr>
+</tbody></table></div>
+
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասընթացի ծրագրից, ոչ թե դասախոսի քննական հարցերից։
+Քննական հարցերի պաշտոնական ցանկի համար դիմեք դասախոսին։</p>
+<ol>
+  <li>Սահմանել բացարձակ անընդհատ բաշխումը և խտությունը, ապացուցել, որ $F$-ն անընդհատ է, $P(\xi=x)=0$, և $F'=p$ $p$-ի
+  անընդհատության կետերում (<a href="#density">ապացույցը</a>)։ Գաղափարը՝ ինտեգրալի անընդհատությունն ըստ վերին սահմանի։</li>
+  <li>Ցույց տալ, որ $p\ge0$ և $\int p=1$ պայմաններին բավարարող ամեն ֆունկցիա ինչ-որ բաշխման խտություն է
+  (<a href="#density">բաժինը</a>)։ Գաղափարը՝ 10-րդ դասի հակադարձ թեորեմը։</li>
+  <li>Հավասարաչափ և ցուցչային բաշխումներ՝ խտություն, $F$, հիշողության բացակայություն և նրա հակադարձը
+  (<a href="#exponential">ապացույցը</a>, վարժություն 7)։</li>
+  <li>Նորմալ բաշխում՝ $\int p=1$, ստանդարտացում, $\Phi(-x)=1-\Phi(x)$, «երեք սիգմայի» կանոն
+  (<a href="#normal">ապացույցը</a>)։ Գաղափարը՝ $I^2$-ը բևեռային կոորդինատներով։</li>
+  <li>Կոշիի բաշխում՝ խտություն, $F$, ծանր պոչեր, կապը $\operatorname{tg}\theta$-ի հետ (<a href="#cauchy">բաժինը</a>)։</li>
+  <li>Արտածել $g(\xi)$-ի խտությունը խիստ մոնոտոն $g$-ի դեպքում և լուծել ոչ մոնոտոն օրինակ ($\xi^2$) բաշխման ֆունկցիայով
+  (<a href="#functions">ապացույցը</a>)։</li>
+</ol>
+
+<h3>Փորձնական բանավոր հարցեր</h3>
+<ul>
+  <li>Կարո՞ղ է խտությունն ընդունել $1$-ից մեծ արժեքներ։ Կարո՞ղ է այն անսահմանափակ լինել։</li>
+  <li>Ինչո՞ւ է բացարձակ անընդհատ $\xi$-ի համար $P(\xi=x)=0$։ Նշանակո՞ւմ է արդյոք դա, որ $\{\xi=x\}$ պատահույթն անհնար է։</li>
+  <li>Միա՞կն է արդյոք խտությունը։</li>
+  <li>Ունի՞ արդյոք խտություն ցանկացած անընդհատ բաշխման ֆունկցիա։</li>
+  <li>Ո՞ր անընդհատ բաշխումը հիշողություն չունի, և ո՞րն է նրա դիսկրետ «երկվորյակը»։</li>
+  <li>Ինչո՞ւ է $\tfrac{\xi-a}\sigma$-ն ստանդարտ նորմալ, եթե $\xi\sim N(a,\sigma^2)$։</li>
+  <li>Ինչո՞վ է Կոշիի բաշխումը տարբերվում նորմալից, եթե երկուսի գրաֆիկն էլ սիմետրիկ «զանգակ» է։</li>
+</ul>
+
+<h3>Ինչ է հաջորդը</h3>
+<p><strong>Դաս 13</strong>՝ սինգուլյար բաշխումներ։ Կտեսնենք Կանտորի ֆունկցիան՝ անընդհատ բաշխման ֆունկցիա, որը $0$-ից աճում է
+մինչև $1$, բայց նրա ածանցյալը համարյա ամենուրեք զրո է, այնպես որ խտություն չունի։ Լեբեգի թեորեմն ասում է, որ ամեն
+բաշխման ֆունկցիա դիսկրետ, բացարձակ անընդհատ և սինգուլյար մասերի խառնուրդ է՝ $F=a_1F_1+a_2F_2+a_3F_3$։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="book" open>
+<summary><h2>Խնդրագրքի խնդիրներ</h2></summary>
+<div class="sec-body">
+<p>Ն. Ահարոնյան, Ե. Իսրաելյան, «Հավանականությունների տեսության խնդրագիրք» (ԵՊՀ հրատ., 2016), «Պատահական մեծություն և
+բաշխման ֆունկցիա» գլուխ։ Այս դասի թեմաներին համապատասխանող խնդիրները՝</p>
+<ul>
+  <li><strong>խտություն, հաստատունի որոնում, $F$ և հավանականություններ՝</strong> 315, 316, 319-321,</li>
+  <li><strong>հավասարաչափ՝</strong> 340, 341,</li>
+  <li><strong>ցուցչային և հիշողության բացակայություն՝</strong> 323, 324,</li>
+  <li><strong>նորմալ՝</strong> 342, 343,</li>
+  <li><strong>Կոշիի՝</strong> 317, 318, 332,</li>
+  <li><strong>պատահական մեծության ֆունկցիա՝</strong> 327-333, 336-338, 354-363,</li>
+  <li><strong>մի քանի պատահական կետ (ավելի դժվար)՝</strong> 334, 335։</li>
+</ul>
+<p class="muted">Տնային աշխատանքը նշանակում է դասախոսը։ Այս ցանկը միայն ցույց է տալիս, թե որ խնդիրներն են վերաբերում այս
+դասի թեմաներին։ Խնդրագրքում խտությունը նշանակված է $f(x)$, իսկ նորմալ բաշխման աղյուսակում տրված է
+$\Phi_0(x)=\Phi(x)-\tfrac12$ Լապլասի ֆունկցիան։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Դասեր">
+        <a class="btn" href="w11-discrete.html">← Դասախոսություն 11</a>
+        <a class="btn" href="index.html">Բոլոր դասերը</a>
+        <a class="btn" href="w13-singular.html">Դասախոսություն 13 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասընթացի ծրագրի և գրականության հիման վրա։ Սխալ նկատելու դեպքում
+  գրեք <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

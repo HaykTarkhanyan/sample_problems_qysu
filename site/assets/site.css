@@ -351,6 +351,11 @@ details.deep > .inner, details.extra > .inner { padding: .2rem 1rem .7rem; }
 .quiz-fb.bad { background: color-mix(in srgb, var(--red) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--red) 45%, var(--line)); }
 .slider-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-family: var(--sans); font-size: .9rem; }
 .slider-row input[type="range"] { flex: 1; min-width: 9rem; }
+/* Phones: a row with two sliders wraps so the second label is left at the end of line 1; keep label|slider pairs. */
+@media (max-width: 560px) {
+  .slider-row:has(input[type="range"] ~ input[type="range"]) { display: grid; grid-template-columns: auto 1fr; column-gap: .6rem; row-gap: .35rem; }
+  .slider-row:has(input[type="range"] ~ input[type="range"]) > [data-out] { grid-column: 1 / -1; }
+}
 .quiz-opts .btn:disabled { cursor: default; }
 .quiz-opts .btn.primary:disabled { opacity: 1; }
 /* Predict-then-check blocks (probability pages) */

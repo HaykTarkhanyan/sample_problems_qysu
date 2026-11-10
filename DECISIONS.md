@@ -14,6 +14,11 @@ Newest first. Superseded entries stay, marked as such.
 - **Alternatives rejected** Keeping solutions visible (the discrete-site default; fine for reference sheets,
   wrong for practice); free-exploration widgets only.
 - **What would change this** Student feedback that hidden solutions or predict prompts get in the way.
+- **Revisited 2026-11-10:** lectures 1-8 and 12-16 were built by parallel builder agents (user request) and,
+  by the user's choice, published **without** the independent math review that lectures 10-11 had; their
+  safety net is each builder's number-recomputation script, a mock-DOM widget smoke test, `check_site`, the
+  Armenian lint and the orchestrator's browser check (1280/390 px). If students report math errors, run the
+  per-page review (the prompt used for lectures 10-11) on the affected pages first.
 
 ## 12. Probability pages: original explanations; the problem book is cited by problem number only
 - **Date** 2026-11-10 - **status** active

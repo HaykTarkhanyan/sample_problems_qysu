@@ -81,6 +81,9 @@ After that: the final exam, oral, 8 points (40% of the grade).
 - Poisson (λ > 0): P(ξ = k) = λ^k e^(-λ) / k!, k = 0, 1, 2, ...
 - Geometric (p): P(ξ = k) = (1-p)^(k-1) p, **k = 1, 2, ...** (number of trials up to and including the first success).
 - Hypergeometric (n, M, N): P(ξ = k) = C_M^k C_(N-M)^(n-k) / C_N^n, k = max(0, n-N+M) .. min(M, n).
+- Normal table: the problem book tabulates the **Laplace function Φ₀(x) = Φ(x) - 1/2** (its table gives
+  0,3413 at x = 1), not Φ itself; the lecture 12 page warns about this. Notation there: density f, ξ ∈ N(a, σ²);
+  our pages write p(x) and ξ ~ N(a, σ²).
 
 ## Notes
 

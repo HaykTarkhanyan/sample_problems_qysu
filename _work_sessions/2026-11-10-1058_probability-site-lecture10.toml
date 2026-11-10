@@ -24,25 +24,34 @@ done = [
   "Heads/tails: «գերբ» replaced by «ղուշ» (owner); mapping question A36 added to armenian_style; GUIDE T2.",
   "Lecture 11 page site/probability/w11-discrete.html + assets/js/w11.js (user: start week 11 now): discrete law, worked example (heads in 3 tosses), degenerate/Bernoulli/uniform, binomial (derivation, mode with proof, simulation widget), geometric (k >= 1, tail, memorylessness + converse, overlay widget), Poisson (theorem with proof, binomial -> Poisson widget with TV distance), hypergeometric (urn widget vs binomial, Vandermonde), summary table, which-distribution quiz (8), typical mistakes, 7 original exercises, oral-exam section, problem-book refs 304-310, 322, 325, 348. Shared PROB.pmf.* and PROB.bars added. Numbers verified by script (verify_w11.cjs), lint 0, QA 0, browser 1280/390 (10 phone overflows fixed, «∎» inside $$ fixed). Independent math review run before publishing.",
   "Probability pages got a die favicon (user side task); discrete pages and hub keep the flag.",
+  "Lectures 12-16 and 1-5 built by parallel builder agents (user: 'start 12 13 14 in parallel', then 15/16, then 1/2/3, then 4/5); each agent wrote only its own page + script, ran check_site, the Armenian lint, a number-recomputation script and a mock-DOM smoke test. Orchestrator: browser check of every page at 1280/390 px with all boxes open (fixed phone overflows on w15 multinomial proof and w03 rings widget), index cards, pager links, cross-page anchor check, term unification across pages (countable additivity = ադիտիվություն, frequency = հաճախություն). Independent math reviews skipped by user choice (DECISIONS #13 revisited). Problem book's normal table is the Laplace function Φ0 = Φ - 1/2 (books.md).",
   "Armenian sources (user: read a grammar book first): background agent read the 22 Language Committee recommendations (hy.wikipedia mirror), the ministry textbooks «Հայոց լեզու 7/11» (lib.armedu.am) and arar.sci.am works; 10 of 36 questions resolved by source (A1: -ը before ե/ո/և except auxiliaries; «չլավ» wrong per Սուքիասյան p. 266), 8 narrowed; new lint rules (66/66 self-tests). Owner interviewed with the question tool on the remaining 26 (armenian_style/OWNER_ANSWERS.md); CONVENTIONS article rule and owner decisions updated; lecture 10 page: «Ստուգեք ինքներդ ձեզ», «Հետևաբար,», «Ինչո՞ւ է այս կառուցումը ճիշտ»; lint hints for «Ահա» and «իրենից ներկայացնում է» removed.",
   "Student's lecture-10 notes (6 photos, probability/notes_from_student/, gitignored) read: convention F(x)=P(ξ<x) CONFIRMED (DECISIONS #10 updated, DEFERRED item closed); lecture proofs match the page; property order aligned to the lecturer's (1 non-decreasing, 2 left-continuous, 3 limits); countable-jumps-as-monotone-function note added; lecture ended with the definition of discrete distributions and the example -2,3/2/5 with 0,2/0,7/0,1, now the default of the week 11 table widget, with cross-links between the pages.",
   "A Bash heredoc rewriting w10.js was flagged by Claude Code ('Dangerous rm operation not ruled out') and rejected by the user; nothing was written. Rule added to the repo CLAUDE.md: code edits only via Edit/Write. Lint fix: NOT_ARTICLE check now case-insensitive («Խառը»).",
   "Independent math review of the lecture 10 page before publishing: no wrong formula/proof/answer; 8 findings applied (false 'remaining jumps < 1/k' sentence for k = 2^m, zero-probability paragraph reworded, interval-widget dot filled only at F's actual value, traffic-light chip showing the partial mass, a < b enforced, 'at jump points' qualifier, dummy-variable clash in the converse proof, '1 հավանականությամբ').",
   "DECISIONS #8-#12, CONVENTIONS (paths + Probability pages section), DEFERRED_TODO (convention check, lecture 11, native read, weeks 12-16).",
+  "Lectures 6 (total probability, Bayes: tree, medical test, Monty Hall, which-coin widgets; book 193-232), 7 (Bernoulli scheme, polynomial scheme: sequence builder, Galton board, at-least-one, die-counts widgets; book 233-303 by topic) and 8 (random variable, measurability, distribution, F with the three properties: map, measurability, same-distribution, F-builder widgets; book 304, 305, 344-347, 349-351, 354, 355) built by three parallel builder agents (user: 'start 678 as well lets finish up'). Each passed node --check, check_site, the lint, a number script (246, 225 and 2400 checks) and a mock-DOM smoke test. All 15 lectures now have a page.",
+  "Orchestrator QA after compaction: w05 dice formula re-checked at 390 px; index cards for 5, 6, 7, 8; pagers 5 -> 6 and 8 <- 10; browser check of 6, 7, 8 at 390/1280 with all boxes open, chips clicked and sliders at both ends. Fixes: w06 widget title in a flex container pushed the page 33 px wide (wrapped in one span); sliders on phones: a row with two sliders left the second label at the end of line 1 on 11 pages (site.css: two-column grid under 560 px for rows with 2+ sliders, verified on every row, desktop unchanged; w07 rows split). A one-shot page-width scan of all 16 probability pages at 390 px: 0 overflow, 0 KaTeX/JS errors. Learning: _learnings/2026-11-10-1843_flex-rows-break-on-phones.md.",
+  "A builder's Bash command hit 'Dangerous rm operation not ruled out' (user screenshot); told the user to deny it and reminded all builders: no heredocs, no inline node -e / python -c code.",
+  "Docs refreshed: CONVENTIONS (convention confirmed, property order, review exception, page names 6-8), DECISIONS #13 (reviews skipped for 1-8 and 12-16), DEFERRED_TODO (closed weeks 12-16 / lecture 12; added math review of the unreviewed pages, native read of all pages, formula-suffix line break, student feedback).",
 ]
 
 pending = [
-  "Lecture 11 page (discrete distributions) before the 16 Nov lecture; outline in DEFERRED_TODO; course conventions for binomial/Poisson/geometric (k>=1)/hypergeometric noted in probability/books.md.",
-  "Integrate armenian_style/ results: answer the native-speaker questions, then polish the lecture 10 Armenian text.",
-  "Remind the user to confirm the F(x)=P(ξ<x) convention with a student's week 8 notes.",
+  "Q14: may I edit glossary_Apr.csv (GLOSSARY_REPORT findings)?",
+  "Q19: sweep the discrete sheets with the decided language rules?",
+  "Q23: repo hook that rejects Bash heredocs / inline node -e code?",
+  "Q24: fix the formula-suffix line break («$F(x)$» / «-ն») in site.js (all pages)?",
+  "Builder-chosen terms not in the glossary: prior/posterior «ապրիորի / ապոստերիորի», specificity «սպեցիֆիկություն», base rate «բազային հաճախություն» (w06); «խցիկ», «մեխ», «գնդիկ» (w07 Galton board). Problem-book groupings for 238, 270-276, 285, 287, 289-292 on w07 are the builder's reading of the transliterated text layer.",
 ]
 
 next = [
-  "Lecture 11 page.",
-  "Native-speaker pass on lecture 10 text using armenian_style/GUIDE.md.",
+  "Collect student feedback (owner); run the lecture 10/11 math-review prompt on any page where students report an error.",
+  "Native-speaker read of the probability pages.",
 ]
 
 files = [
+  "site/probability/w01..w08, w10..w16 *.html + site/assets/js/w01..w08, w10..w16 .js, site/probability/index.html, site/assets/site.css (slider rows on phones)",
+  "_learnings/2026-11-10-1843_flex-rows-break-on-phones.md",
   "probability/books.md",
   "site/index.html (hub), site/p*.html (redirect stubs), site/discrete/* (moved), site/probability/index.html, site/probability/w10-cdf-properties.html",
   "site/assets/js/prob.js, site/assets/js/w10.js, site/assets/site.css (detail-level, theorem, quiz styles)",

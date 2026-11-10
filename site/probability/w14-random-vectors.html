@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Ccircle cx=%279.5%27 cy=%279.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%273.6%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2722.5%27 cy=%2722.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<title>Դասախոսություն 14 - Պատահական վեկտորներ և բազմաչափ բաշխումներ</title>
+<meta name="description" content="Հավանականությունների տեսություն, դասախոսություն 14՝ պատահական վեկտոր, համատեղ բաշխման ֆունկցիա և նրա հատկությունները, ուղղանկյան հավանականություն, մարգինալ բաշխումներ, համատեղ բաշխման աղյուսակ։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/w14.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Հավանականությունների տեսություն</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Դասախոսություն 14</div>
+    <h1>Պատահական վեկտորներ և բազմաչափ բաշխումներ</h1>
+    <p class="subtitle">Մի քանի պատահական մեծություն միասին՝ համատեղ բաշխման ֆունկցիա, ուղղանկյան հավանականություն և մարգինալ բաշխումներ</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս դասի մասին</a></li>
+        <li><a href="#vector">Պատահական վեկտոր</a></li>
+        <li><a href="#joint">Համատեղ բաշխման ֆունկցիա</a></li>
+        <li><a href="#props">Հատկություններ և մարգինալներ</a></li>
+        <li><a href="#rect">Ուղղանկյան հավանականությունը</a></li>
+        <li><a href="#discrete">Դիսկրետ պատահական վեկտորներ</a></li>
+        <li><a href="#same">Համատեղ բաշխումն ավելին է, քան մարգինալները</a></li>
+        <li><a href="#continuous">Անընդհատ օրինակ՝ կետ եռանկյան մեջ</a></li>
+        <li><a href="#quiz">Տիպիկ սխալներ և ինքնաստուգում</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+        <li><a href="#book">Խնդրագրքի խնդիրներ</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս դասի մասին</h2></summary>
+<div class="sec-body">
+<p>Մինչև հիմա ուսումնասիրում էինք մեկ պատահական մեծություն և նրա բաշխման ֆունկցիան։ Սակայն շատ հարցեր վերաբերում են մի
+քանի մեծության <em>միասին</em>՝ երկու զառ նետելիս ընկած թվերից փոքրին ու մեծին, մարդու հասակին ու քաշին, պատահական կետի
+երկու կոորդինատներին։ Այդպիսի հարցերին պատասխանելու համար պետք է իմանալ ոչ միայն յուրաքանչյուր մեծության բաշխումը,
+այլև այն, թե ինչպես են նրանք կապված իրար հետ։ Այս դասում սահմանում ենք պատահական վեկտորը և նրա համատեղ բաշխման
+ֆունկցիան։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Պատահական վեկտորը մի քանի պատահական մեծություն է,</strong> որոնք որոշված են միևնույն $\Omega$-ի վրա և
+  դիտարկվում են միասին՝ $(\xi,\eta)$ կամ $(\xi_1,\dots,\xi_n)$։</li>
+  <li><strong>Համատեղ բաշխման ֆունկցիան՝ $F(x,y)=P(\xi\lt x,\ \eta\lt y)$, որոշում է վեկտորի բաշխումը։</strong> Նրանով
+  հաշվվում են ուղղանկյունների հավանականությունները և յուրաքանչյուր կոորդինատի բաշխման ֆունկցիան՝
+  $F_\xi(x)=F(x,+\infty)$։</li>
+  <li><strong>Համատեղ բաշխումն ավելին է, քան մարգինալները՝</strong> $\xi$-ի և $\eta$-ի առանձին բաշխումները չեն որոշում
+  $(\xi,\eta)$-ի համատեղ բաշխումը։</li>
+</ol>
+</div>
+<div class="note"><strong>Պայմանավորվածություն։</strong> Ինչպես 10-րդ դասում և դասընթացի խնդրագրքում (Ն. Ահարոնյան,
+Ե. Իսրաելյան), անհավասարությունները խիստ են՝ $F(x,y)=P(\xi\lt x,\ \eta\lt y)$։ Բ. Սևաստյանովի դասագրքում
+$\tilde F(x,y)=P(\xi\le x,\ \eta\le y)$ է։ Տարբերությունը նկարագրված է <a href="#conv14">համատեղ բաշխման ֆունկցիայի
+բաժնում</a>։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="vector" open>
+<summary><h2>Պատահական վեկտոր</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>Դիցուք $(\Omega,\mathcal F,P)$-ն հավանականային տարածություն է, իսկ $\xi_1,\dots,\xi_n$-ը՝ նրա վրա որոշված
+պատահական մեծություններ։ $\xi(\omega)=\bigl(\xi_1(\omega),\dots,\xi_n(\omega)\bigr)$ արտապատկերումը $\Omega$-ից $\R^n$
+կոչվում է $n$ չափանի <strong>պատահական վեկտոր</strong> (կամ $n$ չափանի պատահական մեծություն)։ $n=2$ դեպքում
+սովորաբար գրում ենք $(\xi,\eta)$։</p>
+</div>
+<p>Էականն այն է, որ բոլոր կոորդինատները որոշված են <em>միևնույն</em> $\Omega$-ի վրա։ Ամեն $\omega$ ելքի համար միանգամից
+ստանում ենք $n$ թիվ, ուստի կարող ենք խոսել, օրինակ, $P(\xi\lt\eta)$-ի կամ $P(\xi+\eta\gt7)$-ի մասին։ Եթե $\xi$-ն և
+$\eta$-ն որոշված լինեին տարբեր փորձերում (տարբեր $\Omega$-երի վրա), այդպիսի հարցերն իմաստ չէին ունենա։</p>
+<ul>
+  <li><strong>Երկու զառ։</strong> $\Omega$-ն $36$ հավասարահավանական զույգերն են, $\xi$-ն ընկած թվերից փոքրն է, $\eta$-ն՝
+  մեծը։ Այս օրինակը կուղեկցի մեզ ամբողջ դասի ընթացքում։</li>
+  <li><strong>Կետ քառակուսու մեջ։</strong> Միավոր քառակուսու մեջ պատահականորեն նետում ենք կետ (երկրաչափական
+  հավանականություն), իսկ $(U,V)$-ն նրա կոորդինատներն են։</li>
+  <li><strong>Մետաղադրամ։</strong> Մետաղադրամը նետում ենք մեկ անգամ։ $\xi=1$, եթե ընկել է ղուշ, և $\xi=0$՝ հակառակ
+  դեպքում, իսկ $\eta=1-\xi$։ Սա էլ պատահական վեկտոր է, թեև $\eta$-ն լիովին որոշվում է $\xi$-ով։</li>
+</ul>
+<p>Ինչպես մեկ մեծության դեպքում, վեկտորի <strong>բաշխումը</strong> $P_\xi(B)=P(\xi\in B)$ հավանականություններն են, որտեղ
+$B$-ն $\R^n$-ի բորելյան բազմություն է (ուղղանկյուն, շրջան, եռանկյուն և այլն)։ Այսինքն՝ բաշխումը պատասխանում է «որքա՞ն
+է հավանականությունը, որ $\xi$ կետն ընկնի $B$-ի մեջ» հարցին։</p>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Պնդում։</strong> $\xi=(\xi_1,\dots,\xi_n):\Omega\to\R^n$ արտապատկերման համար հետևյալ պայմանները համարժեք են՝</p>
+<ol>
+  <li>յուրաքանչյուր $\xi_k$ պատահական մեծություն է,</li>
+  <li>ամեն $x_1,\dots,x_n$ թվերի համար $\{\xi_1\lt x_1,\dots,\xi_n\lt x_n\}$ բազմությունը պատահույթ է,</li>
+  <li>ամեն բորելյան $B\subset\R^n$ բազմության համար $\{\xi\in B\}$ բազմությունը պատահույթ է։</li>
+</ol>
+<p>(1)$\Rightarrow$(2)՝ $\{\xi_1\lt x_1,\dots,\xi_n\lt x_n\}=\bigcap_k\{\xi_k\lt x_k\}$, այսինքն՝ պատահույթների հատում է։</p>
+<p>(2)$\Rightarrow$(3)՝ դիցուք $\mathcal D$-ն այն $B\subset\R^n$ բազմությունների դասն է, որոնց համար $\{\xi\in B\}\in\mathcal F$։
+Քանի որ $\{\xi\notin B\}=\Omega\setminus\{\xi\in B\}$ և $\{\xi\in\bigcup_k B_k\}=\bigcup_k\{\xi\in B_k\}$, $\mathcal D$-ն
+սիգմա-հանրահաշիվ է։ (2)-ից այն պարունակում է $(-\infty,x_1)\times\dots\times(-\infty,x_n)$ տեսքի բոլոր բազմությունները,
+իսկ դրանք ծնում են $\R^n$-ի բորելյան սիգմա-հանրահաշիվը։ Ուրեմն $\mathcal D$-ն պարունակում է բոլոր բորելյան
+բազմությունները։</p>
+<p>(3)$\Rightarrow$(1)՝ $\{\xi_k\lt x\}=\{\xi\in\R\times\dots\times(-\infty,x)\times\dots\times\R\}$, որտեղ
+$(-\infty,x)$-ը $k$-րդ տեղում է, և աջում գրված բազմությունը բորելյան է։ ∎</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="joint" open>
+<summary><h2>Համատեղ բաշխման ֆունկցիա</h2></summary>
+<div class="sec-body">
+<p>Մեկ մեծության բաշխումը լիովին որոշվում էր բաշխման ֆունկցիայով։ Վեկտորի համար նույն դերը կատարում է հետևյալ
+ֆունկցիան։</p>
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>$(\xi,\eta)$ պատահական վեկտորի <strong>բաշխման ֆունկցիան</strong>, կամ $\xi$ և $\eta$ մեծությունների <strong>համատեղ
+բաշխման ֆունկցիան</strong>, հետևյալն է՝
+$$\begin{gathered}F_{\xi,\eta}(x,y)=P(\xi\lt x,\ \eta\lt y),\\ x,y\in\R.\end{gathered}$$
+Երբ պարզ է, թե որ վեկտորի մասին է խոսքը, գրում ենք կարճ՝ $F(x,y)$։ Ստորակետը նշանակում է «և»՝ $\{\xi\lt x,\ \eta\lt y\}=\{\xi\lt x\}\cap\{\eta\lt y\}$։</p>
+</div>
+<div class="box idea"><div class="box-title">Ինտուիցիա</div>
+<p>Պատկերացրեք, որ հարթության վրա լցված է մեկ միավոր «հավանականության ավազ»։ $F(x,y)$-ը ցույց է տալիս, թե որքան ավազ
+կա $(x,y)$ կետից <em>խիստ ձախ և խիստ ներքև</em> ընկած անվերջ քառորդում՝ $\{(s,t):\ s\lt x,\ t\lt y\}$ բազմության մեջ։
+Քառորդի եզրերը՝ $s=x$ և $t=y$ ճառագայթները, չեն մտնում, քանի որ անհավասարությունները խիստ են։</p>
+</div>
+
+<h3>Լուծված օրինակ՝ երկու զառ</h3>
+<p>Նետում ենք երկու զառ, $\xi$-ն ընկած թվերից փոքրն է, $\eta$-ն՝ մեծը։ Հաշվենք $F(3,5)=P(\xi\lt3,\ \eta\lt5)$-ը։
+Պայմանը նշանակում է, որ մեծ թիվը $5$-ից փոքր է, իսկ փոքր թիվը՝ $3$-ից։ Հարմար է հաշվել հանումով։ $\{\eta\lt5\}$
+պատահույթում երկու թվերն էլ $\{1,2,3,4\}$ բազմությունից են ($16$ ելք)։ Նրանցից հանենք այն ելքերը, որոնցում փոքր թիվն
+էլ է $3$-ից մեծ կամ հավասար, այսինքն՝ երկու թվերն էլ $\{3,4\}$-ից են ($4$ ելք)՝</p>
+$$F(3,5)=\frac{16-4}{36}=\frac{12}{36}=\frac13.$$
+<p>Նույն պատասխանը կստանանք համատեղ բաշխման աղյուսակից (<a href="#discrete">դիսկրետ վեկտորների բաժին</a>)։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $\xi$-ն և $\eta$-ն նույն երկու զառի փոքր և մեծ թվերն են։ Ինչի՞ է հավասար $F(2,2)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\tfrac1{36}$</button><button class="btn" type="button">$\tfrac4{36}$</button><button class="btn" type="button">$\tfrac{11}{36}$</button></div>
+<div class="predict-why">$F(2,2)=P(\xi\lt2,\ \eta\lt2)=P(\eta=1)$, այսինքն՝ երկու զառին էլ ընկել է $1$՝ $\tfrac1{36}$։
+$\tfrac4{36}$-ը կլիներ $P(\xi\le2,\ \eta\le2)$-ը (ոչ խիստ անհավասարություններ), իսկ $\tfrac{11}{36}$-ը՝ $P(\xi\lt2)=P(\xi=1)$-ը,
+եթե մոռանանք $\eta$-ի պայմանը։ Ստուգեք ներքևի նկարում՝ կետը տարեք $(2,2)$։</div>
+</div>
+
+<div class="widget" id="w-quad">
+  <div class="widget-head">$F(x,y)$՝ քառորդի «ավազը»</div>
+  <p class="widget-hint">Ընտրեք օրինակը, ապա նկարի վրա սեղմելով կամ քաշելով տեղաշարժեք $(x,y)$ կետը (կամ օգտվեք
+  սահիչներից)։ Նարնջագույն քառորդը $\{\xi\lt x,\ \eta\lt y\}$ պատահույթն է, և $F(x,y)$-ը նրա մեջ ընկած հավանականությունն
+  է։ Քառորդի եզրերին ընկած կետերը (դատարկ շրջանակներ) չեն հաշվվում։ Ֆոնի գույնը որքան մուգ է, այնքան մեծ է $F$-ը։
+  Նկատեք, թե ինչ է լինում, երբ $x$-ը դառնում է $\xi$-ի բոլոր արժեքներից մեծ։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="widget-out muted" data-out="cap"></div>
+  <div data-out="plot"></div>
+  <div class="slider-row"><span>$x$</span><input type="range" data-in="x" aria-label="x"><span>$y$</span><input type="range" data-in="y" aria-label="y"><span data-out="lab"></span></div>
+  <div class="widget-controls"><button class="btn" type="button" data-act="heat" aria-pressed="true">Ջերմային քարտեզ</button></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="note"></div>
+</div>
+
+<p><strong>$n$ չափանի դեպքը։</strong> $n$ մեծությունների համար
+$$F(x_1,\dots,x_n)=P(\xi_1\lt x_1,\dots,\xi_n\lt x_n).$$
+Երկու չափի դեպքում բոլոր գաղափարները երևում են, և նկարելն էլ է հեշտ։ Դրա համար ստորև հիմնականում $n=2$ է։ Ամեն պնդում
+ընդհանրացվում է $n$ չափի դեպքի համար (տե՛ս «Ավելին» վանդակները)։</p>
+
+<details class="extra" id="conv14"><summary>Ավելին՝ Սևաստյանովի պայմանավորվածությունը</summary><div class="inner">
+<p>Բ. Սևաստյանովի դասագրքում (և անգլալեզու գրականության մեծ մասում) $\tilde F(x,y)=P(\xi\le x,\ \eta\le y)$։ Այդ
+ֆունկցիան <em>աջից</em> է անընդհատ ըստ յուրաքանչյուր արգումենտի, իսկ ուղղանկյան բանաձևը վերաբերում է
+$(a_1,b_1]\times(a_2,b_2]$ ուղղանկյանը։ Կապը՝ $\tilde F(x,y)=F(x+0,\,y+0)$ (երկու արգումենտով էլ աջակողմյան սահման)։
+Խնդրի վերջնական պատասխանը (օրինակ՝ $P(1\le\xi\le2,\ \eta\gt0)$) կախված չէ պայմանավորվածությունից, բայց միջանկյալ
+բանաձևերը տարբեր են։ Զառերի օրինակում $F(3,5)=\tfrac{12}{36}$, իսկ $\tilde F(3,5)=P(\xi\le3,\ \eta\le5)=\tfrac{21}{36}$։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="props" open>
+<summary><h2>Հատկություններ և մարգինալ բաշխումներ</h2></summary>
+<div class="sec-body">
+<p>Համատեղ բաշխման ֆունկցիան ունի մեկ փոփոխականի դեպքի հատկությունների նմանները (համարակալումը՝ ինչպես 10-րդ դասում)։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (հատկություններ)</div>
+<ol>
+  <li><strong>Չնվազող է ըստ յուրաքանչյուր արգումենտի՝</strong> եթե $x_1\lt x_2$, ապա $F(x_1,y)\le F(x_2,y)$, և նույնը՝
+  ըստ $y$-ի։</li>
+  <li><strong>Ձախից անընդհատ է ըստ յուրաքանչյուր արգումենտի՝</strong> $F(x-0,\,y)=F(x,y)$ և $F(x,\,y-0)=F(x,y)$։</li>
+  <li><strong>Սահմանները՝</strong> $F(x,y)\to0$, երբ $x\to-\infty$ <em>կամ</em> $y\to-\infty$ (մյուս արգումենտը
+  ֆիքսած է), և $F(x,y)\to1$, երբ $x\to+\infty$ <em>և</em> $y\to+\infty$։</li>
+</ol>
+<p><strong>Մարգինալ բաշխման ֆունկցիաներ՝</strong>
+$$\begin{gathered}F_\xi(x)=\lim_{y\to+\infty}F(x,y)=F(x,+\infty),\\ F_\eta(y)=\lim_{x\to+\infty}F(x,y)=F(+\infty,y).\end{gathered}$$</p>
+</div>
+<p>$\xi$-ի և $\eta$-ի առանձին բաշխումները կոչվում են <strong>մարգինալ</strong> (կամ միաչափ) բաշխումներ։ Ավազի լեզվով՝
+(1) քառորդը մեծացնելիս ավազը չի պակասում, (3) եթե քառորդի անկյունը տանենք շատ ձախ կամ շատ ներքև, քառորդում ավազ գրեթե
+չի մնում, իսկ եթե երկու կոորդինատն էլ տանենք $+\infty$, քառորդն ընդգրկում է ամբողջ հարթությունը։ $F(x,y)\to1$
+ստանալու համար պետք է <em>երկու</em> արգումենտն էլ ձգտեն $+\infty$-ի։ Եթե միայն $y\to+\infty$, քառորդը դառնում է
+$\{s\lt x\}$ կիսահարթությունը, և ստանում ենք $P(\xi\lt x)=F_\xi(x)$։ Ուշադրություն՝ մարգինալը ստանալու համար մյուս
+արգումենտը տանում ենք $+\infty$, ոչ թե տեղադրում $0$ կամ $x$։</p>
+<p>Զառերի օրինակում $F_\eta(5)=F(+\infty,5)=P(\eta\lt5)=\tfrac{16}{36}$ (երկու թվերն էլ $4$-ից մեծ չեն), իսկ
+$F_\xi(3)=F(3,+\infty)=P(\xi\lt3)=1-\tfrac{16}{36}=\tfrac{20}{36}$ (գոնե մեկ թիվը $1$ կամ $2$ է)։ Վերևի նկարում
+կետը տարեք $x=7$, ապա $y=7$ և տեսեք, որ $F$-ը դառնում է մարգինալ բաշխման ֆունկցիա։</p>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>(1)</strong> Եթե $x_1\lt x_2$, ապա $\{\xi\lt x_1,\ \eta\lt y\}\subset\{\xi\lt x_2,\ \eta\lt y\}$։</p>
+<p><strong>(2)</strong> Դիցուք $x_n$-երն աճելով ձգտում են $x$-ի։ $\{\xi\lt x_n,\ \eta\lt y\}$ պատահույթներն աճում են, և
+նրանց միավորումը $\{\xi\lt x,\ \eta\lt y\}$-ն է։ Հավանականության անընդհատությամբ $F(x_n,y)\to F(x,y)$։
+Մոնոտոնությունից հետևում է, որ $F(x-0,y)=F(x,y)$։ Նույնը՝ ըստ $y$-ի։</p>
+<p><strong>(3)</strong> $F(x,y)\le P(\xi\lt x)=F_\xi(x)\to0$, երբ $x\to-\infty$ (10-րդ դաս), և նույնը՝ ըստ $y$-ի։
+$\{\xi\lt n,\ \eta\lt n\}$ պատահույթներն աճում են, և նրանց միավորումը $\Omega$-ն է, ուստի $F(n,n)\to1$։ Եթե $x,y\ge n$,
+մոնոտոնությունից $F(n,n)\le F(x,y)\le1$, հետևաբար $F(x,y)\to1$, ինչպես էլ $x$-ը և $y$-ը ձգտեն $+\infty$-ի։</p>
+<p><strong>Մարգինալներ։</strong> $\{\xi\lt x,\ \eta\lt n\}$ պատահույթներն աճում են, և նրանց միավորումը $\{\xi\lt x\}$-ն է,
+քանի որ $\eta(\omega)$-ն վերջավոր թիվ է։ Ուրեմն $F(x,n)\to F_\xi(x)$, և մոնոտոնությունից $F(x,y)\to F_\xi(x)$, երբ
+$y\to+\infty$։ ∎</p>
+</div></details>
+
+<details class="extra"><summary>Ավելին՝ $n$ չափանի դեպքը</summary><div class="inner">
+<p>Նույն հատկությունները ճիշտ են $F(x_1,\dots,x_n)$-ի համար։ $0$ սահմանը ստացվում է, երբ արգումենտներից <em>գոնե
+մեկը</em> ձգտում է $-\infty$-ի, իսկ $1$-ը՝ երբ <em>բոլորը</em> ձգտում են $+\infty$-ի։ Որևէ արգումենտ $+\infty$ տանելով՝
+ստանում ենք մնացած կոորդինատների համատեղ բաշխման ֆունկցիան՝
+$$\begin{gathered}F_{\xi_1,\dots,\xi_{n-1}}(x_1,\dots,x_{n-1})\\=F(x_1,\dots,x_{n-1},+\infty),\end{gathered}$$
+իսկ բոլորը, բացի $k$-րդից, տանելով՝ $F_{\xi_k}$-ն։ Խնդրագիրքը սա անվանում է համաձայնեցվածության հատկություն։ Կա նաև
+համաչափության հատկությունը՝ եթե կոորդինատները և արգումենտները տեղափոխենք միաժամանակ, ֆունկցիան չի փոխվում՝
+$F_{\xi,\eta}(x,y)=F_{\eta,\xi}(y,x)$։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="rect" open>
+<summary><h2>Ուղղանկյան հավանականությունը</h2></summary>
+<div class="sec-body">
+<p>Մեկ մեծության դեպքում $P(a\le\xi\lt b)=F(b)-F(a)$։ Ինչպե՞ս գտնել $(\xi,\eta)$ կետի ուղղանկյան մեջ ընկնելու
+հավանականությունը։</p>
+<div class="box thm"><div class="box-title">Թեորեմ</div>
+<p>Եթե $a_1\lt b_1$ և $a_2\lt b_2$, ապա
+$$\begin{aligned}&P(a_1\le\xi\lt b_1,\ a_2\le\eta\lt b_2)\\&\quad=F(b_1,b_2)-F(a_1,b_2)\\&\qquad-F(b_1,a_2)+F(a_1,a_2).\end{aligned}$$</p>
+</div>
+<p><strong>Ինչո՞ւ։</strong> Նշանակենք $A=\{\xi\lt b_1,\ \eta\lt b_2\}$, $B=\{\xi\lt a_1,\ \eta\lt b_2\}$,
+$C=\{\xi\lt b_1,\ \eta\lt a_2\}$։ Մեզ հետաքրքրող պատահույթը $A\setminus(B\cup C)$-ն է՝ $A$ քառորդից հանում ենք ձախ շերտը
+և ներքևի շերտը։ Քանի որ $B,C\subset A$, ապա $P\bigl(A\setminus(B\cup C)\bigr)=P(A)-P(B\cup C)$, իսկ կցման-արտաքսման
+սկզբունքով $P(B\cup C)=P(B)+P(C)-P(B\cap C)$։ Մնում է նկատել, որ $B\cap C=\{\xi\lt a_1,\ \eta\lt a_2\}$, և
+$P(A)=F(b_1,b_2)$, $P(B)=F(a_1,b_2)$, $P(C)=F(b_1,a_2)$, $P(B\cap C)=F(a_1,a_2)$։ Ձախ ներքևի քառորդը պատկանում է և՛
+$B$-ին, և՛ $C$-ին, ուստի երկու անգամ է հանվում, և $+F(a_1,a_2)$ անդամն այն մեկ անգամ հետ է բերում։ Ներքևի նկարում
+«Քայլ 1-4» կոճակներով կարող եք տեսնել, թե ինչպես է չորս անդամից յուրաքանչյուրը փոխում հարթության մասերի «հաշիվը»։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Եռանկյան օրինակում (կետ քառակուսու մեջ, $\xi$-ն նրա կոորդինատներից փոքրն է, $\eta$-ն՝
+մեծը) $F(1,1)=1$, $F(\tfrac12,1)=\tfrac34$, $F(1,\tfrac12)=\tfrac14$, $F(\tfrac12,\tfrac12)=\tfrac14$։ Ինչի՞ է հավասար
+$P(\tfrac12\le\xi\lt1,\ \tfrac12\le\eta\lt1)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\tfrac14$</button><button class="btn" type="button">$0$</button><button class="btn" type="button">$\tfrac12$</button></div>
+<div class="predict-why">$1-\tfrac34-\tfrac14+\tfrac14=\tfrac14$։ $0$ կստանայինք, եթե մոռանայինք չորրորդ անկյան
+$+F(\tfrac12,\tfrac12)$ անդամը։ Ստուգում՝ պատահույթը նշանակում է, որ կետի երկու կոորդինատն էլ $[\tfrac12,1)$-ում են, և
+դրա հավանականությունը $\tfrac12\cdot\tfrac12=\tfrac14$ է։ Ստուգեք նաև ներքևի նկարում՝ «Եռանկյուն» օրինակում։</div>
+</div>
+
+<div class="widget" id="w-rect">
+  <div class="widget-head">Ուղղանկյան հավանականությունը՝ չորս անկյունից</div>
+  <p class="widget-hint">Քաշեք ուղղանկյան անկյունները (կամ օգտվեք սահիչներից)։ Կապույտ անկյուններում $F$-ի արժեքը
+  վերցվում է «+» նշանով, կարմիրներում՝ «−» նշանով։ Ներքևում երևում են չորս արժեքները և արդյունքը, իսկ կանաչ վանդակում՝
+  նույն հավանականությունն ուղղակի հաշված։ «Քայլ 1-4» կոճակները ցույց են տալիս ապացույցը՝ ամեն քայլից հետո հարթության
+  յուրաքանչյուր մասը քանի անգամ է հաշված։ «Հակաօրինակ $G$» օրինակում փորձեք ստանալ բացասական «հավանականություն»։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="widget-out muted" data-out="cap"></div>
+  <div class="chips" data-out="steps"></div>
+  <div data-out="plot"></div>
+  <div class="widget-out muted" data-out="step"></div>
+  <div class="slider-row"><span>$a_1$</span><input type="range" data-in="a1" aria-label="a1"><span>$b_1$</span><input type="range" data-in="b1" aria-label="b1"><span data-out="lab1"></span></div>
+  <div class="slider-row"><span>$a_2$</span><input type="range" data-in="a2" aria-label="a2"><span>$b_2$</span><input type="range" data-in="b2" aria-label="b2"><span data-out="lab2"></span></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div data-out="check"></div>
+</div>
+
+<p>Ուղղանկյան հավանականությունը չի կարող բացասական լինել, որտեղից ստանում ենք համատեղ բաշխման ֆունկցիայի չորրորդ
+հատկությունը։</p>
+<div class="box thm"><div class="box-title">Հատկություն 4 (ուղղանկյան պայման)</div>
+<p>Ամեն $a_1\lt b_1$, $a_2\lt b_2$ թվերի համար
+$$\begin{gathered}F(b_1,b_2)-F(a_1,b_2)\\-F(b_1,a_2)+F(a_1,a_2)\ge0.\end{gathered}$$</p>
+</div>
+<p><strong>Ինչո՞ւ է պետք այս հատկությունն առանձին գրել։</strong> Որովհետև այն չի բխում (1)-(3)-ից։</p>
+<div class="box idea"><div class="box-title">Հակաօրինակ</div>
+<p>Դիտարկենք
+$$G(x,y)=\begin{cases}1, & x+y\gt0,\\ 0, & x+y\le0.\end{cases}$$
+Այն չնվազող է ըստ յուրաքանչյուր արգումենտի, ձախից անընդհատ է ($x+y\gt0$ կիսահարթությունը բաց է), $G\to0$, երբ
+արգումենտներից մեկը ձգտում է $-\infty$-ի, և $G\to1$, երբ երկուսն էլ ձգտում են $+\infty$-ի։ Սակայն $[0,1)\times[0,1)$
+քառակուսու համար
+$$\begin{aligned}&G(1,1)-G(0,1)-G(1,0)+G(0,0)\\&\quad=1-1-1+0=-1.\end{aligned}$$
+Եթե $G$-ն լիներ ինչ-որ $(\xi,\eta)$ վեկտորի բաշխման ֆունկցիա, կստանայինք $P(0\le\xi\lt1,\ 0\le\eta\lt1)=-1$։ Ուրեմն
+$G$-ն բաշխման ֆունկցիա չէ, թեև ունի (1)-(3) հատկությունները։ Նույնը կարելի է տեսնել նաև այլ կերպ՝ $G(t,1-t)=1$ ամեն
+$t$-ի համար, ուստի $G=F_{\xi,\eta}$ դեպքում կունենայինք $F_\xi(t)\ge G(t,1-t)=1$ ամեն $t$-ի համար, մինչդեռ $F_\xi(t)\to0$,
+երբ $t\to-\infty$։</p>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ (բնութագրում)։</strong> Եթե $F:\R^2\to\R$ ֆունկցիան բավարարում է (1)-(4) պայմաններին, ապա գոյություն
+ունեն հավանականային տարածություն և նրա վրա որոշված $(\xi,\eta)$ պատահական վեկտոր, որի համար $F_{\xi,\eta}=F$։ Նույնը
+ճիշտ է $n$ չափանի դեպքում։</p>
+<p>Սա 10-րդ դասի <a href="w10-cdf-properties.html#converse">հակադարձ թեորեմի</a> երկչափ տարբերակն է, և այստեղ այն
+ձևակերպում ենք առանց ապացույցի։ Ապացույցի գաղափարը՝ վերցնում ենք $\Omega=\R^2$, ամեն $[a_1,b_1)\times[a_2,b_2)$
+ուղղանկյանը վերագրում ենք (4)-ի ձախ մասը որպես «հավանականություն» (այն ոչ բացասական է), այդ ֆունկցիան շարունակում ենք
+բոլոր բորելյան բազմությունների վրա (Կարաթեոդորիի թեորեմ), իսկ $\xi$-ն և $\eta$-ն կոորդինատներն են։ Շարունակման քայլը
+չափի տեսության նյութ է։ Գործնական եզրակացությունը՝ ստուգելու համար, թե արդյոք $F$-ը համատեղ բաշխման ֆունկցիա է, պետք է
+ստուգել <em>չորս</em> պայման, ոչ թե երեք։</p>
+<p>Ճիշտ է նաև միակությունը՝ $F_{\xi,\eta}$-ն միարժեքորեն որոշում է $P\bigl((\xi,\eta)\in B\bigr)$-ն բոլոր բորելյան
+$B\subset\R^2$ բազմությունների համար։ Պատճառը նույնն է, ինչ 10-րդ դասում՝ $F$-ով որոշվում են բոլոր կիսաբաց
+ուղղանկյունների հավանականությունները, իսկ ուղղանկյունները ծնում են բորելյան սիգմա-հանրահաշիվը և փակ են հատման
+նկատմամբ։</p>
+<p>Ի դեպ, (1)-ը բխում է (3)-ից և (4)-ից։ (4)-ում $a_1\to-\infty$ անցնելով և օգտվելով (3)-ից՝ ստանում ենք
+$F(b_1,b_2)-F(b_1,a_2)\ge0$, այսինքն՝ $F$-ը չնվազող է ըստ $y$-ի։ Նույն կերպ՝ ըստ $x$-ի։</p>
+</div></details>
+
+<details class="extra"><summary>Ավելին՝ ուղղանկյան բանաձևը $n$ չափանի դեպքում</summary><div class="inner">
+<p>$[a_1,b_1)\times\dots\times[a_n,b_n)$ բազմության հավանականությունը նրա $2^n$ գագաթներում $F$-ի արժեքների գումարն է
+նշաններով։ Գագաթի արժեքը վերցվում է «+» նշանով, եթե նրա կոորդինատների մեջ զույգ թվով $a_k$ կա, և «−» նշանով՝ եթե կենտ
+թվով։ Օրինակ՝ $n=3$ դեպքում
+$$\begin{aligned}&P(a_k\le\xi_k\lt b_k,\ k=1,2,3)\\&=F(b_1,b_2,b_3)-F(a_1,b_2,b_3)\\&\quad-F(b_1,a_2,b_3)-F(b_1,b_2,a_3)\\&\quad+F(a_1,a_2,b_3)+F(a_1,b_2,a_3)\\&\quad+F(b_1,a_2,a_3)-F(a_1,a_2,a_3).\end{aligned}$$
+Ապացույցը նույն կցման-արտաքսման սկզբունքն է՝ այս անգամ երեք պատահույթի համար։ (4) պայմանն էլ $n$ չափանի դեպքում
+պահանջում է, որ այս գումարը ոչ բացասական լինի։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="discrete" open>
+<summary><h2>Դիսկրետ պատահական վեկտորներ</h2></summary>
+<div class="sec-body">
+<p>Ամենապարզ դեպքում $\xi$-ն և $\eta$-ն դիսկրետ են՝ $\xi$-ն ընդունում է $x_1,x_2,\dots$ արժեքները, իսկ $\eta$-ն՝
+$y_1,y_2,\dots$ արժեքները։ Այդ դեպքում $(\xi,\eta)$ վեկտորը կոչվում է <strong>դիսկրետ</strong>, և նրա բաշխումը տրվում է
+$$p_{ij}=P(\xi=x_i,\ \eta=y_j)$$
+թվերով, որոնք կազմում են <strong>համատեղ բաշխման աղյուսակը</strong>։ Այստեղ $p_{ij}\ge0$ և $\sum_{i,j}p_{ij}=1$։
+Խնդրագիրքն էլ վեկտորը դիսկրետ է անվանում, եթե նրա բոլոր կոորդինատները դիսկրետ են։ Այդ դեպքում $(\xi,\eta)$ զույգն
+ընդունում է առավելագույնը հաշվելի թվով արժեքներ։</p>
+<div class="box thm"><div class="box-title">Բանաձևեր</div>
+<p>$$\begin{gathered}P(\xi=x_i)=\sum_j p_{ij},\\ P(\eta=y_j)=\sum_i p_{ij},\\ F(x,y)=\sum_{x_i\lt x,\ y_j\lt y}p_{ij}.\end{gathered}$$</p>
+</div>
+<p>Այսինքն՝ <strong>մարգինալները տողերի և սյուների գումարներն են</strong>, իսկ $F(x,y)$-ն աղյուսակի վերին ձախ «բլոկի»
+գումարն է՝ $x$-ից փոքր $x_i$-երի տողերում և $y$-ից փոքր $y_j$-երի սյուներում։ Առաջին բանաձևը բխում է նրանից, որ
+$\{\xi=x_i\}$ պատահույթը $\{\xi=x_i,\ \eta=y_j\}$, $j=1,2,\dots$, անհամատեղելի պատահույթների միավորումն է (հավանականության
+հաշվելի ադիտիվություն)։ Երրորդն էլ նույն կերպ է ստացվում։</p>
+
+<h3>Լուծված օրինակ՝ զառերի աղյուսակը</h3>
+<p>$\xi$-ն երկու զառին ընկած թվերից փոքրն է, $\eta$-ն՝ մեծը։ Եթե $i\lt j$, $\{\xi=i,\ \eta=j\}$ պատահույթին բարենպաստ են
+երկու ելք՝ $(i,j)$ և $(j,i)$, իսկ եթե $i=j$՝ մեկը։ $i\gt j$ դեպքում պատահույթն անհնար է։ Աղյուսակում գրված են
+$36\,p_{ij}$ թվերը՝</p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$\xi\backslash\eta$</th><th class="num">$1$</th><th class="num">$2$</th><th class="num">$3$</th><th class="num">$4$</th><th class="num">$5$</th><th class="num">$6$</th><th class="num">$36P(\xi=i)$</th></tr></thead>
+<tbody>
+<tr><th>$1$</th><td class="num">$1$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$11$</td></tr>
+<tr><th>$2$</th><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$9$</td></tr>
+<tr><th>$3$</th><td class="num">$0$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$7$</td></tr>
+<tr><th>$4$</th><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$2$</td><td class="num">$5$</td></tr>
+<tr><th>$5$</th><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$3$</td></tr>
+<tr><th>$6$</th><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$1$</td></tr>
+<tr class="hl"><th>$36P(\eta=j)$</th><td class="num">$1$</td><td class="num">$3$</td><td class="num">$5$</td><td class="num">$7$</td><td class="num">$9$</td><td class="num">$11$</td><td class="num">$36$</td></tr>
+</tbody></table></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - մարգինալներ</h3>
+<p>Տողերի գումարները՝ $P(\xi=i)=\tfrac{13-2i}{36}$, սյուներինը՝ $P(\eta=j)=\tfrac{2j-1}{36}$։ Օրինակ՝
+$P(\xi=1)=\tfrac{11}{36}$։ Իսկապես, $36$ ելքից $11$-ում գոնե մեկ զառին ընկել է $1$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $F(3,5)$՝ աղյուսակից</h3>
+<p>$F(3,5)$-ը $\xi\in\{1,2\}$ տողերի և $\eta\in\{1,2,3,4\}$ սյուների «բլոկի» գումարն է՝
+$\tfrac{(1+2+2+2)+(0+1+2+2)}{36}=\tfrac{12}{36}$, ինչպես նախորդ բաժնում։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - ուղղանկյուն</h3>
+<p>$P(2\le\xi\lt4,\ 3\le\eta\lt6)$-ն ուղղանկյան բանաձևով՝
+$$\begin{aligned}&F(4,6)-F(2,6)-F(4,3)+F(2,3)\\&\quad=\tfrac{21-9-4+3}{36}=\tfrac{11}{36}.\end{aligned}$$</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ուղղակի գումարելով $\xi\in\{2,3\}$ տողերում և
+$\eta\in\{3,4,5\}$ սյուներում՝ $\tfrac{2+2+2+1+2+2}{36}=\tfrac{11}{36}$։</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Նույն աղյուսակում ինչի՞ է հավասար $F(4,+\infty)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\tfrac{27}{36}$</button><button class="btn" type="button">$\tfrac9{36}$</button><button class="btn" type="button">$\tfrac{32}{36}$</button></div>
+<div class="predict-why">$F(4,+\infty)=P(\xi\lt4)=F_\xi(4)$, այսինքն՝ $\xi=1,2,3$ տողերի գումարների գումարը՝
+$\tfrac{11+9+7}{36}=\tfrac{27}{36}$։ $\tfrac9{36}$-ը $P(\eta\lt4)$-ն է (սյուների գումարներ), իսկ $\tfrac{32}{36}$-ը՝
+$P(\xi\le4)$-ը։ Ստուգեք ներքևի աղյուսակում՝ $y$ սահիչը տարեք $+\infty$, իսկ $x$-ը՝ $4$։</div>
+</div>
+
+<div class="widget" id="w-table">
+  <div class="widget-head">Համատեղ բաշխման աղյուսակ, մարգինալներ և $F(x,y)$</div>
+  <p class="widget-hint">Վանդակների թվերը կարելի է փոխել։ Աջ սյունը և ներքևի տողը մարգինալներն են՝ տողերի և սյուների
+  գումարները, և դրանք թարմացվում են ամեն փոփոխությունից հետո։ $x$ և $y$ սահիչներով ընտրեք կետը։ Նարնջագույն վանդակների
+  գումարը $F(x,y)$-ն է։ Եթե սահիչը դնեք $x_i$ արժեքի վրա, $x_i$-ի տողը չի մտնում, քանի որ անհավասարությունը խիստ է։
+  $y=+\infty$ դիրքում ստանում եք $F_\xi(x)$-ը։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="widget-out muted" data-out="den"></div>
+  <div class="table-wrap"><table class="tbl" data-out="tbl"></table></div>
+  <div class="slider-row"><span>$x$</span><input type="range" data-in="x" min="0" max="13" step="1" value="5" aria-label="x"><span>$y$</span><input type="range" data-in="y" min="0" max="13" step="1" value="9" aria-label="y"><span data-out="lab"></span></div>
+  <div class="widget-controls"><button class="btn" type="button" data-act="reset">Վերականգնել աղյուսակը</button></div>
+  <div data-out="msg"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="note"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="same" open>
+<summary><h2>Համատեղ բաշխումն ավելին է, քան մարգինալները</h2></summary>
+<div class="sec-body">
+<p>Աղյուսակից միշտ կարելի է ստանալ մարգինալները։ Իսկ հակառակը՝ մարգինալներից աղյուսակը, հնարավոր չէ։ Ամենապարզ
+օրինակը երկու մետաղադրամն է։ Դիցուք $\xi=1$, եթե առաջին մետաղադրամին ընկել է ղուշ, և $\xi=0$՝ հակառակ դեպքում։
+Դիտարկենք $\eta$-ի երեք տարբերակ՝</p>
+<ul>
+  <li><strong>(Ա)</strong> $\eta$-ն նույն կանոնով որոշվում է երկրորդ մետաղադրամով, որը նետվում է առաջինից անկախ,</li>
+  <li><strong>(Բ)</strong> $\eta=\xi$ (երկրորդ անգամ նայում ենք նույն մետաղադրամին),</li>
+  <li><strong>(Գ)</strong> $\eta=1-\xi$ (նայում ենք մետաղադրամի ներքևի կողմին)։</li>
+</ul>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$(\xi,\eta)$</th><th class="num">$(0,0)$</th><th class="num">$(0,1)$</th><th class="num">$(1,0)$</th><th class="num">$(1,1)$</th></tr></thead>
+<tbody>
+<tr><td>(Ա)</td><td class="num">$\tfrac14$</td><td class="num">$\tfrac14$</td><td class="num">$\tfrac14$</td><td class="num">$\tfrac14$</td></tr>
+<tr><td>(Բ)</td><td class="num">$\tfrac12$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$\tfrac12$</td></tr>
+<tr><td>(Գ)</td><td class="num">$0$</td><td class="num">$\tfrac12$</td><td class="num">$\tfrac12$</td><td class="num">$0$</td></tr>
+</tbody></table></div>
+<p>Երեք դեպքում էլ $P(\xi=1)=P(\eta=1)=\tfrac12$, այսինքն՝ մարգինալները նույնն են, իսկ համատեղ բաշխումները՝ տարբեր։ Տարբեր
+են նաև համատեղ բաշխման ֆունկցիաները։ Օրինակ՝ $F(1,1)=P(\xi=0,\ \eta=0)$-ն հավասար է $\tfrac14$-ի, $\tfrac12$-ի և $0$-ի,
+իսկ $P(\xi=\eta)$-ն՝ $\tfrac12$-ի, $1$-ի և $0$-ի։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $\xi$-ն և $\eta$-ն ընդունում են $0$ և $1$ արժեքներ, և հայտնի է միայն, որ
+$P(\xi=1)=P(\eta=1)=\tfrac12$։ Ինչի՞ է հավասար $P(\xi=1,\ \eta=1)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button">$\tfrac14$</button><button class="btn" type="button">$\tfrac12$</button><button class="btn" type="button" data-ok>հնարավոր չէ որոշել</button></div>
+<div class="predict-why">Այն կարող է լինել $0$-ից $\tfrac12$ ցանկացած թիվ։ $\tfrac14$-ը ճիշտ է միայն այն դեպքում, երբ
+$\xi$-ն և $\eta$-ն անկախ են (դաս 16), իսկ $\tfrac12$-ը՝ երբ $\eta=\xi$։ Ներքևի սահիչով տեսեք բոլոր հնարավորությունները։</div>
+</div>
+
+<div class="widget" id="w-same">
+  <div class="widget-head">Նույն մարգինալները, տարբեր համատեղ բաշխումներ</div>
+  <p class="widget-hint">Սահիչով փոխեք $c=P(\xi=0,\ \eta=0)=P(\xi=1,\ \eta=1)$ թիվը, մյուս երկու վանդակներում $\tfrac12-c$
+  է։ Սրանք <em>բոլոր</em> հնարավորություններն են, երբ երկու մարգինալն էլ $\tfrac12,\tfrac12$ է։ Շրջանների մակերեսները
+  համատեղ հավանականություններն են, իսկ նարնջագույն սյուները՝ մարգինալները։ Նկատեք, որ մարգինալները երբեք չեն փոխվում,
+  իսկ $F(1,1)$-ը և $P(\xi=\eta)$-ն փոխվում են։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span>$c$</span><input type="range" data-in="c" min="0" max="0.5" step="0.025" value="0.25" aria-label="c"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="table-wrap" data-out="tbl"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out muted" data-out="out"></div>
+</div>
+
+<p>$c=\tfrac14$ դեպքում $P(\xi=i,\ \eta=j)=P(\xi=i)\,P(\eta=j)$ բոլոր $i,j$-երի համար։ Սա $\xi$-ի և $\eta$-ի
+<strong>անկախության</strong> դեպքն է, որին նվիրված է 16-րդ դասը։ Անկախ մեծությունների համատեղ բաշխումը <em>որոշվում է</em>
+մարգինալներով՝ $F(x,y)=F_\xi(x)\,F_\eta(y)$։ Ընդհանուր դեպքում մարգինալները համատեղ բաշխման մասին տալիս են միայն
+գնահատականներ (տե՛ս վարժություն 7-ը)։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="continuous" open>
+<summary><h2>Անընդհատ օրինակ՝ կետ եռանկյան մեջ</h2></summary>
+<div class="sec-body">
+<p>Միավոր քառակուսու մեջ պատահականորեն նետում ենք $(U,V)$ կետը, այնպես որ քառակուսու ցանկացած $A$ մասում ընկնելու
+հավանականությունը հավասար է $A$-ի մակերեսին (երկրաչափական հավանականություն)։ Դիցուք $\xi=\min(U,V)$,
+$\eta=\max(U,V)$։ Ինչպես զառերի դեպքում, $\xi\le\eta$, և $(\xi,\eta)$ կետը միշտ ընկած է
+$$T=\{(x,y):\ 0\le x\le y\le1\}$$
+եռանկյան մեջ։ $T$-ի ցանկացած $B$ մասի համար $(\xi,\eta)\in B$ պատահույթը նշանակում է, որ $(U,V)$ կետն ընկել է $B$-ի մեջ
+կամ անկյունագծի նկատմամբ նրա արտացոլման մեջ։ Այդ երկու մասերի մակերեսները հավասար են, իսկ նրանց ընդհանուր մասը
+(անկյունագծի վրա) զրո մակերես ունի, ուստի
+$$P\bigl((\xi,\eta)\in B\bigr)=2\,S(B),$$
+որտեղ $S(B)$-ն $B$-ի մակերեսն է։ Այսինքն՝ $(\xi,\eta)$-ն հավասարաչափ բաշխված է $T$ եռանկյան մեջ ($T$-ի մակերեսը
+$\tfrac12$ է)։ Սա զառերի $(\min,\max)$ օրինակի անընդհատ նմանակն է։</p>
+
+<h3>Բաշխման ֆունկցիան</h3>
+<p>Դիցուք $0\le x,y\le1$։ Եթե $y\le x$, ապա $\{\eta\lt y\}$ պատահույթից արդեն հետևում է $\xi\lt x$-ը, ուստի
+$F(x,y)=P(\eta\lt y)=P(U\lt y,\ V\lt y)=y^2$։ Եթե $x\lt y$, ապա $\{\eta\lt y\}$ պատահույթից պետք է հանել այն դեպքերը, երբ
+երկու կոորդինատն էլ $[x,y)$-ում են՝ $F(x,y)=y^2-(y-x)^2=2xy-x^2$։ Այսպիսով՝
+$$\begin{gathered}F(x,y)=\begin{cases}y^2, & y\le x,\\ 2xy-x^2, & x\lt y,\end{cases}\\ 0\le x,y\le1.\end{gathered}$$
+Քառակուսուց դուրս $F=0$, եթե $x\le0$ կամ $y\le0$, իսկ $1$-ից մեծ արգումենտը կարելի է փոխարինել $1$-ով (օրինակ՝
+$F(2,y)=F(1,y)$)։ Այս ֆունկցիայի «ջերմային քարտեզը» և մակարդակի գծերը կարող եք տեսնել <a href="#w-quad">առաջին
+նկարում</a>՝ «Եռանկյուն» օրինակում։</p>
+<p><strong>Մարգինալները։</strong> $F_\xi(x)=F(x,1)=2x-x^2=1-(1-x)^2$ (փոքր կոորդինատը $x$-ից փոքր է, եթե երկուսն էլ
+$\ge x$ չեն), $F_\eta(y)=F(1,y)=y^2$ (մեծ կոորդինատը $y$-ից փոքր է, եթե երկու կոորդինատն էլ փոքր են $y$-ից)։</p>
+<p><strong>Ուղղանկյուն։</strong></p>
+$$\begin{aligned}&P(0\le\xi\lt\tfrac12,\ \tfrac12\le\eta\lt1)\\&\quad=F(\tfrac12,1)-F(0,1)\\&\qquad-F(\tfrac12,\tfrac12)+F(0,\tfrac12)\\&\quad=\tfrac34-0-\tfrac14+0=\tfrac12.\end{aligned}$$
+<p>Իմաստը՝ մի կոորդինատը $\tfrac12$-ից փոքր է, մյուսը՝ ոչ, և դրա հավանականությունը $2\cdot\tfrac12\cdot\tfrac12=\tfrac12$
+է։ Նույնը կստանաք նաև <a href="#w-rect">ուղղանկյան նկարում</a>։</p>
+
+<div class="box idea"><div class="box-title">Առաջ նայելով՝ համատեղ խտություն</div>
+<p>Այս օրինակում հավանականությունը «քսված» է $T$-ի վրա $2$ հաստատուն խտությամբ՝
+$P\bigl((\xi,\eta)\in B\bigr)=\iint_B p(x,y)\,dx\,dy$, որտեղ $p(x,y)=2$, եթե $(x,y)\in T$, և $p(x,y)=0$՝ հակառակ
+դեպքում։ Այդպիսի $p(x,y)$ ֆունկցիան կոչվում է <strong>համատեղ խտություն</strong>, և $T$-ի ներսում
+$\tfrac{\partial^2F}{\partial x\,\partial y}=p$ (ստուգեք՝ $\tfrac{\partial^2}{\partial x\,\partial y}(2xy-x^2)=2$)։ Իսկ
+$(U,V)$ վեկտորի համար $F_{U,V}(x,y)=xy$ ($0\le x,y\le1$)՝ մարգինալների արտադրյալը, ինչը նշանակում է, որ $U$-ն և $V$-ն
+անկախ են։ Դիսկրետ և բացարձակ անընդհատ վեկտորները և խտության հատկությունները 15-րդ դասի թեման են, իսկ անկախությունը՝
+16-րդինը։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="quiz" open>
+<summary><h2>Տիպիկ սխալներ և ինքնաստուգում</h2></summary>
+<div class="sec-body">
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>Մոռանալ չորրորդ անկյունը։</strong> $P(a_1\le\xi\lt b_1,\ a_2\le\eta\lt b_2)$-ն հավասար չէ
+  $F(b_1,b_2)-F(a_1,b_2)-F(b_1,a_2)$-ին։ Ձախ ներքևի քառորդը երկու անգամ է հանվում, և
+  $+F(a_1,a_2)$ անդամն այն հետ է բերում։</li>
+  <li><strong>Պատճենել մեկ փոփոխականի բանաձևը՝ $F(b_1,b_2)-F(a_1,a_2)$։</strong> Զառերի օրինակում դա կտար
+  $\tfrac{21-3}{36}=\tfrac{18}{36}$՝ ճիշտ $\tfrac{11}{36}$-ի փոխարեն։</li>
+  <li><strong>Կարծել, թե մարգինալները որոշում են համատեղ բաշխումը։</strong> Երկու մետաղադրամի օրինակում նույն
+  մարգինալներով $P(\xi=\eta)$-ն կարող է լինել $0$-ից $1$ ցանկացած թիվ։</li>
+  <li><strong>Գրել $F(x,y)=F_\xi(x)\,F_\eta(y)$ առանց անկախության։</strong> Զառերի օրինակում $F(3,5)=\tfrac{12}{36}\approx0{,}333$,
+  իսկ $F_\xi(3)\,F_\eta(5)=\tfrac{20}{36}\cdot\tfrac{16}{36}\approx0{,}247$։</li>
+  <li><strong>Մարգինալը ստանալ սխալ սահմանով։</strong> $F_\xi(x)=F(x,+\infty)$, ոչ թե $F(x,0)$ կամ $F(x,x)$։</li>
+  <li><strong>Օգտվել ոչ խիստ անհավասարությունների բանաձևերից։</strong> Մեր պայմանավորվածությամբ $F(x_i,y_j)$-ի մեջ չեն
+  մտնում ոչ $(x_i,y_j)$ վանդակը, ոչ $x_i$-ի տողը, ոչ էլ $y_j$-ի սյունը։ Սևաստյանովի $\tilde F$-ի մեջ մտնում են։</li>
+</ul>
+</div>
+
+<h3>Ստուգեք ինքներդ ձեզ՝ համատեղ բաշխման ֆունկցիա՞ է</h3>
+<p>Ամեն քայլում տրված է երկու փոփոխականի ֆունկցիա։ Որոշեք՝ այն համատեղ բաշխման ֆունկցիա է, թե ոչ, իսկ եթե ոչ, ո՞ր
+պայմանն է խախտված։ Ամենուր $\Phi(t)$-ն $[0,1]$ հատվածում հավասարաչափ բաշխման ֆունկցիան է՝ $\Phi(t)=0$, երբ $t\le0$,
+$\Phi(t)=t$, երբ $0\lt t\le1$, և $\Phi(t)=1$, երբ $t\gt1$։ Մոնոտոնությունն առանձին տարբերակ չէ, քանի որ այն բխում է
+(3)-ից և (4)-ից։</p>
+<div class="widget" id="w-quiz">
+  <div class="widget-head">Համատեղ բաշխման ֆունկցիա՞ է, թե՞ ոչ</div>
+  <div class="widget-out" data-out="formula" style="text-align:center"></div>
+  <div class="quiz-opts" data-out="opts"></div>
+  <div data-out="fb"></div>
+  <div class="widget-controls"><button class="btn" type="button" data-act="next">Հաջորդը →</button><span class="muted" data-out="score"></span></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Լուծումները սկզբում թաքցված են։ Նախ փորձեք ինքներդ, ապա բացեք միայն պատասխանը, հետո՝ ամբողջ
+լուծումը։ Վարժությունները դասավորված են հեշտից դժվար, ★ նշանովն ամենադժվարն է։</p>
+
+<div class="box problem"><div class="box-title">Վարժություն 1</div>
+<p>$(\xi,\eta)$ վեկտորի համատեղ բաշխման աղյուսակն է՝</p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$\xi\backslash\eta$</th><th class="num">$-1$</th><th class="num">$0$</th><th class="num">$1$</th></tr></thead>
+<tbody>
+<tr><th>$0$</th><td class="num">$0{,}1$</td><td class="num">$0{,}2$</td><td class="num">$0{,}1$</td></tr>
+<tr><th>$1$</th><td class="num">$0{,}2$</td><td class="num">$0{,}1$</td><td class="num">$0{,}3$</td></tr>
+</tbody></table></div>
+<p>(ա) Գտեք $\xi$-ի և $\eta$-ի մարգինալ բաշխումները։ (բ) Գտեք $F(1,1)$-ը և $F(2,\tfrac12)$-ը։ (գ) Գտեք $P(\xi=\eta)$-ն։</p>
+</div>
+<div class="solution">
+<p>(ա) Տողերի գումարները՝ $P(\xi=0)=0{,}4$, $P(\xi=1)=0{,}6$։ Սյուներինը՝ $P(\eta=-1)=0{,}3$, $P(\eta=0)=0{,}3$,
+$P(\eta=1)=0{,}4$։</p>
+<p>(բ) $F(1,1)=P(\xi\lt1,\ \eta\lt1)=P(\xi=0,\ \eta\in\{-1,0\})=0{,}1+0{,}2=0{,}3$։
+$F(2,\tfrac12)=P(\xi\le1,\ \eta\le0)=0{,}1+0{,}2+0{,}2+0{,}1=0{,}6$։</p>
+<p>(գ) $P(\xi=\eta)=P(\xi=0,\ \eta=0)+P(\xi=1,\ \eta=1)=0{,}2+0{,}3=0{,}5$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\xi$՝ $0{,}4;\ 0{,}6$, $\eta$՝ $0{,}3;\ 0{,}3;\ 0{,}4$;
+$F(1,1)=0{,}3$, $F(2,\tfrac12)=0{,}6$; $P(\xi=\eta)=0{,}5$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 2</div>
+<p>Զառը նետում ենք մեկ անգամ։ $\xi=1$, եթե ընկած թիվը զույգ է, և $\xi=0$՝ հակառակ դեպքում, իսկ $\eta=1$, եթե ընկած
+թիվը բաժանվում է $3$-ի, և $\eta=0$՝ հակառակ դեպքում։ (ա) Կազմեք համատեղ բաշխման աղյուսակը և գտեք մարգինալները։
+(բ) Գտեք $F(1,1)$-ը, $F(1,5)$-ը և $F(2,1)$-ը։</p>
+</div>
+<div class="solution">
+<p>(ա) $\{\xi=0,\ \eta=0\}=\{1,5\}$, $\{\xi=0,\ \eta=1\}=\{3\}$, $\{\xi=1,\ \eta=0\}=\{2,4\}$, $\{\xi=1,\ \eta=1\}=\{6\}$՝</p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$\xi\backslash\eta$</th><th class="num">$0$</th><th class="num">$1$</th><th class="num">$P(\xi=i)$</th></tr></thead>
+<tbody>
+<tr><th>$0$</th><td class="num">$\tfrac13$</td><td class="num">$\tfrac16$</td><td class="num">$\tfrac12$</td></tr>
+<tr><th>$1$</th><td class="num">$\tfrac13$</td><td class="num">$\tfrac16$</td><td class="num">$\tfrac12$</td></tr>
+<tr class="hl"><th>$P(\eta=j)$</th><td class="num">$\tfrac23$</td><td class="num">$\tfrac13$</td><td class="num">$1$</td></tr>
+</tbody></table></div>
+<p>(բ) $F(1,1)=P(\xi=0,\ \eta=0)=\tfrac13$, $F(1,5)=P(\xi\lt1)=P(\xi=0)=\tfrac12$ ($\eta\lt5$ պայմանը միշտ տեղի ունի),
+$F(2,1)=P(\eta\lt1)=P(\eta=0)=\tfrac23$։</p>
+<p class="muted">Ուշադրություն դարձրեք՝ այստեղ ամեն վանդակում $p_{ij}=P(\xi=i)\,P(\eta=j)$, օրինակ՝
+$\tfrac16=\tfrac12\cdot\tfrac13$։ 16-րդ դասում կասենք, որ $\xi$-ն և $\eta$-ն անկախ են։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P(\xi=1)=\tfrac12$, $P(\eta=1)=\tfrac13$;
+$\tfrac13;\ \tfrac12;\ \tfrac23$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 3</div>
+<p>Մետաղադրամը նետում ենք $3$ անգամ։ $\xi$-ն ցույց է տալիս, թե առաջին երկու նետումում քանի անգամ է ընկել ղուշ, իսկ
+$\eta$-ն՝ բոլոր երեք նետումում։ (ա) Կազմեք համատեղ բաշխման աղյուսակը։ (բ) Գտեք $\eta$-ի մարգինալ բաշխումը։ (գ) Գտեք
+$F(2,2)$-ը և $P(\xi=\eta)$-ն։</p>
+</div>
+<div class="solution">
+<p>(ա) $8$ հավասարահավանական ելք կա։ $\eta=\xi$, եթե երրորդ նետումում ընկել է գիր, և $\eta=\xi+1$, եթե ղուշ։ Օրինակ՝
+$\{\xi=1,\ \eta=1\}$ պատահույթին բարենպաստ են ՂԳԳ և ԳՂԳ ելքերը՝ $\tfrac28$։</p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>$\xi\backslash\eta$</th><th class="num">$0$</th><th class="num">$1$</th><th class="num">$2$</th><th class="num">$3$</th><th class="num">$P(\xi=i)$</th></tr></thead>
+<tbody>
+<tr><th>$0$</th><td class="num">$\tfrac18$</td><td class="num">$\tfrac18$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$\tfrac14$</td></tr>
+<tr><th>$1$</th><td class="num">$0$</td><td class="num">$\tfrac14$</td><td class="num">$\tfrac14$</td><td class="num">$0$</td><td class="num">$\tfrac12$</td></tr>
+<tr><th>$2$</th><td class="num">$0$</td><td class="num">$0$</td><td class="num">$\tfrac18$</td><td class="num">$\tfrac18$</td><td class="num">$\tfrac14$</td></tr>
+<tr class="hl"><th>$P(\eta=j)$</th><td class="num">$\tfrac18$</td><td class="num">$\tfrac38$</td><td class="num">$\tfrac38$</td><td class="num">$\tfrac18$</td><td class="num">$1$</td></tr>
+</tbody></table></div>
+<p>(բ) Սյուների գումարները՝ $\tfrac18,\tfrac38,\tfrac38,\tfrac18$ (բինոմական բաշխում, $n=3$, $p=\tfrac12$)։</p>
+<p>(գ) $F(2,2)=P(\xi\le1,\ \eta\le1)=\tfrac18+\tfrac18+0+\tfrac14=\tfrac12$։ $P(\xi=\eta)=\tfrac18+\tfrac14+\tfrac18=\tfrac12$,
+ինչը երրորդ նետումում գիր ընկնելու հավանականությունն է։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\eta$՝ $\tfrac18,\tfrac38,\tfrac38,\tfrac18$;
+$F(2,2)=\tfrac12$; $P(\xi=\eta)=\tfrac12$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 4</div>
+<p>$(\xi,\eta)$ վեկտորի բաշխման ֆունկցիան է $F(x,y)=(1-e^{-x})(1-e^{-2y})$, երբ $x\gt0$ և $y\gt0$, իսկ մնացած դեպքերում
+$F(x,y)=0$։ (ա) Գտեք $F_\xi$-ն և $F_\eta$-ն։ (բ) Գտեք $P(1\le\xi\lt2,\ \eta\lt1)$-ը։ (գ) Գտեք $P(\xi\ge1,\ \eta\ge1)$-ը։</p>
+</div>
+<div class="solution">
+<p>(ա) $y\to+\infty$ դեպքում $1-e^{-2y}\to1$, որտեղից $F_\xi(x)=1-e^{-x}$, երբ $x\gt0$, և $0$՝ հակառակ դեպքում։ Նույն կերպ
+$F_\eta(y)=1-e^{-2y}$, երբ $y\gt0$։</p>
+<p>(բ) $\{1\le\xi\lt2,\ \eta\lt1\}=\{\xi\lt2,\ \eta\lt1\}\setminus\{\xi\lt1,\ \eta\lt1\}$, ուստի</p>
+$$\begin{aligned}&P(1\le\xi\lt2,\ \eta\lt1)\\&\quad=F(2,1)-F(1,1)\\&\quad=(e^{-1}-e^{-2})(1-e^{-2})\\&\quad\approx0{,}201.\end{aligned}$$
+<p>(գ) $\{\xi\ge1,\ \eta\ge1\}$-ը $\{\xi\lt1\}\cup\{\eta\lt1\}$-ի հակադիր պատահույթն է։ Կցման-արտաքսման սկզբունքով՝</p>
+$$\begin{aligned}&P(\xi\ge1,\ \eta\ge1)\\&\quad=1-F_\xi(1)-F_\eta(1)+F(1,1)\\&\quad=e^{-1}\cdot e^{-2}=e^{-3}\approx0{,}050.\end{aligned}$$
+<div class="box method"><div class="box-title">Ընդհանուր հնարք</div>
+<p>$P(\xi\ge a,\ \eta\ge b)=1-F_\xi(a)-F_\eta(b)+F(a,b)$։ Սա ուղղանկյան բանաձևն է $b_1=b_2=+\infty$ դեպքում։</p>
+</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $F_\xi(x)=1-e^{-x}$, $F_\eta(y)=1-e^{-2y}$ (դրական
+արգումենտների համար); $(e^{-1}-e^{-2})(1-e^{-2})\approx0{,}201$; $e^{-3}\approx0{,}050$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 5</div>
+<p>Համատեղ բաշխման ֆունկցիա՞ է
+$$G(x,y)=\begin{cases}0, & x+y\le0,\\ x+y, & 0\lt x+y\le1,\\ 1, & x+y\gt1\end{cases}$$
+ֆունկցիան։</p>
+</div>
+<div class="solution">
+<p>$G$-ն ամենուր անընդհատ է (հետևաբար ձախից անընդհատ է), չնվազող է ըստ յուրաքանչյուր արգումենտի, $G\to0$, երբ
+արգումենտներից մեկը ձգտում է $-\infty$-ի, և $G\to1$, երբ երկուսն էլ ձգտում են $+\infty$-ի։ Սակայն
+$[\tfrac14,\tfrac34)\times[\tfrac14,\tfrac34)$ քառակուսու համար</p>
+$$\begin{aligned}&G(\tfrac34,\tfrac34)-G(\tfrac14,\tfrac34)-G(\tfrac34,\tfrac14)+G(\tfrac14,\tfrac14)\\&\quad=1-1-1+\tfrac12=-\tfrac12\lt0.\end{aligned}$$
+<p>Ուղղանկյան պայմանը խախտված է, հետևաբար $G$-ն համատեղ բաշխման ֆունկցիա չէ։ Ի տարբերություն մեկ փոփոխականի դեպքի,
+«գեղեցիկ» անընդհատ և մոնոտոն տեսքը ոչինչ չի երաշխավորում։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> ոչ, (4) պայմանը խախտված է (օրինակ՝ նշված քառակուսու
+վրա $-\tfrac12$)</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 6</div>
+<p>Մետաղադրամը նետում ենք $3$ անգամ, $\xi_k=1$, եթե $k$-րդ նետումում ընկել է ղուշ, և $\xi_k=0$՝ հակառակ դեպքում,
+$k=1,2,3$։ Դիցուք $F$-ը $(\xi_1,\xi_2,\xi_3)$ վեկտորի բաշխման ֆունկցիան է։ (ա) Գտեք $F(x_1,x_2,x_3)$-ը, երբ ամեն $x_k$
+կամ $\tfrac12$ է, կամ $2$։ (բ) Ուղղանկյան բանաձևի եռաչափ տարբերակով գտեք $P(\tfrac12\le\xi_k\lt2,\ k=1,2,3)$-ը և
+ստուգեք պատասխանը։</p>
+</div>
+<div class="solution">
+<p>(ա) $\xi_k\lt2$ պայմանը միշտ տեղի ունի, իսկ $\xi_k\lt\tfrac12$-ը նշանակում է, որ $k$-րդ նետումում ընկել է գիր։ Եթե
+$x_k$-երից $m$-ը հավասար է $\tfrac12$-ի, $F$-ը հավասար է այդ $m$ նետումում գիր ընկնելու հավանականությանը՝
+$F=2^{-m}$։ Օրինակ՝ $F(2,2,2)=1$, $F(\tfrac12,2,2)=\tfrac12$, $F(\tfrac12,\tfrac12,2)=\tfrac14$,
+$F(\tfrac12,\tfrac12,\tfrac12)=\tfrac18$։</p>
+<p>(բ) $a_k=\tfrac12$, $b_k=2$։ Բանաձևում $m$ հատ $a$ պարունակող գագաթները $C_3^m$-ն են, և նրանք վերցվում են $(-1)^m$
+նշանով՝</p>
+$$\begin{aligned}&1-3\cdot\tfrac12+3\cdot\tfrac14-\tfrac18\\&\quad=\Bigl(1-\tfrac12\Bigr)^3=\tfrac18.\end{aligned}$$
+<p>Ստուգում՝ պատահույթը նշանակում է, որ բոլոր $\xi_k$-երը $1$ են, այսինքն՝ երեք անգամ էլ ընկել է ղուշ՝ $\tfrac18$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $F=2^{-m}$ ($m$-ը $\tfrac12$-ին հավասար արգումենտների
+քանակն է); $\tfrac18$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 7 ★</div>
+<p>Ապացուցեք, որ ցանկացած $(\xi,\eta)$ վեկտորի համար
+$$\begin{aligned}F(x,y)&\le\min\bigl(F_\xi(x),\,F_\eta(y)\bigr),\\ F(x,y)&\ge F_\xi(x)+F_\eta(y)-1.\end{aligned}$$
+Ստուգեք, որ երկու մետաղադրամի օրինակում ($x=y=1$) $c=0$ և $c=\tfrac12$ դեպքերում ստացվում են այդ գնահատականները։</p>
+</div>
+<div class="solution">
+<p>Դիցուք $A=\{\xi\lt x\}$, $B=\{\eta\lt y\}$։ Այդ դեպքում $F(x,y)=P(A\cap B)$։ Քանի որ $A\cap B\subset A$ և
+$A\cap B\subset B$, ապա $F(x,y)\le P(A)=F_\xi(x)$ և $F(x,y)\le P(B)=F_\eta(y)$։ Մյուս կողմից՝
+$P(A\cap B)=P(A)+P(B)-P(A\cup B)\ge P(A)+P(B)-1$։</p>
+<p>Մետաղադրամների օրինակում $F(1,1)=c$, $F_\xi(1)=F_\eta(1)=\tfrac12$, և գնահատականները տալիս են $0\le c\le\tfrac12$։
+$c=0$ ($\eta=1-\xi$) դեպքում ստացվում է ստորին գնահատականը, իսկ $c=\tfrac12$ ($\eta=\xi$) դեպքում՝ վերինը։</p>
+<p class="muted">Ընդհանրապես, $\eta=\xi$ դեպքում $F(x,y)=P\bigl(\xi\lt\min(x,y)\bigr)=\min\bigl(F_\xi(x),F_\xi(y)\bigr)$,
+այսինքն՝ վերին գնահատականը ճշգրիտ է։ Ինքնաստուգման հարցաշարի վերջին երկու ֆունկցիաները հենց այս երկու ծայրահեղ
+դեպքերն են։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<h3>Ամբողջ դասը մեկ աղյուսակում</h3>
+<div class="table-wrap"><table class="tbl">
+<tbody>
+<tr><td>սահմանում</td><td>$F(x,y)=P(\xi\lt x,\ \eta\lt y)$</td></tr>
+<tr><td>հատկություններ</td><td>չնվազող և ձախից անընդհատ ըստ յուրաքանչյուր արգումենտի, $F(-\infty,y)=F(x,-\infty)=0$,
+$F(+\infty,+\infty)=1$</td></tr>
+<tr><td>մարգինալներ</td><td>$F_\xi(x)=F(x,+\infty)$, $F_\eta(y)=F(+\infty,y)$</td></tr>
+<tr><td>ուղղանկյուն</td><td>$P(a_1\le\xi\lt b_1,\ a_2\le\eta\lt b_2)=F(b_1,b_2)-F(a_1,b_2)-F(b_1,a_2)+F(a_1,a_2)$</td></tr>
+<tr><td>բնութագրում</td><td>(1)-(3) և ուղղանկյան պայմանը $\iff$ համատեղ բաշխման ֆունկցիա</td></tr>
+<tr><td>դիսկրետ վեկտոր</td><td>$P(\xi=x_i)=\sum_jp_{ij}$, $F(x,y)=\sum_{x_i\lt x,\ y_j\lt y}p_{ij}$</td></tr>
+<tr><td>մարգինալներից՝ համատեղ</td><td>ընդհանուր դեպքում հնարավոր չէ (բացառություն՝ անկախություն, դաս 16)</td></tr>
+</tbody></table></div>
+
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասընթացի ծրագրից, ոչ թե դասախոսի քննական հարցերից։
+Քննական հարցերի պաշտոնական ցանկի համար դիմեք դասախոսին։</p>
+<ol>
+  <li>Սահմանել պատահական վեկտորը և ցույց տալ, որ $\{\xi\in B\}$ բազմությունը պատահույթ է ամեն բորելյան $B$-ի համար
+  (<a href="#vector">ապացույցը</a>)։ Գաղափարը՝ այդպիսի $B$-երը կազմում են սիգմա-հանրահաշիվ, որը պարունակում է
+  $(-\infty,x_1)\times\dots\times(-\infty,x_n)$ բազմությունները։</li>
+  <li>Սահմանել համատեղ բաշխման ֆունկցիան, ապացուցել (1)-(3) հատկությունները և $F_\xi(x)=F(x,+\infty)$ բանաձևը
+  (<a href="#props">ապացույցը</a>)։ Գաղափարը՝ հավանականության անընդհատությունը մոնոտոն պատահույթների համար։</li>
+  <li>Արտածել ուղղանկյան բանաձևը (<a href="#rect">բաժինը</a>)։ Գաղափարը՝ կցման-արտաքսման սկզբունքը $B$ և $C$
+  քառորդների համար։</li>
+  <li>Ցույց տալ, որ ուղղանկյան պայմանը չի բխում (1)-(3)-ից, և ձևակերպել բնութագրման թեորեմը (<a href="#rect">հակաօրինակը</a>)։</li>
+  <li>Դիսկրետ վեկտորի համար աղյուսակից ստանալ մարգինալները և $F$-ը (<a href="#discrete">բաժինը</a>)։</li>
+  <li>Բերել նույն մարգինալներով, բայց տարբեր համատեղ բաշխումներով մեծությունների օրինակ (<a href="#same">բաժինը</a>)։</li>
+</ol>
+
+<h3>Փորձնական բանավոր հարցեր</h3>
+<ul>
+  <li>Ինչո՞ւ պետք է բոլոր կոորդինատները որոշված լինեն միևնույն հավանականային տարածության վրա։</li>
+  <li>Ինչո՞ւ $F(x,y)\to1$ ստանալու համար երկու արգումենտն էլ պետք է ձգտեն $+\infty$-ի, իսկ $F(x,y)\to0$ ստանալու համար
+  բավական է մեկը։</li>
+  <li>Ինչո՞ւ է ուղղանկյան բանաձևում $F(a_1,a_2)$-ը գումարվում, ոչ թե հանվում։</li>
+  <li>Բերեք (1)-(3) հատկություններն ունեցող ֆունկցիա, որը համատեղ բաշխման ֆունկցիա չէ։</li>
+  <li>Որոշո՞ւմ են արդյոք $F_\xi$-ն և $F_\eta$-ն $F_{\xi,\eta}$-ն։ Ե՞րբ են որոշում։</li>
+  <li>Ինչպե՞ս $F$-ով արտահայտել $P(\xi\ge a,\ \eta\ge b)$-ն։</li>
+</ul>
+
+<h3>Ինչ է հաջորդը</h3>
+<p><strong>Դաս 15</strong> (ըստ ծրագրի՝ «Բազմաչափ բաշխումների տեսակները»)։ Ինչպես մեկ մեծության դեպքում (դասեր 11-12),
+կդիտարկենք դիսկրետ վեկտորներ՝ համատեղ բաշխման աղյուսակով, և բացարձակ անընդհատ վեկտորներ՝ համատեղ խտությամբ, որի
+կրկնակի ինտեգրալը տալիս է հավանականությունները։ <strong>Դաս 16</strong>՝ պատահական մեծությունների անկախություն։
+Կտեսնենք, որ $\xi$-ն և $\eta$-ն անկախ են այն և միայն այն դեպքում, երբ $F_{\xi,\eta}(x,y)=F_\xi(x)\,F_\eta(y)$, այսինքն՝
+երբ համատեղ բաշխումը որոշվում է մարգինալներով։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="book" open>
+<summary><h2>Խնդրագրքի խնդիրներ</h2></summary>
+<div class="sec-body">
+<p>Ն. Ահարոնյան, Ե. Իսրաելյան, «Հավանականությունների տեսության խնդրագիրք» (ԵՊՀ հրատ., 2016), «Բազմաչափ պատահական
+մեծություն և բաշխման ֆունկցիա» գլուխ։ Այս դասի թեմաներին համապատասխանող խնդիրները՝</p>
+<ul>
+  <li><strong>համատեղ բաշխման ֆունկցիա և նրա հատկությունները՝</strong> 391, 392, 393,</li>
+  <li><strong>ուղղանկյան հավանականություն բաշխման ֆունկցիայով՝</strong> 365 (1-ին հարցը),</li>
+  <li><strong>համատեղ բաշխման աղյուսակ (դիսկրետ վեկտորներ)՝</strong> 370, 371, 386 և 387 (համատեղ բաշխումը գտնելու
+  մասը), 402 (գ),</li>
+  <li><strong>մարգինալներ խտությամբ տրված վեկտորների համար (15-րդ դասի նյութ)՝</strong> 364, 366, 367, 388։</li>
+</ul>
+<p class="muted">Տնային աշխատանքը նշանակում է դասախոսը։ Այս ցանկը միայն ցույց է տալիս, թե որ խնդիրներն են վերաբերում այս
+դասի թեմաներին։ Անկախությանը վերաբերող խնդիրները (368, 369, 373-385) 16-րդ դասի թեման են։ Գլուխը բաշխման ֆունկցիան
+սահմանում է նույն կերպ՝ խիստ անհավասարություններով։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Դասեր">
+        <a class="btn" href="w13-singular.html">← Դասախոսություն 13</a>
+        <a class="btn" href="index.html">Բոլոր դասերը</a>
+        <a class="btn" href="w15-multivariate-types.html">Դասախոսություն 15 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասընթացի ծրագրի և գրականության հիման վրա։ Սխալ նկատելու դեպքում
+  գրեք <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

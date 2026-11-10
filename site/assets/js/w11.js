@@ -101,7 +101,7 @@
       Q.tex($("formula"), `P(\\xi=${k})=C_{${n}}^{${k}}\\,${numTex(p, 2)}^{${k}}\\,${numTex(1 - p, 2)}^{${n - k}}\\approx ${numTex(ps[k], 4)}`, true);
       const np1 = (n + 1) * p;
       $("mode").innerHTML = `Ամենահավանական արժեք${modes.length > 1 ? "ներ" : ""}՝ <strong>${modes.join(" և ")}</strong> ($(n+1)p=${numTex(np1, 2)}$)։` +
-        (sim ? ` Կարմիր կետերը $${sim.reps}$ փորձի հաճախականություններն են։` : "");
+        (sim ? ` Կարմիր կետերը $${sim.reps}$ փորձի հաճախություններն են։` : "");
       Q.math($("mode"));
     }
     w.querySelector("[data-act=sim]").addEventListener("click", () => {

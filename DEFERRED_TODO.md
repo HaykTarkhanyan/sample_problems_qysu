@@ -2,15 +2,21 @@
 
 Topics cut from current work so they are not lost.
 
-- **Probability lecture 12 page (absolutely continuous distributions, 23 Nov):** density, uniform,
-  exponential (memoryless, the continuous twin of the geometric), normal, Cauchy; reuse the lecture 10/11
-  teaching pattern (DECISIONS #13). Problem-book refs that belong here (not to week 11): 315-321, 323, 324,
-  327-343 (densities, exponential, functions of uniform/normal variables). (2026-11-10)
-- **Native Armenian read of the new probability pages** once `armenian_style/` (GUIDE, questions) is
-  answered; the lecture 10 text was written by the model and only linted for punctuation. (2026-11-10)
-- **Weeks 12-16 pages**, and the missing sources for weeks 10, 15 (Gnedenko ch. 4) and the full proof of
-  Lebesgue's decomposition for week 13 (Borovkov ch. 3 §2); user said not to download more for now.
+- **Native Armenian read of the probability pages** (all 15 written by the model, linted with
+  `armenian_style/lint_armenian.py` against the owner's decided rules, never read end to end by a
+  native speaker). (2026-11-10)
+- **Independent math review of lectures 1-8 and 12-16** (skipped by owner choice, DECISIONS #13
+  revisited); run the lecture 10/11 review prompt on a page first if students report an error there.
   (2026-11-10)
+- **Missing sources** for weeks 10, 15 (Gnedenko ch. 4), the full proof of Lebesgue's decomposition
+  for week 13 (Borovkov ch. 3 §2) and Borovkov for week 8; user said not to download more for now.
+  (2026-11-10)
+- **Line break between an inline formula and its suffix** («$F(x)$» / «-ն է» on two lines at 390 px,
+  seen on w08, affects every page of both courses): after KaTeX renders (and in `Q.math`/`Q.tex`), wrap
+  each inline `.katex` plus a following text node starting with `-` + Armenian letters in a
+  `span.nowrap`. Shared `site.js` change, so test all pages. (2026-11-10)
+- **Student feedback on the probability pages** (owner collects it): hidden solutions, predict
+  prompts, proof boxes (DECISIONS #9, #13 "what would change this"). (2026-11-10)
 
 - **Armenian language sweep of the discrete .tex + site (user: "later"); rules now DECIDED
   (2026-11-10, `armenian_style/OWNER_ANSWERS.md` + `SOURCE_FINDINGS.md`):** `-ը` before ե/ո/և
