@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Ccircle cx=%279.5%27 cy=%279.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%273.6%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2722.5%27 cy=%2722.5%27 r=%273.6%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<title>Դասախոսություն 11 - Դիսկրետ բաշխումներ</title>
+<meta name="description" content="Հավանականությունների տեսություն, դասախոսություն 11՝ դիսկրետ բաշխումներ, բաշխման օրենք, բինոմական, երկրաչափական, Պուասոնի և հիպերերկրաչափական բաշխումներ։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/w11.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Հավանականությունների տեսություն</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Դասախոսություն 11</div>
+    <h1>Դիսկրետ բաշխումներ</h1>
+    <p class="subtitle">Բաշխման օրենք և չորս հիմնական «պատմություն»՝ բինոմական, երկրաչափական, Պուասոնի և հիպերերկրաչափական բաշխումներ</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս դասի մասին</a></li>
+        <li><a href="#discrete">Դիսկրետ բաշխում և բաշխման օրենք</a></li>
+        <li><a href="#simple">Ամենապարզ բաշխումները</a></li>
+        <li><a href="#binomial">Բինոմական բաշխում</a></li>
+        <li><a href="#geometric">Երկրաչափական բաշխում</a></li>
+        <li><a href="#poisson">Պուասոնի բաշխում</a></li>
+        <li><a href="#hyper">Հիպերերկրաչափական բաշխում</a></li>
+        <li><a href="#which">Ո՞ր բաշխումն է</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+        <li><a href="#book">Խնդրագրքի խնդիրներ</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս դասի մասին</h2></summary>
+<div class="sec-body">
+<p>Նախորդ դասում տեսանք, որ բաշխման ֆունկցիայի թռիչքները մեկ կետի հավանականություններն են։ Այս դասում դիտարկում
+ենք այն դեպքը, երբ <em>ամբողջ</em> հավանականությունը կենտրոնացած է կետերում։ Այդպիսի բաշխումները նկարագրվում են պարզ
+աղյուսակով, և նրանց մեծ մասը ծագում է մի քանի բնական «պատմությունից»։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Դիսկրետ բաշխումը տրվում է բաշխման օրենքով՝</strong> $x_k$ արժեքներ և $p_k$ հավանականություններ,
+  $\sum p_k=1$, իսկ $F$-ը թռչում է $p_k$-ով $x_k$ կետերում և ուրիշ տեղ չի աճում։</li>
+  <li><strong>Հիմնական բաշխումները պատմություններ են՝</strong> հաջողությունների քանակ (բինոմական), սպասում մինչև
+  առաջին հաջողությունը (երկրաչափական), շատ հազվադեպ պատահույթների քանակ (Պուասոնի), ընտրություն առանց վերադարձման
+  (հիպերերկրաչափական)։</li>
+  <li><strong>Խնդիր լուծելիս նախ ճանաչեք պատմությունը,</strong> հետո միայն գրեք բանաձևը։</li>
+</ol>
+</div>
+<div class="note"><strong>Պայմանավորվածություններ։</strong> Ինչպես դասընթացի խնդրագրքում, $F(x)=P(\xi\lt x)$, զուգորդությունների
+թիվը գրում ենք $C_n^k$, իսկ երկրաչափական բաշխումը սկսվում է $k=1$-ից (փորձերի քանակը՝ առաջին հաջողությունը ներառյալ)։
+Որոշ գրքերում և Վիքիպեդիայում երկրաչափական բաշխումը հաշվում է <em>անհաջողությունների</em> քանակը և սկսվում է
+$0$-ից։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="discrete" open>
+<summary><h2>Դիսկրետ բաշխում և բաշխման օրենք</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>$\xi$ պատահական մեծությունը կոչվում է <strong>դիսկրետ</strong>, եթե գոյություն ունի վերջավոր կամ հաշվելի
+$\{x_1,x_2,\dots\}$ բազմություն, որի համար $P(\xi\in\{x_1,x_2,\dots\})=1$։ $p_k=P(\xi=x_k)$ թվերի հետ միասին այդ
+արժեքները կազմում են $\xi$-ի <strong>բաշխման օրենքը</strong>՝</p>
+<div class="table-wrap"><table class="tbl">
+<tbody>
+<tr><td>$\xi$</td><td class="num">$x_1$</td><td class="num">$x_2$</td><td class="num">$x_3$</td><td class="num">$\dots$</td></tr>
+<tr><td>$P$</td><td class="num">$p_1$</td><td class="num">$p_2$</td><td class="num">$p_3$</td><td class="num">$\dots$</td></tr>
+</tbody></table></div>
+<p>որտեղ $p_k\ge0$ և $\sum_k p_k=1$։</p>
+</div>
+<p>Բաշխման օրենքը լիովին որոշում է բաշխման ֆունկցիան՝</p>
+$$F(x)=P(\xi\lt x)=\sum_{k:\ x_k\lt x}p_k.$$
+<p>$x_k$ կետում $F$-ը թռչում է $p_k$-ով, իսկ $x_k$-եր չպարունակող ամեն միջակայքում հաստատուն է։ Եթե $x_k$-երը
+կուտակման կետ չունեն (օրինակ՝ վերջավոր են կամ ամբողջ թվեր), $F$-ն աստիճանաձև է, բայց եթե $x_k$-երը բոլոր ռացիոնալ
+թվերն են, $F$-ը խիստ աճող է։ Նախորդ դասի
+լեզվով՝ $\xi$-ն դիսկրետ է այն և միայն այն դեպքում, երբ նրա բաշխման ֆունկցիայի բոլոր թռիչքների գումարը $1$ է։</p>
+
+<h3>Լուծված օրինակ՝ ղուշերի քանակը երեք նետումում</h3>
+<p>Մետաղադրամը նետում ենք $3$ անգամ, $\xi$-ն ցույց է տալիս, թե քանի անգամ է ընկել ղուշ։ $8$ հավասարահավանական
+արդյունքներից ղուշ չի ընկնում $1$-ում, մեկ անգամ ընկնում է $3$-ում, երկու անգամ՝ $3$-ում, երեք անգամ՝ $1$-ում՝</p>
+<div class="table-wrap"><table class="tbl">
+<tbody>
+<tr><td>$\xi$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$3$</td></tr>
+<tr><td>$P$</td><td class="num">$\tfrac18$</td><td class="num">$\tfrac38$</td><td class="num">$\tfrac38$</td><td class="num">$\tfrac18$</td></tr>
+</tbody></table></div>
+$$F(x)=\begin{cases}0, & x\le0,\\ \tfrac18, & 0\lt x\le1,\\ \tfrac12, & 1\lt x\le2,\\ \tfrac78, & 2\lt x\le3,\\ 1, & x\gt3.\end{cases}$$
+<figure class="fig" id="fig-law"><div data-out="plot"></div><div data-out="mass"></div>
+<figcaption>Վերևում՝ $F$-ը, ներքևում՝ բաշխման օրենքը սյուներով։ Ամեն սյան բարձրությունը $F$-ի թռիչքն է նույն կետում։</figcaption></figure>
+<p>Օրինակ՝ $P(\xi\ge2)=1-F(2)=1-\tfrac12=\tfrac12$ և $P(1\le\xi\le2)=F(2+0)-F(1)=\tfrac78-\tfrac18=\tfrac34$։ Նույնը
+ստանում ենք ուղղակի գումարելով՝ $P(\xi=1)+P(\xi=2)=\tfrac38+\tfrac38$։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Կարո՞ղ է դիսկրետ պատահական մեծությունն ընդունել անվերջ թվով արժեքներ։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Այո</button><button class="btn" type="button">Ոչ</button></div>
+<div class="predict-why">Այո, եթե արժեքները հաշվելի են։ Օրինակ՝ մետաղադրամը նետում ենք մինչև առաջին ղուշը, $\xi$-ն
+նետումների քանակն է։ Այն կարող է լինել $1,2,3,\dots$, և $P(\xi=k)=2^{-k}$, ընդ որում $\sum_{k\ge1}2^{-k}=1$։ «Դիսկրետ»
+նշանակում է «հաշվելի բազմությունում», ոչ թե «վերջավոր»։</div>
+</div>
+
+<div class="widget" id="w-table">
+  <div class="widget-head">Բաշխման օրենքից՝ բաշխման ֆունկցիա</div>
+  <p class="widget-hint">Գրեք արժեքներ և հավանականություններ (կարելի է կոտորակով՝ 1/6)։ Եթե գումարը $1$ չէ, «Նորմավորել»
+  կոճակը բոլոր հավանականությունները բաժանում է գումարի վրա։ Նկատեք, թե ինչպես է ամեն տողը դառնում $F$-ի մեկ թռիչք։</p>
+  <div class="table-wrap"><table class="tbl"><thead><tr><th>$x_k$</th><th>$p_k$</th><th></th></tr></thead><tbody data-out="rows"></tbody></table></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="add">+ տող</button>
+    <button class="btn" type="button" data-act="norm">Նորմավորել</button>
+    <button class="btn" type="button" data-act="reset">Սկզբնական օրինակը</button>
+  </div>
+  <div data-out="msg"></div>
+  <div data-out="plot"></div>
+  <div data-out="mass"></div>
+  <div class="widget-out" data-out="formula"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Պնդում։</strong> Դիսկրետ $\xi$-ի համար $F(x)=\sum_{x_k\lt x}p_k$։</p>
+<p>Դիցուք $X=\{x_1,x_2,\dots\}$ և $P(\xi\in X)=1$։ Այդ դեպքում
+$\{\xi\lt x\}=\bigcup_{x_k\lt x}\{\xi=x_k\}\ \cup\ \bigl(\{\xi\lt x\}\setminus\{\xi\in X\}\bigr)$, և այս պատահույթներն
+անհամատեղելի են։ Վերջինի հավանականությունը զրո է, իսկ առաջին միավորումը վերջավոր կամ հաշվելի է։ Հավանականության
+հաշվելի գումարելիությունից ստանում ենք $F(x)=\sum_{x_k\lt x}P(\xi=x_k)$։ ∎</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="simple" open>
+<summary><h2>Ամենապարզ բաշխումները</h2></summary>
+<div class="sec-body">
+<ul>
+  <li><strong>Վերասերված (հաստատուն) բաշխում՝</strong> $P(\xi=c)=1$։ Պատահականություն չկա, բայց սա էլ է բաշխում։
+  $F(x)=0$, երբ $x\le c$, և $F(x)=1$, երբ $x\gt c$։</li>
+  <li><strong>Բեռնուլիի բաշխում $p$ պարամետրով՝</strong> $P(\xi=1)=p$, $P(\xi=0)=1-p$։ Կարևոր օրինակ՝ $A$ պատահույթի
+  <em>ինդիկատորը</em>՝ $\xi=1$, եթե $A$-ն տեղի է ունեցել, և $\xi=0$՝ հակառակ դեպքում։ Այդ դեպքում $p=P(A)$։</li>
+  <li><strong>Դիսկրետ հավասարաչափ բաշխում՝</strong> $P(\xi=k)=\tfrac1n$, $k=1,\dots,n$։ Զառը $n=6$ դեպքն է։</li>
+</ul>
+<p>Բեռնուլիի բաշխումը մնացածի «աղյուսն» է։ Բինոմական, երկրաչափական և Պուասոնի բաշխումները ստացվում են Բեռնուլիի
+անկախ փորձերից՝ տարբեր հարցեր տալով (Պուասոնինը՝ որպես սահման)։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="binomial" open>
+<summary><h2>Բինոմական բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> Կատարում ենք $n$ անկախ փորձ (Բեռնուլիի սխեմա, դաս 7), ամեն մեկում հաջողության
+հավանականությունը $p$ է, իսկ $q=1-p$։ $\xi$-ն հաջողությունների քանակն է։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}P(\xi=k)=C_n^k\,p^k q^{n-k},\\ k=0,1,\dots,n.\end{gathered}$$</p>
+</div>
+<p><strong>Ինչո՞ւ։</strong> Որոշակի հաջորդականություն, որում $k$ հաջողություն և $n-k$ անհաջողություն կա (օրինակ՝
+«ՀՀԱՀԱ»), ունի $p^kq^{n-k}$ հավանականություն՝ անկախության շնորհիվ։ Այդպիսի հաջորդականությունների քանակը $C_n^k$ է՝ $n$
+տեղից ընտրում ենք այն $k$-ը, որտեղ հաջողություն է։ Գումարը $1$ է Նյուտոնի երկանդամի բանաձևով՝
+$\sum_k C_n^kp^kq^{n-k}=(p+q)^n=1$, դրանից էլ բաշխման անունը։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Մետաղադրամը նետում ենք $10$ անգամ ($n=10$, $p=\tfrac12$)։ Ղուշերի ո՞ր քանակն է ամենահավանականը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$5$</button><button class="btn" type="button">բոլորը հավասարահավանական են</button><button class="btn" type="button">$0$ կամ $10$</button></div>
+<div class="predict-why">$5$-ը՝ $P(\xi=5)=C_{10}^5\,2^{-10}=\tfrac{252}{1024}\approx0{,}246$։ Բոլոր <em>հաջորդականություններն</em>
+են հավասարահավանական, բայց $5$ ղուշով հաջորդականություններն ամենաշատն են ($C_{10}^5=252$), իսկ $0$ ղուշով՝ միայն մեկը։</div>
+</div>
+
+<div class="widget" id="w-binom">
+  <div class="widget-head">Բինոմական բաշխում և մոդելավորում</div>
+  <p class="widget-hint">Փոխեք $n$-ը և $p$-ն, իսկ $k$ սահիչով ընտրեք արժեքը, որի հավանականությունը հաշվվում է ներքևում
+  (նարնջագույն սյունը)։ «Մոդելավորել» կոճակը $300$ անգամ կատարում է $n$ փորձ և կարմիր կետերով ցույց տալիս, թե որքան
+  հաճախ է ստացվել ամեն $k$-ն։ Նկատեք, թե որտեղ է գտնվում ամենաբարձր սյունը, և ինչպես է այն շարժվում $p$-ի հետ։</p>
+  <div class="slider-row"><span>$n$</span><input type="range" data-in="n" min="1" max="40" step="1" value="10" aria-label="n">
+    <span>$p$</span><input type="range" data-in="p" min="0" max="1" step="0.01" value="0.5" aria-label="p"></div>
+  <div class="slider-row"><span>$k$</span><input type="range" data-in="k" min="0" max="10" step="1" value="5" aria-label="k"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="widget-controls"><button class="btn primary" type="button" data-act="sim">Մոդելավորել</button></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out" data-out="mode"></div>
+</div>
+
+<p><strong>Ամենահավանական արժեքը։</strong> Դիցուք $0\lt p\lt1$ ($p=0$ և $p=1$ դեպքերում $\xi\equiv0$ կամ $\xi\equiv n$)։ $k^*$-ը բավարարում է $(n+1)p-1\le k^*\le(n+1)p$ պայմանին։ Եթե $(n+1)p$-ն
+ամբողջ թիվ է, կա երկու ամենահավանական արժեք՝ $(n+1)p-1$ և $(n+1)p$, հակառակ դեպքում՝ մեկը՝ $\lfloor(n+1)p\rfloor$։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Համեմատենք հարևան հավանականությունները՝
+$$\begin{aligned}\frac{P(\xi=k+1)}{P(\xi=k)}&=\frac{C_n^{k+1}}{C_n^k}\cdot\frac pq\\&=\frac{(n-k)\,p}{(k+1)\,q}.\end{aligned}$$
+Այս հարաբերությունը $\ge1$ է այն և միայն այն դեպքում, երբ $(n-k)p\ge(k+1)q$, այսինքն՝ $k\le(n+1)p-1$։ Հետևաբար
+հավանականություններն աճում են, քանի դեռ $k+1\le(n+1)p$, իսկ հետո նվազում են։ Ամենամեծը $k^*=\lfloor(n+1)p\rfloor$-ն
+է, իսկ եթե $(n+1)p$-ն ամբողջ է, ապա $(n+1)p-1$ և $(n+1)p$ արժեքների հավանականությունները հավասար են։ ∎</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="geometric" open>
+<summary><h2>Երկրաչափական բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> Կատարում ենք անկախ փորձեր, մինչև առաջին հաջողությունը (հաջողության հավանականությունը
+ամեն փորձում $p$ է)։ $\xi$-ն փորձերի քանակն է՝ հաջողը ներառյալ։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}P(\xi=k)=q^{k-1}p,\quad k=1,2,3,\dots,\\ P(\xi\gt n)=q^n.\end{gathered}$$</p>
+</div>
+<p>$\xi=k$ նշանակում է առաջին $k-1$ փորձում անհաջողություն և $k$-րդում հաջողություն։ $\xi\gt n$ նշանակում է, որ առաջին
+$n$ փորձերը բոլորն անհաջող են։ Գումարը $1$ է՝ երկրաչափական պրոգրեսիայի գումարի բանաձևով՝
+$\sum_{k\ge1}q^{k-1}p=\tfrac{p}{1-q}=1$, դրանից էլ անունը։</p>
+
+<h3>Հիշողության բացակայություն</h3>
+<p>Երկրաչափական բաշխման ամենահետաքրքիր հատկությունը՝ ամեն $m,n\ge0$ ամբողջ թվերի համար</p>
+$$P(\xi\gt m+n\mid\xi\gt m)=P(\xi\gt n).$$
+<p>Եթե արդեն $m$ անգամ անհաջողություն է եղել, մնացած սպասումն ունի նույն բաշխումը, ինչ սկզբում։ Մետաղադրամը
+կամ զառը չի «հիշում» նախորդ արդյունքները։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Զառը նետում ենք մինչև առաջին $6$-ը։ Արդեն $5$ նետում $6$ չի ընկել։ Ո՞րն է
+հավանականությունը, որ հաջորդ նետումում կընկնի $6$։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\tfrac16$</button><button class="btn" type="button">$\tfrac16$-ից մեծ, «արդեն ժամանակն է»</button><button class="btn" type="button">$\tfrac16$-ից փոքր</button></div>
+<div class="predict-why">$\tfrac16$։ Նետումներն անկախ են, և նախորդ անհաջողությունները հաջորդ նետման վրա չեն ազդում։
+«Արդեն ժամանակն է» մտածելակերպը հայտնի սխալ է (կոչվում է «խաղացողի սխալ»)։ Հիշողության բացակայությունը հենց այս
+փաստի բանաձևն է։</div>
+</div>
+
+<div class="widget" id="w-geom">
+  <div class="widget-head">Սպասում մինչև առաջին հաջողությունը</div>
+  <p class="widget-hint">Կապույտ սյուները երկրաչափական բաշխումն են։ Մեծացրեք $m$-ը՝ կարմիր կետերը ցույց կտան մնացած
+  սպասման ($\xi-m$) բաշխումն այն պայմանով, որ առաջին $m$ փորձերն անհաջող էին։ Նկատեք, որ կետերը միշտ նստում են
+  սյուների վրա։</p>
+  <div class="slider-row"><span>$p$</span><input type="range" data-in="p" min="0.05" max="0.9" step="0.05" value="0.3" aria-label="p">
+    <span>$m$</span><input type="range" data-in="m" min="0" max="10" step="1" value="0" aria-label="m"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="widget-out" data-out="out"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Քանի որ $\{\xi\gt m+n\}\subset\{\xi\gt m\}$,
+$$\begin{aligned}&P(\xi\gt m+n\mid\xi\gt m)\\&\quad=\frac{P(\xi\gt m+n)}{P(\xi\gt m)}=\frac{q^{m+n}}{q^m}\\&\quad=q^n=P(\xi\gt n).\qquad\blacksquare\end{aligned}$$</p>
+</div></details>
+<details class="extra"><summary>Ավելին՝ հիշողություն չունեցող միակ դիսկրետ բաշխումը</summary><div class="inner">
+<p>Ճիշտ է նաև հակառակը։ Եթե $\xi$-ն ընդունում է $1,2,\dots$ արժեքներ և ունի հիշողության բացակայության հատկությունը, ապա
+այն երկրաչափական է։ Իսկապես, $g(n)=P(\xi\gt n)$-ի համար հատկությունը նշանակում է $g(m+n)=g(m)g(n)$, որտեղից
+$g(n)=g(1)^n$։ Նշանակելով $q=g(1)$՝ ստանում ենք $P(\xi=k)=g(k-1)-g(k)=q^{k-1}(1-q)$։ Տե՛ս վարժություն 7-ը։ 12-րդ դասում
+կտեսնենք նույն հատկությամբ անընդհատ բաշխումը՝ ցուցչայինը։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="poisson" open>
+<summary><h2>Պուասոնի բաշխում</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}P(\xi=k)=\frac{\lambda^k}{k!}\,e^{-\lambda},\\ k=0,1,2,\dots,\qquad\lambda\gt0.\end{gathered}$$</p>
+</div>
+<p>Գումարը $1$ է, որովհետև $\sum_k\tfrac{\lambda^k}{k!}=e^{\lambda}$։ <strong>Որտեղի՞ց է գալիս։</strong> Պուասոնի բաշխումը
+նկարագրում է շատ անկախ, բայց յուրաքանչյուրը հազվադեպ պատահույթների քանակը՝ զանգերը կենտրոնում մեկ րոպեում,
+վրիպակները գրքի մեկ էջում, քայքայվող ատոմները մեկ վայրկյանում։ $\lambda$-ն ցույց է տալիս, թե «միջինում» քանի
+պատահույթ է լինում (այս միտքը ճշգրիտ կդառնա մաթեմատիկական սպասման դասում)։ Բինոմական բաշխման հետ կապը հետևյալ
+թեորեմն է։</p>
+<div class="box thm"><div class="box-title">Պուասոնի թեորեմ</div>
+<p>Եթե $n\to\infty$, $p_n\to0$ և $np_n\to\lambda\gt0$, ապա ամեն ֆիքսված $k$-ի համար
+$$C_n^k\,p_n^k(1-p_n)^{n-k}\ \longrightarrow\ \frac{\lambda^k}{k!}\,e^{-\lambda}.$$</p>
+</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $1000$ լամպից յուրաքանչյուրը խոտան է $0{,}002$ հավանականությամբ, անկախ մյուսներից։
+Մոտավորապես ինչի՞ է հավասար հավանականությունը, որ ոչ մի խոտան չկա։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\approx0{,}135$</button><button class="btn" type="button">$\approx0{,}002$</button><button class="btn" type="button">$\approx0{,}998$</button></div>
+<div class="predict-why">$\lambda=np=2$, ուստի $P(\xi=0)\approx e^{-2}\approx0{,}135$։ Ճշգրիտ բինոմական պատասխանը
+$0{,}998^{1000}\approx0{,}135$ է։ $0{,}998$-ը մեկ լամպի խոտան չլինելու հավանականությունն է, իսկ $1000$ լամպի համար այն
+բարձրացվում է $1000$ աստիճանի։</div>
+</div>
+
+<div class="widget" id="w-poisson">
+  <div class="widget-head">Բինոմականից՝ Պուասոնի</div>
+  <p class="widget-hint">Կապույտ սյուները Պուասոնի բաշխումն են $\lambda$ պարամետրով, կարմիր կետերը՝ բինոմականը $n$
+  փորձով և $p=\tfrac{\lambda}{n}$-ով։ Մեծացրեք $n$-ը և տեսեք, թե ինչպես են կետերը նստում սյուների վրա, իսկ ներքևի
+  հեռավորությունը ձգտում է զրոյի։</p>
+  <div class="slider-row"><span>$\lambda$</span><input type="range" data-in="lam" min="0.5" max="8" step="0.5" value="2" aria-label="lambda">
+    <span>$n$</span><input type="range" data-in="n" min="0" max="7" step="1" value="2" aria-label="n"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="widget-out" data-out="out"></div>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Ֆիքսենք $k$-ն և գրենք
+$$\begin{aligned}&C_n^kp_n^k(1-p_n)^{n-k}\\&\quad=\frac{(np_n)^k}{k!}\cdot\prod_{j=0}^{k-1}\Bigl(1-\frac jn\Bigr)\\&\qquad\cdot(1-p_n)^{n}\cdot(1-p_n)^{-k}.\end{aligned}$$
+Երբ $n\to\infty$, առաջին արտադրիչը ձգտում է $\tfrac{\lambda^k}{k!}$-ի, երկրորդը՝ $1$-ի (վերջավոր թվով արտադրիչներ, որոնցից
+յուրաքանչյուրը ձգտում է $1$-ի), չորրորդը՝ $1$-ի (քանի որ $p_n\to0$)։ Երրորդի համար
+$(1-p_n)^n=\exp\bigl(n\ln(1-p_n)\bigr)$, և $n\ln(1-p_n)=-np_n\bigl(1+o(1)\bigr)\to-\lambda$, ուստի այն ձգտում է
+$e^{-\lambda}$-ի։ ∎</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="hyper" open>
+<summary><h2>Հիպերերկրաչափական բաշխում</h2></summary>
+<div class="sec-body">
+<p><strong>Պատմությունը։</strong> Սափորում $N$ գնդակ կա, որոնցից $M$-ը սպիտակ են։ Պատահականորեն հանում ենք $n$ գնդակ
+<em>առանց վերադարձման</em>։ $\xi$-ն հանված սպիտակ գնդակների քանակն է։</p>
+<div class="box thm"><div class="box-title">Բանաձև</div>
+<p>$$\begin{gathered}P(\xi=k)=\frac{C_M^k\,C_{N-M}^{\,n-k}}{C_N^n},\\ \max(0,n-N+M)\le k\le\min(M,n).\end{gathered}$$</p>
+</div>
+<p><strong>Ինչո՞ւ։</strong> Դասական սահմանում՝ $n$ գնդակի բոլոր $C_N^n$ ընտրությունները հավասարահավանական են։ Բարենպաստ են
+այն ընտրությունները, որոնցում $M$ սպիտակից ընտրված է $k$-ը, իսկ $N-M$ սևից՝ $n-k$-ը։ $k$-ի սահմանները պարզապես
+ասում են, որ չի կարելի հանել ավելի շատ սպիտակ, քան կա, և ավելի շատ սև, քան կա։</p>
+<p><strong>Վերադարձմամբ</strong> հանելիս ամեն հանում անկախ է, և սպիտակի հավանականությունը միշտ $\tfrac MN$ է, ուստի
+ստացվում է բինոմական բաշխում $n$ և $p=\tfrac MN$ պարամետրերով։ Եթե $N$-ը շատ մեծ է $n$-ի համեմատ, մի քանի գնդակ
+հանելը գրեթե չի փոխում համամասնությունը, և երկու բաշխումները մոտ են։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Սափորում $3$ սպիտակ և $2$ սև գնդակ կա։ Առանց վերադարձման հանում ենք $2$ գնդակ։ Ո՞րն է
+երկուսն էլ սպիտակ լինելու հավանականությունը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$\tfrac3{10}$</button><button class="btn" type="button">$\tfrac9{25}$</button><button class="btn" type="button">$\tfrac35$</button></div>
+<div class="predict-why">$\tfrac{C_3^2C_2^0}{C_5^2}=\tfrac3{10}$։ $\tfrac9{25}=\left(\tfrac35\right)^2$-ը կլիներ <em>վերադարձմամբ</em> հանելու
+պատասխանը։ Առանց վերադարձման առաջին սպիտակից հետո սպիտակների համամասնությունը փոքրանում է՝
+$\tfrac35\cdot\tfrac24=\tfrac3{10}$։</div>
+</div>
+
+<div class="widget" id="w-hyper">
+  <div class="widget-head">Սափոր՝ առանց վերադարձման և վերադարձմամբ</div>
+  <p class="widget-hint">Ընտրեք գնդակների ընդհանուր քանակը ($N$), սպիտակների քանակը ($M$) և հանվող գնդակների քանակը
+  ($n$)։ Կապույտ սյուները հիպերերկրաչափական բաշխումն են, կարմիր կետերը՝ բինոմականը։ «Հանել» կոճակը կատարում է մեկ
+  հանում։ Համեմատեք փոքր և մեծ $N$-երի դեպքերը։</p>
+  <div class="slider-row"><span>$N$</span><input type="range" data-in="N" min="4" max="60" step="1" value="10" aria-label="N">
+    <span>$M$</span><input type="range" data-in="M" min="0" max="10" step="1" value="4" aria-label="M"></div>
+  <div class="slider-row"><span>$n$</span><input type="range" data-in="n" min="1" max="10" step="1" value="5" aria-label="n"><span data-out="lab"></span></div>
+  <div data-out="plot"></div>
+  <div class="widget-controls"><button class="btn primary" type="button" data-act="draw">Հանել</button></div>
+  <div data-out="balls"></div>
+  <div class="widget-out" data-out="out"></div>
+</div>
+
+<details class="extra"><summary>Ավելին՝ Վանդերմոնդի նույնությունը</summary><div class="inner">
+<p>Հավանականությունների գումարը $1$ լինելը նշանակում է $\sum_kC_M^kC_{N-M}^{\,n-k}=C_N^n$։ Սա Վանդերմոնդի նույնությունն
+է, և նրա ապացույցը նույն պատմությունն է։ $N$ գնդակից $n$-ի բոլոր ընտրությունները բաժանենք խմբերի՝ ըստ նրանում եղած
+սպիտակների $k$ քանակի։ $k$-րդ խմբում $C_M^kC_{N-M}^{\,n-k}$ ընտրություն կա։</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="which" open>
+<summary><h2>Ո՞ր բաշխումն է</h2></summary>
+<div class="sec-body">
+<h3>Ամփոփիչ աղյուսակ</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>Բաշխում</th><th>Արժեքներ</th><th>$P(\xi=k)$</th><th>Պատմությունը</th></tr></thead>
+<tbody>
+<tr><td>Բեռնուլիի ($p$)</td><td>$0,1$</td><td>$p^k(1-p)^{1-k}$</td><td>մեկ փորձ, հաջողվե՞ց</td></tr>
+<tr><td>հավասարաչափ ($n$)</td><td>$1,\dots,n$</td><td>$\tfrac1n$</td><td>բոլոր արժեքները հավասարահավանական են</td></tr>
+<tr><td>բինոմական ($n,p$)</td><td>$0,\dots,n$</td><td>$C_n^kp^kq^{n-k}$</td><td>հաջողությունների քանակը $n$ փորձում</td></tr>
+<tr><td>երկրաչափական ($p$)</td><td>$1,2,\dots$</td><td>$q^{k-1}p$</td><td>փորձերի քանակը մինչև առաջին հաջողությունը</td></tr>
+<tr><td>Պուասոնի ($\lambda$)</td><td>$0,1,2,\dots$</td><td>$\tfrac{\lambda^k}{k!}e^{-\lambda}$</td><td>հազվադեպ պատահույթների քանակը</td></tr>
+<tr><td>հիպերերկրաչափական ($N,M,n$)</td><td>$\max(0,n-N+M),\dots,\min(M,n)$</td><td>$\tfrac{C_M^kC_{N-M}^{n-k}}{C_N^n}$</td><td>սպիտակների քանակն առանց վերադարձման հանելիս</td></tr>
+</tbody></table></div>
+
+<div class="widget" id="w-which">
+  <div class="widget-head">Ճանաչեք պատմությունը</div>
+  <p class="widget-hint">Կարդացեք իրավիճակը և ընտրեք բաշխումը։ Բացատրության մեջ նշված են նաև պարամետրերը։</p>
+  <div class="widget-out" data-out="q"></div>
+  <div class="quiz-opts" data-out="opts"></div>
+  <div data-out="fb"></div>
+  <div class="widget-controls"><button class="btn" type="button" data-act="next">Հաջորդը →</button><span class="muted" data-out="score"></span></div>
+</div>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>Շփոթել վերադարձմամբ և առանց վերադարձման հանումները։</strong> Վերադարձմամբ՝ բինոմական, առանց
+  վերադարձման՝ հիպերերկրաչափական։</li>
+  <li><strong>Մոռանալ $C_n^k$-ն։</strong> $p^kq^{n-k}$-ն <em>մեկ</em> որոշակի հաջորդականության հավանականությունն է, իսկ
+  «ճիշտ $k$ հաջողություն»-ը ներառում է բոլոր $C_n^k$ հաջորդականությունները։</li>
+  <li><strong>Երկրաչափական բաշխման պայմանավորվածությունը։</strong> Մեզ մոտ $\xi\ge1$ (փորձերի քանակը)։ Եթե գրքում
+  հաշվում են անհաջողությունները, բանաձևը $q^kp$ է, $k\ge0$։</li>
+  <li><strong>«Արդեն ժամանակն է»։</strong> Անկախ փորձերում նախորդ անհաջողությունները չեն մեծացնում հաջորդ փորձի
+  հաջողության հավանականությունը (հիշողության բացակայություն)։</li>
+  <li><strong>Պուասոնի մոտարկումն ամենուր։</strong> Այն լավ է, երբ $n$-ը մեծ է, իսկ $p$-ն փոքր, և $\lambda=np$։ $n=10$,
+  $p=\tfrac12$ դեպքում բինոմականը պետք է հաշվել ուղղակի։</li>
+</ul>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Լուծումները սկզբում թաքցված են։ Նախ փորձեք ինքներդ, ապա բացեք միայն պատասխանը, հետո՝ ամբողջ
+լուծումը։ Վարժությունները դասավորված են հեշտից դժվար, ★ նշանովն ամենադժվարն է։</p>
+
+<div class="box problem"><div class="box-title">Վարժություն 1</div>
+<p>$\xi$-ն ընդունում է $-1$, $0$, $2$ արժեքները համապատասխանաբար $c$, $2c$, $3c$ հավանականություններով։ (ա) Գտեք
+$c$-ն։ (բ) Գրեք $F$-ը։ (գ) Գտեք $P(\xi\ge0)$-ն և $P(-1\lt\xi\le2)$-ը։</p>
+</div>
+<div class="solution">
+<p>(ա) $c+2c+3c=1$, ուստի $c=\tfrac16$։ (բ) Գումարելով $x$-ից ձախ ընկած հավանականությունները՝</p>
+$$F(x)=\begin{cases}0, & x\le-1,\\ \tfrac16, & -1\lt x\le0,\\ \tfrac12, & 0\lt x\le2,\\ 1, & x\gt2.\end{cases}$$
+<p>(գ) $P(\xi\ge0)=1-F(0)=\tfrac56$ (կամ $\tfrac26+\tfrac36$), $P(-1\lt\xi\le2)=F(2+0)-F(-1+0)=1-\tfrac16=\tfrac56$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $c=\tfrac16;\quad\tfrac56;\ \tfrac56$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 2</div>
+<p>Թեստը $8$ հարցից է, ամեն հարցին $4$ պատասխան է առաջարկված, որոնցից մեկն է ճիշտ։ Ուսանողը բոլոր պատասխանները
+պատահականորեն է ընտրում։ Գտեք հավանականությունը, որ (ա) ճիշտ է պատասխանել ուղիղ $2$ հարցի, (բ) գոնե $1$ հարցի։
+(գ) Ճիշտ պատասխանների ո՞ր քանակն է ամենահավանականը։</p>
+</div>
+<div class="solution">
+<p>Բինոմական բաշխում՝ $n=8$, $p=\tfrac14$, $q=\tfrac34$։</p>
+$$\begin{aligned}
+P(\xi=2)&=C_8^2\,(1/4)^2\,(3/4)^6\\&=\tfrac{28\cdot729}{65536}\approx0{,}311,\\
+P(\xi\ge1)&=1-P(\xi=0)\\&=1-(3/4)^8\approx0{,}900.
+\end{aligned}$$
+<p>(գ) $(n+1)p=\tfrac94=2{,}25$, ուստի ամենահավանականը $2$-ն է։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\approx0{,}311;\ \approx0{,}900;\ 2$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 3</div>
+<p>Զառը նետում ենք մինչև առաջին $6$-ը, $\xi$-ն նետումների քանակն է։ Գտեք $P(\xi=3)$-ը, $P(\xi\gt6)$-ը և $P(\xi\le3)$-ը։</p>
+</div>
+<div class="solution">
+<p>Երկրաչափական բաշխում՝ $p=\tfrac16$, $q=\tfrac56$։ $P(\xi=3)=\left(\tfrac56\right)^2\tfrac16=\tfrac{25}{216}\approx0{,}116$,
+$P(\xi\gt6)=\left(\tfrac56\right)^6\approx0{,}335$, $P(\xi\le3)=1-P(\xi\gt3)=1-\left(\tfrac56\right)^3=\tfrac{91}{216}\approx0{,}421$։</p>
+<p class="muted">Ուշադրություն դարձրեք՝ նույնիսկ $6$ նետումից հետո մոտ մեկ երրորդ հավանականությամբ $6$ դեռ չի ընկել։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\tfrac{25}{216};\ \left(\tfrac56\right)^6\approx0{,}335;\ \tfrac{91}{216}$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 4</div>
+<p>Զանգերի կենտրոնը մեկ րոպեում ստանում է Պուասոնի բաշխմամբ զանգեր, $\lambda=3$։ Գտեք հավանականությունը, որ րոպեի
+ընթացքում (ա) զանգ չի լինի, (բ) կլինի առնվազն $2$ զանգ։</p>
+</div>
+<div class="solution">
+<p>(ա) $P(\xi=0)=e^{-3}\approx0{,}050$։ (բ) $P(\xi\ge2)=1-P(\xi=0)-P(\xi=1)=1-e^{-3}(1+3)=1-4e^{-3}\approx0{,}801$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $e^{-3}\approx0{,}050;\ 1-4e^{-3}\approx0{,}801$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 5</div>
+<p>Տուփում $12$ լամպ կա, որոնցից $4$-ը խոտան են։ Պատահականորեն վերցնում ենք $3$ լամպ։ Գտեք հավանականությունը, որ
+վերցրածների մեջ (ա) ուղիղ $1$ խոտան կա, (բ) խոտան չկա, (գ) գոնե $1$ խոտան կա։</p>
+</div>
+<div class="solution">
+<p>Հիպերերկրաչափական բաշխում՝ $N=12$, $M=4$, $n=3$, $C_{12}^3=220$։</p>
+$$P(\xi=1)=\frac{C_4^1C_8^2}{C_{12}^3}=\frac{4\cdot28}{220}=\frac{28}{55},$$
+$$P(\xi=0)=\frac{C_8^3}{C_{12}^3}=\frac{56}{220}=\frac{14}{55}.$$
+<p>(գ) $P(\xi\ge1)=1-\tfrac{14}{55}=\tfrac{41}{55}$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\tfrac{28}{55};\ \tfrac{14}{55};\ \tfrac{41}{55}$</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 6</div>
+<p>Դահլիճում $500$ մարդ կա։ Ենթադրենք՝ ամեն մարդու ծննդյան օրը, անկախ մյուսներից, տարվա $365$ օրերից ցանկացածն է
+հավասար հավանականությամբ։ Գտեք հավանականությունը, որ գոնե մեկի ծննդյան օրը հունվարի $1$-ն է՝ ճշգրիտ և Պուասոնի
+մոտարկմամբ։</p>
+</div>
+<div class="solution">
+<p>Բինոմական բաշխում՝ $n=500$, $p=\tfrac1{365}$։ Ճշգրիտ՝ $1-\left(\tfrac{364}{365}\right)^{500}\approx0{,}7463$։ Պուասոնի
+մոտարկմամբ՝ $\lambda=\tfrac{500}{365}\approx1{,}370$, $1-e^{-\lambda}\approx0{,}7459$։ Տարբերությունը մոտ $0{,}0005$ է։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\approx0{,}746$ (երկու եղանակով էլ)</div>
+</div>
+
+<div class="box problem"><div class="box-title">Վարժություն 7 ★</div>
+<p>Դիցուք $\xi$-ն ընդունում է $1,2,3,\dots$ արժեքներ, $P(\xi\gt1)\lt1$, և ամեն $m,n\ge0$ ամբողջ թվերի համար
+$P(\xi\gt m+n)=P(\xi\gt m)\,P(\xi\gt n)$։ Ապացուցեք, որ $\xi$-ն երկրաչափական բաշխում ունի։</p>
+</div>
+<div class="solution">
+<p>Նշանակենք $g(n)=P(\xi\gt n)$։ $g(0)=1$, քանի որ $\xi\ge1$։ Պայմանից $g(n+1)=g(n)g(1)$, և ինդուկցիայով $g(n)=g(1)^n$։
+Դիցուք $q=g(1)$, $p=1-q$։ Պայմանից $q\lt1$, ուստի $p\gt0$։ Այդ դեպքում
+$$\begin{aligned}P(\xi=k)&=P(\xi\gt k-1)-P(\xi\gt k)\\&=q^{k-1}-q^k=q^{k-1}p,\qquad k\ge1,\end{aligned}$$
+այսինքն՝ $\xi$-ն երկրաչափական է $p$ պարամետրով ($p=1$ դեպքում $\xi\equiv1$)։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<p>Բոլոր բանաձևերը «Ո՞ր բաշխումն է» բաժնի աղյուսակում են։</p>
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասընթացի ծրագրից, ոչ թե դասախոսի քննական հարցերից։
+Քննական հարցերի պաշտոնական ցանկի համար դիմեք դասախոսին։</p>
+<ol>
+  <li>Սահմանել դիսկրետ պատահական մեծությունը և բաշխման օրենքը, արտահայտել $F$-ը $p_k$-երով (<a href="#discrete">ապացույցը</a>)։</li>
+  <li>Արտածել բինոմական բաշխման բանաձևը և գտնել ամենահավանական արժեքը (<a href="#binomial">ապացույցը</a>)։</li>
+  <li>Արտածել երկրաչափական բաշխման բանաձևը, ապացուցել հիշողության բացակայությունը և նրա հակադարձը (<a href="#geometric">բաժինը</a>)։</li>
+  <li>Ձևակերպել և ապացուցել Պուասոնի թեորեմը (<a href="#poisson">ապացույցը</a>)։</li>
+  <li>Արտածել հիպերերկրաչափական բաշխման բանաձևը և բացատրել նրա կապը բինոմականի հետ (<a href="#hyper">բաժինը</a>)։</li>
+</ol>
+<h3>Փորձնական բանավոր հարցեր</h3>
+<ul>
+  <li>Կարո՞ղ է դիսկրետ մեծությունն ունենալ անվերջ թվով արժեքներ։ Իսկ անհաշվելի՞ թվով։</li>
+  <li>Ինչո՞ւ է բինոմական բաշխման հավանականությունների գումարը $1$, և որտեղի՞ց է անունը։</li>
+  <li>Ի՞նչ է նշանակում հիշողության բացակայությունը։ Բերեք մի բաշխում, որն այդ հատկությունը չունի։</li>
+  <li>Ո՞ր դեպքում է Պուասոնի մոտարկումը լավ, և ինչո՞ւ $\lambda=np$։</li>
+  <li>Ե՞րբ են հիպերերկրաչափական և բինոմական բաշխումները մոտ իրար։</li>
+</ul>
+<h3>Ինչ է հաջորդը</h3>
+<p><strong>Դաս 12</strong>՝ բացարձակ անընդհատ բաշխումներ։ Այնտեղ հավանականությունը կետերում չէ, այլ «քսված» է
+խտությամբ, իսկ բաշխման օրենքի դերը կատարում է խտության ֆունկցիան։ Կհանդիպենք երկրաչափականի անընդհատ «եղբորը»՝
+ցուցչային բաշխմանը, որը նույնպես հիշողություն չունի։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="book" open>
+<summary><h2>Խնդրագրքի խնդիրներ</h2></summary>
+<div class="sec-body">
+<p>Ն. Ահարոնյան, Ե. Իսրաելյան, «Հավանականությունների տեսության խնդրագիրք» (ԵՊՀ հրատ., 2016), «Պատահական մեծություն և
+բաշխման ֆունկցիա» գլուխ։ Այս դասի թեմաներին համապատասխանող խնդիրները՝</p>
+<ul>
+  <li><strong>բաշխման օրենք և բաշխման ֆունկցիա՝</strong> 304, 325,</li>
+  <li><strong>բինոմական՝</strong> 306,</li>
+  <li><strong>հիպերերկրաչափական՝</strong> 305,</li>
+  <li><strong>երկրաչափական (սպասում մինչև առաջին հաջողությունը)՝</strong> 307-310,</li>
+  <li><strong>հիշողության բացակայություն՝</strong> 322 (ուշադրություն՝ այնտեղ $\xi$-ն ընդունում է $0,1,2,\dots$ արժեքներ),</li>
+  <li><strong>Պուասոնի՝</strong> 348։</li>
+</ul>
+<p class="muted">Տնային աշխատանքը նշանակում է դասախոսը։ Այս ցանկը միայն ցույց է տալիս, թե որ խնդիրներն են վերաբերում այս
+դասի թեմաներին։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Դասեր">
+        <a class="btn" href="w10-cdf-properties.html">← Դասախոսություն 10</a>
+        <a class="btn" href="index.html">Բոլոր դասերը</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասընթացի ծրագրի և գրականության հիման վրա։ Սխալ նկատելու դեպքում
+  գրեք <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

@@ -148,6 +148,13 @@ widget, etc.).
   `#exam` section (one-table summary, oral-exam checklist with proof ideas and links, sample oral questions,
   what's next). Every widget gets a caption saying what the example is.
 - Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see `armenian_style/` A36 for which is which.
+- Shared distribution code: `PROB.pmf.binom / poisson / geom (k >= 1) / hyper` and `PROB.bars(host, {ks, ps,
+  overlay, hl})` for pmf bar charts with an overlay of red dots (comparisons, simulations).
+- Probability pages use the die favicon (blue rounded square, white-orange-white pips); discrete pages and the
+  hub keep the flag favicon.
+- Every new page: also run `python -I armenian_style/lint_armenian.py <page> <script>` (0 errors) and check that
+  no `.katex-display` overflows at 390 px; formula boxes with a formula plus its range go in
+  `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
   every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
   themes (no `.katex-display` overflow on phones), and one independent math review.

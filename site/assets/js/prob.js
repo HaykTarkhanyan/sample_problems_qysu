@@ -223,6 +223,58 @@
     return { pl, draw };
   }
 
+  // ---------- probability mass functions (course conventions, see probability/books.md) ----------
+  const LF = [0];
+  const logFact = n => { for (let i = LF.length; i <= n; i++) LF[i] = LF[i - 1] + Math.log(i); return LF[n]; };
+  const logC = (n, k) => (k < 0 || k > n ? -Infinity : logFact(n) - logFact(k) - logFact(n - k));
+  const pmf = {
+    /** P(xi = k) = C_n^k p^k (1-p)^(n-k), k = 0..n */
+    binom(n, p) {
+      return Array.from({ length: n + 1 }, (_, k) => {
+        if (p === 0) return k === 0 ? 1 : 0;
+        if (p === 1) return k === n ? 1 : 0;
+        return Math.exp(logC(n, k) + k * Math.log(p) + (n - k) * Math.log(1 - p));
+      });
+    },
+    /** P(xi = k) = lambda^k e^-lambda / k!, k = 0..kmax */
+    poisson(lam, kmax) {
+      return Array.from({ length: kmax + 1 }, (_, k) => Math.exp(k * Math.log(lam) - lam - logFact(k)));
+    },
+    /** P(xi = k) = (1-p)^(k-1) p, k = 1..kmax (index 0 is unused = 0): trials up to the first success */
+    geom(p, kmax) {
+      return Array.from({ length: kmax + 1 }, (_, k) => (k === 0 ? 0 : Math.pow(1 - p, k - 1) * p));
+    },
+    /** P(xi = k) = C_M^k C_(N-M)^(n-k) / C_N^n, k = 0..n (zero outside max(0,n-N+M)..min(M,n)) */
+    hyper(N, M, n) {
+      return Array.from({ length: n + 1 }, (_, k) => Math.exp(logC(M, k) + logC(N - M, n - k) - logC(N, n)));
+    }
+  };
+
+  /** Bar chart of a pmf on integer points. o: {ks, ps, overlay: [p...] drawn as dots, hl: Set of k,
+      xlabel, ymax, w, h, labels: true to print values over bars}. Returns the plot api. */
+  function bars(host, o) {
+    const ks = o.ks, ps = o.ps, n = ks.length;
+    const ymax = o.ymax || Math.max(1e-9, ...ps, ...(o.overlay || [])) * 1.18;
+    const step = n > 26 ? 5 : n > 12 ? 2 : 1;
+    const pl = plot(host, { w: o.w || 560, h: o.h || 250, x0: ks[0] - 0.7, x1: ks[n - 1] + 0.7, y0: 0, y1: ymax,
+      xticks: ks.filter(k => k % step === 0), yticks: niceTicks(ymax), xlabel: o.xlabel || "k", grid: true });
+    const bw = Math.min(0.72, 0.72 * (pl.o.x1 - pl.o.x0) / (n + 1.4));
+    ks.forEach((k, i) => {
+      if (ps[i] <= 0) return;
+      pl.rect(k - bw / 2, 0, k + bw / 2, ps[i], o.hl && o.hl.has(k) ? "f-orange" : "f-blue");
+      if (o.labels && n <= 12) pl.text(k, ps[i], num(ps[i], 3), { "text-anchor": "middle", dy: -4, "font-size": 10 });
+    });
+    if (o.overlay) ks.forEach((k, i) => { if (o.overlay[i] > 1e-6) pl.dot(k, o.overlay[i], true, "red", pl.over, 3.6); });
+    return pl;
+  }
+  function niceTicks(ymax) {
+    const raw = ymax / 4, mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
+    const st = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag;
+    const out = [];
+    for (let t = 0; t <= ymax + 1e-12; t += st) out.push({ v: t, label: num(t, 3) });
+    return out;
+  }
+
   /** Predict-then-check blocks: <div class="predict"><p>question</p><div class="predict-opts">
       <button class="btn" data-ok>right</button><button class="btn">wrong</button></div>
       <div class="predict-why">explanation</div></div>. The explanation shows after any answer. */
@@ -257,5 +309,5 @@
   }
   Q.ready(setupDeep);
 
-  window.PROB = { makeDist, intervalProb, num, numTex, frac, fracTex, plot, onDrag, rng, massPanel, EPS };
+  window.PROB = { makeDist, intervalProb, num, numTex, frac, fracTex, plot, onDrag, rng, massPanel, pmf, bars, logC, EPS };
 })();

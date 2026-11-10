@@ -5,11 +5,10 @@ Topics cut from current work so they are not lost.
 - **Confirm the distribution-function convention with the students (user: "remind me").** The
   probability pages use F(x) = P(ξ < x) like the problem book (DECISIONS #10). Check a student's
   week 8 notes: if Narimanyan uses P(ξ ≤ x), flip the formulas on the probability pages. (2026-11-10)
-- **Probability lecture 11 page (discrete distributions)** before the 16 Nov lecture: outline agreed in
-  the 2026-11-10 session (table widget, Bernoulli/uniform, binomial with simulation, geometric +
-  memorylessness, Poisson limit overlay, hypergeometric urn, summary table, "which distribution?" quiz,
-  problem-book refs 304-310, 317-319, 322, 323, 325, 348). Check the problem book's geometric-distribution
-  convention (trials vs failures) first. (2026-11-10)
+- **Probability lecture 12 page (absolutely continuous distributions, 23 Nov):** density, uniform,
+  exponential (memoryless, the continuous twin of the geometric), normal, Cauchy; reuse the lecture 10/11
+  teaching pattern (DECISIONS #13). Problem-book refs that belong here (not to week 11): 315-321, 323, 324,
+  327-343 (densities, exponential, functions of uniform/normal variables). (2026-11-10)
 - **Native Armenian read of the new probability pages** once `armenian_style/` (GUIDE, questions) is
   answered; the lecture 10 text was written by the model and only linted for punctuation. (2026-11-10)
 - **Weeks 12-16 pages**, and the missing sources for weeks 10, 15 (Gnedenko ch. 4) and the full proof of
