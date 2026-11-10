@@ -159,7 +159,10 @@
   function pathTex(leaf) {
     const n = leaf.s.length, names = leaf.s.map((red, k) => kName(k + 1, red));
     const factors = names.map((nm, k) => (k === 0 ? `P(${nm})` : `P(${nm}\\mid ${names.slice(0, k).join("")})`));
-    const known = leaf.edges.filter(e => e !== null);
+    const known = leaf.edges.filter(e => e !== null), m = known.length;
+    // A zero branch before the last step: the later conditions have probability 0, so their conditional
+    // probabilities are undefined. Bound the path by its prefix instead of writing them.
+    if (m < n) return `\\begin{aligned}&P(${names.join("")})\\le P(${names.slice(0, m).join("")})\\\\&\\ =${factors.slice(0, m).join("\\,")}\\\\&\\ =${known.map(ftex).join("\\cdot ")}=0\\end{aligned}`;
     const lines = [`&P(${names.join("")})`, `&\\ =${factors[0]}\\,${factors[1]}`];
     if (n === 3) lines.push(`&\\qquad\\cdot ${factors[2]}`);
     lines.push(`&\\ =${known.map(ftex).join("\\cdot ")}=${ftex(leaf.p)}`);
@@ -217,7 +220,10 @@
         Q.tex($("formula"), `\\begin{aligned}&P(\\text{${ev.lab}})\\\\&\\quad=${rhs}\\end{aligned}`, true);
       }
       let note;
-      if (sel !== null && leaves[sel].edges.some(e => e === null || e.n === 0)) note = "Այս ճանապարհն անցնում է $0$ հավանականությամբ ճյուղով, ուրեմն նրա հավանականությունը $0$ է։ Դրանից հետո պայմանական հավանականությունները սահմանված չեն (պայմանն անհնար է)։";
+      if (sel !== null && leaves[sel].edges.some(e => e === null || e.n === 0)) {
+        note = "Այս ճանապարհն անցնում է $0$ հավանականությամբ ճյուղով, ուրեմն նրա հավանականությունը $0$ է։";
+        if (leaves[sel].edges.includes(null)) note += " Դրանից հետո պայմանն անհնար է, և պայմանական հավանականությունները սահմանված չեն, ուստի բազմապատկման թեորեմը կիրառում ենք միայն մինչև այդ ճյուղը։";
+      }
       else if (repl) note = `Վերադարձմամբ սափորի կազմը չի փոխվում. ամեն ճյուղում կարմիրի հավանականությունը $${ftex(fr(r, r + b))}$ է, այսինքն՝ հանումներն անկախ են։`;
       else if (ev.id === "last") note = `Նույնը, ինչ առաջին գնդակի համար՝ $${ftex(fr(r, r + b))}$։ Չիմանալով նախորդ հանումները՝ վերջին գնդակը նույն հավանականությամբ կարող է լինել սափորի ցանկացած գնդակը։ Ճանապարհների նման գումարի ընդհանուր տեսքը լրիվ հավանականության բանաձևն է (դաս 6)։`;
       else if (ev.id === "some") note = "«Գոնե մեկը» պատահույթի համար ավելի կարճ է հակադիրով՝ $1$-ից հանում ենք միակ «բոլորը կարմիր» տերևի հավանականությունը։";
@@ -274,7 +280,7 @@
       pl.text(xb, Math.max(0.03, edge(xb) / 2 - 0.02), "B", { "text-anchor": "middle", class: "m" });
       Q.tex($("lab"), t === 0 ? `y=${numTex(b, 2)}` : `y=${numTex(b, 2)}${t > 0 ? "+" : "-"}${numTex(Math.abs(t), 1)}(x-0{,}5)`);
       const prod = m.pA * m.pB, cond = m.pB > 0 ? m.pAB / m.pB : NaN;
-      Q.tex($("formula"), `\\begin{gathered}P(A)${eqv(m.pA)},\\quad P(B)${eqv(m.pB)},\\\\ P(AB)${eqv(m.pAB)},\\quad P(A)P(B)${eqv(prod)},\\\\ P(A\\mid B)=\\tfrac{P(AB)}{P(B)}${eqv(cond)}\\end{gathered}`, true);
+      Q.tex($("formula"), `\\begin{gathered}P(A)${eqv(m.pA)},\\ \\ P(B)${eqv(m.pB)},\\\\ P(AB)${eqv(m.pAB)},\\ \\ P(A)P(B)${eqv(prod)},\\\\ P(A\\mid B)=\\tfrac{P(AB)}{P(B)}${eqv(cond)}\\end{gathered}`, true);
       let v;
       if (Math.abs(m.pAB - prod) < 1e-9) v = "<strong>Անկախ են։</strong> $AB$-ն ուղղանկյուն է՝ $P(A)$ լայնությամբ և $P(B)$ բարձրությամբ, ուստի $P(AB)=P(A)P(B)$, և $P(A\\mid B)=P(A)$։";
       else v = `<strong>Կախյալ են։</strong> $P(A\\mid B)${m.pAB / m.pB > m.pA ? "\\gt " : "\\lt "}P(A)$՝ եթե գիտենք, որ կետը $B$-ում է, ${m.pAB / m.pB > m.pA ? "ավելի" : "պակաս"} հավանական է, որ այն ձախ շերտում է։`;
