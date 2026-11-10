@@ -18,13 +18,13 @@ done = [
   "site/assets/js/prob.js: distributions (atoms + continuous part), F / F(x+0), generalized inverse sampler, seeded RNG 509, SVG plot helper (correct filled/hollow dots for both conventions, responsive width >= 300 px), drag helper, #deep-btn toggle for proof boxes.",
   "site/probability/w10-cdf-properties.html + assets/js/w10.js: recap, interval probabilities (table + rule + drag widget), jumps and the traffic-light mixed example, countability of jumps (k-slider widget), converse theorem with inverse-transform sampling widget and full proof, 8-item quiz, two-conventions section with toggle, 5 original exercises with hidden solutions, problem-book refs (313, 314, 326, 339, 344-346, 349). Three detail levels: main text, details.deep proofs, details.extra.",
   "Verification: check_site 0 errors; node --check; node script recomputing every exercise answer plus story simulations (traffic lights) and sampler frequencies, all passed; Playwright at 1280 and 390 px, light and dark: no console errors, no katex errors, no overflow (fixed tiny labels on phones via responsive width, multi-line formulas, label overlap, quiz feedback wording, faded correct option).",
-  "Background agent started on the user's request: Armenian LLM-bias style guide + glossary check + questions for the native speaker (armenian_style/).",
-  "Independent math review agent on the lecture 10 page before publishing.",
+  "Background agent (user request): armenian_style/ with GUIDE.md (LLM-Armenian pitfalls, wrong -> right, confidence + evidence; top rule: չ- only on verbs/verbal forms, adjectives take «ոչ»), POLISH_CHECKLIST.md, QUESTIONS_FOR_NATIVE_SPEAKER.md (A1-A35), GLOSSARY_REPORT.md (20 findings, e.g. row 509 typo «գնատահական», rows 257/258 duplicate, U+2024 in 23 rows), lint_armenian.py (39 self-tests) and check_glossary.py. Evidence: 12 hy.wikipedia articles vs the agent's own blind-written paragraphs (in gitignored _sources/). No official Armenian style source found online.",
+  "Applied the new lint to the probability pages: 6 article slips (-ը before a vowel) fixed per the house -ն rule; the 168 hits in the older discrete sheets are left for the deferred language review.",
+  "Independent math review of the lecture 10 page before publishing: no wrong formula/proof/answer; 8 findings applied (false 'remaining jumps < 1/k' sentence for k = 2^m, zero-probability paragraph reworded, interval-widget dot filled only at F's actual value, traffic-light chip showing the partial mass, a < b enforced, 'at jump points' qualifier, dummy-variable clash in the converse proof, '1 հավանականությամբ').",
   "DECISIONS #8-#12, CONVENTIONS (paths + Probability pages section), DEFERRED_TODO (convention check, lecture 11, native read, weeks 12-16).",
 ]
 
 pending = [
-  "Apply the math reviewer's findings, then commit and push (user: push when QA passes).",
   "Lecture 11 page (discrete distributions) before the 16 Nov lecture; outline in DEFERRED_TODO; course conventions for binomial/Poisson/geometric (k>=1)/hypergeometric noted in probability/books.md.",
   "Integrate armenian_style/ results: answer the native-speaker questions, then polish the lecture 10 Armenian text.",
   "Remind the user to confirm the F(x)=P(ξ<x) convention with a student's week 8 notes.",
@@ -44,7 +44,9 @@ files = [
   "DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md",
 ]
 
-commits = []
+commits = [
+  "1beb811 Add probability course: lecture 10 page, site split into /discrete and /probability (pushed; Pages run 42805060593)",
+]
 
 notes = """
 Not committed on purpose: the syllabus PDF and probability/sh.exe.stackdump (user's files, untracked),
