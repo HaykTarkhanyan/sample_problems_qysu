@@ -27,7 +27,9 @@
   function wTable() {
     const w = document.getElementById("w-table"); if (!w) return;
     const $ = s => w.querySelector(`[data-out="${s}"]`);
-    let rows = [["-1", "1/6"], ["0", "1/3"], ["2", "1/2"]];
+    // default = the example from lecture 10 (student notes): values -2,3; 2; 5 with 0,2; 0,7; 0,1
+    const LECTURE = () => [["-2,3", "0,2"], ["2", "0,7"], ["5", "0,1"]];
+    let rows = LECTURE();
     function render() {
       const tb = $("rows"); tb.innerHTML = "";
       rows.forEach((r, i) => {
@@ -76,7 +78,7 @@
       rows = rows.map((r, i) => [r[0], P.frac(ps[i] / s, 120) || num(ps[i] / s, 12)]);
       render();
     });
-    w.querySelector("[data-act=reset]").addEventListener("click", () => { rows = [["-1", "1/6"], ["0", "1/3"], ["2", "1/2"]]; render(); });
+    w.querySelector("[data-act=reset]").addEventListener("click", () => { rows = LECTURE(); render(); });
     render();
   }
 

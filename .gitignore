@@ -334,3 +334,5 @@ site/pdf/
 # Book PDFs for the probability course: local reference only, never committed
 probability/books/
 armenian_style/_sources/
+# A student's handwritten lecture notes (photos): local reference only, never committed
+probability/notes_from_student/

@@ -2,9 +2,6 @@
 
 Topics cut from current work so they are not lost.
 
-- **Confirm the distribution-function convention with the students (user: "remind me").** The
-  probability pages use F(x) = P(ξ < x) like the problem book (DECISIONS #10). Check a student's
-  week 8 notes: if Narimanyan uses P(ξ ≤ x), flip the formulas on the probability pages. (2026-11-10)
 - **Probability lecture 12 page (absolutely continuous distributions, 23 Nov):** density, uniform,
   exponential (memoryless, the continuous twin of the geometric), normal, Cauchy; reuse the lecture 10/11
   teaching pattern (DECISIONS #13). Problem-book refs that belong here (not to week 11): 315-321, 323, 324,

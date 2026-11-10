@@ -36,7 +36,9 @@ Newest first. Superseded entries stay, marked as such.
 - **What would change this** Needing data-heavy zoomable charts (e.g. statistics with real datasets).
 
 ## 10. Distribution function convention on the probability pages: F(x) = P(ξ < x)
-- **Date** 2026-11-10 - **status** active, **to be confirmed** with the students' lecture notes (DEFERRED_TODO)
+- **Date** 2026-11-10 - **status** active, **confirmed** 2026-11-10 from a student's lecture-10 notes
+  (`probability/notes_from_student/`, local only): the lecturer writes F_ξ(x) = P(ξ < x), P(ξ ≤ x) = F(x+0),
+  numbers the basic properties 1) non-decreasing, 2) left-continuous, 3) limits (the site now uses that order)
 - **Why** The course problem book (Aharonyan/Israelyan 2016, reviewed by the lecturer S. Narimanyan) uses
   the strict inequality and left-continuity (p. 61); homework comes from it. Sevastyanov (main syllabus book)
   and Aleksanyan's notes use P(ξ ≤ x); every page has a section with the other convention and a toggle widget.
