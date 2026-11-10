@@ -124,6 +124,11 @@ code, .mono { font-family: Consolas, "Courier New", monospace; font-size: .92em;
 .brand { font-weight: 700; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
 .brand .flag { display: inline-flex; flex-direction: column; width: 18px; height: 12px; border-radius: 2px; overflow: hidden; }
 .brand .flag i { flex: 1; } .brand .flag i:nth-child(1) { background: #d90012; } .brand .flag i:nth-child(2) { background: #0033a0; } .brand .flag i:nth-child(3) { background: #f2a800; }
+/* Probability pages: a die (same design as their favicon) instead of the flag. */
+.brand .die { flex: none; width: 18px; height: 18px; border-radius: 4px; background:
+  radial-gradient(circle at 29% 29%, #fff 0 1.8px, transparent 2.3px),
+  radial-gradient(circle at 50% 50%, #f2a800 0 1.8px, transparent 2.3px),
+  radial-gradient(circle at 71% 71%, #fff 0 1.8px, transparent 2.3px), #0033a0; }
 .header-actions { margin-left: auto; display: flex; gap: .45rem; flex-wrap: wrap; }
 
 .btn {
