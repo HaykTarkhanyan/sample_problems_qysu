@@ -5,9 +5,11 @@ Topics cut from current work so they are not lost.
 - **Native Armenian read of the probability pages** (all 15 written by the model, linted with
   `armenian_style/lint_armenian.py` against the owner's decided rules, never read end to end by a
   native speaker). (2026-11-10)
-- **Independent math review of lectures 1-8 and 12-16** (skipped by owner choice, DECISIONS #13
-  revisited); run the lecture 10/11 review prompt on a page first if students report an error there.
-  (2026-11-10)
+- **Independent math review of lectures 1-8 and 14-16** (skipped by owner choice, DECISIONS #13
+  revisited; 12 and 13 done 2026-11-10). Focus on theorem statements and hypotheses, which is where the
+  12/13 reviews found everything. Open from those reviews: does the lecturer use Sevastyanov's broad
+  definition of «singular» (any continuous F without a density)? Does w07's «later topics of the course»
+  (de Moivre-Laplace) hold for this semester? (2026-11-10)
 - **Missing sources** for weeks 10, 15 (Gnedenko ch. 4), the full proof of Lebesgue's decomposition
   for week 13 (Borovkov ch. 3 §2) and Borovkov for week 8; user said not to download more for now.
   (2026-11-10)

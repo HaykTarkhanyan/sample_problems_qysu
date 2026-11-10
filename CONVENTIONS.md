@@ -17,7 +17,9 @@ Recurring decisions for this repo, written down once they were made twice.
   «և» start with a consonant sound, so they take `-ը` («թիվը երկու», «$x$-ը և»), except the
   auxiliaries եմ/ես/ենք/եք/են («տարրերն են») (source: «Հայոց լեզու 7» pp. 26-27, Language Committee;
   `armenian_style/SOURCE_FINDINGS.md` A1). After a symbol, go by how it is read: «$A$-ն» («ա»),
-  «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). Numeral + singular noun
+  «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). A symbol whose spoken name ends
+  in a consonant takes `-ը` unless the NEXT word starts with a vowel: «$F$-ը մոնոտոն», «$F$-ն անընդհատ»
+  (F = «էֆ»), «Մեծացրեք $s$-ը։» (lecture 10 usage; I got this backwards once on 2026-11-10). Numeral + singular noun
   by default («6 մարդ», «3 աստղ»); plural is fine when definite («այդ երեք բազմությունները»).
 - Owner decisions of 2026-11-10 (full list: `armenian_style/OWNER_ANSWERS.md`): mijaket stays ASCII
   `.`; «Հետևաբար,» with a comma at the start of a sentence, «Այսպիսով՝» with ՝; «Դիցուք» /
@@ -178,5 +180,5 @@ widget, etc.).
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
   every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
-  themes (no `.katex-display` overflow on phones), and one independent math review (lectures 10-11 had it;
-  1-8 and 12-16 were published without it by the owner's choice, DECISIONS #13 revisited).
+  themes (no `.katex-display` overflow on phones), and one independent math review (lectures 10-13 had it, reports in
+  `probability/reviews/`; 1-8 and 14-16 were published without it by the owner's choice, DECISIONS #13 revisited).

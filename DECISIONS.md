@@ -18,7 +18,10 @@ Newest first. Superseded entries stay, marked as such.
   by the user's choice, published **without** the independent math review that lectures 10-11 had; their
   safety net is each builder's number-recomputation script, a mock-DOM widget smoke test, `check_site`, the
   Armenian lint and the orchestrator's browser check (1280/390 px). If students report math errors, run the
-  per-page review (the prompt used for lectures 10-11) on the affected pages first.
+  per-page review (the prompt used for lectures 10-11) on the affected pages first. Lectures 12 and 13 were
+  reviewed the same evening (user request; `probability/reviews/2026-11-10_w12_math_review.md`, `..._w13_...`):
+  no wrong numbers or answer keys, but missing theorem hypotheses (g' != 0, F_eta continuous) and one invalid
+  inference, all fixed. That pattern says the number scripts work and the remaining risk is in statements.
 
 ## 12. Probability pages: original explanations; the problem book is cited by problem number only
 - **Date** 2026-11-10 - **status** active
