@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 3 3%27%3E%3Crect width=%273%27 height=%271%27 fill=%27%23D90012%27/%3E%3Crect y=%271%27 width=%273%27 height=%271%27 fill=%27%230033A0%27/%3E%3Crect y=%272%27 width=%273%27 height=%271%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գործնական 7 - Տրոհումներ և կցում-արտաքսում</title>
+<meta name="description" content="Դիսկրետ մաթեմատիկա, գործնական 7՝ երկրորդ սեռի Ստիռլինգի թվեր, կցման-արտաքսման սկզբունք, բաժանելիություն, զուգահեռ կողմ չունեցող եռանկյուններ, սահմանափակ ամբողջ լուծումներ։ Մանրամասն լուծումներ ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/p7.js"></script>
+<style>
+/* p7 only: Stirling grid and partition rows (P1), Venn inputs (P7), side-by-side SVGs (P10) */
+.st-grid { display: grid; grid-template-columns: 1.6rem repeat(6, 2.15rem); gap: .22rem; justify-content: center; margin: .7rem 0; }
+.st-grid .hd { display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: .82rem; color: var(--muted); }
+.st-grid .cell-btn { min-width: 0; width: 2.15rem; height: 2.25rem; padding: 0; font-family: var(--sans); font-size: 1rem; }
+.st-grid .cell-btn.st-empty { color: var(--muted); }
+.st-grid .cell-btn.st-target { font-weight: 700; color: var(--orange-ink); }
+.st-grid .cell-btn.st-ul { background: color-mix(in srgb, var(--blue) 20%, var(--surface)); border: 2px solid var(--blue); }
+.st-grid .cell-btn.st-up { background: color-mix(in srgb, var(--red) 18%, var(--surface)); border: 2px solid var(--red); }
+.st-grid .cell-btn.st-cur { border: 2px solid var(--orange); box-shadow: 0 0 0 2px color-mix(in srgb, var(--orange) 35%, transparent); }
+.st-case { font-size: .92rem; margin: .8rem 0 .2rem; }
+.st-row { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; justify-content: center; margin: .3rem 0; }
+.st-base { font-family: var(--sans); font-size: .78rem; color: var(--muted); }
+.chip.st-part { cursor: default; }
+.st-new { font-weight: 700; color: var(--orange-ink); }
+.p7-num { width: 5.6em; font: inherit; padding: .12rem .35rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); }
+.p7-num.sm { width: 3.6em; }
+.p7-hl { fill: color-mix(in srgb, var(--green) 36%, transparent); }
+.p7-halo { paint-order: stroke; stroke: var(--widget-bg); stroke-width: 4px; stroke-linejoin: round; }
+.p7-pair { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; justify-content: center; align-items: center; }
+.p7-pair svg { margin: 0; }
+.p7-layers { display: inline-flex; flex-wrap: wrap; gap: .25rem; }
+.p7-list { margin: .3rem 0; padding-left: 1.2rem; font-size: .95rem; }
+td.p7-target { background: var(--hl); font-weight: 700; }
+table.tbl td.r { text-align: right; }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Դիսկրետ մաթեմատիկա</a>
+  <div class="header-actions">
+    <a class="btn" href="../pdf/Practice7_Partitions_Solutions_ARM.pdf" title="Նույն լուծումները PDF տարբերակով">PDF</a>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գործնական 7</div>
+    <h1>Բազմությունների տրոհումներ և կցում-արտաքսում</h1>
+    <p class="subtitle">Մանրամասն լուծումներ՝ դատողությունները քայլ առ քայլ բացված</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#warmup">Նախապատրաստում</a></li>
+        <li><a href="#p1">Խնդիր 1 - Բազմության տրոհումը ոչ դատարկ դասերի</a></li>
+        <li><a href="#p7">Խնդիր 7 - 11-ի վրա բաժանվող, բայց ոչ 5-ի և ոչ 3-ի վրա</a></li>
+        <li><a href="#p10">Խնդիր 10 - Եռանկյունները կողմերի բաժանման կետերի վրա՝ $ABC$-ին զուգահեռ կողմ չունենալով</a></li>
+        <li><a href="#p12">Խնդիր 12 - Գծային հավասարման սահմանափակ ամբողջ լուծումները</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="warmup" open>
+<summary><h2>Նախապատրաստում</h2></summary>
+<div class="sec-body">
+<p>Այս թերթիկում աշխատում է երկու գործիք։ Առաջինը <strong>երկրորդ սեռի Ստիռլինգի թիվն</strong> է $S(n,k)$՝
+$n$-տարրանոց բազմությունը $k$ ոչ դատարկ չպիտակավորված դասի տրոհելու տարբերակների քանակը։ Երկրորդը
+<strong>կցման-արտաքսման սկզբունքն (ԿԱՍ)</strong> է՝ «վատ» հատկություններից խուսափող տարրերը հաշվելու
+համար սկսեք ընդհանուրից, հանեք յուրաքանչյուր վատ բազմություն, ապա հետ ավելացրեք զույգ հատումները
+(որոնք հանվել էին երկու անգամ), հանեք եռյակ հատումները և այդպես շարունակ։ Այս թերթիկի մեծ մասը
+քողարկված ԿԱՍ է. թե՛ բաժանելիության սահմանափակումներով թվերի հաշվումը, թե՛ վերին սահմաններով
+հավասարման ամբողջ լուծումների հաշվումը հենվում են նույն նշանափոխ գումարի գաղափարի վրա։ Լուծում ենք 1, 7, 10 և 12 խնդիրները։</p>
+<p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
+փորձեք լուծել։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1" open>
+<summary><h2>Խնդիր 1 - Բազմության տրոհումը ոչ դատարկ դասերի</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 1</div>
+<p>Քանի՞ տարբերակով կարելի է $5$-տարրանոց բազմությունը տրոհել $3$ ոչ դատարկ դասի։ (Դասերը
+չպիտակավորված են՝ նշանակություն ունի միայն խմբավորումը, ոչ թե դասերի անունները կամ կարգը։)</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Այս քանակը հենց երկրորդ սեռի Ստիռլինգի $S(5,3)$ թիվն է, և այն հաշվելու ամենապարզ եղանակը <strong>մեկ
+տարրի վրա կենտրոնանալով կառուցված ռեկուրենտ առնչությունն</strong> է։ Առանձնացնենք մեկ ֆիքսված տարր, ասենք
+վերջինը՝ $x_5$։ $3$ ոչ դատարկ դասի ցանկացած տրոհման մեջ $x_5$-ի համար հնարավոր է ճիշտ երկու
+դեպք՝</p>
+<ul>
+  <li><strong>$x_5$-ը մենակ է</strong> իր սեփական դասում։ Այդ դեպքում մյուս $4$ տարրերը պետք է կազմեն
+      մնացած $2$ ոչ դատարկ դասը՝ $S(4,2)$ տարբերակ։</li>
+  <li><strong>$x_5$-ը միանում է մյուսներին։</strong> Այդ դեպքում մյուս $4$ տարրերն արդեն կազմում են բոլոր
+      $3$ ոչ դատարկ դասերը ($S(4,3)$ տարբերակ), և $x_5$-ն ավելացվում է այդ $3$ դասից մեկին՝
+      $3\cdot S(4,3)$ տարբերակ։</li>
+</ul>
+<p>Այս երկու դեպքերն իրարամերժ են և միասին ընդգրկում են բոլոր տրոհումները, ուստի քանակները գումարում ենք։ Սա
+$S(n,k)=S(n-1,k-1)+k\,S(n-1,k)$ ընդհանուր ռեկուրենտ առնչությունն է, և այն թույլ է տալիս բարձրանալ
+փոքր հայտնի արժեքներից։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Ստանանք ավելի փոքր $S(4,2)$ և $S(4,3)$ արժեքները</h3>
+<p>Նույն ռեկուրենտ առնչությամբ (և $S(n,1)=1$, $S(n,n)=1$)՝</p>
+$$S(4,2)=S(3,1)+2\,S(3,2)=1+2\cdot 3=7,\qquad S(4,3)=S(3,2)+3\,S(3,3)=3+3\cdot1=6.$$
+<p>(Այստեղ $S(3,2)=S(2,1)+2S(2,2)=1+2=3$։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Միավորենք</h3>
+$$S(5,3)=S(4,2)+3\,S(4,3)=7+3\cdot 6=7+18=25.$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span> Անկախ բանաձևը
+$S(n,k)=\frac{1}{k!}\sum_{j=0}^{k}(-1)^{j}\binom{k}{j}(k-j)^{n}$ տալիս է
+$$S(5,3)=\frac{1}{6}\big(3^5-3\cdot 2^5+3\cdot 1^5\big)=\frac{243-96+3}{6}=\frac{150}{6}=25.$$
+$\{1,2,3,4,5\}$-ի բոլոր տրոհումների ուղիղ համակարգչային թվարկումը գտնում է ճիշտ $25$-ը՝ երեք դասով։
+$\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $S(5,3)=25$</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա - Ստիռլինգի ռեկուրենտ առնչությունը՝</strong></p>
+$$S(n,k)=\underbrace{S(n-1,k-1)}_{\text{նոր տարրը մենակ է}}+\underbrace{k\,S(n-1,k)}_{\text{նոր տարրը միանում է }k\text{ դասերից մեկին}}.$$
+<p>Մեկ տարր առանձնացնելը և «մենա՞կ է, թե՞ միանում է» հարցնելը ռեկուրսիվ կառուցվածքների հաշվման
+հիմնական հնարքն է։ <strong>Զգուշացում՝</strong> եթե դասերը <em>պիտակավորված</em> լինեին (տարբերակելի արկղեր),
+քանակը կլիներ $k!\,S(n,k)$, իսկ դատարկ արկղեր թույլ տալու դեպքում՝ $k^{n}$։</p>
+</div>
+
+<p><strong>Աղյուսակի կառուցումը։</strong> Յուրաքանչյուր վանդակ ստացվում է «վերին-ձախ հարևանից»՝ դրան
+գումարելով $k$ անգամ «վերին հարևանը»։ Մեր թիրախ $S(5,3)=25$-ը գունանշված է։</p>
+
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th class="num">$n \backslash\, k$</th><th class="num">$1$</th><th class="num">$2$</th><th class="num">$3$</th><th class="num">$4$</th><th class="num">$5$</th></tr></thead>
+<tbody>
+<tr><td class="num">$1$</td><td class="num">$1$</td><td></td><td></td><td></td><td></td></tr>
+<tr><td class="num">$2$</td><td class="num">$1$</td><td class="num">$1$</td><td></td><td></td><td></td></tr>
+<tr><td class="num">$3$</td><td class="num">$1$</td><td class="num">$3$</td><td class="num">$1$</td><td></td><td></td></tr>
+<tr><td class="num">$4$</td><td class="num">$1$</td><td class="num">$7$</td><td class="num">$6$</td><td class="num">$1$</td><td></td></tr>
+<tr><td class="num">$5$</td><td class="num">$1$</td><td class="num">$15$</td><td class="num p7-target">$\mathbf{25}$</td><td class="num">$10$</td><td class="num">$1$</td></tr>
+</tbody></table></div>
+
+<div class="widget" id="w-stirling">
+  <div class="widget-head">Ստիռլինգի աղյուսակը՝ վանդակ առ վանդակ</div>
+  <p class="widget-hint">Եզրային վանդակները՝ $S(n,1)=1$ և $S(n,n)=1$, արդեն լրացված են։ Սեղմեք «Հաջորդ
+  վանդակը» կոճակը կամ որևէ դատարկ վանդակ, որի երկու հարևաններն արդեն հայտնի են՝ այն կստացվի
+  <span class="c-blue">վերին-ձախ հարևանից</span>՝ դրան գումարելով $k$ անգամ <span class="c-red">վերին
+  հարևանը</span>։ Լրացված վանդակի վրա սեղմելիս ներքևում երևում են դրա բոլոր տրոհումները՝ բաժանված
+  երկու դեպքի. նկատեք, որ դեպքերի քանակները հենց բանաձևի երկու գումարելիներն են։</p>
+  <div class="st-grid" data-out="grid" role="group" aria-label="S(n,k) աղյուսակ"></div>
+  <div class="widget-controls">
+    <button class="btn primary" type="button" data-act="next">Հաջորդ վանդակը</button>
+    <button class="btn" type="button" data-act="all">Լրացնել բոլորը</button>
+    <button class="btn" type="button" data-act="reset">Սկզբից</button>
+  </div>
+  <div class="widget-out" data-out="formula"></div>
+  <div data-out="list"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p7" open>
+<summary><h2>Խնդիր 7 - 11-ի վրա բաժանվող, բայց ոչ 5-ի և ոչ 3-ի վրա</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 7</div>
+<p>Հաշվեք $1$-ից $16500$ միջակայքի այն ամբողջ թվերը, որոնք բաժանվում են $11$-ի վրա, բայց <strong>չեն</strong> բաժանվում
+$5$-ի վրա և <strong>չեն</strong> բաժանվում $3$-ի վրա։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>«$11$-ի վրա բաժանվող» պայմանը որոշում է մեր տիեզերքը (ունիվերսալ բազմությունը)՝ մոռանանք մնացած
+բոլոր թվերը և նայենք միայն տիրույթի $11$-ի բազմապատիկներին, որոնց քանակը $1500$ է։ Այդ տիեզերքի
+ներսում պետք է դուրս գցենք նրանց, որոնք <em>նաև</em> բաժանվում են $5$-ի կամ $3$-ի վրա։ «Կամ»-ը
+<strong>կցման-արտաքսման</strong> ազդանշանն է՝ եթե պարզապես գումարենք ($5$-ի բազմապատիկներ) և ($3$-ի
+բազմապատիկներ), ապա <em>և՛</em> $5$-ի, <em>և՛</em> $3$-ի վրա բաժանվող թվերը կհաշվվեն երկու անգամ, ուստի
+գումարից դրանք մեկ անգամ հանում ենք (իսկ տիեզերքից հանելիս՝ մեկ անգամ հետ ենք ավելացնում)։</p>
+<p>Օգտակար դիտարկում, որը հաշվարկը դարձնում է ճշգրիտ՝ «$11$-ի բազմապատիկ և $5$-ի բազմապատիկ» նշանակում է
+«$55$-ի բազմապատիկ» (քանի որ $5$-ը և $11$-ը փոխադարձաբար պարզ են), նմանապես $3$-ը տալիս է $33$, իսկ
+$5$-ը և $3$-ը միասին՝ $165$։ Քանի որ $16500=11\cdot1500$ և $16500$-ը նաև $55$-ի, $33$-ի և $165$-ի
+բազմապատիկ է, ստորև բոլոր բաժանումները ստացվում են առանց մնացորդի՝ կլորացման մասին անհանգստանալու
+կարիք չկա։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Տիեզերքը՝ $11$-ի բազմապատիկները</h3>
+$$\left\lfloor\frac{16500}{11}\right\rfloor=1500.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - «Վատ»-երը (նաև բաժանվում են $5$-ի կամ $3$-ի վրա)</h3>
+<p>$11$-ի բազմապատիկների մեջ՝</p>
+$$\#(\text{նաև }5)=\frac{16500}{55}=300,\quad
+  \#(\text{նաև }3)=\frac{16500}{33}=500,\quad
+  \#(\text{նաև }5\text{ և }3)=\frac{16500}{165}=100.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Կցում-արտաքսում «կամ»-ի համար</h3>
+<p>$11$-ի բազմապատիկներ, որոնք բաժանվում են $5$-ի <strong>կամ</strong> $3$-ի վրա՝</p>
+$$300+500-100=700.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Հանենք տիեզերքից</h3>
+$$1500-700=800.$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span> $1,\dots,16500$ վրայով ուղիղ ցիկլը, որը հաշվում է
+$11\mid n,\ 5\nmid n,\ 3\nmid n$ պայմանին բավարարող $n$-երը, տալիս է ճիշտ $800$։ Խաչաձև ստուգում կոտորակներով՝
+$11$-ի բազմապատիկների մեջ «ո՛չ $5$, ո՛չ $3$» պայմանին բավարարող մասնաբաժինը $\frac{4}{5}\cdot\frac{2}{3}=\frac{8}{15}$
+է, և $1500\cdot\frac{8}{15}=800$ (կոտորակներով այս հաշվարկը ճիշտ է, քանի որ $1500$-ը $15$-ի բազմապատիկ
+է)։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $1500-(300+500-100)=800$</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա - հաշվեք ճիշտ տիեզերքում, ապա ԿԱՍ։</strong> «$A$, բայց ոչ $B$ կամ $C$»-ի համար
+սահմանափակվեք $A$-ով, ապա հանեք $|B\cup C|=|B|+|C|-|B\cap C|$ (ամեն ինչ չափված $A$-ի ներսում)։
+Բաժանելիության համար «$a$-ի և $b$-ի բազմապատիկ» նշանակում է «$\operatorname{lcm}(a,b)$-ի
+բազմապատիկ», և $N$-ից ոչ մեծ քանակը $\lfloor N/\operatorname{lcm}\rfloor$ է։</p>
+</div>
+
+<p><strong>Վեննի դիագրամ ($11$-ի $1500$ բազմապատիկների ներսում)։</strong> Հանում ենք գունանշված մասը՝
+$300+500-100=700$, և մնում է շրջաններից դուրս գտնվող $800$-ը։</p>
+
+<div class="widget" id="w-venn">
+  <div class="widget-head">Վեննի դիագրամը՝ ձեր թվերով</div>
+  <p class="widget-hint">Նշանակենք $A$-ով $1,\dots,N$ թվերի մեջ $a$-ի բազմապատիկները, իսկ $B$-ով և $C$-ով՝
+  $b$-ի և $c$-ի բազմապատիկները։ Փոխեք $N$-ը կամ բաժանարարները և հետևեք թվերին։ Երբ $N$-ը
+  $\operatorname{lcm}(a,b,c)$-ի բազմապատիկ չէ, բաժանումներն այլևս առանց մնացորդի չեն, և պետք են ամբողջ
+  մասերը՝ $\lfloor N/d\rfloor$, որտեղ $d$-ն համապատասխան ամենափոքր ընդհանուր բազմապատիկն է։ Եթե բաժանարարները փոխադարձաբար պարզ չեն (օրինակ՝ $6$ և $4$), «և՛ $6$-ի,
+  և՛ $4$-ի բազմապատիկ» նշանակում է «$\operatorname{lcm}(6,4)=12$-ի բազմապատիկ», ոչ թե $24$-ի։ Սեղմեք
+  դիագրամի որևէ մասի կամ ներքևի կոճակներից մեկի վրա՝ տեսնելու, թե որ թվերն են ընկնում այնտեղ։</p>
+  <div class="widget-controls">
+    <label>$N=$ <input class="p7-num" type="number" data-in="N" min="1" max="100000" step="1" value="16500"></label>
+    <label>$a=$ <input class="p7-num sm" type="number" data-in="a" min="2" max="99" step="1" value="11"></label>
+    <label>$b=$ <input class="p7-num sm" type="number" data-in="b" min="2" max="99" step="1" value="5"></label>
+    <label>$c=$ <input class="p7-num sm" type="number" data-in="c" min="2" max="99" step="1" value="3"></label>
+    <button class="btn" type="button" data-act="reset">Խնդրի թվերը</button>
+  </div>
+  <svg viewBox="0 0 380 240" width="380" role="img" aria-label="Վեննի դիագրամ 11-ի բազմապատիկների ներսում">
+    <defs>
+      <clipPath id="p7-clip-l"><circle cx="145" cy="125" r="75"/></clipPath>
+      <mask id="p7-mask-no-r"><rect width="380" height="240" fill="#fff"/><circle cx="235" cy="125" r="75" fill="#000"/></mask>
+      <mask id="p7-mask-no-l"><rect width="380" height="240" fill="#fff"/><circle cx="145" cy="125" r="75" fill="#000"/></mask>
+      <mask id="p7-mask-none"><rect width="380" height="240" fill="#fff"/><circle cx="145" cy="125" r="75" fill="#000"/><circle cx="235" cy="125" r="75" fill="#000"/></mask>
+    </defs>
+    <rect x="10" y="10" width="360" height="220" rx="8" class="s-blue f-none" stroke-width="2"/>
+    <circle cx="235" cy="125" r="75" class="f-red-soft" clip-path="url(#p7-clip-l)"/>
+    <circle cx="145" cy="125" r="75" class="s-red f-red-soft" stroke-width="1.8"/>
+    <circle cx="235" cy="125" r="75" class="s-orange f-orange-soft" stroke-width="1.8"/>
+    <g class="p7-hl">
+      <circle data-hl="onlyB" cx="145" cy="125" r="75" mask="url(#p7-mask-no-r)" visibility="hidden"/>
+      <circle data-hl="onlyC" cx="235" cy="125" r="75" mask="url(#p7-mask-no-l)" visibility="hidden"/>
+      <circle data-hl="both" cx="235" cy="125" r="75" clip-path="url(#p7-clip-l)" visibility="hidden"/>
+      <rect data-hl="none" x="10" y="10" width="360" height="220" rx="8" mask="url(#p7-mask-none)" visibility="hidden"/>
+    </g>
+    <text x="75" y="27.5" dy=".35em" text-anchor="middle" class="f-blue"><tspan data-v="a">11</tspan>-ի բազմ.՝ <tspan data-v="A">1500</tspan></text>
+    <text x="107.5" y="125" dy=".35em" text-anchor="middle"><tspan data-v="b">5</tspan>-ի վրա</text>
+    <text x="272.5" y="125" dy=".35em" text-anchor="middle"><tspan data-v="c">3</tspan>-ի վրա</text>
+    <text x="117.5" y="172.5" dy=".35em" text-anchor="middle" data-v="onlyB">200</text>
+    <text x="262.5" y="172.5" dy=".35em" text-anchor="middle" data-v="onlyC">400</text>
+    <text x="190" y="125" dy=".35em" text-anchor="middle" data-v="both">100</text>
+    <text x="190" y="210" dy=".35em" text-anchor="middle">մնացածը (ոչ մեկի վրա)՝ <tspan font-weight="700" data-v="none">800</tspan></text>
+    <rect class="hit" x="10" y="10" width="360" height="220" fill="transparent"/>
+  </svg>
+  <div class="chips" data-out="regions"></div>
+  <div class="widget-out" data-out="examples"></div>
+  <div class="widget-out" data-out="formula"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p10" open>
+<summary><h2>Խնդիր 10 - Եռանկյունները կողմերի բաժանման կետերի վրա՝ $ABC$-ին զուգահեռ կողմ չունենալով</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 10</div>
+<p>$ABC$ եռանկյան յուրաքանչյուր կողմ բաժանված է $8$ հավասար մասի։ Քանի՞ եռանկյուն կարելի է կազմել,
+որի երեք գագաթներն էլ բաժանման կետեր են ($A,B,C$ գագաթները <em>չեն</em> օգտագործվում), և որի
+<em>ոչ մի</em> կողմ զուգահեռ չէ $ABC$-ի որևէ կողմի։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Կարևոր են միայն կողմերի բաժանման կետերը. յուրաքանչյուր կողմի վրա կա $7$ ներքին բաժանման կետ
+(անկյունները բացառված են), ուստի կա $21$ թեկնածու գագաթ, իսկ եռանկյան ներսում կետեր չկան։</p>
+<p>Ողջ խնդիրը հենվում է «ոչ մի կողմ զուգահեռ» պայմանի վրա։ Եթե երկու գագաթ լինեին $ABC$-ի <em>նույն</em>
+կողմի վրա, դրանք միացնող հատվածը կընկներ այդ կողմի վրա՝ զուգահեռ դրան, ինչն արգելված է։ Ուստի
+յուրաքանչյուր թույլատրելի եռանկյուն վերցնում է <em>ճիշտ մեկ գագաթ յուրաքանչյուր կողմից</em>։ Սա հաշիվը
+հանգեցնում է հետևյալին՝ ընտրել յուրաքանչյուր կողմի $7$ կետից մեկը ($7^3=343$ եղանակ), ապա բացառել
+այն ընտրությունները, որոնք դեռ թողնում են $ABC$-ին զուգահեռ կողմ։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Մեկ գագաթ յուրաքանչյուր կողմից</h3>
+<p>Եթե երկու գագաթ գտնվում են $ABC$-ի նույն կողմի վրա, եռանկյունն ունի այդ կողմի վրա ընկած (հետևաբար
+դրան զուգահեռ) կողմ՝ այդպիսիք բացառվում են։ Ուստի մնացած եռանկյունները վերցնում են մեկական գագաթ
+յուրաքանչյուր կողմից՝ $7\cdot 7\cdot 7=343$ ընտրություն։ Ոչ մեկը վերասերված չէ. ուղիղը եռանկյան երեք <em>կողմերից</em>
+ներքին կետով կարող է հատել առավելագույնը երկուսը (Մենելաոս), ուստի երեք կետ՝ յուրաքանչյուրն իր
+կողմի խիստ ներսում, երբեք համագիծ չեն։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Ե՞րբ է եռանկյան կողմը զուգահեռ $ABC$-ի կողմին</h3>
+<p>Զուգահեռությունն աֆինական ձևափոխություններով չի խախտվում, ուստի դնենք $A=(0,0)$, $B=(8,0)$,
+$C=(0,8)$ և $AB$-ի, $BC$-ի, $CA$-ի վրա նշանակենք համապատասխանաբար</p>
+$$P_i=(i,0),\qquad Q_j=(8-j,j),\qquad R_k=(0,k),\qquad i,j,k\in\{1,\dots,7\}.$$
+<p>$P_iQ_jR_k$ եռանկյան համար՝ ստուգելով յուրաքանչյուր կողմ $ABC$-ի երեք ուղղությունների դեմ՝</p>
+<ul>
+  <li>$P_iQ_j \parallel CA$ (ուղղաձիգ) $\iff i+j=8$;</li>
+  <li>$P_iR_k \parallel BC$ (թեքություն $-1$) $\iff i=k$;</li>
+  <li>$Q_jR_k \parallel AB$ (հորիզոնական) $\iff j=k$։</li>
+</ul>
+<p>Յուրաքանչյուր պայման կապում է երկու ինդեքս (տալով $7$ լուծում) և երրորդը թողնում է լիովին ազատ,
+ուստի յուրաքանչյուրը կատարվում է $343$ եռանկյունից $7\cdot 7=49$-ում։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Կցման-արտաքսման սկզբունք</h3>
+<p>Նշանակենք երեք «զուգահեռ» դեպքերը $B_1,B_2,B_3$՝ $|B_1|=|B_2|=|B_3|=49$։ Ցանկացած երկու պայման
+միասին թողնում են ընդամենը մեկ ազատ ինդեքս (օրինակ՝ $i+j=8$ և $i=k$ պայմաններից $j=8-i,\ k=i$, իսկ
+$i$-ն ազատ է), ուստի $|B_1\cap B_2|=|B_1\cap B_3|=|B_2\cap B_3|=7$։ Բոլոր երեքը միասին տալիս են
+$i=j=k=4$, ուստի $|B_1\cap B_2\cap B_3|=1$։ <em>Գոնե մեկ</em> $ABC$-ին զուգահեռ կողմ ունեցող
+եռանկյունների քանակը՝</p>
+$$3\cdot 49-3\cdot 7+1=147-21+1=127,$$
+<p>և թույլատրելի եռանկյունները՝</p>
+$$343-127=216.$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span> Բոլոր $\binom{21}{3}=1330$ գագաթ-եռյակների ուղիղ համակարգչային թվարկումը
+(հանելով $3\binom{7}{3}=105$ համագիծ եռյակները և $ABC$-ի որևէ կողմին զուգահեռ կողմ ունեցող
+եռանկյունները) տալիս է ճիշտ $216$, ընդ որում բոլորն ունեն մեկական գագաթ յուրաքանչյուր կողմի վրա՝
+հաստատելով Քայլ 1-ը։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $343-127=216$</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա - արգելեք ըստ ուղղության, ապա կցում-արտաքսում։</strong> «Ոչ մի կողմ զուգահեռ»
+պայմանն ամենից լավ օգտագործվում է երկու քայլով։ Նախ թողեք, որ այն պարտադրի <em>կառուցվածք</em>
+(այստեղ՝ մեկ գագաթ յուրաքանչյուր կողմի վրա)՝ փոքրացնելով թեկնածուների բազմությունը։ Ապա մնացած վատ
+դեպքերը հաշվեք կցման-արտաքսմամբ՝ յուրաքանչյուր արգելված ուղղության համար մեկ դեպք. սիմետրիան սովորաբար
+հավասարեցնում է եզակի, զույգ և եռակի հատումները բոլոր ուղղություններով, ուստի պետք են ընդամենը երեք
+թիվ։</p>
+</div>
+
+<p><strong>Նկարը։</strong> Յուրաքանչյուր կողմի վրա նշված են դրա $7$ բաժանման կետերը (անկյունները բացառված)։
+Սկզբնական վիճակում կապույտ եռանկյունը թույլատրելի է՝ մեկ գագաթ յուրաքանչյուր կողմի վրա, ոչ մի կողմ
+$ABC$-ին զուգահեռ։ Կարմիր գծիկավոր հատվածը միացնում է հավասար բարձրության երկու կետ. այն զուգահեռ է
+$BC$-ին՝ հենց այն տիպի կողմ, որից թույլատրելի եռանկյունը պետք է խուսափի։</p>
+
+<div class="widget" id="w-triangle">
+  <div class="widget-head">Ընտրենք երեք բաժանման կետ</div>
+  <p class="widget-hint">Սեղմեք կողմերի բաժանման կետերից երեքի վրա (չորրորդ սեղմումը փոխարինում է
+  ամենահին ընտրվածը)։ Կետերի կողքի թվերը Քայլ 2-ի ինդեքսներն են՝ $P_i\in AB$ և $R_k\in CA$ կետերը
+  համարակալված են $A$-ից, $Q_j\in BC$ կետերը՝ $B$-ից։ Երբ ընտրված է մեկական կետ յուրաքանչյուր կողմից,
+  $(i,j)$ ցանցում նշվում է համապատասխան վանդակը $k$-րդ շերտում։ Ցանցի կարմիր վանդակներում կատարվում է
+  $B_1$ ($i+j=8$), $B_2$ ($i=k$), $B_3$ ($j=k$) պայմաններից գոնե մեկը. նկատեք, որ յուրաքանչյուր շերտում
+  դրանք երեք ուղիղ են, որոնք մեկ կետով անցնում են միայն $k=4$-ի դեպքում։</p>
+  <div class="p7-pair" data-out="pair"></div>
+  <div class="widget-controls">
+    <button class="btn primary" type="button" data-act="random">Պատահական եռանկյուն</button>
+    <button class="btn" type="button" data-act="clear">Մաքրել</button>
+    <span class="muted">շերտ $k$՝</span><span class="p7-layers" data-out="layers"></span>
+  </div>
+  <div class="widget-out" data-out="status"></div>
+  <div class="widget-out" data-out="layer"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p12" open>
+<summary><h2>Խնդիր 12 - Գծային հավասարման սահմանափակ ամբողջ լուծումները</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 12</div>
+<p>Գտեք համակարգի ամբողջ լուծումների քանակը՝</p>
+$$x_1+x_2+x_3=40,\qquad 4\le x_1\le 15,\quad 9\le x_2\le 18,\quad 5\le x_3\le 16.$$
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Պարզ «աստղեր և ձողիկներ» հաշվին խանգարում է երկու հանգամանք՝ փոփոխականներն ունեն <strong>ստորին</strong>
+սահմաններ (չեն սկսում $0$-ից) և <strong>վերին</strong> սահմաններ (չեն կարող անսահման աճել)։ Դրանք հեռացնում
+ենք մեկ առ մեկ։</p>
+<p><strong>Ստորին սահմաններից ազատվելը հեշտ է՝</strong> տեղադրենք $y_i=x_i-(\text{իր մինիմումը})$, որպեսզի
+յուրաքանչյուր $y_i\ge 0$ լինի և ընդհանուրը համապատասխանաբար նվազի։ <strong>Վերին սահմանները
+պահանջում են կցում-արտաքսում՝</strong> նախ հաշվենք լուծումները՝ անտեսելով վերին սահմանները (հեշտ աստղեր և
+ձողիկներ), ապա հանենք «անօրինական» լուծումները, որտեղ որևէ $y_i$ գերազանցում է իր սահմանը։ Հնարքն
+այն է, որ «$y_i$-ն գերազանցում է իր $c_i$ սահմանը» նշանակում է «$y_i\ge c_i+1$»՝ նախապես տալիս ենք
+$y_i$-ին $c_i+1$ միավոր և մնացածն արդեն հաշվում ենք ազատ։ Միանգամից երկու փոփոխականի գերազանցումները հանվում
+են երկու անգամ, ուստի ԿԱՍ-ը դրանք հետ է ավելացնում։ Ամբողջ լուծումը մեկ կոկիկ նշանափոխ գումար է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Վերացնենք ստորին սահմանները</h3>
+<p>Դիցուք $y_1=x_1-4,\ y_2=x_2-9,\ y_3=x_3-5$։ Այդ դեպքում $y_i\ge 0$ և</p>
+$$y_1+y_2+y_3=40-4-9-5=22,\qquad 0\le y_1\le 11,\ \ 0\le y_2\le 9,\ \ 0\le y_3\le 11.$$
+<p>(Սահմանները՝ $15-4=11$, $18-9=9$, $16-5=11$։)</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Հաշվենք՝ անտեսելով վերին սահմանները</h3>
+<p>$y_1+y_2+y_3=22$-ի ոչ բացասական լուծումներն աստղերով և ձողիկներով՝</p>
+$$\binom{22+3-1}{3-1}=\binom{24}{2}=276.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - Հանենք մեկական գերազանցումները</h3>
+<p>«$y_i$-ն իր սահմանից վեր» նշանակում է $y_i\ge \text{սահման}+1$՝ տանք դրան այդքան միավոր և հաշվենք
+$22-(\text{սահման}+1)$ կրճատված ընդհանուրի լուծումները՝</p>
+$$|y_1\ge 12|=\binom{(22-12)+2}{2}=\binom{12}{2}=66,\quad
+  |y_2\ge 10|=\binom{(22-10)+2}{2}=\binom{14}{2}=91,$$
+$$|y_3\ge 12|=\binom{(22-12)+2}{2}=\binom{12}{2}=66.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - Հետ ավելացնենք կրկնակի գերազանցումները</h3>
+<p>Միանգամից երկու սահման գերազանցված (տանք երկուսին էլ իրենց $\text{սահման}+1$ միավորները, ապա հաշվենք
+մնացածը)՝</p>
+$$|y_1\ge12,\,y_2\ge10|=\binom{(22-12-10)+2}{2}=\binom{2}{2}=1,\quad
+  |y_2\ge10,\,y_3\ge12|=\binom{2}{2}=1,$$
+$$|y_1\ge12,\,y_3\ge12|:\ 22-12-12=-2\lt 0\ \Rightarrow\ 0.$$
+<p>Բոլոր երեք սահմանները միանգամից գերազանցելու համար պահանջվում է $12+10+12=34\gt 22$ միավոր, ինչն
+անհնար է, ուստի եռյակ անդամը $0$ է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 5</span> - Հավաքենք (կցում-արտաքսում)</h3>
+$$276-(66+91+66)+(1+1+0)-0=276-223+2=55.$$
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span> $x_1\in[4,15],\,x_2\in[9,18],\,x_3\in[5,16]$ վրայով ուղիղ եռակի ցիկլը, որը հաշվում
+է $x_1+x_2+x_3=40$ բավարարողները, տալիս է ճիշտ $55$։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\displaystyle \binom{24}{2}-\Big[\binom{12}{2}+\binom{14}{2}+\binom{12}{2}\Big]+\big[1+1\big]=55$</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա - սահմանափակ կոմպոզիցիաներ՝</strong> $x_1+\dots+x_k=N$-ի ամբողջ լուծումները
+$a_i\le x_i\le b_i$ պայմանով հաշվելու համար՝</p>
+<ol>
+  <li>Տեղադրեք $y_i=x_i-a_i$՝ բոլոր ստորին սահմանները $0$ դարձնելու համար (և $N$-ը նվազեցրեք
+      $\sum a_i$-ով՝ ստանալով $N'=N-\sum a_i$)։</li>
+  <li>Հաշվեք առանց վերին սահմանների՝ $\binom{N'+k-1}{k-1}$։</li>
+  <li>ԿԱՍ-ով հանեք/ավելացրեք անդամները, որտեղ փոփոխականների ընտրված $S$ ենթաբազմությունը
+      գերազանցում է՝ յուրաքանչյուր այդպիսի փոփոխական ընդհանուրից հանում է $(\text{սահման}_i+1)$,
+      նշանը՝ $(-1)^{|S|}$։ Բաց թողեք ցանկացած անդամ, որի մնացած ընդհանուրը բացասական է դառնում
+      (այն տալիս է $0$)։</li>
+</ol>
+</div>
+
+<p><strong>ԿԱՍ-ի հաշվառումը մի հայացքով։</strong></p>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>գերազանցման բազմություն</th><th class="num">մնացած ընդհանուր</th><th class="num">$\binom{\cdot+2}{2}$</th><th class="num">նշան</th><th class="num">ներդրում</th></tr></thead>
+<tbody>
+<tr><td>ոչ մեկը</td><td class="num">$22$</td><td class="num">$276$</td><td class="num">$+$</td><td class="num">$+276$</td></tr>
+<tr><td>$y_1\ge12$</td><td class="num">$10$</td><td class="num">$66$</td><td class="num">$-$</td><td class="num">$-66$</td></tr>
+<tr><td>$y_2\ge10$</td><td class="num">$12$</td><td class="num">$91$</td><td class="num">$-$</td><td class="num">$-91$</td></tr>
+<tr><td>$y_3\ge12$</td><td class="num">$10$</td><td class="num">$66$</td><td class="num">$-$</td><td class="num">$-66$</td></tr>
+<tr><td>$y_1\ge12,\,y_2\ge10$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$+$</td><td class="num">$+1$</td></tr>
+<tr><td>$y_2\ge10,\,y_3\ge12$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$+$</td><td class="num">$+1$</td></tr>
+<tr><td>$y_1\ge12,\,y_3\ge12$</td><td class="num">$-2$</td><td class="num">$0$</td><td class="num">$+$</td><td class="num">$0$</td></tr>
+<tr><td>բոլոր երեքը</td><td class="num">$-12$</td><td class="num">$0$</td><td class="num">$-$</td><td class="num">$0$</td></tr>
+</tbody>
+<tfoot><tr><td colspan="4" class="r"><strong>զուտ ընդամենը (ներդրումների գումար)</strong></td><td class="num">$\mathbf{55}$</td></tr></tfoot>
+</table></div>
+
+<div class="widget" id="w-bounded">
+  <div class="widget-head">Լուծումները՝ որպես ցանցի կետեր</div>
+  <p class="widget-hint">Յուրաքանչյուր կետ $(y_1,y_2)$ զույգ է, իսկ $y_3=N'-y_1-y_2$, որտեղ $N'=N-18$։ Կետերի
+  եռանկյունն առանց վերին սահմանների բոլոր լուծումներն են (աստղեր և ձողիկներ), իսկ կապույտ կետերը
+  բավարարում են բոլոր երեք սահմաններին։ Սեղմեք ԿԱՍ-ի որևէ անդամի վրա՝ տեսնելու, թե որ կետերն է այն
+  հաշվում. «գերազանցող» լուծումները եռանկյան անկյուններում փոքր եռանկյուններ են, իսկ դրանց հատումները՝
+  զույգ անդամները։ Փոխեք $N$-ը սահիչով (սահմանները մնում են նույնը) և նկատեք, թե երբ են անդամները զրո
+  դառնում։</p>
+  <div class="widget-controls">
+    <label>$N$՝ <input type="range" data-in="N" min="18" max="49" step="1" value="40"></label>
+    <strong data-out="n">40</strong>
+    <button class="btn" type="button" data-act="reset">Խնդրի թիվը՝ $40$</button>
+  </div>
+  <div data-out="plot"></div>
+  <div class="chips" data-out="terms"></div>
+  <div class="widget-out" data-out="term"></div>
+  <div class="widget-out" data-out="sum"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թերթիկներ">
+        <a class="btn" href="p6-combinations.html">← Գործնական 6</a>
+        <a class="btn" href="index.html">Բոլոր թերթիկները</a>
+        <a class="btn" href="p8-recurrence.html">Գործնական 8 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Լուծումները գրվել են արհեստական բանականության օգնությամբ, իսկ թվային պատասխանները ստուգվել են
+  համակարգչային թվարկմամբ։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

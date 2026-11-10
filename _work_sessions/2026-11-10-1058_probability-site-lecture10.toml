@@ -1,0 +1,55 @@
+title = "Probability course: book hunt, site split into /discrete + /probability, lecture 10 page"
+date = "2026-11-10"
+time = "10:58"  # local (WEST)
+
+areas = [
+  "probability",
+  "site",
+  "tools",
+  "armenian_style (background agent)",
+  "_work_sessions",
+]
+
+done = [
+  "Read the syllabus (probability/2026_27,...Նարիմանյան_Սահակ.pdf): Probability Theory 1, autumn 2026, S. Narimanyan; midterm 1 on 02.11, midterm 2 on 28.12; weeks 10-16 = distribution function properties, discrete / abs. continuous / singular distributions, random vectors, multivariate types, independence. Book list and week mapping in probability/books.md.",
+  "Books: problem book (Aharonyan/Israelyan, YSU 2016) downloaded from the mathteam Notion Drive link (YSU also hosts it openly; lib.ysu.am / publishing.ysu.am time out from Munich). User downloaded Sevastyanov 2019 (complete, ch. 6 §27-29 match the syllabus), Gnedenko 2001 (ch. 1 only, not useful for weeks 10/15) and Aleksanyan's notes (text layer, mapping to weeks 10-16 in books.md). I declined to pull Sevastyanov/Gnedenko/Borovkov from Libgen mirrors. All book PDFs moved to probability/books/ (gitignored).",
+  "Found the convention clash: problem book F(x)=P(ξ<x) (left-continuous), Sevastyanov/Aleksanyan P(ξ<=x). User picked the problem-book convention, to be confirmed with students (DEFERRED_TODO).",
+  "Site restructure (user Q8): discrete pages moved to site/discrete/ (paths ../assets, ../pdf), redirect stubs at the old root URLs keep #anchors, new root hub, probability landing page. check_site.mjs walks subfolders and maps ../pdf to the source PDFs.",
+  "site/assets/js/prob.js: distributions (atoms + continuous part), F / F(x+0), generalized inverse sampler, seeded RNG 509, SVG plot helper (correct filled/hollow dots for both conventions, responsive width >= 300 px), drag helper, #deep-btn toggle for proof boxes.",
+  "site/probability/w10-cdf-properties.html + assets/js/w10.js: recap, interval probabilities (table + rule + drag widget), jumps and the traffic-light mixed example, countability of jumps (k-slider widget), converse theorem with inverse-transform sampling widget and full proof, 8-item quiz, two-conventions section with toggle, 5 original exercises with hidden solutions, problem-book refs (313, 314, 326, 339, 344-346, 349). Three detail levels: main text, details.deep proofs, details.extra.",
+  "Verification: check_site 0 errors; node --check; node script recomputing every exercise answer plus story simulations (traffic lights) and sampler frequencies, all passed; Playwright at 1280 and 390 px, light and dark: no console errors, no katex errors, no overflow (fixed tiny labels on phones via responsive width, multi-line formulas, label overlap, quiz feedback wording, faded correct option).",
+  "Background agent started on the user's request: Armenian LLM-bias style guide + glossary check + questions for the native speaker (armenian_style/).",
+  "Independent math review agent on the lecture 10 page before publishing.",
+  "DECISIONS #8-#12, CONVENTIONS (paths + Probability pages section), DEFERRED_TODO (convention check, lecture 11, native read, weeks 12-16).",
+]
+
+pending = [
+  "Apply the math reviewer's findings, then commit and push (user: push when QA passes).",
+  "Lecture 11 page (discrete distributions) before the 16 Nov lecture; outline in DEFERRED_TODO; course conventions for binomial/Poisson/geometric (k>=1)/hypergeometric noted in probability/books.md.",
+  "Integrate armenian_style/ results: answer the native-speaker questions, then polish the lecture 10 Armenian text.",
+  "Remind the user to confirm the F(x)=P(ξ<x) convention with a student's week 8 notes.",
+]
+
+next = [
+  "Lecture 11 page.",
+  "Native-speaker pass on lecture 10 text using armenian_style/GUIDE.md.",
+]
+
+files = [
+  "probability/books.md",
+  "site/index.html (hub), site/p*.html (redirect stubs), site/discrete/* (moved), site/probability/index.html, site/probability/w10-cdf-properties.html",
+  "site/assets/js/prob.js, site/assets/js/w10.js, site/assets/site.css (detail-level, theorem, quiz styles)",
+  "tools/check_site.mjs",
+  ".gitignore (probability/books/)",
+  "DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md",
+]
+
+commits = []
+
+notes = """
+Not committed on purpose: the syllabus PDF and probability/sh.exe.stackdump (user's files, untracked),
+the three untracked discrete/Առաջադրանքներ/_p*.png (pre-existing, not ours).
+The problem-book PDF's text layer is an ASCII transliteration of Armenian (e.g. "Metaadram netvowm" =
+Մետաղադրամ նետվում); good enough to map problem numbers to topics without rendering pages.
+Playwright screenshots can only be saved inside the repo: use .playwright-mcp/<exact name>.png.
+"""

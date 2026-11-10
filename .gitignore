@@ -330,3 +330,6 @@ site/pdf/
 
 ## Playwright MCP scratch output
 .playwright-mcp/
+
+# Book PDFs for the probability course: local reference only, never committed
+probability/books/

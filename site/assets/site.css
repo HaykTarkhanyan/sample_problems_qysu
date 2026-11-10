@@ -317,3 +317,39 @@ body.try-mode .reveal-btn:not(.hidden) { display: inline-block; }
   :root:not([data-theme="light"]) .chip.on { color: #0e1420; }
 }
 .widget svg:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 6px; }
+
+/* ---------- Probability pages: levels of detail, theorem/definition boxes ---------- */
+/* details.deep = rigorous statement / proof (closed by default, header button #deep-btn toggles all);
+   details.extra = optional material for the curious. */
+details.deep, details.extra {
+  border: 1px dashed var(--widget-line); border-radius: var(--radius); margin: 1rem 0;
+  background: color-mix(in srgb, var(--surface) 70%, var(--bg));
+}
+details.deep > summary, details.extra > summary {
+  list-style: none; cursor: pointer; padding: .5rem .9rem; font-family: var(--sans); font-size: .92rem; font-weight: 700;
+}
+details.deep > summary::-webkit-details-marker, details.extra > summary::-webkit-details-marker { display: none; }
+details.deep > summary { color: var(--link); }
+details.extra > summary { color: var(--orange-ink); }
+details.deep > summary::before { content: "∑ "; }
+details.extra > summary::before { content: "+ "; }
+details.deep[open] > summary::before { content: "∑ "; }
+details.deep[open] > summary, details.extra[open] > summary { border-bottom: 1px dashed var(--widget-line); }
+details.deep > .inner, details.extra > .inner { padding: .2rem 1rem .7rem; }
+.box.def { background: var(--method-bg); border-color: var(--method-line); }
+.box.def .box-title { background: var(--method-chip); }
+.box.thm { background: color-mix(in srgb, var(--red) 5%, var(--surface)); border-color: color-mix(in srgb, var(--red) 50%, var(--line)); }
+.box.thm .box-title { background: #a3000e; }
+:root[data-theme="dark"] .box.thm .box-title { background: #8c1d27; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .box.thm .box-title { background: #8c1d27; } }
+.legend { display: flex; flex-wrap: wrap; gap: .3rem 1rem; justify-content: center; font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .3rem 0 0; }
+.legend i { display: inline-block; width: 1.1rem; height: .22rem; border-radius: 2px; vertical-align: middle; margin-right: .35rem; }
+.legend i.blue { background: var(--blue); } .legend i.red { background: var(--red); } .legend i.orange { background: var(--orange); } .legend i.green { background: var(--green); }
+.quiz-opts { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin: .6rem 0; }
+.quiz-fb { border-radius: 8px; padding: .5rem .8rem; margin: .5rem 0; font-size: .95rem; }
+.quiz-fb.ok { background: var(--answer-bg); border: 1px solid var(--answer-line); }
+.quiz-fb.bad { background: color-mix(in srgb, var(--red) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--red) 45%, var(--line)); }
+.slider-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-family: var(--sans); font-size: .9rem; }
+.slider-row input[type="range"] { flex: 1; min-width: 9rem; }
+.quiz-opts .btn:disabled { cursor: default; }
+.quiz-opts .btn.primary:disabled { opacity: 1; }

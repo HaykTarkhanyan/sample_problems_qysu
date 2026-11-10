@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 3 3%27%3E%3Crect width=%273%27 height=%271%27 fill=%27%23D90012%27/%3E%3Crect y=%271%27 width=%273%27 height=%271%27 fill=%27%230033A0%27/%3E%3Crect y=%272%27 width=%273%27 height=%271%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գործնական 2-3 - Հարաբերություններ</title>
+<meta name="description" content="Դիսկրետ մաթեմատիկա, գործնական 2-3՝ որոշման և արժեքների տիրույթ, գրաֆ և հարևանության մատրից, համադրույթ, հարաբերությունների հատկություններ և փակումներ։ Մանրամասն լուծումներ ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/p2-3.js"></script>
+<style>
+  /* p2-3 only: problem lists, graph + matrix pairs, small multiples, relation editor (4.1, 7.2),
+     plane shadows (1.2), composition columns (3.3) */
+  svg tspan.m { font-family: "KaTeX_Math", "Times New Roman", serif; font-style: italic; }
+  .p23-items { list-style: none; padding-left: .3rem; margin: .45rem 0; }
+  .p23-items li { margin: .12rem 0; }
+  @media (min-width: 560px) { .p23-cols { columns: 2; column-gap: 1.6rem; } .p23-cols li { break-inside: avoid; } }
+  .p23-small { font-size: .9rem; color: var(--muted); }
+  .p23-pair { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; justify-content: center; align-items: center; }
+  .p23-pair svg { margin: 0; }
+  .p23-panels { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; justify-content: center; align-items: flex-end; }
+  .p23-panels svg { margin: 0; }
+  .p23-halo { paint-order: stroke; stroke: var(--widget-bg); stroke-width: 4px; stroke-linejoin: round; }
+  .p23-rel { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; justify-content: center; align-items: center; margin: .5rem 0; }
+  .p23-rel svg { margin: 0; }
+  .p23-mat { display: grid; gap: 3px; justify-content: center; }
+  .p23-mat .hd { font-family: var(--serif); font-size: .95rem; color: var(--muted);
+                 display: flex; align-items: center; justify-content: center; min-width: 1.2rem; }
+  .p23-mat .hd.it { font-style: italic; }
+  .p23-mat .cell { width: 2rem; height: 2rem; padding: 0; border-radius: 6px; border: 1px solid var(--line);
+                   background: var(--surface); color: var(--muted); font-family: var(--sans); font-size: .95rem; cursor: pointer; }
+  .p23-mat .cell.diag { border-style: dashed; }
+  .p23-mat .cell.on { color: var(--ink); font-weight: 700; border-style: solid; border-color: var(--blue);
+                      background: color-mix(in srgb, var(--blue) 15%, var(--surface)); }
+  .p23-mat .cell.new { border-style: solid; border-color: var(--red); background: color-mix(in srgb, var(--red) 15%, var(--surface)); }
+  .p23-mat .cell.hl { outline: 3px solid var(--orange); outline-offset: 0; }
+  .p23-mat .cell.ghost { outline: 2px dashed var(--orange); outline-offset: 0; }
+  .p23-mat .cell:disabled { cursor: default; }
+  .p23-mat .cell:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .p23-badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: .4rem; margin: .6rem 0 .2rem; }
+  .p23-badge { text-align: left; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink);
+               padding: .3rem .55rem; cursor: pointer; font-family: var(--sans); font-size: .84rem; line-height: 1.45; }
+  .p23-badge .t { display: block; font-weight: 700; }
+  .p23-badge.yes { border-color: var(--answer-line); } .p23-badge.yes .t { color: var(--green); }
+  .p23-badge.no { border-color: var(--red); } .p23-badge.no .t { color: var(--red); }
+  .p23-badge[aria-pressed="true"] { box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 55%, transparent); }
+  .p23-badge:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .p23-under { stroke: color-mix(in srgb, var(--orange) 60%, transparent); }
+  .p23-ghost { stroke: var(--orange); stroke-dasharray: 5 4; }
+  .p23-dim { opacity: .16; }
+  .p23-log { font-size: .93rem; margin: .4rem 0 0; padding-left: 1.3rem; }
+  .p23-log li { margin: .1rem 0; }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="flag"><i></i><i></i><i></i></span>Դիսկրետ մաթեմատիկա</a>
+  <div class="header-actions">
+    <a class="btn" href="../pdf/Practice2-3_Relations_Solutions_ARM.pdf" title="Նույն լուծումները PDF տարբերակով">PDF</a>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գործնական 2-3</div>
+    <h1>Հարաբերություններ</h1>
+    <p class="subtitle">Մանրամասն լուծումներ՝ դատողությունները քայլ առ քայլ բացված</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#warmup">Նախապատրաստում</a></li>
+        <li><a href="#p1-2">Խնդիր 1.2 - Որոշման և արժեքների տիրույթ</a></li>
+        <li><a href="#p2-1">Խնդիր 2.1 - Չկողմնորոշված գրաֆ և հարևանության մատրից</a></li>
+        <li><a href="#p2-2">Խնդիր 2.2 - Կողմնորոշված գրաֆ (դիգրաֆ) և հարևանության մատրից</a></li>
+        <li><a href="#p3-3">Խնդիր 3.3 - Երկու հարաբերության համադրույթ</a></li>
+        <li><a href="#p4-1">Խնդիր 4.1 - Հարաբերությունների հիմնական հատկությունները</a></li>
+        <li><a href="#p7-2">Խնդիր 7.2 - Ռեֆլեքսիվ, սիմետրիկ, փոխանցական փակումներ</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="warmup" open>
+<summary><h2>Նախապատրաստում՝ ի՞նչ է հարաբերությունը և ինչո՞ւ ենք այն գծում</h2></summary>
+<div class="sec-body">
+<p>(Երկտեղ) $\rho$ հարաբերությունը բազմությունների վրա պարզապես <em>կարգավորված զույգերի բազմություն</em>
+է։ $(x,y)\in\rho$ գրելը (նաև՝ $x\,\rho\,y$) նշանակում է «$x$-ը կապված է $y$-ի հետ»։ Սա ամբողջ
+սահմանումն է, բայց զույգերի մերկ ցանկը թաքցնում է այն ամենը, ինչ հետաքրքիր է, ուստի հարաբերությունը
+գրեթե միշտ ավելի լավ է հասկանալ որպես <strong>պատկեր</strong>՝</p>
+<ul>
+  <li>Վերջավոր բազմության վրա գծեք <strong>գրաֆ</strong>՝ կետ յուրաքանչյուր տարրի համար և $x\to y$ սլաք
+      յուրաքանչյուր $(x,y)\in\rho$ զույգի համար։ Եթե հարաբերությունը սիմետրիկ է, սլաքների գլխիկները
+      հանում ենք և գծում պարզ կողեր։</li>
+  <li>Նույն տվյալները $0/1$ <strong>հարևանության մատրից</strong> $M$ են՝ դրեք $M_{ij}=1$ հենց այն դեպքում,
+      երբ (տարր $i$, տարր $j$) $\in\rho$։ Գրաֆն ու մատրիցը մեկ օբյեկտի երկու տեսք են։</li>
+  <li>$\R^2$-ում հարաբերությունը <strong>հարթության տիրույթ կամ կոր</strong> է՝ դրա որոշման և արժեքների
+      տիրույթներն այն ստվերներն են, որ այն գցում է $x$- և $y$-առանցքների վրա։</li>
+</ul>
+<p>Ամենուր օգտագործում ենք դասընթացի պայմանավորվածությունները։ <strong>Որոշման տիրույթը</strong> առաջին
+կոորդինատների բազմությունն է՝ $\Dom_\rho=\{x:\exists y\,(x,y)\in\rho\}$, իսկ <strong>արժեքների
+տիրույթը</strong> երկրորդ կոորդինատների բազմությունն է՝ $\Ran_\rho=\{y:\exists x\,(x,y)\in\rho\}$։
+<strong>Համադրույթը ձախից աջ է</strong>՝ $\rho\cdot\sigma$ նշանակում է «նախ $\rho$, ապա $\sigma$», այսինքն՝
+$(x,z)\in\rho\cdot\sigma \iff \exists y:\ (x,y)\in\rho\ \text{և}\ (y,z)\in\sigma$։ (Սա հակառակ կարգն է
+այն $\circ$-ին, որ շատ գրքեր օգտագործում են, ուստի հետևե՛ք ուղղությանը։) Այստեղ $\N=\{1,2,3,\dots\}$։</p>
+<p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
+փորձեք լուծել։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1-2" open>
+<summary><h2>Խնդիր 1.2 - Որոշման և արժեքների տիրույթ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 1.2</div>
+<p>Գտեք յուրաքանչյուր հարաբերության որոշման $\Dom_\rho$ և արժեքների $\Ran_\rho$ տիրույթը։</p>
+<ul class="p23-items p23-cols">
+  <li>ա) $\{(a,1),(a,2),(c,1),(c,2),(c,4),(d,5)\}$</li>
+  <li>բ) $\{(1,2),(2,4),(3,6),(4,8),\dots\}=\{(n,2n)\}$</li>
+  <li>գ) $\{(x,y)\in\R^2 : x=y^2\}$</li>
+  <li>դ) $\{(x,y)\in\R^2 : x^2+y^2\le 16\}$</li>
+  <li>ե) $\{(x,y)\in\N^2 : y\mid x\}$ (աղբյուր՝ $x/y$)</li>
+  <li>զ) $\{(x,y)\in\N^2 : x\mid y\}$ (աղբյուր՝ $y/x$)</li>
+  <li>է) $\{(x,y)\in\R^2 : x+y\le 0\}$</li>
+  <li>ը) $\{(x,y)\in\R^2 : 2x\ge 3y\}$</li>
+</ul>
+<p class="p23-small">Այստեղ թերթիկի $x/y$ նշանակումը բաժանելիության պրեդիկատն է՝ «$x$-ը $y$-ի վրա բաժանելիս
+ստացվում է ամբողջ թիվ», այսինքն՝ $y\mid x$ (ե)-ում և $x\mid y$ (զ)-ում։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Որոշման և արժեքների տիրույթները <strong>ստվերներ</strong> են։ Լուսավորենք վերևից, և հարաբերության ստվերը
+$x$-առանցքի վրա հենց որոշման տիրույթն է (այն $x$-արժեքները, որոնք հանդես են գալիս որպես առաջին
+կոորդինատ)։ Լուսավորենք կողքից, և $y$-առանցքի վրա ընկած ստվերն արժեքների տիրույթն է։ Ուստի ամբողջ
+հարաբերությունը միանգամից պետք չէ՝ յուրաքանչյուր թեկնածու $x$-ի համար պարզապես հարցնում ենք՝
+<strong>«կա՞ արդյոք գոնե մեկ $y$՝ $(x,y)\in\rho$ պայմանով»</strong>։ Եթե այո, $x$-ը որոշման տիրույթում է։
+Նույն հարցը $x$-ի և $y$-ի դերերը փոխած տալիս է արժեքների տիրույթը։ Հարթության հարաբերությունների
+համար գծեք տիրույթը և կարդացեք երկու ստվերն առանցքներից. դիսկրետ դեպքում բավական է յուրաքանչյուր
+արժեքի համար ցույց տալ մեկ վկա զույգ։</p>
+</div>
+
+<h3>(ա) Վերջավոր ցանկ՝ պարզապես կարդանք այն</h3>
+<p>Առաջին կոորդինատներ՝ $a,c,d$։ Երկրորդ կոորդինատներ՝ $1,2,4,5$։</p>
+$$\Dom=\{a,c,d\},\qquad \Ran=\{1,2,4,5\}.$$
+
+<h3>(բ) Կրկնապատկման $\{(n,2n)\}$ հարաբերությունը</h3>
+<p>Յուրաքանչյուր $n\in\N$ առաջին կոորդինատ է, ուստի $\Dom=\N$։ Երկրորդ կոորդինատները հենց զույգ թվերն
+են, ուստի $\Ran=\{2,4,6,\dots\}=2\N$։</p>
+
+<h3>(գ), (դ), (է), (ը)՝ հարթության հարաբերությունները</h3>
+<p>Գծենք յուրաքանչյուրը, ապա կարդանք ստվերները։</p>
+
+<div class="widget" id="w-shadow">
+  <div class="widget-head">Ստվերներ և վկաներ</div>
+  <p class="widget-hint">Ընտրեք հարաբերությունը և շարժեք մկնիկը նկարի վրայով (կամ օգտագործեք սահիչը)։
+  «Լույս վերևից» ռեժիմում $x_0$ կետով անցնող ուղղաձիգ ճառագայթի վրա կանաչով երևում են բոլոր այն
+  $y$-երը, որոնց համար $(x_0,y)\in\rho$։ Եթե գոնե մեկը կա, $x_0$-ն որոշման տիրույթում է (կարմիր ստվերը
+  $x$-առանցքի վրա)։ «Լույս կողքից» ռեժիմը նույնն անում է հորիզոնական ճառագայթով՝ արժեքների տիրույթի
+  համար (նարնջագույն ստվերը $y$-առանցքի վրա)։ Փորձեք $x_0\lt 0$ (գ)-ում և $|x_0|\gt 4$ (դ)-ում։</p>
+  <div class="chips" data-out="rels" role="group" aria-label="Հարաբերություն"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="D" aria-pressed="true">Լույս վերևից՝ $\Dom$</button>
+    <button class="btn" type="button" data-act="R" aria-pressed="false">Լույս կողքից՝ $\Ran$</button>
+    <label><span data-out="vlabel">$x_0$</span> <input type="range" min="-1.5" max="6.5" step="0.05" value="2.25" data-in="v" aria-label="x0"></label>
+  </div>
+  <div class="p23-plane"></div>
+  <div class="widget-out" data-out="read"></div>
+</div>
+
+<p><strong>(գ) $x=y^2$։</strong> Կորը պարաբոլ է՝ բացվող դեպի $x$-առանցքի դրական ուղղությունը։ $x$-ը հանդես է
+գալիս այն և միայն այն դեպքում, երբ $x=y^2$-ն ունի լուծում, այսինքն՝ երբ $x\ge0$՝ ուստի $\Dom=[0,\infty)$։
+Ցանկացած իրական $y$-ի համար $(y^2,y)$ զույգը հարաբերության մեջ է, ուստի յուրաքանչյուր $y$ հանդես է
+գալիս՝ $\Ran=\R$։</p>
+
+<p><strong>(դ) $x^2+y^2\le16$ շրջանը։</strong> Շառավիղը՝ $\sqrt{16}=4$։ $x$ արժեքը հանդես է գալիս այն և
+միայն այն դեպքում, երբ ինչ-որ $y$ բավարարում է $x^2+y^2\le16$-ին՝ ամենահեշտ ընտրությունը $y=0$-ն է, որն
+աշխատում է, երբ $x^2\le16$, այսինքն՝ $x\in[-4,4]$։ Իսկ եթե $|x|\gt 4$, ապա ոչ մի $y$ չի աշխատում, քանի որ
+$x^2+y^2\ge x^2\gt 16$։ Սիմետրիայով $\Ran=[-4,4]$ նույնպես։</p>
+
+<p><strong>(է) $x+y\le0$։</strong> Տիրույթը փակ կիսահարթությունն է $x+y=0$ ուղղի վրա և տակ։ Ցանկացած
+$x$-ի համար ընտրենք $y\le-x$ (օր.՝ $y=-x$)՝ ցանկացած $y$-ի համար ընտրենք $x\le-y$։ Երկու դեպքում էլ
+ցանկացած իրական թիվ պիտանի է, ուստի $\Dom=\Ran=\R$։</p>
+
+<p><strong>(ը) $2x\ge3y$։</strong> Կիսահարթություն $2x=3y$ ուղղի վրա և տակ (այսինքն՝ $y=\tfrac23 x$)։
+Ցանկացած $x$-ի համար վերցնենք $y\le\tfrac{2x}{3}$՝ ցանկացած $y$-ի համար վերցնենք $x\ge\tfrac{3y}{2}$։
+Կրկին $\Dom=\Ran=\R$։</p>
+
+<h3>(ե), (զ)՝ բաժանելիությունը $\N$-ի վրա</h3>
+<p>Հիշենք՝ $y\mid x$ նշանակում է $y$-ն բաժանում է $x$-ին։ (ե)-ի համար ($y\mid x$)՝ յուրաքանչյուր
+$x\in\N$ բաժանվում է $y=1$-ի վրա, ուստի $x$-ը միշտ ունի զույգ՝ $\Dom=\N$, և յուրաքանչյուր $y$ բաժանում է
+հենց $x=y$-ին, ուստի $y$-ն միշտ հանդես է գալիս՝ $\Ran=\N$։ (զ)-ի համար ($x\mid y$) նույն փաստարկը
+$x,y$ փոխած տալիս է $\Dom=\N$ և $\Ran=\N$։</p>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Համակարգչային թվարկումը $1\le x,y\le199$ միջակայքում (ե),(զ)-ի համար տվեց $1,\dots,199$ բոլոր
+արժեքները թե՛ որոշման, թե՛ արժեքների տիրույթում, իսկ հարթության վրա նմուշային ստուգումները հաստատեցին
+$\Dom_c=[0,\infty)$, $\Dom_d=\Ran_d=[-4,4]$ և $\Dom=\Ran=\R$ (է),(ը)-ի համար։ $\checkmark$
+</div>
+
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th></th><th class="num">$\Dom$</th><th class="num">$\Ran$</th></tr></thead>
+<tbody>
+<tr><td>ա)</td><td class="num">$\{a,c,d\}$</td><td class="num">$\{1,2,4,5\}$</td></tr>
+<tr><td>բ)</td><td class="num">$\N$</td><td class="num">$2\N=\{2,4,6,\dots\}$</td></tr>
+<tr><td>գ)</td><td class="num">$[0,\infty)$</td><td class="num">$\R$</td></tr>
+<tr><td>դ)</td><td class="num">$[-4,4]$</td><td class="num">$[-4,4]$</td></tr>
+<tr><td>ե)</td><td class="num">$\N$</td><td class="num">$\N$</td></tr>
+<tr><td>զ)</td><td class="num">$\N$</td><td class="num">$\N$</td></tr>
+<tr><td>է)</td><td class="num">$\R$</td><td class="num">$\R$</td></tr>
+<tr><td>ը)</td><td class="num">$\R$</td><td class="num">$\R$</td></tr>
+</tbody></table></div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Տե՛ս վերևի աղյուսակը՝ որոշման և արժեքների տիրույթները (ա)-ից (ը)։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> որոշման և արժեքների տիրույթները հարաբերության երկու առանցքային
+ստվերներն են։ $x_0$ արժեքը որոշման տիրույթում լինելը ստուգելու համար ամբողջ պատկերը պետք չէ՝ պարզապես
+ցույց տվեք <em>մեկ</em> վկա $y$՝ $(x_0,y)\in\rho$ պայմանով։ $\R^2$-ի հարաբերությունների համար ուրվագծեք
+տիրույթը և բառացիորեն կարդացեք ստվերները՝ $x=f(y)$ հավասարման համար որոշման տիրույթը $f$-ի ելքերի
+բազմությունն է, իսկ արժեքների տիրույթը՝ $f$-ի մուտքերի բազմությունը։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2-1" open>
+<summary><h2>Խնդիր 2.1 - Չկողմնորոշված գրաֆ և հարևանության մատրից</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2.1</div>
+<p>$A=\{a,b,c,d,e\}$-ի վրա կառուցեք յուրաքանչյուր հարաբերության գրաֆն ու հարևանության մատրիցը (տողերն ու
+սյունակները՝ $a,b,c,d,e$ կարգով)։</p>
+<ul class="p23-items">
+  <li>ա) $\{(a,b),(b,a),(b,c),(c,b),(c,a),(a,c),(d,e),(e,d)\}$</li>
+  <li>բ) $\{(a,b),(b,a),(b,c),(c,b),(c,d),(d,c),(c,a),(a,c)\}$</li>
+  <li>գ) նույն բազմությունը, ինչ (բ)-ն աղբյուրում։</li>
+</ul>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Հարաբերության յուրաքանչյուր $(i,j)$ զույգ մատրիցում մեկ $1$ է (տող $i$, սյունակ $j$) և գրաֆում մեկ
+$i\to j$ սլաք։ Այստեղ յուրաքանչյուր հարաբերություն <strong>սիմետրիկ</strong> է՝ երբ $(i,j)$ առկա է,
+$(j,i)$-ն նույնպես։ Սիմետրիան երևում է միանգամից երկու ձևով՝ մատրիցում որպես $M=M^{\mathsf T}$ (այն
+հայելային է անկյունագծի նկատմամբ), իսկ գրաֆում որպես «յուրաքանչյուր սլաք ունի իր հակառակը», ուստի կարող
+ենք ջնջել սլաքների գլխիկները և գծել մեկ չկողմնորոշված <strong>կող</strong> յուրաքանչյուր փոխադարձ զույգի
+համար։ Պատկերը կարդալն այդ դեպքում պարզապես կողերի հաշվարկ է, իսկ մատրիցը կարդալը՝ հայելային սիմետրիայի
+ստուգում։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Թվարկենք չկողմնորոշված կողերը</h3>
+<p>(ա) Փոխադարձ զույգերը տալիս են $a\!-\!b$, $b\!-\!c$, $a\!-\!c$ կողերը ($a,b,c$-ի վրա եռանկյուն) և
+առանձին $d\!-\!e$ կող։ (բ) $a\!-\!b$, $b\!-\!c$, $a\!-\!c$ կողերը (կրկին եռանկյուն) գումարած $c\!-\!d$՝
+$e$ գագաթը կող չունի։ (գ)-ն նույնական է (բ)-ին։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Գծենք գրաֆը և գրենք մատրիցը կողք կողքի</h3>
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 239.5 177" width="240" role="img" aria-label="Գրաֆ (ա)՝ abc եռանկյուն և de կող">
+  <line x1="74.3" y1="36.9" x2="37.7" y2="90.1" class="s-blue" stroke-width="1.8"/>
+  <line x1="44.8" y1="103.5" x2="122.3" y2="103.5" class="s-blue" stroke-width="1.8"/>
+  <line x1="129.3" y1="90.1" x2="92.7" y2="36.9" class="s-blue" stroke-width="1.8"/>
+  <line x1="213.5" y1="49.8" x2="213.5" y2="92.2" class="s-blue" stroke-width="1.8"/>
+  <circle cx="83.5" cy="23.5" r="16.3" class="f-bg"/><circle cx="83.5" cy="23.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="83.5" y="23.5" dy=".35em" text-anchor="middle" class="m">a</text>
+  <circle cx="28.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="28.5" cy="103.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="28.5" y="103.5" dy=".35em" text-anchor="middle" class="m">b</text>
+  <circle cx="138.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="138.5" cy="103.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="138.5" y="103.5" dy=".35em" text-anchor="middle" class="m">c</text>
+  <circle cx="213.5" cy="33.5" r="16.3" class="f-bg"/><circle cx="213.5" cy="33.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="213.5" y="33.5" dy=".35em" text-anchor="middle" class="m">d</text>
+  <circle cx="213.5" cy="108.5" r="16.3" class="f-bg"/><circle cx="213.5" cy="108.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="213.5" y="108.5" dy=".35em" text-anchor="middle" class="m">e</text>
+  <text x="118.5" y="158.5" dy=".35em" text-anchor="middle"><tspan font-weight="700">(ա)</tspan> <tspan class="m">abc</tspan> եռանկյուն + <tspan class="m">de</tspan> կող</text>
+</svg>
+<div>$$M_a=\begin{pmatrix}
+0&1&1&0&0\\ 1&0&1&0&0\\ 1&1&0&0&0\\ 0&0&0&0&1\\ 0&0&0&1&0
+\end{pmatrix}$$</div>
+</div>
+</figure>
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 264.5 192" width="265" role="img" aria-label="Գրաֆ (բ)=(գ)՝ abc եռանկյուն, cd կող, e-ն մեկուսացված">
+  <line x1="84.3" y1="36.9" x2="47.7" y2="90.1" class="s-blue" stroke-width="1.8"/>
+  <line x1="54.7" y1="103.5" x2="132.3" y2="103.5" class="s-blue" stroke-width="1.8"/>
+  <line x1="139.3" y1="90.1" x2="102.7" y2="36.9" class="s-blue" stroke-width="1.8"/>
+  <line x1="164.8" y1="103.5" x2="212.3" y2="103.5" class="s-blue" stroke-width="1.8"/>
+  <circle cx="93.5" cy="23.5" r="16.3" class="f-bg"/><circle cx="93.5" cy="23.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="93.5" y="23.5" dy=".35em" text-anchor="middle" class="m">a</text>
+  <circle cx="38.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="38.5" cy="103.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="38.5" y="103.5" dy=".35em" text-anchor="middle" class="m">b</text>
+  <circle cx="148.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="148.5" cy="103.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="148.5" y="103.5" dy=".35em" text-anchor="middle" class="m">c</text>
+  <circle cx="228.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="228.5" cy="103.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="228.5" y="103.5" dy=".35em" text-anchor="middle" class="m">d</text>
+  <circle cx="228.5" cy="23.5" r="16.3" class="f-bg"/><circle cx="228.5" cy="23.5" r="16.3" class="f-blue-soft s-ink" stroke-width="1"/><text x="228.5" y="23.5" dy=".35em" text-anchor="middle" class="m">e</text>
+  <text x="133.5" y="153.5" dy=".35em" text-anchor="middle"><tspan font-weight="700">(բ) = (գ)</tspan> <tspan class="m">abc</tspan> եռանկյուն + <tspan class="m">cd</tspan> կող՝</text>
+  <text x="133.5" y="174.5" dy=".35em" text-anchor="middle"><tspan class="m">e</tspan>-ն մեկուսացված</text>
+</svg>
+<div>$$M_b=M_c=\begin{pmatrix}
+0&1&1&0&0\\ 1&0&1&0&0\\ 1&1&0&1&0\\ 0&0&1&0&0\\ 0&0&0&0&0
+\end{pmatrix}$$</div>
+</div>
+</figure>
+</div>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Յուրաքանչյուր մատրից հայելային-սիմետրիկ է գլխավոր անկյունագծի նկատմամբ (ինչպես պետք է լինի սիմետրիկ
+հարաբերության համար), անկյունագիծն ամբողջովին $0$ է (ոչ մի $(x,x)$ զույգ թվարկված չէ), և $1$-երի
+քանակը հավասար է կողերի կրկնապատիկին՝ (ա) $8$ հատ $1$ $=2\times4$ կող, (բ) $8$ հատ $1$ $=2\times4$ կող։
+Համակարգչային ստուգումը հաստատեց երկու մատրիցները վանդակ առ վանդակ և որ յուրաքանչյուրը սիմետրիկ է։
+$\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+(ա) $abc$ եռանկյուն $+$ $de$ կող. (բ)=(գ) $abc$ եռանկյուն $+$ $cd$ կող, $e$-ն մեկուսացված։
+Մատրիցները՝ ինչպես գծված է։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> սիմետրիկ հարաբերություն $\Leftrightarrow$ չկողմնորոշված գրաֆ
+$\Leftrightarrow$ սիմետրիկ $0/1$ մատրից։ Անկյունագծից դուրս $1$-երի քանակը $=2\cdot(\#\text{կող})$, և
+անկյունագիծը գրանցում է $(x,x)$ ակերը։ Սիմետրիկ հարաբերության մատրիցի արագ ստուգումն է $M=M^{\mathsf T}$
+պայմանը։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2-2" open>
+<summary><h2>Խնդիր 2.2 - Կողմնորոշված գրաֆ (դիգրաֆ) և հարևանության մատրից</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 2.2</div>
+<p>$A=\{a,b,c,d,e,f\}$-ի վրա կառուցեք յուրաքանչյուր հարաբերության դիգրաֆն ու հարևանության մատրիցը
+($a,b,c,d,e,f$ կարգով)։ $i\to j$ սլաք գնում է հենց այն դեպքում, երբ $(i,j)\in\rho$։</p>
+<ul class="p23-items">
+  <li>ա) $\{(a,b),(b,c),(a,c),(b,e),(c,f),(c,d),(d,f),(f,e)\}$</li>
+  <li>բ) $\{(a,b),(b,c),(d,c),(d,e),(f,e),(f,a),(b,e)\}$</li>
+  <li>գ) $\{(a,c),(c,c),(c,d),(c,e),(e,c),(e,e),(e,f),(a,e)\}$</li>
+</ul>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Ընդհանուր հարաբերության համար պարտադիր չէ, որ սիմետրիկ լինի, ուստի պահում ենք <strong>սլաքների
+գլխիկները</strong>՝ $(i,j)$-ն սլաք է $i$-<em>ից</em> $j$, և պարտադիր չէ, որ ուղեկցվի $j\to i$ հակառակ
+սլաքով։ Մատրիցում սա նշանակում է, որ $M$-ն այլևս հայելային-սիմետրիկ չէ՝ $i$ տողն ասում է, թե ուր կարելի
+է գնալ $i$-<em>ից</em>, իսկ $j$ սյունակը՝ թե որտեղից են գալիս դեպի $j$։ $(x,x)$ զույգն <strong>ակ</strong>
+է $x$-ում և $1$ անկյունագծի վրա։ Դիգրաֆը գծելն ամենաարագ ձևն է տեսնելու այն կառուցվածքը, որ ցանկը
+թաքցնում է («կա՞ ուղի $a$-ից $f$, ցի՞կլ»)։</p>
+</div>
+
+<p><strong>Մատրիցները կարդանք ցանկերից</strong> (տող $=$ աղբյուր, սյունակ $=$ թիրախ)՝</p>
+
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 214.5 242" width="215" role="img" aria-label="Դիգրաֆ (ա)">
+  <circle cx="28.5" cy="53.5" r="16.3" class="f-bg"/><circle cx="28.5" cy="53.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="53.5" dy=".35em" text-anchor="middle" class="m">a</text>
+  <circle cx="113.5" cy="23.5" r="16.3" class="f-bg"/><circle cx="113.5" cy="23.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="113.5" y="23.5" dy=".35em" text-anchor="middle" class="m">b</text>
+  <circle cx="113.5" cy="103.5" r="16.3" class="f-bg"/><circle cx="113.5" cy="103.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="113.5" y="103.5" dy=".35em" text-anchor="middle" class="m">c</text>
+  <circle cx="188.5" cy="68.5" r="16.3" class="f-bg"/><circle cx="188.5" cy="68.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="188.5" y="68.5" dy=".35em" text-anchor="middle" class="m">d</text>
+  <circle cx="188.5" cy="143.5" r="16.3" class="f-bg"/><circle cx="188.5" cy="143.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="188.5" y="143.5" dy=".35em" text-anchor="middle" class="m">f</text>
+  <circle cx="103.5" cy="178.5" r="16.3" class="f-bg"/><circle cx="103.5" cy="178.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="103.5" y="178.5" dy=".35em" text-anchor="middle" class="m">e</text>
+  <path d="M43.8,48.1 L92.5,30.9" class="s-blue f-none" stroke-width="1.8"/><polygon points="98.2,28.9 91.1,35.9 92.5,30.9 88.3,27.9" class="f-blue"/>
+  <path d="M42.5,61.7 L94.3,92.2" class="s-blue f-none" stroke-width="1.8"/><polygon points="99.5,95.3 89.6,94.3 94.3,92.2 93.9,87.1" class="f-blue"/>
+  <path d="M113.5,39.8 L113.5,81.3" class="s-blue f-none" stroke-width="1.8"/><polygon points="113.5,87.3 109.3,78.3 113.5,81.3 117.7,78.3" class="f-blue"/>
+  <path d="M105.2,37.5 C66,103.5 66,103.5 93.5,158.6" class="s-blue f-none" stroke-width="1.8"/><polygon points="96.2,164 88.5,157.8 93.5,158.6 96,154" class="f-blue"/>
+  <path d="M128.2,96.6 L168.3,77.9" class="s-blue f-none" stroke-width="1.8"/><polygon points="173.8,75.4 167.4,83 168.3,77.9 163.8,75.4" class="f-blue"/>
+  <path d="M127.8,111.1 L168.9,133" class="s-blue f-none" stroke-width="1.8"/><polygon points="174.2,135.9 164.2,135.3 168.9,133 168.2,127.9" class="f-blue"/>
+  <path d="M188.5,84.8 L188.5,121.3" class="s-blue f-none" stroke-width="1.8"/><polygon points="188.5,127.3 184.3,118.3 188.5,121.3 192.7,118.3" class="f-blue"/>
+  <path d="M173.5,149.7 L124.1,170" class="s-blue f-none" stroke-width="1.8"/><polygon points="118.5,172.3 125.2,165 124.1,170 128.4,172.8" class="f-blue"/>
+  <text x="108.5" y="223.5" dy=".35em" text-anchor="middle"><tspan font-weight="700">(ա)</tspan></text>
+</svg>
+<div>$$M_a=\begin{pmatrix}
+0&1&1&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&1&0&1\\ 0&0&0&0&0&1\\ 0&0&0&0&0&0\\ 0&0&0&0&1&0
+\end{pmatrix}$$</div>
+</div>
+<figcaption>$b\to e$ սլաքը շրջանցում է $c$ գագաթը. այն $c$-ով <em>չի</em> անցնում ($(c,e)\notin\rho$)։</figcaption>
+</figure>
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 269.5 227" width="270" role="img" aria-label="Դիգրաֆ (բ)">
+  <circle cx="28.5" cy="101" r="16.3" class="f-bg"/><circle cx="28.5" cy="101" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="101" dy=".35em" text-anchor="middle" class="m">a</text>
+  <circle cx="103.5" cy="56" r="16.3" class="f-bg"/><circle cx="103.5" cy="56" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="103.5" y="56" dy=".35em" text-anchor="middle" class="m">b</text>
+  <circle cx="178.5" cy="26" r="16.3" class="f-bg"/><circle cx="178.5" cy="26" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="178.5" y="26" dy=".35em" text-anchor="middle" class="m">c</text>
+  <circle cx="243.5" cy="71" r="16.3" class="f-bg"/><circle cx="243.5" cy="71" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="243.5" y="71" dy=".35em" text-anchor="middle" class="m">d</text>
+  <circle cx="158.5" cy="141" r="16.3" class="f-bg"/><circle cx="158.5" cy="141" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="158.5" y="141" dy=".35em" text-anchor="middle" class="m">e</text>
+  <circle cx="48.5" cy="176" r="16.3" class="f-bg"/><circle cx="48.5" cy="176" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="48.5" y="176" dy=".35em" text-anchor="middle" class="m">f</text>
+  <path d="M42.4,92.6 L84.4,67.4" class="s-blue f-none" stroke-width="1.8"/><polygon points="89.6,64.4 84,72.6 84.4,67.4 79.7,65.4" class="f-blue"/>
+  <path d="M118.6,50 L157.8,34.3" class="s-blue f-none" stroke-width="1.8"/><polygon points="163.4,32 156.6,39.3 157.8,34.3 153.5,31.5" class="f-blue"/>
+  <path d="M112.3,69.6 L146.4,122.3" class="s-blue f-none" stroke-width="1.8"/><polygon points="149.7,127.4 141.3,122.1 146.4,122.3 148.3,117.5" class="f-blue"/>
+  <path d="M230.1,61.8 L196.8,38.7" class="s-blue f-none" stroke-width="1.8"/><polygon points="191.9,35.2 201.7,36.9 196.8,38.7 196.9,43.8" class="f-blue"/>
+  <path d="M231,81.3 L175.7,126.9" class="s-blue f-none" stroke-width="1.8"/><polygon points="171,130.7 175.3,121.7 175.7,126.9 180.7,128.2" class="f-blue"/>
+  <path d="M44.3,160.3 L34.2,122.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="32.7,116.7 39.1,124.3 34.2,122.5 30.9,126.5" class="f-blue"/>
+  <path d="M64,171.1 L137.3,147.7" class="s-blue f-none" stroke-width="1.8"/><polygon points="143,145.9 135.7,152.7 137.3,147.7 133.2,144.7" class="f-blue"/>
+  <text x="128.5" y="211" dy=".35em" text-anchor="middle"><tspan font-weight="700">(բ)</tspan></text>
+</svg>
+<div>$$M_b=\begin{pmatrix}
+0&1&0&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 1&0&0&0&1&0
+\end{pmatrix}$$</div>
+</div>
+</figure>
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 254.5 229.5" width="255" role="img" aria-label="Դիգրաֆ (գ)՝ c-ի և e-ի ակերով, b-ն մեկուսացված">
+  <circle cx="28.5" cy="56" r="16.3" class="f-bg"/><circle cx="28.5" cy="56" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="56" dy=".35em" text-anchor="middle" class="m">a</text>
+  <circle cx="128.5" cy="56" r="16.3" class="f-bg"/><circle cx="128.5" cy="56" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="128.5" y="56" dy=".35em" text-anchor="middle" class="m">c</text>
+  <circle cx="128.5" cy="151" r="16.3" class="f-bg"/><circle cx="128.5" cy="151" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="128.5" y="151" dy=".35em" text-anchor="middle" class="m">e</text>
+  <circle cx="228.5" cy="31" r="16.3" class="f-bg"/><circle cx="228.5" cy="31" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="228.5" y="31" dy=".35em" text-anchor="middle" class="m">d</text>
+  <circle cx="228.5" cy="161" r="16.3" class="f-bg"/><circle cx="228.5" cy="161" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="228.5" y="161" dy=".35em" text-anchor="middle" class="m">f</text>
+  <circle cx="28.5" cy="151" r="16.3" class="f-bg"/><circle cx="28.5" cy="151" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="151" dy=".35em" text-anchor="middle" class="m">b</text>
+  <path d="M44.8,56 L106.3,56" class="s-blue f-none" stroke-width="1.8"/><polygon points="112.3,56 103.3,60.2 106.3,56 103.3,51.8" class="f-blue"/>
+  <path d="M40.3,67.2 L112.4,135.7" class="s-blue f-none" stroke-width="1.8"/><polygon points="116.7,139.8 107.3,136.7 112.4,135.7 113.1,130.6" class="f-blue"/>
+  <path d="M144.3,52.1 L206.9,36.4" class="s-blue f-none" stroke-width="1.8"/><polygon points="212.7,34.9 205,41.2 206.9,36.4 203,33" class="f-blue"/>
+  <path d="M144.8,51 C178.5,76 178.5,76 138.4,134.6" class="s-blue f-none" stroke-width="1.8"/><polygon points="135,139.5 136.6,129.7 138.4,134.6 143.5,134.5" class="f-blue"/>
+  <path d="M118.5,134.8 C78.5,96 78.5,96 108.1,65.3" class="s-blue f-none" stroke-width="1.8"/><polygon points="112.3,61 109,70.4 108.1,65.3 103,64.6" class="f-blue"/>
+  <path d="M144.7,152.6 L206.4,158.8" class="s-blue f-none" stroke-width="1.8"/><polygon points="212.3,159.4 203,162.7 206.4,158.8 203.8,154.3" class="f-blue"/>
+  <path d="M120.4,41.9 C101,8.4 156,8.4 139.6,36.7" class="s-red f-none" stroke-width="1.8"/><polygon points="136.6,41.9 137.5,32 139.6,36.7 144.8,36.2" class="f-red"/>
+  <path d="M113.2,156.6 C76.8,169.8 109.7,202.7 120.9,171.9" class="s-red f-none" stroke-width="1.8"/><polygon points="122.9,166.3 123.8,176.2 120.9,171.9 115.9,173.3" class="f-red"/>
+  <text x="128.5" y="212" dy=".35em" text-anchor="middle"><tspan font-weight="700">(գ)</tspan> <tspan class="m">c</tspan>-ի և <tspan class="m">e</tspan>-ի ակեր (կարմիր)</text>
+</svg>
+<div>$$M_c=\begin{pmatrix}
+0&0&1&0&1&0\\ 0&0&0&0&0&0\\ 0&0&1&1&1&0\\ 0&0&0&0&0&0\\ 0&0&1&0&1&1\\ 0&0&0&0&0&0
+\end{pmatrix}$$</div>
+</div>
+<figcaption>$b$ գագաթը (գ)-ում մեկուսացված է՝ $M_c$-ի $b$ տողն ու սյունակը զրոյական են։</figcaption>
+</figure>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Հաշվենք սլաքները յուրաքանչյուր ցանկում՝ (ա) $8$, (բ) $7$, (գ) $8$՝ սրանք հավասար են համապատասխանաբար
+$M_a,M_b,M_c$-ի $1$-երի քանակին։ $M_c$-ի երկու անկյունագծային $1$-երը հենց $(c,c)$ և $(e,e)$ ակերն են, որ
+գծեցինք կարմիրով։ Համակարգչային ստուգումը հաստատեց բոլոր երեք մատրիցները վանդակ առ վանդակ և ակերի
+դիրքերը։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+Դիգրաֆները՝ ինչպես գծված է. մատրիցները՝ $M_a,M_b,M_c$ ինչպես ցույց է տրված։ Միայն (գ)-ն ունի ակեր՝
+$c$-ում և $e$-ում։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> ընդհանուր (կողմնորոշված) հարաբերության համար $M_{ij}=1\iff i\to j$։
+Հարաբերության ոչ սիմետրիկ լինելը երևում է $M$-ի ոչ սիմետրիկությունից՝ ակ $=$ $1$ անկյունագծի վրա։
+<em>$i$ տողը</em> թվարկում է $i$-ի ելքային հարևանները՝ <em>$j$ սյունակը</em> թվարկում է $j$-ի մուտքային
+հարևանները։ Արագ ստուգում՝ սլաքների քանակ $=$ $1$-երի քանակ։</p>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p3-3" open>
+<summary><h2>Խնդիր 3.3 - Երկու հարաբերության համադրույթ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 3.3</div>
+<p>$\Z$-ի վրա դիցուք $\rho=\{(x,x+2):x\in\Z\}$ ($x\mapsto x+2$ արտապատկերումը) և
+$\sigma=\{(x,x^2):x\in\Z\}$ ($x\mapsto x^2$ արտապատկերումը)։ Գտեք $\rho\cdot\sigma$ և $\sigma\cdot\rho$։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Համադրույթը շղթայում է երկու հարաբերություն <strong>ընդհանուր միջանկյալ արժեքով</strong>։ Դասընթացի
+ձախից-աջ կանոնով $\rho\cdot\sigma$ նշանակում է «նախ $\rho$, ապա $\sigma$»՝ սկսենք $x$-ից. $\rho$-ն այն
+տանում է ինչ-որ $y$, ապա $\sigma$-ն $y$-ը տանում է առաջ՝ $z$։ Միջին $y$-ը կապող օղակն է՝ ստացվող
+հարաբերությունը կապում է սկզբնական $x$-ը վերջնական $z$-ի հետ։ Քանի որ թե՛ $\rho$-ն, թե՛ $\sigma$-ն այստեղ
+<em>ֆունկցիաներ</em> են (յուրաքանչյուր մուտք ունի ճիշտ մեկ ելք), համադրույթը պարզապես <strong>ֆունկցիաների
+համադրույթ</strong> է՝ և կարգը նշանակություն ունի, քանի որ $2$ ավելացնելն ապա քառակուսի բարձրացնելը նույնը
+չէ, ինչ քառակուսի բարձրացնելն ապա $2$ ավելացնելը։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $\rho\cdot\sigma$ (նախ կիրառենք $\rho$-ն)</h3>
+<p>Սկսենք $x$-ից։ $\rho$-ն ուղարկում է $x\mapsto y=x+2$։ Ապա $\sigma$-ն ուղարկում է
+$y\mapsto z=y^2=(x+2)^2$։ Ուստի</p>
+$$\rho\cdot\sigma=\{(x,(x+2)^2):x\in\Z\}.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $\sigma\cdot\rho$ (նախ կիրառենք $\sigma$-ն)</h3>
+<p>Սկսենք $x$-ից։ $\sigma$-ն ուղարկում է $x\mapsto y=x^2$։ Ապա $\rho$-ն ուղարկում է $y\mapsto z=y+2=x^2+2$։
+Ուստի</p>
+$$\sigma\cdot\rho=\{(x,x^2+2):x\in\Z\}.$$
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - դրանք տարբեր են</h3>
+<p>$(x+2)^2=x^2+4x+4\neq x^2+2$ ընդհանուր դեպքում։ Մեկ արժեքն ապացուցում է՝ $x=1$-ում $\rho\cdot\sigma$-ն
+տալիս է $(1,9)$, մինչդեռ $\sigma\cdot\rho$-ն տալիս է $(1,3)$։</p>
+</div>
+
+<p><strong>Սլաքների դիագրամը։</strong> $x=1$-ին հետևելը ընդհանուր միջանկյալ արժեքով տեսանելի է դարձնում
+կարգից կախվածությունը՝</p>
+<figure class="fig">
+<svg viewBox="0 0 374.5 217" width="375" role="img" aria-label="x=1-ի ուղին ρ·σ-ում (1→3→9) և σ·ρ-ում (1→1→3)">
+  <circle cx="83.5" cy="38.5" r="20" class="f-bg"/><circle cx="83.5" cy="38.5" r="20" class="f-blue-soft s-ink" stroke-width="1"/><text x="83.5" y="38.5" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="213.5" cy="38.5" r="20" class="f-bg"/><circle cx="213.5" cy="38.5" r="20" class="f-orange-soft s-ink" stroke-width="1"/><text x="213.5" y="38.5" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="343.5" cy="38.5" r="20" class="f-bg"/><circle cx="343.5" cy="38.5" r="20" class="f-green-soft s-ink" stroke-width="1"/><text x="343.5" y="38.5" dy=".35em" text-anchor="middle" class="mr">9</text>
+  <circle cx="83.5" cy="153.5" r="20" class="f-bg"/><circle cx="83.5" cy="153.5" r="20" class="f-blue-soft s-ink" stroke-width="1"/><text x="83.5" y="153.5" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="213.5" cy="153.5" r="20" class="f-bg"/><circle cx="213.5" cy="153.5" r="20" class="f-orange-soft s-ink" stroke-width="1"/><text x="213.5" y="153.5" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="343.5" cy="153.5" r="20" class="f-bg"/><circle cx="343.5" cy="153.5" r="20" class="f-green-soft s-ink" stroke-width="1"/><text x="343.5" y="153.5" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <path d="M103.5,38.5 L187.5,38.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="193.5,38.5 184.5,42.7 187.5,38.5 184.5,34.3" class="f-blue"/>
+  <path d="M233.5,38.5 L317.5,38.5" class="s-red f-none" stroke-width="1.8"/><polygon points="323.5,38.5 314.5,42.7 317.5,38.5 314.5,34.3" class="f-red"/>
+  <path d="M103.5,153.5 L187.5,153.5" class="s-red f-none" stroke-width="1.8"/><polygon points="193.5,153.5 184.5,157.7 187.5,153.5 184.5,149.3" class="f-red"/>
+  <path d="M233.5,153.5 L317.5,153.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="323.5,153.5 314.5,157.7 317.5,153.5 314.5,149.3" class="f-blue"/>
+  <text x="148.5" y="22" dy=".35em" text-anchor="middle" class="f-blue"><tspan class="m">ρ</tspan>: +2</text>
+  <text x="278.5" y="22" dy=".35em" text-anchor="middle" class="f-red"><tspan class="m">σ</tspan>: ( )²</text>
+  <text x="61" y="38.5" dy=".35em" text-anchor="end"><tspan class="m">ρ</tspan>·<tspan class="m">σ</tspan>՝</text>
+  <text x="213.5" y="86" dy=".35em" text-anchor="middle">միջին <tspan class="m">y</tspan> = <tspan class="m">x</tspan>+2</text>
+  <text x="148.5" y="137" dy=".35em" text-anchor="middle" class="f-red"><tspan class="m">σ</tspan>: ( )²</text>
+  <text x="278.5" y="137" dy=".35em" text-anchor="middle" class="f-blue"><tspan class="m">ρ</tspan>: +2</text>
+  <text x="61" y="153.5" dy=".35em" text-anchor="end"><tspan class="m">σ</tspan>·<tspan class="m">ρ</tspan>՝</text>
+  <text x="213.5" y="201" dy=".35em" text-anchor="middle">միջին <tspan class="m">y</tspan> = <tspan class="m">x</tspan>²</text>
+</svg>
+<figcaption>Նույն մեկնարկ $x=1$, տարբեր ավարտ՝ $9\neq 3$։</figcaption>
+</figure>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+$-20\le x\le 20$ միջակայքում համակարգչային թվարկումը տվեց $\rho\cdot\sigma$ ելք $(x+2)^2$ և
+$\sigma\cdot\rho$ ելք $x^2+2$ յուրաքանչյուր $x$-ի համար՝ համաձայն բանաձևերի, և գտավ դրանք անհավասար
+(առաջին անհամապատասխանությունն արդեն $x=1$-ում)։ $\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\rho\cdot\sigma=\{(x,(x+2)^2):x\in\Z\}$ և $\sigma\cdot\rho=\{(x,x^2+2):x\in\Z\}$. դրանք <em>հավասար
+չեն</em> (օր.՝ $x=1$-ում $9\neq3$)։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> ձախից աջ համադրելու համար ընդհանուր տարրն անցկացրեք
+<em>առաջին</em> հարաբերության, ապա <em>երկրորդի</em> միջով՝ անվանելով միջին արժեքը։
+Ֆունկցիա-հարաբերությունների համար $\rho\cdot\sigma$-ն «$\sigma$ $\rho$-ից հետո» ֆունկցիան է, ուստի
+$(\rho\cdot\sigma)(x)=\sigma(\rho(x))$։ Համադրույթն ընդհանուր առմամբ <strong>կոմուտատիվ չէ</strong>՝ միշտ
+ստուգեք մեկ կոնկրետ մուտքով։</p>
+</div>
+
+<h3>Համադրույթը՝ երեք սյունակով</h3>
+<p>Վերցնենք $x\in\{-3,\dots,3\}$ մեկնարկային արժեքները և հետևենք բոլոր սլաքներին միաժամանակ։</p>
+
+<div class="widget" id="w-compose">
+  <div class="widget-head">Ձախից աջ՝ $x\to y\to z$</div>
+  <p class="widget-hint">Ձախ սյունակում $x$ մեկնարկային արժեքներն են, միջինում՝ առաջին հարաբերության տված
+  $y$-երը, աջում՝ երկրորդի տված $z$-երը։ Սեղմեք ցանկացած շրջանի կամ ներքևի զույգերից մեկի վրա՝ տեսնելու այն
+  $x\to y\to z$ ուղիները, որոնք ծնում են համադրույթի զույգերը։ Փոխեք կարգը և նկատեք, որ $\sigma\cdot\rho$-ում
+  միջին սյունակը սեղմվում է՝ $x$-ը և $-x$-ը հանդիպում են նույն $y=x^2$-ում։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="rs" aria-pressed="true">$\rho\cdot\sigma$ (նախ $\rho$)</button>
+    <button class="btn" type="button" data-act="sr" aria-pressed="false">$\sigma\cdot\rho$ (նախ $\sigma$)</button>
+  </div>
+  <div class="p23-cols-svg"></div>
+  <div class="widget-out" data-out="why"></div>
+  <div class="chips" data-out="pairs" role="group" aria-label="Համադրույթի զույգերը"></div>
+  <div class="widget-out muted" data-out="formula" style="text-align:center"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p4-1" open>
+<summary><h2>Խնդիր 4.1 - Հարաբերությունների հիմնական հատկությունները</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 4.1</div>
+<p>Որոշեք, թե ռեֆլեքսիվ (R), սիմետրիկ (S), անտիսիմետրիկ (AS), փոխանցական (T) հատկություններից որոնք ունի
+յուրաքանչյուր հարաբերությունը։</p>
+<ul class="p23-items">
+  <li>ա) $\{(x,y)\in\R^2 : x^2+y^2=1\}$</li>
+  <li>բ) $\{(x,y)\in\R^2 : x^2=y^2\}$</li>
+  <li>գ) $\{(x,y)\in\Z^2 : x/y\}$ (բաժանելիություն՝ $y\mid x$, այսինքն՝ «$x/y$ քանորդն ամբողջ է»)</li>
+  <li>դ) $\{(x,y)\in\N^2 : x/y\}$ (նույն բաժանելիությունը՝ $\N$-ի վրա)</li>
+  <li>ե) $\{(x,y)\in\N^2 : (x,y)=1\}$ (փոխադարձաբար պարզ՝ $\gcd(x,y)=1$)</li>
+  <li>զ) $\{(x,y)\in\Z^2 : (x,y)=1\}$ (փոխադարձաբար պարզ՝ $\Z$-ի վրա)</li>
+</ul>
+<p class="p23-small">Զգուշացում՝ աղբյուրը գրում է բաժանելիության պրեդիկատը որպես $x/y$ (գ),(դ)-ում՝ սա
+$x\le y$ կարգի հարաբերությունը <em>չէ</em>։ Ստորև (գ),(դ)-ն դիտում ենք որպես բաժանելիություն, ինչպես
+թերթիկն է նշում։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p>Չորս հատկությունները չորս փոքր <strong>պատկեր են, որոնք փնտրում ենք դիգրաֆում</strong>։
+<strong>Ռեֆլեքսիվ</strong>՝ ակ յուրաքանչյուր գագաթում (անկյունագիծը լիքն է)։
+<strong>Սիմետրիկ</strong>՝ յուրաքանչյուր սլաք գալիս է իր հակառակի հետ (ուստի կարելի է գծել
+չկողմնորոշված)։ <strong>Անտիսիմետրիկ</strong>՝ <em>ոչ մի</em> 2-ցիկլ տարբեր գագաթների միջև՝ եթե $x\to y$
+և $y\to x$, ապա $x=y$ (թույլատրված միակ բացառությունն ակն է)։ <strong>Փոխանցական</strong>՝ յուրաքանչյուր
+երկքայլ ուղի լրացվում է ուղիղ սլաքով ($x\to y\to z$ հարկադրում է $x\to z$)։ Հատկությունը
+<em>հերքելու</em> համար բավական է մեկ հակաօրինակ, <em>ապացուցելու</em> համար պետք է դատողություն
+ընդհանուր դեպքում։ Երկու հայտնի համակցություն արժե հիշել՝ R+S+T $=$ <strong>համարժեքություն</strong>.
+R+AS+T $=$ <strong>մասնակի կարգ</strong>։</p>
+</div>
+
+<h3>(ա) $x^2+y^2=1$ $\R^2$-ի վրա (միավոր շրջանագիծը)</h3>
+<ul>
+  <li><em>Ոչ ռեֆլեքսիվ</em>՝ $(x,x)$-ը պահանջում է $2x^2=1$, ճիշտ միայն $x=\pm\tfrac1{\sqrt2}$-ում, ոչ
+      բոլոր $x$-երի համար։</li>
+  <li><em>Սիմետրիկ</em>՝ $x^2+y^2$-ն չի փոխվում, երբ $x$-ի և $y$-ի տեղերը փոխում ենք, ուստի
+      $(x,y)\in\rho\Rightarrow(y,x)\in\rho$։</li>
+  <li><em>Ոչ անտիսիմետրիկ</em>՝ $(1,0)$-ն և $(0,1)$-ն երկուսն էլ $\rho$-ում են, բայց $1\neq0$։</li>
+  <li><em>Ոչ փոխանցական</em>՝ $(1,0),(0,1)\in\rho$, բայց $(1,1)$-ը պահանջում է $1+1=1$, սխալ։</li>
+</ul>
+<p>$\Rightarrow$ միայն սիմետրիկ։</p>
+
+<h3>(բ) $x^2=y^2$ $\R^2$-ի վրա, այսինքն՝ $|x|=|y|$</h3>
+<p>Ռեֆլեքսիվ ($x^2=x^2$). սիմետրիկ ($x^2=y^2\iff y^2=x^2$). փոխանցական ($x^2=y^2=z^2$)։ Ոչ
+անտիսիմետրիկ՝ $(1,-1)$-ն և $(-1,1)$-ն երկուսն էլ $\rho$-ում են՝ $1\neq-1$-ով։ R+S+T $\Rightarrow$
+<strong>համարժեքության հարաբերություն</strong> (դրա դասերը $\{x,-x\}$ զույգերն են)։</p>
+
+<h3>(գ) բաժանելիություն $\Z$-ի վրա ($y\mid x$)</h3>
+<p>Ռեֆլեքսիվ ($x\mid x$). փոխանցական ($z\mid y,\ y\mid x\Rightarrow z\mid x$)։ Ոչ սիմետրիկ ($2\mid 4$,
+բայց $4\nmid 2$)։ <em>Ոչ</em> անտիսիմետրիկ $\Z$-ի վրա՝ $2\mid(-2)$ և $(-2)\mid2$, սակայն $2\neq-2$։
+R+T, բայց ոչ AS, ոչ S $\Rightarrow$ <strong>նախակարգ</strong>, <em>ոչ</em> մասնակի կարգ։</p>
+<p class="note">Նշում՝ $x=0$-ում ռեֆլեքսիվությունը պահանջում է $0\mid 0$։ Սա ճիշտ է
+$y\mid x\iff \exists k\in\Z:\ x=ky$ սահմանմամբ ($0=1\cdot 0$)։ Իսկ «$x/y$ քանորդն ամբողջ է» բառացի
+ընթերցմամբ $0/0$ արտահայտությունը որոշված չէ, ուստի $(0,0)\notin\rho$, և ռեֆլեքսիվությունը կխախտվեր
+միայն այդ մեկ կետում։</p>
+
+<h3>(դ) բաժանելիություն $\N$-ի վրա ($y\mid x$)</h3>
+<p>Ռեֆլեքսիվ և փոխանցական՝ ինչպես վերևում. ոչ սիմետրիկ։ Այստեղ այն արդեն իրոք անտիսիմետրիկ է՝ դրական
+ամբողջ թվերի վրա $a\mid b$ և $b\mid a$ հարկադրում են $a=b$։ R+AS+T $\Rightarrow$ <strong>մասնակի
+կարգ</strong>։ Այն <em>գծային</em> կարգ չէ՝ $2$-ը և $3$-ն անհամեմատելի են (ոչ մեկը մյուսին չի բաժանում)։</p>
+
+<h3>(ե),(զ) փոխադարձ պարզություն $\gcd(x,y)=1$</h3>
+<p>Սիմետրիկ ($\gcd$-ն սիմետրիկ է)։ Ոչ ռեֆլեքսիվ՝ $\gcd(2,2)=2\neq1$։ Ոչ անտիսիմետրիկ՝ $(2,3)$-ն և
+$(3,2)$-ն երկուսն էլ փոխադարձաբար պարզ են, $2\neq3$։ Ոչ փոխանցական՝ $\gcd(2,3)=1$ և $\gcd(3,4)=1$, բայց
+$\gcd(2,4)=2\neq1$։ Ուստի միայն սիմետրիկ՝ թե՛ $\N$-ի (ե), թե՛ $\Z$-ի (զ) վրա։</p>
+
+<p><strong>Պատկերներ, որ տեսանելի են դարձնում եզրակացությունները։</strong> (ա) 2-ցիկլ առանց ակերի ($1$ և
+$0$ տարրերի վրա). (բ) ակեր ամենուր՝ հայելային սլաքներով. (դ) բաժանելիություն $\{1,2,3,4,6\}$-ի վրա՝
+գծված Հասսեի դիագրամի ոճով ((ե)-ի պատկերը նույն տեսքն ունի, ինչ (ա)-ինը՝ 2-ցիկլ առանց ակերի)։</p>
+<figure class="fig">
+<div class="p23-panels">
+<svg viewBox="0 0 157 234.5" width="157" role="img" aria-label="(ա) 1 և 0 տարրերի վրա՝ 2-ցիկլ առանց ակերի">
+  <circle cx="78.5" cy="68.5" r="17.5" class="f-bg"/><circle cx="78.5" cy="68.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="78.5" y="68.5" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="78.5" cy="168.5" r="17.5" class="f-bg"/><circle cx="78.5" cy="168.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="78.5" y="168.5" dy=".35em" text-anchor="middle" class="mr">0</text>
+  <path d="M72,86 L72,145" class="s-blue f-none" stroke-width="1.8"/><polygon points="72,151 67.8,142 72,145 76.2,142" class="f-blue"/>
+  <path d="M85,151 L85,92" class="s-blue f-none" stroke-width="1.8"/><polygon points="85,86 89.2,95 85,92 80.8,95" class="f-blue"/>
+  <text x="78.5" y="216" dy=".35em" text-anchor="middle"><tspan font-weight="700">(ա)</tspan> սիմ, առանց ակերի</text>
+  <text x="78.5" y="18.5" dy=".35em" text-anchor="middle" class="f-muted">ոչ (1,1)՝</text>
+  <text x="78.5" y="37.5" dy=".35em" text-anchor="middle" class="f-muted">ոչ փոխանցական</text>
+</svg>
+<svg viewBox="0 0 139.5 232" width="140" role="img" aria-label="(բ) 1 և −1 տարրերի վրա՝ ակեր և հայելային սլաքներ">
+  <circle cx="73.5" cy="66" r="17.5" class="f-bg"/><circle cx="73.5" cy="66" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="73.5" y="66" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="73.5" cy="166" r="17.5" class="f-bg"/><circle cx="73.5" cy="166" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="73.5" y="166" dy=".35em" text-anchor="middle" class="mr">−1</text>
+  <path d="M58.3,57.3 C32.4,42.3 32.4,89.8 53.1,77.8" class="s-red f-none" stroke-width="1.8"/><polygon points="58.3,74.8 52.7,82.9 53.1,77.8 48.5,75.6" class="f-red"/>
+  <path d="M58.3,157.3 C32.4,142.3 32.4,189.8 53.1,177.8" class="s-red f-none" stroke-width="1.8"/><polygon points="58.3,174.8 52.7,182.9 53.1,177.8 48.5,175.6" class="f-red"/>
+  <path d="M67,83.5 L67,142.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="67,148.5 62.8,139.5 67,142.5 71.2,139.5" class="f-blue"/>
+  <path d="M80,148.5 L80,89.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="80,83.5 84.2,92.5 80,89.5 75.8,92.5" class="f-blue"/>
+  <text x="73.5" y="213.5" dy=".35em" text-anchor="middle"><tspan font-weight="700">(բ)</tspan> R+S+T</text>
+  <text x="73.5" y="18.5" dy=".35em" text-anchor="middle" class="f-muted">համարժեքություն</text>
+</svg>
+<svg viewBox="0 0 267 237" width="267" role="img" aria-label="(դ) բաժանելիությունը {1,2,3,4,6}-ի վրա՝ Հասսեի դիագրամ">
+  <line x1="127.3" y1="167.6" x2="99.7" y2="134.4" class="s-blue" stroke-width="1.8"/>
+  <line x1="149.7" y1="167.6" x2="177.3" y2="134.4" class="s-blue" stroke-width="1.8"/>
+  <line x1="85.8" y1="103.7" x2="81.2" y2="73.3" class="s-blue" stroke-width="1.8"/>
+  <line x1="101.3" y1="109.1" x2="145.7" y2="67.9" class="s-blue" stroke-width="1.8"/>
+  <line x1="181.2" y1="105.1" x2="165.8" y2="71.9" class="s-blue" stroke-width="1.8"/>
+  <circle cx="138.5" cy="181" r="17.5" class="f-bg"/><circle cx="138.5" cy="181" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="138.5" y="181" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="88.5" cy="121" r="17.5" class="f-bg"/><circle cx="88.5" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="88.5" y="121" dy=".35em" text-anchor="middle" class="mr">2</text>
+  <circle cx="188.5" cy="121" r="17.5" class="f-bg"/><circle cx="188.5" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="188.5" y="121" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="78.5" cy="56" r="17.5" class="f-bg"/><circle cx="78.5" cy="56" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="78.5" y="56" dy=".35em" text-anchor="middle" class="mr">4</text>
+  <circle cx="158.5" cy="56" r="17.5" class="f-bg"/><circle cx="158.5" cy="56" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="158.5" y="56" dy=".35em" text-anchor="middle" class="mr">6</text>
+  <text x="133.5" y="218.5" dy=".35em" text-anchor="middle"><tspan font-weight="700">(դ)</tspan> բաժանելիություն = մասնակի կարգ</text>
+  <text x="133.5" y="18.5" dy=".35em" text-anchor="middle" class="f-muted">2,3 անհամեմատելի</text>
+</svg>
+</div>
+</figure>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Համակարգչային ստուգումը հաշվեց չորս հատկություններն էլ ուղղակիորեն իրենց սահմանումներից վերջավոր
+նմուշների վրա ($\R$ դեպքերը՝ ներառյալ համապատասխան շրջանագծի/նշանի կետերը. (գ)-ն
+$\{-6,\dots,6\}\setminus\{0\}$-ի վրա. (դ)-ն $\{1,\dots,12\}$-ի վրա. (ե),(զ)-ն մինչև $14$)։ Աղյուսակի
+յուրաքանչյուր եզրակացություն համընկավ, ներառյալ AS-ի ձախողումը (գ)-ի համար $\Z$-ի վրա $2$-ի և $-2$-ի
+միջոցով, և AS-ի պահպանումը (դ)-ի համար $\N$-ի վրա։ $\checkmark$
+</div>
+
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th></th><th>Հարաբերություն</th><th class="num">R</th><th class="num">S</th><th class="num">AS</th><th class="num">T</th><th>Եզրակացություն</th></tr></thead>
+<tbody>
+<tr><td>ա)</td><td>$x^2+y^2=1$ $\R^2$-ի վրա</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\times$</td><td>միայն սիմետրիկ</td></tr>
+<tr><td>բ)</td><td>$x^2=y^2$ $\R^2$-ի վրա</td><td class="num">$\checkmark$</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td><strong>համարժեքություն</strong></td></tr>
+<tr><td>գ)</td><td>բաժանելիություն $\Z^2$-ի վրա</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td>նախակարգ (ոչ անտիսիմ.)</td></tr>
+<tr><td>դ)</td><td>բաժանելիություն $\N^2$-ի վրա</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td class="num">$\checkmark$</td><td><strong>մասնակի կարգ</strong> (ոչ գծային)</td></tr>
+<tr><td>ե)</td><td>$\gcd(x,y)=1$ $\N^2$-ի վրա</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\times$</td><td>միայն սիմետրիկ</td></tr>
+<tr><td>զ)</td><td>$\gcd(x,y)=1$ $\Z^2$-ի վրա</td><td class="num">$\times$</td><td class="num">$\checkmark$</td><td class="num">$\times$</td><td class="num">$\times$</td><td>միայն սիմետրիկ</td></tr>
+</tbody></table></div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+ա) միայն S. բ) համարժեքություն (R,S,T). գ) բաժանելիություն $\Z$-ի վրա՝ R,T, բայց ոչ AS (նախակարգ).
+դ) բաժանելիություն $\N$-ի վրա՝ մասնակի կարգ (R,AS,T, ոչ գծային). ե),զ) միայն S։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> ստուգեք յուրաքանչյուր հատկությունը որպես պատկեր՝ ռեֆլեքսիվ $=$
+բոլոր ակերը, սիմետրիկ $=$ բոլոր սլաքները հակադարձելի, անտիսիմետրիկ $=$ ոչ մի տարբեր 2-ցիկլ, փոխանցական
+$=$ ամեն երկքայլ ուղի փակված ուղիղ սլաքով։ <em>Մեկ</em> հակաօրինակը բավական է հատկությունը հերքելու
+համար։ Երկու հայտնի փաթեթ՝ R+S+T $=$ համարժեքություն, R+AS+T $=$ մասնակի կարգ։ Նույն պրեդիկատը կարող է
+փոխել դասը՝ կախված հիմքային բազմությունից՝ բաժանելիությունը մասնակի կարգ է $\N$-ի վրա, բայց միայն
+նախակարգ՝ $\Z$-ի վրա (քանի որ $n$-ն և $-n$-ը բաժանում են իրար)։</p>
+</div>
+
+<h3>Հատկությունները՝ ինտերակտիվ</h3>
+<p>Ստորև կարող եք կառուցել ցանկացած վերջավոր հարաբերություն և անմիջապես տեսնել, թե չորս հատկություններից
+որոնք են պահպանվում։</p>
+
+<div class="widget" id="w-editor">
+  <div class="widget-head">Հարաբերության խմբագրիչ</div>
+  <p class="widget-hint">Սեղմեք մատրիցի վանդակի վրա՝ զույգն ավելացնելու կամ հեռացնելու համար։ Դիգրաֆում
+  սեղմեք նախ մեկ գագաթի, ապա մյուսի վրա՝ սլաքը փոխելու համար (նույն գագաթի վրա երկու անգամ՝ ակը), իսկ
+  գոյություն ունեցող սլաքի վրա սեղմելն այն հեռացնում է։ Երկու տեսքը միշտ համընկնում են։ Չորս պիտակները
+  ցույց են տալիս հատկությունները, իսկ ✗-ի դեպքում՝ խախտող զույգը կամ եռյակը. սեղմեք պիտակի վրա՝ այն
+  նկարում ընդգծելու համար (բացակայող զույգը՝ կետագծով)։ (ա)-(ե) պատրաստի օրինակները 4.1-ի հարաբերությունների
+  վերջավոր կտորներ են։ Կտորի վրա գտնված հակաօրինակը (✗) վավեր է նաև ամբողջ հարաբերության համար, իսկ
+  ✓-ը միայն համաձայն է եզրակացությանը. ապացույցը վերևի դատողությունն է։ (դ)-ում գագաթները դասավորված են ըստ
+  բաժանելիության (1-ը՝ ներքևում), ուստի $\rho$-ի սլաքներն ուղղված են վերևից ներքև՝ բազմապատիկից դեպի բաժանարար։</p>
+  <div class="chips" data-out="presets" role="group" aria-label="Պատրաստի օրինակներ"></div>
+  <div class="widget-out" data-out="set" style="text-align:center"></div>
+  <div class="p23-host"></div>
+  <div class="p23-badges" data-out="badges"></div>
+  <div class="widget-out" data-out="class"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p7-2" open>
+<summary><h2>Խնդիր 7.2 - Ռեֆլեքսիվ, սիմետրիկ, փոխանցական փակումներ</h2></summary>
+<div class="sec-body">
+
+<div class="box problem"><div class="box-title">Խնդիր 7.2</div>
+<p>$A=\{1,2,3,4\}$-ի վրա դիցուք $\rho=\{(1,2),(3,1),(3,2),(2,4)\}$։ Գտեք ռեֆլեքսիվ փակումը $r(\rho)$,
+սիմետրիկ փակումը $s(\rho)$ և փոխանցական փակումը $t(\rho)$։</p>
+</div>
+
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div>
+<p><strong>Փակումը</strong> $\rho$-ի <em>ամենափոքր</em> ընդլայնումն է, որ ձեռք է բերում ցանկալի
+հատկություն՝ առանց ավելորդ բան ավելացնելու։ Յուրաքանչյուր փակում ունի մեկտողանի բաղադրատոմս, որ ասում
+է, թե կոնկրետ որ սլաքներն են «հարկադրված»՝</p>
+$$\begin{aligned}
+r(\rho)&=\rho\cup\Delta_A && (\text{ավելացրեք յուրաքանչյուր ակ}),\\
+s(\rho)&=\rho\cup\rho^{-1} && (\text{ավելացրեք յուրաքանչյուր հակառակ}),\\
+t(\rho)&=\bigcup_{k\ge1}\rho^{\,k} && (\text{ավելացրեք սլաք յուրաքանչյուր կողմնորոշված ուղու համար}).
+\end{aligned}$$
+<p>Դիգրաֆի վրա կարդալով՝ $r$-ն ավելացնում է ակ յուրաքանչյուր գագաթին. $s$-ը յուրաքանչյուր սլաք
+երկկողմանի է դարձնում. $t$-ն հարցնում է «ո՞ւր կարող եմ հասնել սլաքներին հետևելով» և գծում ուղիղ սլաք
+յուրաքանչյուր հասանելի գագաթի։ Փակումները միայն <em>ավելացնում</em> են կողեր՝ սկզբնական սլաքները միշտ
+մնում են։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - Գծենք $\rho$-ն և գտնենք, թե յուրաքանչյուր փակումն ինչ պետք է ավելացնի</h3>
+<p>Հասանելիությունը $\rho$-ում՝ $1\to2\to4$, և $3\to1\to2\to4$ (նաև $3\to2\to4$)։ Ուստի նոր
+<em>փոխանցական</em> սլաքները $1\to4$ ($1\to2\to4$ ուղի) և $3\to4$ ($3\to1\to2\to4$ ուղի) են՝ նկատե՛ք, որ
+$3\to1\to2$ ուղու պահանջած $3\to2$ սլաքն արդեն առկա է։</p>
+</div>
+
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Կիրառենք երեք բաղադրատոմսերը</h3>
+$$\begin{aligned}
+r(\rho)&=\rho\cup\{(1,1),(2,2),(3,3),(4,4)\}\\
+&=\{(1,2),(3,1),(3,2),(2,4),\ (1,1),(2,2),(3,3),(4,4)\}.\\[3pt]
+s(\rho)&=\rho\cup\rho^{-1}
+=\{(1,2),(2,1),(3,1),(1,3),(3,2),(2,3),(2,4),(4,2)\}.\\[3pt]
+t(\rho)&=\rho\cup\{(1,4),(3,4)\}
+=\{(1,2),(2,4),(3,1),(3,2),\ (1,4),(3,4)\}.
+\end{aligned}$$
+</div>
+
+<p><strong>Առաջ / հետո դիգրաֆի վրա</strong> (սկզբնական սլաքները՝ կապույտ, <span class="c-red">ավելացված
+սլաքները՝ կարմիր</span>)՝</p>
+<figure class="fig">
+<div class="p23-panels">
+<svg viewBox="0 0 159.5 189.5" width="160" role="img" aria-label="ρ (տրված)">
+  <circle cx="46" cy="46" r="17.5" class="f-bg"/><circle cx="46" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="46" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="121" cy="46" r="17.5" class="f-bg"/><circle cx="121" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="46" dy=".35em" text-anchor="middle" class="mr">2</text>
+  <circle cx="46" cy="121" r="17.5" class="f-bg"/><circle cx="46" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="121" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="121" cy="121" r="17.5" class="f-bg"/><circle cx="121" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="121" dy=".35em" text-anchor="middle" class="mr">4</text>
+  <path d="M63.5,46 L97.5,46" class="s-blue f-none" stroke-width="1.8"/><polygon points="103.5,46 94.5,50.2 97.5,46 94.5,41.8" class="f-blue"/>
+  <path d="M46,103.5 L46,69.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="46,63.5 50.2,72.5 46,69.5 41.8,72.5" class="f-blue"/>
+  <path d="M58.4,108.6 L104.4,62.6" class="s-blue f-none" stroke-width="1.8"/><polygon points="108.6,58.4 105.2,67.7 104.4,62.6 99.3,61.8" class="f-blue"/>
+  <path d="M121,63.5 L121,97.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="121,103.5 116.8,94.5 121,97.5 125.2,94.5" class="f-blue"/>
+  <text x="83.5" y="171" dy=".35em" text-anchor="middle"><tspan font-weight="700"><tspan class="m">ρ</tspan></tspan> <tspan font-weight="700">(տրված)</tspan></text>
+</svg>
+<svg viewBox="0 0 159.5 189.5" width="160" role="img" aria-label="r(ρ)՝ ավելացված ակերով">
+  <circle cx="46" cy="46" r="17.5" class="f-bg"/><circle cx="46" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="46" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="121" cy="46" r="17.5" class="f-bg"/><circle cx="121" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="46" dy=".35em" text-anchor="middle" class="mr">2</text>
+  <circle cx="46" cy="121" r="17.5" class="f-bg"/><circle cx="46" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="121" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="121" cy="121" r="17.5" class="f-bg"/><circle cx="121" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="121" dy=".35em" text-anchor="middle" class="mr">4</text>
+  <path d="M63.5,46 L97.5,46" class="s-blue f-none" stroke-width="1.8"/><polygon points="103.5,46 94.5,50.2 97.5,46 94.5,41.8" class="f-blue"/>
+  <path d="M46,103.5 L46,69.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="46,63.5 50.2,72.5 46,69.5 41.8,72.5" class="f-blue"/>
+  <path d="M58.4,108.6 L104.4,62.6" class="s-blue f-none" stroke-width="1.8"/><polygon points="108.6,58.4 105.2,67.7 104.4,62.6 99.3,61.8" class="f-blue"/>
+  <path d="M121,63.5 L121,97.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="121,103.5 116.8,94.5 121,97.5 125.2,94.5" class="f-blue"/>
+  <path d="M29.6,40 C6.1,31.5 31.5,6.1 38,23.9" class="s-red f-none" stroke-width="1.8"/><polygon points="40,29.6 33,22.5 38,23.9 40.9,19.7" class="f-red"/>
+  <path d="M104.6,40 C81.1,31.5 106.5,6.1 113,23.9" class="s-red f-none" stroke-width="1.8"/><polygon points="115,29.6 108,22.5 113,23.9 115.9,19.7" class="f-red"/>
+  <path d="M29.6,115 C6.1,106.5 31.5,81.1 38,98.9" class="s-red f-none" stroke-width="1.8"/><polygon points="40,104.6 33,97.5 38,98.9 40.9,94.7" class="f-red"/>
+  <path d="M104.6,115 C81.1,106.5 106.5,81.1 113,98.9" class="s-red f-none" stroke-width="1.8"/><polygon points="115,104.6 108,97.5 113,98.9 115.9,94.7" class="f-red"/>
+  <text x="83.5" y="171" dy=".35em" text-anchor="middle"><tspan font-weight="700"><tspan class="m">r</tspan>(<tspan class="m">ρ</tspan>)</tspan>՝ +ակեր</text>
+</svg>
+<svg viewBox="0 0 159.5 189.5" width="160" role="img" aria-label="s(ρ)՝ ավելացված հակադարձներով">
+  <circle cx="46" cy="46" r="17.5" class="f-bg"/><circle cx="46" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="46" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="121" cy="46" r="17.5" class="f-bg"/><circle cx="121" cy="46" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="46" dy=".35em" text-anchor="middle" class="mr">2</text>
+  <circle cx="46" cy="121" r="17.5" class="f-bg"/><circle cx="46" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="46" y="121" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="121" cy="121" r="17.5" class="f-bg"/><circle cx="121" cy="121" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="121" y="121" dy=".35em" text-anchor="middle" class="mr">4</text>
+  <path d="M63.5,41.5 L97.5,41.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="103.5,41.5 94.5,45.7 97.5,41.5 94.5,37.3" class="f-blue"/>
+  <path d="M41.5,103.5 L41.5,69.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="41.5,63.5 45.7,72.5 41.5,69.5 37.3,72.5" class="f-blue"/>
+  <path d="M55.2,105.4 L101.2,59.4" class="s-blue f-none" stroke-width="1.8"/><polygon points="105.4,55.2 102,64.5 101.2,59.4 96.1,58.6" class="f-blue"/>
+  <path d="M125.5,63.5 L125.5,97.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="125.5,103.5 121.3,94.5 125.5,97.5 129.7,94.5" class="f-blue"/>
+  <path d="M103.5,50.5 L69.5,50.5" class="s-red f-none" stroke-width="1.8"/><polygon points="63.5,50.5 72.5,46.3 69.5,50.5 72.5,54.7" class="f-red"/>
+  <path d="M50.5,63.5 L50.5,97.5" class="s-red f-none" stroke-width="1.8"/><polygon points="50.5,103.5 46.3,94.5 50.5,97.5 54.7,94.5" class="f-red"/>
+  <path d="M111.8,61.6 L65.8,107.6" class="s-red f-none" stroke-width="1.8"/><polygon points="61.6,111.8 65,102.5 65.8,107.6 70.9,108.4" class="f-red"/>
+  <path d="M116.5,103.5 L116.5,69.5" class="s-red f-none" stroke-width="1.8"/><polygon points="116.5,63.5 120.7,72.5 116.5,69.5 112.3,72.5" class="f-red"/>
+  <text x="83.5" y="171" dy=".35em" text-anchor="middle"><tspan font-weight="700"><tspan class="m">s</tspan>(<tspan class="m">ρ</tspan>)</tspan>՝ +հակադարձներ</text>
+</svg>
+</div>
+</figure>
+<figure class="fig">
+<div class="p23-pair">
+<svg viewBox="0 0 162 162" width="162" role="img" aria-label="t(ρ)՝ ավելացված (1,4) և (3,4)">
+  <circle cx="31" cy="28.5" r="17.5" class="f-bg"/><circle cx="31" cy="28.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="31" y="28.5" dy=".35em" text-anchor="middle" class="mr">1</text>
+  <circle cx="131" cy="28.5" r="17.5" class="f-bg"/><circle cx="131" cy="28.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="131" y="28.5" dy=".35em" text-anchor="middle" class="mr">2</text>
+  <circle cx="31" cy="113.5" r="17.5" class="f-bg"/><circle cx="31" cy="113.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="31" y="113.5" dy=".35em" text-anchor="middle" class="mr">3</text>
+  <circle cx="131" cy="113.5" r="17.5" class="f-bg"/><circle cx="131" cy="113.5" r="17.5" class="f-blue-soft s-ink" stroke-width="1"/><text x="131" y="113.5" dy=".35em" text-anchor="middle" class="mr">4</text>
+  <path d="M48.5,28.5 L107.5,28.5" class="s-blue f-none" stroke-width="1.8"/><polygon points="113.5,28.5 104.5,32.7 107.5,28.5 104.5,24.3" class="f-blue"/>
+  <path d="M31,96 L31,52" class="s-blue f-none" stroke-width="1.8"/><polygon points="31,46 35.2,55 31,52 26.8,55" class="f-blue"/>
+  <path d="M44.3,102.2 L113.1,43.7" class="s-blue f-none" stroke-width="1.8"/><polygon points="117.7,39.8 113.5,48.9 113.1,43.7 108.1,42.5" class="f-blue"/>
+  <path d="M131,46 L131,90" class="s-blue f-none" stroke-width="1.8"/><polygon points="131,96 126.8,87 131,90 135.2,87" class="f-blue"/>
+  <path d="M45.6,38.2 C91,68.5 91,68.5 115.4,95.9" class="s-red f-none" stroke-width="1.8"/><polygon points="119.4,100.4 110.3,96.5 115.4,95.9 116.5,90.9" class="f-red"/>
+  <path d="M43.4,125.9 C76,158.5 131,158.5 131,137" class="s-red f-none" stroke-width="1.8"/><polygon points="131,131 135.2,140 131,137 126.8,140" class="f-red"/>
+</svg>
+<div style="text-align:left">Հասանելիություն՝<br>$1\to2\to4$<br>$3\to1\to2\to4$<br>ուստի ավելացվում են
+$(1,4)$-ը և $(3,4)$-ը։</div>
+</div>
+<figcaption>$t(\rho)$՝ $+\,(1,4)$ $1{\to}2{\to}4$-ով, $+\,(3,4)$ $3{\to}\cdots{\to}4$-ով</figcaption>
+</figure>
+
+<div class="check"><span class="check-label">Ստուգում։</span>
+Փոխանցական փակումը վերահաշվարկվեց Ուորշալի ալգորիթմով չորս գագաթների վրա. այն տվեց ճիշտ
+$\{(1,2),(1,4),(2,4),(3,1),(3,2),(3,4)\}$՝ համընկնելով ձեռքով ստացված պատասխանին։ Ռեֆլեքսիվ և
+սիմետրիկ փակումները ստուգվեցին ուղղակիորեն կիրառելով $\rho\cup\Delta_A$ և $\rho\cup\rho^{-1}$։
+$\checkmark$
+</div>
+
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$r(\rho)=\rho\cup\{(1,1),(2,2),(3,3),(4,4)\}$.
+$s(\rho)=\{(1,2),(2,1),(1,3),(3,1),(2,3),(3,2),(2,4),(4,2)\}$.
+$t(\rho)=\{(1,2),(2,4),(3,1),(3,2),(1,4),(3,4)\}$։</div>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Փոխանցելի տեխնիկա՝</strong> փակումներն ունեն ֆիքսված բաղադրատոմսեր՝ $r=\rho\cup\Delta$,
+$s=\rho\cup\rho^{-1}$, $t=\bigcup_k\rho^k$՝ և յուրաքանչյուրը միայն <em>ավելացնում</em> է կողեր։ $t$-ի
+համար ամենապարզ ընկալումը հասանելիությունն է՝ գծեք $x\to z$ սլաք, երբ կողմնորոշված ուղի է գնում $x$-ից
+$z$ (Ուորշալի ալգորիթմը հենց սա է մեքենայացնում)։ Դիգրաֆի վրա՝ $r$-ն ավելացնում է բոլոր ակերը, $s$-ը
+կրկնապատկում է յուրաքանչյուր սլաք, $t$-ն ամեն ուղու համար ավելացնում է ուղիղ սլաք։</p>
+</div>
+
+<h3>Փակումները քայլ առ քայլ</h3>
+<p>Նույն $\rho$-ն՝ ինտերակտիվ տեսքով։ Ուորշալի ալգորիթմը, որով ստուգեցինք $t(\rho)$-ն, այստեղ կարելի է
+անցնել քայլ առ քայլ։</p>
+
+<div class="widget" id="w-closure">
+  <div class="widget-head">Փակումների կառուցիչ</div>
+  <p class="widget-hint">Ընտրեք փակումը։ Սկզբնական սլաքները կապույտ են, ավելացվածները՝ կարմիր, իսկ
+  պիտակները ցույց են տալիս, որ ստացված հարաբերությունն արդեն ունի պահանջված հատկությունը (և որ մյուս
+  հատկությունները կարող են կորչել. նայեք AS-ին $s(\rho)$-ում)։ $t(\rho)$-ի համար սեղմեք «Հաջորդ քայլ»՝
+  $k$-րդ քայլում $k$ գագաթը թույլատրվում է որպես միջանկյալ, և $(i,j)$-ն ավելանում է, երբ արդեն կան
+  $(i,k)$ և $(k,j)$ զույգերը։ $\rho$ ներդիրում կարող եք սեղմել մատրիցի վանդակների վրա և փորձել ձեր
+  սեփական հարաբերությունը։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-mode="rho" aria-pressed="true">$\rho$</button>
+    <button class="btn" type="button" data-mode="r" aria-pressed="false">$r(\rho)$</button>
+    <button class="btn" type="button" data-mode="s" aria-pressed="false">$s(\rho)$</button>
+    <button class="btn" type="button" data-mode="t" aria-pressed="false">$t(\rho)$</button>
+  </div>
+  <div class="widget-controls" data-out="tctl" style="display:none">
+    <button class="btn primary" type="button" data-act="step">Հաջորդ քայլ</button>
+    <button class="btn" type="button" data-act="all">Բոլոր քայլերը</button>
+    <button class="btn" type="button" data-act="restart">Սկզբից</button>
+  </div>
+  <div class="widget-controls" data-out="ectl">
+    <button class="btn" type="button" data-act="reset">Վերադառնալ 7.2-ի $\rho$-ին</button>
+  </div>
+  <div class="p23-host"></div>
+  <div class="widget-out" data-out="msg"></div>
+  <ol class="p23-log" data-out="log"></ol>
+  <div class="p23-badges" data-out="badges"></div>
+</div>
+</div><!-- /solution -->
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թերթիկներ">
+        <a class="btn" href="p1-sets.html">← Գործնական 1</a>
+        <a class="btn" href="index.html">Բոլոր թերթիկները</a>
+        <a class="btn" href="p4-functions.html">Գործնական 4 →</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Լուծումները գրվել են արհեստական բանականության օգնությամբ, իսկ թվային պատասխանները ստուգվել են
+  համակարգչային թվարկմամբ։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

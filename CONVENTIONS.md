@@ -20,15 +20,19 @@ Recurring decisions for this repo, written down once they were made twice.
 ## Static site (`site/`)
 
 Live at GitHub Pages via `.github/workflows/pages.yml` (QA gate, then copies the 7 Armenian PDFs
-into `site/pdf/`, then deploys `site/`). Reference implementation: `site/p6-combinations.html` +
-`site/assets/js/p6.js` - copy its patterns.
+into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discrete/p6-combinations.html` +
+`site/assets/js/p6.js` - copy its patterns. Probability pages: `site/probability/w10-cdf-properties.html`
++ `site/assets/js/w10.js` + the shared `site/assets/js/prob.js` (see "Probability pages" below).
 
 ### Files
 
 | path | what |
 |------|------|
-| `site/index.html` | landing page, one card per sheet |
-| `site/pN-topic.html` | one page per practice sheet: `p1-sets`, `p2-3-relations`, `p4-functions`, `p5-combinatorics`, `p6-combinations`, `p7-partitions`, `p8-recurrence` |
+| `site/index.html` | hub: one card per course (discrete, probability) |
+| `site/pN-topic.html` | redirect stubs to `discrete/pN-topic.html` (old URLs keep working, `#anchor` kept) |
+| `site/discrete/index.html` | discrete landing page, one card per sheet |
+| `site/probability/index.html`, `site/probability/wNN-topic.html` | probability landing page and one page per lecture week |
+| `site/discrete/pN-topic.html` | one page per practice sheet: `p1-sets`, `p2-3-relations`, `p4-functions`, `p5-combinatorics`, `p6-combinations`, `p7-partitions`, `p8-recurrence` |
 | `site/assets/site.css` | all shared styles + light/dark tokens |
 | `site/assets/site.js` | KaTeX auto-render, theme / try-mode / TOC behaviour, `window.QYSU` helpers |
 | `site/assets/js/pN.js` | that sheet's widgets only (`p2-3.js` for P2-3) |
@@ -120,3 +124,21 @@ widget, etc.).
    widget computing something new needs its own check).
 4. Visual check in a browser at 1280 px and 390 px, both themes, console clean (orchestrator does
    this with Playwright; subagents must not drive the shared browser).
+
+## Probability pages (`site/probability/`)
+
+- One page per lecture week, `wNN-topic.html`, with page script `assets/js/wNN.js` loaded after
+  `assets/js/prob.js` (shared: `PROB.makeDist`, `intervalProb`, `plot`, `drawF`, `onDrag`, `rng(509)`,
+  `num`/`numTex` (decimal comma, `0{,}5` in TeX), `frac`/`fracTex`). Assets are `../assets/...`.
+- Convention: F(x) = P(ξ < x) (left-continuous), random variable ξ, F(x+0) for the right limit; pending
+  confirmation (DECISIONS #10). In HTML math write `\lt` / `\gt`, never raw `<` / `>`.
+- Levels of detail (DECISIONS #9): main text always open; `<details class="deep"><summary>Ճշգրիտ ձևակերպում
+  և ապացույց</summary><div class="inner">...</div></details>` for proofs (header button `#deep-btn`);
+  `<details class="extra"><summary>Ավելին՝ ...</summary><div class="inner">...</div></details>` for optional
+  material. Boxes: `.box.def` (Սահմանում), `.box.thm` (Թեորեմ), `.box.idea` (Ինտուիցիա), `.box.method`,
+  exercises as `.box.problem` + `.solution` (try-mode).
+- Content is written in our own words with our own examples and exercises; the problem book is cited by
+  problem number only (DECISIONS #12). End each page with a "Խնդրագրքի խնդիրներ" section.
+- Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
+  every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
+  themes (no `.katex-display` overflow on phones), and one independent math review.

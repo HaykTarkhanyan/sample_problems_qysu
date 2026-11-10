@@ -1,8 +1,8 @@
 // QA gate for the static site in site/. Runs locally and in the Pages workflow;
 // a non-zero exit blocks the deploy.
 //
-//   node tools/check_site.mjs              # all site/*.html
-//   node tools/check_site.mjs site/p6-combinations.html
+//   node tools/check_site.mjs              # all .html under site/ (discrete/, probability/, root)
+//   node tools/check_site.mjs site/discrete/p6-combinations.html
 //
 // Runtime: ~1-3 s for the whole site (KaTeX renders every formula once).
 //
@@ -180,7 +180,10 @@ function checkFile(file) {
   }
   for (const lm of stripped.matchAll(/\s(?:href|src)="([^"#:]+)(#[^"]*)?"/g)) {
     const rel = lm[1];
-    const target = rel.startsWith("pdf/") ? path.join(PDF_SRC, rel.slice(4)) : path.join(path.dirname(file), rel);
+    let target = path.join(path.dirname(file), rel);
+    // site/pdf/ is filled by the workflow at deploy time; check the source PDF instead.
+    const pdfDir = path.join(SITE, "pdf") + path.sep;
+    if (target.startsWith(pdfDir)) target = path.join(PDF_SRC, target.slice(pdfDir.length));
     if (!existsSync(target)) err(lineOf(stripped, lm.index), `missing file: ${rel}`);
   }
   if (!/<html lang="hy">/.test(src)) err(1, 'missing <html lang="hy">');
@@ -188,9 +191,16 @@ function checkFile(file) {
   return { errors, mathCount };
 }
 
+/** Every .html under site/, skipping vendored assets and the deploy-time pdf/ copy. */
+function htmlFiles(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap(d => {
+    const p = path.join(dir, d.name);
+    if (d.isDirectory()) return ["assets", "pdf"].includes(d.name) && dir === SITE ? [] : htmlFiles(p);
+    return d.name.endsWith(".html") ? [p] : [];
+  });
+}
 const args = process.argv.slice(2);
-const files = args.length ? args.map(a => path.resolve(a))
-  : readdirSync(SITE).filter(f => f.endsWith(".html")).map(f => path.join(SITE, f));
+const files = args.length ? args.map(a => path.resolve(a)) : htmlFiles(SITE);
 let total = 0;
 const scripts = new Set();
 for (const f of files) {
@@ -198,7 +208,7 @@ for (const f of files) {
   total += errors.length;
   console.log(`${errors.length ? "FAIL" : "ok  "} ${path.relative(ROOT, f)}  (${mathCount} formulas, ${errors.length} errors)`);
   errors.forEach(e => console.log("   " + e));
-  for (const sm of readFileSync(f, "utf8").matchAll(/<script[^>]*\ssrc="(assets\/(?:js\/[^"]+|site\.js))"/g)) {
+  for (const sm of readFileSync(f, "utf8").matchAll(/<script[^>]*\ssrc="((?:\.\.\/)*assets\/(?:js\/[^"]+|site\.js))"/g)) {
     scripts.add(path.join(path.dirname(f), sm[1]));
   }
 }
