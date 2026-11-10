@@ -294,6 +294,85 @@ body.try-mode .reveal-btn:not(.hidden) { display: inline-block; }
 .to-top { position: fixed; right: 1rem; bottom: 1rem; z-index: 15; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .to-top.show { opacity: 1; pointer-events: auto; }
 
+/* ---------- Header tools added by site.js: search, phone menu ---------- */
+.header-actions .btn svg { vertical-align: -3px; }
+#menu-btn { display: none; }
+.header-menu {
+  position: absolute; right: .75rem; top: calc(100% + 4px); z-index: 30; min-width: 15.5rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: .35rem; font-family: var(--sans);
+}
+.header-menu[hidden], .search-overlay[hidden], .toc-sheet[hidden] { display: none; }
+.menu-item {
+  display: flex; align-items: center; gap: .6rem; width: 100%; padding: .6rem .6rem; border: 0;
+  background: none; color: var(--ink); font: inherit; font-size: .93rem; text-align: left; border-radius: 8px; cursor: pointer;
+}
+.menu-item:hover, .menu-item:focus-visible { background: color-mix(in srgb, var(--blue) 10%, transparent); outline: none; }
+.mi-icon { min-width: 1.6rem; text-align: center; font-size: .9em; }
+.mi-state { margin-left: auto; font-size: .78rem; color: var(--muted); }
+.menu-item[aria-checked="true"] .mi-state { color: var(--blue); font-weight: 700; }
+
+/* Search dialog */
+:root.search-open, :root.sheet-open { overflow: hidden; }
+.search-overlay {
+  position: fixed; inset: 0; z-index: 50; background: rgba(10, 14, 22, .45);
+  display: flex; justify-content: center; align-items: flex-start; padding: 8vh 1rem 1rem;
+}
+.search-panel {
+  width: 100%; max-width: 42rem; max-height: 80vh; display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .25); font-family: var(--sans); overflow: hidden;
+}
+.search-bar { display: flex; align-items: center; gap: .55rem; padding: .55rem .7rem .55rem .9rem; border-bottom: 1px solid var(--line); color: var(--muted); }
+.search-bar input {
+  flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: var(--ink);
+  font: inherit; font-size: 1.05rem; padding: .35rem 0;
+}
+.search-close { padding: .2rem .6rem; }
+.search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.search-status { padding: .5rem .95rem; font-size: .82rem; color: var(--muted); }
+.search-results { overflow: auto; padding: 0 .45rem .6rem; overscroll-behavior: contain; }
+.search-hit { display: block; padding: .6rem .6rem; border-radius: 8px; text-decoration: none; color: var(--ink); }
+.search-hit + .search-hit { border-top: 1px solid var(--line); }
+.search-hit:hover, .search-hit.sel { background: color-mix(in srgb, var(--blue) 9%, transparent); }
+.sh-where { display: block; font-size: .74rem; font-weight: 700; color: var(--orange-ink); letter-spacing: .02em; }
+.sh-title { display: block; font-weight: 700; line-height: 1.35; }
+.sh-snip { display: block; font-size: .84rem; color: var(--muted); margin-top: .15rem; line-height: 1.45; }
+.search-hit mark { background: color-mix(in srgb, var(--orange) 38%, transparent); color: inherit; border-radius: 2px; padding: 0 1px; }
+
+/* Contents list: foldable on narrow screens, floating button + bottom sheet */
+.toc-toggle { all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: .4rem; font-weight: 700; cursor: pointer; }
+.toc-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.toc-toggle::after { content: "▾"; margin-left: auto; color: var(--muted); transition: transform .2s; }
+.toc.toc-closed .toc-toggle::after { transform: rotate(-90deg); }
+.toc.toc-closed ol { display: none; }
+.toc.toc-closed .toc-title { margin-bottom: 0; }
+.toc-fab {
+  position: fixed; left: 1rem; bottom: 1rem; z-index: 15; display: none; width: 2.7rem; height: 2.7rem; padding: 0;
+  border-radius: 50%; align-items: center; justify-content: center; box-shadow: var(--shadow);
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.toc-fab.show { opacity: 1; pointer-events: auto; }
+.toc-sheet { position: fixed; inset: 0; z-index: 40; background: rgba(10, 14, 22, .4); display: flex; align-items: flex-end; }
+.toc-sheet-panel {
+  width: 100%; max-height: 78vh; overflow: auto; background: var(--surface); border-radius: 16px 16px 0 0;
+  padding: 0 1rem 1.2rem; box-shadow: var(--shadow); font-family: var(--sans); overscroll-behavior: contain;
+}
+.toc-sheet-head { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; padding: .8rem 0 .5rem; background: var(--surface); }
+.toc-sheet-head .btn { padding: .2rem .6rem; }
+.toc-sheet ol { margin: 0; padding-left: 1.4rem; }
+.toc-sheet a { display: block; padding: .42rem 0; text-decoration: none; }
+.toc-sheet a.active { font-weight: 700; }
+@media (min-width: 1120px) {
+  .toc-toggle { cursor: default; }
+  .toc-toggle::after { display: none; }
+}
+@media (max-width: 1119px) { .toc-fab { display: inline-flex; } }
+
+/* Previous / next at the top of a lecture (a copy of the bottom pager) */
+.pager-top { margin: .8rem 0 0; }
+.pager-top .btn { font-size: .8rem; padding: .22rem .7rem; }
+
 @media (max-width: 560px) {
   body { font-size: 1rem; }
   .sec-body { padding: .3rem .8rem 1rem; }
@@ -303,6 +382,10 @@ body.try-mode .reveal-btn:not(.hidden) { display: inline-block; }
   .header-actions { gap: .3rem; flex-wrap: nowrap; }
   .header-actions .btn { padding: .3rem .55rem; }
   .header-actions .btn .lbl { display: none; }
+  .site-header.has-menu .header-actions .btn:not(#menu-btn):not(#search-btn) { display: none; }
+  .site-header.has-menu #menu-btn { display: inline-block; }
+  .search-overlay { padding: 0; }
+  .search-panel { max-width: none; max-height: 100%; height: 100%; border: 0; border-radius: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

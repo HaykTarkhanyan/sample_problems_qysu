@@ -51,6 +51,13 @@ into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discret
 | `site/assets/js/pN.js` | that sheet's widgets only (`p2-3.js` for P2-3) |
 | `site/assets/katex/`, `site/assets/fonts/` | vendored KaTeX 0.19.1 and Noto Serif/Sans Armenian (no CDN) |
 | `tools/check_site.mjs` | QA gate, also run in CI |
+| `tools/build_search_index.mjs` | writes `site/assets/search/<course>.js` (search index); CI reruns it before deploy; run it locally after editing pages, `--check` tells whether it is stale |
+| `site/assets/vendor/minisearch-7.2.0.js` | search library (DECISIONS #15), loaded only when the search box opens |
+
+Header tools, the phone ⋯ menu, the folded contents list with its floating button, the top pager and the
+glue between inline math and a following suffix are all created by `site.js` at runtime (DECISIONS #14).
+Do not add them to page HTML; a new page gets them automatically if it keeps the standard header,
+`.layout .toc`, `.content .pager` and `.page-head` markup.
 
 ### Page skeleton
 

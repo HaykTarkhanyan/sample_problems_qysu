@@ -9,6 +9,7 @@ on:
       - "site/**"
       - "discrete/solutions_opus_4_8_ARM/*.pdf"
       - "tools/check_site.mjs"
+      - "tools/build_search_index.mjs"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -28,6 +29,8 @@ jobs:
       - uses: actions/checkout@v7
       - name: QA (KaTeX render, Armenian punctuation, links)
         run: node tools/check_site.mjs
+      - name: Rebuild the search index (site/assets/search/*.js) from the pages being deployed
+        run: node tools/build_search_index.mjs
       - name: Copy the Armenian PDFs into the site
         run: |
           mkdir -p site/pdf

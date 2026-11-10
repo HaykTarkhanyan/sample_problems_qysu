@@ -2,6 +2,43 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 15. Site search: MiniSearch (vendored) over a per-course index generated from the pages
+- **Date** 2026-11-11 - **status** active (user: "do mobile fixes + search")
+- **Why** 15 + 7 long pages; students look for a term («Բայես», «Կանտոր», «բաշխ...»). A narrow need, so an
+  existing package: MiniSearch 7.2.0 (MIT, published 2025-09-16, the latest; prefix + fuzzy search, field
+  boosts, ~86 KB unminified UMD), vendored as `site/assets/vendor/minisearch-7.2.0.js` after checking the npm
+  tarball's sha1 against the registry. `tools/build_search_index.mjs` writes one document per page and per
+  `details.sec` (heading, bold terms / box titles / h3 / widget titles, plain text with short formulas turned
+  into readable text) to `site/assets/search/<course>.js`; the Pages workflow rebuilds it before every
+  deploy, so the live index cannot go stale. `site.js` loads both files only when the search box opens
+  (probability index: 827 KB raw, 142 KB gzipped; first open ~0.45 s locally, queries ~36 ms). Armenian
+  handling: ՞ ՛ ՜ removed inside words (ինչո՞ւ -> ինչու), split on non-letters, lower case, «եվ» -> «և», a
+  short stop-word list, AND first and OR as fallback. Results link to `page#section`.
+- **Alternatives rejected** Pagefind (Rust binary in the build, fetch-based so it fails from `file://`, i.e.
+  from a clone; DECISIONS #4 wants offline); hand-written prefix matching (the CLAUDE.md rule: use a package
+  for a narrow need); headings-only index (misses terms that live in the text); one index for both courses
+  (results from the other course would be noise).
+- **What would change this** The index growing past ~300 KB gzipped (then index headings + terms only, or
+  serialize the MiniSearch index at build time), or students asking for search across both courses.
+
+## 14. Phone UI built at runtime by `site.js`: header menu, folded contents + sheet, top pager, suffix glue
+- **Date** 2026-11-11 - **status** active (user picked U1-U5 from the UX ideas)
+- **Why** Browser check at 390 px: the contents list filled the first screen, the 4 header icons had no
+  visible labels (tooltips need a mouse), the course name wrapped (66 px header), prev/next only at the
+  bottom, and «$F(x)$» / «-ն է» split across lines. All fixed in `site.js` + `site.css` without touching the
+  25 HTML files: under 560 px the header tools move into a ⋯ menu with labels and on/off state, a course
+  name that wraps gets its first word abbreviated («Հավ. տեսություն», full name kept as the label; header
+  44 px); under 1120 px the contents list is folded and a floating button opens it as a bottom sheet; the
+  bottom pager is cloned to the top; after inline math a suffix or closing punctuation is glued (TeX up to 32
+  characters: nowrap span; longer: WORD JOINER, because nowrap would remove the formula's own breaks;
+  lecture 8 at 390 px: 21 of 512 pairs broken before, 0 after).
+- **Alternatives rejected** Editing every page's header markup (25 files to keep in sync); visible labels
+  under the icons (header too tall); WORD JOINER alone (left 7 of 21 breaks); nowrap for every formula
+  (long inline formulas would overflow); ← / → keyboard shortcuts for prev/next (pressing an arrow while a
+  widget chip has focus would leave the page and lose the widget state).
+- **What would change this** Student feedback that the ⋯ menu hides tools they use often (then pull the
+  most used one back into the header).
+
 ## 13. Probability pages: solve first, predict first, two representations, oral-exam section
 - **Date** 2026-11-10 - **status** active (user: "do stuff that you think will help" after the pedagogy review)
 - **Why** Two reviews of lecture 10 (author + an independent cold read, `probability/reviews/`) agreed on the
