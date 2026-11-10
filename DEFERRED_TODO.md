@@ -5,11 +5,13 @@ Topics cut from current work so they are not lost.
 - **Native Armenian read of the probability pages** (all 15 written by the model, linted with
   `armenian_style/lint_armenian.py` against the owner's decided rules, never read end to end by a
   native speaker). (2026-11-10)
-- **Independent math review of lectures 1-8 and 14-16** (skipped by owner choice, DECISIONS #13
-  revisited; 12 and 13 done 2026-11-10). Focus on theorem statements and hypotheses, which is where the
-  12/13 reviews found everything. Open from those reviews: does the lecturer use Sevastyanov's broad
-  definition of «singular» (any continuous F without a density)? Does w07's «later topics of the course»
-  (de Moivre-Laplace) hold for this semester? (2026-11-10)
+- **Questions for the lecturer / a student's notes** (from the math reviews, 2026-11-11): does the
+  lecturer use Sevastyanov's broad definition of «singular» (any continuous F without a density)? It
+  changes the answer to a w13 oral question (the page now says the answer depends on the definition).
+  Is the limsup/liminf part of w03 in the week-3 lecture? (The syllabus PDF has no text layer.)
+- **Native read of the reviewers' new Armenian prose**: the w01 atoms proof box, the w15 mixed-derivative
+  counterexample, the w04 long-needle paragraph and the w07 edge-case paragraph were written by review
+  agents and only linted. (2026-11-11)
 - **Missing sources** for weeks 10, 15 (Gnedenko ch. 4), the full proof of Lebesgue's decomposition
   for week 13 (Borovkov ch. 3 §2) and Borovkov for week 8; user said not to download more for now.
   (2026-11-10)

@@ -166,7 +166,9 @@ widget, etc.).
   «հաշվելիորեն ադիտիվ» (not «գումարելիություն»; «գումարելի» only for a summand); frequency =
   «հաճախություն»; convolution = «փաթույթ»; mutual / pairwise independence = «ըստ համախմբության անկախ» /
   «զույգ առ զույգ անկախ»; Lebesgue decomposition = «Լեբեգի վերլուծություն»; singular = «սինգուլյար» (course
-  syllabus); marginal = «մարգինալ (միաչափ)»; distribution law = «բաշխման օրենք».
+  syllabus); marginal = «մարգինալ (միաչափ)»; distribution law = «բաշխման օրենք»; σ-algebra =
+  «սիգմա-հանրահաշիվ» (glossary row 899; the short form «σ-հանրահաշիվ» appears once, as a note at the
+  lecture 1 definition); closed under convolution = «փաթույթի նկատմամբ փակ» (never «կայուն», which means stable).
 - Page file names: `site/probability/wNN-topic.html` with two-digit NN (`w01-events`, `w02-axioms`, `w03-continuity`,
   `w04-classical-geometric`, `w05-conditional-independence`, `w06-total-bayes`, `w07-bernoulli`,
   `w08-random-variable`, `w10-cdf-properties`, `w11-discrete`,
@@ -180,5 +182,6 @@ widget, etc.).
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
   every exercise answer (a node script recomputing them), browser check at 1280 px and 390 px in both
-  themes (no `.katex-display` overflow on phones), and one independent math review (lectures 10-13 had it, reports in
-  `probability/reviews/`; 1-8 and 14-16 were published without it by the owner's choice, DECISIONS #13 revisited).
+  themes (no `.katex-display` overflow on phones), and one independent math review (all 15 lectures have had one by 2026-11-11, reports in
+  `probability/reviews/`; a new page gets one before publishing). When several reviewers run in parallel, each
+  edits only its own page and lists cross-page problems for the orchestrator, who decides them once.

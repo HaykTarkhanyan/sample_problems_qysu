@@ -22,6 +22,12 @@ Newest first. Superseded entries stay, marked as such.
   reviewed the same evening (user request; `probability/reviews/2026-11-10_w12_math_review.md`, `..._w13_...`):
   no wrong numbers or answer keys, but missing theorem hypotheses (g' != 0, F_eta continuous) and one invalid
   inference, all fixed. That pattern says the number scripts work and the remaining risk is in statements.
+  **Revisited 2026-11-11:** the other 11 pages were reviewed too (user: "review the rest"), one agent per page
+  in waves of 4 (laptop load), each writing its report first and then applying only re-verified findings;
+  the orchestrator read every diff, resolved cross-page conflicts and ran the browser checks. 15/15 lectures
+  are now independently reviewed; reports in `probability/reviews/`. Across the 13 pages reviewed on
+  2026-11-10/11 (117 findings): 2 WRONG statements (w15 mixed-derivative claim, w05 answer to w04's
+  question), no wrong number in any answer key.
 
 ## 12. Probability pages: original explanations; the problem book is cited by problem number only
 - **Date** 2026-11-10 - **status** active
