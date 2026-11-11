@@ -23,6 +23,7 @@ done = [
   "Owner feedback 'ui is awful, editor inconvenient': cause 1 = stale cached site.css on the live site (Pages max-age=600); cause 2 = the edit-mode textarea. Rebuilt the cells on code-input 2.9.0 (DECISIONS #19): always editable, live highlighting, Ctrl/Shift+Enter runs, Python indent after ':', Backspace removes an indent level, Reset only after a change. Two bugs found by typing in the browser and fixed (Ctrl+Enter also inserted a newline; no indent after ':').",
   "Pages workflow: deploy-time ?v=<commit> on every local CSS/JS link (owner Q12); site.js passes the same ?v to the search index. Dry run on a copy: 180 links, 0 malformed, page + search work.",
   "Armenian flag removed everywhere (owner request): hub favicon/brand = white sigma, discrete = small graph (Q10, Q11).",
+  "Pedagogy pass on splines.html (owner: 'perhaps some stuff is too abrupt'): 'why splines' motivation before the definition; intuition box for h^2/8 and f'' (parabola vs chord: the bound is exact); M_i method rebuilt as 4 derived steps (S'' linear -> integrate twice with constants C_i, D_i -> interpolation fixes them -> S' continuity gives the system); least squares built up constant -> line (2x2 written out) -> parabola, with 'why squares' and the lecture 1 temperature example; f' / f'' steps shown in problems 3-5 and the (e^u-4)^2 trick explained; Runge and the 'natural' name explained. Lint 0, 0 formula overflows at 390 px.",
 ]
 
 pending = [
