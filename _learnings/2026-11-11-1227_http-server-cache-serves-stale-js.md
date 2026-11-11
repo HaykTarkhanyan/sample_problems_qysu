@@ -19,3 +19,9 @@ for (const u of ['../assets/js/pyrun.js', '../assets/site.css']) await fetch(u, 
 
 **Consequence.** A "fix verified" claim from a re-test is only valid after this step. Recorded in CONVENTIONS.md
 ("Numerical analysis pages").
+
+**The same happens on the live site.** GitHub Pages sends `cache-control: max-age=600`. Right after the first
+deploy of the numerical page, the owner opened it with `site.css` still cached from an earlier visit: the new
+page's code blocks had no styling at all (no colours, a serif "Python" label, a 20-column default textarea) and
+looked broken. For 10 minutes after any deploy that changes a shared asset, returning visitors can see new HTML
+with old CSS/JS. Ctrl+F5 fixes it for one person; a deploy-time `?v=<commit>` on asset URLs fixes it for everyone.

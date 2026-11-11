@@ -1,18 +1,29 @@
-/* Python code blocks: highlighting, copy, edit and Run.
+/* Python cells: always-editable code with live highlighting, Run with Pyodide.
 
    Markup:  <pre class="py" data-run><code>...escaped Python...</code></pre>
             (leave out data-run for a block that is only shown, not run)
 
-   Highlighting uses the vendored highlight.js (assets/vendor/highlight-11.12.0.min.js, load it
-   before this file). Run loads Pyodide from jsDelivr on the first click only (DECISIONS #16): the
-   page reads fine offline, running needs the internet once, then the browser cache. Every block
-   runs in its own fresh namespace, one block at a time (stdout is shared). Packages a block
-   imports (numpy, scipy) are fetched on demand by loadPackagesFromImports. */
+   Load before this file (all `defer`): assets/vendor/highlight-11.12.0.min.js,
+   assets/vendor/code-input-2.9.0/code-input.min.js and .../indent.min.js, plus the two
+   code-input stylesheets in <head>. A runnable block becomes a cell like in Colab: the code is
+   edited in place (code-input = a textarea over a highlighted <pre>; Tab / Shift+Tab indent, Enter
+   keeps the indentation, Esc then Tab leaves the editor), Ctrl+Enter or Shift+Enter runs it.
+
+   Run loads Pyodide from jsDelivr on the first click only (DECISIONS #16): the page reads fine
+   offline, running needs the internet once, then the browser cache. Every cell runs in its own
+   fresh namespace, one cell at a time (stdout is shared). Packages a cell imports (numpy, scipy)
+   are fetched on demand by loadPackagesFromImports. */
 (function () {
   "use strict";
   const Q = window.QYSU;
   const PYODIDE_VERSION = "314.0.7";
   const BASE = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+
+  if (!window.hljs) throw new Error("pyrun.js: highlight.js is not loaded");
+  if (!window.codeInput) throw new Error("pyrun.js: code-input is not loaded");
+  window.codeInput.registerTemplate("py", new window.codeInput.templates.Hljs(window.hljs, [
+    new window.codeInput.plugins.Indent(true, 4)      // 4 spaces, as in PEP 8
+  ]));
 
   let pyPromise = null;            // one Pyodide for the whole page
   let chain = Promise.resolve();   // serialises runs
@@ -41,42 +52,45 @@
     return ["Traceback (most recent call last):", ...lines.slice(first)].join("\n");
   }
 
-  function line(out, text, isErr) {
-    out.appendChild(Q.el("span", { class: isErr ? "err" : null }, text + "\n"));
+  function line(pre, text, isErr) {
+    pre.appendChild(Q.el("span", { class: isErr ? "err" : null }, text + "\n"));
   }
 
-  async function runCode(code, out, status) {
+  async function runCode(code, out) {
+    const pre = out.querySelector("pre"), status = out.querySelector(".py-status");
     out.hidden = false;
-    out.textContent = "";
-    sink = (s, isErr) => line(out, s, isErr);
+    out.classList.add("busy");
+    pre.textContent = "";
+    sink = (s, isErr) => line(pre, s, isErr);
     let ns = null;
     try {
-      if (!pyPromise) status.textContent = "Python-ը բեռնվում է (առաջին անգամ՝ մոտ 9 ՄԲ)...";
+      status.textContent = pyPromise ? "" : "Python-ը բեռնվում է (առաջին անգամ՝ մոտ 9 ՄԲ)...";
       const py = await loadPyodideOnce();
-      status.textContent = "Փաթեթները բեռնվում են...";
+      status.textContent = "փաթեթներ...";
       await py.loadPackagesFromImports(code, { messageCallback: () => {} });
-      status.textContent = "Կատարվում է...";
+      status.textContent = "կատարվում է...";
       ns = py.globals.get("dict")();
       const t0 = performance.now();
       const result = await py.runPythonAsync(code, { globals: ns });
       if (result !== undefined && result !== null) {
-        line(out, String(result), false);
+        line(pre, String(result), false);
         if (typeof result.destroy === "function") result.destroy();
       }
-      if (!out.textContent) line(out, "(ելք չկա)", false);
-      status.textContent = `Պատրաստ է (${Math.round(performance.now() - t0)} մվ)`;
+      if (!pre.textContent) line(pre, "(ելք չկա)", false);
+      status.textContent = `${Math.round(performance.now() - t0)} մվ`;
     } catch (err) {
       console.error(err);
       if (!pyPromise) {
         status.textContent = "Python-ը չբեռնվեց։ Ստուգեք ինտերնետ կապը և նորից փորձեք։";
-        line(out, String(err && err.message || err), true);
+        line(pre, String(err && err.message || err), true);
       } else {
-        status.textContent = "Սխալ";
-        line(out, studentTraceback(String(err && err.message || err)), true);
+        status.textContent = "սխալ";
+        line(pre, studentTraceback(String(err && err.message || err)), true);
       }
     } finally {
       if (ns) ns.destroy();
       sink = null;
+      out.classList.remove("busy");
     }
   }
 
@@ -93,91 +107,109 @@
     });
   }
 
-  function highlight(codeEl) {
-    if (!window.hljs) throw new Error("pyrun.js: highlight.js is not loaded");
-    codeEl.removeAttribute("data-highlighted");
+  /** Type text at the caret (replacing the selection) so that undo works and code-input re-highlights.
+      execCommand is deprecated but still the only way to keep the browser's undo stack; if a browser
+      refuses it, set the text directly and fire the input event ourselves. */
+  function insertText(ta, text) {
+    const ok = text ? document.execCommand("insertText", false, text) : document.execCommand("delete");
+    if (!ok) {
+      ta.setRangeText(text, ta.selectionStart, ta.selectionEnd, "end");
+      ta.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  }
+
+  const ICON = {
+    copy: '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15V5a1 1 0 0 1 1-1h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    reset: '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4.5h4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    run: '<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>'
+  };
+  function iconBtn(icon, label, cls = "btn icon") {
+    const b = Q.el("button", { class: cls, type: "button", title: label, "aria-label": label });
+    b.innerHTML = icon;
+    return b;
+  }
+
+  /** A block that is only shown: highlighted, with a copy button. */
+  function setupStatic(pre, code) {
+    const codeEl = pre.querySelector("code");
+    codeEl.textContent = code;
     codeEl.className = "language-python";
     window.hljs.highlightElement(codeEl);
+    const cell = Q.el("div", { class: "py-cell" });
+    pre.parentNode.insertBefore(cell, pre);
+    const copyB = iconBtn(ICON.copy, "Պատճենել կոդը");
+    copyB.addEventListener("click", () => copyText(code).catch(err => console.error(err)));
+    cell.append(Q.el("div", { class: "py-bar" }, Q.el("span", { class: "py-lang" }, "Python"), Q.el("span", { class: "py-gap" }), copyB), pre);
   }
 
-  function setup(pre) {
-    const codeEl = pre.querySelector("code");
-    if (!codeEl) throw new Error("pyrun.js: <pre class=\"py\"> without <code>");
-    const original = codeEl.textContent.replace(/^\n/, "").replace(/\s+$/, "");
-    codeEl.textContent = original;
-    highlight(codeEl);
+  function setupCell(pre) {
+    const original = pre.querySelector("code").textContent.replace(/^\n/, "").replace(/\s+$/, "");
+    if (!pre.hasAttribute("data-run")) { setupStatic(pre, original); return; }
 
-    const wrap = Q.el("div", { class: "code-block" });
-    pre.parentNode.insertBefore(wrap, pre);
-    const bar = Q.el("div", { class: "code-bar" });
-    const lang = Q.el("span", { class: "code-lang" }, "Python");
-    const status = Q.el("span", { class: "code-status", "aria-live": "polite" });
-    const out = Q.el("pre", { class: "code-out", hidden: true });
-    let editor = null;   // textarea while editing
+    const cell = Q.el("div", { class: "py-cell" });
+    const editor = document.createElement("code-input");
+    editor.setAttribute("language", "python");
+    editor.setAttribute("template", "py");
+    editor.className = "code-input_autogrow_height";
+    const fallback = Q.el("textarea", { "data-code-input-fallback": "", spellcheck: "false", autocapitalize: "off", "aria-label": "Python կոդ" });
+    fallback.value = original;
+    editor.append(fallback);
 
-    const current = () => (editor ? editor.value : codeEl.textContent);
-    const btn = (label, title) => Q.el("button", { class: "btn", type: "button", title }, label);
-
-    const copyB = btn("Պատճենել", "Պատճենել կոդը");
-    copyB.addEventListener("click", () => {
-      copyText(current()).then(
-        () => { status.textContent = "Պատճենված է"; },
-        err => { console.error(err); status.textContent = "Չհաջողվեց պատճենել. ընտրեք կոդը և պատճենեք ձեռքով"; });
-    });
-
-    const editB = btn("Խմբագրել", "Փոխել կոդը և նորից գործարկել");
-    editB.setAttribute("aria-pressed", "false");
-    const resetB = btn("Վերականգնել", "Վերադարձնել սկզբնական կոդը");
+    const runB = Q.el("button", { class: "btn primary py-run", type: "button", title: "Գործարկել (Ctrl+Enter)" });
+    runB.innerHTML = ICON.run + " Գործարկել";
+    const resetB = iconBtn(ICON.reset, "Վերադարձնել սկզբնական կոդը");
     resetB.hidden = true;
+    const copyB = iconBtn(ICON.copy, "Պատճենել կոդը");
+    const note = Q.el("span", { class: "py-note", "aria-live": "polite" });
+    const bar = Q.el("div", { class: "py-bar" },
+      Q.el("span", { class: "py-lang" }, "Python"),
+      Q.el("span", { class: "py-hint" }, "Խմբագրեք տեղում · Ctrl+Enter՝ գործարկել"),
+      Q.el("span", { class: "py-gap" }), note, resetB, copyB, runB);
+    const out = Q.el("div", { class: "py-out", hidden: true },
+      Q.el("div", { class: "py-out-head" }, Q.el("span", {}, "Ելք"), Q.el("span", { class: "py-status" })),
+      Q.el("pre"));
 
-    function stopEditing() {
-      codeEl.textContent = editor.value;
-      highlight(codeEl);
-      editor.remove();
-      editor = null;
-      pre.hidden = false;
-      editB.setAttribute("aria-pressed", "false");
-      editB.textContent = "Խմբագրել";
+    const code = () => editor.value;
+    function run() {
+      runB.disabled = true;
+      chain = chain.then(() => runCode(code(), out)).finally(() => { runB.disabled = false; });
     }
-    editB.addEventListener("click", () => {
-      if (editor) { stopEditing(); return; }
-      editor = Q.el("textarea", { class: "code-edit", spellcheck: "false", autocapitalize: "off", "aria-label": "Python կոդ" });
-      editor.value = codeEl.textContent;
-      editor.rows = Math.min(40, editor.value.split("\n").length + 1);
-      pre.hidden = true;
-      wrap.insertBefore(editor, pre);
-      editor.addEventListener("keydown", ev => {     // Tab inserts 4 spaces instead of leaving the box
-        if (ev.key !== "Tab" || ev.shiftKey) return;
-        ev.preventDefault();
-        const s = editor.selectionStart;
-        editor.setRangeText("    ", s, editor.selectionEnd, "end");
-      });
-      editor.focus();
-      editB.setAttribute("aria-pressed", "true");
-      editB.textContent = "Ավարտել";
-      resetB.hidden = false;
-    });
+    runB.addEventListener("click", run);
+    // Capture phase: runs before the Indent plugin's own keydown listener on the inner textarea.
+    editor.addEventListener("keydown", ev => {
+      const ta = ev.target;
+      if (ta.tagName !== "TEXTAREA") return;
+      const stop = () => { ev.preventDefault(); ev.stopPropagation(); };
+      if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey || ev.shiftKey)) { stop(); run(); return; }
+      if (ta.selectionStart !== ta.selectionEnd || ev.altKey) return;
+      const before = ta.value.slice(0, ta.selectionStart);
+      const lineSoFar = before.slice(before.lastIndexOf("\n") + 1);
+      if (ev.key === "Enter" && /:\s*(#.*)?$/.test(lineSoFar)) {
+        // Python block opener (def, for, if, ...:): next line one level deeper. Other lines: the
+        // Indent plugin keeps the current indentation.
+        stop();
+        insertText(ta, "\n" + lineSoFar.match(/^ */)[0] + "    ");
+      } else if (ev.key === "Backspace" && lineSoFar.length >= 4 && lineSoFar.length % 4 === 0 && /^ +$/.test(lineSoFar)) {
+        stop();                                        // inside the leading indent: remove one level
+        ta.setSelectionRange(ta.selectionStart - 4, ta.selectionStart);
+        insertText(ta, "");
+      }
+    }, true);
+    editor.addEventListener("input", () => { resetB.hidden = code() === original; });
     resetB.addEventListener("click", () => {
-      if (editor) stopEditing();
-      codeEl.textContent = original;
-      highlight(codeEl);
+      editor.value = original;
       resetB.hidden = true;
       out.hidden = true;
-      status.textContent = "";
+    });
+    copyB.addEventListener("click", () => {
+      copyText(code()).then(
+        () => { note.textContent = "պատճենված է"; setTimeout(() => { note.textContent = ""; }, 1500); },
+        err => { console.error(err); note.textContent = "չհաջողվեց պատճենել"; });
     });
 
-    bar.append(lang);
-    if (pre.hasAttribute("data-run")) {
-      const runB = Q.el("button", { class: "btn primary", type: "button", title: "Գործարկել կոդը ձեր բրաուզերում" }, "▶ Գործարկել");
-      runB.addEventListener("click", () => {
-        runB.disabled = true;
-        chain = chain.then(() => runCode(current(), out, status)).finally(() => { runB.disabled = false; });
-      });
-      bar.append(runB, editB, resetB);
-    }
-    bar.append(copyB, status);
-    wrap.append(bar, pre, out);
+    pre.replaceWith(cell);
+    cell.append(bar, editor, out);
   }
 
-  Q.ready(() => document.querySelectorAll("pre.py").forEach(setup));
+  Q.ready(() => document.querySelectorAll("pre.py").forEach(setupCell));
 })();

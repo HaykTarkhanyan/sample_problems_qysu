@@ -19,6 +19,10 @@ done = [
   "Verification: numerical_methods/checks/splines_check.py (scipy-based, all asserts pass, 0.7 s), checks/widgets_check.mjs (JS numerics), all 10 Python blocks executed locally (numpy 2.5.4, scipy 1.18.1) and in the browser through Pyodide (first run 19.6 s, later 0.3 s, scipy block 30 s first time), check_site full site 0 errors, Armenian lint 0 errors, 390 px: 0 display/inline formula overflows after splitting 22 formulas, console clean.",
   "Search: normTerm maps «ինտերպոլյաց» to «ինտերպոլաց» so the problem list's spelling finds the glossary spelling.",
   "Docs: DECISIONS #16 (Pyodide CDN, reopens #4 for Run only), #17 (Manim), #18 (numerical course pages); CONVENTIONS 'Numerical analysis pages'; README rewritten; CLAUDE.md scope updated; animations/README.md; 2 learnings; DEFERRED_TODO entries; .gitignore (numerical PDFs, animations venv/media, logs, *.stackdump).",
+  "Commit a122ad7 pushed and deployed (Pages run passed).",
+  "Owner feedback 'ui is awful, editor inconvenient': cause 1 = stale cached site.css on the live site (Pages max-age=600); cause 2 = the edit-mode textarea. Rebuilt the cells on code-input 2.9.0 (DECISIONS #19): always editable, live highlighting, Ctrl/Shift+Enter runs, Python indent after ':', Backspace removes an indent level, Reset only after a change. Two bugs found by typing in the browser and fixed (Ctrl+Enter also inserted a newline; no indent after ':').",
+  "Pages workflow: deploy-time ?v=<commit> on every local CSS/JS link (owner Q12); site.js passes the same ?v to the search index. Dry run on a copy: 180 links, 0 malformed, page + search work.",
+  "Armenian flag removed everywhere (owner request): hub favicon/brand = white sigma, discrete = small graph (Q10, Q11).",
 ]
 
 pending = [

@@ -8,6 +8,9 @@
 
   // URL of the assets/ folder (site.js lives there); the search files load from it on demand.
   const ASSETS = document.currentScript ? new URL(".", document.currentScript.src).href : null;
+  // "?v=<commit>" that the Pages workflow appends to site.js at deploy time (empty locally); reused for the
+  // files loaded on demand so a fresh deploy never pairs new pages with a cached search index.
+  const VER = document.currentScript ? new URL(document.currentScript.src).search : "";
 
   // Macros shared by all sheets (mirrors the \newcommand / \DeclareMathOperator
   // lines in the .tex preambles). A page may add more via window.PAGE_MACROS.
@@ -304,7 +307,7 @@
     function load() {
       if (loading) return loading;
       loading = loadScript(ASSETS + "vendor/minisearch-7.2.0.js")
-        .then(() => loadScript(ASSETS + "search/" + course + ".js"))
+        .then(() => loadScript(ASSETS + "search/" + course + ".js" + VER))
         .then(() => {
           docs = (window.QYSU_SEARCH || {})[course];
           if (!Array.isArray(docs) || typeof window.MiniSearch !== "function") throw new Error("search index or MiniSearch missing for " + course);

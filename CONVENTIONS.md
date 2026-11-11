@@ -187,8 +187,10 @@ widget, etc.).
   `w12-continuous`, `w13-singular`, `w14-random-vectors`, `w15-multivariate-types`, `w16-independence`).
 - Shared distribution code: `PROB.pmf.binom / poisson / geom (k >= 1) / hyper` and `PROB.bars(host, {ks, ps,
   overlay, hl})` for pmf bar charts with an overlay of red dots (comparisons, simulations).
-- Probability pages use the die favicon (blue rounded square, white-orange-white pips); discrete pages and the
-  hub keep the flag favicon.
+- Course icons (favicon + `.brand` span, same design, blue rounded square; no Armenian flag anywhere since
+  2026-11-11, user request): hub = white ∑ (`span.sigma`), discrete = small graph with orange nodes
+  (`span.graph`), probability = die (`span.die`), numerical = curve through three nodes (`span.spl`). Copy the
+  `<link rel="icon">` line and the span from an existing page of the same course.
 - Every new page: also run `python -I armenian_style/lint_armenian.py <page> <script>` (0 errors) and check that
   no `.katex-display` overflows at 390 px; formula boxes with a formula plus its range go in
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
@@ -203,7 +205,9 @@ widget, etc.).
 - One page per block of the Armenian problem list (`numerical_methods/README.md` maps the blocks), named by
   topic: `splines.html` (block C). Scripts after `site.js`: `prob.js` (reused for `PROB.plot`, `PROB.onDrag`,
   `PROB.num`, predict blocks and the `#deep-btn`), `../assets/vendor/highlight-11.12.0.min.js`,
-  `../assets/js/pyrun.js`, then the page's `num-<topic>.js`. Brand icon `<span class="spl">` and the curve
+  `../assets/vendor/code-input-2.9.0/code-input.min.js` and `indent.min.js`, `../assets/js/pyrun.js`, then the
+  page's `num-<topic>.js`; in `<head>` the two code-input stylesheets (`code-input.min.css`, `autogrow.min.css`)
+  before `site.css`. Copy the whole `<head>` of `splines.html`. Brand icon `<span class="spl">` and the curve
   favicon (copy both from `splines.html`).
 - Page pattern = the probability pattern (DECISIONS #13, #18): `<body data-try-default data-two-step>`, three key
   ideas, short theory right before each group of problems (definition / theorem boxes, proof in `details.deep`),

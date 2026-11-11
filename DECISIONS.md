@@ -2,6 +2,27 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 19. Python cells are edited in place with code-input 2.9.0 (vendored), plus Python-aware Enter / Backspace
+- **Date** 2026-11-11 - **status** active (user, after the first deploy: "the ui is awful, also the editor is very
+  inconvenient to use")
+- **Why** The first version had a separate "Edit" mode that swapped the highlighted code for a plain textarea (no
+  highlighting while typing). Part of what the user saw was a stale stylesheet (GitHub Pages sends
+  `cache-control: max-age=600`, so returning visitors kept the old `site.css` without any code-block rules), but
+  the mode switch itself was clumsy. Now every runnable block is a Colab-like cell: always editable, highlighted
+  while typing, Ctrl/Shift+Enter runs, Reset appears only after a change, the height follows the code. A narrow
+  need, so a package: code-input 2.9.0 (MIT, released 2026-09-18, 27 releases; textarea over a highlighted
+  `<pre>`, built-in highlight.js template, Indent plugin, autogrow CSS), npm tarball sha1 checked, vendored in
+  `site/assets/vendor/code-input-2.9.0/` (22 KB JS + 5.6 KB indent + 9 KB CSS; classic script, so it works from
+  `file://`). `pyrun.js` adds a capture-phase key handler: Ctrl/Shift+Enter only runs (the plugin would also insert
+  a newline), Enter after a line ending in `:` indents one level deeper (the plugin indents only after brackets),
+  Backspace inside the leading indent removes 4 spaces. Checked by typing in the browser: `for k in range(2):` +
+  Enter gave 8 spaces, Ctrl+Enter ran it without adding a line.
+- **Alternatives rejected** CodeMirror 6 (ES modules only: needs a bundler or a CDN, ~10x the size, overkill for
+  20-line snippets); a hand-written textarea overlay (code-input is exactly that, with the caret/scroll syncing
+  already debugged); keeping the edit-mode textarea (the user's complaint).
+- **What would change this** Students needing line numbers, multi-cursor or autocompletion (then CodeMirror loaded
+  on demand), or code-input breaking on a browser update.
+
 ## 18. Numerical analysis course: one page per problem-list block, solutions in the probability pattern
 - **Date** 2026-11-11 - **status** active (user: "generate nice armenian solutions - focus first on pages 14-17,
   the spline part", "we won't care about pdfs for this one")

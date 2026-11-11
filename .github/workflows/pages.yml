@@ -36,6 +36,17 @@ jobs:
           mkdir -p site/pdf
           cp discrete/solutions_opus_4_8_ARM/*.pdf site/pdf/
           ls -la site/pdf
+      # GitHub Pages lets browsers cache assets for 10 minutes (max-age=600). Without a version in the URL a
+      # returning visitor can get new HTML with the old site.css / site.js right after a deploy. Only the
+      # deployed copy is rewritten; the repo keeps plain links, so pages still open from a clone.
+      - name: Cache-bust local CSS/JS links with ?v=<commit>
+        run: |
+          v="${GITHUB_SHA::8}"
+          find site -name '*.html' -print0 | xargs -0 sed -i -E "s#((href|src)=\"[^\"?]*assets/[^\"?]+\.(css|js))\"#\1?v=${v}\"#g"
+          n=$(grep -rhoE 'assets/[^"?]+\.(css|js)\?v=[0-9a-f]{8}"' site --include='*.html' | wc -l)
+          bad=$(grep -rhoE 'assets/[^"]+\.(css|js)\?v=[0-9a-f]{8}[^"]' site --include='*.html' | wc -l)
+          echo "versioned $n asset links with v=$v ($bad malformed)"
+          test "$n" -gt 100 && test "$bad" -eq 0
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

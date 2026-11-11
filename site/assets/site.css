@@ -122,9 +122,10 @@ code, .mono { font-family: Consolas, "Courier New", monospace; font-size: .92em;
   display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
 }
 .brand { font-weight: 700; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
-.brand .flag { display: inline-flex; flex-direction: column; width: 18px; height: 12px; border-radius: 2px; overflow: hidden; }
-.brand .flag i { flex: 1; } .brand .flag i:nth-child(1) { background: #d90012; } .brand .flag i:nth-child(2) { background: #0033a0; } .brand .flag i:nth-child(3) { background: #f2a800; }
-/* Probability pages: a die (same design as their favicon) instead of the flag. */
+/* Course icons in the header, each the same design as the course favicon: hub = sigma, discrete = small graph,
+   probability = die, numerical = curve through three nodes. */
+.brand .sigma { flex: none; width: 18px; height: 18px; border-radius: 4px; background: #0033a0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M22.5 9.5V8H9.5L16.5 16L9.5 24H22.5V22.5' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.brand .graph { flex: none; width: 18px; height: 18px; border-radius: 4px; background: #0033a0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 9H23V23H9ZM9 9L23 23' fill='none' stroke='%23fff' stroke-width='2.8'/%3E%3Ccircle cx='9' cy='9' r='4' fill='%23F2A800'/%3E%3Ccircle cx='23' cy='9' r='4' fill='%23F2A800'/%3E%3Ccircle cx='9' cy='23' r='4' fill='%23F2A800'/%3E%3Ccircle cx='23' cy='23' r='4' fill='%23F2A800'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
 .brand .die { flex: none; width: 18px; height: 18px; border-radius: 4px; background:
   radial-gradient(circle at 29% 29%, #fff 0 1.8px, transparent 2.3px),
   radial-gradient(circle at 50% 50%, #f2a800 0 1.8px, transparent 2.3px),
@@ -464,20 +465,35 @@ details.deep > .inner, details.extra > .inner { padding: .2rem 1rem .7rem; }
 body.try-mode .solution.answer-only { display: block; }
 body.try-mode .solution.answer-only:not(.revealed) > :not(.box.answer) { display: none; }
 
-/* ---------- Python code blocks (assets/js/pyrun.js) ---------- */
-.code-block { margin: 1rem 0 1.2rem; border: 1px solid var(--widget-line); border-radius: var(--radius); background: var(--widget-bg); overflow: hidden; }
-.code-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: .4rem .55rem; border-bottom: 1px solid var(--widget-line); font-family: var(--sans); font-size: .85rem; }
-.code-bar .btn { padding: .2rem .65rem; font-size: .85rem; }
-.code-bar .btn[hidden] { display: none; }   /* .btn sets display, which would override the hidden attribute */
-.code-lang { font-weight: 700; color: var(--muted); margin-right: .2rem; }
-.code-status { color: var(--muted); font-size: .82rem; }
-pre.py, pre.code-out, textarea.code-edit { margin: 0; padding: .7rem .85rem; font-family: Consolas, "Courier New", monospace; font-size: .86rem; line-height: 1.5; tab-size: 4; }
-pre.py { overflow-x: auto; background: transparent; }
+/* ---------- Python cells (assets/js/pyrun.js + vendor/code-input-2.9.0) ---------- */
+.py-cell { margin: 1rem 0 1.3rem; border: 1px solid var(--widget-line); border-radius: var(--radius); background: var(--widget-bg); overflow: hidden; }
+.py-cell:focus-within { border-color: var(--blue); box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 18%, transparent); }
+.py-bar { display: flex; align-items: center; gap: .35rem; padding: .3rem .4rem .3rem .75rem; border-bottom: 1px solid var(--widget-line);
+  background: color-mix(in srgb, var(--ink) 3%, var(--widget-bg)); font-family: var(--sans); font-size: .8rem; line-height: 1.3; }
+.py-lang { font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.py-hint { color: var(--muted); margin-left: .4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.py-gap { flex: 1; }
+.py-note { color: var(--green); white-space: nowrap; }
+.py-bar .btn { padding: .22rem .6rem; font-size: .8rem; line-height: 1.3; }
+.py-bar .btn.icon { padding: .25rem .4rem; display: inline-flex; align-items: center; color: var(--muted); background: transparent; border-color: transparent; }
+.py-bar .btn.icon:hover { color: var(--ink); border-color: var(--widget-line); }
+.py-bar .btn[hidden] { display: none; }   /* .btn sets display, which would override the hidden attribute */
+.py-run { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; }
+@media (max-width: 560px) { .py-hint { display: none; } }
+/* the editor and the static block share one code font */
+.py-cell code-input, pre.py { margin: 0; font-family: Consolas, "Cascadia Mono", "Courier New", monospace; font-size: .86rem; line-height: 1.55; tab-size: 4; }
+.py-cell code-input { --padding: 12px; width: 100%; background: transparent; color: var(--ink); caret-color: var(--ink); border-radius: 0; }
+.py-cell code-input:has(textarea:focus):not(.code-input_mouse-focused) { outline: none; }   /* the whole cell shows focus */
+.py-cell code-input textarea::selection { background: color-mix(in srgb, var(--blue) 30%, transparent); }
+pre.py { padding: 12px; overflow-x: auto; background: transparent; }
 pre.py code { font-size: inherit; white-space: pre; }
-textarea.code-edit { display: block; width: 100%; border: 0; resize: vertical; background: color-mix(in srgb, var(--orange) 6%, var(--surface)); color: var(--ink); white-space: pre; overflow-x: auto; }
-textarea.code-edit:focus { outline: 2px solid var(--blue); outline-offset: -2px; }
-pre.code-out { border-top: 1px dashed var(--widget-line); background: color-mix(in srgb, var(--ink) 4%, var(--surface)); white-space: pre-wrap; word-break: break-word; max-height: 24rem; overflow-y: auto; }
-pre.code-out .err { color: var(--red); }
+.py-out { border-top: 1px solid var(--widget-line); background: color-mix(in srgb, var(--ink) 4%, var(--surface)); }
+.py-out-head { display: flex; justify-content: space-between; gap: .5rem; padding: .25rem .75rem 0; font-family: var(--sans); font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.py-status { text-transform: none; letter-spacing: 0; }
+.py-out.busy .py-status { color: var(--orange-ink); }
+.py-out pre { margin: 0; padding: .3rem .75rem .65rem; font-family: Consolas, "Cascadia Mono", "Courier New", monospace; font-size: .84rem; line-height: 1.5;
+  white-space: pre-wrap; word-break: break-word; max-height: 24rem; overflow-y: auto; }
+.py-out .err { color: var(--red); }
 /* highlight.js tokens, coloured with the theme tokens so dark mode follows */
 .hljs-keyword, .hljs-built_in, .hljs-literal { color: var(--blue); font-weight: 700; }
 .hljs-string { color: var(--green); }
