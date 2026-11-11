@@ -246,11 +246,11 @@
     list: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
   };
   const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
-  /** "probability" / "discrete" for pages inside a course folder, else null (hub, redirect stubs). */
+  /** "probability" / "discrete" / "numerical" for pages inside a course folder, else null (hub, redirect stubs). */
   function courseFromPath() {
     const parts = location.pathname.split("/").filter(Boolean);
     const dir = location.pathname.endsWith("/") ? parts[parts.length - 1] : parts[parts.length - 2];
-    return dir === "probability" || dir === "discrete" ? dir : null;
+    return dir === "probability" || dir === "discrete" || dir === "numerical" ? dir : null;
   }
   function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -265,7 +265,9 @@
 
   // ---------- search: MiniSearch + the course index, both loaded on first open ----------
   const STOP = new Set(["են", "որ", "ու", "այս", "այդ", "մի", "եթե", "ապա", "իսկ", "կամ", "նաև", "էլ", "համար", "հետ", "մեջ", "վրա", "դա", "դրա", "նրա", "որը", "որի"]);
-  const normTerm = t => t.toLowerCase().replace(/եվ/g, "և");
+  // Same normalisation for indexed text and queries. «ինտերպոլյացիա» (the numerical-analysis problem list's spelling)
+  // and «ինտերպոլացիա» (the glossary's) become one term, so both find the same sections.
+  const normTerm = t => t.toLowerCase().replace(/եվ/g, "և").replace(/ինտերպոլյաց/g, "ինտերպոլաց");
   function setupSearch() {
     const course = courseFromPath();
     const actions = document.querySelector(".header-actions");

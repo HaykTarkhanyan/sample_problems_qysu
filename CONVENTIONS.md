@@ -41,7 +41,12 @@ into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discret
 
 | path | what |
 |------|------|
-| `site/index.html` | hub: one card per course (discrete, probability) |
+| `site/index.html` | hub: one card per course (numerical, probability, discrete) |
+| `site/numerical/index.html`, `site/numerical/<topic>.html` | numerical analysis landing page and one page per problem-list block (`splines.html` = block C) |
+| `site/assets/js/pyrun.js` | runnable Python blocks (Pyodide from CDN on first Run, DECISIONS #16) |
+| `site/assets/js/num-<topic>.js` | that numerical page's widgets (`num-splines.js`) |
+| `site/assets/vendor/highlight-11.12.0.min.js` | Python highlighting for `pre.py` blocks |
+| `site/assets/video/*.mp4` | Manim videos rendered from `animations/` (DECISIONS #17) |
 | `site/pN-topic.html` | redirect stubs to `discrete/pN-topic.html` (old URLs keep working, `#anchor` kept) |
 | `site/discrete/index.html` | discrete landing page, one card per sheet |
 | `site/probability/index.html`, `site/probability/wNN-topic.html` | probability landing page and one page per lecture week |
@@ -192,3 +197,35 @@ widget, etc.).
   themes (no `.katex-display` overflow on phones), and one independent math review (all 15 lectures have had one by 2026-11-11, reports in
   `probability/reviews/`; a new page gets one before publishing). When several reviewers run in parallel, each
   edits only its own page and lists cross-page problems for the orchestrator, who decides them once.
+
+## Numerical analysis pages (`site/numerical/`)
+
+- One page per block of the Armenian problem list (`numerical_methods/README.md` maps the blocks), named by
+  topic: `splines.html` (block C). Scripts after `site.js`: `prob.js` (reused for `PROB.plot`, `PROB.onDrag`,
+  `PROB.num`, predict blocks and the `#deep-btn`), `../assets/vendor/highlight-11.12.0.min.js`,
+  `../assets/js/pyrun.js`, then the page's `num-<topic>.js`. Brand icon `<span class="spl">` and the curve
+  favicon (copy both from `splines.html`).
+- Page pattern = the probability pattern (DECISIONS #13, #18): `<body data-try-default data-two-step>`, three key
+  ideas, short theory right before each group of problems (definition / theorem boxes, proof in `details.deep`),
+  every problem its own `details.sec#pN` with `.box.problem` + `.solution`, a predict block before each main
+  widget, closing `#exam` section with a summary table, typical mistakes and self-check questions.
+- Problem statements are restated in our own words; data, intervals and what is asked stay exactly as in the
+  list. Terms follow the glossary (`ինտերպոլացիա`), and the course-specific terms are: spline = «սպլայն», linear /
+  cubic = «գծային (առաջին կարգի)» / «խորանարդային», natural = «բնական», clamped = «ամրացված ծայրերով»,
+  not-a-knot = «"ոչ հանգույց" պայման», node = «հանգույց», partition = «տրոհում», residual = «շեղում», normal
+  equations = «նորմալ հավասարումներ», sum of squares = $\Phi$.
+- Python blocks: `<pre class="py" data-run><code>...</code></pre>` with `<`, `>`, `&` escaped. Every block is
+  self-contained (it runs in a fresh namespace), uses only numpy unless the text says the block downloads SciPy
+  (~14 MB), prints its results, and its output matches the numbers in the text. Armenian comments and strings
+  are fine; no Latin `:` or `;` right after an Armenian letter (the lint checks code too), use `՝`. Run all
+  blocks locally before publishing (extract the `pre.py` blocks and `exec` them with the `animations/` env).
+- Display math must fit 316 px (288 px inside a box): split long formulas with `aligned` / `gathered`, and write
+  two-piece functions in a problem statement inline («$[a,b]$-ում $p(x)$-ին և ...») instead of a wide `cases`.
+  Never put Armenian inside `\text{}` (KaTeX fonts have no Armenian glyphs); use $S(x_0^-)$ / $S(x_0^+)$ style
+  notation and say in prose what it means.
+- Every number on the page is recomputed by `numerical_methods/checks/<topic>_check.py`
+  (`uv run --project animations python numerical_methods/checks/splines_check.py`), and the widget numerics by
+  `node numerical_methods/checks/widgets_check.mjs`. One independent math review per page before publishing,
+  report in `numerical_methods/reviews/`.
+- Browser checks against `python -m http.server` serve cached JS after an edit: before re-testing, refresh the
+  cache with `fetch(url, {cache: "reload"})` for each changed file, then reload the page.

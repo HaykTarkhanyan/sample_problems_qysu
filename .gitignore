@@ -336,3 +336,14 @@ probability/books/
 armenian_style/_sources/
 # A student's handwritten lecture notes (photos): local reference only, never committed
 probability/notes_from_student/
+
+# Numerical analysis: lecture slides and problem lists are local reference only (user, 2026-11-11: "we won't care about pdfs")
+numerical_methods/*.pdf
+# Manim environment and its render cache; finished videos are copied to site/assets/video/
+animations/.venv/
+animations/media/
+__pycache__/
+# Logs of committed scripts (numerical_methods/checks/*.py write logs/<script>.log)
+logs/
+# Git Bash crash dumps
+*.stackdump

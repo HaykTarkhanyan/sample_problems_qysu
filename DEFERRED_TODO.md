@@ -2,6 +2,15 @@
 
 Topics cut from current work so they are not lost.
 
+- **Numerical analysis, remaining problem-list blocks** A (errors + nonlinear equations, 45 problems),
+  B (interpolation, 26), D (integration, 25), E (linear systems, 16), with PSS 1 of the current course as a
+  separate page or merged into A. `numerical_methods/README.md` has the map. (2026-11-11)
+- **Native Armenian read of `site/numerical/splines.html`** (model-written, linted only). (2026-11-11)
+- **Student feedback on runnable Python**: is the ~9 MB first load acceptable on phones; do they edit and rerun;
+  would plots in the output help (matplotlib in Pyodide, ~10 MB more) (DECISIONS #16). (2026-11-11)
+- **More Manim videos** if the first one helps: candidates are the linear-spline error parabola
+  (where h²/8 comes from) and least-squares residual squares shrinking to the optimum. (2026-11-11)
+
 - **Native Armenian read of the probability pages** (all 15 written by the model, linted with
   `armenian_style/lint_armenian.py` against the owner's decided rules, never read end to end by a
   native speaker). (2026-11-10)

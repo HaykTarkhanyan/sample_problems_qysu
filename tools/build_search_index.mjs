@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = path.join(ROOT, "site");
 const OUT_DIR = path.join(SITE, "assets", "search");
-const COURSES = ["probability", "discrete"];
+const COURSES = ["probability", "discrete", "numerical"];
 
 const ENT = { lt: "<", gt: ">", amp: "&", nbsp: " ", quot: "\"", "#39": "'", thinsp: " ", hellip: "…" };
 function decode(s) {

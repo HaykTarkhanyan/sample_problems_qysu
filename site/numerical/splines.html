@@ -1,0 +1,1006 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Cpath d=%27M6 22 C10 8 13 8 16 16 S22 25 26 10%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%276%27 cy=%2722%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2726%27 cy=%2710%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Սպլայններ և փոքրագույն քառակուսիներ</title>
+<meta name="description" content="Թվային անալիզ՝ գծային և խորանարդային սպլայններ, սխալանքի գնահատական, բնական սպլայն, փոքրագույն քառակուսիների մեթոդ։ 17 լուծված խնդիր, ինտերակտիվ նկարներ և բրաուզերում գործարկվող Python կոդ։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/vendor/highlight-11.12.0.min.js"></script>
+<script defer src="../assets/js/pyrun.js"></script>
+<script defer src="../assets/js/num-splines.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="spl" aria-hidden="true"></span>Թվային անալիզ</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել խնդիրների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Դասախոսություն 4 · խնդիրների ցանկի 3-րդ բաժին</div>
+    <h1>Սպլայններ և փոքրագույն քառակուսիներ</h1>
+    <p class="subtitle">Գծային և խորանարդային սպլայններ, սխալանքի գնահատական, բնական սպլայն, փոքրագույն քառակուսիների մեթոդ՝ 17 լուծված խնդիր</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս բաժնի մասին</a></li>
+        <li><a href="#linear">Գծային սպլայն</a></li>
+        <li><a href="#p1">Խնդիր 1 - բեկյալ</a></li>
+        <li><a href="#p2">Խնդիր 2 - սպլայն և գնահատական</a></li>
+        <li><a href="#p3">Խնդիր 3 - քանի՞ հանգույց</a></li>
+        <li><a href="#p4">Խնդիր 4 - ինտեգրալի սխալանք</a></li>
+        <li><a href="#p5">Խնդիր 5 - անհավասար տրոհում</a></li>
+        <li><a href="#cubic">Խորանարդային սպլայն</a></li>
+        <li><a href="#p6">Խնդիր 6 - ո՞ր պայմանն է խախտված</a></li>
+        <li><a href="#p7">Խնդիր 7 - ստուգում հանգույցներում</a></li>
+        <li><a href="#p8">Խնդիր 8 - խզում</a></li>
+        <li><a href="#p9">Խնդիր 9 - երկու կետ</a></li>
+        <li><a href="#p10">Խնդիր 10 - բնական սպլայն</a></li>
+        <li><a href="#p11">Խնդիր 11 - անհայտ գործակիցներ</a></li>
+        <li><a href="#p12">Խնդիր 12 - անհայտ գործակիցներ</a></li>
+        <li><a href="#p13">Խնդիր 13 - գոյություն չունի</a></li>
+        <li><a href="#lsq">Փոքրագույն քառակուսիներ</a></li>
+        <li><a href="#p14">Խնդիր 14 - հաստատուն և $a+|x|+bx^2$</a></li>
+        <li><a href="#p15">Խնդիր 15 - երեք կետ</a></li>
+        <li><a href="#p16">Խնդիր 16 - նորմալ հավասարումներ</a></li>
+        <li><a href="#p17">Խնդիր 17 - Python ծրագիր</a></li>
+        <li><a href="#exam">Ամփոփում և տիպիկ սխալներ</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս բաժնի մասին</h2></summary>
+<div class="sec-body">
+<p>Այստեղ լուծված են թվային անալիզի խնդիրների ցանկի «Ինտերպոլացիոն սպլայններ» բաժնի բոլոր 17 խնդիրները։ Առաջին հինգը
+գծային սպլայնի մասին են, 6-13-ը՝ խորանարդային սպլայնների, 14-17-ը՝ փոքրագույն քառակուսիների մեթոդի։ Ամեն խմբից առաջ կարճ
+տեսություն է՝ 4-րդ դասախոսության սլայդների հիման վրա։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Սպլայնը կտորներից կազմված ֆունկցիա է՝</strong> ամեն $[x_i,x_{i+1}]$ հատվածում ցածր աստիճանի բազմանդամ, իսկ
+  հանգույցներում կտորները միանում են անընդհատության պայմաններով։ Բարձր աստիճանի մեկ բազմանդամի փոխարեն շատ փոքր
+  բազմանդամներ՝ առանց Ռունգեի տատանումների։</li>
+  <li><strong>Գծային սպլայնի սխալանքը համեմատական է $h^2$-ին՝</strong> $|f-S|\le\frac{h^2}{8}\max|f''|$։ Հանգույցների քանակը
+  կրկնապատկելիս սխալանքը մոտ չորս անգամ փոքրանում է։</li>
+  <li><strong>Փոքրագույն քառակուսիների կորը կետերով չի անցնում,</strong> այլ ընտրում է տրված տեսքի այն ֆունկցիան, որի
+  շեղումների քառակուսիների գումարը նվազագույնն է։ Գործակիցները գծային համակարգի լուծում են։</li>
+</ol>
+</div>
+<div class="note"><strong>Պայմանավորվածություններ։</strong> Հանգույցները $x_0\lt x_1\lt\dots\lt x_n$ են,
+$h_i=x_{i+1}-x_i$, $h=\max_i h_i$, $M_2=\max|f''|$, իսկ խորանարդային սպլայնի համար $M_i=S''(x_i)$։ Խնդիրների ցանկում
+գրված է «ինտերպոլյացիա», իսկ այստեղ հետևում ենք տերմինների բառարանին՝ «ինտերպոլացիա»։ Խնդիրների պայմանները շարադրված են
+մեր բառերով, տվյալները չեն փոխված։</div>
+<div class="note"><strong>Python։</strong> Կոդի վանդակի «▶ Գործարկել» կոճակը կոդը կատարում է ձեր բրաուզերում (Pyodide)։
+Առաջին անգամ ներբեռնվում է մոտ 9 ՄԲ, հետո գործարկումն արագ է։ «Խմբագրել» կոճակով կարելի է փոխել տվյալները և նորից
+գործարկել, իսկ կոդը կարելի է պատճենել Jupyter կամ Colab։ Առանց ինտերնետի էջը կարդացվում է, բայց կոդը չի գործարկվում։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="linear" open>
+<summary><h2>Գծային սպլայն և սխալանքի գնահատական</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>Դիցուք $a=x_0\lt x_1\lt\dots\lt x_n=b$ տրոհում է։ $S$ ֆունկցիան կոչվում է <strong>առաջին կարգի (գծային) սպլայն</strong>,
+եթե $S$-ն անընդհատ է $[a,b]$-ում և ամեն $[x_i,x_{i+1}]$ հատվածում գծային ֆունկցիա է։ Եթե բացի այդ $S(x_i)=f(x_i)$ բոլոր
+$i$-երի համար, $S$-ը կոչվում է $f$-ի <strong>ինտերպոլացիոն գծային սպլայն</strong>։</p>
+</div>
+<p>Ամեն հատվածում $S$-ը հարևան երկու կետերը միացնող հատվածն է, իսկ ամբողջ գրաֆիկը՝ բեկյալ՝</p>
+$$\begin{gathered}S(x)=f(x_i)+\frac{f(x_{i+1})-f(x_i)}{h_i}\,(x-x_i),\\ x\in[x_i,x_{i+1}].\end{gathered}$$
+
+<div class="box thm"><div class="box-title">Թեորեմ (սխալանքի գնահատական)</div>
+<p>Դիցուք $f\in C^2[a,b]$, իսկ $S$-ը $f$-ի ինտերպոլացիոն գծային սպլայնն է $x_0,\dots,x_n$ հանգույցներում։ Այդ դեպքում
+ցանկացած $x\in[a,b]$-ի համար</p>
+$$|f(x)-S(x)|\le\frac{h^2}{8}\max_{[a,b]}|f''|.$$
+</div>
+<p>Թեորեմը կարելի է կիրառել նաև ամեն հատվածի համար առանձին՝ $[x_i,x_{i+1}]$-ում
+$|f-S|\le\frac{h_i^2}{8}\max_{[x_i,x_{i+1}]}|f''|$։ Սա օգտակար է, երբ հատվածները հավասար չեն (խնդիրներ 4 և 5)։</p>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Վերցնենք $x\in(x_i,x_{i+1})$ և դիտարկենք $g(t)=f(t)-S(t)-K(t-x_i)(t-x_{i+1})$ ֆունկցիան, որտեղ $K$ թիվն ընտրված է
+այնպես, որ $g(x)=0$։ $g$-ն զրո է դառնում երեք կետում՝ $x_i$, $x$, $x_{i+1}$։ Ռոլլի թեորեմով $g'$-ը զրո է դառնում երկու
+կետում, իսկ $g''$-ը՝ մի $\xi$ կետում։ Քանի որ $S''=0$ հատվածի ներսում, $g''(\xi)=f''(\xi)-2K=0$, այսինքն՝
+$K=\frac{f''(\xi)}{2}$, և</p>
+$$\begin{gathered}f(x)-S(x)=\\ \frac{f''(\xi)}{2}\,(x-x_i)(x-x_{i+1}).\end{gathered}$$
+<p>$|(x-x_i)(x-x_{i+1})|$ արտադրյալը մեծագույնն է հատվածի մեջտեղում, որտեղ այն հավասար է $\frac{h_i^2}{4}$-ի։
+Հետևաբար, $|f(x)-S(x)|\le\frac{h_i^2}{8}\max|f''|\le\frac{h^2}{8}\max|f''|$։ ∎</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $f(x)=\ln(e^{x^2}+4)$ ֆունկցիայի համար հավասար հատվածների քանակը կրկնապատկում ենք։
+Մոտավորապես քանի՞ անգամ կփոքրանա գծային սպլայնի մեծագույն սխալանքը։</p>
+<div class="predict-opts"><button class="btn" type="button">2 անգամ</button><button class="btn" type="button" data-ok>4 անգամ</button><button class="btn" type="button">8 անգամ</button></div>
+<div class="predict-why">Սխալանքը համեմատական է $h^2$-ին, և երբ $h$-ը կիսվում է, այն փոքրանում է մոտ $4$ անգամ։ «2 անգամ» կլիներ,
+եթե սխալանքը համեմատական լիներ $h$-ին, իսկ «8 անգամ»՝ $h^3$-ին։ Ստուգեք ներքևում՝ $n=10$ և $n=20$։</div>
+</div>
+
+<div class="widget" id="w-lin">
+  <div class="widget-head">Գծային սպլայնի սխալանքը</div>
+  <p class="widget-hint">Ընտրեք ֆունկցիան և փոխեք $n$-ը (հավասար հատվածների քանակը)։ Վերևում մոխրագույնով $f$-ն է,
+  կապույտով՝ $S$-ը, իսկ կարմիր հատվածը ցույց է տալիս, թե որտեղ է սխալանքը մեծագույնը։ Ներքևում $|f-S|$-ն է, իսկ կարմիր
+  կետագիծը՝ $\frac{h^2}{8}M_2$ գնահատականը։ Սխալանքը միշտ այդ գծից ցածր է։ «Ռունգեի ֆունկցիա» դեպքում միացրեք
+  ինտերպոլացիոն բազմանդամը և մեծացրեք $n$-ը՝ բազմանդամը տատանվում է ծայրերում, իսկ սպլայնը՝ ոչ։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p2" aria-pressed="false">Խնդիր 2</button>
+    <button class="btn" type="button" data-case="p3" aria-pressed="true">Խնդիր 3</button>
+    <button class="btn" type="button" data-case="runge" aria-pressed="false">Ռունգեի ֆունկցիա</button>
+    <button class="btn" type="button" data-act="poly" aria-pressed="false">Ինտերպոլացիոն բազմանդամ</button>
+  </div>
+  <div class="slider-row"><label for="w-lin-n">$n$</label><input type="range" id="w-lin-n" min="1" max="60" value="4"><span data-out="n"></span></div>
+  <div data-out="plot"></div>
+  <div data-out="err"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1" open>
+<summary><h2>Խնդիր 1 - բեկյալ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 1</div>
+<p>Գտեք այն գծային սպլայնը, որն ինտերպոլացնում է հետևյալ տվյալները՝</p>
+<div class="table-wrap"><table class="tbl"><tbody>
+<tr><td>$x$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$4$</td><td class="num">$8$</td></tr>
+<tr><td>$y$</td><td class="num">$0$</td><td class="num">$1$</td><td class="num">$2$</td><td class="num">$3$</td></tr>
+</tbody></table></div>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գծային սպլայնը հարևան կետերը միացնող բեկյալն է.
+բավական է գրել երեք ուղղի հավասարում՝ ամեն հատվածի համար մեկը։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - թեքություններ</h3>
+<p>$[1,2]$-ում թեքությունը $\frac{1-0}{2-1}=1$ է, $[2,4]$-ում՝ $\frac{2-1}{4-2}=\frac12$, $[4,8]$-ում՝ $\frac{3-2}{8-4}=\frac14$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ուղիղներ</h3>
+<p>$S(x)=0+1\cdot(x-1)=x-1$, $S(x)=1+\frac12(x-2)=\frac x2$, $S(x)=2+\frac14(x-4)=\frac x4+1$։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Հանգույցներում հարևան բանաձևերը համընկնում են՝
+$x=2$-ում երկուսն էլ տալիս են $1$, $x=4$-ում՝ $2$։ Հետևաբար, $S$-ն անընդհատ է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$$S(x)=\begin{cases}x-1, & 1\le x\le2,\\ \frac x2, & 2\le x\le4,\\ \frac x4+1, & 4\le x\le8.\end{cases}$$</div>
+<p>Նույն սպլայնը Python-ով։ Ֆունկցիան գտնում է այն հատվածը, որում ընկած է $x$-ը, և վերցնում ծայրերի արժեքների
+կշռված միջինը։ Համեմատության համար տպում ենք նաև NumPy-ի պատրաստի <code>np.interp</code>-ը։</p>
+<pre class="py" data-run><code>import numpy as np
+
+def linear_spline(xs, ys):
+    xs, ys = np.asarray(xs, float), np.asarray(ys, float)
+    def S(x):
+        # i-ն այն հատվածի համարն է, որում ընկած է x-ը
+        i = np.clip(np.searchsorted(xs, x) - 1, 0, len(xs) - 2)
+        t = (x - xs[i]) / (xs[i + 1] - xs[i])
+        return (1 - t) * ys[i] + t * ys[i + 1]
+    return S
+
+xs, ys = [1, 2, 4, 8], [0, 1, 2, 3]
+S = linear_spline(xs, ys)
+for x in [1, 1.5, 3, 6, 8]:
+    print(f"S({x}) = {S(x):.4f}   np.interp: {np.interp(x, xs, ys):.4f}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2" open>
+<summary><h2>Խնդիր 2 - սպլայն և գնահատական</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 2</div>
+<p>Դիցուք $f(x)=x^2+\sin\frac{\pi x}{2}$։ (ա) Կառուցեք $f$-ի ինտերպոլացիոն գծային սպլայնը $x_0=-2$, $x_1=0$, $x_2=1$
+հանգույցներում։ (բ) Հաշվեք $S(0{,}5)$-ը։ (գ) Ցույց տվեք, որ $\max_{[-2,1]}|f(x)-S(x)|\le1+\frac{\pi^2}{8}$։</p>
+</div>
+<div class="solution">
+<h3>(ա) Սպլայնը</h3>
+<p>$f(-2)=4+\sin(-\pi)=4$, $f(0)=0$, $f(1)=1+\sin\frac\pi2=2$։ $[-2,0]$-ում սպլայնը $(-2,4)$ և $(0,0)$ կետերով ուղիղն է՝
+$S(x)=-2x$, իսկ $[0,1]$-ում՝ $(0,0)$ և $(1,2)$ կետերով ուղիղը՝ $S(x)=2x$։ Միասին՝ $S(x)=2|x|$, $x\in[-2,1]$։</p>
+<h3>(բ) Արժեքը</h3>
+<p>$S(0{,}5)=2\cdot0{,}5=1$։ Համեմատության համար՝ $f(0{,}5)=0{,}25+\sin\frac\pi4\approx0{,}957$։</p>
+<h3>(գ) Գնահատականը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_2$</h3>
+<p>$f''(x)=2-\frac{\pi^2}{4}\sin\frac{\pi x}{2}$։ Քանի որ $|\sin|\le1$, $|f''(x)|\le2+\frac{\pi^2}{4}$ (հավասարությունը
+$x=-1$-ում է)։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $h$ և թեորեմը</h3>
+<p>Հատվածների երկարություններն են $2$ և $1$, այսինքն՝ $h=2$, և</p>
+$$\begin{aligned}\max_{[-2,1]}|f-S|&\le\frac{2^2}{8}\Bigl(2+\frac{\pi^2}{4}\Bigr)\\&=1+\frac{\pi^2}{8}\approx2{,}234.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական մեծագույն սխալանքը $2$ է՝ $x=-1$ կետում, որտեղ
+$f(-1)=1-1=0$, իսկ $S(-1)=2$։ Գնահատականը ճիշտ է և բավական մոտ իրականին։ Վերևի ինտերակտիվ նկարում ընտրեք «Խնդիր 2»։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $S(x)=2|x|$, $S(0{,}5)=1$, $\max|f-S|\le\frac{2^2}{8}\bigl(2+\frac{\pi^2}{4}\bigr)=1+\frac{\pi^2}{8}$</div>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: x**2 + np.sin(np.pi * x / 2)
+xs = np.array([-2.0, 0.0, 1.0])
+S = lambda x: np.interp(x, xs, f(xs))
+
+print("S(0.5) =", S(0.5), "   f(0.5) =", round(f(0.5), 4))
+x = np.linspace(-2, 1, 300001)
+err = np.abs(f(x) - S(x))
+print("max|f - S| =", round(err.max(), 6), "  x =", round(x[err.argmax()], 4))
+print("1 + pi^2/8 =", round(1 + np.pi**2 / 8, 6))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p3" open>
+<summary><h2>Խնդիր 3 - քանի՞ հանգույց</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 3</div>
+<p>$f(x)=\ln(e^{x^2}+4)$ ֆունկցիան $[-2,0]$ հատվածում մոտարկվում է իր ինտերպոլացիոն գծային սպլայնով։ Քանի՞
+հավասարահեռ հանգույց է անհրաժեշտ, որ բոլոր $x\in[-2,0]$-ի համար $|S(x)-f(x)|\lt10^{-3}$ լինի։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Թեորեմից ստանում ենք բավարար պայման՝
+$\frac{h^2}{8}M_2\lt10^{-3}$։ Հիմնական քայլը $M_2=\max|f''|$-ի գնահատումն է։ Որքան ճշգրիտ է գնահատականը, այնքան քիչ
+հանգույց է պետք։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - երկրորդ ածանցյալը</h3>
+<p>Նշանակենք $u=x^2\in[0,4]$։ Այդ դեպքում $f'(x)=\frac{2x\,e^{u}}{e^{u}+4}$ և</p>
+$$f''(x)=\frac{2e^{u}}{e^{u}+4}+\frac{16\,u\,e^{u}}{(e^{u}+4)^2}\gt0.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - պարզ գնահատական</h3>
+<p>Առաջին գումարելին փոքր է $2$-ից։ Երկրորդի համար $(e^u+4)^2-16e^u=(e^u-4)^2\ge0$, ուստի
+$\frac{16\,u\,e^u}{(e^u+4)^2}\le u\le4$։ Հետևաբար, $M_2\le6$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - $n$-ը</h3>
+<p>$n$ հավասար հատվածի դեպքում $h=\frac2n$, և պայմանը դառնում է</p>
+$$\begin{gathered}\frac{1}{8}\cdot\frac{4}{n^2}\cdot6=\frac{3}{n^2}\lt10^{-3}\\ \iff n^2\gt3000\iff n\ge55.\end{gathered}$$
+<p>$55$ հատվածի ծայրակետերը $56$ հանգույց են։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - ճշգրիտ $M_2$</h3>
+<p>$f''$-ի մեծագույն արժեքը կարելի է գտնել թվային եղանակով (տես կոդը)՝ $M_2\approx3{,}3804$, $x\approx-1{,}632$ կետում։
+Վերցնելով $M_2\le3{,}381$՝ $\frac{1}{2n^2}\cdot3{,}381\lt10^{-3}$, այսինքն՝ $n^2\gt1690{,}5$, $n\ge42$, և բավական է $43$ հանգույց։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $n=41$ հատվածի դեպքում իրական մեծագույն սխալանքը
+$\approx1{,}005\cdot10^{-3}$ է (դեռ մեծ է), իսկ $n=42$-ի դեպքում՝ $\approx0{,}958\cdot10^{-3}$։ Այս ֆունկցիայի համար
+գնահատականը գրեթե ճշգրիտ է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $M_2\le6$ գնահատականով՝ $56$ հանգույց, ճշգրիտ $M_2\approx3{,}38$-ով՝ $43$ հանգույց (նվազագույնը)</div>
+<p class="muted">Երկու պատասխանն էլ երաշխավորում են $10^{-3}$ ճշտությունը, քանի որ թեորեմի պայմանը բավարար է։ Նվազագույն
+քանակը $43$ է։</p>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: np.log(np.exp(x**2) + 4)
+
+def f2(x):                                  # f''(x), քայլ 1
+    e = np.exp(x**2)
+    return 2*e/(e + 4) + 16*x**2*e/(e + 4)**2
+
+x = np.linspace(-2, 0, 200001)
+M2 = f2(x).max()
+print("M2 =", round(M2, 5), "  x =", round(x[f2(x).argmax()], 4))
+
+n = int(np.floor(2 / np.sqrt(8e-3 / M2))) + 1   # h^2/8 * M2 < 1e-3, h = 2/n
+print("n =", n, "հատված,", n + 1, "հանգույց")
+
+def true_error(n):
+    t = np.linspace(-2, 0, n + 1)
+    return np.abs(f(x) - np.interp(x, t, f(t))).max()
+
+for k in [n - 1, n]:
+    print(k, "հատված, իրական սխալանքը՝", f"{true_error(k):.4e}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p4" open>
+<summary><h2>Խնդիր 4 - ինտեգրալի սխալանք</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 4</div>
+<p>$[0;\,0{,}2]$ հատվածը տրոհված է $t_0=0$, $t_1=0{,}04$, $t_2=0{,}1$, $t_3=0{,}2$ կետերով։ $S$-ը $f(x)=e^{x-x^2}$
+ֆունկցիայի ինտերպոլացիոն գծային սպլայնն է այդ հանգույցներում։ Գնահատեք
+$\left|\int_0^{0{,}2}\bigl(f(x)-S(x)\bigr)dx\right|$-ը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գնահատենք ինտեգրալն ամեն տրոհման հատվածում առանձին՝
+կիրառելով թեորեմը հենց այդ հատվածի համար, և արդյունքները գումարենք։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - մեկ հատված</h3>
+<p>$[t_i,t_{i+1}]$-ում $|f-S|\le\frac{h_i^2}{8}M_2$։ Ինտեգրելով $h_i$ երկարությամբ հատվածով՝</p>
+$$\begin{gathered}\Bigl|\int_{t_i}^{t_{i+1}}(f-S)\,dx\Bigr|\le\frac{h_i^3}{8}M_2,\\
+\Bigl|\int_0^{0{,}2}(f-S)\,dx\Bigr|\le\frac{M_2}{8}\sum_i h_i^3.\end{gathered}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $M_2$</h3>
+<p>$f''(x)=e^{x-x^2}\bigl((1-2x)^2-2\bigr)$։ $[0;\,0{,}2]$-ում $(1-2x)^2\in[0{,}36;\,1]$, այնպես որ
+$|f''(x)|=e^{x-x^2}\bigl(2-(1-2x)^2\bigr)$, և երկու արտադրիչն էլ աճում են։ Մեծագույն արժեքը $x=0{,}2$-ում է՝
+$M_2=e^{0{,}16}\cdot1{,}64\approx1{,}925$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - գումարը</h3>
+<p>$h_0=0{,}04$, $h_1=0{,}06$, $h_2=0{,}1$, $\sum h_i^3=0{,}000064+0{,}000216+0{,}001=0{,}00128$։</p>
+$$\begin{aligned}\Bigl|\int_0^{0{,}2}(f-S)\,dx\Bigr|&\le\frac{0{,}00128}{8}\cdot1{,}925\\&\approx3{,}08\cdot10^{-4}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ինտեգրալի ճշգրիտ արժեքը $\approx1{,}73\cdot10^{-4}$ է (կոդը)։ Քանի որ
+$f''\lt0$, $f$-ը գոգավոր է, լարերը գրաֆիկից ցածր են, և ինտեգրալը դրական է։</div>
+<p class="muted">Թեորեմն ամբողջ հատվածի համար միանգամից կիրառելով ($h=0{,}1$)՝ ստանում ենք ավելի կոպիտ, բայց նույնպես ճիշտ
+գնահատական՝ $(b-a)\frac{h^2}{8}M_2=0{,}2\cdot\frac{0{,}01}{8}\cdot1{,}925\approx4{,}81\cdot10^{-4}$։ Ամեն հատվածի համար
+առանձին կիրառելն ավելի ճշգրիտ է, քանի որ կարճ հատվածներում $h_i^2$-ն ավելի փոքր է։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\left|\int_0^{0{,}2}(f-S)\,dx\right|\le\frac{M_2}{8}\sum h_i^3\approx3{,}08\cdot10^{-4}$ (պարզագույն եղանակով՝ $4{,}81\cdot10^{-4}$)</div>
+<details class="extra"><summary>Ավելին՝ ավելի լավ հաստատուն</summary><div class="inner">
+<p>Թեորեմի ապացույցից $f(x)-S(x)=\frac{f''(\xi)}{2}(x-t_i)(x-t_{i+1})$, ուստի
+$|f-S|\le\frac{M_2}{2}(x-t_i)(t_{i+1}-x)$ հատվածի ներսում։ Ինտեգրելով՝
+$\int_{t_i}^{t_{i+1}}(x-t_i)(t_{i+1}-x)\,dx=\frac{h_i^3}{6}$, և $8$-ի փոխարեն ստանում ենք $12$՝
+$\frac{0{,}00128}{12}\cdot1{,}925\approx2{,}05\cdot10^{-4}$։ $S$-ի ինտեգրալը սեղանների բանաձևն է, և այս $\frac{h^3}{12}$-ը նրա
+սխալանքն է, որը կհանդիպի թվային ինտեգրման բաժնում։</p>
+</div></details>
+<pre class="py" data-run><code>import numpy as np
+
+f   = lambda x: np.exp(x - x**2)
+fpp = lambda x: np.exp(x - x**2) * ((1 - 2*x)**2 - 2)
+t = np.array([0, 0.04, 0.1, 0.2])          # Խնդիր 5-ի համար փոխեք f, fpp, t
+h = np.diff(t)
+
+M2 = np.abs(fpp(np.linspace(t[0], t[-1], 100001))).max()
+print("M2 =", round(M2, 5), "  sum h^3 =", round((h**3).sum(), 8))
+print("գնահատականը՝", f"{(h**3).sum() / 8 * M2:.4e}")
+
+x = np.linspace(t[0], t[-1], 2000001)
+exact = np.trapezoid(f(x) - np.interp(x, t, f(t)), x)
+print("ճշգրիտ արժեքը՝", f"{exact:.4e}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p5" open>
+<summary><h2>Խնդիր 5 - անհավասար տրոհում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 5</div>
+<p>$[1,2]$ հատվածը տրոհված է $t_0=1$, $t_1=1{,}6$, $t_2=1{,}79$, $t_3=2$ կետերով։ $S$-ը
+$f(x)=-e^{x^2-2x}-(x-1)^2$ ֆունկցիայի ինտերպոլացիոն գծային սպլայնն է այդ հանգույցներում։ Գնահատեք
+$\left|\int_1^2\bigl(f(x)-S(x)\bigr)dx\right|$-ը։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_2$</h3>
+<p>Նշանակենք $t=x-1\in[0,1]$, այդ դեպքում $x^2-2x=t^2-1$ և $f=-e^{t^2-1}-t^2$։ Ածանցելով՝</p>
+$$\begin{gathered}f''=-e^{t^2-1}\,(2+4t^2)-2,\\ |f''|=e^{t^2-1}(2+4t^2)+2.\end{gathered}$$
+<p>$|f''|$-ն աճում է $t$-ից, և մեծագույնն աջ ծայրում է՝ $M_2=|f''(2)|=e^0\cdot6+2=8$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գնահատականը</h3>
+<p>$h_0=0{,}6$, $h_1=0{,}19$, $h_2=0{,}21$, $\sum h_i^3=0{,}216+0{,}006859+0{,}009261=0{,}23212$։ Խնդիր 4-ի եղանակով՝</p>
+$$\Bigl|\int_1^2(f-S)\,dx\Bigr|\le\frac{0{,}23212}{8}\cdot8=0{,}23212.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - ամեն հատվածի $M_2$-ով</h3>
+<p>Քանի որ $|f''|$-ն աճող է, ամեն հատվածում մեծագույնն աջ ծայրում է՝ $3{,}814$, $5{,}088$ և $8$ (վերցնում ենք
+$3{,}82$ և $5{,}09$)։ Այդ դեպքում</p>
+$$\begin{aligned}&\tfrac18\bigl(0{,}216\cdot3{,}82+0{,}006859\cdot5{,}09\\&\qquad+0{,}009261\cdot8\bigr)\approx0{,}117.\end{aligned}$$
+<p class="muted">Թեորեմն ամբողջ $[1,2]$-ի համար միանգամից կիրառելով ($h=0{,}6$)՝ $1\cdot\frac{0{,}36}{8}\cdot8=0{,}36$։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ինտեգրալի ճշգրիտ արժեքը $\approx0{,}0616$ է (Խնդիր 4-ի կոդը՝ նոր
+տվյալներով)։ Ամենամեծ ներդրումը տալիս է ամենաերկար՝ առաջին հատվածը ($h_0^3=0{,}216$ գումարի $93\%$-ն է)։ Անհավասար
+տրոհման դեպքում սխալանքը որոշում են երկար հատվածները։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\le0{,}36$ (պարզագույն եղանակով), $\le0{,}232$ (ամեն հատվածի $h_i$-ով), $\le0{,}117$ (ամեն հատվածի $h_i$-ով և $M_2$-ով), ճշգրիտ արժեքը՝ $\approx0{,}062$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="cubic" open>
+<summary><h2>Խորանարդային սպլայն</h2></summary>
+<div class="sec-body">
+<p>Գծային սպլայնի գրաֆիկը հանգույցներում անկյուններ ունի։ Ողորկ կոր ստանալու համար կտորները դարձնում ենք երրորդ
+աստիճանի և պահանջում, որ հանգույցներում համընկնեն նաև առաջին և երկրորդ ածանցյալները։</p>
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>$S$-ը կոչվում է <strong>խորանարդային սպլայն</strong> $a=x_0\lt\dots\lt x_n=b$ տրոհման նկատմամբ, եթե ամեն
+$[x_i,x_{i+1}]$-ում $S$-ն առավելագույնը երրորդ աստիճանի բազմանդամ է, և $S$, $S'$, $S''$ ֆունկցիաներն անընդհատ են ամբողջ
+$[a,b]$-ում։</p>
+</div>
+<p>Գործնականում անընդհատությունը ստուգում ենք ներքին հանգույցներում՝ ամեն $x_i$-ում ձախ և աջ կտորների արժեքները,
+առաջին և երկրորդ ածանցյալները պետք է հավասար լինեն։ Կտորները հարմար է գրել $(x-x_i)$-ի աստիճաններով՝ եթե
+$p(x)=\alpha+\beta(x-c)+\gamma(x-c)^2+\delta(x-c)^3$, ապա $p(c)=\alpha$, $p'(c)=\beta$, $p''(c)=2\gamma$։</p>
+
+<h3>Քանի՞ պայման է պետք</h3>
+<p>$n$ կտոր, ամեն մեկում $4$ գործակից՝ $4n$ անհայտ։ Ինտերպոլացիան տալիս է $2n$ պայման (ամեն կտոր անցնում է իր երկու
+ծայրակետերով), $S'$-ի և $S''$-ի անընդհատությունը՝ $2(n-1)$։ Ընդամենը $4n-2$ պայման, այսինքն՝ պակասում է <strong>երկու պայման</strong>։
+Դրանք ավելացնում են ծայրերում՝</p>
+<ul>
+  <li><strong>բնական սպլայն՝</strong> $S''(x_0)=S''(x_n)=0$,</li>
+  <li><strong>ամրացված ծայրերով սպլայն՝</strong> $S'(x_0)=f'(x_0)$, $S'(x_n)=f'(x_n)$,</li>
+  <li><strong>«ոչ հանգույց» պայման ($n\ge3$)՝</strong> $S'''$-ն անընդհատ է $x_1$ և $x_{n-1}$ կետերում, այսինքն՝ առաջին երկու
+  և վերջին երկու կտորները նույն բազմանդամն են,</li>
+  <li><strong>պարբերական սպլայն՝</strong> $S'(x_0)=S'(x_n)$, $S''(x_0)=S''(x_n)$ (և տվյալներում $y_0=y_n$)։</li>
+</ul>
+
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ՝ կառուցում $M_i$-երով</div>
+<p>Ամենահարմար անհայտները $M_i=S''(x_i)$ թվերն են։ $S''$-ն ամեն կտորում գծային է և որոշվում է ծայրերի $M_i$ և
+$M_{i+1}$ արժեքներով։ Երկու անգամ ինտեգրելով և օգտվելով $S(x_i)=y_i$, $S(x_{i+1})=y_{i+1}$ պայմաններից՝</p>
+$$\begin{aligned}S(x)={}&M_i\frac{(x_{i+1}-x)^3}{6h_i}\\
+&+M_{i+1}\frac{(x-x_i)^3}{6h_i}\\
+&+\Bigl(\frac{y_i}{h_i}-\frac{M_ih_i}{6}\Bigr)(x_{i+1}-x)\\
+&+\Bigl(\frac{y_{i+1}}{h_i}-\frac{M_{i+1}h_i}{6}\Bigr)(x-x_i).\end{aligned}$$
+<p>Այս բանաձևով $S$ և $S''$ ֆունկցիաներն արդեն անընդհատ են։ $S'$-ի անընդհատությունը ներքին հանգույցներում տալիս է
+գծային համակարգ՝</p>
+$$\begin{gathered}h_{i-1}M_{i-1}+2(h_{i-1}+h_i)M_i+h_iM_{i+1}\\
+=6\Bigl(\frac{y_{i+1}-y_i}{h_i}-\frac{y_i-y_{i-1}}{h_{i-1}}\Bigr),\\ i=1,\dots,n-1.\end{gathered}$$
+<p>Բնական սպլայնի դեպքում $M_0=M_n=0$, և համակարգի մատրիցը երեքանկյունագծային է՝ ամեն հավասարման մեջ կա ընդամենը
+երեք անհայտ։</p>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Համակարգի դուրսբերումը։</strong> Ածանցելով $S$-ի բանաձևը՝ $x_i$ կետում աջ կտորի ածանցյալը</p>
+$$\begin{aligned}S'(x_i^+)={}&-\frac{h_i}{3}M_i-\frac{h_i}{6}M_{i+1}\\&+\frac{y_{i+1}-y_i}{h_i},\end{aligned}$$
+<p>իսկ ձախ կտորինը՝</p>
+$$\begin{aligned}S'(x_i^-)={}&\frac{h_{i-1}}{6}M_{i-1}+\frac{h_{i-1}}{3}M_i\\&+\frac{y_i-y_{i-1}}{h_{i-1}}.\end{aligned}$$
+<p>Հավասարեցնելով և բազմապատկելով $6$-ով՝ ստանում ենք վերևի հավասարումը։</p>
+<p><strong>Գոյություն և միակություն։</strong> Ամեն տողում անկյունագծային տարրը՝ $2(h_{i-1}+h_i)$, մեծ է նույն տողի մյուս
+տարրերի գումարից՝ $h_{i-1}+h_i$։ Այդպիսի $A$ մատրիցը չվերասերված է. եթե $Av=0$ և $|v_k|$-ն $v$-ի կոորդինատներից
+մեծագույնն է, $k$-րդ տողից $2(h_{k-1}+h_k)|v_k|\le(h_{k-1}+h_k)|v_k|$, որից $v_k=0$ և, հետևաբար, $v=0$։ Այսպիսով՝ բնական սպլայնը գոյություն
+ունի և միակն է։ ∎</p>
+</div></details>
+
+<figure class="fig"><video controls playsinline preload="metadata" muted width="720" src="../assets/video/spline-smoothness.mp4"></video>
+<figcaption>Անիմացիա (Manim)։ Գծային սպլայնի $S'$-ը թռչում է ամեն ներքին հանգույցում, իսկ խորանարդային սպլայնի $S'$
+և $S''$ ֆունկցիաներն անընդհատ են։ Բնական սպլայնի $S''$-ը կտոր առ կտոր գծային է և ծայրերում զրո է։</figcaption></figure>
+
+<p>Ստորև բնական սպլայնը կառուցող ֆունկցիան է՝ ուղիղ վերևի բանաձևերով։ Օրինակը Խնդիր 10-ի տվյալներն են։</p>
+<pre class="py" data-run><code>import numpy as np
+
+def natural_spline(xs, ys):
+    """Բնական խորանարդային սպլայն՝ վերադարձնում է M = S''(x_i) և S ֆունկցիան"""
+    xs, ys = np.asarray(xs, float), np.asarray(ys, float)
+    n = len(xs) - 1
+    h = np.diff(xs)
+    A = np.zeros((n + 1, n + 1))
+    r = np.zeros(n + 1)
+    A[0, 0] = A[n, n] = 1                      # M_0 = M_n = 0
+    for i in range(1, n):
+        A[i, i - 1:i + 2] = h[i - 1], 2 * (h[i - 1] + h[i]), h[i]
+        r[i] = 6 * ((ys[i + 1] - ys[i]) / h[i] - (ys[i] - ys[i - 1]) / h[i - 1])
+    M = np.linalg.solve(A, r)
+
+    def S(x):
+        i = np.clip(np.searchsorted(xs, x) - 1, 0, n - 1)
+        a, b = xs[i + 1] - x, x - xs[i]
+        return ((M[i] * a**3 + M[i + 1] * b**3) / (6 * h[i])
+                + (ys[i] / h[i] - M[i] * h[i] / 6) * a
+                + (ys[i + 1] / h[i] - M[i + 1] * h[i] / 6) * b)
+    return M, S
+
+M, S = natural_spline([-1, 0, 1], [1, 2, -1])
+print("M =", M)
+for x in [-1, -0.5, 0, 0.5, 1]:
+    print(f"S({x:5}) = {S(x):8.4f}    |x|^3 - 3x^2 - x + 2 = {abs(x)**3 - 3*x**2 - x + 2:8.4f}")</code></pre>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Բնական սպլայնի մեկ կետը վեր ենք քաշում։ Ի՞նչ կլինի սպլայնի հետ։</p>
+<div class="predict-opts"><button class="btn" type="button">Կփոխվեն միայն այդ կետի երկու հարևան կտորները</button><button class="btn" type="button" data-ok>Կփոխվի ամբողջ սպլայնը, բայց հեռվում՝ շատ քիչ</button><button class="btn" type="button">Ամբողջ սպլայնը կփոխվի նույն չափով</button></div>
+<div class="predict-why">$M_i$-երի համակարգը կապում է բոլոր անհայտները, և մեկ $y_i$-ի փոփոխությունը փոխում է բոլոր $M$-երը։
+Բայց ազդեցությունն արագ մարում է՝ հավասարահեռ հանգույցների դեպքում ամեն հանգույցում մոտ $2+\sqrt3\approx3{,}7$ անգամ։
+Այս իմաստով է սլայդներում նշված «տեղային կառավարումը»։ Միայն երկու կտոր կփոխվեր գծային սպլայնի դեպքում։ Փորձեք
+ներքևում։</div>
+</div>
+
+<div class="widget" id="w-cubic">
+  <div class="widget-head">Խորանարդային սպլայնի կառուցիչ</div>
+  <p class="widget-hint">Քաշեք նարնջագույն կետերը վեր և վար, ընտրեք եզրային պայմանը և համեմատեք։ Ներքևի գրաֆիկը $S''$-ն
+  է՝ կտոր առ կտոր գծային։ Բնական սպլայնի դեպքում այն ծայրերում զրո է։ «Ամրացված» տարբերակում ծայրերի թեքությունը զրո
+  է։ Միացրեք ինտերպոլացիոն բազմանդամը և ավելացրեք կետեր՝ բազմանդամը սկսում է տատանվել, իսկ սպլայնը մնում է հանգիստ։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-bc="natural" aria-pressed="true">Բնական</button>
+    <button class="btn" type="button" data-bc="clamped" aria-pressed="false">Ամրացված ($S'=0$ ծայրերում)</button>
+    <button class="btn" type="button" data-bc="notaknot" aria-pressed="false">«Ոչ հանգույց»</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="lin" aria-pressed="false">Գծային սպլայն</button>
+    <button class="btn" type="button" data-act="poly" aria-pressed="false">Ինտերպոլացիոն բազմանդամ</button>
+  </div>
+  <div data-out="plot"></div>
+  <p class="mass-cap">Ներքևում՝ $S''(x)$ և $M_i$ արժեքները</p>
+  <div data-out="dd"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="add">+ կետ</button>
+    <button class="btn" type="button" data-act="del">− կետ</button>
+    <button class="btn" type="button" data-act="p10">Խնդիր 10-ի տվյալները</button>
+    <button class="btn" type="button" data-act="reset">Սկզբնական</button>
+  </div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p6" open>
+<summary><h2>Խնդիր 6 - ո՞ր պայմանն է խախտված</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 6</div>
+<p>Դիցուք</p>
+$$f(x)=\begin{cases}x^3+x-1, & x\in[-1,0],\\ x^3-x-1, & x\in[0,1].\end{cases}$$
+<p>Ցույց տվեք, որ $\lim_{x\to0^+}f(x)=\lim_{x\to0^-}f(x)$ և $\lim_{x\to0^+}f''(x)=\lim_{x\to0^-}f''(x)$։ Արդյո՞ք $f$ և $f''$
+ֆունկցիաներն անընդհատ են։ Արդյո՞ք $f$-ը խորանարդային սպլայն է։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Սահմանման մեջ երեք պայման կա՝ $S$, $S'$, $S''$։ Խնդիրը
+ստուգել է տալիս միայն երկուսը, իսկ խախտվածը միջինն է։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $f$ և $f''$</h3>
+<p>Երկու կտորն էլ $0$-ում հավասար են $-1$-ի, ուրեմն $f$-ն անընդհատ է ամբողջ $[-1,1]$-ում։ $f''(x)=6x$ երկու կողմից, և
+$f''$-ի երկու միակողմանի սահմանն էլ $0$ է։ Կտորների ներսում $f''$-ն անընդհատ է, իսկ $0$-ում նրա միակողմանի սահմանները
+համընկնում են։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $f'$</h3>
+<p>Ձախից $f'(x)=3x^2+1\to1$, աջից $f'(x)=3x^2-1\to-1$։ $f'$-ը $0$ կետում թռչում է $2$-ով։ Խիստ ասած՝ այդ պատճառով
+$f''(0)$-ն գոյություն չունի (չկա $f'(0)$), և «$f''$-ն անընդհատ է» պնդումը ճիշտ է միայն միակողմանի սահմանների իմաստով։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Գրաֆիկը $0$-ում անկյուն ունի՝ ձախից աճում է $1$ թեքությամբ, աջից
+նվազում է $-1$ թեքությամբ։ Խնդիր 8-ի լուծման ինտերակտիվ նկարում ընտրեք «Խնդիր 6»։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f$-ն անընդհատ է, $f''$-ի միակողմանի սահմանները $0$-ում հավասար են, բայց $f'(0^-)=1\ne-1=f'(0^+)$, ուստի $f$-ը խորանարդային սպլայն չէ</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p7" open>
+<summary><h2>Խնդիր 7 - ստուգում հանգույցներում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 7</div>
+<p>Պարզեք՝ արդյո՞ք խորանարդային սպլայն է այն $S$ ֆունկցիան, որը</p>
+<ul>
+  <li>$[0,1)$-ում հավասար է $1+x-x^3$-ի,</li>
+  <li>$[1,2)$-ում՝ $1-2(x-1)-3(x-1)^2+4(x-1)^3$-ի,</li>
+  <li>$[2,3]$-ում՝ $4(x-2)+9(x-2)^2-3(x-2)^3$-ի։</li>
+</ul>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Ներքին հանգույցներն են $1$ և $2$։ Երկրորդ և երրորդ կտորներն
+արդեն գրված են $(x-1)$-ի և $(x-2)$-ի աստիճաններով, և նրանց արժեքը, $S'$-ը և $S''$-ը հանգույցում կարդում ենք
+գործակիցներից՝ $\alpha$, $\beta$, $2\gamma$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $x=1$</h3>
+<p>Ձախ կտոր՝ $S(1)=1$, $S'(x)=1-3x^2\to-2$, $S''(x)=-6x\to-6$։ Աջ կտոր՝ $1$, $-2$, $2\cdot(-3)=-6$։ Համընկնում են։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $x=2$</h3>
+<p>Ձախ կտոր՝ $S(2)=1-2-3+4=0$, $S'(x)=-2-6(x-1)+12(x-1)^2\to4$, $S''(x)=-6+24(x-1)\to18$։ Աջ կտոր՝ $0$, $4$,
+$2\cdot9=18$։ Համընկնում են։</p></div>
+<div class="table-wrap"><table class="tbl"><thead><tr><th>Հանգույց</th><th>$S$ (ձախ, աջ)</th><th>$S'$ (ձախ, աջ)</th><th>$S''$ (ձախ, աջ)</th></tr></thead>
+<tbody>
+<tr><td class="num">$x=1$</td><td class="num">$1,\ 1$</td><td class="num">$-2,\ -2$</td><td class="num">$-6,\ -6$</td></tr>
+<tr><td class="num">$x=2$</td><td class="num">$0,\ 0$</td><td class="num">$4,\ 4$</td><td class="num">$18,\ 18$</td></tr>
+</tbody></table></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> այո, $S$-ը խորանարդային սպլայն է։ Ավելին՝ $S''(0)=0$ և $S''(3)=18-18=0$, ուստի սա <strong>բնական</strong> խորանարդային սպլայն է</div>
+<p>Թռիչքները կարելի է հաշվել NumPy-ի <code>Polynomial</code> դասով։ <code>P([1, -2, -3, 4])(x1)</code> գրառումը
+$1-2t-3t^2+4t^3$ բազմանդամն է $t=x-1$ տեղադրմամբ։ Նույն կոդով ստուգվում են նաև խնդիրներ 6-ը և 8-ը։</p>
+<pre class="py" data-run><code>from numpy.polynomial import Polynomial as P
+
+def jumps(left, right, x0):
+    """S, S', S'' թռիչքները x0 կետում (աջ - ձախ)"""
+    return [round(float(right.deriv(k)(x0) - left.deriv(k)(x0)), 12) for k in range(3)]
+
+x1, x2 = P([-1, 1]), P([-2, 1])            # x - 1  և  x - 2
+S0 = P([1, 1, 0, -1])
+S1 = P([1, -2, -3, 4])(x1)
+S2 = P([0, 4, 9, -3])(x2)
+print("Խնդիր 7, x = 1:", jumps(S0, S1, 1), "  x = 2:", jumps(S1, S2, 2))
+print("S''(0) =", S0.deriv(2)(0), "  S''(3) =", S2.deriv(2)(3))
+
+print("Խնդիր 6, x = 0:", jumps(P([-1, 1, 0, 1]), P([-1, -1, 0, 1]), 0))
+print("Խնդիր 8, x = 1/2:", jumps(P([-1, 0, 0, 1]), P([-1, 0, 0, 3]), 0.5))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p8" open>
+<summary><h2>Խնդիր 8 - խզում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 8</div>
+<p>Պարզեք՝ արդյո՞ք խորանարդային սպլայն է</p>
+$$S(x)=\begin{cases}x^3-1, & x\in[-1,\tfrac12),\\ 3x^3-1, & x\in[\tfrac12,2)\end{cases}$$
+<p>ֆունկցիան։</p>
+</div>
+<div class="solution">
+<p>Արդեն առաջին պայմանը խախտվում է՝ $\lim_{x\to1/2^-}S(x)=\frac18-1=-\frac78$, իսկ $S(\tfrac12)=\frac38-1=-\frac58$։
+$S$-ն անընդհատ չէ, հետևաբար սպլայն չէ՝ ոչ միայն խորանարդային, այլև ոչ մի կարգի։ Չեն համընկնում նաև ածանցյալները՝
+$S'$-ի համար $\frac34$ և $\frac94$, $S''$-ի համար $3$ և $9$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> ոչ, $S$-ը խզվում է $x=\frac12$ կետում (թռիչքը $\frac14$ է)</div>
+<div class="widget" id="w-check">
+  <div class="widget-head">Արդյո՞ք սպլայն է (խնդիրներ 6-8)</div>
+  <p class="widget-hint">Երեք գրաֆիկը $S$-ն, $S'$-ը և $S''$-ն են։ Ներքին հանգույցում կանաչ կետը նշանակում է, որ ձախ և աջ
+  արժեքները համընկնում են, իսկ կարմիր լցված և դատարկ կետերը թռիչք են ցույց տալիս։ Խորանարդային սպլայնի համար երեք
+  տողում էլ պետք է կանաչ լինի։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p6" aria-pressed="true">Խնդիր 6</button>
+    <button class="btn" type="button" data-case="p7" aria-pressed="false">Խնդիր 7</button>
+    <button class="btn" type="button" data-case="p8" aria-pressed="false">Խնդիր 8</button>
+  </div>
+  <div data-out="k0"></div>
+  <div data-out="k1"></div>
+  <div data-out="k2"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p9" open>
+<summary><h2>Խնդիր 9 - երկու կետ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 9</div>
+<p>Գրեք $(t_0,y_0)$ և $(t_1,y_1)$ երկու կետերը ($t_0\lt t_1$) ինտերպոլացնող բնական խորանարդային սպլայնի բանաձևը։</p>
+</div>
+<div class="solution">
+<p>Կա մեկ կտոր՝ $[t_0,t_1]$-ում որոշված խորանարդային $S$ բազմանդամ։ $S''$-ը գծային ֆունկցիա է, որը զրո է $t_0$-ում և
+$t_1$-ում (բնական պայմաններ)։ Երկու կետում զրո դարձող գծային ֆունկցիան նույնաբար զրո է։ Այսպիսով՝ $S''\equiv0$, և $S$-ը
+գծային է։ Մնում է անցկացնել ուղիղ երկու կետով։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> $M_i$-երով բանաձևը $n=1$, $M_0=M_1=0$ դեպքում տալիս է նույնը՝
+$S(x)=\frac{y_0}{h}(t_1-x)+\frac{y_1}{h}(x-t_0)$, $h=t_1-t_0$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $S(x)=y_0+\dfrac{y_1-y_0}{t_1-t_0}\,(x-t_0)$, այսինքն՝ երկու կետերը միացնող ուղիղը</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p10" open>
+<summary><h2>Խնդիր 10 - բնական սպլայն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 10</div>
+<p>Գտեք $(-1,1)$, $(0,2)$, $(1,-1)$ կետերն ինտերպոլացնող բնական խորանարդային սպլայնը։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_1$-ը</h3>
+<p>$h_0=h_1=1$, $M_0=M_2=0$, և կա մեկ հավասարում ($i=1$), որտեղ $2(h_0+h_1)=4$՝</p>
+$$\begin{gathered}4M_1=6\bigl((-1-2)-(2-1)\bigr)=-24,\\ M_1=-6.\end{gathered}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կտորները</h3>
+<p>$[-1,0]$-ում ($i=0$, $M_0=0$, $M_1=-6$)՝</p>
+$$\begin{aligned}S(x)&=-6\cdot\frac{(x+1)^3}{6}+1\cdot(0-x)\\&\quad+\bigl(2+1\bigr)(x+1)\\&=-(x+1)^3+2x+3\\&=-x^3-3x^2-x+2.\end{aligned}$$
+<p>$[0,1]$-ում ($i=1$, $M_1=-6$, $M_2=0$)՝</p>
+$$\begin{aligned}S(x)&=-6\cdot\frac{(1-x)^3}{6}+\bigl(2+1\bigr)(1-x)\\&\quad+(-1)\cdot x\\&=-(1-x)^3+3-4x\\&=x^3-3x^2-x+2.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $S(-1)=1$, $S(0)=2$, $S(1)=-1$։ $0$-ում $S'=-1$ և $S''=-6$
+երկու կողմից, իսկ $S''(-1)=-6\cdot(-1)-6=0$, $S''(1)=6-6=0$։ Վերևի կառուցիչում սեղմեք «Խնդիր 10-ի տվյալները»։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $S(x)=-x^3-3x^2-x+2$, երբ $x\in[-1,0]$, և $S(x)=x^3-3x^2-x+2$, երբ $x\in[0,1]$, կամ կարճ՝ $S(x)=|x|^3-3x^2-x+2$</div>
+<p>Պատասխանը կարելի է ստուգել SciPy-ի <code>CubicSpline</code>-ով (առաջին գործարկումը ներբեռնում է SciPy-ը՝ մոտ 14 ՄԲ)։</p>
+<pre class="py" data-run><code>from scipy.interpolate import CubicSpline
+
+cs = CubicSpline([-1, 0, 1], [1, 2, -1], bc_type="natural")
+for x in [-0.5, 0.5]:
+    print(f"S({x}) = {float(cs(x)):.4f}    |x|^3 - 3x^2 - x + 2 = {abs(x)**3 - 3*x**2 - x + 2:.4f}")
+print("S''(0) =", float(cs(0, 2)))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p11" open>
+<summary><h2>Խնդիր 11 - անհայտ գործակիցներ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 11</div>
+<p>Գտեք $a$, $b$, $c$, $d$ պարամետրերն այնպես, որ $[-2,-1]$-ում $ax^3+bx^2+12x+9$-ին և $[-1,2]$-ում
+$2x^3+cx^2+dx+8$-ին հավասար $S$ ֆունկցիան ինտերպոլացնի $(-2,1)$, $(-1,4)$, $(2,70)$ տվյալները։ Պարզեք՝ արդյո՞ք $S$-ը խորանարդային սպլայն է։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Ներքին $-1$ հանգույցը պայման է տալիս երկու կտորի համար,
+այնպես որ ինտերպոլացիայի պայմանները չորսն են, որքան անհայտները։ Ողորկությունը հետո ստուգում ենք առանձին։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ինտերպոլացիա</h3>
+$$\begin{aligned}S(-2)&=-8a+4b-15=1,\\
+S(-1^-)&=-a+b-3=4,\\
+S(-1^+)&=c-d+6=4,\\
+S(2)&=4c+2d+24=70.\end{aligned}$$
+<p>Այստեղ $S(-1^-)$-ը ձախ կտորի արժեքն է, $S(-1^+)$-ը՝ աջինը։ Այսինքն՝ $-2a+b=4$, $-a+b=7$, $c-d=-2$, $2c+d=23$։ Առաջին երկուսից $a=3$, $b=10$, վերջին երկուսից $3c=21$,
+$c=7$, $d=9$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ողորկություն $x=-1$-ում</h3>
+<p>Ձախ կտոր՝ $S'(x)=9x^2+20x+12\to1$, $S''(x)=18x+20\to2$։ Աջ կտոր՝ $S'(x)=6x^2+14x+9\to1$, $S''(x)=12x+14\to2$։</p></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $a=3$, $b=10$, $c=7$, $d=9$, և $S$-ը խորանարդային սպլայն է (բայց ոչ բնական՝ $S''(-2)=-16\ne0$)</div>
+<pre class="py" data-run><code>import numpy as np
+from numpy.polynomial import Polynomial as P
+
+# անհայտներ՝ a, b, c, d (քայլ 1-ի չորս հավասարումը)
+A = np.array([[-8, 4, 0, 0],
+              [-1, 1, 0, 0],
+              [ 0, 0, 1, -1],
+              [ 0, 0, 4, 2]], float)
+r = np.array([16, 7, -2, 46], float)
+a, b, c, d = np.linalg.solve(A, r)
+print("a, b, c, d =", a, b, c, d)
+
+L, R = P([9, 12, b, a]), P([8, d, c, 2])
+print("x = -1:  S, S', S'' թռիչքները =", [round(float(R.deriv(k)(-1) - L.deriv(k)(-1)), 12) for k in range(3)])</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p12" open>
+<summary><h2>Խնդիր 12 - անհայտ գործակիցներ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 12</div>
+<p>Գտեք $a$, $b$, $c$, $d$ պարամետրերն այնպես, որ $[0,1]$-ում $ax^3+x^2+x+b$-ին և $[1,2]$-ում $x^3-cx^2+dx-5$-ին
+հավասար $S$ ֆունկցիան ինտերպոլացնի $(0,-1)$, $(1,-2)$, $(2,-15)$ տվյալները։ Ցույց տվեք, որ $S$-ը խորանարդային սպլայն է։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ինտերպոլացիա</h3>
+$$\begin{aligned}S(0)&=b=-1,\\
+S(1^-)&=a+b+2=-2,\\
+S(1^+)&=d-c-4=-2,\\
+S(2)&=2d-4c+3=-15.\end{aligned}$$
+<p>Այսինքն՝ $b=-1$, $a=-3$, $d-c=2$, $d-2c=-9$։ Վերջին երկուսից $c=11$, $d=13$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ողորկություն $x=1$-ում</h3>
+<p>Ձախ կտոր՝ $S'(x)=-9x^2+2x+1\to-6$, $S''(x)=-18x+2\to-16$։ Աջ կտոր՝ $S'(x)=3x^2-22x+13\to-6$,
+$S''(x)=6x-22\to-16$։</p></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $a=-3$, $b=-1$, $c=11$, $d=13$։ $S'(1)=-6$ և $S''(1)=-16$ երկու կողմից, ուստի $S$-ը խորանարդային սպլայն է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p13" open>
+<summary><h2>Խնդիր 13 - գոյություն չունի</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 13</div>
+<p>Գոյություն ունե՞ն արդյոք $a$, $b$, $c$, $d$ թվեր, որոնց դեպքում</p>
+$$S(x)=\begin{cases}ax^3+x^2+cx, & x\in[-1,0],\\ bx^3+x^2+dx, & x\in(0,1]\end{cases}$$
+<p>ֆունկցիան $f(x)=|x|$ ֆունկցիան $-1$, $0$, $1$ հանգույցներում ինտերպոլացնող բնական խորանարդային սպլայն է։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գրենք բոլոր պայմանները և տեսնենք՝ համատեղելի՞ են արդյոք։</p></div>
+<ul>
+  <li>Ինտերպոլացիա՝ $S(-1)=-a+1-c=1\Rightarrow c=-a$ և $S(1)=b+1+d=1\Rightarrow d=-b$ ($S(0)=0$ ինքնաբերաբար)։</li>
+  <li>$S'$-ի անընդհատությունը $0$-ում՝ $c=d$։</li>
+  <li>$S''$-ի անընդհատությունը $0$-ում՝ $2=2$, ինքնաբերաբար։</li>
+  <li>Բնական պայմաններ՝ $S''(-1)=-6a+2=0\Rightarrow a=\frac13$ և $S''(1)=6b+2=0\Rightarrow b=-\frac13$։</li>
+</ul>
+<p>Ուրեմն $c=-\frac13$ և $d=\frac13$, իսկ $c=d$ պայմանը խախտվում է։ Հակասություն։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> Գտնենք իսկական բնական սպլայնը։ $4M_1=6\bigl((1-0)-(0-1)\bigr)=12$, $M_1=3$,
+և $[0,1]$-ում $S(x)=\frac32x^2-\frac12x^3$ (տվյալները զույգ են, և $[-1,0]$-ում $S(x)=\frac32x^2+\frac12x^3$)։ $x^2$-ի
+գործակիցը $\frac32$ է, իսկ տրված տեսքում այն $1$ է, ուստի տրված տեսքով սպլայն գոյություն չունի։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> ոչ։ Բնական պայմաններից $a=\frac13$, $b=-\frac13$, ինտերպոլացիայից $c=-\frac13$, $d=\frac13$, իսկ $S'$-ի անընդհատությունը պահանջում է $c=d$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="lsq" open>
+<summary><h2>Փոքրագույն քառակուսիների մեթոդ</h2></summary>
+<div class="sec-body">
+<p>Երբ տվյալները չափումներ են (սխալանքով), նրանցով անցնող կորը պարտադիր չէ, որ լավ մոտարկում լինի։ Փոքրագույն
+քառակուսիների մեթոդն ընտրում է տրված տեսքի ֆունկցիա (հաստատուն, ուղիղ, պարաբոլ...), որը կետերին ամենամոտն է՝
+շեղումների քառակուսիների գումարի իմաստով։ Այս թեման դեռ չկա դասախոսության սլայդներում, դրա համար բերում ենք ստանդարտ
+շարադրանքը։</p>
+<div class="box def"><div class="box-title">Սահմանում</div>
+<p>Տրված են $(x_i,y_i)$, $i=0,\dots,m$, կետերը և $P(x)=a_0+a_1x+\dots+a_kx^k$ տեսքը։ $r_i=y_i-P(x_i)$ թվերը կոչվում են
+<strong>շեղումներ</strong>, և</p>
+$$\begin{aligned}\Phi(a_0,\dots,a_k)&=\sum_{i=0}^m r_i^2\\&=\sum_{i=0}^m\bigl(y_i-P(x_i)\bigr)^2.\end{aligned}$$
+<p><strong>Փոքրագույն քառակուսիների բազմանդամն</strong> այն $P$-ն է, որի համար $\Phi$-ն նվազագույնն է։</p>
+</div>
+<p>Նվազագույնի կետում բոլոր մասնակի ածանցյալները զրո են՝ $\frac{\partial\Phi}{\partial a_j}=-2\sum_i x_i^j\bigl(y_i-P(x_i)\bigr)=0$։
+Նշանակենք $s_p=\sum_i x_i^p$ և $t_j=\sum_i x_i^jy_i$։ Պարաբոլի ($k=2$) համար ստանում ենք <strong>նորմալ
+հավասարումները</strong>՝</p>
+$$\begin{pmatrix}s_0&s_1&s_2\\ s_1&s_2&s_3\\ s_2&s_3&s_4\end{pmatrix}\begin{pmatrix}a_0\\a_1\\a_2\end{pmatrix}=\begin{pmatrix}t_0\\t_1\\t_2\end{pmatrix}.$$
+<p>Ուղղի համար մնում է վերևի ձախ $2\times2$ մասը, հաստատունի համար՝ $s_0a_0=t_0$, այսինքն՝ $a_0=\bar y$ (միջին
+թվաբանականը)։ Այստեղ $s_0=m+1$՝ կետերի քանակը։ $j=0$ հավասարումը նշանակում է $\sum r_i=0$. եթե մոդելում ազատ անդամ կա,
+շեղումների գումարը զրո է։</p>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Ինչո՞ւ է կրիտիկական կետը նվազագույն։</strong> Նշանակենք $V$-ով այն $(m+1)\times(k+1)$ մատրիցը, որի $i$-րդ տողը
+$(1,x_i,\dots,x_i^k)$ է։ Այդ դեպքում $\Phi(a)=|y-Va|^2$, իսկ նորմալ հավասարումները՝ $V^{\mathsf T}Va=V^{\mathsf T}y$։ Եթե
+$x_i$-երի մեջ կա առնվազն $k+1$ տարբեր արժեք, $V$-ի սյուները գծորեն անկախ են (այլապես ոչ զրոյական $k$-րդ աստիճանի
+բազմանդամը կունենար $k+1$ արմատ), հետևաբար $V^{\mathsf T}V$-ն դրական որոշյալ է։ Ցանկացած $b$-ի համար
+$\Phi(a+b)=\Phi(a)+|Vb|^2-2b^{\mathsf T}V^{\mathsf T}(y-Va)$, իսկ նորմալ հավասարումների լուծման դեպքում վերջին գումարելին
+զրո է։ Հետևաբար, $\Phi(a+b)=\Phi(a)+|Vb|^2\gt\Phi(a)$, երբ $b\ne0$, այսինքն՝ լուծումը միակ նվազագույնն է։ ∎</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Ուղիղով մոտարկելիս մի կետ շատ վեր ենք քաշում։ Ի՞նչ կլինի ուղղի հետ։</p>
+<div class="predict-opts"><button class="btn" type="button">Ուղիղը կանցնի այդ կետով</button><button class="btn" type="button" data-ok>Ուղիղը կշարժվի դեպի կետը, բայց չի հասնի նրան</button><button class="btn" type="button">Ուղիղը չի փոխվի</button></div>
+<div class="predict-why">Մեծ շեղումը գումարում շատ է կշռում ($r^2$), ուստի ուղիղը ձգվում է դեպի այն, բայց մյուս կետերը նույնպես
+պահում են։ Այդ պատճառով փոքրագույն քառակուսիները զգայուն են կոպիտ սխալ պարունակող կետերի նկատմամբ։ Փորձեք
+ներքևում՝ «Ուղիղ» մոդելով։</div>
+</div>
+
+<div class="widget" id="w-lsq">
+  <div class="widget-head">Փոքրագույն քառակուսիներ</div>
+  <p class="widget-hint">Ընտրեք տվյալները և մոդելը։ Կարմիր հատվածները շեղումներն են, իսկ կարմիր քառակուսիների
+  մակերեսները՝ նրանց քառակուսիները. մեթոդը նվազագույնի է հասցնում հենց այդ մակերեսների գումարը։ Քաշեք կետերը։
+  Սահիչը կորը տեղաշարժում է վեր կամ վար (ազատ անդամին գումարում է $\delta$), և $\Phi$-ն միշտ մեծանում է։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-set="p14" aria-pressed="false">Խնդիր 14</button>
+    <button class="btn" type="button" data-set="p16" aria-pressed="false">Խնդիր 16</button>
+    <button class="btn" type="button" data-set="p17" aria-pressed="true">Խնդիր 17</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-deg="0" aria-pressed="false">Հաստատուն</button>
+    <button class="btn" type="button" data-deg="1" aria-pressed="false">Ուղիղ</button>
+    <button class="btn" type="button" data-deg="2" aria-pressed="true">Պարաբոլ</button>
+    <button class="btn" type="button" data-act="squares" aria-pressed="true">Քառակուսիներ</button>
+  </div>
+  <div class="slider-row"><label for="w-lsq-d">$\delta$</label><input type="range" id="w-lsq-d" min="-2" max="2" step="0.05" value="0"></div>
+  <div data-out="plot"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p14" open>
+<summary><h2>Խնդիր 14 - հաստատուն և $a+|x|+bx^2$</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 14</div>
+<p>Տրված են $(-1,-3)$, $(0,1)$, $(1,6)$, $(2,8)$ կետերը։ Փոքրագույն քառակուսիների մեթոդով գտեք դրանք մոտարկող
+(ա) հաստատուն ֆունկցիան, (բ) $a+|x|+bx^2$ տեսքի ֆունկցիան։</p>
+</div>
+<div class="solution">
+<h3>(ա) Հաստատուն</h3>
+<p>$\Phi(c)=\sum(y_i-c)^2$, $\Phi'(c)=-2\sum(y_i-c)=0$ պայմանից $c=\bar y=\frac{-3+1+6+8}{4}=3$։ Այդ դեպքում
+$\Phi(3)=36+4+9+25=74$։</p>
+<h3>(բ) $a+|x|+bx^2$</h3>
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>$|x|$-ի գործակիցը ֆիքսված է՝ $1$։ Տեղափոխենք $|x|$-ը ձախ՝
+$z_i=y_i-|x_i|$, և մոտարկենք $z$-ը $a+bx^2$-ով։ Սա գծային խնդիր է $a$-ի և $b$-ի նկատմամբ։</p></div>
+<div class="table-wrap"><table class="tbl"><thead><tr><th>$x_i$</th><th>$y_i$</th><th>$z_i=y_i-|x_i|$</th><th>$x_i^2$</th><th>$x_i^4$</th><th>$x_i^2z_i$</th></tr></thead>
+<tbody>
+<tr><td class="num">$-1$</td><td class="num">$-3$</td><td class="num">$-4$</td><td class="num">$1$</td><td class="num">$1$</td><td class="num">$-4$</td></tr>
+<tr><td class="num">$0$</td><td class="num">$1$</td><td class="num">$1$</td><td class="num">$0$</td><td class="num">$0$</td><td class="num">$0$</td></tr>
+<tr><td class="num">$1$</td><td class="num">$6$</td><td class="num">$5$</td><td class="num">$1$</td><td class="num">$1$</td><td class="num">$5$</td></tr>
+<tr><td class="num">$2$</td><td class="num">$8$</td><td class="num">$6$</td><td class="num">$4$</td><td class="num">$16$</td><td class="num">$24$</td></tr>
+<tr class="hl"><td>$\sum$</td><td></td><td class="num">$8$</td><td class="num">$6$</td><td class="num">$18$</td><td class="num">$25$</td></tr>
+</tbody></table></div>
+<p>Նորմալ հավասարումները՝</p>
+$$\begin{gathered}\begin{cases}4a+6b=8,\\ 6a+18b=25,\end{cases}\\ b=\frac{13}{9},\quad a=2-\frac32b=-\frac16.\end{gathered}$$
+<div class="check"><span class="check-label">Ստուգում։</span> $4\cdot(-\frac16)+6\cdot\frac{13}{9}=-\frac23+\frac{26}{3}=8$ և
+$6\cdot(-\frac16)+18\cdot\frac{13}{9}=-1+26=25$։ $\Phi=\frac{389}{9}\approx43{,}2$։ Այն փոքր է հաստատունի $74$-ից, թեև դա
+երաշխավորված չէր. $a+|x|+bx^2$ տեսքի ֆունկցիաների մեջ հաստատուններ չկան ($|x|$-ի գործակիցը $1$ է)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $c=3$, (բ) $\varphi(x)=-\frac16+|x|+\frac{13}{9}x^2$</div>
+<p class="muted">Եթե նկատի է առնված $a|x|+bx^2$ տեսքը (երկու գործակիցն էլ ազատ), նույն եղանակով ստացվում է $6a+10b=19$,
+$10a+18b=35$, $a=-1$, $b=\frac52$, $\Phi=41{,}5$։</p>
+<pre class="py" data-run><code>import numpy as np
+
+x = np.array([-1, 0, 1, 2], float)
+y = np.array([-3, 1, 6, 8], float)
+
+# (ա) հաստատուն
+c = y.mean()
+print("c =", c, "   Phi =", ((y - c)**2).sum())
+
+# (բ) a + |x| + b x^2  ->  z = y - |x| = a + b x^2
+z = y - np.abs(x)
+G = np.array([[len(x), (x**2).sum()], [(x**2).sum(), (x**4).sum()]])
+t = np.array([z.sum(), (x**2 * z).sum()])
+a, b = np.linalg.solve(G, t)
+print("a =", a, "  b =", b, "  Phi =", ((z - a - b*x**2)**2).sum())</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p15" open>
+<summary><h2>Խնդիր 15 - երեք կետ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 15</div>
+<p>$(1,2)$, $(2,0)$, $(4,2)$ կետերի համար փոքրագույն քառակուսիների մեթոդով գտեք երկրորդ աստիճանի բազմանդամը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Երեք կետ և երեք գործակից։ Քանի որ $x$-երը տարբեր են,
+գոյություն ունի պարաբոլ, որն անցնում է բոլոր երեքով, և նրա համար $\Phi=0$։ $\Phi\ge0$, ուստի դա նվազագույնն է։ Այստեղ
+փոքրագույն քառակուսիների պարաբոլն ինտերպոլացիոն պարաբոլն է։</p></div>
+<p>Քանի որ $P(1)=P(4)=2$, $P(x)-2=c(x-1)(x-4)$ որևէ $c$ թվի համար։ $P(2)=0$ պայմանից $-2c+2=0$, $c=1$, և $P(x)=x^2-5x+6=(x-2)(x-3)$։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> Նորմալ հավասարումները ($s_0=3$, $s_1=7$, $s_2=21$, $s_3=73$, $s_4=273$,
+$t_0=4$, $t_1=10$, $t_2=34$) տալիս են նույն $(a_0,a_1,a_2)=(6,-5,1)$-ը՝ $3\cdot6-7\cdot5+21=4$,
+$7\cdot6-21\cdot5+73=10$, $21\cdot6-73\cdot5+273=34$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P(x)=x^2-5x+6$, $\Phi=0$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p16" open>
+<summary><h2>Խնդիր 16 - նորմալ հավասարումներ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 16</div>
+<p>$(-1,2)$, $(0,1)$, $(2,5)$, $(3,10)$ կետերի համար փոքրագույն քառակուսիների մեթոդով գտեք երկրորդ աստիճանի
+բազմանդամը։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - գումարները</h3>
+<p>$s_0=4$, $s_1=-1+0+2+3=4$, $s_2=1+0+4+9=14$, $s_3=-1+0+8+27=34$, $s_4=1+0+16+81=98$,
+$t_0=18$, $t_1=-2+0+10+30=38$, $t_2=2+0+20+90=112$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - համակարգը</h3>
+$$\begin{cases}4a_0+4a_1+14a_2=18,\\ 4a_0+14a_1+34a_2=38,\\ 14a_0+34a_1+98a_2=112.\end{cases}$$
+<p>Երկրորդից հանելով առաջինը՝ $10a_1+20a_2=20$, $a_1=2-2a_2$։ Առաջինից՝ $a_0=\frac{5-3a_2}{2}$։ Տեղադրելով երրորդում՝
+$103+9a_2=112$, $a_2=1$, որից $a_1=0$, $a_0=1$։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $P(x)=1+x^2$ պարաբոլն անցնում է բոլոր չորս կետերով՝ $P(-1)=2$,
+$P(0)=1$, $P(2)=5$, $P(3)=10$, և $\Phi=0$։ Տվյալներն ընկած են պարաբոլի վրա, և մեթոդը գտել է հենց այն։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P(x)=x^2+1$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p17" open>
+<summary><h2>Խնդիր 17 - Python ծրագիր</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 17 (Python)</div>
+<p>Գրեք ֆունկցիա, որն ընդունում է զանգվածով տրված $m+1$ կետ՝ $(x_i,y_i)$, $0\le i\le m$, և փոքրագույն քառակուսիների
+մեթոդով կառուցում է նրանց մոտարկող երկրորդ աստիճանի բազմանդամը։ <code>polyfit</code> ֆունկցիան չօգտագործեք։ Փորձեք
+ֆունկցիան հետևյալ տվյալներով՝</p>
+<div class="table-wrap"><table class="tbl"><tbody>
+<tr><td>$x$</td><td class="num">$0$</td><td class="num">$0{,}5$</td><td class="num">$1$</td><td class="num">$1{,}5$</td><td class="num">$2$</td><td class="num">$2{,}5$</td><td class="num">$3$</td><td class="num">$3{,}5$</td><td class="num">$4$</td></tr>
+<tr><td>$y$</td><td class="num">$0{,}2124$</td><td class="num">$1{,}2448$</td><td class="num">$1{,}3962$</td><td class="num">$2{,}4794$</td><td class="num">$2{,}6790$</td><td class="num">$4{,}4033$</td><td class="num">$4{,}8407$</td><td class="num">$3{,}6054$</td><td class="num">$5{,}4757$</td></tr>
+</tbody></table></div>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Ֆունկցիան հաշվում է $s_0,\dots,s_4$ և $t_0,t_1,t_2$ գումարները,
+կազմում $3\times3$ նորմալ համակարգը և լուծում այն։ Ամբողջ «փոքրագույն քառակուսիների» մասը հենց նորմալ հավասարումներն են։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - գումարները</h3>
+<p>$s_0=9$, $s_1=18$, $s_2=51$, $s_3=162$, $s_4=548{,}25$, $t_0=26{,}3369$, $t_1=71{,}14775$, $t_2=220{,}866325$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - լուծումը</h3>
+<p>Համակարգի լուծումը՝ $a_0\approx0{,}1877$, $a_1\approx1{,}7037$, $a_2\approx-0{,}1180$, իսկ
+$\Phi=\sum r_i^2\approx2{,}581$։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> <code>np.polyfit(x, y, 2)</code>-ը (միայն ստուգման համար) տալիս է նույն
+գործակիցները։ Նույն տվյալներով լավագույն ուղիղը $0{,}4631+1{,}2316x$ է, $\Phi\approx2{,}849$։ Պարաբոլի $\Phi$-ն չի կարող
+մեծ լինել ուղղինից, քանի որ ուղիղը նաև պարաբոլ է ($a_2=0$)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P(x)\approx0{,}1877+1{,}7037x-0{,}1180x^2$</div>
+<pre class="py" data-run><code>import numpy as np
+
+def lsq_parabola(points):
+    """Փոքրագույն քառակուսիների պարաբոլ a0 + a1 x + a2 x^2 (առանց polyfit)։
+    points՝ (m+1) x 2 զանգված, տողերը (x_i, y_i) են"""
+    x, y = np.asarray(points, float).T
+    s = [np.sum(x**p) for p in range(5)]          # s_p = Σ x_i^p
+    t = [np.sum(x**j * y) for j in range(3)]      # t_j = Σ x_i^j y_i
+    G = np.array([[s[0], s[1], s[2]],
+                  [s[1], s[2], s[3]],
+                  [s[2], s[3], s[4]]])
+    return np.linalg.solve(G, t)
+
+x = np.arange(0, 4.01, 0.5)
+y = np.array([0.2124, 1.2448, 1.3962, 2.4794, 2.6790, 4.4033, 4.8407, 3.6054, 5.4757])
+a0, a1, a2 = lsq_parabola(np.column_stack([x, y]))
+print(f"P(x) = {a0:.4f} + {a1:.4f} x + ({a2:.4f}) x^2")
+
+r = y - (a0 + a1*x + a2*x**2)
+print("Phi = Σ r_i^2 =", round((r**2).sum(), 6), "   Σ r_i =", f"{r.sum():.1e}")   # 0՝ կլորացման ճշտությամբ
+print("polyfit (միայն ստուգման համար):", np.polyfit(x, y, 2)[::-1])</code></pre>
+<details class="extra"><summary>Ավելին՝ մեծ աստիճանների դեպքում</summary><div class="inner">
+<p>Երբ բազմանդամի աստիճանը մեծ է, նորմալ համակարգի մատրիցը վատ պայմանավորված է դառնում՝ փոքր կլորացման սխալները
+մեծ սխալներ են տալիս գործակիցներում։ Գործնականում այդ դեպքում $Va\approx y$ խնդիրը լուծում են առանց $V^{\mathsf T}V$
+մատրիցը կազմելու՝ QR կամ սինգուլյար արժեքների (SVD) վերլուծությամբ։ Օրինակ՝ <code>np.linalg.lstsq</code>-ն օգտագործում է
+SVD։ Երկրորդ աստիճանի և ինը կետի համար սա խնդիր չէ։</p>
+</div></details>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="table-wrap"><table class="tbl"><thead><tr><th></th><th>Գծային սպլայն</th><th>Խորանարդային սպլայն</th><th>Փոքրագույն քառակուսիներ</th></tr></thead>
+<tbody>
+<tr><td>Անցնո՞ւմ է կետերով</td><td>այո</td><td>այո</td><td>ընդհանուր դեպքում՝ ոչ</td></tr>
+<tr><td>Ողորկություն</td><td>$S$-ն անընդհատ է</td><td>$S$, $S'$, $S''$ անընդհատ</td><td>մեկ բազմանդամ</td></tr>
+<tr><td>Ինչպես գտնել</td><td>բեկյալ, ամեն հատվածում ուղիղ</td><td>$M_i$-երի երեքանկյունագծային համակարգ</td><td>նորմալ հավասարումներ</td></tr>
+<tr><td>Հիմնական փաստը</td><td>$|f-S|\le\frac{h^2}{8}M_2$</td><td>$4n-2$ պայման $4n$ անհայտի համար, ուստի ծայրերում պետք է ևս երկու պայման</td><td>նվազագույնի է հասցվում $\Phi=\sum r_i^2$-ն</td></tr>
+</tbody></table></div>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li>Շփոթել հատվածների և հանգույցների քանակը՝ $n$ հատվածի համար հանգույցները $n+1$ են (խնդիր 3)։</li>
+  <li>Սպլայնը ստուգելիս մոռանալ $S'$-ը (խնդիր 6) կամ ստուգել միայն $S$-ը։</li>
+  <li>Գնահատականում վերցնել $|f''|$-ի արժեքը մեկ կետում, ոչ թե մեծագույն արժեքն ամբողջ հատվածում։</li>
+  <li>Ներքին հանգույցում ինտերպոլացիայի պայմանը գրել միայն մեկ կտորի համար (խնդիրներ 11, 12)։</li>
+  <li>Բնական սպլայնի պայմանները գրել $S'$-ի համար, ոչ թե $S''$-ի։</li>
+  <li>Կարծել, որ փոքրագույն քառակուսիների կորն անցնում է կետերով։ Դա լինում է միայն երբ կետերի և գործակիցների քանակները
+  հավասար են (խնդիր 15) կամ կետերն արդեն ընկած են այդ տեսքի կորի վրա (խնդիր 16)։</li>
+</ul>
+</div>
+
+<h3>Հարցեր ինքնաստուգման համար</h3>
+<ol>
+  <li>Ինչո՞ւ է խորանարդային սպլայնին պետք երկու լրացուցիչ պայման։ <span class="muted">($4n$ անհայտ, $4n-2$ պայման)</span></li>
+  <li>Որտեղի՞ց է գալիս $\frac18$-ը գծային սպլայնի գնահատականում։ <span class="muted">($|(x-x_i)(x-x_{i+1})|\le\frac{h_i^2}{4}$ և $\frac{f''}{2}$)</span></li>
+  <li>Ինչո՞ւ է երկու կետով բնական սպլայնն ուղիղ։ <span class="muted">(խնդիր 9)</span></li>
+  <li>Ե՞րբ է փոքրագույն քառակուսիների բազմանդամը համընկնում ինտերպոլացիոն բազմանդամի հետ։ <span class="muted">(խնդիր 15)</span></li>
+  <li>Ինչո՞ւ է Ռունգեի ֆունկցիայի համար սպլայնը լավ, իսկ բարձր աստիճանի բազմանդամը՝ վատ։ <span class="muted">(առաջին ինտերակտիվ նկարը)</span></li>
+</ol>
+<p>Խնդիրների ցանկի հաջորդ բաժինը թվային ինտեգրումն է։ Այնտեղ կհանդիպի սեղանների բանաձևը, որի սխալանքը տեսանք խնդիր 4-ում։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Թեմաներ">
+        <a class="btn" href="index.html">Բոլոր թեմաները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասընթացի խնդիրների ցանկի և դասախոսությունների հիման վրա։ Սխալ
+  նկատելու դեպքում գրեք <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>

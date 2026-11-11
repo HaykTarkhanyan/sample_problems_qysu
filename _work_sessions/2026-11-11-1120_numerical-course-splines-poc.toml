@@ -1,0 +1,53 @@
+title = "Numerical analysis course: material map, splines page (17 solutions) with runnable Python and a Manim video"
+date = "2026-11-11"
+time = "11:20"  # local (WEST)
+
+areas = [
+  "numerical_methods",
+  "site/numerical",
+  "site/assets (pyrun.js, num-splines.js, site.css, site.js, vendor, video)",
+  "animations",
+  "tools/build_search_index.mjs",
+  "docs (README, CLAUDE.md, DECISIONS, CONVENTIONS, DEFERRED_TODO, _learnings)",
+]
+
+done = [
+  "Mapped the 7 PDFs in numerical_methods/ (numerical_methods/README.md): lectures 1-4 (Srapionyan, Fall 2026), PSS 1 of the current course, an 8-set Spring 2022 bundle (two sets labelled No. 02, No. 06/09 missing), and the Armenian problem list (5 blocks, 129 problems). Renamed rename_properly_pls.pdf -> Problems_ARM_2023.pdf (the only rename, per user).",
+  "Manim CE 0.22.1 in animations/ (uv, Python 3.12); dvisvgm added to TeX Live 2025 from the frozen archive. Smoke test with Armenian Text + MathTex passed.",
+  "Q6: user picked Pyodide from CDN, loaded on first Run. site/assets/js/pyrun.js: highlight (vendored highlight.js 11.12.0, sha1 checked), Run / Edit / Reset / Copy, fresh namespace per block, serialised runs, trimmed tracebacks.",
+  "site/numerical/splines.html: block C problems 1-17 (linear spline + error bound, cubic/natural spline, least squares) with three theory sections, solve-first pattern, 3 predict blocks, 4 widgets (num-splines.js), 10 runnable Python blocks, Manim video spline-smoothness.mp4 (15 s, 490 KB), typical mistakes and self-check questions. Landing page site/numerical/index.html, hub card, brand icon, search course 'numerical'.",
+  "Verification: numerical_methods/checks/splines_check.py (scipy-based, all asserts pass, 0.7 s), checks/widgets_check.mjs (JS numerics), all 10 Python blocks executed locally (numpy 2.5.4, scipy 1.18.1) and in the browser through Pyodide (first run 19.6 s, later 0.3 s, scipy block 30 s first time), check_site full site 0 errors, Armenian lint 0 errors, 390 px: 0 display/inline formula overflows after splitting 22 formulas, console clean.",
+  "Search: normTerm maps «ինտերպոլյաց» to «ինտերպոլաց» so the problem list's spelling finds the glossary spelling.",
+  "Docs: DECISIONS #16 (Pyodide CDN, reopens #4 for Run only), #17 (Manim), #18 (numerical course pages); CONVENTIONS 'Numerical analysis pages'; README rewritten; CLAUDE.md scope updated; animations/README.md; 2 learnings; DEFERRED_TODO entries; .gitignore (numerical PDFs, animations venv/media, logs, *.stackdump).",
+]
+
+pending = [
+  "Owner reviews splines.html before the next block is chosen (Q9). Q7 decided: glossary spelling. Q8: committed and pushed.",
+]
+
+next = [
+  "Next block of the problem list (A: errors + nonlinear equations is the current lecture topic; PSS 1 fits there).",
+  "Native-speaker read of splines.html; student feedback on the Python runner.",
+]
+
+files = [
+  "numerical_methods/README.md, numerical_methods/checks/splines_check.py, numerical_methods/checks/widgets_check.mjs",
+  "site/numerical/index.html, site/numerical/splines.html",
+  "site/assets/js/pyrun.js, site/assets/js/num-splines.js, site/assets/vendor/highlight-11.12.0.min.js (+ LICENSE), site/assets/video/spline-smoothness.mp4, site/assets/search/numerical.js",
+  "site/assets/site.css (code blocks, video, .brand .spl, .btn[hidden]), site/assets/site.js (course 'numerical', normTerm), site/index.html (hub card), tools/build_search_index.mjs",
+  "animations/pyproject.toml, animations/uv.lock, animations/README.md, animations/scenes/spline_smoothness.py",
+  "README.md, CLAUDE.md, DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md, .gitignore, _learnings/2026-11-11-1227_*, _learnings/2026-11-11-1228_*",
+]
+
+commits = []
+
+notes = """
+Independent math review (one agent, ~10 min, numerical_methods/reviews/2026-11-11_splines_math_review.md): no math
+errors, all 17 statements match the source; 11 findings (1 error: lstsq uses SVD not QR; 4 unclear; 6 nitpicks), all
+re-checked and applied: f''(0) does not exist in p6 (one-sided limits wording), plain (b-a)h^2/8*M2 bounds added to
+p4/p5 (4.81e-4, 0.36), 1/12 constant derived from the page's own error formula, upper bounds rounded up, summary
+table row fixed, n>=3 for not-a-knot, matrix renamed A in the existence proof, p14 "beats the constant" qualified.
+The hub card of the probability course changed its kicker from «Նոր» to «15 դաս» because «Նոր» moved to the new course.
+sh.exe.stackdump files (Git Bash crash dumps) appeared at the repo root and in site/assets/ during the session; now
+gitignored, not deleted. TeX Live's tlmgr in Git Bash is tlmgr.bat (plain `tlmgr` is not found).
+"""

@@ -2,6 +2,58 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 18. Numerical analysis course: one page per problem-list block, solutions in the probability pattern
+- **Date** 2026-11-11 - **status** active (user: "generate nice armenian solutions - focus first on pages 14-17,
+  the spline part", "we won't care about pdfs for this one")
+- **Why** The course material is 4 lecture slide decks plus an Armenian problem list in 5 topic blocks
+  (`numerical_methods/README.md`). The user wants solutions to that list, site-first, no LaTeX/PDF track. So
+  a page = one block of the list (`site/numerical/splines.html` = block C, problems 1-17), with short theory
+  before each group of problems, the solve-first pattern of DECISIONS #13 (hidden solutions, two-step reveal,
+  predict blocks, typical mistakes, closing summary), widgets, runnable Python (#16) and Manim video (#17).
+  Problem statements are restated in our own words with the data unchanged (the list is a course handout,
+  like the discrete sheets, but restating lets us use glossary terms). Terminology follows the glossary
+  («ինտերպոլացիա»), not the list's spelling («ինտերպոլյացիա»); the search treats both spellings as one term
+  (`normTerm` in `site.js`). Source PDFs stay local (`numerical_methods/*.pdf` gitignored).
+- **Alternatives rejected** One page per lecture (the problems, not the slides, are what students practise;
+  lectures 5-7 have no slides yet); LaTeX solution PDFs first like discrete (user said no PDFs); copying
+  statements verbatim (would mix two spellings of key terms on one page).
+- **What would change this** The lecturer or students preferring the list's spelling (switch the course's
+  pages to «ինտերպոլյացիա»; the search already finds both), or a block too large for one page.
+- **Confirmed 2026-11-11:** owner picked the glossary spelling (Q7).
+
+## 17. Animations with Manim Community Edition in `animations/`, rendered to MP4 and embedded
+- **Date** 2026-11-11 - **status** active (user: "install manim ce so that we can also consider creating nice
+  animations")
+- **Why** User's choice of tool. `animations/` is its own uv project (`manim==0.22.1`, Python 3.12 because
+  manim 0.22 needs >= 3.11 and the system Python is 3.10). TeX Live lacked `dvisvgm` (needed for `MathTex`);
+  installed it from the frozen TeX Live 2025 archive with `tlmgr.bat --repository ...`. Videos are rendered at
+  720p30 (`-qm`, ~100 s for 15 s of video), copied to `site/assets/video/` (first one: 490 KB) and embedded with
+  `<video controls playsinline preload="metadata" muted>`, so they work offline like the rest of the site.
+- **Alternatives rejected** Animating in the browser with JS (that is what the widgets are for; Manim is for
+  narrated, fixed sequences); GIFs (5-10x larger than H.264 for the same clip, no controls).
+- **What would change this** Video files growing past a few MB each (then lower the resolution or host them
+  elsewhere), or the animations needing interactivity (then a widget instead).
+
+## 16. Runnable Python on the pages: Pyodide from the jsDelivr CDN, loaded on the first Run click
+- **Date** 2026-11-11 - **status** active (user picked "CDN, on Run" out of CDN / vendored / show-only).
+  **Reopens DECISIONS #4** (no CDN, everything vendored) for this one optional feature.
+- **Why** Pyodide is the only in-browser CPython with numpy/scipy. Version 314.0.7 (Python 3.14.2, numpy
+  2.4.6, scipy 1.18.0; released 2026-09-14). Measured download on the first Run: ~9 MB (core 3.4 MB + stdlib
+  2.5 MB + numpy 2.9 MB, compressed), scipy adds 13.9 MB, only for a block that imports it. Browser check:
+  first Run 19.6 s end to end (download + start), later runs 0.3 s, the scipy block 30 s the first time.
+  Reading the page stays fully offline; only Run needs the internet. `site/assets/js/pyrun.js` (one shared
+  file) turns `<pre class="py" data-run><code>` into a block with Run / Edit / Reset / Copy, runs each block
+  in a fresh namespace, one at a time, and trims Pyodide's own frames from tracebacks. Highlighting:
+  highlight.js 11.12.0 (BSD-3, `@highlightjs/cdn-assets` tarball, sha1 checked against the npm registry),
+  vendored as `site/assets/vendor/highlight-11.12.0.min.js` (129 KB, common-languages build: the UMD build works
+  from `file://`, the ES-module core does not); token colours come from the theme tokens in `site.css`.
+- **Alternatives rejected** Vendoring Pyodide (~9 MB compressed, more on disk, in every clone and deploy);
+  display-only code (user wanted it executable); a Web Worker runner (worker scripts cannot load from
+  `file://`); JupyterLite or Thebe/Binder (heavier, or a remote kernel); Prism (no advantage, hand-picked
+  language bundles).
+- **What would change this** Students without a stable connection asking for offline Run (then vendor core +
+  numpy), jsDelivr outages, or plots being needed in the output (then matplotlib in Pyodide, ~10 MB more).
+
 ## 15. Site search: MiniSearch (vendored) over a per-course index generated from the pages
 - **Date** 2026-11-11 - **status** active (user: "do mobile fixes + search")
 - **Why** 15 + 7 long pages; students look for a term («Բայես», «Կանտոր», «բաշխ...»). A narrow need, so an

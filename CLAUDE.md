@@ -24,18 +24,23 @@ and rejected.)
 ## What this repo is
 
 This is **not a software project**. It is a bilingual (Armenian / English) collection of
-worked solutions to sample problems from two QYSU (Yerevan State University) math courses:
+worked solutions and study pages for QYSU (Yerevan State University) math courses, published as a
+static Armenian site from `site/` (GitHub Pages; QA gate `node tools/check_site.mjs`):
 
-- `discrete/` — Discrete Mathematics (12 lectures, 8 practice sets). See `discrete/README.md`
-  for the full lecture/practice/topic map; do not duplicate that table here.
+- `numerical_methods/` + `site/numerical/` — Numerical Analysis (YSU 301, fall 2026). Source PDFs are
+  local only (gitignored); `numerical_methods/README.md` maps every file and problem block. Pages follow
+  CONVENTIONS.md "Numerical analysis pages": runnable Python (Pyodide), widgets, Manim videos from
+  `animations/`. **Current focus** (2026-11-11).
+- `probability/` + `site/probability/` — Probability Theory 1 (15 lecture pages, all reviewed).
+- `discrete/` + `site/discrete/` — Discrete Mathematics (12 lectures, 8 practice sets). See
+  `discrete/README.md` for the full lecture/practice/topic map; do not duplicate that table here.
 - `group_theory/` — Group Theory practice sets (currently practice 10).
 
-Solutions are AI-generated (Claude + Gemini), typeset in LaTeX, and produced in both English
-and Armenian. The "code" here is LaTeX documents plus a few one-off Python helper scripts.
+Discrete solutions are AI-generated (Claude + Gemini), typeset in LaTeX, and produced in both English
+and Armenian; the newer courses are site-first (HTML + KaTeX), no LaTeX/PDF track.
 
-**Active scope: `discrete/` only.** Work happens in `discrete/`; `group_theory/` is kept for
-reference but is not being maintained. Do not edit, regenerate, or delete `group_theory/`
-unless explicitly asked.
+`group_theory/` is kept for reference but is not being maintained. Do not edit, regenerate, or delete
+`group_theory/` unless explicitly asked.
 
 ## The one thing that will break builds: two LaTeX engines
 

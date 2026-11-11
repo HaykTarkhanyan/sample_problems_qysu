@@ -129,6 +129,8 @@ code, .mono { font-family: Consolas, "Courier New", monospace; font-size: .92em;
   radial-gradient(circle at 29% 29%, #fff 0 1.8px, transparent 2.3px),
   radial-gradient(circle at 50% 50%, #f2a800 0 1.8px, transparent 2.3px),
   radial-gradient(circle at 71% 71%, #fff 0 1.8px, transparent 2.3px), #0033a0; }
+/* Numerical analysis pages: a curve through three nodes (same design as their favicon). */
+.brand .spl { flex: none; width: 18px; height: 18px; border-radius: 4px; background: #0033a0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 22 C10 8 13 8 16 16 S22 25 26 10' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='6' cy='22' r='3.2' fill='%23F2A800'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23F2A800'/%3E%3Ccircle cx='26' cy='10' r='3.2' fill='%23F2A800'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
 .header-actions { margin-left: auto; display: flex; gap: .45rem; flex-wrap: wrap; }
 
 .btn {
@@ -461,3 +463,27 @@ details.deep > .inner, details.extra > .inner { padding: .2rem 1rem .7rem; }
 /* Two-step reveal: answer box only, then the full solution */
 body.try-mode .solution.answer-only { display: block; }
 body.try-mode .solution.answer-only:not(.revealed) > :not(.box.answer) { display: none; }
+
+/* ---------- Python code blocks (assets/js/pyrun.js) ---------- */
+.code-block { margin: 1rem 0 1.2rem; border: 1px solid var(--widget-line); border-radius: var(--radius); background: var(--widget-bg); overflow: hidden; }
+.code-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: .4rem .55rem; border-bottom: 1px solid var(--widget-line); font-family: var(--sans); font-size: .85rem; }
+.code-bar .btn { padding: .2rem .65rem; font-size: .85rem; }
+.code-bar .btn[hidden] { display: none; }   /* .btn sets display, which would override the hidden attribute */
+.code-lang { font-weight: 700; color: var(--muted); margin-right: .2rem; }
+.code-status { color: var(--muted); font-size: .82rem; }
+pre.py, pre.code-out, textarea.code-edit { margin: 0; padding: .7rem .85rem; font-family: Consolas, "Courier New", monospace; font-size: .86rem; line-height: 1.5; tab-size: 4; }
+pre.py { overflow-x: auto; background: transparent; }
+pre.py code { font-size: inherit; white-space: pre; }
+textarea.code-edit { display: block; width: 100%; border: 0; resize: vertical; background: color-mix(in srgb, var(--orange) 6%, var(--surface)); color: var(--ink); white-space: pre; overflow-x: auto; }
+textarea.code-edit:focus { outline: 2px solid var(--blue); outline-offset: -2px; }
+pre.code-out { border-top: 1px dashed var(--widget-line); background: color-mix(in srgb, var(--ink) 4%, var(--surface)); white-space: pre-wrap; word-break: break-word; max-height: 24rem; overflow-y: auto; }
+pre.code-out .err { color: var(--red); }
+/* highlight.js tokens, coloured with the theme tokens so dark mode follows */
+.hljs-keyword, .hljs-built_in, .hljs-literal { color: var(--blue); font-weight: 700; }
+.hljs-string { color: var(--green); }
+.hljs-number { color: var(--orange-ink); }
+.hljs-comment { color: var(--muted); font-style: italic; }
+.hljs-title, .hljs-title.function_ { color: var(--red); }
+.hljs-params, .hljs-meta { color: var(--ink); }
+/* Manim videos */
+.fig video { display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto; border-radius: 8px; background: #1b2430; }
