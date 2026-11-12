@@ -8,6 +8,8 @@ areas = [
   "site/assets (pyrun.js, num-splines.js, site.css, site.js, vendor, video)",
   "animations",
   "tools/build_search_index.mjs",
+  ".github/workflows/pages.yml",
+  "site/index.html, site/discrete/*.html (icons)",
   "docs (README, CLAUDE.md, DECISIONS, CONVENTIONS, DEFERRED_TODO, _learnings)",
 ]
 
@@ -27,12 +29,14 @@ done = [
 ]
 
 pending = [
-  "Owner reviews splines.html before the next block is chosen (Q9). Q7 decided: glossary spelling. Q8: committed and pushed.",
+  "Q9 (open): which problem-list block comes next. Owner wanted to review splines.html first; the pedagogy pass was the result of that review so far.",
+  "Decided this session: Q6 Pyodide from CDN on first Run; Q7 glossary spelling «ինտերպոլացիա»; Q10/Q11 icons (discrete graph, hub sigma); Q12 deploy-time cache busting; standing permission to commit and push in this repo (now in CLAUDE.md).",
 ]
 
 next = [
-  "Next block of the problem list (A: errors + nonlinear equations is the current lecture topic; PSS 1 fits there).",
-  "Native-speaker read of splines.html; student feedback on the Python runner.",
+  "Next block of the problem list; recommended A (errors + nonlinear equations, 45 problems, matches lectures 2-3; fold PSS 1 in). Reuse the splines.html head, pyrun.js cells, the check script pattern and one independent math review per page.",
+  "Native-speaker read of splines.html; student feedback on the Python runner (first-load size on phones, editing).",
+  "DEFERRED_TODO still lists the formula-suffix line-break item that DECISIONS #14 already fixed (left from an earlier session; remove when touching that file).",
 ]
 
 files = [
@@ -42,9 +46,16 @@ files = [
   "site/assets/site.css (code blocks, video, .brand .spl, .btn[hidden]), site/assets/site.js (course 'numerical', normTerm), site/index.html (hub card), tools/build_search_index.mjs",
   "animations/pyproject.toml, animations/uv.lock, animations/README.md, animations/scenes/spline_smoothness.py",
   "README.md, CLAUDE.md, DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md, .gitignore, _learnings/2026-11-11-1227_*, _learnings/2026-11-11-1228_*",
+  "site/assets/vendor/code-input-2.9.0/ (code-input.min.js/css, indent.min.js, autogrow.min.css, LICENSE.txt)",
+  ".github/workflows/pages.yml (cache-bust step), site/index.html + site/discrete/*.html (favicon and brand icon)",
+  "numerical_methods/reviews/2026-11-11_splines_math_review.md",
 ]
 
-commits = []
+commits = [
+  "a122ad7 Add numerical analysis course: splines page with runnable Python and a Manim video (Pages run passed)",
+  "e51c461 Python cells editable in place (code-input), course icons instead of the flag, cache-busted deploys (Pages run 43016673708 passed, 180 links versioned)",
+  "1d999f7 Splines page: pedagogy pass (motivation, intuition, derived steps) (Pages run 43019304678 passed)",
+]
 
 notes = """
 Independent math review (one agent, ~10 min, numerical_methods/reviews/2026-11-11_splines_math_review.md): no math
@@ -55,4 +66,7 @@ table row fixed, n>=3 for not-a-knot, matrix renamed A in the existence proof, p
 The hub card of the probability course changed its kicker from «Նոր» to «15 դաս» because «Նոր» moved to the new course.
 sh.exe.stackdump files (Git Bash crash dumps) appeared at the repo root and in site/assets/ during the session; now
 gitignored, not deleted. TeX Live's tlmgr in Git Bash is tlmgr.bat (plain `tlmgr` is not found).
+Browser checks: every re-test after an edit needs fetch(url, {cache: "reload"}) or a fresh port, or the old script
+runs (see _learnings/2026-11-11-1227_*). Hidden solutions (try-mode) are not typeable: test editor input on a visible
+cell. Session ran 11 Nov 11:20 to 13 Nov 00:00 local with breaks; one subagent (math review, ~190k tokens).
 """
