@@ -1,4 +1,4 @@
-# Owner answers (native speaker, interview of 2026-11-10)
+# Owner answers (native speaker, interviews of 2026-11-10 and 2026-11-13)
 
 These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources left open
 (the source-resolved ones are in `SOURCE_FINDINGS.md`). They override GUIDE.md where the two differ.
@@ -32,3 +32,11 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A32 | row 432 «հեսիան մատրից» is right | |
 | A33 | row 336 / 986 «լրիվ դիֆերենցիալ» intended, keep both | |
 | A36 | heads = «ղուշ», tails = «գիր» | Prefer «քանի անգամ է ընկել ղուշ» over a plural noun. |
+
+## Interview of 2026-11-13 (asked by Fable 5.2 after reading the guide)
+
+| ID | Decision | What it means in practice |
+|----|----------|---------------------------|
+| A37 | glued «չ-» is wrong on «-ելի» words | «անլուծելի», «անհաշվելի», or a separate «ոչ»; never «չլուծելի», «չհաշվելի». GUIDE N1 had listed «-ելի» with the participles by mistake. |
+| A38 | singular after a numeral, also in definitions | «Երկու բազմություն հավասար են, եթե ...» stays. The model had guessed the plural here; that guess was wrong. |
+| A39 | «հզոր» for a method or tool is normal Armenian | «հզոր մեթոդ», «պարզ, բայց շատ հզոր կանոններ» stay; removed from the calque list (GUIDE C1). |

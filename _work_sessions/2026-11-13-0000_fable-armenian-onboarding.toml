@@ -1,0 +1,49 @@
+title = "Fable 5.2 onboarding on the Armenian style guide: second model check, guide and lint fixes"
+date = "2026-11-13"
+time = "00:00"  # local (system clock, UTC+1), approximate start
+
+areas = [
+  "armenian_style (GUIDE, POLISH_CHECKLIST, README, OWNER_ANSWERS, QUESTIONS, lint_armenian.py)",
+  "CONVENTIONS.md (Armenian text section)",
+  "DEFERRED_TODO.md",
+]
+
+done = [
+  "Read all of armenian_style/ (GUIDE, OWNER_ANSWERS, QUESTIONS, SOURCE_FINDINGS, POLISH_CHECKLIST, GLOSSARY_REPORT, lint), the Armenian section of CONVENTIONS.md and the two Armenian learnings.",
+  "Second model check: one fresh Fable 5.2 subagent wrote the same 12 paragraphs as the first baseline without reading the guide (armenian_style/_sources/own/fable_paragraphs_raw.md, 697 Armenian words, about 3.5 min, about 95k subagent tokens). Lint: 4 errors (3 times U+2024 as the mijaket, 1 article) against 12 for the first baseline; 0 fillers, 0 redundant «մենք», 0 «կողմից», «Օրինակ՝» 8 of 8. Misses: «գերբ» twice, «ընտրանք» for a statistical sample, «միջին քառակուսային շեղում», «Դը Մուավրի մոտ», 6 sentence-initial «Այն». Table at the end of GUIDE.md.",
+  "Owner interview (A37-A39): glued «չ-» is wrong on «-ելի» words (GUIDE N1 had it backwards); singular after a numeral also in definitions (my plural guess was wrong); «հզոր մեթոդ» is normal Armenian (dropped from the calque list).",
+  "GUIDE.md: owner answers of 2026-11-10 folded in (mijaket, «Հետևաբար,», heads/tails, j, «նմուշ», «ստանդարտ շեղում», scare quotes, «իրենից ներկայացնում է», «հանդես գալ որպես», W1), «ով / ովքեր» exception, spoken-name table for Latin and Greek letters, digits and formulas (A1b), the «մոտ» example, the second-model-check section.",
+  "POLISH_CHECKLIST.md: removed the instructions the owner had overruled («Ահա», «հզոր», «իրենից ներկայացնում է», «հանդես է գալիս որպես», scare quotes); added the ե/ո/և article check, the «-ելի» note and the owner-decided terms.",
+  "lint_armenian.py: «ով», «ովքեր» (also «ո՞վ», «ովքե՞ր») no longer flagged by article-n-before-yeo; docstring synced with the removed hints; self-test 66 -> 71 cases, all pass. Before/after run on all site pages, widget scripts and polished sheets: identical (18 errors, 316 hints).",
+  "README, OWNER_ANSWERS, QUESTIONS (A37-A39), CONVENTIONS and DEFERRED_TODO updated to match.",
+]
+
+pending = [
+  "Glossary fixes still wait for the owner's OK (row 509 typo, rows 257/258 duplicate, row 172 -> «հաշվարկելիություն»).",
+  "Not put to the owner: «Բազմությունը, դա ...», «Իր հերթին», «X-ի մոտ» in the 'in X's work' sense, the spoken names of g, h, q, w.",
+]
+
+next = [
+  "The deferred Armenian sweep of the discrete sheets and site (DEFERRED_TODO) can now run against a guide with no open points.",
+  "Lint gaps parked in DEFERRED_TODO: «X-ի մոտ» hint, article after Greek letters and longer formulas, «չ...ելի» words.",
+]
+
+files = [
+  "armenian_style/GUIDE.md, armenian_style/POLISH_CHECKLIST.md, armenian_style/README.md, armenian_style/OWNER_ANSWERS.md, armenian_style/QUESTIONS_FOR_NATIVE_SPEAKER.md",
+  "armenian_style/lint_armenian.py",
+  "CONVENTIONS.md, DEFERRED_TODO.md",
+  "gitignored: armenian_style/_sources/own/fable_paragraphs_raw.md, fable_lint_probe.txt, fable_lint_probe2.txt; armenian_style/_sources/lint_before_2026-11-13.txt, lint_after_2026-11-13.txt",
+]
+
+commits = [
+  "see git log: 'Armenian guide: second model check (Fable 5.2), owner answers folded in, lint ով/ովքեր exception'",
+]
+
+notes = """
+The first lint fix passed its own three tests and still failed on «Խնդիրն ո՞վ է լուծել»: the regex
+word class is Armenian letters only, so the ՞ inside «ո՞վ» cut the captured word to «ո». Fixed by
+reading the next word with its marks and stripping them (word_without_marks). Lesson for this lint:
+test a word-list exception with the question and stress marks inside the word, not only the bare form.
+
+No session hello: the no-repeats list lives outside this repo and the repo CLAUDE.md forbids reading it.
+"""

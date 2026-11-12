@@ -19,18 +19,24 @@ node tools/check_site.mjs site/...html                       # for site pages (p
 ```
 
 Fix every ERROR: Latin `: ; ?` (P1), `ու՞` and marks after consonants (P2), «այսինքն» without ՝
-(P3), U+2024, dashes, curly quotes, look-alike letters, glued «չ + adjective» (N1), and «-ը» before
-a vowel-initial word (A1; use «-ն», but keep «-ը» before a comma or other pause). Rerun until clean.
+(P3), U+2024 (write the mijaket as ASCII `.`, P4), dashes, curly quotes, look-alike letters, glued
+«չ + adjective» (N1), «-ը» before a vowel sound (A1; use «-ն», but keep «-ը» before a comma or other
+pause) and «-ն» before a word starting with ե, ո or «և» (A1; use «-ը»). Rerun until clean.
 
 ## 2. Terminology pass
 
 For every math term, grep the glossary. One concept = one word in the whole document (e.g. do not
 mix «ընտրանք» and «նմուշ»). Literal translations of English terms are errors (T1).
 
+Then check the owner-decided words that models miss by default (T1, T2): heads / tails = «ղուշ» /
+«գիր» (not «գերբ»), statistical sample = «նմուշ» (not «ընտրանք»), standard deviation = «ստանդարտ
+շեղում» (not «միջին քառակուսային շեղում»). The lint cannot see these.
+
 ## 3. Negation pass (N1)
 
 Search for words starting with «չ» and for «ոչ».
-- «չ» + adjective / adverb / noun -> «ոչ ...» or an antonym («վատ», «անհնար»).
+- «չ» + adjective / adverb / noun -> «ոչ ...» or an antonym («վատ», «անհնար»). This includes «-ելի»
+  words: «անլուծելի», not «չլուծելի» (the lint does not catch these).
 - «չ» + verb or participle (չի, չունի, չհատվող, չնվազող) is right.
 - A negative word («ոչ մի», «ոչինչ», «երբեք», «ոչ ոք») needs a negative verb in the same clause.
 
@@ -38,9 +44,12 @@ Search for words starting with «չ» and for «ոչ».
 
 Replace or delete, one by one:
 - English fillers: «Կարևոր է նշել, որ», «Պետք է նշել», «Հեշտ է տեսնել», «պարզապես», «իրականում», «հենց» (S3).
-- English verbs used literally: «աշխատում է» (works), «հարկադրում է» (forces), «Ահա ...» (here is),
-  «կրում է տեղեկությունը», «ամենապարզ ձևն ...», «հզոր» (C1).
-- Russian patterns: «հանդիսանում է», «իրենից ներկայացնում է», «X, դա ...», «իր հերթին», «հանդես է գալիս որպես» (C2).
+- English verbs used literally: «աշխատում է» (works), «հարկադրում է» (forces), «կրում է
+  տեղեկությունը», «ամենապարզ ձևն ...» (C1). Leave «Ահա ...» and «հզոր մեթոդ» alone: both are fine
+  (A12, A39).
+- Russian patterns: «հանդիսանում է», «X, դա ...», «իր հերթին» (C2), «X-ի մոտ» for «у» (O7),
+  «արդյունքում» (O3). «իրենից ներկայացնում է» and «հանդես է գալիս որպես» are allowed (A28, A5);
+  shorten them only where the short form reads better.
 - Passive with «... կողմից» -> active verb with the actor as subject (G2).
 - «մենք» before a «-ենք» verb: delete (G1).
 
@@ -48,8 +57,8 @@ Replace or delete, one by one:
 
 - Count «Ուստի» and sentence-opening «Սա» / «Այն»; if the lint reports a density hint, vary them (S1, S4).
 - Turn «..., որը ...» chains into participles or two sentences (S2).
-- Numerals take a singular noun («երեք տարր», «n տարրից») (G3).
-- Scare quotes only for quotations, example names and real terms (W2).
+- Numerals take a singular noun («երեք տարր», «n տարրից», «Երկու բազմություն հավասար են») (G3, A38).
+- Do not strip scare quotes: they are fine as they are (W2, A29).
 - One idea per sentence, but do not chop proofs into 5-word fragments either.
 
 ## 6. Final check

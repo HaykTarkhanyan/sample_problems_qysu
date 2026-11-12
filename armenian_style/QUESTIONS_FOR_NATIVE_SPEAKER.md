@@ -15,6 +15,7 @@ need to answer the open ones.
 |--------|-----|
 | **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
+| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39 |
 | **Open** | none |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
@@ -289,3 +290,24 @@ problem book's word). Which is which? «ղուշ» means "bird" (the coat of arm
 - Also: is the plural «ղուշեր» fine («ղուշերի քանակը»), or rephrase as «քանի՞ անգամ է ընկել ղուշ»?
 - My guess: a; and the rephrasing reads more naturally. The site currently uses «Քանի՞ ղուշ՝ 3 նետումում»
   and «քանի անգամ է ընկել ղուշ».
+
+## Added 2026-11-13 (second model check, all answered the same day)
+
+**A37. Glued «չ-» on «-ելի» words.** GUIDE N1 listed «-ելի» with the participles that take «չ-»,
+which would allow «չլուծելի խնդիր», «չհաշվելի բազմություն». The glossary has «անհաշվելի» (row 1014).
+- a) wrong: «ան-» or a separate «ոչ» only
+- b) both fine
+- c) depends on the word
+- **Owner:** a.
+
+**A38. Numeral + noun in a definition about two specific objects.**
+- a) plural: «Երկու բազմություններ հավասար են, եթե ...»
+- b) singular: «Երկու բազմություն հավասար են, եթե ...»
+- c) either
+- My guess was a. **Owner:** b (the house rule holds here too).
+
+**A39. «հզոր» for a method («պարզ, բայց շատ հզոր կանոններ»).** GUIDE C1 called it an English calque.
+- a) normal Armenian, drop the rule
+- b) calque, keep replacing it with «արդյունավետ»
+- c) fine, but prefer «արդյունավետ»
+- **Owner:** a.

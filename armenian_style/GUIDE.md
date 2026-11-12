@@ -4,6 +4,8 @@ For anyone (human or agent) who writes or polishes Armenian in this repo: `.tex`
 pages, widget strings. It sits on top of the house rules in `CONVENTIONS.md` ("Armenian text") and
 the term list `glossary_Apr.csv`; it does not replace them. Where this guide and an existing house
 rule disagree, the house rule wins and the point is listed in `QUESTIONS_FOR_NATIVE_SPEAKER.md`.
+The owner's answers of 2026-11-10 and 2026-11-13 (`OWNER_ANSWERS.md`) are folded into the rules
+below (last sync 2026-11-13); if a rule and an owner answer ever differ again, the owner answer wins.
 
 How to read a rule: **wrong -> right**, one-line reason, a confidence level, the evidence, and the
 lint rule id if `lint_armenian.py` checks it.
@@ -28,13 +30,13 @@ gap in discourse words is a signal, not proof.
 
 1. **Negation:** «չ-» only on verbs and verb-derived forms (չի, չունի, չհատվող, չնվազող); adjectives,
    adverbs and nouns take a separate «ոչ» (ոչ լավ, ոչ դատարկ, ոչ միշտ) or a real antonym (վատ, անհնար). Never «չլավ».
-   (source-backed)
+   Words in «-ելի» are adjectives too: «անլուծելի», never «չլուծելի». (source-backed; «-ելի»: owner, A37)
 2. **Article:** «-ն» right before a vowel *sound* with no pause («թիվն է», «բազմությունն ունի», «որն
    ունի», «տարրերն են»); «-ը» elsewhere, including before ե-, ո- and «և» («թիվը երկու», «A-ը և»
    when the name ends in a consonant). After a formula, go by how the symbol is read aloud ($A$-ն,
    $x$-ը). (source-backed, A1)
 3. **Punctuation:** ։ for the full stop, ՝ for colon/apposition, « » quotes, ՞ ՛ on the stressed vowel
-   (ինչո՞ւ). Never Latin `:` `;` `?` after Armenian.
+   (ինչո՞ւ). Never Latin `:` `;` `?` after Armenian. The mijaket is ASCII `.`, never `․` (U+2024).
 4. **Drop pronouns the verb already carries:** no «մենք ստանում ենք», fewer sentence-opening «Սա» / «Այն».
 5. **No English fillers:** cut «Կարևոր է նշել, որ», «Հեշտ է տեսնել», «պարզապես», «իրականում», «հենց» used as "exactly".
 6. **No English word-for-word verbs:** «աշխատում է» (= "works"), «հարկադրում է» (= "forces"),
@@ -43,8 +45,10 @@ gap in discourse words is a signal, not proof.
    Language Committee's prose and 1.7 in the grade-7 textbook (A3).
 8. **Fewer «որը» clauses:** use a participle («2-ի բաժանվող թիվ») or two sentences.
 9. **Active voice with a named actor:** «Կոլմոգորովը տվել է աքսիոմները», not «... Կոլմոգորովի կողմից առաջարկված».
-10. **Terms come from the glossary**, never from a literal translation (injective = ինյեկտիվ, not
-    ներարկում; event = պատահույթ; sample = նմուշ, see A23).
+10. **Terms come from the glossary and the owner's answers**, never from a literal translation or
+    from general knowledge (injective = ինյեկտիվ, not ներարկում; event = պատահույթ; statistical
+    sample = նմուշ; standard deviation = ստանդարտ շեղում; heads / tails = ղուշ / գիր). A newer model
+    still misses exactly these by default (see "Second model check" at the end).
 
 ## Rules, most frequent first
 
@@ -54,7 +58,7 @@ paragraphs and the newest probability page), not in the already-polished sheets.
 ### P1. Latin punctuation instead of Armenian marks (error)
 
 - «Թիվը զույգ է:» -> «Թիվը զույգ է։»
-- «Չուղղորդված կողեր; սլաքներ պետք չեն։» -> «Չուղղորդված կողեր. սլաքներ պետք չեն։» (or split into two sentences; see A2 on the mijaket)
+- «Չուղղորդված կողեր; սլաքներ պետք չեն։» -> «Չուղղորդված կողեր. սլաքներ պետք չեն։» (the ASCII `.` is our mijaket, see P4; or split into two sentences)
 - «Ինչո՞ւ: $x$-ը ...» -> «Ինչո՞ւ։ $x$-ը ...»
 
 Reason: the Armenian full stop is ։ (U+0589), the colon role is played by ՝ (or ։ at a sentence
@@ -79,6 +83,10 @@ end), and `;` has no place in Armenian prose. Keyboards make the Latin `:` easy,
 - **ե-, ո- and «և» take «-ը»:** «Արամն եկավ» -> «Արամը եկավ», «Բազմությունն որպես» -> «Բազմությունը
   որպես», «$x$-ն և $y$-ը» -> «$x$-ը և $y$-ը», «$f$-ն ոչ միակն է» -> «$f$-ը ոչ միակն է». Only the
   auxiliaries are exempt: «տարրերն են», «$x_1$-ն են».
+- **«ով» and «ովքեր» are the one exception among ո-words:** they are said with օ, not վօ, so «-ն»
+  before them is right by the house rule («Խնդիրն ո՞վ է լուծել»). Since 2026-11-13 the lint no longer
+  flags «-ն» there; it does not demand it either. (Standard pronunciation rule; not checked against a
+  cited source in this repo and not put to the owner.)
 
 Reason: after a consonant-final word the article is «-ը»; «-ն» is a linking form used when the next
 word starts with a vowel sound and no pause separates them. Word-initial ե, ո and «և» are said յէ,
@@ -119,8 +127,26 @@ consonant-initial words they write $A$-ն, $B$-ն, $C$-ն, $g$-ն, $t$-ն, $0$-�
 $s$-ը, $3$-ը, $6$-ը (counted in `solutions_opus_4_8_ARM/*.tex`). Keep it. A bare number used as a
 noun declines with ս («երկուսը, երկուսի», «Հայոց լեզու 7», p. 56), so «$2$-ը» is right and «$2$-ն»
 only before a vowel sound («$2$-ն էլ»). Confidence: source-backed for the principle (the Language
-Committee's «Ը-Ն»: pronunciation decides) and for bare numbers. The readings of indexed symbols
-(«$Y_2$», «Քայլ 2») and of j are still open (A22.1, A22.2).
+Committee's «Ը-Ն»: pronunciation decides) and for bare numbers. Owner-decided (A22): indexed symbols
+and labels take «-ը» («$Y_2$-ը», «Քայլ 2-ը», read «... երկուսը» / «երկրորդը»), and j is read «ժի», so
+«$j$-ն».
+
+Spoken names for choosing the article (added 2026-11-13). The last spoken word decides:
+
+| group | name ends in a vowel: «-ն» always | name ends in a consonant: «-ը», and «-ն» only before a vowel sound |
+|-------|-----------------------------------|---------------------------------------------------------------------|
+| Latin letters | a ա, b բե, c ցե, d դե, e ե, g ժե, i ի, j ժի, k կա, o օ, p պե, q կու, t տե, u ու, v վե, w դուբլվե | f էֆ, h հաշ, l էլ, m էմ, n էն, r էռ, s էս, x իքս, y իգրեկ, z զետ |
+| Greek letters | α ալֆա, β բետա, γ գամմա, δ դելտա, η էտա, θ թետա, λ լամբդա, μ մյու, ν նյու, ξ քսի, π պի, ρ ռո, σ սիգմա, τ տաու, φ ֆի, χ խի, ψ պսի, ω օմեգա | ε էպսիլոն |
+| digits | 0 զրո | 1 մեկ, 2 (երկուսը), 3 երեք, 4 չորս, 5 հինգ, 6 վեց, 7 յոթ, 8 ութ, 9 (իննը), 10 (տասը) |
+| formulas | «$F(c)$-ն» (... ցե), «$P_n(k)$-ն» (... կա), «$P(A)$-ն», «$A\cup B$-ն», «$x^2$-ն» (... քառակուսի) | «$f(x)$-ը» (... իքս), «$n!$-ը» (... ֆակտորիալ), «$\mathbb{R}$-ը» (էռ) |
+
+The Latin split is the one the lint uses (`LATIN_CONS_NAMES`) and the polished sheets follow. The
+site already has «$\varepsilon$-ը» (`site/probability/w12-continuous.html:159`), «$F(c)$-ն բ...»
+(`w10-cdf-properties.html:195`) and «$P_n(k)$-ն տ...» (`w07-bernoulli.html:288`). The lint checks only
+single Latin letters and digits (with one subscript): «$\varepsilon$-ն փոքր» and «$f(x)$-ն դրական»
+pass it, so Greek letters and longer formulas are on the writer. When the reading of a formula is
+unclear, put a noun after it and let the noun carry the article («$f$ ֆունկցիան»). Confidence: high
+for the principle; the spoken names of g, h, q and w were not put to the owner.
 
 ### S1. «Ուստի» on autopilot (style)
 
@@ -192,25 +218,27 @@ Reason: Armenian drops the subject or repeats the noun more readily than English
 - «$a\le b\le c$ հարկադրում է $a\le c$» -> «$a\le b\le c$-ից հետևում է $a\le c$»
 - «\textbf{Փոխանցելի տեխնիկա՝}» -> «\textbf{Ընդհանուր հնարք՝}» (see A11)
 - Not a calque after all: «Ահա (ա) մասը՝ ...». The Language Committee itself opens sentences with
-  «Ահա ... օրինակներ՝» (A12 resolved a). The `--style` hint `calque-here-is` contradicts this source and
-  should be removed.
+  «Ահա ... օրինակներ՝» (A12 resolved a); the `--style` hint `calque-here-is` was removed from the lint.
 - «Սա տեսնելու ամենապարզ ձևն աշտարակ կառուցելն է» -> «Դա ամենից հեշտ երևում է աշտարակ կառուցելիս»
 - «կարգն է, որ կրում է տեղեկությունը» -> «տեղեկությունը կարգի մեջ է»
-- «Այս կանոնները պարզ են, բայց շատ հզոր» -> «... պարզ են, բայց շատ արդյունավետ»
+- Not a calque either: «հզոր» for a method or tool («հզոր մեթոդ», «Այս կանոնները պարզ են, բայց շատ
+  հզոր») is normal Armenian (owner, 2026-11-13, A39). Do not replace it.
 - «իրական պատճառը» (= "the real reason") -> «բուն պատճառը» or just «պատճառը»
 
-Reason: "works", "forces", "transferable", "the way to see", "carries information",
-"powerful" have no such sense in Armenian; a reader decodes them back into English.
+Reason: "works", "forces", "transferable", "the way to see" and "carries information" have no
+such sense in Armenian; a reader decodes them back into English.
 
 - Confidence: medium-high (zero or near-zero in the human references; the meanings are plainly
-  English). Exact replacements: needs native check (A9-A11). For A11 the Language Committee's
+  English). The owner confirmed A9-A11 on 2026-11-10: math «աշխատում է» and «հարկադրել» are calques
+  (a program or simulation «աշխատում է» stays), and the box title is «Ընդհանուր հնարք». For A11 the
+  Language Committee's
   «Փոխանցել» gives the verb only the senses "hand over, pass on, convey", not "transferable to other
   problems".
 - Evidence (polished sheets + site): «Փոխանցելի տեխնիկա» 72 uses (0 in Wikipedia), «հարկադր-» 41
   (0), «աշխատ-» 26 (2.4 per 10k in Wikipedia, in its real sense). Lines:
   `Practice2-3_Relations_Solutions_ARM.tex:222`, `Practice1_Sets_Solutions_ARM.tex:180, 193, 197, 719`,
   `site/discrete/p4-functions.html:400`, `Practice8_Recurrence_Solutions_ARM.tex:139`.
-- Lint: `--style` hints `calque-works`, `calque-force`, `calque-transferable-technique`, `calque-here-is`.
+- Lint: `--style` hints `calque-works`, `calque-force`, `calque-transferable-technique`.
 
 ### G1. Redundant «մենք» (error-ish)
 
@@ -229,27 +257,31 @@ Reason: the verb ending (-ենք) already says "we". Wikipedia writes «Երբ �
 ### C2. Russian calques (calque)
 
 - «X-ը հիմք է հանդիսանում Y-ի համար» -> «X-ը Y-ի հիմքն է»
-- «իրենից ներկայացնում է n-մուլտիբազմություն» -> «n-մուլտիբազմություն է»
 - «Բազմությունը, դա ...» -> «Բազմությունը ... է»
 - «Իր հերթին, ...» (= "в свою очередь") -> «Իսկ ...» / drop
-- «$B$-ն հանդես է գալիս որպես $C$-ի տարր» -> «$B$-ն $C$-ի տարր է» / «$B$-ն $C$-ի տարրերից մեկն է»
+- Allowed, the shorter form is only a style choice: «իրենից ներկայացնում է n-մուլտիբազմություն» may
+  stay (owner, A28); «n-մուլտիբազմություն է» is lighter.
+- Allowed, shorter preferred where it fits: «$B$-ն հանդես է գալիս որպես $C$-ի տարր» -> «$B$-ն $C$-ի
+  տարր է» / «$B$-ն $C$-ի տարրերից մեկն է» (owner, A5).
 
 Reason: «հանդիսանալ» meaning "to be" is a semantic loan from Russian «являться» (Wiktionary marks
 it formal and gives «լինել» as the plain synonym: https://en.wiktionary.org/wiki/հանդիսանալ). The
 others follow the same pattern («представлять собой», «это», «в свою очередь», «выступать в
 качестве»). LLMs pick these up from Armenian web text, which has many of them.
 
-- Confidence: medium for «հանդիսանալ» (one dictionary source); needs native check for the rest
-  (A5, A28). The Language Committee pages do not list them. «հանդես գալ որպես» is not an error: the
+- Confidence: medium for «հանդիսանալ» (one dictionary source). «Բազմությունը, դա ...» and «Իր
+  հերթին» were never put to the owner: needs native check. The Language Committee pages do not list
+  any of them. «իրենից ներկայացնում է» may be used (A28). «հանդես գալ որպես» is not an error: the
   ministry textbook uses it in its own explanations («հանդես են գալիս որպես նախադասության ...
-  անդամներ», «Հայոց լեզու 7», p. 27), so replacing it is a style choice for brevity (A5 narrowed).
+  անդամներ», «Հայոց լեզու 7», p. 27), so replacing it is a style choice for brevity (A5: allowed,
+  prefer the shorter form).
   Two related Russian patterns are covered by the Committee: «X-ի արդյունքում» (= «в результате»)
   and «մոտ» for «у» (see O3 and O7 below).
 - Evidence: Wikipedia has «հանդիսան-» 3.2 per 10k and «իրենից ներկայացն-» 0.8; the professor's
   lecture uses «իրենից ներկայացնում է» (`discrete/Դասախոսություններ/lecture5-discrete.pdf` p. 3), so
   even good human text has them. Our LLM text has 0 «հանդիսան-» but 22 «հանդես գալ», e.g.
   `Practice1_Sets_Solutions_ARM.tex:245, 272`.
-- Lint: `--style` hints `calque-handisanal`, `calque-irenic-nerkayacnel`.
+- Lint: `--style` hint `calque-handisanal` (`calque-irenic-nerkayacnel` was removed after A28).
 
 ### G2. Passive voice with «... կողմից» (calque)
 
@@ -283,7 +315,11 @@ where a plain ablative belongs: «հայտ է ստացել երկու թեկնա
 
 The rule:
 1. «չ-» is glued to verb forms only: finite verbs (չի պատկանում, չունի, չկա), infinitives, and
-   participles built from verbs (-ող, -ած, -ված, -ելի: չհատվող, չկարգավորված).
+   participles built from verbs (-ող, -ած, -ված: չհատվող, չկարգավորված). Words in «-ելի» are
+   adjectives, not participles: they take «ան-» (անլուծելի, անբաժանելի, անհաշվելի: row 1014) or,
+   where no ան- word exists, a separate «ոչ»; never «չլուծելի», «չհաշվելի» (owner, 2026-11-13, A37;
+   until then this line wrongly listed «-ելի» with the participles). The lint's closed list does not
+   catch these.
 2. Adjectives, adverbs, nouns and pronouns are negated with a separate «ոչ»: ոչ լավ, ոչ դատարկ, ոչ
    սիմետրիկ, ոչ միշտ, ոչ ոք, ոչ մի. A handful of old adjectives with glued «չ-» exist (չտես,
    չբեր), but the prefix is no longer productive, so never invent a new one.
@@ -321,7 +357,8 @@ The rule:
 ### G3. Numeral + singular noun (house rule)
 
 - «n տարրերից կազմված տեղափոխություններ» -> «n տարրից կազմված տեղափոխություններ»
-- «Երկու բազմություններ հավասար են, եթե ...» -> «Երկու բազմություն հավասար են, եթե ...»
+- «Երկու բազմություններ հավասար են, եթե ...» -> «Երկու բազմություն հավասար են, եթե ...» (also in
+  definitions about two specific objects: owner, 2026-11-13, A38)
 - Fine with plural: definite or "both" phrases, «երկու քայլերն էլ», «այդ երեք բազմությունները».
 
 - Confidence: source-backed (A4 resolved b). «Հայոց լեզու 7», pp. 55-56: after a numeral the noun can
@@ -358,8 +395,9 @@ stressed, so the mark moves to the syllable before it. Exceptions where the stre
 - «այսինքն x-ը զույգ է» -> «այսինքն՝ x-ը զույգ է» (house rule)
 - «Օրինակ, x-ը ...» -> «Օրինակ՝ x-ը ...» when an example follows; a mid-sentence parenthetical keeps
   commas: «..., օրինակ, ...» (A15 resolved a)
-- «Այսպիսով, ...» / «Այսպիսով ...» -> «Այսպիսով՝ ...» at the start of a sentence (A16, half settled)
-- Sentence-initial «Հետևաբար»: no source; see A16.
+- «Այսպիսով, ...» / «Այսպիսով ...» -> «Այսպիսով՝ ...» at the start of a sentence (A16, source)
+- «Հետևաբար $0<x$ ...» -> «Հետևաբար, $0<x$ ...»: a comma after sentence-initial «Հետևաբար» (A16,
+  owner; no source covers it)
 
 - Confidence: source-backed for «այսինքն՝» (Language Committee 8 of 8, and the grade-11 textbook's
   own text), «Օրինակ՝» (Committee 54 vs 3, grade-7 textbook 74 vs 3, the comma cases being
@@ -370,19 +408,20 @@ stressed, so the mark moves to the syllable before it. Exceptions where the stre
   known from the search abstract only, the PDF did not extract).
 - Lint: `aysinqn-but`.
 
-### P4. The mijaket (style, undecided)
+### P4. The mijaket is ASCII `.` (house rule, owner-decided)
 
 Our sheets use ASCII `.` as the mijaket between clauses (121 times: «արկղը բազմություն է. նրա
-...»). The lint bans U+2024 everywhere (house rule) because it looks like ։ in some fonts. Until A2 is
-answered: do not add new mijakets; prefer ։ (two sentences) or ՝.
+...»). The lint bans U+2024 everywhere (house rule) because it looks like ։ in some fonts. Decided
+(A2, owner): keep ASCII `.`; old and new text may join clauses with it. Models type U+2024 by
+default (all 3 mijakets in the 2026-11-13 Fable baseline were `․`), so expect `one-dot-leader` hits
+on fresh text and replace them with `.`.
 
 - The mark itself is correct modern punctuation: the grade-11 textbook lists միջակետ among the four
   division marks (p. 126), and the Language Committee uses it often («Երբեմն հարց է առաջանում. իսկ
-  ո՞ր հոդը ...»). "Avoid it" is a house preference, not a correction, so don't "fix" existing
-  mijakets for being mijakets.
-- Confidence: source-backed that the mark is legitimate; needs native check for the character and
-  the house preference (A2 narrowed; Unicode has no mijaket code point, and the Committee mirror
-  mixes `.` and `․`).
+  ո՞ր հոդը ...»). So don't "fix" existing mijakets for being mijakets.
+- Confidence: source-backed that the mark is legitimate; the character is the owner's choice (A2;
+  Unicode has no mijaket code point, and the Committee mirror mixes `.` and `․`).
+- Lint: `one-dot-leader`.
 
 ### T1. Terminology: glossary first, never a literal translation (error)
 
@@ -394,32 +433,42 @@ answered: do not add new mijakets; prefer ։ (two sentences) or ՝.
 - one concept, one word per document: P4 calls numerical sampling «ընտրանք»
   (`Practice4_Functions_Solutions_ARM.tex:180`) while P2-3 says «նմուշ»
   (`Practice2-3_Relations_Solutions_ARM.tex:653`, matches row 874), and the professor uses
-  «ընտրանք» for a combinatorial selection (lecture5 p. 3). See A23.
+  «ընտրանք» for a combinatorial selection (lecture5 p. 3). Decided (A23, owner): «նմուշ» in
+  statistics, «ընտրանք» only in combinatorics.
+- standard deviation = «ստանդարտ շեղում» (row 928; A24, owner), not «միջին քառակուսային շեղում»
+- probability mass function: «բաշխման օրենք» on the site (A26, owner); the glossary's «հավանականային
+  ֆունկցիա» (row 787) stays as an alternative
 
 - Confidence: high (glossary is authoritative). The three "not ..." forms are common LLM calques
-  from general knowledge; none occurs in the repo today, so they are preventive.
+  from general knowledge; none occurs in the repo today, so they are preventive. The owner-decided
+  words need the same care: the 2026-11-13 Fable baseline wrote «ընտրանք» for a statistical sample
+  and «միջին քառակուսային շեղում».
 - Also see `_learnings/2026-09-07-0243_glossary-changed-terms-invert-instinct.md`: the ⚠ rows of
   the focused glossary deliberately go against instinct.
 
 ### T2. Everyday probability words (owner-confirmed terms)
 
-- Coin sides: **«ղուշ» / «գիր»**, never «գերբ» (owner, 2026-11-10). Which side is which: see A36
-  (likely heads = ղուշ). Prefer «քանի անգամ է ընկել ղուշ» over a plural noun.
-- Confidence: high for the words, needs native check for the mapping.
+- Coin sides: **heads = «ղուշ», tails = «գիր»**, never «գերբ» (owner, 2026-11-10, A36). Prefer
+  «քանի անգամ է ընկել ղուշ» over a plural noun.
+- Confidence: high (owner). Models reach for the textbook word: the 2026-11-13 Fable baseline wrote
+  «գերբ» twice.
 
-### W1. Openers built on an adverbial participle (needs native check)
+### W1. Openers built on an adverbial participle (owner-decided, A17)
 
 - «Չլինելով բարդ՝ գրաֆների հիմնական գաղափարները շատ օգտակար են» (my draft) -> «Գրաֆների հիմնական
   գաղափարները պարզ են, բայց շատ օգտակար»
 - Reason: English "Being simple, X ..." patterns; in Armenian the -ելով form must share the subject
   and sounds heavy at the start. Evidence: my own draft only (A17).
+- Decided (A17, owner): rephrase concessive openers like this one. A «-ելով ...՝» opener with a shared
+  subject is native and stays («Հիմք ընդունելով ասվածը՝ ...»).
 
 ### W2. Scare quotes and other small things (low frequency)
 
 - Scare quotes: our LLM text has 298 « » vs 39 in Wikipedia, many around ordinary words
-  («անունների», «կպչում»). Keep « » for quotations, names of examples and real terms (A29). The
-  Language Committee lists quotes for names (organizations, papers, works) and quoted speech. For a
-  word mentioned as a word, italics, bold or no marking are also allowed.
+  («անունների», «կպչում»). Decided (A29, owner): they are fine as they are, no restriction; do not
+  strip them when polishing. For reference, the Language Committee lists quotes for names
+  (organizations, papers, works) and quoted speech, and for a word mentioned as a word it also allows
+  italics, bold or no marking.
 - Quotes and endings (Language Committee, «Չակերտ»): only « », also around foreign-script names.
   Case endings and articles normally go inside («Հայկական միջօրեականի»). They go outside only when
   the quoted unit is a whole sentence, ends in a case form, is indeclinable or is a pronoun. So our
@@ -431,7 +480,7 @@ answered: do not add new mijakets; prefer ։ (two sentences) or ՝.
   professor sometimes write «ինչ որ».
 - Hyphen: plain `-` (house rule; A35 resolved a: neither the Language Committee pages nor the
   grade-7 textbook use U+058A). Wikipedia uses the Armenian hyphen 65 times; do not copy it.
-- Headings like «Ստուգեք ձեզ» ("Check yourself") are calqued (A18).
+- The self-check heading is «Ստուգեք ինքներդ ձեզ» (A18, owner), not the calqued «Ստուգեք ձեզ».
 
 ## Rules from the Language Committee not covered above
 
@@ -493,6 +542,9 @@ are listed for new text, especially the probability word problems.
 
 - «Այս բաշխման մոտ միջինը ...» -> «Այս բաշխման միջինը ...»; «Ինձ մոտ հարց առաջացավ» -> «Իմ մեջ
   ...»; «նրանց մոտ չի ստացվում» -> «նրանց չի հաջողվում»
+- Probably the same calque in the "in X's work" sense: «ավելի վաղ հանդիպում է Դը Մուավրի մոտ» ->
+  «... Դը Մուավրի աշխատանքներում» (from the 2026-11-13 Fable baseline; my reading of the Committee
+  rule, needs native check; the lint has no hint for «մոտ»).
 - The spatial sense is fine: «լուսացույցի մոտ», «$x_0$-ի մոտ». [«Մոտ»]
 
 ### O8. Dates
@@ -516,3 +568,28 @@ participle negation (չհատվող, չնվազող), «այսինքն՝», ՞ p
 plural reader address («Դիտարկենք», «հաշվեք»), and article choice after formulas (A1b). The
 remaining problems are mostly fluency and rhythm, which the lint cannot judge; that needs a reader
 (see POLISH_CHECKLIST.md).
+
+## Second model check: Fable 5.2 (2026-11-13)
+
+The rules above were built from Opus-era text. To see which of them still matter for a newer model,
+a fresh Fable 5.2 agent wrote the same 12 paragraphs as the first baseline without reading this
+guide (`_sources/own/fable_paragraphs_raw.md`, 697 Armenian words). One run, so a signal, not a rate.
+
+| marker | first baseline (741 words) | Fable 5.2 raw (697 words) |
+|--------|----------------------------|---------------------------|
+| lint errors | 12 | 4 (3 times U+2024 as the mijaket, 1 article) |
+| «-ը» before a vowel sound (A1) | 10 | 1 («բաշխումը անընդհատ») |
+| Latin `:` after Armenian (P1) | 1 | 0 |
+| fillers (S3) | 5 | 0 |
+| redundant «մենք» (G1) | 3 | 0 |
+| «կողմից» passive (G2) | 1 | 0 |
+| «Օրինակ՝» with ՝ (P3) | 0 of 5 | 8 of 8 |
+| «որը / որն / որոնք» (S2) | 14 | 7 |
+| sentence-initial «Այն» (S4) | 3 | 6, three of them in one paragraph |
+| injective (T1) | «ներարկում» | «ինյեկտիվ» |
+
+What it still got wrong, and only the mijaket is visible to the lint: «գերբ» for heads (T2), «ընտրանք»
+for a statistical sample and «միջին քառակուսային շեղում» (T1), `․` for the mijaket (P4), «Դը Մուավրի
+մոտ» (O7) and chains of «Այն» openers (S4). For a newer model the mechanical rules are mostly a
+safety net. The owner-decided terms, the Russian calques and the rhythm rules are where the reading
+pass has to look.

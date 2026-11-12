@@ -41,6 +41,11 @@ Topics cut from current work so they are not lost.
 - **Glossary fixes waiting for the owner's OK (Q14):** row 509 typo «գնատահական», rows 257/258
   duplicate, row 172 computability -> «հաշվարկելիություն» (A30), U+2024 in 23 rows
   (`armenian_style/GLOSSARY_REPORT.md`). (2026-11-10)
+- **Armenian lint gaps found in the second model check:** no hint for the Russian «X-ի մոտ» (= «у»;
+  the spatial sense would give many false positives), no article check after Greek letters or longer
+  formulas («$\varepsilon$-ն փոքր», «$f(x)$-ն դրական» pass), and `che-adjective` does not see
+  «չ...ելի» words. The rules are written down (GUIDE.md O7, A1b, N1); only the mechanical check is
+  missing. Also not asked: whether «X-ի մոտ» for "in X's work" is the calque. (2026-11-13)
 - **English site pages.** Port the content fixes from the Armenian pass into the English sheets in
   `discrete/solutions_opus_4_8/` first (stars-and-bars gaps wording, P8 n>=3, P7 DOF prose and
   Stirling rule, P5 red dots 15/30/45, P1 contrapositive and mirror claims, P2-3 vertex labels),

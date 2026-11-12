@@ -25,7 +25,8 @@ ERROR rules are mechanical with a low false-positive rate on this repo's text:
                         consonant: $x$, $f$, $n$, ...) directly before a word starting with ե, ո (not
                         ու) or the conjunction և; they start with the sounds յ/վ, so -ը is required
                         (textbook «Հայոց լեզու 7», p. 27: «Արամն եկավ», «Արամն որոշեց» are wrong).
-                        Auxiliaries եմ ես ենք եք են are exempt («տարրերն են»).          [A1, SOURCE_FINDINGS]
+                        Auxiliaries եմ ես ենք եք են are exempt («տարրերն են»), and so are «ով»,
+                        «ովքեր» (said with օ, not վօ).                                  [A1, SOURCE_FINDINGS]
   qmark-on-aux          ՞ on a positive auxiliary (քննարկել ե՞ք -> քննարկե՞լ եք; չե՞ք is fine)
                         (Language Committee «Հարցական»)                                  [P2]
   mark-on-schwa         ՞ ՛ ՜ right after ը (the article is never stressed: խո՞սքը, not խոսքը՞)
@@ -34,8 +35,8 @@ ERROR rules are mechanical with a low false-positive rate on this repo's text:
                         (Language Committee «Ու»)                                         [P5]
 
 STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
-  calque phrases (հանդիսանում է, իրենից ներկայացնում է, Փոխանցելի տեխնիկա, հարկադրել, աշխատում է
-  for "works", Ահա ..., կարևոր է նշել, հեշտ է տեսնել, պետք է նշել), filler (պարզապես, իրականում),
+  calque phrases (հանդիսանում է, Փոխանցելի տեխնիկա, հարկադրել, աշխատում է for "works",
+  կարևոր է նշել, հեշտ է տեսնել, պետք է նշել), filler (պարզապես, իրականում),
   redundant «մենք», passive «... կողմից», «ոչ մի / ոչինչ / երբեք» sentences with no negative verb,
   «արդյունքում» (Russian «в результате»; Committee «Արդյունքում»), «իրականացնել» (overused;
   Committee «Իրականացնել, կատարել, անել»), and per-file density of «Ուստի» / «հենց» / sentence-initial «Սա».
@@ -50,6 +51,8 @@ VOWELS = "աեէըիոօԱԵԷԸԻՈՕև"
 # «ես» is left out: it is also the pronoun "I" (said յէս).
 CLEAR_VOWEL_START = rf"(?:[աէըիօԱԷԸԻՕ]|[Ոո]ւ|(?:եմ|ենք|եք|են)(?![{ARM}]))"
 AUX = {"եմ", "ես", "ենք", "եք", "են"}
+# the only ո-initial words said with օ, not վօ: «-ն» before them is right, so they are not flagged
+O_VOWEL_WORDS = {"ով", "ովքեր"}
 # consonant letters that can precede a final article -ն (յ and ւ left out: այն, միայն, նույն, տուն are not articles)
 CONS_BEFORE_N = "բգդզթժլխծկհձղճմնշչպջռսվտրցփքֆ"
 # words whose final consonant + ն is part of the word, not an article
@@ -164,16 +167,24 @@ def symbol_name_ends_in_consonant(tok):
     return last in LATIN_CONS_NAMES
 
 
+def word_without_marks(text, start):
+    """The word starting at `start`, lowercased, with ՞ ՛ ՜ removed (ո՞վ -> ով, ովքե՞ր -> ովքեր)."""
+    m = re.match(rf"[{ARM}՛՜՞]+", text[start:])
+    return re.sub("[՛՜՞]", "", m.group(0)).lower() if m else ""
+
+
 def article_n_hits(line, raw):
     """-ն after a consonant-final word or symbol right before a ե/ո/և word (not an auxiliary)."""
     hits = []
     for m in N_BEFORE_YEO.finditer(line):
-        if m.group(1).lower() in NATURAL_N or m.group(2) in AUX:
+        if (m.group(1).lower() in NATURAL_N or m.group(2) in AUX
+                or word_without_marks(line, m.start(2)) in O_VOWEL_WORDS):
             continue
         hits.append(f"{m.group(1)} {m.group(2)}")
     for m in MATH_N_BEFORE_YEO.finditer(raw):
         tok = m.group(1) if m.group(1) is not None else m.group(2)
-        if m.group(3) in AUX or not symbol_name_ends_in_consonant(tok):
+        if (m.group(3) in AUX or word_without_marks(raw, m.start(3)) in O_VOWEL_WORDS
+                or not symbol_name_ends_in_consonant(tok)):
             continue
         hits.append(f"{m.group(0)}")
     return hits
@@ -286,6 +297,12 @@ def selftest():
         ("$x_1$-ն են", ".tex", None),                           # auxiliary
         ("$B$-ն որպես $C$-ի տարր", ".tex", None),               # B = բե
         ("$(1,0)$-ն և", ".tex", None),                          # unknown reading: not flagged
+        # «ով», «ովքեր» are said with օ (not վօ), so -ն before them is not an error (2026-11-13)
+        ("Խնդիրն ով է լուծել", ".txt", None),
+        ("Խնդիրն ո՞վ է լուծել։", ".txt", None),                 # the mark inside the word must not hide it
+        ("Հարցերն ովքե՞ր են տվել։", ".txt", None),
+        ("$x$-ն ո՞վ է ընտրել։", ".tex", None),
+        ("Արամն ո՞ր խնդիրը լուծեց։", ".txt", "article-n-before-yeo"),  # ո՞ր is said վոր: still wrong
         # punctuation rules from the Language Committee
         ("Քննարկել ե՞ք հարցը։", ".txt", "qmark-on-aux"),
         ("Քննարկե՞լ եք հարցը։", ".txt", None),
