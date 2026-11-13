@@ -2,6 +2,23 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 20. Next numerical page is block B (polynomial interpolation), before A, D and E
+- **Date** 2026-11-13 - **status** active (user picked it from four options, Q22 of that session; it closes the
+  "which block next" question left open on 2026-11-11)
+- **Decision** Build `site/numerical/` block B (problems B 1-26: Lagrange, Newton / divided differences, error,
+  Chebyshev nodes) as the second page of the course, one page, in the pattern of DECISIONS #18.
+- **Why** It completes lecture 4: slides p2-56 are interpolation and p57-88 are splines, and only the spline half
+  has a page. `splines.html` already uses the interpolating polynomial and the Runge effect without a page that
+  explains them. Slides exist, the block is self-contained, and the spline widgets already compute the
+  interpolating polynomial. The glossary term «բաժանված տարբերություն» was fixed the same day.
+- **Alternatives rejected** Block A first (the 2026-11-11 session's recommendation: 45 problems on errors and
+  nonlinear equations, and PSS 1 is the only homework of the current run): it needs two pages and does not close
+  the gap under the splines page. Blocks D and E: no lecture slides yet.
+- **What would change this** An exam or homework that starts from the beginning of the course (then A 1-15 with
+  PSS 1 goes first). Planned order after B: A 16-45 (nonlinear equations), A 1-15 + PSS 1 (errors), then D and E
+  once their slides exist. Not verified when this was decided: the 26 problems themselves were not read (their
+  Armenian text is not in the PDF's text layer), only the course map in `numerical_methods/README.md`.
+
 ## 19. Python cells are edited in place with code-input 2.9.0 (vendored), plus Python-aware Enter / Backspace
 - **Date** 2026-11-11 - **status** active (user, after the first deploy: "the ui is awful, also the editor is very
   inconvenient to use")
