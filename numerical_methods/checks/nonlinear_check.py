@@ -1,0 +1,528 @@
+"""Recompute every number on site/numerical/nonlinear.html (problem list block A, problems 16-45).
+
+Run from the repo root (uses the animations/ environment, which has numpy + scipy):
+    uv run --project animations python numerical_methods/checks/nonlinear_check.py
+Takes about 1 s. Every check is an assert; the log lists the values the page quotes.
+Independent tools on purpose: scipy's brentq / numpy's roots check the hand computations,
+and Decimal (50-200 digits) checks the convergence orders that double precision cannot show.
+"""
+import logging
+import math
+import time
+from decimal import Decimal as D
+from decimal import getcontext
+from fractions import Fraction as Fr
+from pathlib import Path
+
+import numpy as np
+from scipy.optimize import brentq
+
+Path("logs").mkdir(exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler("logs/nonlinear_check.log", mode="w", encoding="utf-8")],
+)
+log = logging.getLogger(__name__)
+T0 = time.time()
+
+
+def close(a, b, tol=1e-9):
+    assert abs(a - b) <= tol * max(1.0, abs(b)), f"{a} != {b}"
+
+
+def bisect_mid(f, a, b, n):
+    """Midpoints x_0..x_n of the bisection method (lecture: x_0 is the first midpoint) and the last interval."""
+    xs = []
+    fa = f(a)
+    assert fa * f(b) < 0
+    for _ in range(n + 1):
+        x = (a + b) / 2
+        xs.append(x)
+        fx = f(x)
+        if fx == 0:
+            break
+        if fa * fx < 0:
+            b = x
+        else:
+            a, fa = x, fx
+    return xs, (a, b)
+
+
+def newton(f, df, x0, n):
+    xs = [x0]
+    for _ in range(n):
+        xs.append(xs[-1] - f(xs[-1]) / df(xs[-1]))
+    return xs
+
+
+def secant(f, x0, x1, n):
+    """x_0, x_1, ..., x_n (stops early when two values of f coincide)."""
+    xs = [x0, x1]
+    while len(xs) <= n:
+        a, b = xs[-2], xs[-1]
+        if f(b) == f(a):
+            break
+        xs.append(b - f(b) * (b - a) / (f(b) - f(a)))
+    return xs
+
+
+def fpi(g, x0, n):
+    xs = [x0]
+    for _ in range(n):
+        xs.append(g(xs[-1]))
+    return xs
+
+
+def bisect_steps(length, eps):
+    """Smallest n with length / 2^(n+1) < eps (lecture bound |r - x_n| <= (b-a)/2^(n+1))."""
+    n = 0
+    while length / 2 ** (n + 1) >= eps:
+        n += 1
+    return n
+
+
+# ---------- A16: limits and orders of four sequences ----------
+def order_table(e):
+    """ratio e_{n+1}/e_n and p_n = ln(e_{n+1}/e_n) / ln(e_n/e_{n-1}) from exact fractions."""
+    ln = lambda q: math.log(q.numerator) - math.log(q.denominator)
+    ratio = [float(e[i + 1] / e[i]) for i in range(len(e) - 1)]
+    p = [ln(e[i + 1] / e[i]) / ln(e[i] / e[i - 1]) for i in range(1, len(e) - 1)]
+    return ratio, p
+
+
+ea = [Fr(1, n**6) for n in range(1, 400)]
+ra, pa = order_table(ea)
+close(ra[9], (10 / 11) ** 6); close(ra[99], (100 / 101) ** 6)
+assert 0.98 < ra[-1] < 1 and abs(pa[-1] - 1) < 0.01          # ratio -> 1: sublinear
+eb = [Fr(1, 3**n + 1) for n in range(1, 30)]
+rb, pb = order_table(eb)
+close(rb[-1], 1 / 3, 1e-9); assert abs(pb[-1] - 1) < 1e-6     # linear, q = 1/3
+ec = [Fr(1, 3 ** (3**n)) for n in range(1, 7)]               # x_n - 1 = 3^(-3^n)
+rc, pc = order_table(ec)
+assert all(ec[i + 1] == ec[i] ** 3 for i in range(5))         # e_{n+1} = e_n^3 exactly: order 3
+assert all(abs(p - 3) < 1e-12 for p in pc)
+ed = [Fr(1, 3 ** (n * n)) for n in range(1, 12)]             # x_n - 1 = 3^(-n^2)
+rd, pd_ = order_table(ed)
+assert all(rd[i] == 3.0 ** -(2 * (i + 1) + 1) for i in range(6))   # ratio 3^-(2n+1) -> 0: superlinear
+assert 1 < pd_[-1] < 1.12                                     # p_n = (2n+1)/(2n-1) -> 1: order 1
+close(pd_[0], 5 / 3); close(pd_[1], 7 / 5)
+assert 1 + 3.0 ** -(3**4) == 1.0 and 1 + 3.0 ** -(3**3) > 1.0   # in doubles x_4 = 1 exactly, x_3 is not
+log.info(f"A16 (a) 1/n^6: ratios n=10: {ra[9]:.4f}, n=100: {ra[99]:.4f} -> 1 (sublinear)")
+log.info(f"A16 (b) 1/(3^n+1): ratios {[round(r, 5) for r in rb[:4]]} -> 1/3 (linear)")
+log.info(f"A16 (c) e_n = 3^-3^n: e_1..e_3 = {[f'{float(e):.3e}' for e in ec[:3]]}, p = {[round(p, 6) for p in pc]} (order 3)")
+log.info(f"A16 (d) e_n = 3^-n^2: ratios {[f'{r:.3e}' for r in rd[:4]]} -> 0, p = {[round(p, 4) for p in pd_[:5]]} -> 1 (superlinear, order 1)")
+
+# ---------- A17: three sequences converging to ln 2 ----------
+getcontext().prec = 220
+LN2 = D(2).ln()
+xa = [D(2)]
+for _ in range(9):
+    xa.append(xa[-1] - 1 + 2 / xa[-1].exp())
+xb = [D(2)]
+for _ in range(60):
+    xb.append(xb[-1] + D(1) / 5 - xb[-1].exp() / 10)
+xc = [D(2), D(1)]
+for _ in range(11):
+    a_, b_ = xc[-2], xc[-1]
+    xc.append(b_ - (b_ - a_) / (b_.exp() - a_.exp()) * (b_.exp() - 2))
+err = lambda xs: [abs(x - LN2) for x in xs]
+ea17, eb17, ec17 = err(xa), err(xb), err(xc)
+dorder = lambda e: [float((e[i + 1] / e[i]).ln() / (e[i] / e[i - 1]).ln()) for i in range(1, len(e) - 1)]
+pa17, pb17, pc17 = dorder(ea17), dorder(eb17), dorder(ec17)
+assert abs(pa17[-1] - 2) < 1e-6                                # Newton: order 2
+assert abs(float(ea17[6] / ea17[5] ** 2) - 0.5) < 1e-6          # e_{n+1}/e_n^2 -> f''/(2f') = 1/2
+assert abs(pb17[-1] - 1) < 1e-3 and abs(float(eb17[-1] / eb17[-2]) - 0.8) < 1e-5   # linear, q = 0.8
+golden = (1 + math.sqrt(5)) / 2
+assert abs(pc17[-1] - golden) < 0.02                           # secant: order ~1.618
+f17 = lambda x: math.exp(x) - 2
+da = newton(f17, math.exp, 2.0, 6)
+db = fpi(lambda x: x + 0.2 - math.exp(x) / 10, 2.0, 40)
+dc = secant(f17, 2.0, 1.0, 8)
+log.info(f"A17 (a) Newton: x_1..x_5 = {[round(v, 10) for v in da[1:6]]}")
+log.info(f"A17 (a) errors {[f'{float(e):.2e}' for e in ea17[:7]]}, p = {[round(p, 3) for p in pa17[:6]]}")
+log.info(f"A17 (b) errors n=0,5,10,20,40: {[f'{float(eb17[i]):.2e}' for i in (0, 5, 10, 20, 40)]}, "
+         f"ratios {[round(float(eb17[i + 1] / eb17[i]), 4) for i in (0, 5, 10, 20, 40)]}")
+log.info(f"A17 (c) secant: x_2..x_6 = {[round(v, 10) for v in dc[2:7]]}")
+log.info(f"A17 (c) errors {[f'{float(e):.2e}' for e in ec17[:9]]}, p = {[round(p, 3) for p in pc17[:9]]}")
+n_a = next(i for i, e in enumerate(ea17) if e < D("1e-12"))
+n_b = next(i for i, e in enumerate(eb17) if e < D("1e-6"))
+n_c = next(i for i, e in enumerate(ec17) if e < D("1e-12"))
+log.info(f"A17 first n with error < 1e-12: Newton {n_a}, secant {n_c}; (b) needs n = {n_b} for 1e-6")
+assert (n_a, n_c, n_b) == (6, 7, 60)
+
+# ---------- A18: number of roots and isolating intervals ----------
+g = np.linspace(-8, 8, 160001)
+f18a = lambda x: x**3 + np.exp(x)
+assert (3 * g**2 + np.exp(g) > 0).all() and f18a(-1) < 0 < f18a(0)
+r18a = brentq(f18a, -1, 0)
+f18b = lambda x: x + 2.0 ** (x**3)                             # -x - 2^(x^3) = 0  <=>  x + 2^(x^3) = 0
+gb = np.linspace(-3, 3, 60001)
+assert (1 + 3 * gb**2 * math.log(2) * 2.0 ** (gb**3) > 0).all() and f18b(-1) == -0.5 and f18b(0) == 1
+r18b = brentq(f18b, -1, 0)
+p18c = [1, 0, -27, 7.8]
+f18c = lambda x: np.polyval(p18c, x)
+r18c = np.sort(np.roots(p18c).real)
+assert np.abs(np.roots(p18c).imag).max() < 1e-12
+close(f18c(-3), 61.8); close(f18c(3), -46.2); close(f18c(-6), -46.2); close(f18c(0), 7.8)
+close(f18c(1), -18.2); close(f18c(5), -2.2); close(f18c(6), 61.8)
+assert -6 < r18c[0] < -3 and 0 < r18c[1] < 1 and 5 < r18c[2] < 6
+assert np.abs(np.roots([1, 0, -2, 0, 4]).imag).min() > 0.5     # (d): no real roots, x^4-2x^2+4 = (x^2-1)^2+3
+p18e = [1, -4, 4, 0, -2]
+f18e = lambda x: np.polyval(p18e, x)
+assert [f18e(0), f18e(1), f18e(2), f18e(-1), f18e(3)] == [-2, -1, -2, 7, 7]
+re_ = np.roots(p18e)
+real_e = np.sort(re_[np.abs(re_.imag) < 1e-9].real)
+assert len(real_e) == 2
+close(real_e[0], 1 - math.sqrt(1 + math.sqrt(2))); close(real_e[1], 1 + math.sqrt(1 + math.sqrt(2)))
+f18f = lambda x: np.exp(x**3) + 2 * x
+assert (3 * gb**2 * np.exp(gb**3) + 2 > 0).all() and f18f(-1) < 0 < f18f(0)
+r18f = brentq(f18f, -1, 0)
+log.info(f"A18 (a) 1 root in (-1,0): {r18a:.6f}; f(-1) = {f18a(-1):.4f}")
+log.info(f"A18 (b) 1 root in (-1,0): {r18b:.6f}")
+log.info(f"A18 (c) 3 roots {r18c.round(6).tolist()} in (-6,-3), (0,1), (5,6)")
+log.info(f"A18 (e) 2 roots {real_e.round(6).tolist()} in (-1,0), (2,3) = 1 -+ sqrt(1+sqrt2)")
+log.info(f"A18 (f) 1 root in (-1,0): {r18f:.6f}; f(-1) = {f18f(-1):.4f}")
+
+# ---------- A19: x e^{-x} = gamma has exactly two roots for 0 < gamma < 1/e ----------
+h19 = lambda x: x * np.exp(-x)
+for gam in [0.01, 0.1, 0.2, 0.3, 0.36]:
+    assert gam < math.exp(-1)
+    r1 = brentq(lambda x: h19(x) - gam, 0, 1)
+    assert h19(2 / gam) < gam                                   # e^x > x^2/2  =>  h(x) < 2/x
+    r2 = brentq(lambda x: h19(x) - gam, 1, 2 / gam)
+    assert 0 < r1 < 1 < r2 < 2 / gam
+r19 = (brentq(lambda x: h19(x) - 0.2, 0, 1), brentq(lambda x: h19(x) - 0.2, 1, 10))
+log.info(f"A19 gamma = 0.2: roots {r19[0]:.5f} and {r19[1]:.5f}; 1/e = {math.exp(-1):.5f}")
+
+# ---------- A20: f = e^x + x^2 + x - 3 ----------
+f20 = lambda x: math.exp(x) + x * x + x - 3
+df20 = lambda x: math.exp(x) + 2 * x + 1
+assert df20(-1) < 0 < df20(0)
+c20 = brentq(df20, -1, 0)
+assert f20(c20) < f20(0) == -2
+assert f20(-3) > 0 > f20(-2) and f20(0) < 0 < f20(1)
+r20 = (brentq(f20, -3, -2), brentq(f20, 0, 1))
+log.info(f"A20 f'(-1) = {df20(-1):.4f}, f'(0) = 2, c = {c20:.5f}, f(c) = {f20(c20):.5f}")
+log.info(f"A20 f(-3) = {f20(-3):.4f}, f(-2) = {f20(-2):.4f}, f(0) = -2, f(1) = {f20(1):.4f}; roots {r20[0]:.5f}, {r20[1]:.5f}")
+
+# ---------- A21, A22: bisection ----------
+f21 = lambda x: x**3 + 4 * x - 2
+xs21, _ = bisect_mid(f21, 0, 1, 2)
+assert xs21 == [0.5, 0.25, 0.375] and f21(0.5) == 0.125 and f21(0.25) == -0.984375
+n21 = bisect_steps(1, 1e-5)
+assert n21 == 16 and 2**17 == 131072 and 2**16 == 65536
+r21 = brentq(f21, 0, 1)
+x16, _ = bisect_mid(f21, 0, 1, 16)
+assert abs(x16[-1] - r21) < 1e-5
+log.info(f"A21 x_0, x_1, x_2 = {xs21}, f(0.375) = {f21(0.375)}, n = {n21}, root {r21:.6f}, x_16 = {x16[-1]:.6f}, |x_2 - r| = {abs(0.375 - r21):.4f}")
+f22 = lambda x: x**3 + 2 * x - 1
+xs22, _ = bisect_mid(f22, 0, 1, 2)
+assert xs22 == [0.5, 0.25, 0.375] and f22(0.5) == 0.125 and f22(0.25) == -0.484375
+n22 = bisect_steps(1, 1e-6)
+assert n22 == 19 and 2**20 == 1048576 and 2**19 == 524288
+r22 = brentq(f22, 0, 1)
+log.info(f"A22 x_0, x_1, x_2 = {xs22}, f(0.375) = {f22(0.375)}, n = {n22}, root {r22:.6f}, |x_2 - r| = {abs(0.375 - r22):.4f}")
+
+# ---------- A23: a_0 = a_1 = ... for the first k steps only ----------
+f23 = lambda x: x - 0.01                                       # root 0.01 lies in (1/128, 1/64)
+_, (a23, b23) = bisect_mid(f23, 0, 1, 5)                       # after x_0..x_5: [a_6, b_6]
+assert (a23, b23) == (0, 1 / 64)
+_, (a23b, b23b) = bisect_mid(f23, 0, 1, 6)                     # [a_7, b_7]: the left end moves at last
+assert (a23b, b23b) == (1 / 128, 1 / 64)
+log.info(f"A23 f = x - 0.01 on [0,1]: [a_6, b_6] = [{a23}, {b23}], [a_7, b_7] = [{a23b}, {b23b}]")
+
+# ---------- A24: 1.8 as an approximate root of x^4 - 4x - 1 ----------
+f24 = lambda x: x**4 - 4 * x - 1
+df24 = lambda x: 4 * x**3 - 4
+r24 = brentq(f24, 1.6, 1.7)
+close(f24(1.8), 2.2976); close(f24(1.6), -0.8464); close(f24(1.7), 0.5521); close(f24(1.65), -0.18799375)
+close(df24(1.6), 12.384); close(df24(1.8), 19.328)
+lo24, hi24 = f24(1.8) / df24(1.8), f24(1.8) / df24(1.6)
+assert 0.1 < lo24 < 1.8 - r24 < hi24 < 0.2 and 1.65 < r24 < 1.7
+log.info(f"A24 root {r24:.5f}, error {1.8 - r24:.5f}; MVT bounds {lo24:.4f} .. {hi24:.4f}; f(1.8) = {f24(1.8):.4f}")
+
+# ---------- A25: bisection for x^2 (x-2)(x-5)(x-4) on [-1, 7] ----------
+f25 = lambda x: x * x * (x - 2) * (x - 5) * (x - 4)
+assert [f25(-1), f25(7), f25(3), f25(1), f25(2)] == [-90, 1470, 18, -12, 0]
+xs25, _ = bisect_mid(f25, -1, 7, 5)
+assert xs25 == [3, 1, 2]
+log.info(f"A25 midpoints {xs25}: f(3) = 18, f(1) = -12, f(2) = 0 -> root 2")
+
+# ---------- A26: y = 3x and y = e^x ----------
+f26 = lambda x: math.exp(x) - 3 * x
+assert f26(0) == 1 and f26(1) < 0 < f26(2) and f26(math.log(3)) < 0
+r26 = (brentq(f26, 0, 1), brentq(f26, 1, 2))
+n26 = bisect_steps(1, 1e-5)
+assert n26 == 16
+m26 = [bisect_mid(f26, a, b, n26)[0][-1] for a, b in [(0, 1), (1, 2)]]
+assert all(abs(m - r) < 1e-5 for m, r in zip(m26, r26))
+log.info(f"A26 f(ln3) = {f26(math.log(3)):.4f}, f(1) = {f26(1):.4f}, f(2) = {f26(2):.4f}; roots {r26[0]:.6f}, {r26[1]:.6f}; "
+         f"x_16 = {m26[0]:.6f}, {m26[1]:.6f}; y = {3 * r26[0]:.4f}, {3 * r26[1]:.4f}")
+
+# ---------- A27: recursive bisection for 1/x - tan x on [0.1, pi/3] ----------
+f27 = lambda x: 1 / x - math.tan(x)
+
+
+def rec_bisect(f, a, b, tol, depth=0):
+    if abs(b - a) < tol:
+        return (a + b) / 2, depth
+    c = (a + b) / 2
+    if f(c) == 0:
+        return c, depth
+    return rec_bisect(f, a, c, tol, depth + 1) if f(a) * f(c) < 0 else rec_bisect(f, c, b, tol, depth + 1)
+
+
+x27, d27 = rec_bisect(f27, 0.1, math.pi / 3, 1e-4)
+r27 = brentq(f27, 0.1, math.pi / 3)
+L27 = math.pi / 3 - 0.1
+assert d27 == 14 and L27 / 2**14 < 1e-4 <= L27 / 2**13 and abs(x27 - r27) < 5e-5
+log.info(f"A27 f(0.1) = {f27(0.1):.4f}, f(pi/3) = {f27(math.pi / 3):.4f}, length {L27:.6f}, {d27} halvings, "
+         f"last length {L27 / 2**14:.2e}, x = {x27:.6f}, root {r27:.6f}")
+
+# ---------- A28: ln x - 2 = 0 ----------
+f28 = lambda x: math.log(x) - 2
+n28 = newton(f28, lambda x: 1 / x, 1.0, 2)
+close(n28[1], 3); close(n28[2], 9 - 3 * math.log(3))
+s28 = secant(f28, 1.0, 2.0, 2)
+close(s28[2], 1 + 2 / math.log(2))
+log.info(f"A28 Newton x_1 = {n28[1]}, x_2 = {n28[2]:.6f}; secant x_2 = {s28[2]:.6f}; root e^2 = {math.e**2:.6f}")
+n28l = newton(f28, lambda x: 1 / x, 1.0, 6)
+log.info(f"A28 Newton further: {[round(v, 6) for v in n28l[3:]]}")
+
+# ---------- A29: x^3 - x + 1 = 0, Newton from 1 ----------
+f29 = lambda x: x**3 - x + 1
+df29 = lambda x: 3 * x * x - 1
+n29 = newton(f29, df29, 1.0, 25)
+assert n29[1] == 0.5 and n29[2] == 3.0 and f29(0.5) == 0.625 and df29(0.5) == -0.25
+r29 = brentq(f29, -2, -1)
+k29 = next(i for i, v in enumerate(n29) if abs(v - r29) < 1e-6)
+log.info(f"A29 x_1 = {n29[1]}, x_2 = {n29[2]}, x_3 = {n29[3]:.4f}; root {r29:.6f}; first n with error < 1e-6: {k29}")
+log.info(f"A29 path: {[round(v, 3) for v in n29[:k29 + 1]]}")
+
+# ---------- A30: three examples for Newton's method ----------
+fa30 = lambda x: x**3 + 2 * x * x + 4
+dfa30 = lambda x: 3 * x * x + 4 * x
+na30 = newton(fa30, dfa30, 2.0, 2)
+assert na30 == [2.0, 1.0, 0.0] and dfa30(0) == 0 and fa30(0) == 4
+assert Fr(-4, 3) ** 3 + 2 * Fr(-4, 3) ** 2 + 4 == Fr(140, 27)       # local maximum value > 0: one real root
+ra30 = np.roots([1, 2, 0, 4])
+assert (np.abs(ra30.imag) < 1e-9).sum() == 1 and fa30(-3) == -5 and fa30(-2) == 4
+nb30 = newton(f17, math.exp, 2.0, 2)
+assert abs(nb30[2] - math.log(2)) < abs(nb30[1] - math.log(2))
+assert abs(n29[2] - r29) > abs(n29[1] - r29)                         # the opposite case (A29 data)
+fc30 = lambda x: x**3 - 2 * x + 2
+nc30 = newton(fc30, lambda x: 3 * x * x - 2, 0.0, 4)
+assert nc30 == [0.0, 1.0, 0.0, 1.0, 0.0]
+rc30 = np.roots([1, 0, -2, 2])
+assert (np.abs(rc30.imag) < 1e-9).sum() == 1
+log.info(f"A30 (a) x^3+2x^2+4 from 2: {na30}, f'(0) = 0, root {ra30[np.abs(ra30.imag) < 1e-9].real[0]:.5f}")
+log.info(f"A30 (b) e^x-2 from 2: x_1 = {nb30[1]:.5f}, x_2 = {nb30[2]:.5f}, distances {abs(nb30[1] - math.log(2)):.4f}, {abs(nb30[2] - math.log(2)):.4f}; "
+         f"A29 distances {abs(n29[1] - r29):.4f}, {abs(n29[2] - r29):.4f}")
+log.info(f"A30 (c) x^3-2x+2 from 0: {nc30}, root {rc30[np.abs(rc30.imag) < 1e-9].real[0]:.5f}")
+
+# ---------- A31: ln 2 by Newton and secant ----------
+def run_until(step, xs, tol=1e-12, nmax=100):
+    while abs(xs[-1] - xs[-2]) >= tol and len(xs) < nmax:
+        xs.append(step(xs))
+    return xs
+
+
+n31 = run_until(lambda xs: xs[-1] - f17(xs[-1]) / math.exp(xs[-1]), [1.0, 1.0 - f17(1.0) / math.exp(1.0)])
+s31 = run_until(lambda xs: xs[-1] - f17(xs[-1]) * (xs[-1] - xs[-2]) / (f17(xs[-1]) - f17(xs[-2])), [0.0, 1.0])
+assert abs(n31[-1] - math.log(2)) < 1e-15 and abs(s31[-1] - math.log(2)) < 1e-15
+log.info(f"A31 Newton from 1: last index {len(n31) - 1}, x = {n31[-1]:.15f}; secant from 0, 1: last index {len(s31) - 1}, x = {s31[-1]:.15f}; ln 2 = {math.log(2):.15f}")
+log.info(f"A31 Newton iterates {[round(v, 12) for v in n31]}")
+log.info(f"A31 secant iterates {[round(v, 12) for v in s31]}")
+
+# ---------- A32: x_{n+1} = x_n/2 + 1/x_n ----------
+g32 = lambda x: x / 2 + 1 / x
+for x0 in [1.0, 10.0]:
+    it = fpi(g32, x0, 6)
+    log.info(f"A32 x_0 = {x0}: {[round(v, 8) for v in it[1:]]}")
+    assert all(v >= math.sqrt(2) - 1e-15 for v in it[1:]) and all(it[i + 1] <= it[i] + 1e-15 for i in range(1, 6))
+for x0 in [-1.0, -10.0]:
+    it = fpi(g32, x0, 6)
+    assert it == [-v for v in fpi(g32, -x0, 6)]
+    log.info(f"A32 x_0 = {x0}: {[round(v, 8) for v in it[1:]]}")
+close(fpi(g32, 1.0, 6)[6], math.sqrt(2), 1e-15)
+assert abs(fpi(g32, 10.0, 6)[6] - math.sqrt(2)) < 1e-6
+for x in [0.3, 1.0, 7.0]:
+    close(g32(x) - math.sqrt(2), (x - math.sqrt(2)) ** 2 / (2 * x))    # quadratic error identity
+    close(g32(x), x - (x * x - 2) / (2 * x))                           # Newton for x^2 - 2
+log.info(f"A32 sqrt 2 = {math.sqrt(2):.10f}; x_6 from 10: error {abs(fpi(g32, 10.0, 6)[6] - math.sqrt(2)):.2e}")
+
+# ---------- A33: largest root of e^{x^2} - 3 by Newton, |f| < 1e-3 ----------
+f33 = lambda x: math.exp(x * x) - 3
+df33 = lambda x: 2 * x * math.exp(x * x)
+r33 = math.sqrt(math.log(3))
+for x0 in [1.0, 2.0]:
+    xs = [x0]
+    while abs(f33(xs[-1])) >= 1e-3:
+        xs.append(xs[-1] - f33(xs[-1]) / df33(xs[-1]))
+    log.info(f"A33 x_0 = {x0}: {len(xs) - 1} steps, x = {xs[-1]:.8f}, f = {f33(xs[-1]):.2e}, |x - r| = {abs(xs[-1] - r33):.2e}; iterates {[round(v, 6) for v in xs]}")
+    assert abs(xs[-1] - r33) < 1e-3
+log.info(f"A33 root sqrt(ln 3) = {r33:.8f}")
+
+# ---------- A34: minimum of x^4 + x^2 - 2x + 1 ----------
+f34 = lambda x: x**4 + x * x - 2 * x + 1
+d34 = lambda x: 4 * x**3 + 2 * x - 2
+dd34 = lambda x: 12 * x * x + 2
+assert d34(0) == -2 and d34(1) == 4
+n34 = newton(d34, dd34, 0.0, 6)
+assert n34[1] == 1.0
+close(n34[2], 5 / 7)
+c34 = brentq(d34, 0, 1)
+x3_34 = Fr(5, 7) - (4 * Fr(5, 7) ** 3 + 2 * Fr(5, 7) - 2) / (12 * Fr(5, 7) ** 2 + 2)
+assert x3_34 == Fr(843, 1393) and 4 * Fr(5, 7) ** 3 + 2 * Fr(5, 7) - 2 == Fr(304, 343) and 12 * Fr(5, 7) ** 2 + 2 == Fr(398, 49)
+log.info(f"A34 x_1 = {n34[1]}, x_2 = {n34[2]:.6f} = 5/7, x_3 = {n34[3]:.6f} = {x3_34}, x_4 = {n34[4]:.6f}; c = {c34:.6f}, f(c) = {f34(c34):.6f}, f(5/7) = {f34(5 / 7):.6f}")
+
+# ---------- A35: x^5 + x^3 + 8 = 0, secant from 0, 1 ----------
+f35 = lambda x: x**5 + x**3 + 8
+s35 = secant(f35, 0.0, 1.0, 12)
+assert f35(0) == 8 and f35(1) == 10 and s35[2] == -4.0
+r35 = brentq(f35, -2, -1)
+log.info(f"A35 x_2 = {s35[2]}, f(-4) = {f35(-4.0)}, x_3 = {s35[3]:.5f}; root {r35:.6f}; f(-2) = {f35(-2)}, f(-1) = {f35(-1)}")
+log.info(f"A35 secant path {[round(v, 4) for v in s35]}")
+
+# ---------- A36: secant examples with x_3 undefined ----------
+s36 = secant(lambda x: x * x, 1.0, -2.0, 5)
+assert s36 == [1.0, -2.0, 2.0]                                      # f(2) = f(-2): x_3 undefined
+f36 = lambda x: 2 * x**3 - 5 * x * x + x + 4
+s36b = secant(f36, 0.0, 1.0, 5)
+assert s36b == [0.0, 1.0, 2.0] and [f36(0), f36(1), f36(2)] == [4, 2, 2]
+r36 = np.roots([2, -5, 1, 4])
+assert (np.abs(r36.imag) < 1e-9).sum() == 1
+cp36 = (5 + math.sqrt(19)) / 6
+assert f36(cp36) > 0.9
+log.info(f"A36 x^2 from 1, -2: {s36}; 2x^3-5x^2+x+4 from 0, 1: {s36b}, local min f({cp36:.4f}) = {f36(cp36):.4f}, root {r36[np.abs(r36.imag) < 1e-9].real[0]:.5f}")
+
+# ---------- A37: the limit of the secant sequence for e^x - 2 ----------
+s37 = secant(f17, 0.0, 1.0, 9)
+close(s37[2], 1 + (2 - math.e) / (math.e - 1))
+assert abs(s37[-1] - math.log(2)) < 1e-14
+log.info(f"A37 x_2..x_6 = {[round(v, 8) for v in s37[2:7]]}, ln 2 = {math.log(2):.8f}")
+
+# ---------- A38: fixed points ----------
+assert [x for x in (0, 1) if 2 * x - x * x == x] == [0, 1]
+fp38 = [(-1 + math.sqrt(5)) / 2, (-1 - math.sqrt(5)) / 2]
+for x in fp38:
+    close(1 / (x + 1), x)
+log.info(f"A38 (a) 0 and 1; (b) {fp38[0]:.6f}, {fp38[1]:.6f}")
+
+# ---------- A39: contraction mappings ----------
+def lip(f, a, b, n=400001):
+    x = np.linspace(a, b, n)
+    y = f(x)
+    return np.abs(np.diff(y) / np.diff(x)).max()
+
+
+L39 = {
+    "a": lip(np.log, 3, 10),
+    "b": lip(lambda x: x * x - 2 * x, 0, 1),
+    "c": lip(lambda x: 1 / (x * x + 1), 0, 5),
+    "d": lip(np.cbrt, 1 / 27, 3),
+    "e": lip(lambda x: 0.5 * (x + 6) / (x + 2), 0.5, 2),
+    "f": lip(lambda x: np.abs(x - 1), -1, 2),
+    "g": lip(lambda x: x**0.25, 1 / 81, 2),
+    "h": lip(lambda x: -(2 * x * np.sin(2 * x) + np.cos(2 * x)) / (9 - 2 * np.sin(2 * x)), -1, 1),
+}
+close(L39["a"], 1 / 3, 1e-4); close(L39["b"], 2, 1e-4); close(L39["c"], 3 * math.sqrt(3) / 8, 1e-6)
+close(L39["d"], 3, 1e-3); close(L39["e"], 8 / 25, 1e-4); close(L39["f"], 1, 1e-9); close(L39["g"], 6.75, 1e-3)
+assert L39["h"] < 40 / 49
+xh = np.linspace(-1, 1, 400001)
+dh = -4 * np.cos(2 * xh) * (9 * xh + np.cos(2 * xh)) / (9 - 2 * np.sin(2 * xh)) ** 2     # the page's formula for f'
+close(np.abs(dh).max(), L39["h"], 1e-4)
+assert abs(1 / 2 - 1 / 3) > abs(1 / 8 - 1 / 27) and Fr(1, 8) - Fr(1, 27) == Fr(19, 216)      # (d) counterexample
+assert abs(1 / 2 - 1 / 3) > abs(1 / 16 - 1 / 81) and Fr(1, 16) - Fr(1, 81) == Fr(65, 1296)   # (g) counterexample
+assert abs((0.1**2 - 0.2) - 0) > 0.1                                                        # (b): |f(0.1) - f(0)| = 0.19
+assert math.log(3) < 3                                                                      # (a) does not map [3,10] into itself
+log.info("A39 sup|f'|: " + ", ".join(f"{k} {v:.4f}" for k, v in L39.items()) + f"; 3sqrt3/8 = {3 * math.sqrt(3) / 8:.4f}, 40/49 = {40 / 49:.4f}")
+log.info(f"A39 (h) max |f'| at x = {xh[np.abs(dh).argmax()]:.3f}")
+
+# ---------- A40: x^3 + 6x + 1, g = -(x^3+1)/6 on [-1, 0] ----------
+f40 = lambda x: x**3 + 6 * x + 1
+g40 = lambda x: -(x**3 + 1) / 6
+assert f40(-1) == -6 and f40(0) == 1 and g40(-1) == 0 and g40(0) == -1 / 6
+r40 = brentq(f40, -1, 0)
+it40 = fpi(g40, 0.0, 9)
+n40 = next(n for n in range(1, 100) if 0.5**n / (1 - 0.5) * abs(it40[1] - it40[0]) < 1e-3)
+assert n40 == 9 and 2**9 == 512 and 2**8 == 256
+assert all(abs(it40[n] - r40) <= 0.5**n / 0.5 * abs(it40[1] - it40[0]) for n in range(1, 10))
+log.info(f"A40 root {r40:.8f}; iterates {[round(v, 8) for v in it40[:5]]}; errors {[f'{abs(v - r40):.1e}' for v in it40[:5]]}; a priori n = {n40}; g'(r) = {r40 * r40 / 2:.4f}")
+
+# ---------- A41: 2 + sin x - x, g = 2 + sin x on [2, 3] ----------
+f41 = lambda x: 2 + math.sin(x) - x
+g41 = lambda x: 2 + math.sin(x)
+r41 = brentq(f41, 2, 3)
+al41 = abs(math.cos(3))
+assert f41(2) > 0 > f41(3) and 2 < g41(3) < g41(2) < 3 and abs(math.cos(2)) < al41 < 0.99
+it41 = fpi(g41, 2.0, 60)
+d41 = abs(it41[1] - it41[0])
+n41 = next(n for n in range(1, 5000) if al41**n / (1 - al41) * d41 < 1e-3)
+n41r = next(n for n in range(1, 5000) if 0.99**n / 0.01 * d41 < 1e-3)
+k41 = next(n for n, v in enumerate(it41) if abs(v - r41) < 1e-3)
+assert all(abs(v - r41) < 1e-3 for v in it41[k41:])
+g41b = lambda x: (x + 2 + math.sin(x)) / 2
+al41b = (1 + math.cos(2)) / 2
+it41b = fpi(g41b, 2.0, 12)
+n41b = next(n for n in range(1, 100) if 0.3**n / 0.7 * abs(it41b[1] - 2) < 1e-3)
+k41b = next(n for n, v in enumerate(it41b) if abs(v - r41) < 1e-3)
+assert 2 < g41b(2) < g41b(3) < 3 and al41b < 0.3
+log.info(f"A41 root {r41:.6f}; f(2) = {f41(2):.4f}, f(3) = {f41(3):.4f}; g(2) = {g41(2):.4f}, g(3) = {g41(3):.4f}; |cos 3| = {al41:.6f}, |cos 2| = {abs(math.cos(2)):.4f}")
+log.info(f"A41 x_1 = {it41[1]:.6f}, |x_1 - x_0| = {d41:.4f}; a priori n: exact alpha {n41}, alpha = 0.99: {n41r}; actual first n with error < 1e-3: {k41}; g'(r) = {math.cos(r41):.4f}")
+log.info(f"A41 iterates {[round(v, 4) for v in it41[:6]]}")
+log.info(f"A41 other g = (x + 2 + sin x)/2: g(2) = {g41b(2):.4f}, g(3) = {g41b(3):.4f}, alpha = (1+cos 2)/2 = {al41b:.4f}, a priori n (alpha = 0.3) = {n41b}, actual {k41b}; iterates {[round(v, 5) for v in it41b[:5]]}")
+
+# ---------- A42: x^3 - e^{-x} = 0, g = e^{-x/3} on [0, 1] ----------
+f42 = lambda x: x**3 - math.exp(-x)
+g42 = lambda x: math.exp(-x / 3)
+r42 = brentq(f42, 0, 1)
+it42 = fpi(g42, 1.0, 12)
+n42 = next(n for n in range(1, 100) if (1 / 3) ** n / (2 / 3) * abs(it42[1] - it42[0]) < 1e-3)
+k42 = next(n for n, v in enumerate(it42) if abs(v - r42) < 1e-3)
+assert n42 == 6 and f42(0) == -1 and f42(1) > 0 and abs(r42 + r18a) < 1e-12
+assert all(abs(it42[n] - r42) <= (1 / 3) ** n / (2 / 3) * abs(it42[1] - it42[0]) for n in range(1, 13))
+log.info(f"A42 root {r42:.6f}; g(1) = {g42(1):.6f}; iterates {[round(v, 6) for v in it42[:8]]}; a priori n = {n42}, actual {k42}; |x_6 - r| = {abs(it42[6] - r42):.1e}; g'(r) = {-g42(r42) / 3:.4f}")
+
+# ---------- A43: g = 1/(2(1+x^2)), x_0 = 7 ----------
+g43 = lambda x: 1 / (2 * (1 + x * x))
+r43 = brentq(lambda x: g43(x) - x, 0, 1)
+it43 = fpi(g43, 7.0, 40)
+assert it43[1] == 0.01 and abs(it43[-1] - r43) < 1e-12
+close(lip(g43, -10, 10, 2000001), 3 * math.sqrt(3) / 16, 1e-6)
+close(2 * r43**3 + 2 * r43 - 1, 0, 1e-12)
+log.info(f"A43 fixed point {r43:.6f}; alpha = 3sqrt3/16 = {3 * math.sqrt(3) / 16:.4f}; iterates {[round(v, 5) for v in it43[:7]]}")
+
+# ---------- A44: x_{n+1} = 4 + sin(2 x_n)/3 ----------
+g44 = lambda x: 4 + math.sin(2 * x) / 3
+r44 = brentq(lambda x: g44(x) - x, 11 / 3, 13 / 3)
+for x0 in [-100.0, 0.0, 4.0, 1e6]:
+    it = fpi(g44, x0, 80)
+    assert 11 / 3 <= it[1] <= 13 / 3 and abs(it[-1] - r44) < 1e-12
+it44 = fpi(g44, 0.0, 6)
+log.info(f"A44 fixed point {r44:.6f}; from 0: {[round(v, 5) for v in it44]}; g'(r) = {2 / 3 * math.cos(2 * r44):.4f}")
+
+# ---------- A45: four methods for x^3 + x - 1 ----------
+f45 = lambda x: x * (x * x + 1) - 1
+X45 = 0.682327803828019
+exact45 = (1 / 36 ** (1 / 3)) * ((2 * (9 + math.sqrt(93))) ** (1 / 3) - 2 * (3 / (9 + math.sqrt(93))) ** (1 / 3))
+close(exact45, X45, 1e-14); close(brentq(f45, 0, 1), X45, 1e-12)
+b45, _ = bisect_mid(f45, 0, 1, 10)
+n45 = newton(f45, lambda x: 3 * x * x + 1, 1.0, 10)
+s45 = secant(f45, 0.0, 1.0, 10)
+p45 = fpi(lambda x: 1 / (x * x + 1), 1.0, 10)
+e45 = {name: (abs(xs[5] - X45), abs(xs[10] - X45)) for name, xs in
+       [("bisection", b45), ("fixed point", p45), ("secant", s45), ("newton", n45)]}
+assert e45["bisection"][0] <= 1 / 2**6 and e45["bisection"][1] <= 1 / 2**11
+assert e45["newton"][0] < 1e-13 and e45["secant"][0] < 1e-3 and e45["secant"][1] < 1e-14
+assert e45["fixed point"][1] < e45["fixed point"][0] < 0.05
+for k, (e5, e10) in e45.items():
+    log.info(f"A45 {k:11s}: |x_5 - x*| = {e5:.3e}, |x_10 - x*| = {e10:.3e}")
+log.info(f"A45 bisection x_5 = {b45[5]}, x_10 = {b45[10]}; fixed point x_5 = {p45[5]:.6f}, x_10 = {p45[10]:.6f}; "
+         f"secant x_5 = {s45[5]:.10f}; newton x_5 = {n45[5]:.15f}")
+log.info(f"A45 newton errors {[f'{abs(v - X45):.2e}' for v in n45[:6]]}; secant errors {[f'{abs(v - X45):.2e}' for v in s45[:9]]}")
+gp45 = -2 * X45 / (X45**2 + 1) ** 2
+log.info(f"A45 g'(x*) = {gp45:.4f} for g = 1/(x^2+1)")
+
+log.info(f"all checks passed in {time.time() - T0:.1f} s")
