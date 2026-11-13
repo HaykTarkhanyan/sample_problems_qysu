@@ -80,7 +80,7 @@ newline, so `wc -l` undercounts). Each reported row was checked by hand and then
 | 505 | «միջին արժեքի թեորեմ» | «միջանկյալ արժեքի թեորեմ» | "intermediate", not "mean"; the owner first kept the row, then corrected it the same hour |
 | 961 | `symmetry group` | `symmetric group` | the Armenian «սիմետրիկ խումբ» is S_n; the English side was wrong |
 
-Asked and deliberately left as written, so do not "fix" them: row 806 «քառակուսեցման բանաձև», row
+Asked twice and confirmed by the owner as right as written, so do not "fix" them: row 806 «քառակուսեցման բանաձև», row
 730 «մասնակի ածանցյալով [դիֆերենցիալ] հավասարում». Row 545 «ավագ անդամ» was confirmed earlier (A27).
 
 Still as on 2026-11-10: the duplicate row 258 (kept on purpose: deleting it would shift every row

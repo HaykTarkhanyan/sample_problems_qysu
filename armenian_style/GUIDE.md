@@ -451,7 +451,7 @@ on fresh text and replace them with `.`.
 - standard deviation = «ստանդարտ շեղում» (row 928; A24, owner), not «միջին քառակուսային շեղում»
 - probability mass function: «բաշխման օրենք» on the site (A26, owner); the glossary's «հավանականային
   ֆունկցիա» (row 787) stays as an alternative
-- asked on 2026-11-13 and deliberately left as written: row 806 «քառակուսեցման բանաձև» and row 730
+- confirmed right as written by the owner (asked twice on 2026-11-13): row 806 «քառակուսեցման բանաձև» and row 730
   «մասնակի ածանցյալով [դիֆերենցիալ] հավասարում». Do not "correct" them (A46).
 
 - Confidence: high (glossary is authoritative). The three "not ..." forms are common LLM calques

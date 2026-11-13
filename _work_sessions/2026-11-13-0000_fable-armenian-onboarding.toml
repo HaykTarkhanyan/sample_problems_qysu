@@ -44,7 +44,9 @@ files = [
 ]
 
 commits = [
-  "see git log: 'Armenian guide: second model check (Fable 5.2), owner answers folded in, lint ով/ովքեր exception'",
+  "7fff498 Armenian guide: second model check (Fable 5.2), owner answers folded in, lint ով/ովքեր exception (docs and lint only, no Pages run)",
+  "c36f87f Armenian: owner answers A40-A46, glossary fixes after a full read, two new lint rules (Pages run 43333623307 passed, 13 Nov 01:01 local)",
+  "third commit: two learnings; rows 806 and 730 recorded as confirmed by the owner (asked a second time after a heads-up note pointed out that 'not selected' is not 'confirmed')",
 ]
 
 notes = """
