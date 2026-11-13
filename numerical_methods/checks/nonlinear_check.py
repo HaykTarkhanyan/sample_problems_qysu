@@ -31,6 +31,20 @@ def close(a, b, tol=1e-9):
     assert abs(a - b) <= tol * max(1.0, abs(b)), f"{a} != {b}"
 
 
+def shown(v, s):
+    """The page prints v as s (written here with a decimal point; the page uses a comma), rounded as the page
+    rounds it: "0.0985" -> 4 decimals, "6.8e-06" -> 1 decimal in scientific notation."""
+    v = float(v)
+    if "e" in s:
+        mant = s.split("e")[0]
+        d = len(mant.split(".")[1]) if "." in mant else 0
+        got = f"{v:.{d}e}"
+    else:
+        d = len(s.split(".")[1]) if "." in s else 0
+        got = f"{v:.{d}f}"
+    assert got == s, f"{v} prints as {got}, the page says {s}"
+
+
 def bisect_mid(f, a, b, n):
     """Midpoints x_0..x_n of the bisection method (lecture: x_0 is the first midpoint) and the last interval."""
     xs = []
@@ -102,18 +116,22 @@ ec = [Fr(1, 3 ** (3**n)) for n in range(1, 7)]               # x_n - 1 = 3^(-3^n
 rc, pc = order_table(ec)
 assert all(ec[i + 1] == ec[i] ** 3 for i in range(5))         # e_{n+1} = e_n^3 exactly: order 3
 assert all(abs(p - 3) < 1e-12 for p in pc)
-ed = [Fr(1, 3 ** (n * n)) for n in range(1, 12)]             # x_n - 1 = 3^(-n^2)
+ed = [Fr(1, 3 ** (n * n)) for n in range(1, 14)]             # x_n - 1 = 3^(-n^2)
 rd, pd_ = order_table(ed)
 assert all(rd[i] == 3.0 ** -(2 * (i + 1) + 1) for i in range(6))   # ratio 3^-(2n+1) -> 0: superlinear
 assert 1 < pd_[-1] < 1.12                                     # p_n = (2n+1)/(2n-1) -> 1: order 1
 close(pd_[0], 5 / 3); close(pd_[1], 7 / 5)
 assert 1 + 3.0 ** -(3**4) == 1.0 and 1 + 3.0 ** -(3**3) > 1.0   # in doubles x_4 = 1 exactly, x_3 is not
 # the rows the page's Python cell prints (n -> ratio e_{n+1}/e_n, p_n); lists start at e_1, so index n is e_{n+1}
-assert [round(ra[n - 1], 4) for n in (10, 100, 199)] == [0.5645, 0.942, 0.9703]
-assert [round(pa[n - 2], 4) for n in (10, 100, 199)] == [0.9046, 0.9901, 0.995]
+assert [round(ra[n - 1], 4) for n in (10, 100, 199)] == [0.5645, 0.942, 0.9704]
+assert [round(pa[n - 2], 4) for n in (10, 100, 199)] == [0.9046, 0.99, 0.995]
 assert [round(rb[n - 1], 4) for n in (2, 5, 19)] == [0.3571, 0.3342, 0.3333]
 assert [round(pd_[n - 2], 4) for n in (2, 5, 11)] == [1.6667, 1.2222, 1.0952]
 close(float(ec[0]), 1 / 27); close(float(ec[1]), 3.0**-9); close(float(ec[2]), 3.0**-27)
+# numbers quoted in the text of A16
+shown(ra[9], "0.564"); shown(ra[99], "0.942")
+shown(1 / 27, "0.037"); shown(3.0**-9, "5.1e-05"); shown(3.0**-27, "1.3e-13")
+close(pd_[2], 9 / 7)
 log.info(f"A16 (a) 1/n^6: ratios n=10: {ra[9]:.4f}, n=100: {ra[99]:.4f} -> 1 (sublinear)")
 log.info(f"A16 (b) 1/(3^n+1): ratios {[round(r, 5) for r in rb[:4]]} -> 1/3 (linear)")
 log.info(f"A16 (c) e_n = 3^-3^n: e_1..e_3 = {[f'{float(e):.3e}' for e in ec[:3]]}, p = {[round(p, 6) for p in pc]} (order 3)")
@@ -156,6 +174,18 @@ n_b = next(i for i, e in enumerate(eb17) if e < D("1e-6"))
 n_c = next(i for i, e in enumerate(ec17) if e < D("1e-12"))
 log.info(f"A17 first n with error < 1e-12: Newton {n_a}, secant {n_c}; (b) needs n = {n_b} for 1e-6")
 assert (n_a, n_c, n_b) == (6, 7, 60)
+# numbers quoted in the text of A17
+for e, s in zip(ea17[:7], ["1.3", "0.58", "0.14", "9.2e-03", "4.2e-05", "8.9e-10", "4.0e-19"]):
+    shown(e, s)
+shown(eb17[40], "8e-05")
+for p, s in zip(pc17[3:8], ["1.74", "1.57", "1.64", "1.61", "1.62"]):
+    shown(p, s)
+shown(golden, "1.618")
+xb_long = xb[:]
+while abs(xb_long[-1] - LN2) >= D("1e-12"):
+    xb_long.append(xb_long[-1] + D(1) / 5 - xb_long[-1].exp() / 10)
+assert len(xb_long) - 1 > 100                                  # "(b) needs more than a hundred steps for 1e-12"
+log.info(f"A17 (b) first n with error < 1e-12: {len(xb_long) - 1}")
 
 # ---------- A18: number of roots and isolating intervals ----------
 g = np.linspace(-8, 8, 160001)
@@ -184,6 +214,11 @@ close(real_e[0], 1 - math.sqrt(1 + math.sqrt(2))); close(real_e[1], 1 + math.sqr
 f18f = lambda x: np.exp(x**3) + 2 * x
 assert (3 * gb**2 * np.exp(gb**3) + 2 > 0).all() and f18f(-1) < 0 < f18f(0)
 r18f = brentq(f18f, -1, 0)
+# numbers quoted in the text of A18
+shown(f18a(-1), "-0.63"); shown(f18f(-1), "-1.63")
+shown(1 - math.sqrt(1 + math.sqrt(2)), "-0.554"); shown(1 + math.sqrt(1 + math.sqrt(2)), "2.554")
+for v, s in zip([r18a, r18b, *r18c, *real_e, r18f], ["-0.773", "-0.748", "-5.335", "0.290", "5.045", "-0.554", "2.554", "-0.455"]):
+    shown(v, s)
 log.info(f"A18 (a) 1 root in (-1,0): {r18a:.6f}; f(-1) = {f18a(-1):.4f}")
 log.info(f"A18 (b) 1 root in (-1,0): {r18b:.6f}")
 log.info(f"A18 (c) 3 roots {r18c.round(6).tolist()} in (-6,-3), (0,1), (5,6)")
@@ -199,6 +234,7 @@ for gam in [0.01, 0.1, 0.2, 0.3, 0.36]:
     r2 = brentq(lambda x: h19(x) - gam, 1, 2 / gam)
     assert 0 < r1 < 1 < r2 < 2 / gam
 r19 = (brentq(lambda x: h19(x) - 0.2, 0, 1), brentq(lambda x: h19(x) - 0.2, 1, 10))
+shown(math.exp(-1), "0.368"); shown(r19[0], "0.259"); shown(r19[1], "2.543")
 log.info(f"A19 gamma = 0.2: roots {r19[0]:.5f} and {r19[1]:.5f}; 1/e = {math.exp(-1):.5f}")
 
 # ---------- A20: f = e^x + x^2 + x - 3 ----------
@@ -209,6 +245,8 @@ c20 = brentq(df20, -1, 0)
 assert f20(c20) < f20(0) == -2
 assert f20(-3) > 0 > f20(-2) and f20(0) < 0 < f20(1)
 r20 = (brentq(f20, -3, -2), brentq(f20, 0, 1))
+shown(df20(-1), "-0.63"); shown(f20(-3), "3.05"); shown(f20(-2), "-0.86"); shown(f20(1), "1.72")
+shown(c20, "-0.739"); shown(f20(c20), "-2.715"); shown(r20[0], "-2.274"); shown(r20[1], "0.653")
 log.info(f"A20 f'(-1) = {df20(-1):.4f}, f'(0) = 2, c = {c20:.5f}, f(c) = {f20(c20):.5f}")
 log.info(f"A20 f(-3) = {f20(-3):.4f}, f(-2) = {f20(-2):.4f}, f(0) = -2, f(1) = {f20(1):.4f}; roots {r20[0]:.5f}, {r20[1]:.5f}")
 
@@ -234,6 +272,13 @@ log.info(f"A22 x_0, x_1, x_2 = {xs22}, f(0.375) = {f22(0.375)}, n = {n22}, root 
 log.info(f"A21 |x_16 - r| = {abs(x16[-1] - r21):.2e}; A22 x_19 = {x19[-1]:.7f}, |x_19 - r| = {abs(x19[-1] - r22):.2e}; "
          f"predict block: n(1e-3) = {bisect_steps(1, 1e-3)}, n(1e-6) = {bisect_steps(1, 1e-6)}")
 assert (bisect_steps(1, 1e-3), bisect_steps(1, 1e-6)) == (9, 19)
+# numbers quoted in the bisection theory and in A21, A22
+shown(math.log2(10), "3.32"); shown(math.log2(10), "3.3"); assert 2**10 == 1024
+shown(f21(0.375), "-0.447"); shown(r21, "0.473466"); shown(abs(0.375 - r21), "0.0985"); assert abs(0.375 - r21) <= 0.125
+shown(x16[-1], "0.473473"); shown(abs(x16[-1] - r21), "6.8e-06")
+shown(r22, "0.453398"); shown(abs(0.375 - r22), "0.0784"); shown(x19[-1], "0.4533968"); shown(abs(x19[-1] - r22), "8.5e-07")
+shown(1 / 64, "0.0156"); shown(1 / 128, "0.0078")                 # A23
+assert 1 / 64 > 0.01 > 1 / 128
 
 # ---------- A23: a_0 = a_1 = ... for the first k steps only ----------
 f23 = lambda x: x - 0.01                                       # root 0.01 lies in (1/128, 1/64)
@@ -251,6 +296,9 @@ close(f24(1.8), 2.2976); close(f24(1.6), -0.8464); close(f24(1.7), 0.5521); clos
 close(df24(1.6), 12.384); close(df24(1.8), 19.328)
 lo24, hi24 = f24(1.8) / df24(1.8), f24(1.8) / df24(1.6)
 assert 0.1 < lo24 < 1.8 - r24 < hi24 < 0.2 and 1.65 < r24 < 1.7
+assert lo24 > 0.1188 and hi24 < 0.1856                        # bounds rounded outward on the page
+assert f24(1) == -4 and f24(1.65) < 0 and 0.1188 < 1.8 - r24 < 0.15 and 0.1 < 1.8 - r24 < 0.2
+shown(f24(1.65), "-0.188"); shown(r24, "1.66325"); shown(r24, "1.663"); shown(1.8 - r24, "0.13675")
 log.info(f"A24 root {r24:.5f}, error {1.8 - r24:.5f}; MVT bounds {lo24:.4f} .. {hi24:.4f}; f(1.8) = {f24(1.8):.4f}")
 
 # ---------- A25: bisection for x^2 (x-2)(x-5)(x-4) on [-1, 7] ----------
@@ -268,7 +316,14 @@ n26 = bisect_steps(1, 1e-5)
 assert n26 == 16
 m26 = [bisect_mid(f26, a, b, n26)[0][-1] for a, b in [(0, 1), (1, 2)]]
 assert all(abs(m - r) < 1e-5 for m, r in zip(m26, r26))
-log.info(f"A26 f(ln3) = {f26(math.log(3)):.4f}, f(1) = {f26(1):.4f}, f(2) = {f26(2):.4f}; roots {r26[0]:.6f}, {r26[1]:.6f}; "
+shown(f26(math.log(3)), "-0.2958"); shown(f26(1), "-0.2817"); shown(f26(2), "1.3891")
+shown(r26[0], "0.619061"); shown(r26[1], "1.512135"); shown(m26[0], "0.619057"); shown(m26[1], "1.512138")
+for x, s in [(r26[0], "0.6191"), (m26[0], "0.6191"), (r26[1], "1.5121"), (m26[1], "1.5121")]:
+    shown(x, s)
+for x, s in [(r26[0], "1.8572"), (m26[0], "1.8572"), (r26[1], "4.5364"), (m26[1], "4.5364")]:
+    shown(3 * x, s)
+assert bisect_steps(1, 1e-5 / 3) == 18 and 2**18 == 262144 and 2**19 == 524288   # y = 3x also within 1e-5
+log.info(f"A26 f(ln3) ={f26(math.log(3)):.4f}, f(1) = {f26(1):.4f}, f(2) = {f26(2):.4f}; roots {r26[0]:.6f}, {r26[1]:.6f}; "
          f"x_16 = {m26[0]:.6f}, {m26[1]:.6f}; y = {3 * r26[0]:.4f}, {3 * r26[1]:.4f}")
 
 # ---------- A27: recursive bisection for 1/x - tan x on [0.1, pi/3] ----------
@@ -291,6 +346,9 @@ assert d27 == 14 and L27 / 2**14 < 1e-4 <= L27 / 2**13 and abs(x27 - r27) < 5e-5
 log.info(f"A27 f(0.1) = {f27(0.1):.4f}, f(pi/3) = {f27(math.pi / 3):.4f}, length {L27:.6f}, {d27} halvings, "
          f"last length {L27 / 2**14:.2e}, x = {x27:.6f}, root {r27:.6f}, |x - r| = {abs(x27 - r27):.1e}, f(x) = {f27(x27):.2e}")
 close(f27(math.pi / 3), 3 / math.pi - math.sqrt(3))
+shown(f27(0.1), "9.8997"); shown(f27(math.pi / 3), "-0.7771"); shown(L27, "0.947198"); shown(L27 * 1e4, "9472")
+assert 2**13 == 8192 and 2**14 == 16384 and L27 / 2**15 < 5e-5
+shown(x27, "0.860319"); shown(x27, "0.86032"); shown(r27, "0.860334"); shown(r27, "0.86033"); shown(abs(x27 - r27), "1.4e-05")
 
 # ---------- A28: ln x - 2 = 0 ----------
 f28 = lambda x: math.log(x) - 2
