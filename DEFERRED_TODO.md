@@ -44,11 +44,15 @@ Topics cut from current work so they are not lost.
 - **Glossary leftovers, none put to the owner:** duplicate row 258 (kept on purpose, row numbers are
   cited), trailing spaces in rows 287 and 292, missing comma in row 190, U+2024 in 23 rows, «․․․» in
   row 1031 (`armenian_style/GLOSSARY_REPORT.md`). The real fixes were applied on 2026-11-13.
-- **Armenian lint gaps found in the second model check:** no hint for the Russian «X-ի մոտ» (= «у»;
-  the spatial sense would give many false positives), no article check after Greek letters or longer
-  formulas («$\varepsilon$-ն փոքր», «$f(x)$-ն դրական» pass), and `che-adjective` does not see
-  «չ...ելի» words. The rules are written down (GUIDE.md O7, A1b, N1); only the mechanical check is
-  missing. (2026-11-13)
+- **Discrete sweep, more finds (owner on 2026-11-13: still "not now"):** the lint hint
+  `article-after-symbol` lists 13 wrong articles after a formula in P2-3 and P4 (sheet and site copy):
+  «$y$-ն բաժանում», «$y$-ն միշտ», «$n$-ն և», «$f$-ն ոչ» (3 places), «$f$-ն երբեք»; all should be
+  «-ը». One more sits across a line break in `site/discrete/p4-functions.html:763` («$f$-ն» then
+  `<em>ոչ</em>` on the next line), which the per-line lint cannot see.
+- **Armenian lint gaps still open:** no hint for the Russian «X-ի մոտ» (= «у»; all 24 uses on the
+  site are the spatial sense, so a hint would only be noise), no article check after longer formulas
+  («$f(x)$-ն դրական» passes), and nothing across line breaks. (2026-11-13; the Greek-letter, prime
+  and «չ...ելի» gaps were closed the same day.)
 - **English site pages.** Port the content fixes from the Armenian pass into the English sheets in
   `discrete/solutions_opus_4_8/` first (stars-and-bars gaps wording, P8 n>=3, P7 DOF prose and
   Stirling rule, P5 red dots 15/30/45, P1 contrapositive and mirror claims, P2-3 vertex labels),

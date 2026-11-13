@@ -208,9 +208,11 @@ From the Language Committee unless marked. The ones added to the lint are marked
    արդյունք՝». Our sheets have «Արդյունքում՝» 3 times (P6 line 308 and its site copy, `p2-3.js:656`).
    Lint hint `calque-ardyunqum`.
 10. **«որ» vs «որպեսզի»** (LC/Որ-որպեսզի): «որպեսզի» only for purpose clauses (answering ինչո՞ւ,
-    ի՞նչ նպատակով); after «պետք է», «անհրաժեշտ է», «նախընտրելի է», «ժամանակն է», «պնդում է»,
-    «նպաստել» use «որ». «որ» can also replace «որպեսզի» in purpose clauses. Our current uses are all
-    purpose clauses (correct).
+    ի՞նչ նպատակով); after «նախընտրելի է», «ժամանակն է», «պնդում է», «նպաստել», «թույլ չտալ» (the
+    page's own examples) use «որ». «որ» can also replace «որպեսզի» in purpose clauses. Our current
+    uses are all purpose clauses (correct). Corrected 2026-11-13: this entry used to list «պետք է» and
+    «անհրաժեշտ է» as if the page named them. It does not; they follow from the same principle (the
+    clause is not a purpose clause), which is our application, not a quote.
 11. **«ով» vs «որ» in relative clauses** (LC/Ով-որ): after a noun, people included, use «որ, որը,
     որոնք, որին» («Միակ մարդը, որ ...», «վարչապետը, որը ...»). «ով, ովքեր, ում» go after «նա,
     նրանք», «յուրաքանչյուր ոք», «բոլորը», «ամեն ոք» («նա, ով ...»). Our texts have no «, ով»

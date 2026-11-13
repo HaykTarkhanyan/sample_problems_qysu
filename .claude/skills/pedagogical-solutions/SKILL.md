@@ -212,19 +212,29 @@ glossary form (recurrence relation -> ռեկուրենտ առնչություն,
 հավասարում, determinant -> որոշիչ, superposition -> վերադրում, ...). One term per concept, used
 consistently throughout.
 
+**Language rules live in `armenian_style/`, not here.** Before writing or translating, read
+`CONVENTIONS.md` ("Armenian text"), the top-10 list in `armenian_style/GUIDE.md` and
+`armenian_style/OWNER_ANSWERS.md` (the owner's decisions override everything else). After writing,
+run `python -I armenian_style/lint_armenian.py --style <file>` until it reports 0 errors, then follow
+`armenian_style/POLISH_CHECKLIST.md`. The points below are only the ones that bite first.
+
 **Armenian punctuation** (the ASCII-clean rule does NOT apply here - the source is necessarily
 Unicode):
 - Sentence-final full stop is the verjaket `։` (U+0589), never a Latin `.` and never the one-dot
   leader `․` (U+2024).
-- The but-mark `՝` (U+055D) stands in for a colon or semicolon and introduces an
-  explanation/apposition. Use it wherever the English had `:` or `;` joining clauses.
+- The but-mark `՝` (U+055D) introduces an explanation, an apposition or a list. Two clauses are
+  joined by the mijaket, written as ASCII `.` (owner decision A2), or split into two sentences.
+  Never a Latin `:` or `;`.
 - The question mark `՞` (U+055E) sits over the stressed vowel of the question word (`ի՞նչ`,
-  `Ինչու՞`), not at sentence end.
+  `ինչո՞ւ`: in «ու» it goes on the ո, never `ինչու՞`), not at sentence end.
 - Quotations use guillemets `« »`, replacing the English `\textquotedbl{}`.
 
 **Independent check (step 6, adapted):** dispatch a native-fluent Armenian reviewer agent to verify
 (1) terminology faithfulness against the glossary, (2) math fidelity vs the English source,
-(3) fluency, and (4) punctuation (`։`/`՝`/`՞`/`« »`, no stray Latin `.` as a terminator/clause-join).
+(3) fluency, and (4) punctuation (`։`/`՝`/`՞`/`« »`, no Latin `.` as a sentence terminator; an ASCII
+`.` between two clauses is the mijaket and is allowed). Give the reviewer `armenian_style/GUIDE.md`
+and `OWNER_ANSWERS.md`: a model's own ear for "natural" Armenian was wrong 4 times out of 5 on
+2026-11-13 (`_learnings/2026-11-13-0106_*`), so doubts go to the owner as questions, not as rewrites.
 
 Reference example to copy: `discrete/solutions_opus_4_8_ARM/Practice8_Recurrence_Solutions_ARM.tex`.
 
@@ -236,7 +246,7 @@ Before declaring done, confirm each item honestly:
       *why*, numbered steps, a check, an answer box, and (where it teaches a method) a method box.
 - [ ] Every numeric / counting / recurrence answer was independently recomputed and matched.
 - [ ] The compiler ran twice with no errors (`pdflatex` for English, **`xelatex`** for Armenian) and the PDF was actually viewed (not assumed).
-- [ ] English source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`). For Armenian, instead: full stops use `։`, clause-joins use `՝`, quotes use `« »`, and there are no stray Latin `.` terminators (see the Armenian variant section).
+- [ ] English source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`). For Armenian, instead: full stops use `։`, quotes use `« »`, no Latin `:` `;` `?`, no Latin `.` as a sentence terminator, and `python -I armenian_style/lint_armenian.py` reports 0 errors (see the Armenian variant section).
 - [ ] The independent check was done (or, if running as a subagent, the from-scratch re-derivation
       was done and flagged for a follow-up pass).
 - [ ] Only the `.tex` and `.pdf` remain in the folder (aux files and temp PNGs removed).

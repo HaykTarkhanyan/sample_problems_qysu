@@ -35,6 +35,7 @@ ERROR rules are mechanical with a low false-positive rate on this repo's text:
                         (Language Committee «Ու»)                                         [P5]
   imperative-stress     a stress mark on a plural imperative (Նկատե՛ք -> Նկատեք; house rule, owner A40)  [P2]
   see-without-stress    bare «տես» (write «տե՛ս»; house rule, owner A40)                    [P2]
+  che-eli               չ glued to an -ելի adjective (չլուծելի -> անլուծելի; owner A37)       [N1]
 
 STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
   calque phrases (հանդիսանում է, Փոխանցելի տեխնիկա, հարկադրել, աշխատում է for "works",
@@ -42,7 +43,9 @@ STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
   redundant «մենք», passive «... կողմից», «ոչ մի / ոչինչ / երբեք» sentences with no negative verb,
   «արդյունքում» (Russian «в результате»; Committee «Արդյունքում»), «իրականացնել» (overused;
   Committee «Իրականացնել, կատարել, անել»), the mark after a sentence opener («Հետևաբար,» «Վերջապես,»
-  «Մյուս կողմից,» «Մասնավորապես,» with a comma, «Այսպիսով՝» with ՝; owner A16, A41), and per-file
+  «Մյուս կողմից,» «Մասնավորապես,» with a comma, «Այսպիսով՝» with ՝; owner A16, A41), the article after
+  an inline formula judged by the spoken name of its last symbol (article-after-symbol: $k$-ը -> $k$-ն,
+  $y$-ն բաժանում -> $y$-ը բաժանում; Latin and Greek letters, digits, primes; GUIDE A1b), and per-file
   density of «Ուստի» / «հենց» / sentence-initial «Սա».
 """
 import re
@@ -64,7 +67,14 @@ NATURAL_N = {"մանրամասն", "ինքն", "երբեմն", "ուրեմն", "
              "գառն", "բեռն", "ձեռն", "մատն", "առնվազն"}
 N_BEFORE_YEO = re.compile(rf"(?<![{ARM}])([{ARM}]*[{CONS_BEFORE_N}]ն)[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
 MATH_N_BEFORE_YEO = re.compile(rf"(?:\$([^$]{{1,24}})\$|\\\((.{{1,24}}?)\\\))-ն[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
-LATIN_CONS_NAMES = set("fhlmnrsxyzFHLMNRSXYZ")  # էֆ աշ էլ էմ էն էր էս իքս իգրեկ զետ; j is ambiguous (ժի / յոտ)
+LATIN_CONS_NAMES = set("fhlmnrsxyzFHLMNRSXYZ")  # էֆ հաշ էլ էմ էն էռ էս իքս իգրեկ զետ (h = հաշ: owner A42)
+LATIN_VOWEL_START = set("afilmnorsuxyAFILMNORSUXY")  # names that START with a vowel sound (e left out: unsure)
+GREEK_CONS_NAMES = {"varepsilon", "epsilon"}         # էպսիլոն
+GREEK_VOWEL_NAMES = {"alpha", "beta", "gamma", "delta", "eta", "theta", "vartheta", "lambda", "mu", "nu", "xi", "pi",
+                     "rho", "sigma", "tau", "phi", "varphi", "chi", "psi", "omega", "Gamma", "Delta", "Theta",
+                     "Lambda", "Xi", "Pi", "Sigma", "Phi", "Psi", "Omega"}
+GREEK_VOWEL_START = {"alpha", "varepsilon", "epsilon", "eta", "omega", "Omega"}
+MATH_WRAP = r"\\(?:mathbf|mathrm|mathit|mathcal|mathbb|bar|hat|tilde|overline|widehat)\{([^{}]*)\}"
 # adjectives / adverbs that must be negated with «ոչ», not glued «չ» (closed list, extend with care)
 CHE_ADJ = ("լավ վատ դատարկ զրոյական բացասական դրական մեծ փոքր հավասար ճիշտ սխալ վերջավոր անվերջ կենտ զույգ "
            "պարզ ինյեկտիվ սյուրյեկտիվ բիյեկտիվ սիմետրիկ ռեֆլեքսիվ փոխանցական գծային անկախ կախյալ "
@@ -89,6 +99,8 @@ ERROR_RULES = [
     # house rules, owner 2026-11-13 (A40): plural imperatives carry no stress mark, \u00ab\u057f\u0565\u055b\u057d\u00bb always does
     ("imperative-stress", re.compile(rf"[{ARM}]{{2,}}\u0565\u055b\u0584(?![{ARM}])")),
     ("see-without-stress", re.compile(rf"(?<![{ARM}])[\u054f\u057f]\u0565\u057d(?![{ARM}\u055b])")),
+    # glued \u0579- on an -\u0565\u056c\u056b adjective (owner A37: \u0561\u0576\u056c\u0578\u0582\u056e\u0565\u056c\u056b, never \u0579\u056c\u0578\u0582\u056e\u0565\u056c\u056b); \u0579\u0561\u0583\u0565\u056c\u056b is not \u0579 + \u0561\u0583\u0565\u056c\u056b
+    ("che-eli", re.compile(rf"(?<![{ARM}])[\u0549\u0579](?!\u0561\u0583)[{ARM}]{{2,}}\u0565\u056c\u056b(?:\u0568|\u0576|\u056b|\u056b\u0581|\u0578\u057e|\u0578\u0582\u0574|\u0576\u0565\u0580|\u0576\u0565\u0580\u0568|\u0576\u0565\u0580\u056b)?(?![{ARM}])")),
 ]
 
 STYLE_RULES = [
@@ -160,21 +172,72 @@ def article_hits(line):
 
 def symbol_name_ends_in_consonant(tok):
     """How a short formula is read aloud: True if its spoken name ends in a consonant ($x$ իքս,
-    $f$ էֆ, $x_1$ ... մեկ), False if in a vowel ($A$ ա, $B$ բե, $0$ զրո), None if unknown
-    (anything longer than a letter/number with one subscript, j, numbers ending in 2 or 9; see A22)."""
-    tok = re.sub(r"\\(?:mathbf|mathrm|mathit|mathcal|bar|hat|tilde|overline)\{([^{}]*)\}", r"\1", tok.strip())
+    $f$ էֆ, $x_1$ ... մեկ, $\\varepsilon$ էպսիլոն, any primed symbol: ... շտրիխ), False if in a vowel
+    ($A$ ա, $B$ բե, $0$ զրո, $j$ ժի, $\\sigma$ սիգմա), None if unknown (anything longer than a letter,
+    Greek letter or number with one subscript; numbers ending in 2 or 9; see GUIDE A1b)."""
+    tok = re.sub(MATH_WRAP, r"\1", tok.strip())
+    primed = bool(re.search(r"'|\\prime", tok))
     tok = re.sub(r"'+|\^\{?\\prime\}?", "", tok)
-    m = re.fullmatch(r"([A-Za-z]|\d+)(?:_\{?([A-Za-z]|\d+)\}?)?", tok)
+    m = re.fullmatch(r"([A-Za-z]|\\[A-Za-z]+|\d+)(?:_\{?([A-Za-z]|\\[A-Za-z]+|\d+)\}?)?", tok)
     if not m:
         return None
+    if primed:
+        return True  # read «... շտրիխ» (owner, A47)
     last = m.group(2) or m.group(1)
+    if last.startswith("\\"):
+        return True if last[1:] in GREEK_CONS_NAMES else False if last[1:] in GREEK_VOWEL_NAMES else None
     if last.isdigit():
         if last == "0":
             return False
         return None if last[-1] in "29" else True
     if last in "jJ":
-        return None
+        return False  # ժի (owner, A22)
     return last in LATIN_CONS_NAMES
+
+
+def sound_after(rest):
+    """What follows an article in the same line: 'vowel', 'cons', 'pause', or None (unknown, e.g. end of
+    line). Skips tags, emphasis commands and opening quotes; reads a following formula by the spoken
+    name of its first symbol."""
+    r = re.sub(r"<[^>]+>|\\(?:emph|textbf|textit|text)\{|[«(\[{]", " ", rest)
+    if re.match(r"\s*[,.;:)։՝]", r):
+        return "pause"
+    r = r.lstrip("  ~\t")
+    if not r:
+        return None
+    if re.match(f"[{ARM}]", r):
+        if re.match(rf"{CLEAR_VOWEL_START}|[Ոո]վ(?:քեր)?(?![{ARM}])|ես(?![{ARM}])", r):
+            return "vowel"
+        return "cons"
+    m = re.match(r"\$\s*(?:" + MATH_WRAP + r"|\\([A-Za-z]+)|([A-Za-z])|(\d+))", r)
+    if not m:
+        return None
+    inner, greek, latin, num = m.groups()
+    if inner:
+        latin = inner[:1] if inner[:1].isalpha() else None
+    if greek:
+        return "vowel" if greek in GREEK_VOWEL_START else "cons" if greek in GREEK_VOWEL_NAMES else None
+    if latin:
+        return None if latin in "eE" else "vowel" if latin in LATIN_VOWEL_START else "cons"
+    if num:
+        return "vowel" if num[0] in "89" and not (len(num) == 2 and num[0] == "1") else "cons"
+    return None
+
+
+def article_after_symbol_hits(raw):
+    """Style hint: the article after an inline formula does not fit the spoken name of its last symbol:
+    «-ը» after a vowel-final name ($k$-ը -> $k$-ն), or «-ն» after a consonant-final name when a
+    consonant sound or a pause follows ($y$-ն բաժանում -> $y$-ը բաժանում)."""
+    hits = []
+    for m in re.finditer(rf"\$([^$]{{1,30}})\$-(ը|ն)(?![{ARM}])", raw):
+        cons = symbol_name_ends_in_consonant(m.group(1))
+        if cons is None:
+            continue
+        if not cons and m.group(2) == "ը":
+            hits.append(f"{m.group(0)}  (-> -ն)")
+        elif cons and m.group(2) == "ն" and sound_after(raw[m.end():m.end() + 60]) in ("cons", "pause"):
+            hits.append(f"{m.group(0)}  (-> -ը)")
+    return hits
 
 
 def word_without_marks(text, start):
@@ -238,6 +301,8 @@ def lint_text(text, suffix=".txt", style=False):
                 for m in rx.finditer(line):
                     s = max(0, m.start() - 25)
                     out.append((i, "hint", rule, line[s:m.end() + 25].strip()))
+            for h in article_after_symbol_hits(raw):
+                out.append((i, "hint", "article-after-symbol", h))
             for sent in re.split("[\u0589]", line):
                 if NEG_WORD.search(sent) and not NEG_VERB.search(NEG_WORD.sub(" ", sent)) and len(sent.split()) > 3:
                     out.append((i, "hint", "negative-word-without-negative-verb", sent.strip()[:80]))
@@ -329,6 +394,15 @@ def selftest():
         ("Պատասխանը (տես նկար 2) պարզ է։", ".txt", "see-without-stress"),
         ("Պատասխանը (տե՛ս նկար 2) պարզ է։", ".txt", None),
         ("Գրենք այդ տեսքով։", ".txt", None),                    # տեսք is not տես
+        # A37: no glued չ- on -ելի adjectives; չափելի is a different word
+        ("Սա չլուծելի խնդիր է։", ".txt", "che-eli"),
+        ("Սա անլուծելի խնդիր է։", ".txt", None),
+        ("Բազմությունը չափելի է։", ".txt", None),
+        # spoken names: primes («... շտրիխ», A47), Greek letters, j = ժի
+        ("$A'$-ն և $B$-ն", ".tex", "article-n-before-yeo"),     # ա շտրիխ ends in a consonant
+        ("$\\varepsilon$-ն և $\\delta$-ն", ".tex", "article-n-before-yeo"),   # էպսիլոն
+        ("$\\sigma$-ն և $\\mu$-ն", ".tex", None),                # սիգմա, մյու
+        ("$j$-ն և $k$-ն", ".tex", None),                        # ժի, կա
     ]
     style_cases = [
         ("Ոչ մի $y$ չի աշխատում։", ".tex", "calque-works"),
@@ -340,6 +414,17 @@ def selftest():
         ("Ստուգում ենք իրականացնում։", ".txt", "overuse-irakanacnel"),
         ("Վերջապես՝ ստուգենք պատասխանը։", ".txt", "opener-punct"),
         ("Հետևաբար $x>0$։", ".tex", "opener-punct"),
+        ("Ընտրում ենք այն $k$-ը, որտեղ հաջողություն է։", ".tex", "article-after-symbol"),   # կա -> -ն
+        ("$y$-ն բաժանում է $x$-ին։", ".tex", "article-after-symbol"),                       # իգրեկ -> -ը
+        ("Երեք գրաֆիկը $S$-ն, $S'$-ը և $S''$-ն են։", ".tex", "article-after-symbol"),       # էս + pause
+    ]
+    style_absent = [  # (text, suffix, hint that must NOT fire)
+        ("$F$-ն $x$ կետում թռիչք ունի։", ".tex", "article-after-symbol"),        # իքս starts with a vowel
+        ("$g'$-ը զրո է դառնում։", ".tex", "article-after-symbol"),               # ժե շտրիխ
+        ("$A_n$-ն «առաջին ղուշն է» պատահույթն է։", ".tex", "article-after-symbol"),  # quote, then a vowel
+        ("$f$-ն <strong>ինյեկտիվ</strong> է։", ".html", "article-after-symbol"),   # tag, then a vowel
+        ("$k$-ն, իսկ $n-k$-ն։", ".tex", "article-after-symbol"),
+        ("Այստեղ դիտարկում ենք $S''$-ն", ".tex", "article-after-symbol"),         # end of line: unknown
     ]
     failed = 0
     for text, suffix, expected in cases:
@@ -354,7 +439,12 @@ def selftest():
         if not ok:
             failed += 1
             print(f"FAIL (style): {text!r} expected {expected}, got {sorted(got)}")
-    total = len(cases) + len(style_cases)
+    for text, suffix, rule in style_absent:
+        got = {r for _, lvl, r, _ in lint_text(text, suffix, style=True) if lvl == "hint"}
+        if rule in got:
+            failed += 1
+            print(f"FAIL (style, must not fire): {text!r} fired {rule}")
+    total = len(cases) + len(style_cases) + len(style_absent)
     print(f"selftest: {total - failed}/{total} passed")
     return 1 if failed else 0
 

@@ -15,7 +15,7 @@ need to answer the open ones.
 |--------|-----|
 | **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
-| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46 |
+| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48 |
 | **Open** | none |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
@@ -335,3 +335,10 @@ first two to be calques.
 
 **A46. Glossary rows** (from a full read of all 1061 rows). Swap 315/316, fix 509, 172, 288, 505,
 961: yes. Rows 806 and 730: leave. Details in `OWNER_ANSWERS.md` and `GLOSSARY_REPORT.md`.
+
+**A47. How is a prime read?** a) «շտրիխ», so «$g'$-ը»  b) not read, the article follows the letter
+c) other. **Owner:** a.
+
+**A48. «Անհրաժեշտ է, որ ...» or «Անհրաժեշտ է, որպեսզի ...»?** The Committee page gives the rule for
+other verbs («նախընտրելի է», «պնդում է», «ժամանակն է»), not for «անհրաժեշտ է» / «պետք է».
+a) «որ»  b) both fine  c) «որպեսզի». **Owner:** a.

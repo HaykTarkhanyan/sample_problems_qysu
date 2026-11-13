@@ -8,11 +8,11 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
 |------|------------|
 | `GUIDE.md` | The rules: top-10 summary, then each rule as wrong -> right with reason, confidence and evidence, ordered by how often the mistake appears in LLM text. Start here. |
 | `POLISH_CHECKLIST.md` | The order in which to polish a text (lint, terms, negation, calques, rhythm, final check). |
-| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 46 points (A1-A46), each answerable in a few words. All are settled: 10 by sources, 36 by the owner (status table at the top). A new doubt gets the next free `A` number. |
+| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 48 points (A1-A48), each answerable in a few words. All are settled: 10 by sources, 38 by the owner (status table at the top). A new doubt gets the next free `A` number. |
 | `OWNER_ANSWERS.md` | The owner's decisions from the interviews of 2026-11-10 and 2026-11-13, one line each. They override GUIDE.md if the two ever differ. |
 | `SOURCE_FINDINGS.md` | What the Language Committee recommendations, the ministry textbooks «Հայոց լեզու 7/11» and two academic sources say about each question, with citations; new rules from those sources. Added 2026-11-10. |
 | `GLOSSARY_REPORT.md` | Review of `glossary_Apr.csv` (read-only): 20 findings with row numbers and severity. |
-| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (79 cases). Not wired into CI or `check_site.mjs`. |
+| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (95 cases). Not wired into CI or `check_site.mjs`. |
 | `check_glossary.py` | Mechanical checks on the glossary CSV: `python -I armenian_style/check_glossary.py`. |
 | `_sources/` | Gitignored. Downloaded reference texts, my own paragraphs, analysis scripts and their outputs (see below). |
 
@@ -74,6 +74,20 @@ The owner asked whether the rules still apply to a newer model. What was done:
    hand, then put to the owner (A46). Seven rows changed; see GLOSSARY_REPORT.md.
 9. After the second round the lint got `imperative-stress`, `see-without-stress` and the hint
    `opener-punct`; the 8 places the two error rules found were fixed the same day.
+10. Third round, source spot-check (`_sources/spotcheck_sources.py`, `spotcheck_followup.py`): 60
+    phrases the guide quotes from the Committee pages, the grade-7 textbook and Սուքիասյան were
+    searched in the saved texts. All are there (10 needed a second look: capital letters, OCR soft
+    hyphens, or an example of ours that was never a quote). The usage counts reproduce exactly
+    («Օրինակ՝» 54 against 3, «այսինքն՝» 8 of 8, «ուստի» 9, «հենց» 7). Two citations were overstated
+    and are corrected: the «որ / որպեսզի» page does not name «պետք է» or «անհրաժեշտ է» (the owner then
+    confirmed the rule for them, A48), and one date example was not the page's.
+11. `discrete/glossary_discrete_focused.md` against the CSV: 193 rows, no Armenian disagreement.
+12. `.claude/skills/pedagogical-solutions/SKILL.md` taught `Ինչու՞` and "no Latin `.` as a
+    clause-join", against P2 and A2. Fixed; it now points to this folder and the lint.
+13. Article after a formula (`_sources/probe_article_after_symbol.py`): 1572 articles after a symbol
+    with a known reading, 18 wrong. The 5 on the probability and numerical pages were fixed; the 13
+    in the discrete sheets wait for the parked sweep. The check is now the lint hint
+    `article-after-symbol`; `che-eli` is a new error rule; primes are read «շտրիխ» (A47).
 
 Limits: one run of 697 words; the first baseline came from another model on another day; «Այն» and
 «որը» were counted by pattern, not by reading each use; «ով / ովքեր» and the spoken names of g, h, q

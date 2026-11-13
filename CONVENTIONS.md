@@ -16,7 +16,8 @@ Recurring decisions for this repo, written down once they were made twice.
 - ը/ն article: `-ն` before a vowel **sound**, `-ը` otherwise. Words starting with ե, ո (not ու) and
   «և» start with a consonant sound, so they take `-ը` («թիվը երկու», «$x$-ը և»), except the
   auxiliaries եմ/ես/ենք/եք/են («տարրերն են») (source: «Հայոց լեզու 7» pp. 26-27, Language Committee;
-  `armenian_style/SOURCE_FINDINGS.md` A1). Before «ով» / «ովքեր» both articles are fine (A43).
+  `armenian_style/SOURCE_FINDINGS.md` A1). Before «ով» / «ովքեր» both articles are fine (A43). A primed symbol
+  is read «... շտրիխ» and takes `-ը`: «$g'$-ը», «$S'$-ը» (A47).
   After a symbol, go by how it is read (table in `armenian_style/GUIDE.md` A1b): «$A$-ն» («ա»),
   «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). A symbol whose spoken name ends
   in a consonant takes `-ը` unless the NEXT word starts with a vowel: «$F$-ը մոնոտոն», «$F$-ն անընդհատ»

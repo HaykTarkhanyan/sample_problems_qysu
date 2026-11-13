@@ -59,7 +59,11 @@ the rule is the owner's own usage, not an import.
 
 - Mathematical correctness of each translation beyond the rows above (I read the 260 rare words
   and the 30 stem mismatches, not all 1060 rows line by line).
-- The ⚠ / † markers of `discrete/glossary_discrete_focused.md` against the CSV.
+- The ⚠ / † markers of `discrete/glossary_discrete_focused.md` against the CSV. (Checked on
+  2026-11-13 with `_sources/spotcheck_followup.py`: 193 rows with Armenian, 145 match a CSV row and
+  none disagrees with it, 36 are marked †. The other 12 have no † although the CSV has no row under
+  that exact English name; each is a derived form of a CSV row and agrees with it, e.g. «ռեֆլեքսիվ»
+  beside row 838 «ռեֆլեքսիվություն», «մասնակի կարգ» beside row 733 «մասնակի կարգավորված».)
 - Whether the course textbooks (Ահարոնյան-Իսրաելյան, Սևաստյանով) use the same probability terms;
   they are not in the repo as text.
 

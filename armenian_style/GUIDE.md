@@ -142,9 +142,16 @@ Spoken names for choosing the article (added 2026-11-13). The last spoken word d
 
 The Latin split is the one the lint uses (`LATIN_CONS_NAMES`) and the polished sheets follow. The
 site already has «$\varepsilon$-ը» (`site/probability/w12-continuous.html:159`), «$F(c)$-ն բ...»
-(`w10-cdf-properties.html:195`) and «$P_n(k)$-ն տ...» (`w07-bernoulli.html:288`). The lint checks only
+(`w10-cdf-properties.html:195`) and «$P_n(k)$-ն տ...» (`w07-bernoulli.html:288`). A primed symbol is
+read «... շտրիխ» and so always ends in a consonant: «$g'$-ը զրո է դառնում», «$S'$-ը», «$S''$-ն են»
+(owner, 2026-11-13, A47). Until 2026-11-13 the lint checked only
 single Latin letters and digits (with one subscript): «$\varepsilon$-ն փոքր» and «$f(x)$-ն դրական»
-pass it, so Greek letters and longer formulas are on the writer. When the reading of a formula is
+passed it. Now it knows the table for a single Latin or Greek letter, a number or a primed symbol,
+each with one subscript: the error `article-n-before-yeo` uses it, and the `--style` hint
+`article-after-symbol` reports «-ը» after a vowel-final name and «-ն» after a consonant-final name
+when a consonant sound or a pause follows in the same line. On its first run the probe behind it
+found «$k$-ը,» (twice), «$F_W$-ը» and «$S$-ն,» on live pages, all fixed, and 13 more places in the
+discrete sheets. Longer formulas («$f(x)$-ն դրական») are still on the writer. When the reading of a formula is
 unclear, put a noun after it and let the noun carry the article («$f$ ֆունկցիան»). Confidence: high
 for the principle. The owner confirmed h = «հաշ» (2026-11-13, A42) and raised no objection to g =
 «ժե», q = «կու», w = «դուբլվե», r = «էռ», y = «իգրեկ», z = «զետ» when shown them.
@@ -321,8 +328,8 @@ The rule:
    participles built from verbs (-ող, -ած, -ված: չհատվող, չկարգավորված). Words in «-ելի» are
    adjectives, not participles: they take «ան-» (անլուծելի, անբաժանելի, անհաշվելի: row 1014) or,
    where no ան- word exists, a separate «ոչ»; never «չլուծելի», «չհաշվելի» (owner, 2026-11-13, A37;
-   until then this line wrongly listed «-ելի» with the participles). The lint's closed list does not
-   catch these.
+   until then this line wrongly listed «-ելի» with the participles). Lint: `che-eli` («չափելի» is
+   exempt: it is չափ + ելի, not չ + ափելի).
 2. Adjectives, adverbs, nouns and pronouns are negated with a separate «ոչ»: ոչ լավ, ոչ դատարկ, ոչ
    սիմետրիկ, ոչ միշտ, ոչ ոք, ոչ մի. A handful of old adjectives with glued «չ-» exist (չտես,
    չբեր), but the prefix is no longer productive, so never invent a new one.
@@ -354,7 +361,7 @@ The rule:
 - Note: Wikipedia has both «չնվազող» and «ոչ նվազող». Write «չնվազող»: չ- on a participle is the
   regular form (Սուքիասյան p. 266; the Committee writes «չշահած») and the glossary picks it (row
   668). No source calls «ոչ նվազող» wrong (A34 resolved).
-- Lint: `che-adjective` (closed list of adjectives), `--style` hint
+- Lint: `che-adjective` (closed list of adjectives), `che-eli`, `--style` hint
   `negative-word-without-negative-verb`.
 
 ### G3. Numeral + singular noun (house rule)
@@ -527,7 +534,7 @@ are listed for new text, especially the probability word problems.
 
 ### O2. «անել» with a fitting verb instead
 
-- Set phrases are fine (միտք անել, փորձ անել, գյուտ անել); otherwise prefer the specific verb
+- Set phrases are fine (միտք անել, փորձեր անել, գյուտ անել); otherwise prefer the specific verb
   (ֆիլմ նկարահանել, ներկայացում բեմադրել, ծրագիր իրականացնել). [«Անել»]
 
 ### O3. «արդյունքում» (Russian «в результате»)
@@ -542,8 +549,11 @@ are listed for new text, especially the probability word problems.
 
 - «Անհրաժեշտ է, որպեսզի $x>0$» -> «Անհրաժեշտ է, որ $x>0$»
 - «որպեսզի» only answers «ինչո՞ւ, ի՞նչ նպատակով» («Տեղադրենք $x=1$, որպեսզի ...» is right).
-  After «պետք է», «անհրաժեշտ է», «բավական է», «նախընտրելի է», «պնդում է» use «որ». «որ» may also
-  replace «որպեսզի». [«Որ-որպեսզի»] Our 10 current uses are all purpose clauses.
+  After «նախընտրելի է», «պնդում է», «ժամանակն է», «նպաստել» (the Committee's own examples) use «որ»;
+  by the same principle also after «պետք է», «անհրաժեշտ է», «բավական է» (our application, the page
+  does not name these three). «որ» may also
+  replace «որպեսզի». [«Որ-որպեսզի»] Our 10 current uses are all purpose clauses. The owner confirmed
+  «Անհրաժեշտ է, որ ...» for maths text (2026-11-13, A48).
 
 ### O5. «որ / որը», not «ով», after a noun (even a person)
 
@@ -568,7 +578,7 @@ are listed for new text, especially the probability word problems.
 ### O8. Dates
 
 - Detached dates: «15 մայիսի 2018 թ.» (no comma, month lowercase, a space before «թ.»); numeric
-  «15.05.2018» with միջակետ, never `/` or `-`, and no «թ.» after it. [«Ամսաթվեր»]
+  «15.05.2019» with միջակետ, never `/` or `-`, and no «թ.» after it. [«Ամսաթվեր»]
 
 ### O9. Foreign words that have Armenian equivalents
 

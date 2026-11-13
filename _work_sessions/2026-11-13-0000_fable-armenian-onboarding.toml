@@ -20,6 +20,10 @@ done = [
   "Full glossary read by a second subagent (1061 rows, about 5 min, about 135k tokens); every reported row checked by hand. Applied after the owner's answers: rows 315/316 swap (equality/equation), 509, 172, 288 «բաժանված տարբերություն», 505 «միջանկյալ արժեքի թեորեմ», 961 English -> symmetric group. Rows 806 and 730 asked and left as written.",
   "Owner answers A40-A46: no stress mark on plural imperatives («տե՛ս» keeps it); comma after «Վերջապես», «Մյուս կողմից», «Մասնավորապես»; h = «հաշ»; both articles fine before «ով»; «Իր հերթին», «X-ը, դա ... է», «դեր չի խաղում» are fine, «X-ի մոտ» for an author is a calque; a long definition keeps its «որը» clause; the glossary rows.",
   "Lint: new error rules imperative-stress and see-without-stress, new hint opener-punct; self-test 71 -> 79. The 8 errors they found were fixed (3 stress marks in P1 / P2-3 sheets and their site copies, 2 bare «տես» in splines.html), plus 10 opener marks on the probability pages and P5. Lint on site + sheets back to the 18 known errors that wait for the discrete sweep; search index rebuilt; check_site passes.",
+  "Third round. Source spot-check: 60 quoted phrases and 10 usage counts of the guide checked against the saved Committee pages, the grade-7 textbook and Սուքիասյան: all hold; two citations were overstated («որ / որպեսզի» page does not name «պետք է» / «անհրաժեշտ է»; one date example) and are corrected. Course glossary view against the CSV: 193 rows, no disagreement.",
+  "The solutions skill (.claude/skills/pedagogical-solutions/SKILL.md) taught `Ինչու՞` and forbade the ASCII mijaket; fixed, and it now points to armenian_style/ and the lint.",
+  "Article after a formula: a probe built on the spoken-name table checked 1572 articles and found 18 wrong. Fixed the 5 on live probability / numerical pages («$k$-ը,» twice, «$n-k$-ը», «$F_W$-ը», «$S$-ն,»); 13 in the discrete sheets stay parked. Lint: hint article-after-symbol, error che-eli, primes read «շտրիխ», Greek letters and j known; self-test 79 -> 95.",
+  "Owner answers: discrete sweep 'not now' (asked again); A47 primes are read «շտրիխ»; A48 «Անհրաժեշտ է, որ ...».",
 ]
 
 pending = [
@@ -46,7 +50,8 @@ files = [
 commits = [
   "7fff498 Armenian guide: second model check (Fable 5.2), owner answers folded in, lint ով/ովքեր exception (docs and lint only, no Pages run)",
   "c36f87f Armenian: owner answers A40-A46, glossary fixes after a full read, two new lint rules (Pages run 43333623307 passed, 13 Nov 01:01 local)",
-  "third commit: two learnings; rows 806 and 730 recorded as confirmed by the owner (asked a second time after a heads-up note pointed out that 'not selected' is not 'confirmed')",
+  "ba5d2c2 two learnings; rows 806 and 730 recorded as confirmed by the owner (asked a second time after a heads-up note pointed out that 'not selected' is not 'confirmed')",
+  "fourth commit (third round): source spot-check, skill fix, article-after-symbol hint and 5 article fixes on live pages, che-eli, primes, A47-A48",
 ]
 
 notes = """
