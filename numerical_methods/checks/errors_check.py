@@ -295,6 +295,11 @@ log.info(f"cancellation example: fl(x) = 15.3148, fl(y) = 15.3149, x (-) y = -0.
          f"abserr 0.000031, relerr 31/131 = {31/131:.4f}; relerr of inputs {float(relerr(xc, fx)):.2e}, {float(relerr(yc, fy)):.2e}")
 close(31 / 131, 0.2366, 1e-3)
 close(float(relerr(xc, fx)), 2.09e-6, 1e-2); close(float(relerr(yc, fy)), 6.5e-8, 2e-2)
+assert f"{31/131:.3f}" == "0.237" and round(100 * 31 / 131) == 24
+assert relerr(xc, fx) < Fr(1, 10 ** 5) and relerr(yc, fy) < Fr(1, 10 ** 5)
+assert f"{float(relerr(xc, fx)):.2g}" == "2.1e-06" and f"{float(relerr(yc, fy)):.2g}" == "6.5e-08"
+assert f"{float((xc + yc) / abs(xc - yc)):.2g}" == "2.3e+05"            # the amplification factor of the example
+assert str(math.sqrt(399))[:8] == "19.97498"
 # quadratic x^2 - 40x + 1 = 0 in four-digit rounding arithmetic
 sq = fl(Fr(math.isqrt(399 * 10 ** 20), 10 ** 10), 4, "round")          # sqrt(399) = 19.97498...
 assert sq == Fr("19.97") and abs(math.sqrt(399) - 19.974984355) < 1e-9
@@ -308,6 +313,7 @@ re_naive, re_stable = abs(0.03 - true_small) / true_small, abs(0.02502 - true_sm
 log.info(f"quadratic x^2 - 40x + 1: sqrt(399) -> 19.97, x1 = 39.97, naive x2 = 0.03000, stable x2 = 0.02502, "
          f"true x2 = {true_small:.9f}; relerr naive {re_naive:.4f}, stable {re_stable:.2e}; 1/39.97 = {1/39.97:.7f}")
 close(re_naive, 0.199, 5e-3); close(re_stable, 1.74e-4, 2e-2); close(1 / 39.97, 0.0250188, 1e-5)
+assert f"{true_small:.7f}" == "0.0250156" and round(re_naive, 1) == 0.2 and f"{re_stable:.2g}" == "0.00017"
 
 # ---------------------------------------------------------------- A6
 for x in (2.0, 3.5, -7.25, 1e3, 0.3):
@@ -328,6 +334,9 @@ log.info(f"A6b at x = 1e-5: naive {naive_b!r}, stable {stable_b!r}, relerr {rel_
 assert 1e-8 < rel_b < 1e-5 and abs(stable_b + 5e-11) < 1e-20
 assert math.cos(1e-8) - 1 == 0.0 and -2 * math.sin(0.5e-8) ** 2 == -5.0000000000000005e-17
 close(-(1e-5) ** 2 / 2 + (1e-5) ** 4 / 24, stable_b, 1e-12)
+assert f"{naive_b:.10e}" == "-5.0000004137e-11" and f"{stable_b:.11e}" == "-4.99999999996e-11"
+assert f"{rel_b:.2g}" == "8.3e-08" and math.floor(-math.log10(rel_b)) == 7
+assert f"{-2 * math.sin(0.5e-8) ** 2:.1g}" == "-5e-17"
 # four-digit decimal illustration for x = 100: both terms round to numbers near 1
 ta, tb = mop(100, 101, "/", 4), mop(100, 99, "/", 4)
 assert ta == Fr("0.9901") and tb == Fr("1.01") and mop(ta, tb, "-", 4) == Fr("-0.0199")
@@ -337,6 +346,29 @@ assert mop(99, 101, "*", 4) == 9999 and st == Fr("-0.02") and abs(float(exact_a)
 log.info(f"A6a, 4 digits, x = 100: 0.9901 - 1.010 = -0.0199 (relerr {float(relerr(exact_a, Fr('-0.0199'))):.2e}), "
          f"stable -0.02000 (relerr {float(relerr(exact_a, st)):.2e}), exact {float(exact_a):.8f}")
 close(float(relerr(exact_a, Fr("-0.0199"))), 5.1e-3, 2e-2); close(float(relerr(exact_a, st)), 1.0e-4, 1e-2)
+r6n, r6s = float(relerr(exact_a, Fr("-0.0199"))), float(relerr(exact_a, st))
+assert f"{r6n:.2g}" == "0.0051" and f"{r6s:.2g}" == "0.0001" and 45 < r6n / r6s < 55        # "about 50 times"
+assert str(100 / 101).startswith("0.990099") and str(100 / 99).startswith("1.0101") and str(float(exact_a)).startswith("-0.020002")
+# A6a in double, as quoted in step 4 and the predict block
+n6 = lambda x: x / (x + 1) - x / (x - 1)
+s6 = lambda x: -2 * x / ((x - 1) * (x + 1))
+assert f"{n6(1e8):.11e}" == "-2.00000001005e-08" and f"{s6(1e8):.15e}" == "-2.000000000000000e-08"
+r8 = abs(n6(1e8) - s6(1e8)) / abs(s6(1e8))
+assert f"{r8:.0e}" == "5e-09" and math.floor(-math.log10(r8)) == 8
+assert f"{abs(n6(1e12) - s6(1e12)) / abs(s6(1e12)):.2g}" == "3.3e-05" and n6(1e17) == 0.0
+for _ in range(2000):                                      # "0 correct digits for x = 1e17 and larger"
+    assert n6(10 ** random.uniform(17, 300)) == 0.0
+assert 1e-16 / (2e-8) == 5e-9
+# the rewritten formula really is accurate to ~1e-16 (the widget says so): compare with exact fractions
+for x in (1e4, 1e8, 1e12, 1e15):
+    ex = Fr(-2) * Fr(x) / ((Fr(x) - 1) * (Fr(x) + 1))
+    assert abs(Fr(s6(x)) - ex) / abs(ex) < Fr(4, 10 ** 16)
+dctx = decimal.Context(prec=60)
+for bq in (1e4, 1e6, 1e8):
+    exq = 1 / (D(bq) + dctx.sqrt(D(bq) * D(bq) - 1))
+    stq = 1 / (bq + math.sqrt(bq * bq - 1))
+    assert abs(D(stq) - exq) / exq < D("1e-15")
+assert f"{2.0 ** -53:.2g}" == "1.1e-16"
 
 # ---------------------------------------------------------------- A7
 for _ in range(3000):
@@ -395,6 +427,20 @@ log.info(f"A8: (a) 5(ea+eb)+ea*eb, sharp at a = b = -5; (b) abs (ea+2eb)/(3-eb),
          f"(6,3) and (3,3); largest ratios seen {float(worst_a):.3f}, {float(worst_b1):.3f}, {float(worst_b2):.3f}; "
          f"ea = eb = 0.1: 1.01, 3/29 = {3/29:.4f}, 2/29 = {2/29:.4f}")
 close(3 / 29, 0.1034, 1e-3); close(2 / 29, 0.0690, 1e-3)
+assert f"{3/29:.4f}" == "0.1034" and f"{2/29:.4f}" == "0.0690"
+for _ in range(2000):                                    # the identity of A8 (a) step 1 and the quotient numerator
+    a, b = Fr(random.randint(-500, 100), 100), Fr(random.randint(-500, 100), 100)
+    sa, sb = a + Fr(random.randint(-50, 50), 100), b + Fr(random.randint(-50, 50), 100)
+    assert a * b - sa * sb == a * (b - sb) + b * (a - sa) - (a - sa) * (b - sb)
+    assert a * sb - sa * b == b * (a - sa) - a * (b - sb)
+# theory box: relerr of a quotient <= (ra + rb) / (1 - rb)
+for _ in range(3000):
+    a, b = Fr(random.randint(1, 900), 37) * random.choice([1, -1]), Fr(random.randint(1, 900), 41) * random.choice([1, -1])
+    sa, sb = a * (1 + Fr(random.randint(-90, 90), 100)), b * (1 + Fr(random.randint(-90, 90), 100))
+    ra, rb = relerr(a, sa), relerr(b, sb)
+    assert relerr(a / b, sa / sb) <= (ra + rb) / (1 - rb)
+# "hard to swallow" example of the theory: a = 1 +- 0.005, b = 0.98 +- 0.005
+assert round(100 * Fr("0.005"), 1) == Fr("0.5") and round(float(100 * Fr("0.005") / Fr("0.98")), 1) == 0.5
 
 # ---------------------------------------------------------------- A9
 L = math.log(12)
@@ -406,6 +452,11 @@ log.info(f"A9: ln 12 = {L:.6f}, sqrt = {math.sqrt(L):.6f}, sqrt(ln 12 - 0.01) = 
          f"rough bound 0.01/2.82 = {rough9:.6f}, sharp bound {sharp9:.6f}; 0.01/(2 sqrt(ln 12)) = {0.01/(2*math.sqrt(L)):.6f}")
 assert rough9 < 0.0036 and sharp9 < 0.00318 and sharp9 > 0.00317
 close(math.sqrt(L), 1.576359, 1e-6); close(math.sqrt(L - 0.01), 1.573184, 1e-6)
+assert f"{math.e ** 2:.2f}" == "7.39" and Fr("1.41") ** 2 == Fr("1.9881") and Fr("1.41") ** 2 < 2
+assert (f"{L:.6f}", f"{math.sqrt(L):.6f}", f"{math.sqrt(L - 0.01):.6f}") == ("2.484907", "1.576359", "1.573184")
+assert f"{math.sqrt(L) + math.sqrt(L - 0.01):.6f}" == "3.149542" and f"{rough9:.6f}" == "0.003546"
+assert f"{sharp9:.6f}" == "0.003175" and f"{0.01 / (2 * math.sqrt(L)):.6f}" == "0.003172"
+assert f"{1 / (2 * math.sqrt(L)):.2f}" == "0.32" and round(0.01 / sharp9) == 3
 for x in np.linspace(L - 0.01, L + 0.01, 2001)[1:-1]:
     assert abs(math.sqrt(L) - math.sqrt(x)) < sharp9
 close(abs(math.sqrt(L) - math.sqrt(L - 0.0099999)), sharp9, 1e-4)
@@ -424,6 +475,10 @@ log.info(f"A10: f(3) = 14, f(a) = 14.010577747684, abserr = 0.010577747684, rele
          f"f'(3)*|da| = 0.010576, max f' bound = {float(lag10):.9f}; relerr of a = {float(relerr(a10, s10)):.4e}")
 close(float(rel10), 7.5498e-4, 1e-4); close(float(relerr(a10, s10)), 4.405e-4, 1e-3)
 close(float(rel10) / float(relerr(a10, s10)), 1.714, 1e-3)
+assert f"{float(rel10):.3g}" == "0.000755" and f"{float(abserr(f10(a10), f10(s10))):.3g}" == "0.0106"
+assert f"{100 * float(rel10):.3g}" == "0.0755" and f"{float(relerr(a10, s10)):.2g}" == "0.00044"
+assert 2 * a10 + 2 == Fr("8.002644") and str(float(lag10)).startswith("0.010579") and 9 + 6 - 1 == 14
+assert round(float(rel10) / float(relerr(a10, s10)), 1) == 1.7 and round(3 * 8 / 14, 1) == 1.7
 
 # ---------------------------------------------------------------- A11
 a11 = 2.1234567
@@ -451,6 +506,7 @@ close(float(abs11b), 0.221738, 1e-5); close(float(rel11b), 0.040924, 1e-4)
 close(1 / 0.0417356, 23.96036, 1e-6); close(float(relerr(a, s)), 0.010966, 1e-4)
 close(26.6 * 0.008678, 0.230835, 1e-5)
 close(float(abs11b) / 0.008678, 25.55, 1e-3); close(float(rel11b) / float(relerr(a, s)), 3.73, 2e-3)
+assert f"{float(rel11b) / float(relerr(a, s)):.1f}" == "3.7"           # the func-theory paragraph: "about 3.7 times"
 
 # ---------------------------------------------------------------- A12
 for _ in range(3000):

@@ -54,6 +54,14 @@
         <li><a href="#arith">Մեքենայական գործողություններ</a></li>
         <li><a href="#p4">Խնդիր 4 - երկու հակաօրինակ</a></li>
         <li><a href="#p5">Խնդիր 5 - բաշխականություն</a></li>
+        <li><a href="#cancel">Գրեթե հավասար թվերի հանում</a></li>
+        <li><a href="#p6">Խնդիր 6 - ինչպես խուսափել հանումից</a></li>
+        <li><a href="#prop">Սխալանքը գործողություններից հետո</a></li>
+        <li><a href="#p7">Խնդիր 7 - գումար և հակադարձ</a></li>
+        <li><a href="#p8">Խնդիր 8 - արտադրյալ և քանորդ</a></li>
+        <li><a href="#func">Ֆունկցիայի արժեքի սխալանքը</a></li>
+        <li><a href="#p9">Խնդիր 9 - $\sqrt{\ln12}$</a></li>
+        <li><a href="#p10">Խնդիր 10 - բազմանդամ</a></li>
       </ol>
     </nav>
 
@@ -570,6 +578,462 @@ add, sub, div = machine(2)                           # Խնդիր 5, k = 2
 a, b, c = D("0.41"), D("0.36"), D("0.3")
 print("Խնդիր 5՝  a ⊖ b =", sub(a, b), "  (a ⊖ b) ⊘ c =", div(sub(a, b), c))
 print("          a ⊘ c =", div(a, c), "  b ⊘ c =", div(b, c), "  (a ⊘ c) ⊖ (b ⊘ c) =", sub(div(a, c), div(b, c)))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="cancel" open>
+<summary><h2>Գրեթե հավասար թվերի հանում</h2></summary>
+<div class="sec-body">
+<p>Երբ հանում ենք իրար շատ մոտ երկու թիվ, նրանց առաջին նիշերը համընկնում են և կրճատվում։ Մնում են միայն վերջին նիշերը,
+այսինքն՝ այն նիշերը, որոնցում նստած է կլորացման սխալանքը։ Հանումն ինքը կարող է լինել ճշգրիտ, բայց այն երևան է հանում
+մուտքի թվերի սխալանքները։</p>
+<p><strong>Օրինակ (դասախոսությունից)։</strong> $x=15{,}314768$, $y=15{,}314899$, $t=6$, կլորացում։ $\fl(x)=15{,}3148$,
+$\fl(y)=15{,}3149$ (երկուսի հարաբերական սխալանքն էլ փոքր է $10^{-5}$-ից), և $x\ominus y=-0{,}0001$։ Ճշգրիտ տարբերությունը
+$x-y=-0{,}000131$ է, և</p>
+$$\begin{gathered}\abserr(x-y,\,x\ominus y)=0{,}000031,\\ \relerr(x-y,\,x\ominus y)=\tfrac{31}{131}\approx0{,}237.\end{gathered}$$
+<p>Մուտքի թվերի հարաբերական սխալանքները $\approx2{,}1\cdot10^{-6}$ և $\approx6{,}5\cdot10^{-8}$ էին, իսկ տարբերությանը՝ մոտ
+$24\%$։ $x$-ի և $y$-ի առաջին հինգ նիշը համընկել են, և տարբերության մեջ մնացել է մեկ նիշ, այն էլ՝ սխալ։</p>
+<p>Ընդհանուր դեպքում, եթե $x^*$ և $y^*$ թվերի հարաբերական սխալանքները չեն գերազանցում $\delta$-ն, ապա
+$|(x-y)-(x^*-y^*)|\le\delta|x|+\delta|y|$, այսինքն՝</p>
+$$\relerr(x-y,\,x^*-y^*)\le\frac{|x|+|y|}{|x-y|}\,\delta.$$
+<p>$\frac{|x|+|y|}{|x-y|}$ գործակիցը մեծ է, երբ $x\approx y$։ Վերևի օրինակում այն մոտ $2{,}3\cdot10^5$ է։</p>
+
+<h3>Ինչպես խուսափել</h3>
+<p>Կլորացումը վերացնել հնարավոր չէ, բայց բանաձևը հաճախ կարելի է ձևափոխել այնպես, որ մոտ թվերի հանում չլինի։ Սովորական
+հնարքներն են ընդհանուր հայտարարի բերելը, համալուծ արտահայտությամբ բազմապատկելը, եռանկյունաչափական նույնությունները և
+Թեյլորի շարքը։</p>
+<p><strong>Օրինակ (դասախոսության քառակուսի հավասարումը)։</strong> $x^2-2bx+c=0$ հավասարման արմատներն են
+$x_{1,2}=b\pm\sqrt{b^2-c}$։ Վերցնենք $b=20$, $c=1$՝ $x^2-40x+1=0$, և հաշվենք չորս նիշով կլորացմամբ։
+$\sqrt{399}=19{,}97498\ldots$, և $\fl(\sqrt{399})=19{,}97$։ Այդ դեպքում</p>
+$$\begin{gathered}x_1=20\oplus19{,}97=39{,}97,\\ x_2=20\ominus19{,}97=0{,}03.\end{gathered}$$
+<p>Ճշգրիտ արժեքը $x_2=20-\sqrt{399}\approx0{,}0250156$ է, և $x_2$-ի հարաբերական սխալանքը մոտ $0{,}2$ է ($20\%$)։ Մեծ արմատը
+լավն է, փոքրը՝ վատ։ Վիետի թեորեմով $x_1x_2=c$, այնպես որ փոքր արմատը կարելի է հաշվել առանց հանման՝</p>
+$$x_2=\frac{c}{x_1}=1\oslash39{,}97=0{,}02502,$$
+<p>և դրա հարաբերական սխալանքը $\approx1{,}7\cdot10^{-4}$ է։ Նույն բանաձևն է $x_2=\frac{c}{b+\sqrt{b^2-c}}$-ը։ Նույն երևույթը
+կրկնակի ճշտությամբ կարելի է տեսնել խնդիր 6-ի ինտերակտիվ նկարում՝ «Քառակուսի հավասարում» դեպքը։</p>
+<pre class="py" data-run><code>import math
+from decimal import Decimal as D, Context, ROUND_HALF_UP
+
+def machine(t):
+    ctx = Context(prec=t, rounding=ROUND_HALF_UP)       # t նիշ, կլորացում
+    return ctx, ctx.create_decimal
+
+ctx, fl = machine(6)                                     # դասախոսության օրինակը, t = 6
+x, y = D("15.314768"), D("15.314899")
+d = ctx.subtract(fl(x), fl(y))
+print("fl(x) =", fl(x), "  fl(y) =", fl(y), "  x ⊖ y =", d, "  x - y =", x - y)
+print(f"relerr = {float(abs((x - y) - d) / abs(x - y)):.3f}")
+
+ctx, fl = machine(4)                                     # x^2 - 40x + 1 = 0, t = 4
+r = fl(D(399).sqrt())
+x1, x2 = ctx.add(20, r), ctx.subtract(20, r)
+x2_vieta = ctx.divide(1, x1)
+true = 20 - math.sqrt(399)
+print("fl(√399) =", r, "  x1 =", x1, "  x2 =", x2, "  x2 = 1 ⊘ x1 =", x2_vieta)
+print(f"ճշգրիտ x2 = {true:.9f}   relerr՝ {abs(float(x2) - true) / true:.4f} և {abs(float(x2_vieta) - true) / true:.2e}")</code></pre>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p6" open>
+<summary><h2>Խնդիր 6 - ինչպես խուսափել հանումից</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 6</div>
+<p>Պարզեք, թե $x$-ի որ արժեքների դեպքում է առաջանում գրեթե հավասար թվերի հանում, և գտեք այլընտրանքային ներկայացում,
+որի դեպքում այդ խնդիրը չկա՝</p>
+<ul>
+  <li>(ա) $\dfrac{x}{x+1}-\dfrac{x}{x-1}$,</li>
+  <li>(բ) $\cos x-1$։</li>
+</ul>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գտնում ենք, թե երբ են երկու գումարելիները գրեթե հավասար և
+նույն նշանի, ապա արտահայտությունը ձևափոխում ենք հանրահաշվորեն այնպես, որ մոտ թվերի հանումն անհետանա։</p></div>
+<h3>(ա) $\frac{x}{x+1}-\frac{x}{x-1}$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - երբ է վտանգավոր</h3>
+<p>Երբ $|x|$-ը մեծ է, երկու կոտորակն էլ մոտ են $1$-ի, իսկ նրանց տարբերությունը մոտ է $-\frac2x$-ի՝ փոքր թվի։ Օրինակ՝
+$x=100$ դեպքում $\frac{100}{101}=0{,}990099\ldots$, $\frac{100}{99}=1{,}0101\ldots$, իսկ տարբերությունը $\approx-0{,}02$ է։
+$x\approx0$-ի մոտ գումարելիները մոտ են $x$-ի և $-x$-ի, այսինքն՝ տարբեր նշանի են, և հանումը վտանգավոր չէ։ $x\approx\pm1$-ի
+մոտ գումարելիներից մեկը շատ մեծ է, մյուսը՝ ոչ, և դրանք նույնպես գրեթե հավասար չեն։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ընդհանուր հայտարար</h3>
+$$\begin{aligned}\frac{x}{x+1}-\frac{x}{x-1}&=\frac{x(x-1)-x(x+1)}{(x+1)(x-1)}\\&=\frac{-2x}{(x-1)(x+1)}.\end{aligned}$$
+<p>Համարիչում $x^2$-երը կրճատվեցին հանրահաշվորեն, և նոր բանաձևում մոտ թվերի հանում չկա։ Հայտարարը թողնում ենք
+$(x-1)(x+1)$ տեսքով, ոչ թե $x^2-1$. $|x|\approx1$-ի մոտ $x^2-1$-ում նույնպես մոտ թվեր են հանվում ($x^2$-ն արդեն
+կլորացված է), իսկ $x-1$-ում հանվում են ճշգրիտ $x$ և $1$ թվերը։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - չորս նիշով օրինակ</h3>
+<p>$x=100$, $t=4$, կլորացում։ Սկզբնական բանաձևով՝ $100\oslash101=0{,}9901$, $100\oslash99=1{,}010$, և տարբերությունը
+$-0{,}0199$ է։ Ճշգրիտ արժեքը $-\frac{200}{9999}=-0{,}020002\ldots$ է, հարաբերական սխալանքը՝ $\approx5{,}1\cdot10^{-3}$։ Նոր
+բանաձևով՝ $99\otimes101=9999$, $-200\oslash9999=-0{,}02000$, հարաբերական սխալանքը՝ $\approx1{,}0\cdot10^{-4}$, այսինքն՝ մոտ
+$50$ անգամ փոքր։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - կրկնակի ճշտությամբ</h3>
+<p>$x=10^8$ դեպքում սկզբնական բանաձևը տալիս է $\approx-2{,}00000001005\cdot10^{-8}$, իսկ նորը՝ $-2\cdot10^{-8}$ (16 նիշի
+ճշտությամբ)։ Հարաբերական սխալանքը $\approx5\cdot10^{-9}$ է, այսինքն՝ 16 նիշից մնացել է մոտ 8-ը։ $x=10^{12}$ դեպքում
+սխալանքն արդեն $\approx3{,}3\cdot10^{-5}$ է, իսկ $x=10^{17}$ դեպքում սկզբնական բանաձևը տալիս է $0$։</p></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $|x|$-ի մեծ արժեքների դեպքում,
+$\frac{x}{x+1}-\frac{x}{x-1}=\frac{-2x}{(x-1)(x+1)}$</div>
+<pre class="py" data-run><code>naive  = lambda x: x / (x + 1) - x / (x - 1)
+stable = lambda x: -2 * x / ((x - 1) * (x + 1))
+
+for x in [1e2, 1e4, 1e8, 1e12, 1e17]:
+    a, b = naive(x), stable(x)
+    print(f"x = {x:5.0e}   սկզբնական՝ {a: .16e}   նոր՝ {b: .16e}   relerr = {abs(a - b) / abs(b):.1e}")</code></pre>
+<!-- PSS1-OVERLAP-START -->
+<h3>(բ) $\cos x-1$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - երբ է վտանգավոր</h3>
+<p>Երբ $x$-ը մոտ է $0$-ին, $\cos x\approx1$, և $\cos x-1\approx-\frac{x^2}{2}$ փոքր թիվը ստացվում է $1$-ին մոտ երկու թվերի
+հանումից։ Նույնը տեղի ունի $x\approx2\pi k$ կետերի մոտ։ Օրինակ՝ $x=10^{-8}$ դեպքում կրկնակի ճշտությամբ $\cos x$-ը կլորացվում
+է ճիշտ $1$-ի, և $\cos x-1$ արտահայտությունը տալիս է $0$, թեև ճշգրիտ արժեքը $\approx-5\cdot10^{-17}$ է։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - նույնություն</h3>
+<p>$\cos x=1-2\sin^2\frac x2$ նույնությունից՝</p>
+$$\cos x-1=-2\sin^2\frac x2.$$
+<p>Այստեղ հանում չկա՝ միայն բազմապատկում և քառակուսի։ Մեկ այլ տարբերակ՝ համալուծ արտահայտությամբ բազմապատկելը՝
+$\cos x-1=\frac{(\cos x-1)(\cos x+1)}{\cos x+1}=-\frac{\sin^2x}{1+\cos x}$ ($x\approx0$-ի մոտ հայտարարում գումարվում են $1$-ին
+մոտ երկու թիվ, և դա վտանգավոր չէ)։ Շատ փոքր $x$-երի համար կարելի է օգտագործել նաև Թեյլորի շարքը՝
+$\cos x-1=-\frac{x^2}{2}+\frac{x^4}{24}-\dots$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - կրկնակի ճշտությամբ</h3>
+<p>$x=10^{-5}$ դեպքում $\cos x-1$ արտահայտությունը տալիս է $\approx-5{,}0000004137\cdot10^{-11}$, իսկ նոր բանաձևը՝
+$\approx-4{,}99999999996\cdot10^{-11}$։ Առաջինի հարաբերական սխալանքը $\approx8{,}3\cdot10^{-8}$ է, այսինքն՝ 16 նիշից ճիշտ է
+մնացել մոտ 7-ը։ $x=10^{-8}$ դեպքում առաջին բանաձևը տալիս է $0$, երկրորդը՝ $\approx-5\cdot10^{-17}$։</p></div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $x$-ը մոտ է $0$-ին (կամ $2\pi k$-ին),
+$\cos x-1=-2\sin^2\frac x2$ (կամ $-\frac{\sin^2x}{1+\cos x}$)</div>
+<pre class="py" data-run><code>import math
+
+for x in [1e-2, 1e-5, 1e-8]:
+    a, b = math.cos(x) - 1, -2 * math.sin(x / 2)**2
+    print(f"x = {x:.0e}   cos x - 1 = {a: .16e}   -2 sin²(x/2) = {b: .16e}   relerr = {abs(a - b) / abs(b):.1e}")</code></pre>
+<!-- PSS1-OVERLAP-END -->
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Կրկնակի ճշտության թվերով (մոտ 16 նիշ) $x=10^8$ կետում քանի՞ ճիշտ նիշ կունենա
+$\frac{x}{x+1}-\frac{x}{x-1}$ արտահայտության արժեքը, եթե այն հաշվենք սկզբնական բանաձևով։</p>
+<div class="predict-opts"><button class="btn" type="button">մոտ 16</button><button class="btn" type="button" data-ok>մոտ 8</button><button class="btn" type="button">0</button></div>
+<div class="predict-why">Ամեն կոտորակ մոտ է $1$-ի և ունի $\approx10^{-16}$ կարգի սխալանք, իսկ տարբերությունը $\approx-2\cdot10^{-8}$
+է։ Հարաբերական սխալանքը դառնում է $\approx\frac{10^{-16}}{2\cdot10^{-8}}=5\cdot10^{-9}$, այսինքն՝ 16 նիշից մնում է մոտ 8-ը։
+«Մոտ 16» կլիներ առանց կրճատման, իսկ «0» ճիշտ է $x=10^{17}$-ի և ավելի մեծ արժեքների համար, երբ երկու կոտորակն էլ
+կլորացվում են ճիշտ $1$-ի։ Ստուգեք ներքևում։</div>
+</div>
+
+<div class="widget" id="w-cancel">
+  <div class="widget-head"><span>Գրեթե հավասար թվերի հանումը կրկնակի ճշտությամբ</span></div>
+  <p class="widget-hint">Ընտրեք արտահայտությունը և շարժեք սահիչը (արգումենտի մեծությունը)։ Կարմիր կետերը սկզբնական բանաձևի
+  հարաբերական սխալանքն են՝ ձևափոխված բանաձևի համեմատ, մոխրագույն կետագիծը՝ դրա մոտավոր գնահատականը ($u$-ն բազմապատկած
+  $\frac{|x|+|y|}{|x-y|}$ տեսքի գործակցով), իսկ կապույտ գիծը՝ $u=2^{-53}\approx1{,}1\cdot10^{-16}$։ Աղյուսակում երկու
+  բանաձևի արժեքներն են ընտրված կետում։ «Քառակուսի հավասարում» դեպքում $b-\sqrt{b^2-1}$-ը $x^2-2bx+1=0$ հավասարման փոքր
+  արմատն է։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p6a" aria-pressed="true">Խնդիր 6ա</button>
+    <button class="btn" type="button" data-case="quad" aria-pressed="false">Քառակուսի հավասարում</button>
+  </div>
+  <div class="slider-row"><label for="w-cancel-k">$10^k$</label><input type="range" id="w-cancel-k" min="0" max="165" value="75"><span data-out="x"></span></div>
+  <div data-out="plot"></div>
+  <div data-out="table"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="prop" open>
+<summary><h2>Սխալանքը թվաբանական գործողություններից հետո</h2></summary>
+<div class="sec-body">
+<p>Դիցուք $a$ և $b$ թվերի փոխարեն ունենք $a^*$ և $b^*$ մոտավոր արժեքները, և հայտնի են գնահատականներ՝
+$\abserr(a,a^*)\le\Delta_a$, $\abserr(b,b^*)\le\Delta_b$։ Որքա՞ն կարող է լինել $a+b$, $a-b$, $ab$, $\frac ab$ թվերի
+սխալանքը, եթե դրանք հաշվենք $a^*$ և $b^*$ թվերով (առանց կլորացման)։ Նշանակենք $\delta_a=a-a^*$, $\delta_b=b-b^*$,
+$r_a=\relerr(a,a^*)$, $r_b=\relerr(b,b^*)$։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (սխալանքների գնահատականներ)</div>
+<ul>
+  <li>Գումար և տարբերություն՝ $\abserr(a\pm b,\,a^*\pm b^*)\le\Delta_a+\Delta_b$։</li>
+  <li>Արտադրյալ՝ $\abserr(ab,\,a^*b^*)\le|a|\Delta_b+|b|\Delta_a+\Delta_a\Delta_b$ և $\relerr(ab,\,a^*b^*)\le r_a+r_b+r_ar_b$։</li>
+  <li>Քանորդ, եթե $\Delta_b\lt|b|$՝
+  $$\begin{gathered}\abserr\Bigl(\frac ab,\frac{a^*}{b^*}\Bigr)\\ \le\frac{|a|\Delta_b+|b|\Delta_a}{|b|\,(|b|-\Delta_b)}.\end{gathered}$$</li>
+</ul>
+</div>
+<p>Կանոնը հեշտ է հիշել՝ <strong>գումարման և հանման դեպքում գումարվում են բացարձակ սխալանքները, բազմապատկման և բաժանման
+դեպքում՝ (մոտավորապես) հարաբերականները</strong>։ Իրոք, երբ $r_a$-ն և $r_b$-ն փոքր են, $r_ar_b$ արտադրյալն աննշան է, իսկ
+քանորդի համար $\relerr\bigl(\frac ab,\frac{a^*}{b^*}\bigr)\le\frac{r_a+r_b}{1-r_b}\approx r_a+r_b$։</p>
+<p><strong>Ուշադրություն՝ հանում։</strong> Տարբերության բացարձակ սխալանքը փոքր է, բայց եթե $a\approx b$, տարբերությունն ինքն
+է փոքր, և հարաբերական սխալանքը կարող է շատ մեծ լինել։ Օրինակ՝ $a=1\pm0{,}005$, $b=0{,}98\pm0{,}005$ դեպքում $a-b=0{,}02$,
+իսկ սխալանքը կարող է հասնել $0{,}01$-ի, այսինքն՝ $50\%$-ի, թեև $a$-ի և $b$-ի հարաբերական սխալանքները մոտ $0{,}5\%$ են։ Սա
+նույն գրեթե հավասար թվերի հանումն է։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Գումար։</strong> $(a+b)-(a^*+b^*)=\delta_a+\delta_b$, և եռանկյան անհավասարությունից
+$|\delta_a+\delta_b|\le|\delta_a|+|\delta_b|\le\Delta_a+\Delta_b$ (խնդիր 7ա)։ Տարբերության համար նույնն է՝
+$\delta_a-\delta_b$-ով։</p>
+<p><strong>Արտադրյալ։</strong> $a^*=a-\delta_a$, $b^*=b-\delta_b$, այնպես որ $ab-a^*b^*=a\delta_b+b\delta_a-\delta_a\delta_b$։
+Եռանկյան անհավասարությունից ստանում ենք բացարձակ սխալանքի գնահատականը, իսկ $|ab|$-ի վրա բաժանելով՝ հարաբերականինը
+(խնդիր 13)։</p>
+<p><strong>Քանորդ։</strong> $\frac ab-\frac{a^*}{b^*}=\frac{ab^*-a^*b}{bb^*}$ և $ab^*-a^*b=b\delta_a-a\delta_b$։ Համարիչի մոդուլը
+չի գերազանցում $|a|\Delta_b+|b|\Delta_a$-ն, իսկ $|b^*|\ge|b|-\Delta_b\gt0$ (խնդիր 8բ)։ Հարաբերական սխալանքի համար գրենք
+$a^*=a(1+\alpha)$, $b^*=b(1+\beta)$, որտեղ $|\alpha|=r_a$, $|\beta|=r_b$։ Այդ դեպքում
+$\relerr\bigl(\frac ab,\frac{a^*}{b^*}\bigr)=\bigl|1-\frac{1+\alpha}{1+\beta}\bigr|=\frac{|\beta-\alpha|}{|1+\beta|}\le\frac{r_a+r_b}{1-r_b}$։
+$\blacksquare$</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $a$ և $b$ դրական թվերից յուրաքանչյուրը հայտնի է $1\%$ հարաբերական սխալանքով։ Առավելագույնը
+որքա՞ն կարող է լինել $ab$ արտադրյալի հարաբերական սխալանքը։</p>
+<div class="predict-opts"><button class="btn" type="button">$1\%$</button><button class="btn" type="button" data-ok>$\approx2\%$</button><button class="btn" type="button">$\approx0{,}01\%$</button></div>
+<div class="predict-why">Բազմապատկելիս հարաբերական սխալանքները գումարվում են՝ $r_a+r_b+r_ar_b=1\%+1\%+0{,}01\%=2{,}01\%$։ Մեծագույն
+արժեքը ստացվում է, երբ երկու սխալանքն էլ նույն ուղղությամբ են (օրինակ՝ $a^*=1{,}01a$, $b^*=1{,}01b$)։ «1%» կլիներ գումարի
+դեպքում (խնդիր 7բ), իսկ «0,01%» պատասխանը միայն $r_ar_b$ անդամն է։ Ստուգեք ներքևում՝ «1% և 1%» կոճակով։</div>
+</div>
+
+<div class="widget" id="w-prop">
+  <div class="widget-head"><span>Սխալանքը մեկ գործողությունից հետո</span></div>
+  <p class="widget-hint">Ընտրեք $a$-ն, $b$-ն, նրանց սխալանքների $\Delta_a$, $\Delta_b$ գնահատականները և գործողությունը։ Կապույտ
+  հատվածն արդյունքի բոլոր հնարավոր արժեքներն են, երբ $a^*\in[a-\Delta_a,\,a+\Delta_a]$ և $b^*\in[b-\Delta_b,\,b+\Delta_b]$,
+  իսկ նարնջագույն կետը՝ ճշգրիտ արդյունքը։ Թեորեմի բանաձևը տալիս է մեծագույն սխալանքը, և այն համընկնում է նարնջագույն
+  կետից հատվածի ամենահեռու ծայրի հեռավորության հետ։ Համեմատեք «Գրեթե հավասար թվեր» դեպքը մյուսների հետ։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-op="+" aria-pressed="false">$a+b$</button>
+    <button class="btn" type="button" data-op="-" aria-pressed="false">$a-b$</button>
+    <button class="btn" type="button" data-op="*" aria-pressed="true">$ab$</button>
+    <button class="btn" type="button" data-op="/" aria-pressed="false">$a/b$</button>
+  </div>
+  <div class="slider-row"><label for="w-prop-a">$a$</label><input type="range" id="w-prop-a" min="0.1" max="6" step="0.01" value="2"><label for="w-prop-da">$\Delta_a$</label><input type="range" id="w-prop-da" min="0" max="0.5" step="0.005" value="0.02"><span data-out="a"></span></div>
+  <div class="slider-row"><label for="w-prop-b">$b$</label><input type="range" id="w-prop-b" min="0.1" max="6" step="0.01" value="3"><label for="w-prop-db">$\Delta_b$</label><input type="range" id="w-prop-db" min="0" max="0.5" step="0.005" value="0.03"><span data-out="b"></span></div>
+  <div data-out="plot"></div>
+  <div data-out="formula"></div>
+  <div data-out="table"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-set="one">1% և 1%</button>
+    <button class="btn" type="button" data-set="near">Գրեթե հավասար թվեր</button>
+    <button class="btn" type="button" data-set="p15a">Խնդիր 15ա</button>
+    <button class="btn" type="button" data-set="p15b">Խնդիր 15բ</button>
+  </div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p7" open>
+<summary><h2>Խնդիր 7 - գումար և հակադարձ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 7</div>
+<p>(ա) Ենթադրենք $a_1$ և $a_2$ թվերը մոտարկվում են համապատասխանաբար $a_1^*$ և $a_2^*$ թվերով։ Ցույց տվեք, որ</p>
+$$\begin{gathered}\abserr(a_1+a_2,\,a_1^*+a_2^*)\\ \le\abserr(a_1,a_1^*)+\abserr(a_2,a_2^*).\end{gathered}$$
+<p>(բ) Ենթադրենք $a_1\gt0$ և $a_2\gt0$ թվերը մոտարկվում են համապատասխանաբար $a_1^*$ և $a_2^*$ թվերով։ Ցույց տվեք, որ</p>
+$$\begin{gathered}\relerr(a_1+a_2,\,a_1^*+a_2^*)\\ \le\max_{i=1,2}\relerr(a_i,a_i^*).\end{gathered}$$
+<p>(գ) Ենթադրենք $a^*$ թիվը $a\in[2,5]$ թվի մոտավոր արժեքն է, և $\abserr(a,a^*)\lt2$։ Գնահատեք
+$\abserr\bigl(\frac1a,\frac1{a^*}\bigr)$ բացարձակ սխալանքը $\abserr(a,a^*)$-ի միջոցով։</p>
+</div>
+<div class="solution">
+<h3>(ա) Գումարի բացարձակ սխալանքը</h3>
+<p>Նշանակենք $\delta_i=a_i-a_i^*$։ Այդ դեպքում $(a_1+a_2)-(a_1^*+a_2^*)=\delta_1+\delta_2$, և եռանկյան անհավասարությունից</p>
+$$\begin{aligned}|\delta_1+\delta_2|&\le|\delta_1|+|\delta_2|\\&=\abserr(a_1,a_1^*)+\abserr(a_2,a_2^*).\end{aligned}$$
+<p>Տարբերության համար ապացույցը նույնն է՝ $|\delta_1-\delta_2|\le|\delta_1|+|\delta_2|$։ $\blacksquare$</p>
+<h3>(բ) Գումարի հարաբերական սխալանքը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - (ա)-ից</h3>
+<p>Նշանակենք $r_i=\relerr(a_i,a_i^*)=\frac{|\delta_i|}{a_i}$ (այստեղ $a_i\gt0$), այսինքն՝ $|\delta_i|=a_ir_i$։ Քանի որ
+$a_1+a_2\gt0$, (ա)-ից ստանում ենք</p>
+$$\begin{gathered}\relerr(a_1+a_2,\,a_1^*+a_2^*)\\ \le\frac{|\delta_1|+|\delta_2|}{a_1+a_2}=\frac{a_1r_1+a_2r_2}{a_1+a_2}.\end{gathered}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կշռավորված միջին</h3>
+<p>Աջ մասը $r_1$-ի և $r_2$-ի կշռավորված միջինն է՝ $\frac{a_1}{a_1+a_2}$ և $\frac{a_2}{a_1+a_2}$ դրական կշիռներով, որոնց
+գումարը $1$ է։ Կշռավորված միջինը չի գերազանցում մեծագույն թիվը՝</p>
+$$\begin{gathered}\frac{a_1r_1+a_2r_2}{a_1+a_2}\le\frac{(a_1+a_2)\max(r_1,r_2)}{a_1+a_2}\\=\max(r_1,r_2).\ \blacksquare\end{gathered}$$</div>
+<div class="check"><span class="check-label">Ինչո՞ւ է պետք $a_i\gt0$։</span> Վերցնենք $a_1=1$, $a_1^*=1{,}01$ ($r_1=1\%$) և
+$a_2=a_2^*=-0{,}99$ ($r_2=0$)։ Այդ դեպքում $a_1+a_2=0{,}01$, $a_1^*+a_2^*=0{,}02$, և գումարի հարաբերական սխալանքը $100\%$ է։
+Տարբեր նշանի թվերի գումարը փաստորեն տարբերություն է, և կրկին ստացվում է գրեթե հավասար թվերի հանում։</div>
+<h3>(գ) Հակադարձ թվի սխալանքը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ընդհանուր հայտարար</h3>
+<p>Նշանակենք $\Delta=\abserr(a,a^*)$։ Այդ դեպքում</p>
+$$\Bigl|\frac1a-\frac1{a^*}\Bigr|=\frac{|a^*-a|}{|a|\,|a^*|}=\frac{\Delta}{|a|\,|a^*|}.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - հայտարարի գնահատականը</h3>
+<p>$|a|\ge2$, իսկ $|a^*|\ge|a|-\Delta\ge2-\Delta\gt0$, քանի որ $\Delta\lt2$։ Հետևաբար,</p>
+$$\Bigl|\frac1a-\frac1{a^*}\Bigr|\le\frac{\Delta}{2(2-\Delta)}.$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Գնահատականը չի կարելի լավացնել՝ $a=2$, $a^*=2-\Delta$ դեպքում
+$\bigl|\frac12-\frac1{2-\Delta}\bigr|$ տարբերությունը ճիշտ $\frac{\Delta}{2(2-\Delta)}$ է։ Օրինակ՝ $\Delta=0{,}1$ դեպքում
+գնահատականը $\frac1{38}\approx0{,}0263$ է, $\Delta=1$ դեպքում՝ $0{,}5$, իսկ $\Delta=1{,}9$ դեպքում՝ $9{,}5$. երբ $\Delta\to2$,
+$a^*$ թիվը կարող է մոտենալ զրոյին, և $\frac1{a^*}$ կոտորակը՝ անվերջ մեծանալ։ Փոքր $\Delta$-ի դեպքում գնահատականը
+$\approx\frac{\Delta}{4}$ է, ինչը համաձայն է $\bigl|(\tfrac1x)'\bigr|=\frac1{x^2}\le\frac14$ փաստի հետ ($x\ge2$)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) և (բ) ապացուցված են, (գ)
+$\abserr\bigl(\frac1a,\frac1{a^*}\bigr)\le\dfrac{\Delta}{2(2-\Delta)}$, որտեղ $\Delta=\abserr(a,a^*)$ (գնահատականը հասանելի է
+$a=2$ դեպքում)</div>
+<p>Պատահական թվերով ստուգում՝ (գ)-ի գնահատականը միշտ բավարարվում է, իսկ $a=2$, $a^*=2-\Delta$ դեպքում դառնում է
+հավասարություն։</p>
+<pre class="py" data-run><code>import numpy as np
+
+rng = np.random.default_rng(509)
+for D in [0.1, 1.0, 1.9]:
+    a = rng.uniform(2, 5, 200000)
+    astar = a + rng.uniform(-D, D, a.size)
+    worst = np.abs(1 / a - 1 / astar).max()
+    print(f"Δ = {D}   max|1/a - 1/a*| = {worst:.4f}   գնահատականը՝ {D / (2 * (2 - D)):.4f}   a = 2, a* = 2 - Δ՝ {abs(1/2 - 1/(2 - D)):.4f}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p8" open>
+<summary><h2>Խնդիր 8 - արտադրյալ և քանորդ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 8</div>
+<p>Դիցուք $a^*$ և $b^*$ թվերը համապատասխանաբար $a$-ի և $b$-ի մոտարկումներն են՝ $a\approx a^*$, $b\approx b^*$։</p>
+<ul>
+  <li>(ա) Ենթադրենք $a,b\in[-5,1]$։ Գնահատեք $\abserr(ab,\,a^*b^*)$ բացարձակ սխալանքը $\abserr(a,a^*)$-ի և
+  $\abserr(b,b^*)$-ի միջոցով։</li>
+  <li>(բ) Ենթադրենք $a,b\in[3,6]$ և $\abserr(b,b^*)\lt3$։ Գնահատեք $\frac ab\approx\frac{a^*}{b^*}$ մոտարկման բացարձակ և
+  հարաբերական սխալանքները $\abserr(a,a^*)$-ի և $\abserr(b,b^*)$-ի միջոցով։</li>
+</ul>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Տարբերությունը գրում ենք $a-a^*$ և $b-b^*$ թվերով, ապա
+կիրառում ենք եռանկյան անհավասարությունը և $a$, $b$ թվերի տիրույթներից ստացվող գնահատականները։ Նշանակենք
+$\Delta_a=\abserr(a,a^*)$, $\Delta_b=\abserr(b,b^*)$։</p></div>
+<h3>(ա) Արտադրյալ</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - նույնություն</h3>
+<p>Փակագծերը բացելով՝ կարելի է ստուգել, որ</p>
+$$\begin{aligned}ab-a^*b^*&=a(b-b^*)+b(a-a^*)\\&\quad-(a-a^*)(b-b^*).\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գնահատական</h3>
+<p>$a,b\in[-5,1]$, այնպես որ $|a|\le5$, $|b|\le5$, և եռանկյան անհավասարությունից</p>
+$$\abserr(ab,\,a^*b^*)\le5\Delta_b+5\Delta_a+\Delta_a\Delta_b.$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Գնահատականը չի կարելի լավացնել՝ $a=b=-5$, $a^*=-5-\Delta_a$,
+$b^*=-5-\Delta_b$ դեպքում $a^*b^*=25+5\Delta_a+5\Delta_b+\Delta_a\Delta_b$, և սխալանքը ճիշտ
+$5(\Delta_a+\Delta_b)+\Delta_a\Delta_b$ է։ Օրինակ՝ $\Delta_a=\Delta_b=0{,}1$ դեպքում՝ $1{,}01$։ Ուշադրություն դարձրեք, որ
+$[-5,1]$-ում մոդուլով մեծագույն թիվը $-5$-ն է, ոչ թե $1$-ը։</div>
+<h3>(բ) Քանորդ</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - բացարձակ սխալանքը</h3>
+$$\begin{gathered}\frac ab-\frac{a^*}{b^*}=\frac{ab^*-a^*b}{bb^*},\\ ab^*-a^*b=b(a-a^*)-a(b-b^*).\end{gathered}$$
+<p>Համարիչի մոդուլը չի գերազանցում $|b|\Delta_a+|a|\Delta_b$-ն, իսկ $|b^*|\ge|b|-\Delta_b\gt0$, քանի որ $|b|\ge3\gt\Delta_b$։
+Այսպիսով՝</p>
+$$\begin{aligned}\abserr\Bigl(\frac ab,\frac{a^*}{b^*}\Bigr)&\le\frac{|b|\Delta_a+|a|\Delta_b}{|b|\,(|b|-\Delta_b)}\\
+&=\frac{\Delta_a}{|b|-\Delta_b}+\frac{|a|}{|b|}\cdot\frac{\Delta_b}{|b|-\Delta_b}.\end{aligned}$$
+<p>$[3,6]$-ում $\frac{|a|}{|b|}\le\frac63=2$ և $|b|-\Delta_b\ge3-\Delta_b$, հետևաբար՝</p>
+$$\abserr\Bigl(\frac ab,\frac{a^*}{b^*}\Bigr)\le\frac{\Delta_a+2\Delta_b}{3-\Delta_b}.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - հարաբերական սխալանքը</h3>
+<p>Բաժանենք $\bigl|\frac ab\bigr|$-ի վրա՝</p>
+$$\begin{aligned}\relerr\Bigl(\frac ab,\frac{a^*}{b^*}\Bigr)&\le\frac{|b|\Delta_a+|a|\Delta_b}{|a|\,(|b|-\Delta_b)}\\
+&=\frac{\Delta_a}{|a|}\cdot\frac{|b|}{|b|-\Delta_b}+\frac{\Delta_b}{|b|-\Delta_b}.\end{aligned}$$
+<p>Այստեղ $\frac{\Delta_a}{|a|}\le\frac{\Delta_a}{3}$, $\frac{|b|}{|b|-\Delta_b}=\frac{1}{1-\Delta_b/|b|}\le\frac{3}{3-\Delta_b}$ և
+$\frac{\Delta_b}{|b|-\Delta_b}\le\frac{\Delta_b}{3-\Delta_b}$։ Գումարելով՝</p>
+$$\relerr\Bigl(\frac ab,\frac{a^*}{b^*}\Bigr)\le\frac{\Delta_a+\Delta_b}{3-\Delta_b}.$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Երկու գնահատականն էլ չի կարելի լավացնել։ Բացարձակինը հասանելի է
+$a=6$, $b=3$, $a^*=6+\Delta_a$, $b^*=3-\Delta_b$ դեպքում, հարաբերականինը՝ $a=b=3$, $a^*=3+\Delta_a$, $b^*=3-\Delta_b$
+դեպքում։ Օրինակ՝ $\Delta_a=\Delta_b=0{,}1$ դեպքում ստանում ենք $\frac{0{,}3}{2{,}9}=\frac3{29}\approx0{,}1034$ և
+$\frac{0{,}2}{2{,}9}=\frac2{29}\approx0{,}0690$։ $\Delta_b\lt3$ պայմանը պետք է, որ $b^*$ թիվը չդառնա զրո։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\Delta_a=\abserr(a,a^*)$, $\Delta_b=\abserr(b,b^*)$
+նշանակումներով՝ (ա) $\abserr(ab,\,a^*b^*)\le5(\Delta_a+\Delta_b)+\Delta_a\Delta_b$, (բ)
+$\abserr\bigl(\frac ab,\frac{a^*}{b^*}\bigr)\le\frac{\Delta_a+2\Delta_b}{3-\Delta_b}$,
+$\relerr\bigl(\frac ab,\frac{a^*}{b^*}\bigr)\le\frac{\Delta_a+\Delta_b}{3-\Delta_b}$</div>
+<p>Պատահական թվերով ստուգում $\Delta_a=\Delta_b=0{,}1$ դեպքում և վերևի ծայրահեղ դեպքերը։</p>
+<pre class="py" data-run><code>import numpy as np
+
+rng = np.random.default_rng(509)
+Da, Db, n = 0.1, 0.1, 400000
+
+a, b = rng.uniform(-5, 1, n), rng.uniform(-5, 1, n)              # (ա)՝ a, b ∈ [-5, 1]
+astar, bstar = a + rng.uniform(-Da, Da, n), b + rng.uniform(-Db, Db, n)
+print("(ա) max|ab - a*b*| =", round(np.abs(a*b - astar*bstar).max(), 4), "  գնահատականը՝", round(5*(Da + Db) + Da*Db, 4))
+
+a, b = rng.uniform(3, 6, n), rng.uniform(3, 6, n)                # (բ)՝ a, b ∈ [3, 6]
+astar, bstar = a + rng.uniform(-Da, Da, n), b + rng.uniform(-Db, Db, n)
+err = np.abs(a/b - astar/bstar)
+print("(բ) max abserr =", round(err.max(), 4), "  գնահատականը՝", round((Da + 2*Db) / (3 - Db), 4))
+print("    max relerr =", round((err / (a/b)).max(), 4), "  գնահատականը՝", round((Da + Db) / (3 - Db), 4))
+print("ծայրահեղ դեպքերը՝", round(abs(25 - (-5 - Da)*(-5 - Db)), 4), round(abs(2 - (6 + Da)/(3 - Db)), 4), round(abs(1 - (3 + Da)/(3 - Db)), 4))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="func" open>
+<summary><h2>Ֆունկցիայի արժեքի սխալանքը</h2></summary>
+<div class="sec-body">
+<p>Խնդիրներ 9-11-ում $f(a)$ արժեքի փոխարեն հաշվում ենք $f(a^*)$ արժեքը։ Որքա՞ն է այդ մոտարկման սխալանքը։ Հիմնական գործիքը
+Լագրանժի վերջավոր աճերի բանաձևն է։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (Լագրանժի վերջավոր աճերի բանաձև)</div>
+<p>Եթե $f$-ն անընդհատ է $a$ և $a^*$ կետերը միացնող հատվածում և դիֆերենցելի է նրա ներսում, ապա այդ հատվածում կա այնպիսի
+$\xi$ կետ, որ $f(a)-f(a^*)=f'(\xi)\,(a-a^*)$։ Հետևաբար,</p>
+$$\begin{gathered}\abserr\bigl(f(a),f(a^*)\bigr)\\ \le\max_{\xi}|f'(\xi)|\cdot\abserr(a,a^*),\end{gathered}$$
+<p>որտեղ մեծագույն արժեքը վերցվում է $a$ և $a^*$ կետերը պարունակող միջակայքում։</p>
+</div>
+<p>Գործնականում հաճախ օգտագործում են մոտավոր գնահատականը՝ $\abserr(f(a),f(a^*))\approx|f'(a^*)|\cdot\abserr(a,a^*)$։ Այն
+հարմար է, բայց երաշխավորված չէ. երաշխիքի համար պետք է $|f'|$-ի մեծագույն արժեքն ամբողջ միջակայքում։ Իսկ երբ ֆունկցիան
+պարզ է, ավելի լավ է տարբերությունը գրել ճշգրիտ։ Օրինակ՝ քառակուսի արմատի համար</p>
+$$\sqrt u-\sqrt v=\frac{u-v}{\sqrt u+\sqrt v},$$
+<p>իսկ բազմանդամի համար $f(a)-f(a^*)$ տարբերությունը բաժանվում է $a-a^*$-ի վրա (խնդիր 10)։</p>
+<p><strong>Հարաբերական սխալանքը։</strong> Բաժանելով $|f(a)|$-ի վրա՝
+$\relerr(f(a),f(a^*))\approx\bigl|\frac{a\,f'(a)}{f(a)}\bigr|\cdot\relerr(a,a^*)$։ $\bigl|\frac{af'(a)}{f(a)}\bigr|$ գործակիցը
+ցույց է տալիս, թե քանի անգամ է մեծանում հարաբերական սխալանքը։ Օրինակ՝ $\sqrt x$-ի համար այն $\frac12$ է (արմատը կիսում է
+հարաբերական սխալանքը), խնդիր 10-ում՝ մոտ $1{,}7$, իսկ խնդիր 11բ-ում հարաբերական սխալանքը մեծանում է մոտ $3{,}7$ անգամ։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p9" open>
+<summary><h2>Խնդիր 9 - $\sqrt{\ln12}$</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 9</div>
+<p>Դիցուք $\ln12$ թիվը $x$-ով մոտարկելիս բացարձակ սխալանքը փոքր է $0{,}01$-ից։ Գնահատեք $\sqrt{\ln12}\approx\sqrt x$
+մոտարկման բացարձակ սխալանքը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Կօգտվենք $\sqrt u-\sqrt v=\frac{u-v}{\sqrt u+\sqrt v}$
+նույնությունից։ Համարիչը փոքր է $0{,}01$-ից, և մնում է հայտարարը գնահատել ներքևից։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - նույնությունը</h3>
+<p>Նշանակենք $L=\ln12$։ Այդ դեպքում</p>
+$$|\sqrt L-\sqrt x|=\frac{|L-x|}{\sqrt L+\sqrt x}\lt\frac{0{,}01}{\sqrt L+\sqrt x}.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - հայտարարն առանց հաշվիչի</h3>
+<p>$e^2\approx7{,}39\lt12$, այնպես որ $L\gt2$։ Քանի որ $|L-x|\lt0{,}01$, $x\gt L-0{,}01\gt1{,}99$։ $1{,}41^2=1{,}9881\lt1{,}99$,
+ուստի $\sqrt L\gt\sqrt2\gt1{,}41$ և $\sqrt x\gt\sqrt{1{,}99}\gt1{,}41$։ Հետևաբար, $\sqrt L+\sqrt x\gt2{,}82$, և</p>
+$$|\sqrt L-\sqrt x|\lt\frac{0{,}01}{2{,}82}\approx0{,}003546\lt0{,}0036.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - հաշվիչով</h3>
+<p>$L\approx2{,}484907$, $\sqrt L\approx1{,}576359$, իսկ $\sqrt x\gt\sqrt{L-0{,}01}\approx1{,}573184$։ Հայտարարը մեծ է
+$\approx3{,}149542$-ից, և սխալանքը փոքր է $\approx0{,}003175$-ից։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ածանցյալով մոտավոր գնահատականը տալիս է գրեթե նույնը՝
+$(\sqrt u)'=\frac1{2\sqrt u}$, և $\frac{0{,}01}{2\sqrt L}\approx0{,}003172$։ Արմատից հետո բացարձակ սխալանքը մոտ երեք անգամ
+փոքրացավ, քանի որ $\frac1{2\sqrt L}\approx0{,}32\lt1$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\abserr\bigl(\sqrt{\ln12},\sqrt x\bigr)\lt\frac{0{,}01}{2{,}82}\lt0{,}0036$ (ավելի ճշգրիտ՝ $\lt0{,}003175$)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p10" open>
+<summary><h2>Խնդիր 10 - բազմանդամ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 10</div>
+<p>Մեր նպատակն է հաշվել $f(x)=x^2+2x-1$ ֆունկցիայի արժեքը $a=3{,}001322$ կետում։ Ենթադրենք $a$-ն մոտարկում ենք $a^*=3$
+թվով և հաշվում ենք $f(a^*)$ արժեքը, այսինքն՝ $f(a)\approx f(a^*)$։ Գնահատեք այդ մոտարկման բացարձակ և հարաբերական
+սխալանքները։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Քանի որ $a$-ն հայտնի է, սխալանքը կարող ենք հաշվել ճշգրիտ։
+Բազմանդամի դեպքում $f(a)-f(a^*)$ տարբերությունից դուրս է գալիս $a-a^*$ արտադրիչը։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - տարբերությունը</h3>
+$$\begin{aligned}f(a)-f(a^*)&=(a^2-a^{*2})+2(a-a^*)\\&=(a-a^*)(a+a^*+2).\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - բացարձակ սխալանքը</h3>
+<p>$a-a^*=0{,}001322$, $a+a^*+2=8{,}001322$, և</p>
+$$\begin{gathered}\abserr\bigl(f(a),f(a^*)\bigr)=0{,}001322\cdot8{,}001322\\=0{,}010577747684.\end{gathered}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - հարաբերական սխալանքը</h3>
+<p>$f(a^*)=9+6-1=14$, և քանի որ երկու արտադրիչն էլ դրական են, $f(a)=14{,}010577747684$։ Այսպիսով՝</p>
+$$\begin{gathered}\relerr\bigl(f(a),f(a^*)\bigr)=\frac{0{,}010577747684}{14{,}010577747684}\\ \approx7{,}55\cdot10^{-4}.\end{gathered}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ածանցյալով մոտավոր գնահատականը՝
+$f'(3)\cdot0{,}001322=8\cdot0{,}001322=0{,}010576$, մի փոքր փոքր է իրական սխալանքից։ Երաշխավորված գնահատականը
+$\max_{[3;\,3{,}001322]}|f'|=f'(a)=8{,}002644$ թվով՝ $0{,}010579\ldots$, մեծ է իրականից, ինչպես պետք է։ Հարաբերական
+սխալանքը $a$-ի հարաբերական սխալանքից ($\approx4{,}4\cdot10^{-4}$) մոտ $1{,}7$ անգամ մեծ է, և դա համընկնում է
+$\bigl|\frac{af'(a)}{f(a)}\bigr|\approx\frac{3\cdot8}{14}\approx1{,}7$ գործակցի հետ։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span>
+$\abserr\bigl(f(a),f(a^*)\bigr)=0{,}010577747684\approx0{,}0106$, $\relerr\bigl(f(a),f(a^*)\bigr)\approx7{,}55\cdot10^{-4}\approx0{,}0755\%$</div>
+<p>Խնդիրներ 9-ը և 10-ը Python-ով (խնդիր 10-ը՝ ճշգրիտ կոտորակներով)։</p>
+<pre class="py" data-run><code>import math
+from fractions import Fraction as F
+
+L = math.log(12)                                          # Խնդիր 9
+print("ln 12 =", round(L, 6), "  √(ln 12) =", round(math.sqrt(L), 6), "  √(ln 12 - 0.01) =", round(math.sqrt(L - 0.01), 6))
+print("գնահատականները՝", round(0.01 / 2.82, 6), "(առանց հաշվիչի)", round(0.01 / (math.sqrt(L) + math.sqrt(L - 0.01)), 6))
+xs = [L + d for d in [-0.00999, -0.005, 0.005, 0.00999]]
+print("սխալանքը մի քանի x-ի համար՝", [round(abs(math.sqrt(L) - math.sqrt(x)), 6) for x in xs])
+
+f = lambda x: x**2 + 2*x - 1                              # Խնդիր 10
+a, astar = F("3.001322"), F(3)
+err = abs(f(a) - f(astar))
+print("f(a*) =", f(astar), "  f(a) =", float(f(a)), "  abserr =", float(err), "  relerr =", f"{float(err / abs(f(a))):.4e}")</code></pre>
 </div>
 </div>
 </details>
