@@ -388,9 +388,10 @@
     const caseBtns = Array.from(root.querySelectorAll("[data-case]"));
     const CASES = {
       p38: { g: x => 2 * x - x * x, view: [-0.3, 1.5], x0: 0.1 },
-      p40: { g: x => -(x ** 3 + 1) / 6, view: [-1.1, 0.2], x0: -1 },
+      p40: { g: x => -(x ** 3 + 1) / 6, view: [-1.1, 0.2], x0: 0 },
       p41: { g: x => 2 + Math.sin(x), view: [1.9, 3.1], x0: 2 },
       p41b: { g: x => (x + 2 + Math.sin(x)) / 2, view: [1.9, 3.1], x0: 2 },
+      p42: { g: x => Math.exp(-x / 3), view: [-0.1, 1.1], x0: 1 },
       p43: { g: x => 1 / (2 * (1 + x * x)), view: [-0.5, 7.5], x0: 7 },
       p44: { g: x => 4 + Math.sin(2 * x) / 3, view: [3.4, 4.8], x0: 3.5 },
       p45: { g: x => 1 / (x * x + 1), view: [0, 1.2], x0: 1 }

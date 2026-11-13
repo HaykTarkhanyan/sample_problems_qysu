@@ -8,6 +8,7 @@ reference only (gitignored); this map is what gets committed.
 
 | ARM block | topic | site page | status |
 |-----------|-------|-----------|--------|
+| A | nonlinear equations (problems 16-45) | `site/numerical/nonlinear.html` | built 2026-11-13 by an agent (unreviewed): theory (rate of convergence, isolation, bisection, Newton / secant, fixed point), 30 solutions, 4 widgets, 15 runnable Python blocks; numbers checked by `checks/nonlinear_check.py`, widget math by `checks/nonlinear_widgets_check.mjs`; no math review and no browser check yet |
 | C | splines + least squares (problems 1-17) | `site/numerical/splines.html` | built 2026-11-11 (proof of concept): theory, 17 solutions, 4 widgets, 10 runnable Python blocks, 1 Manim video; numbers checked by `checks/splines_check.py`, widget math by `checks/widgets_check.mjs`, math review in `reviews/`; language and content pass on 2026-11-13 (12 fixes, plus a folded four-point natural-spline example under problem 10) |
 | B | polynomial interpolation (problems 1-26) | - | **next** (chosen 2026-11-13, DECISIONS #20); not started |
 | A, D, E | errors + nonlinear equations, integration, linear systems | - | not started; planned order after B: A 16-45, A 1-15 + PSS 1, then D and E once slides exist |

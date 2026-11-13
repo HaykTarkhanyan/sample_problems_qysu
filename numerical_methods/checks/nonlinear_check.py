@@ -536,6 +536,9 @@ fp38 = [(-1 + math.sqrt(5)) / 2, (-1 - math.sqrt(5)) / 2]
 for x in fp38:
     close(1 / (x + 1), x)
 log.info(f"A38 (a) 0 and 1; (b) {fp38[0]:.6f}, {fp38[1]:.6f}")
+shown(fp38[0], "0.618034"); shown(fp38[1], "-1.618034"); shown(fp38[0], "0.618"); shown(fp38[1], "-1.618")
+assert (2 - 2 * 0, 2 - 2 * 1) == (2, 0)                              # g'(0) = 2, g'(1) = 0 for g = 2x - x^2
+shown(-1 / (fp38[0] + 1) ** 2, "-0.382"); shown(-1 / (fp38[1] + 1) ** 2, "-2.618")
 
 # ---------- A39: contraction mappings ----------
 def lip(f, a, b, n=400001):
@@ -564,6 +567,16 @@ assert abs(1 / 2 - 1 / 3) > abs(1 / 8 - 1 / 27) and Fr(1, 8) - Fr(1, 27) == Fr(1
 assert abs(1 / 2 - 1 / 3) > abs(1 / 16 - 1 / 81) and Fr(1, 16) - Fr(1, 81) == Fr(65, 1296)   # (g) counterexample
 assert abs((0.1**2 - 0.2) - 0) > 0.1                                                        # (b): |f(0.1) - f(0)| = 0.19
 assert math.log(3) < 3                                                                      # (a) does not map [3,10] into itself
+shown(math.log(3), "1.10"); shown(math.log(10), "2.30"); assert math.log(10) < 3
+shown(3 * math.sqrt(3) / 8, "0.6495"); shown(3 * math.sqrt(3) / 8, "0.65"); shown(40 / 49, "0.816"); shown(L39["h"], "0.277")
+assert Fr(8, 25) == Fr(2, 1) / Fr(5, 2) ** 2 and 8 / 25 == 0.32 and 0.25 * 27 == 6.75 and Fr(1, 3) * 9 == 3
+f39e = lambda x: 0.5 * (x + 6) / (x + 2)
+close(f39e(0.5), 1.3); close(f39e(2), 1.0); close(1 / (5**2 + 1), 1 / 26)
+f39h = lambda x: -(2 * x * math.sin(2 * x) + math.cos(2 * x)) / (9 - 2 * math.sin(2 * x))
+for x in [-1, -0.3, 0.2, 1]:                                         # (h) is Newton's map for F = 9x + cos 2x
+    close(f39h(x), x - (9 * x + math.cos(2 * x)) / (9 - 2 * math.sin(2 * x)))
+    assert abs(f39h(x)) <= 3 / 7
+assert abs(xh[np.abs(dh).argmax()] - 1) < 1e-9                       # max |f'| at x = 1
 log.info("A39 sup|f'|: " + ", ".join(f"{k} {v:.4f}" for k, v in L39.items()) + f"; 3sqrt3/8 = {3 * math.sqrt(3) / 8:.4f}, 40/49 = {40 / 49:.4f}")
 log.info(f"A39 (h) max |f'| at x = {xh[np.abs(dh).argmax()]:.3f}")
 
@@ -576,6 +589,10 @@ it40 = fpi(g40, 0.0, 9)
 n40 = next(n for n in range(1, 100) if 0.5**n / (1 - 0.5) * abs(it40[1] - it40[0]) < 1e-3)
 assert n40 == 9 and 2**9 == 512 and 2**8 == 256
 assert all(abs(it40[n] - r40) <= 0.5**n / 0.5 * abs(it40[1] - it40[0]) for n in range(1, 10))
+shown(1000 / 6, "166.7"); shown(r40, "-0.16590558"); shown(r40, "-0.165906")
+for v, s in zip(it40[1:5], ["-0.16666667", "-0.16589506", "-0.16590573", "-0.16590558"]):
+    shown(v, s)
+shown(abs(it40[1] - r40), "7.6e-04"); assert abs(it40[1] - r40) < 1e-3; shown(r40 * r40 / 2, "0.0138")
 log.info(f"A40 root {r40:.8f}; iterates {[round(v, 8) for v in it40[:5]]}; errors {[f'{abs(v - r40):.1e}' for v in it40[:5]]}; a priori n = {n40}; g'(r) = {r40 * r40 / 2:.4f}")
 
 # ---------- A41: 2 + sin x - x, g = 2 + sin x on [2, 3] ----------
@@ -596,6 +613,15 @@ it41b = fpi(g41b, 2.0, 12)
 n41b = next(n for n in range(1, 100) if 0.3**n / 0.7 * abs(it41b[1] - 2) < 1e-3)
 k41b = next(n for n, v in enumerate(it41b) if abs(v - r41) < 1e-3)
 assert 2 < g41b(2) < g41b(3) < 3 and al41b < 0.3
+assert n41 == 1136 and k41 == 33 and n41b == 6 and k41b == 3 and math.pi / 2 < 2 and 3 < math.pi
+for v, s in [(f41(2), "0.9093"), (f41(3), "-0.8589"), (g41(2), "2.9093"), (g41(3), "2.1411"), (al41, "0.98999"),
+             (al41, "0.99"), (it41[1], "2.909297"), (d41, "0.9093"), (math.cos(r41), "-0.8324"), (math.cos(r41), "-0.83"),
+             (al41b, "0.2919"), (al41b, "0.29"), (g41b(2), "2.4546"), (g41b(3), "2.5706"), (it41b[1], "2.45465"),
+             (r41, "2.554196"), (r41, "2.5542")]:
+    shown(v, s)
+assert (1 + math.cos(3)) / 2 >= 0
+for v, s in zip(it41[1:6], ["2.9093", "2.2302", "2.7904", "2.3441", "2.7156"]):
+    shown(v, s)
 log.info(f"A41 root {r41:.6f}; f(2) = {f41(2):.4f}, f(3) = {f41(3):.4f}; g(2) = {g41(2):.4f}, g(3) = {g41(3):.4f}; |cos 3| = {al41:.6f}, |cos 2| = {abs(math.cos(2)):.4f}")
 log.info(f"A41 x_1 = {it41[1]:.6f}, |x_1 - x_0| = {d41:.4f}; a priori n: exact alpha {n41}, alpha = 0.99: {n41r}; actual first n with error < 1e-3: {k41}; g'(r) = {math.cos(r41):.4f}")
 log.info(f"A41 iterates {[round(v, 4) for v in it41[:6]]}")
@@ -610,6 +636,10 @@ n42 = next(n for n in range(1, 100) if (1 / 3) ** n / (2 / 3) * abs(it42[1] - it
 k42 = next(n for n, v in enumerate(it42) if abs(v - r42) < 1e-3)
 assert n42 == 6 and f42(0) == -1 and f42(1) > 0 and abs(r42 + r18a) < 1e-12
 assert all(abs(it42[n] - r42) <= (1 / 3) ** n / (2 / 3) * abs(it42[1] - it42[0]) for n in range(1, 13))
+assert k42 == 4
+for v, s in [(math.exp(-1 / 3), "0.7165"), (it42[1], "0.716531"), (abs(it42[1] - it42[0]), "0.2835"), (r42, "0.772883"),
+             (r42, "0.773"), (it42[6], "0.772947"), (abs(it42[6] - r42), "6.4e-05"), (3 / r42, "3.88")]:
+    shown(v, s)
 log.info(f"A42 root {r42:.6f}; g(1) = {g42(1):.6f}; iterates {[round(v, 6) for v in it42[:8]]}; a priori n = {n42}, actual {k42}; |x_6 - r| = {abs(it42[6] - r42):.1e}; g'(r) = {-g42(r42) / 3:.4f}")
 
 # ---------- A43: g = 1/(2(1+x^2)), x_0 = 7 ----------
@@ -619,6 +649,9 @@ it43 = fpi(g43, 7.0, 40)
 assert it43[1] == 0.01 and abs(it43[-1] - r43) < 1e-12
 close(lip(g43, -10, 10, 2000001), 3 * math.sqrt(3) / 16, 1e-6)
 close(2 * r43**3 + 2 * r43 - 1, 0, 1e-12)
+shown(3 * math.sqrt(3) / 16, "0.3248"); shown(r43, "0.423854"); shown(r43, "0.4239")
+for v, s in zip(it43[2:7], ["0.49995", "0.40002", "0.43103", "0.42166", "0.42452"]):
+    shown(v, s)
 log.info(f"A43 fixed point {r43:.6f}; alpha = 3sqrt3/16 = {3 * math.sqrt(3) / 16:.4f}; iterates {[round(v, 5) for v in it43[:7]]}")
 
 # ---------- A44: x_{n+1} = 4 + sin(2 x_n)/3 ----------
@@ -628,6 +661,11 @@ for x0 in [-100.0, 0.0, 4.0, 1e6]:
     it = fpi(g44, x0, 80)
     assert 11 / 3 <= it[1] <= 13 / 3 and abs(it[-1] - r44) < 1e-12
 it44 = fpi(g44, 0.0, 6)
+shown(r44, "4.261484"); shown(r44, "4.2615")
+for v, s in zip(it44[1:7], ["4", "4.32979", "4.2309", "4.27363", "4.25638", "4.26358"]):
+    shown(v, s)
+gp44 = 2 / 3 * math.cos(2 * r44)
+shown(gp44, "-0.41"); shown(1 / abs(gp44), "2.4")
 log.info(f"A44 fixed point {r44:.6f}; from 0: {[round(v, 5) for v in it44]}; g'(r) = {2 / 3 * math.cos(2 * r44):.4f}")
 
 # ---------- A45: four methods for x^3 + x - 1 ----------
@@ -651,5 +689,15 @@ log.info(f"A45 bisection x_5 = {b45[5]}, x_10 = {b45[10]}; fixed point x_5 = {p4
 log.info(f"A45 newton errors {[f'{abs(v - X45):.2e}' for v in n45[:6]]}; secant errors {[f'{abs(v - X45):.2e}' for v in s45[:9]]}")
 gp45 = -2 * X45 / (X45**2 + 1) ** 2
 log.info(f"A45 g'(x*) = {gp45:.4f} for g = 1/(x^2+1)")
+# the table and the comments on the page
+for (name, k), s in {("bisection", 0): "1.0e-02", ("bisection", 1): "2.0e-04", ("fixed point", 0): "2.9e-02",
+                     ("fixed point", 1): "3.0e-03", ("secant", 0): "3.1e-04"}.items():
+    shown(e45[name][k], s)
+assert e45["secant"][1] < 1e-15 and e45["newton"][0] < 1e-15 and e45["newton"][1] < 1e-15
+shown(1 / 64, "0.0156"); shown(1 / 2048, "4.9e-04"); shown(abs(gp45), "0.64")
+assert 9 < e45["fixed point"][0] / e45["fixed point"][1] < 11                # "about 10 times in five steps"
+for v, s in zip(n45[:5], ["3.2e-01", "6.8e-02", "3.7e-03", "1.2e-05", "1.2e-10"]):
+    shown(abs(v - X45), s)
+assert len(s45) == 11
 
 log.info(f"all checks passed in {time.time() - T0:.1f} s")

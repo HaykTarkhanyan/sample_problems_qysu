@@ -86,6 +86,8 @@ assert.equal(f40.length, 1); near(f40[0], -0.16590558, 1e-7);
 const f41 = fp(x => 2 + Math.sin(x), 1.9, 3.1);
 assert.equal(f41.length, 1); near(f41[0], 2.554196, 1e-6);
 assert.equal(fp(x => (x + 2 + Math.sin(x)) / 2, 1.9, 3.1).length, 1);
+const f42 = fp(x => Math.exp(-x / 3), -0.1, 1.1);
+assert.equal(f42.length, 1); near(f42[0], 0.772883, 1e-6);
 const f43 = fp(x => 1 / (2 * (1 + x * x)), -0.5, 7.5);
 assert.equal(f43.length, 1); near(f43[0], 0.423854, 1e-6);
 const f44 = fp(x => 4 + Math.sin(2 * x) / 3, 3.4, 4.8);
