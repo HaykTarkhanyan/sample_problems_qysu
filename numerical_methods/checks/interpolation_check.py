@@ -221,11 +221,14 @@ assert abs(e14.max() - 0.03363) < 1e-5 and abs(math.pi**3 / 6 * om14g.max() - 0.
 assert lagrange_poly([-2, -1, 0, 1, 2], [4, 1, 0, 1, 4]) == [0, 0, 1]
 t = dd_table([-2, -1, 0, 1, 2], [4, 1, 0, 1, 4])
 assert t[1] == [-3, -1, 1, 3] and t[2] == [1, 1, 1] and t[3] == [0, 0] and t[4] == [0]
+assert newton_poly([-2, -1, 0, 1, 2], [4, -3, 1, 0, 0]) == [0, 0, 1]     # 4 - 3(x+2) + (x+2)(x+1) = x^2
+assert pmul([2, 1], [1, 1]) == [2, 3, 1] and pmul(pmul([2, 1], [1, 1]), [-2, 1]) == [-4, -4, 1, 1]
 t = dd_table([-2, -1, 2, 4], [2, -1, 3, 5])
 assert t[1] == [-3, F(4, 3), 1] and t[2] == [F(13, 12), F(-1, 15)] and t[3] == [F(-23, 120)]
 p6 = newton_poly([-2, -1, 2, 4], [2, -3, F(13, 12), F(-23, 120)])
 assert p6 == [F(-16, 15), F(61, 60), F(107, 120), F(-23, 120)]
 assert [peval(p6, x) for x in [-2, -1, 2, 4]] == [2, -1, 3, 5]
+assert -23 * 64 + 107 * 16 + 122 * 4 - 128 == 600 and 184 + 428 - 244 - 128 == 240     # the page's check of P3(4), P3(-2)
 assert lagrange_poly([-2, -1, 2, 4], [2, -1, 3, 5]) == p6
 log.info("B6: (b) 2 - 3(x+2) + 13/12 (x+2)(x+1) - 23/120 (x+2)(x+1)(x-2) = -23/120 x^3 + 107/120 x^2 + 61/60 x - 16/15")
 
@@ -256,6 +259,7 @@ t = dd_table([5, 3, -1, 1], [114, 20, 0, -2])      # order of the required form
 assert [c[0] for c in t] == [114, 47, 7, 1]
 p8 = newton_poly([5, 3, -1, 1], [114, 47, 7, 1])
 assert p8 == [-1, -2, 0, 1]                        # x^3 - 2x - 1
+assert pmul([-5, 1], [-3, 1]) == [15, -8, 1] and pmul([15, -8, 1], [1, 1]) == [15, 7, -7, 1]
 assert [peval(p8, x) for x in [1, 3, 5, -1]] == [-2, 20, 114, 0]
 log.info("B8: f[3] = 20, f[5] = 114, f[3,5] = 47, f[5,-1] = 19, f[3,5,-1] = 7; P = 114 + 47(x-5) + 7(x-5)(x-3) + (x-5)(x-3)(x+1) = x^3 - 2x - 1")
 
@@ -294,6 +298,17 @@ p12 = newton_poly(xs12, [c[0] for c in t])
 assert p12 == [11, 7, -1, -1]
 assert [peval(p12, x) for x in xs12] == ys12
 log.info("B12: P = 1 + 3(x+2) + 2(x+2)(x+1) - (x+2)(x+1)x = -x^3 - x^2 + 7x + 11 (degree 3)")
+# B13: NewtonInterpolation on B12's data at -2, 0.5, 3, 4 (0.5 and 4 are not nodes)
+c13 = newton_float(xs12, ys12)
+v13 = [newton_eval(xs12, c13, x) for x in (-2, 0.5, 3, 4)]
+assert [peval(p12, F(x)) for x in (-2, F(1, 2), 3, 4)] == [1, F(113, 8), -4, -41]          # 14.125
+for v, e in zip(v13, (1, 14.125, -4, -41)):
+    close(v, e, 1e-12)
+log.info(f"B13: NewtonInterpolation on B12's data at -2, 0.5, 3, 4 = {v13}")
+# the Newton section's lecture example: f[x0,x1] = 2, f[x1,x2] = 6, f[x0,x1,x2] = -4; P2(1) = -3, P2(-1) = -15
+assert peval([-5, 6, -4], 1) == -3 and peval([-5, 6, -4], -1) == -15
+# predict block: the wrong denominator x2 - x1 gives -2, and -5 + 2x - 2x(x-1) is -11 (not -15) at x = -1
+assert F(6 - 2, -1 - 1) == -2 and peval(newton_poly([0, 1, -1], [-5, 2, -2]), -1) == -11
 
 # ---------- B15 ----------
 nodes15 = [-1, 0, 2, 3, 5, 6]
