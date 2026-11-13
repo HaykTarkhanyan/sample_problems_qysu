@@ -92,21 +92,20 @@ assert.deepEqual(toyNeighbours(3.5, toy), { lo: 3.5, hi: 3.5 }); assert.deepEqua
 
 // cancellation: the formulas agree where there is no cancellation, and differ as errors_check.py logs
 near(CANCEL.p6a.naive(3), CANCEL.p6a.stable(3)); near(CANCEL.p6a.stable(3), -0.75);
-near(CANCEL.p6b.naive(1), CANCEL.p6b.stable(1)); near(CANCEL.p6b.stable(1), Math.cos(1) - 1);
 near(CANCEL.quad.naive(2), CANCEL.quad.stable(2)); near(CANCEL.quad.stable(2), 2 - Math.sqrt(3));
+assert.deepEqual(Object.keys(CANCEL).sort(), ["p6a", "quad"]);   // cos x - 1 (PSS 1 overlap) has no preset
 assert.equal(CANCEL.p6a.naive(1e8), -2.0000000100495186e-08);    // division only: same bits as Python
 assert.equal(CANCEL.p6a.naive(1e12), -2.0000667788622195e-12);
 near(CANCEL.p6a.stable(1e8), -2e-8); near(CANCEL.p6a.stable(1e12), -2e-12);
 near(relErr(CANCEL.p6a.naive(1e8), CANCEL.p6a.stable(1e8)), 5.025e-9, 1e-3);
-const e6b = relErr(CANCEL.p6b.naive(1e-5), CANCEL.p6b.stable(1e-5));
-assert.ok(e6b > 1e-8 && e6b < 1e-5, `relerr of cos x - 1 at 1e-5: ${e6b}`);
-near(CANCEL.p6b.stable(1e-5), -4.9999999999583335e-11, 1e-12);
-assert.equal(CANCEL.p6b.naive(1e-9), 0); assert.equal(relErr(0, CANCEL.p6b.stable(1e-9)), 1);
+assert.equal(Math.floor(-Math.log10(relErr(CANCEL.p6a.naive(1e8), CANCEL.p6a.stable(1e8)))), 8);   // "about 8 of 16 digits"
 assert.equal(CANCEL.quad.naive(1e9), 0); near(CANCEL.quad.stable(1e9), 5e-10);
 assert.equal(CANCEL.p6a.naive(1e17), 0);
 assert.equal(UNIT, 2 ** -53);
+// slider positions of the presets: k = k0 + s/10 gives exactly 10^8 and 10^4
+assert.equal(10 ** (0.5 + 75 / 10), 1e8); assert.equal(10 ** (0.3 + 37 / 10), 1e4);
 // the dashed model line u * amplification is the right order of magnitude where the error is visible
-for (const [key, x] of [["p6a", 1e8], ["p6a", 1e12], ["p6b", 1e-4], ["quad", 1e4]]) {
+for (const [key, x] of [["p6a", 1e8], ["p6a", 1e12], ["quad", 1e4]]) {
   const e = relErr(CANCEL[key].naive(x), CANCEL[key].stable(x)), model = UNIT * CANCEL[key].amp(x);
   assert.ok(e < 20 * model, `${key} at ${x}: error ${e} far above the model ${model}`);
 }
@@ -119,6 +118,8 @@ for (const [a, da, b, db] of [[1.1, 0.1, 3.3, 0.3], [1, 0.1, 2, 0.2], [1, 0.005,
     assert.ok(p.lo <= p.exact && p.exact <= p.hi);
   }
 }
+near(propagate(2, 0.02, 3, 0.03, "*").maxRel, 0.0201, 1e-9);          // default preset and the predict: 1% and 1% -> 2.01%
+near(propagate(1, 0.005, 0.98, 0.005, "-").maxRel / (0.005 / 0.98), 98, 1e-9);   // "near" preset: grows 98 times
 near(propagate(1.1, 0.1, 3.3, 0.3, "*").maxAbs, 0.69, 1e-9);          // A15 (a)
 near(propagate(1, 0.1, 2, 0.2, "*").maxRel, 0.21, 1e-9);               // A15 (b)
 near(propagate(1, 0.005, 0.98, 0.005, "-").maxRel, 0.5, 1e-9);         // the "nearly equal numbers" preset

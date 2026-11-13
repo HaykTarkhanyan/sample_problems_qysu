@@ -106,7 +106,12 @@ log.info(f"toy system (2, 3, -1..2): {len(toy)} positive numbers from {toy[0]} t
 assert len(range(10, 100)) == 90
 assert Fr(11, 100) * 10 ** 0 - Fr(10, 100) == Fr(1, 100) and Fr(11, 100) * 10 ** 3 - Fr(10, 100) * 10 ** 3 == 10
 # general count: 2 (b-1) b^(t-1) (M-m+1) + 1 machine numbers
-assert 2 * (2 - 1) * 2 ** (3 - 1) * 4 + 1 == 33
+assert 2 * (2 - 1) * 2 ** (3 - 1) * 4 + 1 == 33 == 2 * len(toy) + 1
+assert toy[:4] == [Fr(1, 4), Fr(5, 16), Fr(3, 8), Fr(7, 16)] and toy[4:8] == [Fr(1, 2), Fr(5, 8), Fr(3, 4), Fr(7, 8)]
+assert [Fr(4, 8), Fr(5, 8), Fr(6, 8), Fr(7, 8)] == [Fr(1, 2), Fr(5, 8), Fr(3, 4), Fr(7, 8)]   # mantissas 0.100_2 .. 0.111_2
+# normalized-form examples of the text
+assert norm_exp(Fr("0.00456")) == -2 and Fr("0.00456") == Fr("0.456") * Fr(10) ** -2
+assert norm_exp(Fr(math.pi)) == 1
 
 # IEEE double facts quoted in the text
 eps = np.finfo(np.float64).eps
@@ -134,6 +139,14 @@ close(float(r64), 5.5511151e-17, 1e-6)
 with np.errstate(over="ignore", under="ignore"):
     assert np.float64(1e308) * 10 == np.inf and np.float64(1e-200) * np.float64(1e-200) == 0.0
     assert math.isinf(math.sqrt(np.float64(1e200) * np.float64(1e200) + 1.0)) and math.hypot(1e200, 1.0) == 1e200
+assert 1e308 * 10 == math.inf and 1e-200 * 1e-200 == 0.0 and repr(math.hypot(1e200, 1.0)) == "1e+200"
+assert (1.0 / 1e200) ** 2 == 0.0                       # (b/s)^2 = 1e-400 underflows to zero
+# the numbers quoted in the "real computers" paragraph, as printed on the page
+assert f"{eps:.3g}" == "2.22e-16" and f"{2.0 ** -53:.3g}" == "1.11e-16" and 2.0 ** -53 == eps / 2
+assert f"{np.finfo(np.float64).max:.2g}" == "1.8e+308" and f"{np.finfo(np.float64).tiny:.2g}" == "2.2e-308"
+assert np.finfo(np.float64).nmant == 52 and round(53 * math.log10(2)) == 16
+assert Fr(1, 2) * Fr(2) ** (1 - 53) == Fr(2) ** -53     # u = (1/2) 2^(1-t) for t = 53
+assert str(D(0.1)).startswith("0.1000000000000000055511")
 
 # ---------------------------------------------------------------- theory: chopping and rounding
 PI = Fr("3.141592653589793238462643383279")
@@ -155,6 +168,10 @@ assert norm_exp(x1) == 2 and x1 == Fr("0.3721829") * 100
 assert fl(x1, 4, "chop") == Fr("37.21") and fl(x1, 4, "round") == Fr("37.22")
 assert mant(fl(x1, 4, "chop"), 4) == (3721, 2) and mant(fl(x1, 4, "round"), 4) == (3722, 2)
 assert abserr(x1, Fr("37.21")) == Fr("0.00829") and abserr(x1, Fr("37.22")) == Fr("0.00171")
+assert Fr(10) ** (2 - 4) == Fr("0.01") and abserr(x1, Fr("37.21")) < Fr("0.01") and abserr(x1, Fr("37.22")) <= Fr("0.005")
+# the Python block prints the relative errors too
+assert relerr(x1, Fr("37.21")) == Fr(829, 3721829) and f"{829 / 3721829:.3e}" == "2.227e-04"
+assert relerr(x1, Fr("37.22")) == Fr(171, 3721829) and f"{171 / 3721829:.3e}" == "4.595e-05"
 log.info("A1: normalized 0.3721829e2; chop 0.3721e2 = 37.21 (error 0.00829), round 0.3722e2 = 37.22 (error 0.00171)")
 
 # ---------------------------------------------------------------- A2
@@ -170,6 +187,10 @@ log.info(f"A2: 407/3 = 0.135666...e3; chop 135.66, round 135.67; abs 1/150 = {1/
          f"rel 1/20350 = {1/20350:.4e}, 1/40700 = {1/40700:.4e}")
 close(1 / 150, 0.006667, 1e-4); close(1 / 300, 0.003333, 1e-4)
 close(1 / 20350, 4.914e-5, 1e-4); close(1 / 40700, 2.457e-5, 1e-4)
+assert x2 == 135 + Fr(2, 3) and 407 == 3 * 135 + 2
+assert x2 - Fr(13566, 100) == Fr(40700 - 40698, 300) and Fr(13567, 100) - x2 == Fr(40701 - 40700, 300)
+assert abserr(x2, c2) == 2 * abserr(x2, r2)                                    # rounding error exactly half
+assert (f"{1/150:.3g}", f"{1/300:.3g}", f"{1/20350:.3g}", f"{1/40700:.3g}") == ("0.00667", "0.00333", "4.91e-05", "2.46e-05")
 
 # ---------------------------------------------------------------- A3
 x3 = Fr(105, 9)
@@ -183,6 +204,10 @@ log.info(f"A3: 105/9 = 35/3 = 0.116666...e2; chop 11.666, round 11.667; abs 1/15
          f"1/3000 = {1/3000:.7f}; rel 1/17500 = {1/17500:.4e}, 1/35000 = {1/35000:.4e}")
 close(1 / 1500, 0.0006667, 1e-4); close(1 / 3000, 0.0003333, 1e-4)
 close(1 / 17500, 5.714e-5, 1e-4); close(1 / 35000, 2.857e-5, 1e-4)
+assert x3 == 11 + Fr(2, 3) and x3 - Fr(11666, 1000) == Fr(35000 - 34998, 3000) and Fr(11667, 1000) - x3 == Fr(35001 - 35000, 3000)
+assert (f"{1/1500:.2e}", f"{1/17500:.2e}", f"{1/3000:.2e}", f"{1/35000:.2e}") == ("6.67e-04", "5.71e-05", "3.33e-04", "2.86e-05")
+assert abserr(x2, c2) == 10 * abserr(x3, c3) and abserr(x2, r2) == 10 * abserr(x3, r3)   # problem 3's check box
+assert relerr(x3, c3) < Fr(1, 10 ** 4) and relerr(x3, r3) <= Fr(5, 10 ** 5)
 
 # ---------------------------------------------------------------- theory: absolute and relative error
 assert abserr(2, Fr("1.98")) == Fr("0.02") and relerr(2, Fr("1.98")) == Fr("0.01")
@@ -202,7 +227,8 @@ small = Fr(0)
 for _ in range(1000):
     small = mop(small, 1, "+", 4)
 assert s == 10000 and small == 1000 and mop(small, 10000, "+", 4) == 11000
-assert relerr(11000, 10000) == Fr(1, 11)
+assert relerr(11000, 10000) == Fr(1, 11) and round(100 / 11) == 9
+assert fl(10001, 4, "round") == 10000 and mant(Fr(10000), 4) == (1000, 5)
 log.info(f"sum order: largest first 10000, smallest first 11000, relative error 1/11 = {1/11:.4f}")
 close(1 / 11, 0.0909, 1e-3)
 # the same effect in double: 1e16 + 1000 ones
@@ -229,7 +255,12 @@ assert mop(1, Fr("0.001"), "+", 3) == 1 and mop(1, Fr("0.004"), "+", 3) == 1 and
 assert dec_op(1, "0.001", "+", 3) == 1
 # how often the midpoint formula leaves [a, b] among 3-digit numbers in [1, 10)
 grid3 = [Fr(k, 100) for k in range(100, 1000)]
-bad = sum(1 for i in range(len(grid3) - 1) if not grid3[i] <= mop(mop(grid3[i], grid3[i + 1], "+", 3), 2, "/", 3) <= grid3[i + 1])
+bad_pairs = [(grid3[i], grid3[i + 1]) for i in range(len(grid3) - 1)
+             if not grid3[i] <= mop(mop(grid3[i], grid3[i + 1], "+", 3), 2, "/", 3) <= grid3[i + 1]]
+bad = len(bad_pairs)
+assert bad == 300 and len(grid3) - 1 == 899 and all(p + q >= 10 for p, q in bad_pairs)
+assert a4 + b4 - s4 == Fr("0.03") and b4 - a4 == Fr("0.01") and mant(s4, 3) == (100, 2)
+assert all(mop(1, Fr(k, 1000), "+", 3) == 1 for k in range(1, 5))                # every 0 < b < 0.005 on the grid
 log.info(f"A4: (5.01 + 5.02) -> 10.0, /2 -> 5.00 outside [5.01, 5.02]; a + (b - a)/2 -> 5.02; 1 + 0.001 -> 1.00; "
          f"neighbours in [1,10) with the midpoint outside: {bad} of {len(grid3) - 1}")
 
@@ -252,6 +283,7 @@ assert relerr(a5 / c5, q1) == Fr(1, 41)
 log.info(f"A5: (a-b)/c -> 0.05/0.3 -> 0.17; a/c -> 1.4, b/c -> 1.2, difference 0.20; exact 1/6; "
          f"relative errors 2% and 20%; relerr of 1.4 = 1/41 = {1/41:.4f}")
 close(41 / 30, 1.3667, 1e-4); close(1 / 41, 0.0244, 2e-3)
+assert q1 - a5 / c5 == Fr(1, 30) and f"{1/30:.2g}" == "0.033" and f"{100/41:.1f}" == "2.4" and f"{1/6:.4f}" == "0.1667"
 
 # ---------------------------------------------------------------- theory: cancellation
 xc, yc = Fr("15.314768"), Fr("15.314899")
@@ -476,7 +508,10 @@ log.info("A15: (a) a* = 1.2, b* = 3.6 gives 4.32, abserr 0.69 > 0.5 (largest pos
 assert Fr(10) ** (1 - 5) == Fr(1, 10 ** 4) and Fr(10) ** (1 - 5) / 2 == Fr(5, 10 ** 5)
 # propagation predict: relative errors 1% and 1% -> product about 2% (exactly 2.01%)
 assert Fr(1, 100) + Fr(1, 100) + Fr(1, 100) ** 2 == Fr("0.0201")
-# propagation widget presets: difference of 1.000 and 0.999, each with error 0.0005
-assert (Fr("0.0005") + Fr("0.0005")) / (Fr("1.000") - Fr("0.999")) == 1
+# propagation widget presets: a = 1 +- 0.005, b = 0.98 +- 0.005, difference: relative error up to 50 %, 98 times
+# the larger input relative error; the default preset 2 +- 0.02 times 3 +- 0.03 gives 2.01 %
+near_rel = (Fr("0.005") + Fr("0.005")) / (1 - Fr("0.98"))
+assert near_rel == Fr(1, 2) and near_rel / (Fr("0.005") / Fr("0.98")) == 98
+assert (2 * Fr("0.03") + 3 * Fr("0.02") + Fr("0.02") * Fr("0.03")) / 6 == Fr("0.0201")
 
 log.info(f"all checks passed in {time.time() - T0:.1f} s")

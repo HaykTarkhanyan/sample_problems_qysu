@@ -97,7 +97,6 @@
   // ---------------------------------------------------------------- cancellation
   const CANCEL = {
     p6a: { naive: x => x / (x + 1) - x / (x - 1), stable: x => -2 * x / ((x - 1) * (x + 1)), amp: x => x / 2 },
-    p6b: { naive: x => Math.cos(x) - 1, stable: x => -2 * Math.sin(x / 2) ** 2, amp: x => 2 / (x * x) },
     quad: { naive: b => b - Math.sqrt(b * b - 1), stable: b => 1 / (b + Math.sqrt(b * b - 1)), amp: b => 2 * b * b }
   };
   const relErr = (approx, exact) => Math.abs(approx - exact) / Math.abs(exact);
@@ -172,24 +171,23 @@
     const out = s => root.querySelector(`[data-out="${s}"]`);
     const baseBtns = Array.from(root.querySelectorAll("[data-base]"));
     const logBtn = root.querySelector('[data-act="log"]');
-    const sT = root.querySelector("#w-toy-t"), sm = root.querySelector("#w-toy-m"), sM = root.querySelector("#w-toy-M");
-    let beta = 2, sel = 2.3;
+    const sT = root.querySelector("#w-toy-t"), sm = root.querySelector("#w-toy-emin"), sM = root.querySelector("#w-toy-emax");
+    let beta = 2, sel = 2.3, st = null;
 
-    function draw() {
+    // The plot is rebuilt only when the system changes; dragging x redraws the marker layer only,
+    // so the pointer capture of the drag stays on the same SVG.
+    function build() {
       const t = Number(sT.value), m = Number(sm.value), M = Number(sM.value);
       const nums = toyNumbers(beta, t, m, M);
       const lo = nums[0], hi = nums[nums.length - 1];
       const log = logBtn.getAttribute("aria-pressed") === "true";
       out("t").textContent = `t = ${t}`;
-      out("mM").textContent = `m = ${m}, M = ${M}`.replace(/-/g, "−");
+      out("mM").textContent = `m = ${m}, M = ${M}`.replace("-", "−");
       const U = v => (log ? Math.log(v) / Math.log(beta) : v);
       const x0 = log ? m - 1.4 : 0, x1 = log ? M + 0.25 : hi * 1.06;
       const xticks = [];
       if (log) for (let e = m - 1; e <= M; e++) xticks.push({ v: e, label: beta + sup(e) });
-      else {
-        xticks.push({ v: 0, label: "0" });
-        for (let e = Math.max(m, M - 2); e <= M; e++) xticks.push({ v: bpow(beta, e), label: P.num(bpow(beta, e), 4) });
-      }
+      else xticks.push({ v: 0, label: "0" }, { v: bpow(beta, M - 1), label: P.num(bpow(beta, M - 1), 4) }, { v: hi, label: P.num(hi, 4) });
       const pl = P.plot(out("plot"), { w: 560, h: 130, x0, x1, y0: 0, y1: 1, xticks, yticks: [], grid: false,
         pad: { l: 14, r: 14, t: 26, b: 30 } });
       // one colour per exponent, so the bands [beta^(e-1), beta^e) are visible
@@ -198,26 +196,32 @@
         const band = Math.floor(i / per);
         pl.line(U(v), 0, U(v), 0.62, band % 2 ? "s-orange" : "s-blue", pl.main, { "stroke-width": per > 40 ? 0.8 : 1.6 });
       });
-      const floor = log ? beta ** (x0 + 0.15) : 0;
-      sel = Math.max(floor, Math.min(sel, log ? beta ** (x1 - 0.05) : x1 * 0.995));
-      const nb = toyNeighbours(sel, nums);
+      const floor = log ? beta ** (x0 + 0.15) : 1e-12, ceil = log ? beta ** (x1 - 0.05) : x1 * 0.995;
+      st = { t, m, M, nums, lo, hi, log, U, floor, ceil, pl };
+      P.onDrag(pl, x => { sel = log ? beta ** x : x; mark(); });
+      mark();
+    }
+    function mark() {
+      const { t, m, M, nums, lo, hi, U, floor, ceil, pl } = st;
+      sel = Math.max(floor, Math.min(sel, ceil));
+      pl.clear(pl.over);
       pl.line(U(sel), 0, U(sel), 0.86, "s-red", pl.over, { "stroke-width": 1.4, "stroke-dasharray": "4 3" });
       pl.dot(U(sel), 0.86, true, "red", pl.over, 4.4);
       pl.text(U(sel), 0.86, "x", { class: "m", "text-anchor": "middle", dy: -9 });
 
+      const nb = toyNeighbours(sel, nums);
       const n4 = v => P.num(v, 6);
       let msg = `Համակարգում ${toyCount(beta, t, m, M)} թիվ կա (երկու նշանով, զրոյի հետ միասին)։ Ամենափոքր դրականը ` +
         `${n4(lo)} է, ամենամեծը՝ ${n4(hi)}։ Հարևան թվերի հեռավորությունն աճում է ${n4(bpow(beta, m - t))}-ից մինչև ${n4(bpow(beta, M - t))}։ `;
       if (nb.over) msg += `Ընտրված x ≈ ${n4(sel)} թիվը մեծ է ամենամեծ մեքենայական թվից. սա գերլցում է (overflow)։`;
-      else if (nb.under) msg += `Ընտրված x ≈ ${n4(sel)} թիվը փոքր է ամենափոքր դրական մեքենայական թվից. զրոյի շուրջը դատարկ տեղ կա (underflow)։`;
+      else if (nb.under) msg += `Ընտրված x ≈ ${n4(sel)} թիվը փոքր է ամենափոքր դրական մեքենայական թվից. այդպիսի արդյունքը սովորաբար դառնում է 0 (underflow)։`;
       else if (nb.lo === nb.hi) msg += `Ընտրված x = ${n4(sel)} թիվը մեքենայական թիվ է։`;
       else {
         const r = sel - nb.lo < nb.hi - sel ? nb.lo : nb.hi;
         msg += `Ընտրված x ≈ ${n4(sel)} թվի հարևաններն են ${n4(nb.lo)} և ${n4(nb.hi)} (հեռավորությունը՝ ${n4(nb.hi - nb.lo)})։ ` +
-          `Հատելիս fl(x) = ${n4(nb.lo)}, կլորացնելիս fl(x) = ${n4(r)}, կլորացման հարաբերական սխալանքը՝ ${sci(Math.abs(sel - r) / sel, 2)}։`;
+          `Կտրելիս fl(x) = ${n4(nb.lo)}, կլորացնելիս՝ fl(x) = ${n4(r)}, կլորացման հարաբերական սխալանքը՝ ${sci(Math.abs(sel - r) / sel, 2)}։`;
       }
       out("msg").textContent = msg;
-      P.onDrag(pl, x => { sel = log ? beta ** x : x; draw(); });
     }
     function limits() {
       sT.max = beta === 2 ? 5 : 2;
@@ -225,14 +229,14 @@
     }
     baseBtns.forEach(b => b.addEventListener("click", () => {
       beta = Number(b.dataset.base); press(baseBtns, b); limits();
-      sel = beta === 2 ? 2.3 : 3.7;
-      draw();
+      sel = beta === 2 ? 2.3 : 3.74;
+      build();
     }));
-    logBtn.addEventListener("click", () => { toggle(logBtn); draw(); });
-    [sT, sm, sM].forEach(s => s.addEventListener("input", draw));
+    logBtn.addEventListener("click", () => { toggle(logBtn); build(); });
+    [sT, sm, sM].forEach(s => s.addEventListener("input", build));
     press(baseBtns, baseBtns.find(b => b.dataset.base === "2"));
     limits();
-    draw();
+    build();
   }
 
   // ---------------------------------------------------------------- 2. chopping against rounding
@@ -267,7 +271,7 @@
       const ec = absErr(x, c.value), er = absErr(x, r.value);
       const bAbs = ratNum(ulp);
       show(out("table"), table([
-        ["", "հատում", "կլորացում"],
+        ["", "կտրում", "կլորացում"],
         ["fl(x)", mantStr(c), mantStr(r)],
         ["բացարձակ սխալանք", sci(ratNum(ec)), sci(ratNum(er))],
         ["դրա գնահատականը", "< " + sci(bAbs), "≤ " + sci(bAbs / 2)],
@@ -275,18 +279,17 @@
         ["դրա գնահատականը", "< " + sci(10 ** (1 - t)), "≤ " + sci(10 ** (1 - t) / 2)]
       ]));
       const digits = ratStr(ratOp["/"](ratAbs(x), e >= 0 ? rat(pow10(e)) : rat(1n, pow10(-e))), 12);
-      out("msg").textContent = `Նորմալացված ձևը՝ x = ${x.n < 0n ? "−" : ""}${digits}·10${sup(e)}։ Նարնջագույն հատվածը հատման սխալանքն է, ` +
+      out("msg").textContent = `Նորմալացված ձևը՝ x = ${x.n < 0n ? "−" : ""}${digits}·10${sup(e)}։ Նարնջագույն հատվածը կտրման սխալանքն է, ` +
         `կապույտը՝ մինչև հաջորդ մեքենայական թիվը մնացած հեռավորությունը։ ` +
-        (up ? `|x|-ը միջնակետից աջ է (կամ հենց միջնակետում), ուստի կլորացումը վերցնում է աջ հարևանը։`
-            : `|x|-ը միջնակետից ձախ է, ուստի կլորացումը և հատումը տալիս են նույն թիվը։`);
+        (theta === 0 ? `Այս t-ի դեպքում x-ը մեքենայական թիվ է, և երկու եղանակով էլ սխալանքը զրո է։`
+          : up ? `|x|-ը միջնակետից աջ է (կամ ճիշտ միջնակետում), և կլորացումը վերցնում է աջ հարևանը։`
+            : `|x|-ը միջնակետից ձախ է, և կլորացումն ու կտրումը տալիս են նույն թիվը։`);
     }
     btns.forEach(b => b.addEventListener("click", () => {
       x = parseRat(b.dataset.x); slider.value = b.dataset.t; press(btns, b); draw();
     }));
     slider.addEventListener("input", draw);
-    press(btns, btns[0]);
-    slider.value = btns[0].dataset.t;
-    draw();
+    btns[0].click();
   }
 
   // ---------------------------------------------------------------- 3. cancellation
@@ -296,19 +299,19 @@
     const out = s => root.querySelector(`[data-out="${s}"]`);
     const btns = Array.from(root.querySelectorAll("[data-case]"));
     const slider = root.querySelector('input[type="range"]');
-    // log10 of the argument runs over [k0, k1]; start = slider position on load
+    // log10 of the argument runs over [k0, k1] in steps of 0.1 (slider value s: k = k0 + s/10);
+    // start = slider value on load (p6a: x = 10^8, quad: b = 10^4)
     const VIEW = {
-      p6a: { k0: 0.5, k1: 16.5, start: 50, name: "x", f1: "x/(x+1) − x/(x−1)", f2: "−2x/((x−1)(x+1))" },
-      p6b: { k0: -9, k1: 0, start: 45, name: "x", f1: "cos x − 1", f2: "−2 sin²(x/2)" },
-      quad: { k0: 0.3, k1: 9, start: 40, name: "b", f1: "b − √(b² − 1)", f2: "1/(b + √(b² − 1))" }
+      p6a: { k0: 0.5, k1: 17, start: 75, name: "x", f1: "x/(x+1) − x/(x−1)", f2: "−2x/((x−1)(x+1))" },
+      quad: { k0: 0.3, k1: 9, start: 37, name: "b", f1: "b − √(b² − 1)", f2: "1/(b + √(b² − 1))" }
     };
     let cur = "p6a";
 
     function draw() {
       const v = VIEW[cur], c = CANCEL[cur];
-      const k = v.k0 + (v.k1 - v.k0) * Number(slider.value) / 100;
+      const k = v.k0 + Number(slider.value) / 10;
       const x = 10 ** k;
-      out("x").textContent = `${v.name} = 10^${P.num(k, 2)} ≈ ${sci(x, 3)}`;
+      out("x").textContent = `${v.name} ≈ ${sci(x, 3)}`;
       const Y = e => Math.max(-17, Math.min(0.5, Math.log10(e)));
       const xt = [];
       for (let q = Math.ceil(v.k0); q <= v.k1; q += v.k1 - v.k0 > 10 ? 4 : 2) xt.push({ v: q, label: "10" + sup(q) });
@@ -333,14 +336,19 @@
       ]));
       const good = e === 0 ? 16 : Math.max(0, Math.min(16, Math.floor(-Math.log10(e))));
       out("msg").textContent = e >= 1
-        ? `Առաջին բանաձևի հարաբերական սխալանքը 100% է. բոլոր նիշերը կորել են։`
-        : `Առաջին բանաձևի հարաբերական սխալանքը մոտ ${sci(e, 2)} է, այսինքն՝ ճիշտ է մոտ ${good} նիշ 16-ից։ Երկրորդ բանաձևի սխալանքը մնում է 10⁻¹⁶-ի կարգի։`;
+        ? `Առաջին բանաձևի հարաբերական սխալանքը 100% է կամ ավելի. բոլոր նիշերը կորել են։`
+        : `Առաջին բանաձևի հարաբերական սխալանքը մոտ ${sci(e, 2)} է, այսինքն՝ ճիշտ է մոտ ${good} նիշ 16-ից։ Երկրորդ բանաձևում գրեթե հավասար թվերի հանում չկա, և նրա սխալանքը 10⁻¹⁶-ի կարգի է։`;
     }
-    btns.forEach(b => b.addEventListener("click", () => { cur = b.dataset.case; press(btns, b); slider.value = VIEW[cur].start; draw(); }));
+    function load(key) {
+      cur = key;
+      slider.max = Math.round((VIEW[cur].k1 - VIEW[cur].k0) * 10);
+      slider.value = VIEW[cur].start;
+      draw();
+    }
+    btns.forEach(b => b.addEventListener("click", () => { press(btns, b); load(b.dataset.case); }));
     slider.addEventListener("input", draw);
     press(btns, btns.find(b => b.dataset.case === cur));
-    slider.value = VIEW[cur].start;
-    draw();
+    load(cur);
   }
 
   // ---------------------------------------------------------------- 4. error bound after one operation
@@ -352,11 +360,17 @@
     const setBtns = Array.from(root.querySelectorAll("[data-set]"));
     const S = id => root.querySelector("#w-prop-" + id);
     const SETS = {
+      one: { a: 2, da: 0.02, b: 3, db: 0.03, op: "*" },
+      near: { a: 1, da: 0.005, b: 0.98, db: 0.005, op: "-" },
       p15a: { a: 1.1, da: 0.1, b: 3.3, db: 0.3, op: "*" },
-      p15b: { a: 1, da: 0.1, b: 2, db: 0.2, op: "*" },
-      near: { a: 1, da: 0.005, b: 0.98, db: 0.005, op: "-" }
+      p15b: { a: 1, da: 0.1, b: 2, db: 0.2, op: "*" }
     };
     const SIGN = { "+": "+", "-": "−", "*": "·", "/": "/" };
+    // left side: the largest possible error of the result; right side: the closed formula
+    const LHS = {
+      "+": "\\max\\bigl|(a+b)-(a^*+b^*)\\bigr|", "-": "\\max\\bigl|(a-b)-(a^*-b^*)\\bigr|",
+      "*": "\\max|ab-a^*b^*|", "/": "\\max\\Bigl|\\frac ab-\\frac{a^*}{b^*}\\Bigr|"
+    };
     const TEX = {
       "+": "\\Delta_a+\\Delta_b", "-": "\\Delta_a+\\Delta_b",
       "*": "|a|\\Delta_b+|b|\\Delta_a+\\Delta_a\\Delta_b",
@@ -371,7 +385,7 @@
       const r = propagate(a, da, b, db, op);
       if (!isFinite(r.bound)) {
         out("plot").innerHTML = ""; out("table").innerHTML = ""; out("formula").innerHTML = "";
-        out("msg").textContent = "Բաժանարարի հնարավոր արժեքների մեջ զրոն էլ կա, ուստի քանորդի սխալանքը հնարավոր չէ գնահատել։ Փոքրացրեք b-ի սխալանքը։";
+        out("msg").textContent = "Բաժանարարի հնարավոր արժեքների մեջ զրոն էլ կա, և քանորդի սխալանքը հնարավոր չէ գնահատել։ Փոքրացրեք b-ի սխալանքը։";
         return;
       }
       const w = r.hi - r.lo || 1;
@@ -383,19 +397,22 @@
       pl.dot(r.exact, 0.5, true, "orange", pl.over, 5);
       pl.text(r.exact, 0.5, `a ${SIGN[op]} b = ${sci(r.exact, 4)}`, { "text-anchor": "middle", dy: -10 });
 
-      Q.tex(out("formula"), `\\max|a${op === "*" ? "b" : op === "/" ? "/b" : op + "b"}-a^*${op === "*" ? "b^*" : op === "/" ? "/b^*" : op + "b^*"}|=${TEX[op]}=${P.numTex(r.bound, 5)}`, true);
+      Q.tex(out("formula"), `\\begin{aligned}${LHS[op]}&=${TEX[op]}\\\\&=${P.numTex(r.bound, 5)}\\end{aligned}`, true);
+      const zero = r.exact === 0;
       show(out("table"), table([
         ["", "բացարձակ", "հարաբերական"],
         ["a-ի սխալանքը", "≤ " + sci(da), "≤ " + sci(r.relA)],
         ["b-ի սխալանքը", "≤ " + sci(db), "≤ " + sci(r.relB)],
-        ["արդյունքի սխալանքը", "≤ " + sci(r.maxAbs), "≤ " + sci(r.maxRel)]
+        ["արդյունքի սխալանքը", "≤ " + sci(r.maxAbs), zero ? "-" : "≤ " + sci(r.maxRel)]
       ]));
-      const worstIn = Math.max(r.relA, r.relB);
+      const worstIn = Math.max(r.relA, r.relB), grows = worstIn > 0 ? r.maxRel / worstIn : 1;
       let msg;
-      if (op === "*" || op === "/") {
+      if (zero) {
+        msg = "Տարբերությունը զրո է, և արդյունքի հարաբերական սխալանքը որոշված չէ։";
+      } else if (op === "*" || op === "/") {
         msg = `Հարաբերական սխալանքները գրեթե գումարվում են. մուտքի ${sci(r.relA)} և ${sci(r.relB)} սխալանքներից ստացվում է ${sci(r.maxRel)}։`;
-      } else if (worstIn > 0 && r.maxRel > 1.5 * worstIn) {
-        msg = `Բացարձակ սխալանքները գումարվում են, բայց արդյունքը փոքր է, ուստի հարաբերական սխալանքը մեծացել է մոտ ${P.num(r.maxRel / worstIn, 1)} անգամ։`;
+      } else if (grows > 1.0005) {
+        msg = `Բացարձակ սխալանքները գումարվում են։ Արդյունքը փոքր է մուտքի թվերի համեմատ, դրա համար էլ հարաբերական սխալանքը մեծացել է մոտ ${P.num(grows, 1)} անգամ։`;
       } else {
         msg = `Բացարձակ սխալանքները գումարվում են, իսկ հարաբերական սխալանքը չի գերազանցում մուտքի սխալանքներից մեծագույնը։`;
       }
