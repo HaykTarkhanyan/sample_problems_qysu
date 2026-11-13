@@ -1,0 +1,53 @@
+title = "Errors page (problem list block A, problems 1-15): finished in an isolated worktree after the first agent was stopped"
+date = "2026-11-13"
+time = "19:34"  # local
+
+areas = [
+  "site/numerical (errors.html, index.html)",
+  "site/assets/js/num-errors.js",
+  "numerical_methods/checks (errors_check.py, errors_widgets_check.mjs)",
+  "numerical_methods/README.md",
+]
+
+done = [
+  "Took over branch worktree-agent-a1e5f6b9c64191077 (merged) and its gitignored notes (logs/errors_statements.md: the 15 statements, lecture conventions, worked answers).",
+  "site/numerical/errors.html: intro with three key ideas; 7 theory sections (machine numbers and normalized form, absolute and relative error, chopping and rounding with the bound theorem and proof, machine arithmetic and the laws that fail, subtraction of nearly equal numbers with the 4-digit quadratic, error bounds after +-*/ with proofs, error of a function value via the mean value theorem); problems A1-A15, each its own details.sec with restated statement, steps, check and answer; 4 predict blocks; 4 widgets; 12 runnable Python blocks (numpy + stdlib decimal/fractions); closing #exam (summary table, 8 typical mistakes, 7 self-check questions).",
+  "Sub-part 6b (cos x - 1) overlaps PSS 1 problem 3: its whole solution and Python block sit between <!-- PSS1-OVERLAP-START --> and <!-- PSS1-OVERLAP-END -->; the cancellation widget has no cos x - 1 preset, so removing the block leaves nothing dangling.",
+  "num-errors.js fixed and finished: toy-system drag (plot built once, only the marker layer redrawn, so the pointer capture survives), rounding widget starts on its first preset, exact-machine-number message, cancellation widget with 0.1-step log sliders (presets land exactly on 10^8 and 10^4), propagation widget formula (parentheses, aligned), zero-difference and growth messages, neutral default preset (1% and 1%).",
+  "Checks: errors_check.py asserts every number on the page (exact fractions + decimal module, format checks of every quoted rounding), errors_widgets_check.mjs passes, all 12 Python blocks run (run_page_blocks.py), check_site 0 errors, Armenian lint 0 errors and 0 style hints. A scratchpad mock-DOM smoke test (real prob.js + num-errors.js, real KaTeX for the 29 dynamic TeX strings, every button, every slider, drags) found and fixed two bugs; it is not committed.",
+  "Display formulas: estimated widths against splines.html (which is known to fit) and split every line that was wider.",
+  "Index card and README status row added first in their lists.",
+]
+
+pending = [
+  "No browser check yet (agents may not drive the browser): 1280 px and 390 px, both themes, console, widget look, katex-display overflow.",
+  "site/assets/search/numerical.js is stale (CI rebuilds it before deploy; discrete.js was already stale).",
+  "Owner decision: publish 6b now or remove the PSS1-OVERLAP block until PSS 1 is due.",
+  "Term choices to confirm: chopping = «կտրում», overflow = «գերլցում», underflow left in English, «համալուծ արտահայտություն» for the algebraic conjugate.",
+  "One independent math review (CONVENTIONS) before publishing.",
+]
+
+next = [
+  "Main session: maths and Armenian pass, browser check, merge, rebuild the search index.",
+  "Problems A16-45 come from the sibling page; link the two pages in their closing sections once both exist.",
+]
+
+files = [
+  "site/numerical/errors.html",
+  "site/assets/js/num-errors.js",
+  "numerical_methods/checks/errors_check.py, numerical_methods/checks/errors_widgets_check.mjs",
+  "site/numerical/index.html (card), numerical_methods/README.md (status row)",
+]
+
+commits = [
+  "05a43bd Errors page M1: widget check passing, skeleton, theory, problems 1-5",
+  "e8ea0f8 Errors page M2: problems 6-10, cancellation and propagation widgets wired",
+  "M3 (this log's commit): problems 11-15, exam section, index card, README row, formula splits",
+]
+
+notes = """
+The statements were not re-read from the PDF: logs/errors_statements.md (cross-checked by the first agent) was the source.
+Problem 4a counterexample: 300 of the 899 neighbouring 3-digit pairs in [1, 10) fail the same way, all with a + b >= 10.
+The first agent's notes had relerr bound for 8b as (ea + eb)/(3 - eb); the page derives it from the same formula as the
+absolute bound (|b|/|b*| <= 3/(3 - eb)), sharp at a = b = 3.
+"""
