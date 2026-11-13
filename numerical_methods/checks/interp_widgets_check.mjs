@@ -238,6 +238,8 @@ if (widgets["w-dd"]) {
     for (let k = 0; k < 20; k++) { r.querySelector('[data-act="step"]').fire("click"); clean(outOf(r, "step"), "w-dd step"); clean(outOf(r, "poly"), "w-dd poly"); }
     const poly = outOf(r, "poly").textContent;
     assert.ok(poly.startsWith("P(x)=") || poly.startsWith("\\begin{aligned}P(x)="), `w-dd ${b.dataset.case}: ${poly}`);
+    if (b.dataset.case === "ex") assert.equal(poly, "\\begin{aligned}P(x)={}&-5\\\\&+2x\\\\&-4x(x-1)\\end{aligned}");
+    if (b.dataset.case === "p8") assert.equal(poly, "\\begin{aligned}P(x)={}&-2\\\\&+11(x-1)\\\\&+9(x-1)(x-3)\\\\&+(x-1)(x-3)(x-5)\\end{aligned}");
     if (b.dataset.case === "p5") assert.equal(poly, "P(x)=3x-3x(x-\\tfrac{1}{6})");
     if (b.dataset.case === "p6") assert.equal(poly, "\\begin{aligned}P(x)={}&2\\\\&-3(x+2)\\\\&+\\tfrac{13}{12}(x+2)(x+1)\\\\&-\\tfrac{23}{120}(x+2)(x+1)(x-2)\\end{aligned}");
     if (b.dataset.case === "p12") assert.equal(poly, "\\begin{aligned}P(x)={}&1\\\\&+3(x+2)\\\\&+2(x+2)(x+1)\\\\&-(x+2)(x+1)x\\end{aligned}");
@@ -259,7 +261,17 @@ if (widgets["w-err"]) {
     if (b.dataset.case === "p14") assert.ok(first.includes("0,0311") && first.includes("0,0482") && first.includes("0,0336"), first);
     if (b.dataset.case === "p16a") assert.ok(first.includes("0,0929") && first.includes("≈ 1։"), first);
     if (b.dataset.case === "p26") assert.ok(first.includes("≈ 12 ") && first.includes("≈ 256։"), first);
-    for (const v of [0, 137, 500, 1000]) { slider.value = v; slider.fire("input"); clean(outOf(r, "msg"), "w-err slider"); clean(outOf(r, "x"), "w-err x"); pointsOk(r); }
+    // problem 26: f(-1) = P2(-1) exactly, so the widget must print 0 there and not rounding noise (1,78·10⁻¹⁵)
+    if (b.dataset.case === "p26") assert.ok(first.startsWith("x = −1 կետում՝ |f − P| ≈ 0, "), first);
+    if (b.dataset.case === "p15") assert.ok(first.includes("6,86·10⁻⁷") && first.includes("1,09·10⁻⁶") && first.includes("7,38·10⁻⁷") && first.includes("1,13·10⁻⁶"), first);
+    if (b.dataset.case === "p16b") assert.ok(first.includes("≈ 2,002") && first.includes("≈ 33,979"), first);
+    for (const v of [0, 137, 500, 1000]) {
+      slider.value = v; slider.fire("input");
+      const s = clean(outOf(r, "msg"), "w-err slider"); clean(outOf(r, "x"), "w-err x"); pointsOk(r);
+      // both ends of every case except p16b's left end are nodes: error and bound are both 0 there
+      if ((v === 0 && b.dataset.case !== "p16b" && b.dataset.case !== "p26") || (v === 1000 && b.dataset.case !== "p26"))
+        assert.ok(s.includes("|f − P| ≈ 0, ") && s.includes("! ≈ 0։"), `w-err ${b.dataset.case} at a node: ${s}`);
+    }
   }
   ran.push("w-err");
 }

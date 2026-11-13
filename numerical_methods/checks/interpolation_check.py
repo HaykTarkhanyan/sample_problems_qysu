@@ -151,6 +151,7 @@ log.info(f"theory: cos example, bound pi^3/128 = {ex_bound:.4f}, true error = {e
 P = [-1, -1, 5]                                   # 5x^2 - x - 1
 assert peval(P, -1) == 5 and peval(P, 0) == -1 and peval(P, 2) == 17
 assert lagrange_poly([-1, 0], [5, -1]) == [-1, -6]   # the degree <= 1 interpolant: -6x - 1
+assert trim(padd(P, pscale([-1, -6], -1))) == [0, 5, 5] == pscale(pmul([1, 1], [0, 1]), 5)   # page's check: P - P1 = 5x^2 + 5x = 5(x+1)x
 p1b = math.pi**4 + 3 * math.pi**2
 close(math.sin(2 * math.pi), 0, 1e-12)
 log.info(f"B1: (a) P passes through both points, the degree <= 1 interpolant is -6x - 1; (b) P(pi) = {p1b:.3f} != 0")
@@ -163,9 +164,16 @@ assert lagrange_poly([-5, 0, 3], [1, 0, 0]) == pscale(pmul([0, 1], [-3, 1]), F(1
 assert lagrange_poly([-5, 0, 3], [0, 1, 0]) == pscale(pmul([5, 1], [-3, 1]), F(-1, 15))      # -(x+5)(x-3)/15
 assert lagrange_poly([-5, 0, 3], [0, 0, 1]) == pscale(pmul([0, 1], [5, 1]), F(1, 24))        # x(x+5)/24
 assert trim(padd([2], pscale(pmul([0, 1], [-3, 1]), F(-3, 40)))) == p2a                      # 2 - 3/40 x(x-3)
+# page's step 2: over the common denominator 120 the numerator is -3x(x-3) - 16(x+5)(x-3) + 10x(x+5) = -9x^2 + 27x + 240
+num2a = padd(padd(pscale(pmul([0, 1], [-3, 1]), -3), pscale(pmul([5, 1], [-3, 1]), -16)), pscale(pmul([0, 1], [5, 1]), 10))
+assert trim(num2a) == [240, 27, -9] and pscale(num2a, F(1, 120)) == p2a
+assert peval(p2a, 3) == F(-27, 40) + F(27, 40) + 2 == 2 and peval(p2a, -5) == F(-75, 40) - F(45, 40) + 2 == -1   # page's check line
 xs = np.array([0, math.pi / 2, math.pi])
 for x in np.linspace(-1, 4, 11):
     close(lagrange_eval(xs, np.cos(xs), x), 1 - 2 * x / math.pi)
+    # page's basis polynomials of (b): l0 = 2/pi^2 (x - pi/2)(x - pi), l2 = 2/pi^2 x (x - pi/2)
+    close(lagrange_eval(xs, [1, 0, 0], x), 2 / math.pi**2 * (x - math.pi / 2) * (x - math.pi), 1e-12)
+    close(lagrange_eval(xs, [0, 0, 1], x), 2 / math.pi**2 * x * (x - math.pi / 2), 1e-12)
 log.info("B2: (a) -3/40 x^2 + 9/40 x + 2, (b) 1 - 2x/pi  OK")
 
 # ---------- B3 ----------
@@ -174,6 +182,17 @@ assert q3a == [-3, 1, 1] and peval(q3a, 10) == 107
 assert lagrange_poly([1, 2, 5, 10], [-1, 3, 27, 107]) == [-3, 1, 1]
 q3b = lagrange_poly([1, 2, 3], [2, 9, 22])
 assert q3b == [1, -2, 3] and peval(q3b, 4) == 41 != 12
+# page's basis polynomials and numerators: (a) nodes 1, 2, 5; (b) nodes 1, 2, 3
+assert lagrange_poly([1, 2, 5], [1, 0, 0]) == pscale(pmul([-2, 1], [-5, 1]), F(1, 4))
+assert lagrange_poly([1, 2, 5], [0, 1, 0]) == pscale(pmul([-1, 1], [-5, 1]), F(-1, 3))
+assert lagrange_poly([1, 2, 5], [0, 0, 1]) == pscale(pmul([-1, 1], [-2, 1]), F(1, 12))
+num3a = padd(padd(pscale([10, -7, 1], -1), pscale([5, -6, 1], -4)), pscale([2, -3, 1], 9))   # -(x^2-7x+10) - 4(x^2-6x+5) + 9(x^2-3x+2)
+assert pmul([-2, 1], [-5, 1]) == [10, -7, 1] and pmul([-1, 1], [-5, 1]) == [5, -6, 1] and pmul([-1, 1], [-2, 1]) == [2, -3, 1]
+assert num3a == [-12, 4, 4] and pscale(num3a, F(1, 4)) == q3a
+assert lagrange_poly([1, 2, 3], [1, 0, 0]) == pscale(pmul([-2, 1], [-3, 1]), F(1, 2))
+assert lagrange_poly([1, 2, 3], [0, 1, 0]) == pscale(pmul([-1, 1], [-3, 1]), -1)
+assert lagrange_poly([1, 2, 3], [0, 0, 1]) == pscale(pmul([-1, 1], [-2, 1]), F(1, 2))
+assert padd(padd(pmul([-2, 1], [-3, 1]), pscale(pmul([-1, 1], [-3, 1]), -9)), pscale(pmul([-1, 1], [-2, 1]), 11)) == q3b
 t = dd_table([1, 2, 5, 10], [-1, 3, 27, 107])
 assert t[1] == [4, 8, 16] and t[2] == [1, 1] and t[3] == [0]
 t = dd_table([1, 2, 3, 4], [2, 9, 22, 12])
@@ -528,6 +547,11 @@ f26 = lambda x: x**6 - 4 * x**4 + 5
 close(f26(s3), -4); close(f26(-s3), -4); assert f26(0) == 5
 for x in np.linspace(-2, 2, 9):
     close(lagrange_eval([-s3, 0, s3], [-4, 5, -4], x), 5 - 3 * x * x)
+    # page's basis polynomials: l0 = x(x - sqrt3)/6, l1 = -(x^2 - 3)/3, l2 = x(x + sqrt3)/6, so l0 + l2 = x^2/3
+    close(lagrange_eval([-s3, 0, s3], [1, 0, 0], x), x * (x - s3) / 6, 1e-12)
+    close(lagrange_eval([-s3, 0, s3], [0, 1, 0], x), -(x * x - 3) / 3, 1e-12)
+    close(lagrange_eval([-s3, 0, s3], [0, 0, 1], x), x * (x + s3) / 6, 1e-12)
+    close(-4 * x * x / 3 - 5 * (x * x - 3) / 3, 5 - 3 * x * x, 1e-12)
 g = np.linspace(-2, 2, 400001)
 close(np.abs(120 * g**3 - 96 * g).max(), 768)
 close(np.abs(g**3 - 3 * g).max(), 2)                 # omega = x(x^2 - 3) = 2 T3(x/2)

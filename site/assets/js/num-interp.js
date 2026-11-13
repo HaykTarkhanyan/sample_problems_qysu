@@ -429,7 +429,9 @@
       pe.line(x, 0, x, top, "s-red", pe.main, { "stroke-width": 1, "stroke-dasharray": "4 3" });
       c.nodes.forEach(t => pe.dot(t, 0, true, "orange", pe.over, 3.4));
 
-      out("msg").textContent = `x = ${num(x, 3)} կետում՝ |f − P| ≈ ${sci(err(x))}, գնահատականը՝ M·|ω(x)| / ${n1}! ≈ ${sci(bnd(x))}։ ` +
+      // at a node (and at x = -1 in problem 26) the error is exactly 0; do not print rounding noise like 1,78·10⁻¹⁵
+      const ex = err(x) < 1e-12 ? 0 : err(x);
+      out("msg").textContent = `x = ${num(x, 3)} կետում՝ |f − P| ≈ ${sci(ex)}, գնահատականը՝ M·|ω(x)| / ${n1}! ≈ ${sci(bnd(x))}։ ` +
         `Ամբողջ [${num(c.a, 2)}; ${num(c.b, 2)}] հատվածում՝ max|f − P| ≈ ${sci(mE.max)} (x ≈ ${num(mE.at, 2)}), գնահատականը՝ ≈ ${sci(mB.max)}։ ` +
         `Այստեղ M = max|f⁽${sup(n1)}⁾| ≈ ${sci(c.M)}։`;
     }
