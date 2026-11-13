@@ -78,7 +78,8 @@ near(errOf(R, N.equiNodes(10, -1, 1), -1, 1), 1.9157, 1e-4);
 near(errOf(R, N.chebNodes(10, -1, 1), -1, 1), 0.1092, 1e-3);
 near(errOf(R, N.equiNodes(5, -1, 1), -1, 1), 0.4327, 1e-4);
 near(errOf(R, N.chebNodes(5, -1, 1), -1, 1), 0.5559, 1e-4);
-near(errOf(x => 1 / (1 + x * x), N.chebNodes(50, -5, 5), -5, 5), 3.96e-5, 2e-2 / 3.96e-5 * 3.96e-5);
+const e50 = errOf(x => 1 / (1 + x * x), N.chebNodes(50, -5, 5), -5, 5);
+assert.ok(Math.abs(e50 - 3.96e-5) < 1e-6, `B23, n = 50: ${e50}`);
 console.log("num-interp.js numerics: all checks passed");
 
 // ------------------------------------------------------------------ 2. widgets on a mock DOM
@@ -220,7 +221,6 @@ if (widgets["w-lag"]) {
     outOf(r, "chips").children.slice().forEach((_, k) => { outOf(r, "chips").children[k].fire("click"); check("chip " + k); });
   }
   r.querySelector('[data-act="p2"]').fire("click");
-  near(Number(clean(outOf(r, "formula"), "p2").match(/x\^\{2\}/) ? 1 : 0), 1);
   assert.equal(outOf(r, "formula").textContent, "P(x)=2 + 0{,}225x - 0{,}075x^{2}");
   const svg = outOf(r, "plot").children[0];
   svg.fire("pointerdown", { clientX: 300, clientY: 100, pointerId: 1 });
@@ -232,7 +232,6 @@ if (widgets["w-lag"]) {
 
 if (widgets["w-dd"]) {
   const r = widgets["w-dd"];
-  const expect = { p5: "3x-3x(x-\\tfrac{1}{6})", p8: "x^3", p18: "aligned" };
   for (const b of r.querySelectorAll("[data-case]")) {
     b.fire("click");
     clean(outOf(r, "step"), "w-dd start");
@@ -248,7 +247,6 @@ if (widgets["w-dd"]) {
     r.querySelector('[data-act="all"]').fire("click");
     assert.equal(outOf(r, "poly").textContent, poly);
   }
-  void expect;
   ran.push("w-dd");
 }
 
