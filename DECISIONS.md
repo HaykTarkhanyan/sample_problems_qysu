@@ -2,6 +2,26 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 21. Three numerical pages built by agents in parallel, each with an independent maths review before publishing
+- **Date** 2026-11-14 - **status** active (user: "launch an indep agent", "use opus and then u do a pass", then
+  "fable reviews")
+- **Decision** `errors.html` (block A 1-15), `nonlinear.html` (A 16-45) and `interpolation.html` (B 1-26) were
+  each built by one agent in its own git worktree and branch (started on Fable, finished on Opus when the Fable
+  limit ran low), then reviewed in full by a separate Fable agent that re-solved every problem, and only then
+  merged and deployed. The main session reran every gate, did the 390 px browser check and read the reviewers'
+  diffs. The errors page covers the 15 list problems only, not PSS 1.
+- **Why** Three pages in one day instead of one. Results of the reviews: no wrong answer in 71 problems; 4 false
+  statements on the errors page and a handful of unclear ones, all fixed (`numerical_methods/reviews/2026-11-14_*`).
+  The browser check found 4 formulas overflowing at phone width on the errors page, which no agent could see
+  without a browser. Cost: about 1.1 M Fable tokens for the first builders, 1.5 M Opus tokens for the finishing
+  builders, 1.2 M Fable tokens for the reviewers.
+- **Alternatives rejected** Building in the main session (the owner wanted it free, and its context was long);
+  publishing on the builders' check scripts plus a 12-problem sample by the main session (the repo's rule is a
+  full independent review per page); Opus reviewers (the owner chose Fable for the reviews).
+- **What would change this** A reviewer finding wrong answers that the builder's check script asserted (then the
+  scripts are not independent enough and the builder must not write its own check); merge conflicts beyond the
+  two shared files (`site/numerical/index.html`, `numerical_methods/README.md`), which is all that collided here.
+
 ## 20. Next numerical page is block B (polynomial interpolation), before A, D and E
 - **Date** 2026-11-13 - **status** active (user picked it from four options, Q22 of that session; it closes the
   "which block next" question left open on 2026-11-11)

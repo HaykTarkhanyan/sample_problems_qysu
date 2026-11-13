@@ -2,9 +2,19 @@
 
 Topics cut from current work so they are not lost.
 
-- **Numerical analysis, remaining problem-list blocks** A (errors + nonlinear equations, 45 problems),
-  B (interpolation, 26), D (integration, 25), E (linear systems, 16), with PSS 1 of the current course as a
-  separate page or merged into A. `numerical_methods/README.md` has the map. (2026-11-11)
+- **Numerical analysis, remaining problem-list blocks** D (integration, 25 problems) and E (linear systems,
+  16): both wait for their lecture slides. Blocks A and B were published on 2026-11-14. PSS 1 of the current
+  course (7 problems) is still not on the errors page; the owner said on 2026-11-14 that all solutions may be
+  published, so adding it only needs a yes. `numerical_methods/README.md` has the map. (2026-11-11, updated
+  2026-11-14)
+- **Native Armenian read of the three pages published on 2026-11-14** (`errors.html`, `nonlinear.html`,
+  `interpolation.html`): written by Opus agents on a Fable start, each given a full independent maths review by
+  a Fable agent, but read for language only by lint and by a 12-problem sample. The reviewers' and builders'
+  doubts (terms with no glossary row, a few maths conventions) are collected at the end of the three reports
+  in `numerical_methods/reviews/2026-11-14_*`. (2026-11-14)
+- **Cross-page links between the numerical pages**: `splines.html` mentions the interpolating polynomial and
+  the Runge effect and could link to `interpolation.html`; the pagers of the four pages do not link to each
+  other yet. (2026-11-14)
 - **Native Armenian read of `site/numerical/splines.html`** (model-written). A model pass was done on
   2026-11-13 (full read against the guide and glossary, 12 fixes, 4 doubtful phrasings put to the owner
   and all 4 kept), but nobody native has read it end to end yet. (2026-11-11)
