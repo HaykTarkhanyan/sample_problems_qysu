@@ -4,7 +4,8 @@ cancellation, error bounds).
 
 Run from the repo root (uses the animations/ environment, numpy only):
     uv run --project animations python numerical_methods/checks/errors_check.py
-Takes about 1 s. Every check is an assert; the log lists the values the page quotes.
+Takes about 3.5 s (measured 2026-11-14; 12-13 s while other jobs were running; nearly all of it is exact
+Fraction arithmetic on random data). Every check is an assert; the log lists the values the page quotes.
 
 The hand arithmetic is redone exactly with fractions.Fraction, so the check does not suffer from
 the rounding it describes. t-digit decimal machine arithmetic is done twice with independent tools:
@@ -160,7 +161,11 @@ for _ in range(4000):
     assert abserr(x, fl(x, t, "chop")) < Fr(10) ** (e - t) and relerr(x, fl(x, t, "chop")) < Fr(10) ** (1 - t)
     assert abserr(x, fl(x, t, "round")) <= Fr(10) ** (e - t) / 2 and relerr(x, fl(x, t, "round")) <= Fr(10) ** (1 - t) / 2
     assert abs(fl(x, t, "chop")) <= abs(x)
-log.info("fl bounds: chop < 10^(1-t), round <= 10^(1-t)/2 on 4000 random fractions  OK")
+    # predict block of the rounding widget: the chopping error is never smaller than the rounding error,
+    # and the sign changes nothing (both rules are symmetric about zero)
+    assert abserr(x, fl(x, t, "chop")) >= abserr(x, fl(x, t, "round"))
+    assert fl(-x, t, "chop") == -fl(x, t, "chop") and fl(-x, t, "round") == -fl(x, t, "round")
+log.info("fl bounds: chop < 10^(1-t), round <= 10^(1-t)/2, chop error >= round error on 4000 random fractions  OK")
 
 # ---------------------------------------------------------------- A1
 x1 = Fr("37.21829")
@@ -261,6 +266,12 @@ bad = len(bad_pairs)
 assert bad == 300 and len(grid3) - 1 == 899 and all(p + q >= 10 for p, q in bad_pairs)
 assert a4 + b4 - s4 == Fr("0.03") and b4 - a4 == Fr("0.01") and mant(s4, 3) == (100, 2)
 assert all(mop(1, Fr(k, 1000), "+", 3) == 1 for k in range(1, 5))                # every 0 < b < 0.005 on the grid
+# "any machine number 0 < b < 0.005": all 3-digit machine numbers 0.000100 .. 0.00499 are absorbed by 1.
+# Without "machine number" the claim is false: b = 0.004995 is first rounded to fl(b) = 0.00500, and 1 (+) b = 1.01
+assert all(mop(1, Fr(k, 10 ** 5), "+", 3) == 1 for k in range(100, 500))
+assert all(mop(1, Fr(k, 10 ** 6), "+", 3) == 1 for k in range(100, 1000))
+assert fl(Fr("0.004995"), 3, "round") == Fr("0.005") and mop(1, Fr("0.004995"), "+", 3) == Fr("1.01")
+assert dec_op(1, "0.004995", "+", 3) == Fr("1.01") and dec_op(1, "0.00499", "+", 3) == 1
 log.info(f"A4: (5.01 + 5.02) -> 10.0, /2 -> 5.00 outside [5.01, 5.02]; a + (b - a)/2 -> 5.02; 1 + 0.001 -> 1.00; "
          f"neighbours in [1,10) with the midpoint outside: {bad} of {len(grid3) - 1}")
 
@@ -299,6 +310,15 @@ assert f"{31/131:.3f}" == "0.237" and round(100 * 31 / 131) == 24
 assert relerr(xc, fx) < Fr(1, 10 ** 5) and relerr(yc, fy) < Fr(1, 10 ** 5)
 assert f"{float(relerr(xc, fx)):.2g}" == "2.1e-06" and f"{float(relerr(yc, fy)):.2g}" == "6.5e-08"
 assert f"{float((xc + yc) / abs(xc - yc)):.2g}" == "2.3e+05"            # the amplification factor of the example
+# x and y share their first five digits, and the one digit left in x (-) y is the right leading digit of x - y
+assert math.floor(xc * 1000) == math.floor(yc * 1000) == 15314 and math.floor(xc * 10 ** 4) != math.floor(yc * 10 ** 4)
+assert mant(dc, 1) == (1, -3) and fl(xc - yc, 1, "round") == dc
+for _ in range(2000):                                    # relerr(x - y, x* - y*) <= (|x| + |y|) / |x - y| * delta
+    x, y = Fr(random.randint(1, 9000), 37) * random.choice([1, -1]), Fr(random.randint(1, 9000), 41) * random.choice([1, -1])
+    sx, sy = x * (1 + Fr(random.randint(-50, 50), 1000)), y * (1 + Fr(random.randint(-50, 50), 1000))
+    if x != y:
+        delta = max(relerr(x, sx), relerr(y, sy))
+        assert relerr(x - y, sx - sy) <= (abs(x) + abs(y)) / abs(x - y) * delta
 assert str(math.sqrt(399))[:8] == "19.97498"
 # quadratic x^2 - 40x + 1 = 0 in four-digit rounding arithmetic
 sq = fl(Fr(math.isqrt(399 * 10 ** 20), 10 ** 10), 4, "round")          # sqrt(399) = 19.97498...
@@ -439,6 +459,8 @@ for _ in range(3000):
     sa, sb = a * (1 + Fr(random.randint(-90, 90), 100)), b * (1 + Fr(random.randint(-90, 90), 100))
     ra, rb = relerr(a, sa), relerr(b, sb)
     assert relerr(a / b, sa / sb) <= (ra + rb) / (1 - rb)
+    da, db = abserr(a, sa), abserr(b, sb)                # the absolute bound of the same box (db < |b| here)
+    assert abserr(a / b, sa / sb) <= (abs(a) * db + abs(b) * da) / (abs(b) * (abs(b) - db))
 # "hard to swallow" example of the theory: a = 1 +- 0.005, b = 0.98 +- 0.005
 assert round(100 * Fr("0.005"), 1) == Fr("0.5") and round(float(100 * Fr("0.005") / Fr("0.98")), 1) == 0.5
 
@@ -460,6 +482,11 @@ assert f"{1 / (2 * math.sqrt(L)):.2f}" == "0.32" and round(0.01 / sharp9) == 3
 for x in np.linspace(L - 0.01, L + 0.01, 2001)[1:-1]:
     assert abs(math.sqrt(L) - math.sqrt(x)) < sharp9
 close(abs(math.sqrt(L) - math.sqrt(L - 0.0099999)), sharp9, 1e-4)
+# the answer quotes the sharp bound as a strict inequality, so it must be rounded UP: the bound is 0.00317506...,
+# and "< 0.003175" is false for an admissible x (|L - x| = 0.0099999 < 0.01)
+assert 0.003175 < sharp9 < 0.0031751
+assert abs(math.sqrt(L) - math.sqrt(L - 0.0099999)) > 0.003175
+assert f"{sharp9:.7f}" == "0.0031751" and round(sharp9, 7) == 0.0031751   # as printed by the page's Python block
 
 # ---------------------------------------------------------------- A10
 f10 = lambda x: x * x + 2 * x - 1
@@ -493,6 +520,7 @@ assert 0.002831 < abs11 < 0.002832 and 0.001602 < rel11 < 0.001603 and abs11 < 0
 for astar in np.linspace(a11 - 0.01, a11 + 0.01, 2001)[1:-1]:
     assert abs(fa - math.sqrt(astar + 1)) < abs11 and abs(fa - math.sqrt(astar + 1)) / fa < rel11
 assert f"{abs11:.7f}" == "0.0028314" and f"{rel11:.7f}" == "0.0016021" and round(100 * rel11, 2) == 0.16
+assert abs11 < 0.0028314 and rel11 < 0.0016021          # quoted as strict bounds: both are rounded up, so valid
 assert f"{0.01 / (1.767330 + 1.764499):.7f}" == "0.0028314" and f"{0.0028314 / 1.767330:.7f}" == "0.0016021"
 assert Fr("1.76") ** 2 == Fr("3.0976") < Fr("3.1134567") and f"{0.01 / 3.52:.6f}" == "0.002841" and 0.01 / 3.52 < 0.00285
 assert f"{0.01 / (2 * lo):.7f}" == "0.0028337" and round(100 * 0.01 / a11, 1) == 0.5 and round(0.01 / a11 / rel11) == 3
