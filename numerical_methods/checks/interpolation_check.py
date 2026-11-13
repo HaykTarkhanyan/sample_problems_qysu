@@ -144,6 +144,7 @@ ex_bound = math.pi**3 / 128
 ex_true = math.cos(math.pi / 4) - (1 - 2 * (math.pi / 4) / math.pi)
 close(abs((math.pi / 4) * (-math.pi / 4) * (-3 * math.pi / 4)), 3 * math.pi**3 / 64)
 assert 0 < ex_true < ex_bound
+assert abs(ex_bound - 0.2422) < 5e-5 and abs(ex_true - 0.2071) < 5e-5
 log.info(f"theory: cos example, bound pi^3/128 = {ex_bound:.4f}, true error = {ex_true:.4f}")
 
 # ---------- B1 ----------
@@ -216,6 +217,8 @@ log.info(f"B5: P2 = 7/2 x - 3x^2.  B14: f(0.4) = {math.sin(0.4 * math.pi):.6f}, 
          f"max|omega| = {om14g.max():.6f}, global bound = {math.pi**3 / 6 * om14g.max():.5f}")
 assert abs(err14 - 0.031057) < 1e-6 and abs(bound14 - 0.048232) < 1e-6
 assert abs(e14.max() - 0.03363) < 1e-5 and abs(math.pi**3 / 6 * om14g.max() - 0.05054) < 1e-5
+assert abs(g[e14.argmax()] - 0.359) < 5e-4 and round(err14 / bound14, 2) == 0.64 and abs(math.sin(0.4 * math.pi) - 0.951057) < 5e-7
+assert F(2, 5) - F(1, 6) == F(7, 30) and peval([0, F(7, 2), -3], F(1, 6)) == F(1, 2)   # page: 0.4 * 7/30 * 0.1 = 7/750
 
 # ---------- B6 ----------
 assert lagrange_poly([-2, -1, 0, 1, 2], [4, 1, 0, 1, 4]) == [0, 0, 1]
@@ -330,6 +333,9 @@ tt = g - 2.5
 uu = tt**2 - 6.25
 assert np.abs(np.prod([g - xk for xk in nodes15], axis=0) - (uu**3 - 36 * uu)).max() < 1e-9
 assert abs((-6.25) ** 3 - 36 * (-6.25)) < 48 * math.sqrt(3)
+assert F(-25, 4) ** 3 - 36 * F(-25, 4) == F(-1225, 64) and abs(-1225 / 64 + 19.14) < 5e-3 and abs(48 * math.sqrt(3) - 83.14) < 5e-3
+s12 = 2 * math.sqrt(3)
+close(abs(s12**3 - 36 * s12), 48 * math.sqrt(3))
 b15_glob = M6 / 720 * 48 * math.sqrt(3)
 e15 = np.abs(f15(g) - P5(g))
 # exact integral of |omega| over [-1, 6]
@@ -349,7 +355,8 @@ assert abs(f15(0) - P5(0)) < 1e-15
 assert abs(f15(1) - P5(1)) <= b15_point and e15.max() <= b15_glob and int_true <= b15_int_sharp <= b15_int_crude
 assert abs(M6 * 1e6 - 9.805) < 1e-3 and abs(b15_point * 1e6 - 1.089) < 1e-3 and abs(b15_glob * 1e6 - 1.132) < 1e-3
 assert abs(b15_int_crude * 1e6 - 7.925) < 1e-3 and abs(b15_int_sharp * 1e6 - 4.404) < 1e-3
-assert int_abs == F(9055, 28)
+assert int_abs == F(9055, 28) and abs(float(int_abs) - 323.39) < 5e-3
+assert abs(g[e15.argmax()] + 0.62) < 5e-3
 assert abs(abs(f15(1) - P5(1)) * 1e7 - 6.862) < 1e-3 and abs(e15.max() * 1e7 - 7.379) < 1e-3 and abs(int_true * 1e7 - 7.118) < 1e-3
 
 # ---------- B16 ----------
@@ -379,6 +386,13 @@ assert b16_point == 1 and abs(f16(1) - P3(1)) <= b16_point and e16.max() <= b16_
 close(b16_glob, 12.5 * math.e)
 assert abs(abs(f16(1) - P3(1)) - 0.0929) < 1e-4 and abs(e16.max() - 2.002) < 1e-3 and abs(b16_glob - 33.98) < 1e-2
 assert abs(P3(1) - 0.2750) < 1e-4 and abs(f16(1) - 0.3679) < 1e-4
+assert abs(5 * math.e - 13.59) < 5e-3 and round(b16_glob / e16.max()) == 17
+assert abs(np.abs(om16(g04)).max() - 6.914) < 1e-3 and abs(np.abs(f16(g04) - P3(g04)).max() - 0.122) < 5e-4
+g02, g24 = np.linspace(0, 2, 20001), np.linspace(2, 4, 20001)       # the page's factor-by-factor bounds
+assert np.abs(g02 * (g02 - 2)).max() <= 1 + 1e-12 and np.abs(om16(g02)).max() <= 12
+assert np.abs((g24 - 2) * (g24 - 4)).max() <= 1 + 1e-12 and np.abs(g24 * (g24 - 3)).max() <= 4 + 1e-12 and np.abs(om16(g24)).max() <= 4
+gm = np.linspace(-1, 0, 10001)
+assert np.abs(om16(gm)).max() == 60 and g[e16.argmax()] == -1
 
 # ---------- B17 ----------
 nodes17 = [100, 101, 102, 103]
@@ -389,7 +403,11 @@ close(b17, 2.34375e-9)
 c17 = newton_float(nodes17, np.log(np.array(nodes17, float)))
 e17 = abs(math.log(100.5) - newton_eval(nodes17, c17, 100.5))
 log.info(f"B17: bound = {b17:.5e}, true error = {e17:.3e}, ln 100.5 = {math.log(100.5):.10f}")
-assert e17 <= b17 and abs(e17 * 1e9 - 2.23) < 0.01
+assert e17 <= b17 and abs(e17 * 1e9 - 2.23) < 0.01 and abs(e17 * 1e9 - 2.226) < 5e-4
+l17 = [lagrange_poly([0, 1, 2, 3], [int(i == k) for i in range(4)]) for k in range(4)]    # nodes 100..103 shifted by 100
+v17 = [peval(l, F(1, 2)) for l in l17]
+assert v17 == [F(5, 16), F(15, 16), F(-5, 16), F(1, 16)] and sum(abs(v) for v in v17) == F(13, 8)   # 1.625
+close(1.625 * 0.5e-9, 0.8125e-9)
 
 # ---------- B18 ----------
 xs18 = [-1, 0, 1, 2]
@@ -401,6 +419,7 @@ assert t[1] == [2, 0, 4] and t[2] == [-1, 2] and t[3] == [1]
 assert newton_poly(xs18, [-1, 2, -1, 1]) == [1, 0, -1, 1]
 close((0.5**3 - 0.5**2 + 1) * math.cos(math.pi), -0.875)
 assert peval([F(1), F(0), F(-1), F(1)], F(1, 2)) == F(7, 8)
+assert round((2 * math.pi) ** 4) == 1559
 log.info("B18: P3 = -1 + 2(x+1) - (x+1)x + (x+1)x(x-1) = x^3 - x^2 + 1; f(1/2) = -7/8, P3(1/2) = 7/8")
 
 # ---------- B19 - B24: Chebyshev polynomials ----------
@@ -414,7 +433,12 @@ for r in roots5:
 close(roots5[0], math.sqrt((5 + math.sqrt(5)) / 8)); close(roots5[1], math.sqrt((5 - math.sqrt(5)) / 8))
 for th in np.linspace(0, math.pi, 7):
     close(math.cos(5 * th), 16 * math.cos(th)**5 - 20 * math.cos(th)**3 + 5 * math.cos(th), 1e-12)
+assert list(np.round(roots5, 4)) == [0.9511, 0.5878, 0.0, -0.5878, -0.9511]
+assert peval(T[5], 1) == 1 and (F(20) ** 2 - 4 * 16 * 5) == 80        # discriminant of 16y^2 - 20y + 5
 log.info(f"B19: T5 = 16x^5 - 20x^3 + 5x, roots = {np.round(roots5, 4)}")
+# leading coefficient 2^(n-1); T6 = 32x^6 - 48x^4 + 18x^2 - 1 (problem 24's check); T1*T2 = (T3 + T1)/2
+assert all(T[n][-1] == 2 ** (n - 1) for n in range(1, 13)) and T[6] == [-1, 0, 18, 0, -48, 0, 32]
+assert pmul(T[1], T[2]) == [0, -1, 0, 2] == pscale(padd(T[3], T[1]), F(1, 2))
 # B20 values quoted on the page
 Tf = lambda n, x: peval([float(c) for c in T[n]], x)
 assert (Tf(4, 2), Tf(8, 2), Tf(12, 2)) == (97, 18817, 3650401)
@@ -460,7 +484,10 @@ for n in (5, 10, 20):
 assert abs(runge[5][0] - 0.4327) < 1e-4 and abs(runge[5][1] - 0.5559) < 1e-4
 assert abs(runge[10][0] - 1.9157) < 1e-4 and abs(runge[10][1] - 0.1092) < 1e-4
 assert abs(runge[20][0] - 59.82) < 1e-2 and abs(runge[20][1] - 0.0153) < 1e-4
-assert abs(runge[5][2] - 0.0692) < 1e-4 and abs(runge[10][2] - 0.00853) < 1e-5
+assert abs(runge[5][2] - 0.0692) < 1e-4 and abs(runge[10][2] - 0.00853) < 1e-5 and abs(2.0**-10 - 9.77e-4) < 5e-7
+# predict block before w-cheb: T10's roots, outer gap ~0.097, middle gap ~0.313
+r10 = np.cos((2 * np.arange(10) + 1) * math.pi / 20)
+assert abs((r10[0] - r10[1]) - 0.097) < 5e-4 and abs((r10[4] - r10[5]) - 0.313) < 5e-4
 
 # ---------- B23: Chebyshev interpolation of 1/(1+x^2) on [-5, 5] ----------
 F23 = lambda x: 1 / (1 + x * x)
@@ -474,6 +501,9 @@ for n in (5, 10, 25, 50):
     log.info(f"B23 n = {n}: max error (Lagrange formula) = {e23[n]:.3e}, Newton form with increasing nodes = {eN:.3e}")
 assert abs(e23[5] - 0.5559) < 1e-4 and abs(e23[10] - 0.1092) < 1e-4 and abs(e23[25] - 0.01141) < 1e-5 and abs(e23[50] * 1e5 - 3.96) < 0.01
 assert eN > 20 * e23[50], "Newton form with increasing nodes should lose accuracy at n = 50"
+assert f"{e23[25]:.4g}" == "0.01141" and f"{e23[50]:.4g}" == "3.965e-05" and f"{eN:.1e}" == "3.5e-03" and round(eN / e23[50], -2) == 100
+# x = 5t turns 1/(1+x^2) on [-5, 5] into the Runge function on [-1, 1]: same errors for n = 5, 10
+assert abs(e23[5] - runge[5][1]) < 1e-4 and abs(e23[10] - runge[10][1]) < 1e-4
 
 # ---------- B25 ----------
 ch25 = -0.5 + 1.5 * np.cos((2 * np.arange(3) + 1) * math.pi / 6)
@@ -490,6 +520,7 @@ assert Fr(3, 8) / 6 * Fr(27, 32) == Fr(27, 512)
 e25 = np.abs(f25(g) - lagrange_eval(ch25, f25(ch25), g))
 log.info(f"B25: nodes = {np.round(ch25, 6)}, bound 27/512 = {b25:.6f}, true max = {e25.max():.5f} at x = {g[e25.argmax()]:.2f}")
 assert e25.max() <= b25 and abs(e25.max() - 0.01141) < 1e-5 and abs(b25 - 0.052734) < 1e-6
+assert abs(ch25[0] - 0.799) < 5e-4 and abs(ch25[2] + 1.799) < 5e-4 and round(b25 / e25.max(), 1) == 4.6 and g[e25.argmax()] == -2
 
 # ---------- B26 ----------
 s3 = math.sqrt(3)
@@ -509,6 +540,10 @@ gi = np.linspace(-1.99, 1.99, 400001)
 di = np.abs(gi**2 * (gi**2 - 1) * (gi**2 - 3))
 s_in = (4 + math.sqrt(7)) / 3
 close(s_in * (s_in - 1) * (s_in - 3), -2.1126, 1e-4)
+xc = math.sqrt(4 / 15)                                # f'''' = 360x^2 - 96 = 0
+assert round(abs(120 * xc**3 - 96 * xc)) == 33 and 120 * 8 - 96 * 2 == 768 and 4**3 / 2**5 == 2
+assert f26(-1) == 2 and abs(np.abs(d26).max() - 12) < 1e-9 and abs(abs(d26[0]) - 12) < 1e-9     # max at x = -2
+assert lagrange_poly([0, 1, 2], [1, 0, 0]) == pscale(pmul([-1, 1], [-2, 1]), F(1, 2))           # sanity of the helper
 log.info(f"B26: P2 = 5 - 3x^2; bounds 768/6 * 2 = {768 / 6 * 2:.0f}; true: |f(-1) - P2(-1)| = 0, max = 12 at x = +-2 "
          f"(inside the interval the largest value is {abs(s_in * (s_in - 1) * (s_in - 3)):.4f} at x = +-{math.sqrt(s_in):.4f})")
 

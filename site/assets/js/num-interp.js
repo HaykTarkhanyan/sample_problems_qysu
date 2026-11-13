@@ -139,9 +139,11 @@
   const SUB = "₀₁₂₃₄₅₆₇₈₉";
   const sub = k => String(k).replace(/\d/g, ch => SUB[ch]);
   const sup = k => String(k).replace(/./g, ch => SUP[ch]);
-  /** 0.000958 -> "9,58·10⁻⁴"; ordinary numbers stay as num(). */
+  /** 0.000958 -> "9,58·10⁻⁴", 0.03106 -> "0,0311" (d significant digits below 1); 1 <= |v| < 1e5 stays as num(v, d). */
   function sci(v, d = 3) {
-    if (v === 0 || (Math.abs(v) >= 0.01 && Math.abs(v) < 1e5)) return num(v, d);
+    const a = Math.abs(v);
+    if (v === 0 || (a >= 1 && a < 1e5)) return num(v, d);
+    if (a >= 0.01 && a < 1) return num(v, d - 1 - Math.floor(Math.log10(a)));
     const [m, e] = v.toExponential(2).split("e");
     return m.replace(".", ",").replace("-", "−") + "·10" + sup(Number(e));
   }

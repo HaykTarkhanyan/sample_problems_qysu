@@ -60,6 +60,22 @@
         <li><a href="#p11">Խնդիր 11 - $(n-1)$-րդ աստիճան</a></li>
         <li><a href="#p12">Խնդիր 12 - վեց կետ, երրորդ աստիճան</a></li>
         <li><a href="#p13">Խնդիր 13 - Python ֆունկցիա</a></li>
+        <li><a href="#error">Ինտերպոլացիայի սխալանքը</a></li>
+        <li><a href="#p14">Խնդիր 14 - սխալանքը $x=0{,}4$-ում</a></li>
+        <li><a href="#p15">Խնդիր 15 - երեք տեսակի սխալանք</a></li>
+        <li><a href="#p16">Խնդիր 16 - հանգույցներից դուրս</a></li>
+        <li><a href="#p17">Խնդիր 17 - $\ln100{,}5$</a></li>
+        <li><a href="#p18">Խնդիր 18 - ինչ չեն տեսնում հանգույցները</a></li>
+        <li><a href="#nodes">Հանգույցների ընտրություն</a></li>
+        <li><a href="#p19">Խնդիր 19 - $T_5$ և նրա արմատները</a></li>
+        <li><a href="#p20">Խնդիր 20 - $T_n$ Python-ով</a></li>
+        <li><a href="#p21">Խնդիր 21 - զույգություն</a></li>
+        <li><a href="#p22">Խնդիր 22 - սիմետրիկություն</a></li>
+        <li><a href="#p23">Խնդիր 23 - $\frac{1}{1+x^2}$, $[-5,5]$</a></li>
+        <li><a href="#p24">Խնդիր 24 - երեք նույնություն</a></li>
+        <li><a href="#p25">Խնդիր 25 - $[-2,1]$-ի հանգույցները</a></li>
+        <li><a href="#p26">Խնդիր 26 - $x^6-4x^4+5$</a></li>
+        <li><a href="#exam">Ամփոփում և տիպիկ սխալներ</a></li>
       </ol>
     </nav>
 
@@ -557,7 +573,7 @@ $f[x_0,x_1,x_2]$ բաժանված տարբերությունը։</p>
   <p class="widget-hint">Ընտրեք տվյալները և սեղմեք «Հաջորդ քայլը»։ Նոր թիվը նարնջագույն շրջանակով է, իսկ այն երկու
   թիվը, որոնցից այն ստացվում է, ընդգծված են նախորդ սյունակում։ Աղյուսակի տակ երևում է հաշվարկը։ Կապույտ թվերը՝ ամեն
   սյունակի առաջինը, Նյուտոնի տեսքի գործակիցներն են, և վերջին քայլից հետո ներքևում երևում է բազմանդամը։ Խնդիրների
-  կոճակները ցույց են տալիս լուծումը, ուստի նախ փորձեք ինքնուրույն։</p>
+  կոճակները ցույց են տալիս լուծումը. նախ փորձեք ինքնուրույն։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-case="ex" aria-pressed="true">Օրինակ</button>
     <button class="btn" type="button" data-case="p5" aria-pressed="false">Խնդիր 5</button>
@@ -778,7 +794,7 @@ $f[x_0,\dots,x_{n+1}]$-ը, որտեղ $x_{n+1}$-ը $x_i$-երից ($i=0,\dots,n$
 <div class="solution">
 <div class="step"><h3><span class="step-num">Քայլ 1</span> - $k\le n$</h3>
 <p>$f$-ը զրո է դառնում $x_0,\dots,x_n$ բոլոր հանգույցներում, այսինքն՝ աղյուսակի առաջին սյունակի $f[x_0],\dots,f[x_n]$
-թվերը զրո են։ Զրոների տարբերությունը զրո է, ուստի առաջին կարգի $f[x_i,x_{i+1}]$ թվերը ($i+1\le n$) նույնպես զրո են,
+թվերը զրո են։ Զրոների տարբերությունը զրո է, և առաջին կարգի $f[x_i,x_{i+1}]$ թվերը ($i+1\le n$) նույնպես զրո են,
 դրանցից ստացվող երկրորդ կարգինը նույնպես, և այդպես շարունակ։ Կարգի վրա ինդուկցիայով՝ $f[x_i,\dots,x_j]=0$ բոլոր
 $0\le i\le j\le n$ համարների համար, մասնավորապես՝ $f[x_0,\dots,x_k]=0$, $k\le n$։</p></div>
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - $f[x_0,\dots,x_{n+1}]$</h3>
@@ -876,7 +892,7 @@ $$\begin{aligned}P(x)&=1+3(x+2)\\&\quad+2(x+2)(x+1)\\&\quad-(x+2)(x+1)x\\&=-x^3-
 <p>$x^3$-ի գործակիցը $f[x_0,\dots,x_3]=-1\ne0$ է, ուրեմն բազմանդամը երրորդ աստիճանի է։</p></div>
 <div class="check"><span class="check-label">Ստուգում։</span> $P(2)=-8-4+14+11=13$, $P(3)=-27-9+21+11=-4$, $P(1)=-1-1+7+11=16$։
 Աղյուսակը քայլ առ քայլ՝ վերևի ինտերակտիվ նկարում («Խնդիր 12»)։</div>
-<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f[x_0,\dots,x_4]=f[x_0,\dots,x_5]=0$, $f[x_0,\dots,x_3]=-1\ne0$, ուստի $P(x)=-x^3-x^2+7x+11$ երրորդ աստիճանի բազմանդամ է</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f[x_0,\dots,x_4]=f[x_0,\dots,x_5]=0$, $f[x_0,\dots,x_3]=-1\ne0$, ուրեմն $P(x)=-x^3-x^2+7x+11$ երրորդ աստիճանի բազմանդամ է</div>
 </div>
 </div>
 </details>
@@ -924,6 +940,891 @@ $-41$, նույնը, ինչ $-x^3-x^2+7x+11$ բանաձևը։ $x=0{,}5$ և $x=4$
 հանգույցների $[-2,3]$ հատվածից։ Խնդիր 6բ-ի տվյալներով ֆունկցիան հանգույցներում վերադարձնում է $2$, $-1$, $3$, $5$։</div>
 <div class="box answer"><span class="answer-label">Պատասխան՝</span> վերևի <code>NewtonInterpolation</code> ֆունկցիան. աղյուսակը՝ $n(n+1)/2$ բաժանում, ամեն $x$ կետում արժեքը՝ $n$ բազմապատկում</div>
 </div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="error" open>
+<summary><h2>Ինտերպոլացիայի սխալանքը</h2></summary>
+<div class="sec-body">
+<p>Հանգույցներում $P_n$-ը և $f$-ը համընկնում են, իսկ հանգույցների միջև ընդհանուր դեպքում՝ ոչ։ Սխալանքը՝
+$|f(x)-P_n(x)|$-ը, տարբեր կետերում տարբեր է, իսկ հանգույցներում զրո է։ Մեզ հետաքրքրում է նրա արժեքը տրված կետում
+(կետային սխալանք) և մեծագույն արժեքն ամբողջ հատվածում (գլոբալ սխալանք)։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (ինտերպոլացիայի սխալանքը)</div>
+<p>Դիցուք $f\in C^{n+1}[a,b]$, $x_0,\dots,x_n\in[a,b]$ հանգույցներն իրարից տարբեր են, իսկ $P_n$-ը $f$-ի
+ինտերպոլացիոն բազմանդամն է այդ հանգույցներում։ Այդ դեպքում ամեն $x\in[a,b]$-ի համար գոյություն ունի
+$\xi=\xi(x)\in(a,b)$, որ</p>
+$$\begin{gathered}f(x)-P_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega_{n+1}(x),\\ \omega_{n+1}(x)=(x-x_0)\cdots(x-x_n).\end{gathered}$$
+</div>
+<p>Քանի որ $\xi$-ն անհայտ է, $|f^{(n+1)}(\xi)|$-ն փոխարինում ենք նրա մեծագույն արժեքով՝
+$M_{n+1}=\max_{[a,b]}|f^{(n+1)}|$։ Ստանում ենք կետային և գլոբալ գնահատականները՝</p>
+$$\begin{gathered}|f(x)-P_n(x)|\le\frac{M_{n+1}}{(n+1)!}\,|\omega_{n+1}(x)|,\\ \max_{[a,b]}|f-P_n|\le\frac{M_{n+1}}{(n+1)!}\,\max_{[a,b]}|\omega_{n+1}|.\end{gathered}$$
+<p>Կետային գնահատականում $[a,b]$-ի փոխարեն կարելի է վերցնել ամենափոքր հատվածը, որը պարունակում է բոլոր հանգույցները
+և $x$ կետը, քանի որ $\xi$-ն ընկած է այդ հատվածում (տե՛ս ապացույցը)։</p>
+<div class="box idea"><div class="box-title">Երկու արտադրիչ</div>
+<p>$\frac{f^{(n+1)}(\xi)}{(n+1)!}$ արտադրիչը կախված է ֆունկցիայից։ Եթե $f$-ը բազմանդամ է, որի աստիճանը չի գերազանցում
+$n$-ը, այն զրո է, և $P_n=f$ (ինչպես Խնդիր 7-ում)։</p>
+<p>$\omega_{n+1}(x)$ արտադրիչը կախված է միայն հանգույցներից և $x$-ից։ Այն զրո է հանգույցներում, փոքր է նրանց մոտ և արագ
+աճում է հանգույցներից դուրս։ Հանգույցներն ընտրելով՝ կարող ենք փոքրացնել միայն այս արտադրիչը. դրան է նվիրված
+«Հանգույցների ընտրություն» բաժինը։</p>
+</div>
+
+<h3>Օրինակ</h3>
+<p>Խնդիր 2բ-ում $\cos x$ ֆունկցիայի համար $0$, $\frac\pi2$, $\pi$ հանգույցներում ստացանք $P_2(x)=1-\frac{2x}{\pi}$։
+Գնահատենք սխալանքը $x=\frac\pi4$ կետում։ Այստեղ $n=2$, $|f'''(x)|=|\sin x|\le1$, այսինքն՝ $M_3=1$, և</p>
+$$\Bigl|\omega_3\Bigl(\frac\pi4\Bigr)\Bigr|=\frac\pi4\cdot\frac\pi4\cdot\frac{3\pi}{4}=\frac{3\pi^3}{64}.$$
+<p>Հետևաբար,</p>
+$$\begin{aligned}\Bigl|\cos\frac\pi4-P_2\Bigl(\frac\pi4\Bigr)\Bigr|&\le\frac{1}{3!}\cdot\frac{3\pi^3}{64}\\&=\frac{\pi^3}{128}\approx0{,}2422.\end{aligned}$$
+<p>Իրական սխալանքը $\cos\frac\pi4-\frac12\approx0{,}2071$ է. գնահատականը ճիշտ է և բավական մոտ իրականին։</p>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Եթե $x$-ը հանգույց է, երկու կողմն էլ զրո են։ Դիցուք $x$-ը հանգույց չէ։ Ընտրենք $K$ թիվն այնպես, որ</p>
+$$g(t)=f(t)-P_n(t)-K\,\omega_{n+1}(t)$$
+<p>ֆունկցիան զրո դառնա $t=x$ կետում (դա հնարավոր է, քանի որ $\omega_{n+1}(x)\ne0$)։ $g$-ն զրո է $n+2$ տարբեր կետում՝
+$x_0,\dots,x_n$ և $x$։ Ռոլլի թեորեմով ամեն երկու հարևան զրոների միջև $g'$-ը զրո է դառնում, այսինքն՝ $g'$-ն ունի
+առնվազն $n+1$ զրո, $g''$-ը՝ առնվազն $n$, և այդպես շարունակ, իսկ $g^{(n+1)}$-ը՝ առնվազն մեկ զրո։ Նշանակենք այն
+$\xi$-ով. այն ընկած է հանգույցները և $x$-ը պարունակող ամենափոքր հատվածի ներսում։ $P_n$-ի աստիճանը չի գերազանցում
+$n$-ը, ուստի $P_n^{(n+1)}\equiv0$, իսկ $\omega_{n+1}^{(n+1)}\equiv(n+1)!$, քանի որ $\omega_{n+1}$-ի ավագ անդամը
+$t^{n+1}$ է։ Հետևաբար,</p>
+$$\begin{aligned}0&=g^{(n+1)}(\xi)\\&=f^{(n+1)}(\xi)-K\,(n+1)!,\end{aligned}$$
+<p>որից $K=\frac{f^{(n+1)}(\xi)}{(n+1)!}$, և $g(x)=0$ պայմանը թեորեմի բանաձևն է։ ∎</p>
+<p><strong>Կապը բաժանված տարբերությունների հետ (հատկություն 4)։</strong> $x$-ը դիտարկենք որպես լրացուցիչ հանգույց։
+Նյուտոնի բանաձևով $x_0,\dots,x_n,x$ հանգույցների ինտերպոլացիոն բազմանդամը
+$P_n(t)+f[x_0,\dots,x_n,x]\,\omega_{n+1}(t)$-ն է, և $t=x$ կետում այն հավասար է $f(x)$-ի։ Ուրեմն
+$f(x)-P_n(x)=f[x_0,\dots,x_n,x]\,\omega_{n+1}(x)$, և թեորեմի հետ համեմատելով՝
+$f[x_0,\dots,x_n,x]=\frac{f^{(n+1)}(\xi)}{(n+1)!}$։ Սա հատկություն 4-ն է $n+1$ կարգի համար (վերջին հանգույցը $x$-ն է)։ ∎</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Խնդիր 16-ում $P_3$-ն ինտերպոլացնում է $f(x)=xe^{-x}$ ֆունկցիան $0$, $2$, $3$, $4$
+հանգույցներում։ $[-1,4]$ հատվածի ո՞ր մասում է սխալանքը մեծագույնը։</p>
+<div class="predict-opts"><button class="btn" type="button">$0$-ի և $2$-ի միջև, որտեղ հարևան հանգույցների հեռավորությունն ամենամեծն է</button><button class="btn" type="button" data-ok>$x=-1$-ի մոտ, հանգույցներից դուրս</button><button class="btn" type="button">$x=4$-ի մոտ</button></div>
+<div class="predict-why">$|\omega_4(x)|=|x(x-2)(x-3)(x-4)|$ արտադրիչը $x=-1$ կետում $60$ է, իսկ $[0,4]$-ում նրա մեծագույն
+արժեքը մոտ $6{,}91$ է։ Հանգույցներից դուրս չորս արտադրիչն էլ մեծանում են միասին։ Իրական սխալանքը $x=-1$-ում մոտ
+$2{,}002$ է, իսկ $[0,4]$-ում չի գերազանցում $0{,}122$-ը։ $0$-ի և $2$-ի միջև ամենաերկար միջակայքն է, բայց այնտեղ էլ
+$\omega_4$-ը մնում է փոքր, իսկ $x=4$-ը հանգույց է, որտեղ սխալանքը զրո է։ Հանգույցներից դուրս բազմանդամով հաշվելը
+(էքստրապոլացիա) վտանգավոր է։ Ներքևում ընտրեք «Խնդիր 16, $[-1,4]$»։</div>
+</div>
+
+<div class="widget" id="w-err">
+  <div class="widget-head"><span>Սխալանքը և նրա գնահատականը</span></div>
+  <p class="widget-hint">Վերևում մոխրագույնով $f$-ն է, կապույտով՝ $P_n$-ը, նարնջագույն կետերը հանգույցներն են։ Շարժեք
+  սահիչը. կարմիր հատվածը ցույց է տալիս $f$-ի և $P_n$-ի տարբերությունը $x$ կետում։ Ներքևում կապույտով $|f-P_n|$-ն է,
+  իսկ կարմիր կետագծով՝ $\frac{M_{n+1}}{(n+1)!}|\omega_{n+1}(x)|$ գնահատականը։ Սխալանքը միշտ այդ գծից ցածր է, և երկուսն
+  էլ զրո են հանգույցներում։ Խնդիր 16-ի երկու տարբերակում համեմատեք սխալանքը հանգույցների միջև և նրանցից դուրս։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p14" aria-pressed="true">Խնդիր 14</button>
+    <button class="btn" type="button" data-case="p15" aria-pressed="false">Խնդիր 15</button>
+    <button class="btn" type="button" data-case="p16a" aria-pressed="false">Խնդիր 16, $[0,4]$</button>
+    <button class="btn" type="button" data-case="p16b" aria-pressed="false">Խնդիր 16, $[-1,4]$</button>
+    <button class="btn" type="button" data-case="p26" aria-pressed="false">Խնդիր 26</button>
+  </div>
+  <div class="slider-row"><label for="w-err-x">$x$</label><input type="range" id="w-err-x" min="0" max="1000" value="800"><span data-out="x"></span></div>
+  <div data-out="plot"></div>
+  <p class="mass-cap">Ներքևում՝ $|f-P_n|$ (կապույտ) և գնահատականը (կարմիր կետագիծ)</p>
+  <div data-out="err"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p14" open>
+<summary><h2>Խնդիր 14 - սխալանքը $x=0{,}4$ կետում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 14</div>
+<p>Կառուցեք $f(x)=\sin(\pi x)$ ֆունկցիայի ինտերպոլացիոն բազմանդամը $x_0=0$, $x_1=\frac16$, $x_2=\frac12$
+հանգույցներում։</p>
+<p>(ա) (Python) Գծեք ինտերպոլացիոն բազմանդամի և ֆունկցիայի գրաֆիկները։</p>
+<p>(բ) (Python) Հաշվեք սխալանքը $x=0{,}4$ կետում և համեմատեք սխալանքի տեսական գնահատականի հետ։</p>
+</div>
+<div class="solution">
+<p>Բազմանդամը Խնդիր 5-ում ենք կառուցել՝ $P_2(x)=\frac72x-3x^2$։</p>
+<h3>(ա) Գրաֆիկները</h3>
+<p>Վերևի ինտերակտիվ նկարում ընտրեք «Խնդիր 14»։ $[0,\frac12]$ հատվածում երկու կորը գրեթե համընկնում են։ Jupyter-ում կամ
+Colab-ում նույն գրաֆիկը կարելի է գծել այսպես՝</p>
+<pre class="py"><code>import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(-0.1, 0.6, 400)
+plt.plot(t, np.sin(np.pi * t), label="f(x) = sin(πx)")
+plt.plot(t, 3.5 * t - 3 * t**2, "--", label="P2(x)")
+plt.plot([0, 1/6, 1/2], [0, 0.5, 1], "o", label="հանգույցներ")
+plt.legend()
+plt.grid()
+plt.show()</code></pre>
+<h3>(բ) Սխալանքը $x=0{,}4$ կետում</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - իրական սխալանքը</h3>
+<p>$P_2(0{,}4)=1{,}4-0{,}48=0{,}92$, իսկ $f(0{,}4)=\sin(0{,}4\pi)\approx0{,}951057$։ Սխալանքը՝
+$|f(0{,}4)-P_2(0{,}4)|\approx0{,}031057$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - տեսական գնահատականը</h3>
+<p>$f'''(x)=-\pi^3\cos(\pi x)$, ուստի $M_3=\pi^3$ (մեծագույն արժեքը՝ $x=0$-ում)։ Բացի այդ,</p>
+$$\begin{gathered}|\omega_3(0{,}4)|=0{,}4\cdot\frac{7}{30}\cdot0{,}1=\frac{7}{750},\\ |f(0{,}4)-P_2(0{,}4)|\le\frac{\pi^3}{6}\cdot\frac{7}{750}=\frac{7\pi^3}{4500}.\end{gathered}$$
+<p>$\frac{7\pi^3}{4500}\approx0{,}048232$։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $0{,}031057\le0{,}048232$. իրական սխալանքը գնահատականի մոտ $64\%$-ն է։
+Ամբողջ $[0,\frac12]$ հատվածում մեծագույն սխալանքը $\approx0{,}03363$ է ($x\approx0{,}36$ կետում), իսկ գլոբալ
+գնահատականը՝ $\frac{\pi^3}{6}\max|\omega_3|\approx0{,}05054$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P_2(x)=\frac72x-3x^2$, $|f(0{,}4)-P_2(0{,}4)|\approx0{,}031057\le\frac{7\pi^3}{4500}\approx0{,}048232$</div>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: np.sin(np.pi * x)
+P2 = lambda x: 3.5 * x - 3 * x**2            # Խնդիր 5-ի բազմանդամը
+
+x = 0.4
+err = abs(f(x) - P2(x))
+omega = abs(x * (x - 1/6) * (x - 1/2))
+bound = np.pi**3 / 6 * omega                 # M3 = π^3
+print(f"P2(0.4) = {P2(x):.6f},  f(0.4) = {f(x):.6f}")
+print(f"սխալանքը՝ {err:.6f},  գնահատականը՝ {bound:.6f},  հարաբերությունը՝ {err / bound:.2f}")
+
+t = np.linspace(0, 0.5, 200001)
+e = np.abs(f(t) - P2(t))
+w = np.abs(t * (t - 1/6) * (t - 1/2))
+print(f"[0, 1/2]-ում՝ max|f - P2| = {e.max():.5f} (x = {t[e.argmax()]:.3f}),  "
+      f"գնահատականը՝ {np.pi**3 / 6 * w.max():.5f}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p15" open>
+<summary><h2>Խնդիր 15 - կետային, գլոբալ և ինտեգրալի սխալանք</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 15</div>
+<p>Դիցուք $P_5$ բազմանդամն ինտերպոլացնում է $f(x)=e^{-x/7}$ ֆունկցիան $x_0=-1$, $x_1=0$, $x_2=2$, $x_3=3$, $x_4=5$,
+$x_5=6$ հանգույցներում։</p>
+<p>(ա) Գնահատեք $|f(0)-P_5(0)|$ և $|f(1)-P_5(1)|$ կետային սխալանքները։</p>
+<p>(բ) Գնահատեք $\max_{[-1,6]}|f(x)-P_5(x)|$ գլոբալ սխալանքը։</p>
+<p>(գ) Ենթադրենք, որ $\int_{-1}^6f(x)\,dx$ ինտեգրալի փոխարեն հաշվում ենք $\int_{-1}^6P_5(x)\,dx$-ը։ Գնահատեք այդ
+մոտարկման սխալանքը՝ $\left|\int_{-1}^6f(x)\,dx-\int_{-1}^6P_5(x)\,dx\right|$-ը։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_6$</h3>
+<p>Ամեն ածանցում ավելացնում է $-\frac17$ արտադրիչ, և $f^{(6)}(x)=\frac{1}{7^6}e^{-x/7}$։ Այն դրական է և նվազող, և
+$[-1,6]$-ում նրա մեծագույն արժեքը $x=-1$-ում է՝</p>
+$$M_6=\frac{e^{1/7}}{7^6}\approx9{,}805\cdot10^{-6},\qquad 6!=720.$$</div>
+<h3>(ա) Կետային սխալանքները</h3>
+<p>$x=0$-ն հանգույց է, և այնտեղ $|f(0)-P_5(0)|=0$ (ճշգրիտ)։ $x=1$ կետում</p>
+$$\begin{aligned}\omega_6(1)&=2\cdot1\cdot(-1)(-2)(-4)(-5)\\&=80,\end{aligned}$$
+$$\begin{aligned}|f(1)-P_5(1)|&\le\frac{M_6}{720}\cdot80=\frac{e^{1/7}}{9\cdot7^6}\\&\approx1{,}089\cdot10^{-6}.\end{aligned}$$
+<h3>(բ) Գլոբալ սխալանքը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $\max|\omega_6|$</h3>
+<p>Հանգույցները սիմետրիկ են $\frac52$ կետի նկատմամբ։ $t=x-\frac52$ նշանակմամբ նրանք $\pm\frac12$, $\pm\frac52$,
+$\pm\frac72$ են, և</p>
+$$\omega_6=\Bigl(t^2-\frac14\Bigr)\Bigl(t^2-\frac{25}{4}\Bigr)\Bigl(t^2-\frac{49}{4}\Bigr).$$
+<p>Նշանակենք նաև $u=t^2-\frac{25}{4}$։ Քանի որ $t^2\in[0,\frac{49}{4}]$, $u\in[-\frac{25}{4},6]$, և</p>
+$$\omega_6=(u+6)\,u\,(u-6)=u^3-36u.$$
+<p>$(u^3-36u)'=3u^2-36$ ածանցյալը զրո է $u=\pm2\sqrt3$ կետերում, որտեղ $|u^3-36u|=48\sqrt3\approx83{,}14$։ Ծայրերում՝
+$u=6$-ում $0$ է, $u=-\frac{25}{4}$-ում՝ $-\frac{1225}{64}\approx-19{,}14$։ Հետևաբար, $\max_{[-1,6]}|\omega_6|=48\sqrt3$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - գնահատականը</h3>
+$$\begin{aligned}\max_{[-1,6]}|f-P_5|&\le\frac{M_6}{720}\cdot48\sqrt3\\&\approx1{,}132\cdot10^{-6}.\end{aligned}$$</div>
+<h3>(գ) Ինտեգրալի սխալանքը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - պարզ գնահատական</h3>
+<p>Ինտեգրալի մոդուլը չի գերազանցում մոդուլի ինտեգրալը, իսկ վերջինս՝ հատվածի երկարության ($7$) և մեծագույն արժեքի
+արտադրյալը՝</p>
+$$\begin{aligned}\Bigl|\int_{-1}^6(f-P_5)\,dx\Bigr|&\le7\max_{[-1,6]}|f-P_5|\\&\le7\cdot\frac{M_6}{720}\cdot48\sqrt3\\&\approx7{,}925\cdot10^{-6}.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 5</span> - ավելի ճշգրիտ գնահատական</h3>
+<p>Ինտեգրենք $|\omega_6|$-ն ուղղակիորեն։ Հարևան հանգույցների միջև $\omega_6$ բազմանդամը նշանը չի փոխում, այնպես որ
+$\int_{-1}^6|\omega_6|\,dx$ ինտեգրալը հավասար է հարևան հանգույցների միջև ինտեգրալների մոդուլների գումարին՝
+$\frac{9055}{28}\approx323{,}39$ (հաշվարկը՝ ներքևի կոդում)։ Հետևաբար,</p>
+$$\begin{aligned}\Bigl|\int_{-1}^6(f-P_5)\,dx\Bigr|&\le\frac{M_6}{720}\int_{-1}^6|\omega_6|\,dx\\&\approx4{,}404\cdot10^{-6}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական արժեքները (կոդը)՝ $|f(1)-P_5(1)|\approx6{,}862\cdot10^{-7}$,
+$\max|f-P_5|\approx7{,}379\cdot10^{-7}$ ($x\approx-0{,}62$ կետում), ինտեգրալի սխալանքը՝ $\approx7{,}118\cdot10^{-7}$։
+Բոլորը գնահատականներից փոքր են։ Ինտեգրալի սխալանքն ավելի փոքր է, քանի որ $f-P_5$-ը նշանը փոխում է ամեն հանգույցում
+(նրա նշանը $\omega_6$-ի նշանն է, քանի որ $f^{(6)}\gt0$), և դրական ու բացասական մասերը մասամբ կրճատվում են։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $|f(0)-P_5(0)|=0$, $|f(1)-P_5(1)|\le\frac{e^{1/7}}{9\cdot7^6}\approx1{,}089\cdot10^{-6}$։ (բ) $\max|f-P_5|\le\frac{M_6}{720}\cdot48\sqrt3\approx1{,}132\cdot10^{-6}$։ (գ) $\le7{,}925\cdot10^{-6}$, ավելի ճշգրիտ՝ $\le4{,}404\cdot10^{-6}$</div>
+<pre class="py" data-run><code>import numpy as np
+
+nodes = np.array([-1, 0, 2, 3, 5, 6], float)
+f = lambda x: np.exp(-x / 7)
+
+c = f(nodes).copy()                       # P5-ի գործակիցները՝ Նյուտոնի տեսքով
+for k in range(1, 6):
+    c[k:] = (c[k:] - c[k-1:-1]) / (nodes[k:] - nodes[:-k])
+def P5(x):
+    v = c[5]
+    for k in range(4, -1, -1):
+        v = c[k] + (x - nodes[k]) * v
+    return v
+omega = lambda x: np.prod([x - t for t in nodes], axis=0)
+
+M6 = np.exp(1/7) / 7**6
+print(f"M6 = {M6:.3e}")
+print(f"(ա) ω(1) = {omega(1.0):.0f},  գնահատականը՝ {M6 / 720 * 80:.3e},  իրականը՝ {abs(f(1) - P5(1)):.3e}")
+
+x = np.linspace(-1, 6, 700001)
+e = np.abs(f(x) - P5(x))
+wmax = np.abs(omega(x)).max()
+print(f"(բ) max|ω| = {wmax:.3f} (48√3 = {48 * np.sqrt(3):.3f}),  գնահատականը՝ {M6 / 720 * wmax:.3e},  "
+      f"իրականը՝ {e.max():.3e} (x = {x[e.argmax()]:.2f})")
+
+W = np.polynomial.Polynomial.fromroots(nodes).integ()      # ω-ի նախնականը
+int_abs = sum(abs(W(b) - W(a)) for a, b in zip(nodes[:-1], nodes[1:]))
+print(f"(գ) 7 * գնահատականը = {7 * M6 / 720 * wmax:.3e},  ∫|ω| = {int_abs:.2f},  "
+      f"ավելի ճշգրիտ՝ {M6 / 720 * int_abs:.3e},  իրականը՝ {abs(np.trapezoid(f(x) - P5(x), x)):.3e}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p16" open>
+<summary><h2>Խնդիր 16 - սխալանքը հանգույցներից դուրս</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 16</div>
+<p>Դիցուք $f(x)=xe^{-x}$, $x\in\R$, և $P_3$ բազմանդամն ինտերպոլացնում է $f$ ֆունկցիան $x_0=0$, $x_1=2$, $x_2=3$,
+$x_3=4$ հանգույցներում։ Գնահատեք $|f(1)-P_3(1)|$ և $\max_{-1\le x\le4}|f(x)-P_3(x)|$ սխալանքները։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ածանցյալները</h3>
+<p>$f'=(1-x)e^{-x}$, $f''=(x-2)e^{-x}$, $f'''=(3-x)e^{-x}$, $f^{(4)}=(x-4)e^{-x}$։ Մեզ պետք է
+$|f^{(4)}(x)|=(4-x)e^{-x}$ ($x\le4$ դեպքում)։ Նրա ածանցյալը՝ $-(5-x)e^{-x}$, բացասական է, այսինքն՝ $|f^{(4)}|$-ը նվազում
+է, և մեծագույն արժեքը հատվածի ձախ ծայրում է։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կետային գնահատականը $x=1$-ում</h3>
+<p>$x=1$-ը և հանգույցները պարունակող ամենափոքր հատվածը $[0,4]$-ն է, որտեղ $M_4=|f^{(4)}(0)|=4$։ Բացի այդ,
+$\omega_4(1)=1\cdot(-1)\cdot(-2)\cdot(-3)=-6$, և</p>
+$$|f(1)-P_3(1)|\le\frac{4}{4!}\cdot6=1.$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - գլոբալ գնահատականը $[-1,4]$-ում</h3>
+<p>$[-1,4]$-ում $M_4=|f^{(4)}(-1)|=5e\approx13{,}59$։ $|\omega_4|$-ի մեծագույն արժեքը՝</p>
+<ul>
+  <li>$[-1,0]$-ում $|x|\le1$, $|x-2|\le3$, $|x-3|\le4$, $|x-4|\le5$, ուստի $|\omega_4|\le60$, և հավասարությունը $x=-1$-ում է՝
+  $\omega_4(-1)=60$,</li>
+  <li>$[0,2]$-ում $|x(x-2)|\le1$, $|x-3|\le3$, $|x-4|\le4$, այսինքն՝ $|\omega_4|\le12$,</li>
+  <li>$[2,4]$-ում $|(x-2)(x-4)|\le1$, $|x(x-3)|\le4$, այսինքն՝ $|\omega_4|\le4$։</li>
+</ul>
+<p>Ուրեմն $\max_{[-1,4]}|\omega_4|=60$, և</p>
+$$\max_{[-1,4]}|f-P_3|\le\frac{5e}{24}\cdot60=12{,}5e\approx33{,}98.$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական արժեքները (կոդը)՝ $f(1)=e^{-1}\approx0{,}3679$,
+$P_3(1)\approx0{,}2750$, այսինքն՝ $|f(1)-P_3(1)|\approx0{,}0929$։ $[-1,4]$-ում մեծագույն սխալանքը $\approx2{,}002$ է՝
+$x=-1$-ում, իսկ $[0,4]$-ում այն չի գերազանցում $0{,}122$-ը։ Երկու գնահատականն էլ ճիշտ են, բայց կոպիտ (գլոբալը մոտ $17$
+անգամ մեծ է իրականից). $M_4$-ը վերցնում ենք ամենավատ կետում՝ ձախ ծայրում։ Ինտերակտիվ նկարում համեմատեք «Խնդիր 16,
+$[0,4]$» և «Խնդիր 16, $[-1,4]$» տարբերակները։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $|f(1)-P_3(1)|\le1$ (իրականը՝ $\approx0{,}0929$), $\max_{[-1,4]}|f-P_3|\le12{,}5e\approx33{,}98$ (իրականը՝ $\approx2{,}002$, $x=-1$-ում)</div>
+<p>Դասախոսությունում ինտերպոլացիոն բազմանդամը հաշվում են NumPy-ի <code>polyfit</code>-ով։ Երբ կետերը $n+1$ են, իսկ
+աստիճանը $n$, այն տալիս է հենց ինտերպոլացիոն բազմանդամը։</p>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: x * np.exp(-x)
+nodes = np.array([0, 2, 3, 4], float)
+p = np.polyfit(nodes, f(nodes), 3)        # 4 կետ, 3-րդ աստիճան՝ ինտերպոլացիոն բազմանդամը
+P3 = lambda x: np.polyval(p, x)
+
+print(f"f(1) = {f(1):.4f},  P3(1) = {P3(1):.4f},  սխալանքը՝ {abs(f(1) - P3(1)):.4f},  գնահատականը՝ {4 / 24 * 6:.0f}")
+x = np.linspace(-1, 4, 500001)
+e = np.abs(f(x) - P3(x))
+w = np.abs(x * (x - 2) * (x - 3) * (x - 4))
+print(f"[-1, 4]-ում՝ max|f - P3| = {e.max():.3f} (x = {x[e.argmax()]:.2f}),  max|ω| = {w.max():.0f},  "
+      f"գնահատականը՝ {5 * np.e / 24 * w.max():.2f}")
+inner = x &gt;= 0
+print(f"[0, 4]-ում՝ max|ω| = {w[inner].max():.2f},  max|f - P3| = {e[inner].max():.3f}")</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p17" open>
+<summary><h2>Խնդիր 17 - $\ln100{,}5$-ի ճշտությունը</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 17</div>
+<p>Գնահատեք, թե ինչ ճշտությամբ կարելի է հաշվել $\ln100{,}5$-ը, եթե հայտնի են $\ln100$, $\ln101$, $\ln102$ և $\ln103$
+արժեքները։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Չորս հայտնի արժեքով կառուցում ենք $f(x)=\ln x$ ֆունկցիայի
+$P_3$ ինտերպոլացիոն բազմանդամը $100$, $101$, $102$, $103$ հանգույցներում և $\ln100{,}5$-ը փոխարինում ենք
+$P_3(100{,}5)$-ով։ Հարցը սխալանքի գնահատականն է։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_4$</h3>
+<p>$f'=\frac1x$, $f''=-\frac{1}{x^2}$, $f'''=\frac{2}{x^3}$, $f^{(4)}=-\frac{6}{x^4}$։ $[100,103]$-ում
+$|f^{(4)}|\le\frac{6}{100^4}=6\cdot10^{-8}$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $\omega_4(100{,}5)$</h3>
+$$\begin{aligned}\omega_4(100{,}5)&=0{,}5\cdot(-0{,}5)\cdot(-1{,}5)\cdot(-2{,}5)\\&=-0{,}9375=-\frac{15}{16}.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - գնահատականը</h3>
+$$\begin{aligned}|\ln100{,}5-P_3(100{,}5)|&\le\frac{6\cdot10^{-8}}{24}\cdot\frac{15}{16}\\&=2{,}34375\cdot10^{-9}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական սխալանքը $\approx2{,}226\cdot10^{-9}$ է (կոդը)։ Գնահատականը
+գրեթե ճշգրիտ է, քանի որ $[100,103]$-ում $f^{(4)}$-ը շատ քիչ է փոխվում։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $|\ln100{,}5-P_3(100{,}5)|\le2{,}34375\cdot10^{-9}$, այսինքն՝ մոտ $2{,}3\cdot10^{-9}$ ճշտությամբ</div>
+<p class="muted">Գործնականում լոգարիթմների արժեքներն էլ են կլորացված։ $P_3(x)=\sum_ky_k\ell_k(x)$, ուստի եթե ամեն $y_k$ ունի
+$\delta$-ից ոչ մեծ սխալանք, $P_3(100{,}5)$-ի սխալանքը չի գերազանցում $\delta\sum_k|\ell_k(100{,}5)|=1{,}625\,\delta$-ն։
+Օրինակ՝ ստորակետից հետո $9$ նիշով տրված արժեքների դեպքում ($\delta=0{,}5\cdot10^{-9}$) այն կարող է հասնել
+$\approx0{,}81\cdot10^{-9}$-ի, որը համեմատելի է ինտերպոլացիայի սխալանքի հետ։</p>
+<pre class="py" data-run><code>import numpy as np
+
+nodes = np.array([100, 101, 102, 103], float)
+x = 100.5
+w = np.prod(x - nodes)                       # ω(100.5)
+print(f"ω(100.5) = {w},  գնահատականը՝ {6 / 100**4 / 24 * abs(w):.5e}")
+
+l = [np.prod([(x - nodes[j]) / (nodes[k] - nodes[j]) for j in range(4) if j != k]) for k in range(4)]
+P3 = np.dot(l, np.log(nodes))                # Լագրանժի բանաձևը
+print(f"ln 100.5 = {np.log(x):.10f},  P3(100.5) = {P3:.10f},  սխալանքը՝ {abs(np.log(x) - P3):.3e}")
+print("ℓ_k(100.5) =", np.round(l, 4), "  Σ|ℓ_k| =", sum(abs(v) for v in l))</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p18" open>
+<summary><h2>Խնդիր 18 - ինչ չեն տեսնում հանգույցները</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 18</div>
+<p>Կառուցեք $f(x)=(x^3-x^2+1)\cos(2\pi x)$ ֆունկցիայի Նյուտոնի ինտերպոլացիոն բազմանդամը $x_0=-1$, $x_1=0$, $x_2=1$,
+$x_3=2$ հանգույցներում։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - արժեքները</h3>
+<p>Ամբողջ $k$-ի համար $\cos(2\pi k)=1$, և հանգույցներում $f(x_i)=x_i^3-x_i^2+1$՝ $f(-1)=-1$, $f(0)=1$, $f(1)=1$,
+$f(2)=5$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - աղյուսակը</h3>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$x_i$</th><th class="num">$f[x_i]$</th><th class="num">1-ին կարգ</th><th class="num">2-րդ կարգ</th><th class="num">3-րդ կարգ</th></tr></thead><tbody>
+<tr><td class="num">$-1$</td><td class="num">$\mathbf{-1}$</td><td></td><td></td><td></td></tr>
+<tr><td class="num">$0$</td><td class="num">$1$</td><td class="num">$\mathbf{2}$</td><td></td><td></td></tr>
+<tr><td class="num">$1$</td><td class="num">$1$</td><td class="num">$0$</td><td class="num">$\mathbf{-1}$</td><td></td></tr>
+<tr><td class="num">$2$</td><td class="num">$5$</td><td class="num">$4$</td><td class="num">$2$</td><td class="num">$\mathbf{1}$</td></tr>
+</tbody></table></div></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - բազմանդամը</h3>
+$$\begin{aligned}P_3(x)&=-1+2(x+1)-(x+1)x\\&\quad+(x+1)x(x-1)\\&=x^3-x^2+1.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $x^3-x^2+1$ բազմանդամի աստիճանը $3$ է, և հանգույցներում այն
+համընկնում է $f$-ի հետ։ Միակության թեորեմի համաձայն՝ $P_3$-ը հենց այդ բազմանդամն է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $P_3(x)=-1+2(x+1)-(x+1)x+(x+1)x(x-1)=x^3-x^2+1$</div>
+<p>Հանգույցների միջև $P_3$-ը և $f$-ը շատ տարբեր են. օրինակ՝ $f(\frac12)=\bigl(\frac18-\frac14+1\bigr)\cos\pi=-\frac78$, իսկ
+$P_3(\frac12)=\frac78$։ Հանգույցների միջև հեռավորությունը $1$ է, այսինքն՝ հենց $\cos(2\pi x)$-ի պարբերությունը, և
+հանգույցները «չեն տեսնում» տատանումը։ Սխալանքի գնահատականն էլ այստեղ օգուտ չի տալիս. $f^{(4)}$-ը պարունակում է
+$(2\pi)^4\approx1559$ արտադրիչ։ Ինտերպոլացիոն բազմանդամն օգտակար է, միայն եթե հանգույցները բավական խիտ են ֆունկցիայի
+տատանումների համեմատ։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="nodes" open>
+<summary><h2>Հանգույցների ընտրություն. Ռունգեի երևույթ և չեբիշևյան հանգույցներ</h2></summary>
+<div class="sec-body">
+<p>Սխալանքի բանաձևում $\frac{f^{(n+1)}(\xi)}{(n+1)!}$-ը կախված է ֆունկցիայից, իսկ $\omega_{n+1}$-ը՝ միայն հանգույցներից։
+Եթե հանգույցներն ընտրում ենք ինքներս, բնական է ընտրել այնպես, որ $\max_{[a,b]}|\omega_{n+1}|$-ը հնարավորինս փոքր լինի։
+Առաջին միտքը հավասարահեռ հանգույցներն են, բայց դրանք լավ ընտրություն չեն։</p>
+
+<h3>Ռունգեի երևույթը</h3>
+<p>$f(x)=\frac{1}{1+25x^2}$ ֆունկցիան (Ռունգեի ֆունկցիան) $[-1,1]$-ում ողորկ է, բայց հավասարահեռ հանգույցներում նրա
+ինտերպոլացիոն բազմանդամները $n$-ի աճին զուգընթաց ծայրերի մոտ ավելի ու ավելի ուժեղ են տատանվում։ Սա կոչվում է
+<strong>Ռունգեի երևույթ</strong>։ Աղյուսակում մեծագույն սխալանքն է $[-1,1]$-ում՝ հավասարահեռ և չեբիշևյան (տե՛ս ներքևում)
+հանգույցների դեպքում։</p>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$n$</th><th class="num">հավասարահեռ</th><th class="num">չեբիշևյան</th></tr></thead><tbody>
+<tr><td class="num">$5$</td><td class="num">$0{,}4327$</td><td class="num">$0{,}5559$</td></tr>
+<tr><td class="num">$10$</td><td class="num">$1{,}9157$</td><td class="num">$0{,}1092$</td></tr>
+<tr><td class="num">$20$</td><td class="num">$59{,}82$</td><td class="num">$0{,}0153$</td></tr>
+</tbody></table></div>
+<p>Հավասարահեռ հանգույցների դեպքում սխալանքն աճում է, չեբիշևյան հանգույցների դեպքում՝ նվազում (փոքր $n$-ի դեպքում,
+ինչպես $n=5$-ը, հավասարահեռ հանգույցները կարող են մի փոքր ավելի լավ լինել)։ Պատճառը $\omega_{n+1}$-ն է. հավասարահեռ
+հանգույցների դեպքում $|\omega_{n+1}|$-ը ծայրերի մոտ շատ ավելի մեծ է, քան մեջտեղում։ Օրինակ՝ $n=10$ դեպքում
+$\max|\omega_{11}|\approx8{,}53\cdot10^{-3}$, իսկ չեբիշևյան հանգույցների դեպքում՝ $2^{-10}\approx9{,}77\cdot10^{-4}$։</p>
+
+<h3>Չեբիշևի բազմանդամները</h3>
+<div class="box def"><div class="box-title">Սահմանում (Չեբիշևի բազմանդամներ)</div>
+$$\begin{gathered}T_0(x)=1,\qquad T_1(x)=x,\\ T_{n+1}(x)=2x\,T_n(x)-T_{n-1}(x),\\ n\ge1.\end{gathered}$$
+</div>
+<p>Առաջին մի քանիսը՝ $T_2(x)=2x^2-1$, $T_3(x)=4x^3-3x$, $T_4(x)=8x^4-8x^2+1$։ $T_n$-ի աստիճանը $n$ է, իսկ ավագ անդամի
+գործակիցը՝ $2^{n-1}$ ($n\ge1$), քանի որ ամեն քայլում այն բազմապատկվում է $2$-ով։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (եռանկյունաչափական ներկայացում)</div>
+<p>Ցանկացած իրական $\theta$-ի համար $T_n(\cos\theta)=\cos n\theta$։ Այսինքն՝ $T_n(x)=\cos(n\arccos x)$, երբ
+$x\in[-1,1]$։ Հետևաբար,</p>
+<ul>
+  <li>$|T_n(x)|\le1$, երբ $x\in[-1,1]$, և $T_n\bigl(\cos\frac{k\pi}{n}\bigr)=(-1)^k$, $k=0,1,\dots,n$,</li>
+  <li>$n\ge1$ դեպքում $T_n$-ն ունի ճիշտ $n$ իրարից տարբեր արմատ, բոլորը $(-1,1)$ միջակայքում՝</li>
+</ul>
+$$\begin{gathered}x_k=\cos\frac{(2k+1)\pi}{2n},\\ k=0,1,\dots,n-1.\end{gathered}$$
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Կոսինուսների գումարի բանաձևից $\cos(k+1)\theta+\cos(k-1)\theta=2\cos\theta\cos k\theta$, այսինքն՝
+$C_k(\theta)=\cos k\theta$ թվերը բավարարում են $C_{k+1}=2\cos\theta\,C_k-C_{k-1}$ առնչությանը, և $C_0=1$,
+$C_1=\cos\theta$։ Դա նույն ռեկուրենտ առնչությունն է, ինչ $T_k(\cos\theta)$-ինը, նույն սկզբնական արժեքներով։ Ինդուկցիայով՝
+$T_k(\cos\theta)=\cos k\theta$ բոլոր $k$-երի համար։</p>
+<p>$x=\cos\theta$, $\theta\in[0,\pi]$ դեպքում $T_n(x)=\cos n\theta$-ի մոդուլը չի գերազանցում $1$-ը, $\theta=\frac{k\pi}{n}$
+կետերում այն $(-1)^k$ է, իսկ զրո է, երբ $n\theta=\frac{(2k+1)\pi}{2}$։ $k=0,\dots,n-1$ համարները տալիս են $(0,\pi)$-ում
+$n$ տարբեր $\theta$, և քանի որ $\cos$-ը $[0,\pi]$-ում խիստ նվազող է, ստացվում է $n$ տարբեր $x_k\in(-1,1)$։ $n$-րդ
+աստիճանի բազմանդամն այլ արմատներ չունի։ ∎</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $T_{10}$-ի տասը արմատը $(-1,1)$ միջակայքում են։ Որտե՞ղ են նրանք ավելի խիտ դասավորված։</p>
+<div class="predict-opts"><button class="btn" type="button">Մեջտեղում՝ $0$-ի մոտ</button><button class="btn" type="button" data-ok>Ծայրերի մոտ՝ $\pm1$-ի մոտ</button><button class="btn" type="button">Հավասարաչափ</button></div>
+<div class="predict-why">Արմատները կիսաշրջանագծի վրա հավասարաչափ դասավորված կետերի պրոյեկցիաներն են $x$-երի առանցքի
+վրա։ Ծայրերի մոտ շրջանագիծը գրեթե ուղղաձիգ է, և հավասար աղեղները պրոյեկտվում են կարճ հատվածների։ $n=10$ դեպքում
+ծայրային երկու արմատի հեռավորությունը մոտ $0{,}097$ է, իսկ մեջտեղի երկուսինը՝ $0{,}313$։ «Հավասարաչափ» կլիներ, եթե
+կետերը վերցնեինք ոչ թե շրջանագծի, այլ հատվածի վրա, և դա կլինեին հավասարահեռ հանգույցները։</div>
+</div>
+
+<div class="widget" id="w-cheb">
+  <div class="widget-head"><span>Չեբիշևի բազմանդամները և նրանց արմատները</span></div>
+  <p class="widget-hint">Փոխեք $n$-ը։ Վերևում կիսաշրջանագծի վրա հավասարաչափ դասավորված $n$ կետ է (կապույտ), և նրանց
+  պրոյեկցիաները $x$-երի առանցքի վրա (նարնջագույն)՝ $T_n$-ի արմատները։ Ներքևում $T_n$-ի գրաֆիկն է։ $[-1,1]$-ում այն
+  տատանվում է $-1$-ի և $1$-ի միջև, իսկ $[-2,2]$-ն ընտրելով՝ կտեսնեք, թե որքան արագ է այն աճում հատվածից դուրս։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-int="1" aria-pressed="true">$[-1,1]$</button>
+    <button class="btn" type="button" data-int="2" aria-pressed="false">$[-2,2]$</button>
+  </div>
+  <div class="slider-row"><label for="w-cheb-n">$n$</label><input type="range" id="w-cheb-n" min="1" max="12" value="5"><span data-out="n"></span></div>
+  <div data-out="circle"></div>
+  <div data-out="plot"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+
+<h3>Չեբիշևյան հանգույցները</h3>
+<div class="box def"><div class="box-title">Սահմանում (չեբիշևյան հանգույցներ)</div>
+<p>$[-1,1]$ հատվածի $n+1$ չեբիշևյան հանգույցները $T_{n+1}$-ի արմատներն են՝</p>
+$$\begin{gathered}x_k=\cos\frac{(2k+1)\pi}{2(n+1)},\\ k=0,1,\dots,n.\end{gathered}$$
+</div>
+<div class="box thm"><div class="box-title">Թեորեմ (չեբիշևյան հանգույցների լավագույնությունը)</div>
+<p>$[-1,1]$-ում ընկած $n+1$ հանգույցների բոլոր հնարավոր ընտրություններից $\max_{[-1,1]}|\omega_{n+1}|$-ն ամենափոքրն է
+չեբիշևյան հանգույցների դեպքում, և այդ դեպքում</p>
+$$\max_{[-1,1]}|\omega_{n+1}(x)|=2^{-n}.$$
+</div>
+<p>Հավասարությունը պարզ է. չեբիշևյան հանգույցների դեպքում $\omega_{n+1}$-ը և $T_{n+1}$-ն ունեն նույն արմատները, իսկ նրանց
+ավագ անդամների գործակիցները $1$ և $2^n$ են։ Ուրեմն $\omega_{n+1}=2^{-n}T_{n+1}$, և $|\omega_{n+1}|\le2^{-n}$։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Դիցուք որևէ $y_0,\dots,y_n\in[-1,1]$ հանգույցների համար $q(x)=(x-y_0)\cdots(x-y_n)$ բազմանդամի մոդուլը $[-1,1]$-ում
+փոքր է $2^{-n}$-ից։ $r=2^{-n}T_{n+1}-q$ տարբերության աստիճանը չի գերազանցում $n$-ը, քանի որ $x^{n+1}$-ի գործակիցները
+կրճատվում են։ $z_k=\cos\frac{k\pi}{n+1}$, $k=0,\dots,n+1$ կետերում $2^{-n}T_{n+1}(z_k)=(-1)^k2^{-n}$, իսկ
+$|q(z_k)|\lt2^{-n}$, ուստի $r(z_k)$-ի նշանը $(-1)^k$ է։ $n+2$ կետում նշանը հերթափոխվում է, և միջանկյալ արժեքի թեորեմով
+$r$-ն ունի առնվազն $n+1$ արմատ։ Աստիճանը $n$-ից մեծ չէ, ուրեմն $r\equiv0$, այսինքն՝ $q=2^{-n}T_{n+1}$, և
+$\max|q|=2^{-n}$՝ հակասություն։ ∎</p>
+</div></details>
+
+<h3>Կամայական $[a,b]$ հատված</h3>
+<p>$x=\frac{a+b}{2}+\frac{b-a}{2}\,t$ աֆինական ձևափոխությունը $[-1,1]$-ը տանում է $[a,b]$-ի վրա։ $[a,b]$-ի չեբիշևյան
+հանգույցները՝</p>
+$$\begin{gathered}x_k=\frac{a+b}{2}+\frac{b-a}{2}\cos\frac{(2k+1)\pi}{2(n+1)},\\ k=0,1,\dots,n.\end{gathered}$$
+<p>Քանի որ $x-x_k=\frac{b-a}{2}(t-t_k)$, $\omega_{n+1}$-ը բազմապատկվում է $\bigl(\frac{b-a}{2}\bigr)^{n+1}$-ով, և</p>
+$$\begin{aligned}\max_{[a,b]}|\omega_{n+1}|&=\Bigl(\frac{b-a}{2}\Bigr)^{n+1}2^{-n}\\&=\frac{(b-a)^{n+1}}{2^{2n+1}}.\end{aligned}$$
+<p>Չեբիշևյան հանգույցների դեպքում գլոբալ գնահատականը դառնում է</p>
+$$\max_{[a,b]}|f-P_n|\le\frac{M_{n+1}}{(n+1)!}\cdot\frac{(b-a)^{n+1}}{2^{2n+1}}.$$
+
+<p>Ռունգեի աղյուսակի թվերը Python-ով՝</p>
+<pre class="py" data-run><code>import numpy as np
+
+R = lambda x: 1 / (1 + 25 * x**2)
+
+def lagrange_eval(xs, ys, x):
+    s = np.zeros_like(x)
+    for k in range(len(xs)):
+        l = np.ones_like(x)
+        for j in range(len(xs)):
+            if j != k:
+                l *= (x - xs[j]) / (xs[k] - xs[j])
+        s += ys[k] * l
+    return s
+
+x = np.linspace(-1, 1, 20001)
+print("առաջինը՝ հավասարահեռ, երկրորդը՝ չեբիշևյան հանգույցներ")
+for n in [5, 10, 20]:
+    eq = np.linspace(-1, 1, n + 1)
+    ch = np.cos((2 * np.arange(n + 1) + 1) * np.pi / (2 * n + 2))
+    e_eq = np.abs(R(x) - lagrange_eval(eq, R(eq), x)).max()
+    e_ch = np.abs(R(x) - lagrange_eval(ch, R(ch), x)).max()
+    w_eq = np.abs(np.prod([x - t for t in eq], axis=0)).max()
+    w_ch = np.abs(np.prod([x - t for t in ch], axis=0)).max()
+    print(f"n = {n:2}   max|f - P| = {e_eq:.4f}, {e_ch:.4f}   max|ω| = {w_eq:.3e}, {w_ch:.3e}")</code></pre>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Ռունգեի ֆունկցիայի հավասարահեռ հանգույցներով ինտերպոլացիայում $n$-ը $10$-ից դարձնում ենք
+$20$։ Ի՞նչ կլինի մեծագույն սխալանքի հետ։</p>
+<div class="predict-opts"><button class="btn" type="button">Կփոքրանա. հանգույցներն ավելի շատ են</button><button class="btn" type="button" data-ok>Կմեծանա. ծայրերում տատանումները կուժեղանան</button><button class="btn" type="button">Գրեթե չի փոխվի</button></div>
+<div class="predict-why">Սխալանքը $1{,}9157$-ից կդառնա $59{,}82$։ «Ավելի շատ կետ՝ ավելի ճշգրիտ» սկզբունքը հավասարահեռ
+հանգույցների համար չի գործում. $f^{(n+1)}$-ն այս ֆունկցիայի համար շատ արագ է աճում, իսկ $|\omega_{n+1}|$-ը ծայրերում
+մեծ է։ Չեբիշևյան հանգույցներով նույն անցումը սխալանքը $0{,}1092$-ից դարձնում է $0{,}0153$։ Ստուգեք ներքևում։</div>
+</div>
+
+<div class="widget" id="w-nodes">
+  <div class="widget-head"><span>Հավասարահեռ և չեբիշևյան հանգույցներ</span></div>
+  <p class="widget-hint">Ընտրեք ֆունկցիան և փոխեք $n$-ը։ Մոխրագույնով $f$-ն է, կարմիրով՝ ինտերպոլացիոն բազմանդամը
+  հավասարահեռ հանգույցներում, կապույտով՝ չեբիշևյան հանգույցներում։ Ներքևում $|\omega_{n+1}(x)|$-ն է նույն գույներով, իսկ
+  կետագիծը՝ $\frac{(b-a)^{n+1}}{2^{2n+1}}$ մակարդակը, որից չեբիշևյան հանգույցների $|\omega_{n+1}|$-ը երբեք բարձր չէ։
+  Կոճակներով կարելի է թաքցնել կորերից մեկը։ $e^x$ ֆունկցիայի դեպքում երկու տեսակի հանգույցներն էլ տալիս են փոքր
+  սխալանք. Ռունգեի երևույթը կախված է նաև ֆունկցիայից։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="runge" aria-pressed="true">Ռունգեի ֆունկցիա</button>
+    <button class="btn" type="button" data-case="p23" aria-pressed="false">Խնդիր 23</button>
+    <button class="btn" type="button" data-case="exp" aria-pressed="false">$e^x$</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-show="eq" aria-pressed="true">Հավասարահեռ</button>
+    <button class="btn" type="button" data-show="ch" aria-pressed="true">Չեբիշևյան</button>
+  </div>
+  <div class="slider-row"><label for="w-nodes-n">$n$</label><input type="range" id="w-nodes-n" min="1" max="30" value="10"><span data-out="n"></span></div>
+  <div data-out="plot"></div>
+  <p class="mass-cap">Ներքևում՝ $|\omega_{n+1}(x)|$ և $\frac{(b-a)^{n+1}}{2^{2n+1}}$ մակարդակը (կետագիծ)</p>
+  <div data-out="omega"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p19" open>
+<summary><h2>Խնդիր 19 - $T_5$ և նրա արմատները</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 19 (Չեբիշևի բազմանդամ և չեբիշևյան հանգույցներ)</div>
+<p>(ա) Գտեք $T_5$ Չեբիշևի բազմանդամի հանրահաշվական ներկայացումը։</p>
+<p>(բ) Արտահայտեք $\cos5x$-ը $\cos x$-ի միջոցով։</p>
+<p>(գ) Հաշվեք 5-րդ աստիճանի Չեբիշևի բազմանդամի արմատները $[-1,1]$ հատվածում։</p>
+</div>
+<div class="solution">
+<h3>(ա) $T_5$-ը</h3>
+<p>Ռեկուրենտ առնչությամբ՝ $T_2=2x\cdot x-1=2x^2-1$, $T_3=2x(2x^2-1)-x=4x^3-3x$, իսկ</p>
+$$\begin{aligned}T_4&=2x(4x^3-3x)-(2x^2-1)\\&=8x^4-8x^2+1,\\ T_5&=2x(8x^4-8x^2+1)-(4x^3-3x)\\&=16x^5-20x^3+5x.\end{aligned}$$
+<h3>(բ) $\cos5x$-ը</h3>
+<p>$T_n(\cos\theta)=\cos n\theta$ ցանկացած իրական $\theta$-ի համար, ուստի</p>
+$$\begin{aligned}\cos5x&=T_5(\cos x)\\&=16\cos^5x-20\cos^3x+5\cos x.\end{aligned}$$
+<h3>(գ) Արմատները</h3>
+<p>Թեորեմի բանաձևով՝ $x_k=\cos\frac{(2k+1)\pi}{10}$, $k=0,\dots,4$՝</p>
+$$\begin{gathered}\cos\frac{\pi}{10}\approx0{,}9511,\quad \cos\frac{3\pi}{10}\approx0{,}5878,\\ \cos\frac{\pi}{2}=0,\\ \cos\frac{7\pi}{10}\approx-0{,}5878,\quad \cos\frac{9\pi}{10}\approx-0{,}9511.\end{gathered}$$
+<p>Նույնը հանրահաշվորեն. $T_5(x)=x(16x^4-20x^2+5)$, և $16x^4-20x^2+5=0$ հավասարումից
+$x^2=\frac{20\pm\sqrt{80}}{32}=\frac{5\pm\sqrt5}{8}$։ Հետևաբար, արմատներն են $0$, $\pm\sqrt{\frac{5+\sqrt5}{8}}\approx\pm0{,}9511$
+և $\pm\sqrt{\frac{5-\sqrt5}{8}}\approx\pm0{,}5878$։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> $T_5(1)=16-20+5=1=\cos0$։ Երկու եղանակով ստացված արմատները
+համընկնում են։ Ինտերակտիվ նկարում ընտրեք $n=5$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $T_5(x)=16x^5-20x^3+5x$։ (բ) $\cos5x=16\cos^5x-20\cos^3x+5\cos x$։ (գ) $0$, $\pm\sqrt{\frac{5-\sqrt5}{8}}\approx\pm0{,}5878$, $\pm\sqrt{\frac{5+\sqrt5}{8}}\approx\pm0{,}9511$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p20" open>
+<summary><h2>Խնդիր 20 - Չեբիշևի բազմանդամները Python-ով</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 20 (Python)</div>
+<p>Գրեք Python ֆունկցիա, որը, ընդունելով $n$-ը և $x$-ը, հաշվում է $n$-րդ աստիճանի Չեբիշևի բազմանդամի արժեքը $x$ կետում։
+Գծեք 4-րդ, 8-րդ և 12-րդ աստիճանի Չեբիշևի բազմանդամների գրաֆիկները $[-1,1]$ և $[-2,2]$ հատվածներում։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Բազմանդամի գործակիցները պետք չեն. ռեկուրենտ առնչությամբ
+հաշվում ենք $T_0(x)$, $T_1(x)$, ..., $T_n(x)$ արժեքները հերթով։ $x$-ի փոխարեն կարելի է տալ նաև զանգված։</p></div>
+<pre class="py" data-run><code>import numpy as np
+
+def cheb(n, x):
+    """T_n(x)՝ T_{k+1} = 2x T_k - T_{k-1} առնչությամբ (x-ը կարող է լինել զանգված)"""
+    x = np.asarray(x, float)
+    t0, t1 = np.ones_like(x), x
+    if n == 0:
+        return t0
+    for _ in range(n - 1):
+        t0, t1 = t1, 2 * x * t1 - t0
+    return t1
+
+for n in [4, 8, 12]:
+    print(f"T{n}(2) = {float(cheb(n, 2)):.0f},  T{n}(0.5) = {float(cheb(n, 0.5)):.4f},  "
+          f"cos({n} arccos 0.5) = {np.cos(n * np.arccos(0.5)):.4f}")
+
+x = np.linspace(-1, 1, 1001)
+print("[-1, 1]-ում max|T12| =", round(float(np.abs(cheb(12, x)).max()), 10))</code></pre>
+<p>Գրաֆիկները՝ վերևի ինտերակտիվ նկարում ($n=4$, $8$, $12$ և $[-1,1]$ կամ $[-2,2]$ կոճակները)։ Jupyter-ում կամ Colab-ում
+(նույն <code>cheb</code> ֆունկցիայով)՝</p>
+<pre class="py"><code>import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+for ax, a, lim in zip(axes, [1, 2], [1.5, 20]):
+    x = np.linspace(-a, a, 2001)
+    for n in [4, 8, 12]:
+        ax.plot(x, cheb(n, x), label=f"T{n}")
+    ax.set_ylim(-lim, lim)
+    ax.set_title(f"[-{a}, {a}]")
+    ax.legend()
+    ax.grid()
+plt.show()</code></pre>
+<div class="check"><span class="check-label">Ստուգում։</span> $T_4(0{,}5)=T_8(0{,}5)=-0{,}5$, $T_{12}(0{,}5)=1$, և նույնը տալիս է
+$\cos(n\arccos0{,}5)=\cos\frac{n\pi}{3}$ բանաձևը։ $[-1,1]$-ում բոլոր արժեքները $-1$-ի և $1$-ի միջև են, իսկ հատվածից դուրս
+բազմանդամներն արագ աճում են՝ $T_4(2)=97$, $T_8(2)=18\,817$, $T_{12}(2)=3\,650\,401$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> վերևի <code>cheb(n, x)</code> ֆունկցիան։ $[-1,1]$-ում $T_n$-ը տատանվում է $-1$-ի և $1$-ի միջև ($n$ արմատ, $n+1$ ծայրային արժեք $\pm1$), $[-2,2]$-ում ծայրերի մոտ արագ աճում է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p21" open>
+<summary><h2>Խնդիր 21 - զույգություն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 21</div>
+<p>Ապացուցեք, որ ամեն $n\in\N\cup\{0\}$ համարի համար $T_{2n}$-ը զույգ ֆունկցիա է, իսկ $T_{2n+1}$-ը՝ կենտ, այսինքն՝
+$T_n(-x)=(-1)^nT_n(x)$։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - բազան</h3>
+<p>$T_0(-x)=1=T_0(x)$ և $T_1(-x)=-x=-T_1(x)$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ինդուկցիայի քայլը</h3>
+<p>Դիցուք պնդումը ճիշտ է $n-1$-ի և $n$-ի համար։ Ռեկուրենտ առնչությունից՝</p>
+$$\begin{aligned}&T_{n+1}(-x)=2(-x)\,T_n(-x)-T_{n-1}(-x)\\&=(-1)^{n+1}2x\,T_n(x)-(-1)^{n-1}T_{n-1}(x)\\&=(-1)^{n+1}\bigl(2xT_n(x)-T_{n-1}(x)\bigr)\\&=(-1)^{n+1}T_{n+1}(x).\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $T_4=8x^4-8x^2+1$-ը պարունակում է միայն զույգ, իսկ $T_5=16x^5-20x^3+5x$-ը՝ միայն
+կենտ աստիճաններ։ Այլ ապացույց $[-1,1]$-ի համար՝ եթե $x=\cos\theta$, ապա $-x=\cos(\pi-\theta)$, և
+$T_n(-x)=\cos(n\pi-n\theta)=(-1)^n\cos n\theta$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> ինդուկցիայով՝ $T_n(-x)=(-1)^nT_n(x)$, ուրեմն $T_{2n}$-ը զույգ է, $T_{2n+1}$-ը՝ կենտ</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p22" open>
+<summary><h2>Խնդիր 22 - հանգույցների սիմետրիկությունը</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 22</div>
+<p>Ապացուցեք, որ չեբիշևյան հանգույցները դասավորված են $0$-ի նկատմամբ սիմետրիկ։</p>
+</div>
+<div class="solution">
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - զույգերը</h3>
+<p>Հանգույցներն են $x_k=\cos\frac{(2k+1)\pi}{2(n+1)}$, $k=0,\dots,n$։ $x_k$-ն համեմատենք $x_{n-k}$-ի հետ.</p>
+$$\frac{(2(n-k)+1)\pi}{2(n+1)}=\pi-\frac{(2k+1)\pi}{2(n+1)},$$
+<p>իսկ $\cos(\pi-\alpha)=-\cos\alpha$։ Հետևաբար, $x_{n-k}=-x_k$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - միջին հանգույցը</h3>
+<p>Եթե $n$-ը զույգ է (հանգույցների քանակը՝ $n+1$-ը, կենտ է), $k=\frac n2$ հանգույցը զույգ չունի. այն
+$\cos\frac{\pi}{2}=0$ է։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Այլ ապացույց Խնդիր 21-ով. եթե $T_{n+1}(r)=0$, ապա
+$T_{n+1}(-r)=(-1)^{n+1}T_{n+1}(r)=0$։ Օրինակներ՝ $T_5$-ի արմատները $0$, $\pm0{,}5878$, $\pm0{,}9511$ են (Խնդիր 19),
+$[-2,2]$-ի երեք հանգույցը՝ $0$, $\pm\sqrt3$ (Խնդիր 26)։ $[a,b]$ հատվածում հանգույցները սիմետրիկ են
+$\frac{a+b}{2}$ կետի նկատմամբ (Խնդիր 25)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $x_{n-k}=-x_k$, իսկ կենտ քանակի դեպքում միջին հանգույցը $0$-ն է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p23" open>
+<summary><h2>Խնդիր 23 - $\frac{1}{1+x^2}$ չեբիշևյան հանգույցներում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 23 (Python)</div>
+<p>Գրեք Python ֆունկցիա, որը որպես պարամետր ընդունում է $n$ դրական ամբողջ թիվը, վերցնում է $[-5,5]$ հատվածին
+համապատասխան $(n+1)$-րդ աստիճանի Չեբիշևի բազմանդամի արմատները՝ $x_0\lt x_1\lt\dots\lt x_n$, կառուցում է
+$f(x)=\frac{1}{1+x^2}$ ֆունկցիայի $n$-րդ աստիճանի ինտերպոլացիոն բազմանդամը $x_i$, $i=0,\dots,n$ կետերում և նույն
+նկարում գծում է $f$ ֆունկցիան, ինտերպոլացիոն բազմանդամը և $(x_i,f(x_i))$ կետերը։ Փորձեք ֆունկցիան $n=5$, $10$, $25$,
+$50$ արժեքների համար։</p>
+<p class="muted">Ցանկում կետերի համար գրված է $i=0,1,\dots,n-1$. նկատի ունեն, ըստ երևույթին, բոլոր $n+1$ կետերը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Չեբիշևյան հանգույցները $[-5,5]$-ում՝
+$x_k=5\cos\frac{(2k+1)\pi}{2n+2}$, աճման կարգով դասավորված։ Բազմանդամի արժեքները հաշվում ենք Լագրանժի բանաձևով մանր
+ցանցի վրա, և սխալանքի մեծագույն արժեքը ցույց է տալիս, թե որքան լավ է մոտարկումը։</p></div>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: 1 / (1 + x**2)
+
+def cheb_nodes(n, a, b):
+    """T_{n+1}-ի արմատները՝ [a, b]-ին բերված, աճման կարգով"""
+    k = np.arange(n + 1)
+    return np.sort((a + b) / 2 + (b - a) / 2 * np.cos((2 * k + 1) * np.pi / (2 * n + 2)))
+
+def lagrange_eval(xs, ys, x):
+    s = np.zeros_like(x)
+    for k in range(len(xs)):
+        l = np.ones_like(x)
+        for j in range(len(xs)):
+            if j != k:
+                l *= (x - xs[j]) / (xs[k] - xs[j])
+        s += ys[k] * l
+    return s
+
+def chebyshev_interpolation(n):
+    xs = cheb_nodes(n, -5, 5)
+    x = np.linspace(-5, 5, 4001)
+    P = lagrange_eval(xs, f(xs), x)
+    return xs, x, P
+
+for n in [5, 10, 25, 50]:
+    xs, x, P = chebyshev_interpolation(n)
+    print(f"n = {n:2}   max|f - P| = {np.abs(f(x) - P).max():.4g}")</code></pre>
+<p>Գրաֆիկը (Jupyter, Colab)՝ նույն ֆունկցիաներով։ Էջում նույն նկարը տալիս է վերևի ինտերակտիվ նկարի «Խնդիր 23» տարբերակը
+($n$-ը՝ մինչև $50$)։</p>
+<pre class="py"><code>import matplotlib.pyplot as plt
+
+for n in [5, 10, 25, 50]:
+    xs, x, P = chebyshev_interpolation(n)
+    plt.figure()
+    plt.plot(x, f(x), label="f(x) = 1/(1+x²)")
+    plt.plot(x, P, "--", label=f"P{n}")
+    plt.plot(xs, f(xs), "o", markersize=3)
+    plt.title(f"n = {n}")
+    plt.legend()
+plt.show()</code></pre>
+<div class="check"><span class="check-label">Ստուգում։</span> Մեծագույն սխալանքը՝ $0{,}5559$ ($n=5$), $0{,}1092$ ($n=10$),
+$0{,}01141$ ($n=25$), $3{,}965\cdot10^{-5}$ ($n=50$)։ Առաջին երկու թիվը նույնն է, ինչ Ռունգեի ֆունկցիայի աղյուսակում,
+և դա պատահական չէ. $x=5t$ դեպքում $\frac{1}{1+x^2}=\frac{1}{1+25t^2}$, իսկ $[-5,5]$-ի չեբիշևյան հանգույցները $[-1,1]$-ի
+հանգույցներն են՝ բազմապատկված $5$-ով։ Այսինքն՝ սա նույն Ռունգեի ֆունկցիան է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> վերևի ֆունկցիան. չեբիշևյան հանգույցներով սխալանքը $n$-ի աճին զուգընթաց նվազում է՝ $0{,}5559$, $0{,}1092$, $0{,}01141$, $3{,}965\cdot10^{-5}$</div>
+<p class="muted">Եթե նույն բազմանդամը հաշվենք Նյուտոնի տեսքով՝ աճման կարգով դասավորված հանգույցներով, $n=50$ դեպքում
+սխալանքը մոտ $3{,}5\cdot10^{-3}$ է, այսինքն՝ մոտ հարյուր անգամ մեծ։ Մեծ $n$-ի դեպքում բաժանված տարբերությունների
+հաշվարկում կլորացման սխալները մեծանում են։ Լագրանժի բանաձևն այստեղ ավելի կայուն է։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p24" open>
+<summary><h2>Խնդիր 24 - երեք նույնություն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 24</div>
+<p>Ապացուցեք, որ</p>
+<p>(ա) $T_n(T_m(x))=T_{nm}(x)$, $n,m\in\N\cup\{0\}$,</p>
+<p>(բ) $T_n(x)\,T_m(x)=\frac12\bigl(T_{n+m}(x)+T_{|n-m|}(x)\bigr)$,</p>
+<p>(գ) $\int_{-1}^{1}\frac{T_n(x)T_m(x)}{\sqrt{1-x^2}}\,dx$-ը հավասար է $0$-ի, երբ $n\ne m$, $\frac{\pi}{2}$-ի, երբ
+$n=m\ne0$, և $\pi$-ի, երբ $n=m=0$։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>$x=\cos\theta$ փոխարինմամբ $T_k(x)$-ը դառնում է
+$\cos k\theta$, և երեք պնդումն էլ վերածվում են կոսինուսների մասին պարզ փաստերի։ Եթե երկու բազմանդամ համընկնում են
+$[-1,1]$-ում, նրանք հավասար են ամենուր, քանի որ նրանց տարբերությունն ունի անվերջ թվով արմատ։</p></div>
+<h3>(ա) Համադրույթը</h3>
+<p>Դիցուք $x=\cos\theta$։ Այդ դեպքում $T_m(x)=\cos m\theta$, և $T_n(\cos m\theta)=\cos(nm\theta)$, քանի որ
+$T_n(\cos\alpha)=\cos n\alpha$ ցանկացած իրական $\alpha$-ի համար։ Ուրեմն
+$T_n(T_m(x))=\cos(nm\theta)=T_{nm}(x)$ բոլոր $x\in[-1,1]$ կետերում, հետևաբար՝ ամենուր։</p>
+<h3>(բ) Արտադրյալը</h3>
+<p>Կոսինուսների արտադրյալի բանաձևից՝</p>
+$$\begin{gathered}\cos n\theta\cos m\theta=\\ \frac12\bigl(\cos(n+m)\theta+\cos(n-m)\theta\bigr),\end{gathered}$$
+<p>իսկ $\cos(n-m)\theta=\cos|n-m|\theta$, քանի որ կոսինուսը զույգ է։ Աջ կողմը $\frac12\bigl(T_{n+m}(x)+T_{|n-m|}(x)\bigr)$-ն է,
+ձախը՝ $T_n(x)T_m(x)$-ը։</p>
+<h3>(գ) Օրթոգոնալությունը</h3>
+<p>$x=\cos\theta$, $\theta\in[0,\pi]$ փոխարինմամբ $dx=-\sin\theta\,d\theta$ և $\sqrt{1-x^2}=\sin\theta$ (քանի որ
+$\sin\theta\ge0$), իսկ սահմանները $1$-ը և $-1$-ը դառնում են $0$ և $\pi$՝</p>
+$$\begin{aligned}&\int_{-1}^{1}\frac{T_nT_m}{\sqrt{1-x^2}}\,dx=\int_0^\pi\cos n\theta\cos m\theta\,d\theta\\&=\frac12\int_0^\pi\cos(n+m)\theta\,d\theta\\&\quad+\frac12\int_0^\pi\cos(n-m)\theta\,d\theta.\end{aligned}$$
+<p>Ամբողջ $k\ne0$ դեպքում $\int_0^\pi\cos k\theta\,d\theta=\frac{\sin k\pi}{k}=0$, իսկ $k=0$ դեպքում ինտեգրալը $\pi$ է։</p>
+<ul>
+  <li>$n\ne m$. երկու ինտեգրալն էլ զրո են ($n+m\ne0$, $n-m\ne0$), արդյունքը $0$ է։</li>
+  <li>$n=m\ne0$. $\frac12(0+\pi)=\frac{\pi}{2}$։</li>
+  <li>$n=m=0$. $T_0=1$, և ինտեգրալը $\int_0^\pi d\theta=\pi$ է։</li>
+</ul>
+<div class="check"><span class="check-label">Ստուգում։</span> (ա) $T_2(T_3(x))=2(4x^3-3x)^2-1$, և բացելով ստացվում է $T_6(x)=32x^6-48x^4+18x^2-1$։
+(բ) $T_1T_2=x(2x^2-1)=2x^3-x=\frac12\bigl((4x^3-3x)+x\bigr)$։ (գ)-ն ստուգված է թվային ինտեգրմամբ։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> երեքն էլ հետևում են $T_k(\cos\theta)=\cos k\theta$ բանաձևից. (գ)-ն նշանակում է, որ Չեբիշևի բազմանդամները $\frac{1}{\sqrt{1-x^2}}$ կշռով օրթոգոնալ են</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p25" open>
+<summary><h2>Խնդիր 25 - չեբիշևյան հանգույցներ $[-2,1]$-ում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 25</div>
+<p>Դիցուք $f(x)=\frac{x+3}{x+4}$։</p>
+<p>(ա) Հաշվեք $[-2,1]$ հատվածին համապատասխան 3-րդ կարգի չեբիշևյան հանգույցները։</p>
+<p>(բ) Դիցուք $P_2$ բազմանդամն ինտերպոլացնում է $f$ ֆունկցիան (ա)-ում գտնված հանգույցներում։ Գնահատեք
+$\max_{x\in[-2,1]}|f(x)-P_2(x)|$ գլոբալ սխալանքը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>«3-րդ կարգի» հանգույցները $T_3$-ի երեք արմատներն են
+(երեք հանգույցով կառուցվում է հենց $P_2$-ը)՝ բերված $[-2,1]$-ի վրա։ Գնահատականի համար օգտագործում ենք
+$\max|\omega_3|=\frac{(b-a)^3}{2^5}$ բանաձևը։</p></div>
+<h3>(ա) Հանգույցները</h3>
+<p>$T_3$-ի արմատները՝ $\cos\frac\pi6=\frac{\sqrt3}{2}$, $\cos\frac\pi2=0$, $\cos\frac{5\pi}{6}=-\frac{\sqrt3}{2}$։ $[-2,1]$-ում
+$\frac{a+b}{2}=-\frac12$, $\frac{b-a}{2}=\frac32$, ուստի</p>
+$$\begin{gathered}x_0=-\frac12+\frac{3\sqrt3}{4}\approx0{,}799,\qquad x_1=-\frac12,\\ x_2=-\frac12-\frac{3\sqrt3}{4}\approx-1{,}799.\end{gathered}$$
+<h3>(բ) Գնահատականը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $M_3$</h3>
+<p>$f(x)=1-\frac{1}{x+4}$, ուրեմն $f'=\frac{1}{(x+4)^2}$, $f''=-\frac{2}{(x+4)^3}$, $f'''=\frac{6}{(x+4)^4}$։ $[-2,1]$-ում
+$f'''$-ը դրական է և նվազող, $M_3=f'''(-2)=\frac{6}{16}=\frac38$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $\max|\omega_3|$ և գնահատականը</h3>
+<p>$\max_{[-2,1]}|\omega_3|=\frac{3^3}{2^5}=\frac{27}{32}$, և</p>
+$$\max_{[-2,1]}|f-P_2|\le\frac{3/8}{3!}\cdot\frac{27}{32}=\frac{27}{512}\approx0{,}0527.$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական մեծագույն սխալանքը $\approx0{,}01141$ է՝ $x=-2$ կետում (կոդը)։
+Գնահատականը մոտ $4{,}6$ անգամ մեծ է. $M_3$-ը վերցված է $x=-2$-ում, որտեղ $f'''$-ն ամենամեծն է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $-\frac12+\frac{3\sqrt3}{4}\approx0{,}799$, $-\frac12$, $-\frac12-\frac{3\sqrt3}{4}\approx-1{,}799$։ (բ) $\max|f-P_2|\le\frac{27}{512}\approx0{,}0527$</div>
+<pre class="py" data-run><code>import numpy as np
+
+f = lambda x: (x + 3) / (x + 4)
+a, b = -2, 1
+k = np.arange(3)
+xs = (a + b) / 2 + (b - a) / 2 * np.cos((2 * k + 1) * np.pi / 6)      # T3-ի արմատները՝ [a, b]-ում
+print("հանգույցները՝", np.round(xs, 4))
+
+P2 = lambda x: sum(f(xs[i]) * np.prod([(x - xs[j]) / (xs[i] - xs[j]) for j in range(3) if j != i], axis=0)
+                   for i in range(3))
+x = np.linspace(a, b, 300001)
+e = np.abs(f(x) - P2(x))
+print(f"max|f - P2| = {e.max():.5f} (x = {x[e.argmax()]:.2f}),  գնահատականը՝ 27/512 = {27 / 512:.4f}")
+print("max|ω3| =", round(float(np.abs(np.prod([x - t for t in xs], axis=0)).max()), 6), "  27/32 =", 27 / 32)</code></pre>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p26" open>
+<summary><h2>Խնդիր 26 - $x^6-4x^4+5$ չեբիշևյան հանգույցներում</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 26</div>
+<p>Դիցուք $f(x)=x^6-4x^4+5$, $x\in\R$, և $P_2$ բազմանդամն ինտերպոլացնում է $f$ ֆունկցիան $[-2,2]$ հատվածին
+համապատասխան չեբիշևյան հանգույցներում։</p>
+<p>(ա) Կառուցեք $P_2$ ինտերպոլացիոն բազմանդամը Լագրանժի ինտերպոլացիոն բանաձևով։</p>
+<p>(բ) Գնահատեք $|f(-1)-P_2(-1)|$ և $\max_{-2\le x\le2}|f(x)-P_2(x)|$ սխալանքները։</p>
+</div>
+<div class="solution">
+<h3>(ա) $P_2$-ը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - հանգույցները և արժեքները</h3>
+<p>$P_2$-ի համար պետք է երեք հանգույց՝ $T_3$-ի արմատները ($\pm\frac{\sqrt3}{2}$, $0$)՝ բազմապատկված $2$-ով՝
+$-\sqrt3$, $0$, $\sqrt3$։ Արժեքները՝ $f(\pm\sqrt3)=27-36+5=-4$, $f(0)=5$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - Լագրանժի բանաձևը</h3>
+$$\begin{aligned}\ell_0(x)&=\frac{x(x-\sqrt3)}{(-\sqrt3)(-2\sqrt3)}=\frac{x(x-\sqrt3)}{6},\\ \ell_1(x)&=\frac{(x+\sqrt3)(x-\sqrt3)}{\sqrt3\cdot(-\sqrt3)}=-\frac{x^2-3}{3},\\ \ell_2(x)&=\frac{(x+\sqrt3)\,x}{2\sqrt3\cdot\sqrt3}=\frac{x(x+\sqrt3)}{6}.\end{aligned}$$
+<p>$P_2=-4\ell_0+5\ell_1-4\ell_2$, իսկ $\ell_0+\ell_2=\frac{2x^2}{6}=\frac{x^2}{3}$, ուստի</p>
+$$\begin{aligned}P_2(x)&=-\frac{4x^2}{3}-\frac{5(x^2-3)}{3}\\&=5-3x^2.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $P_2(0)=5$, $P_2(\pm\sqrt3)=5-9=-4$։</div>
+<h3>(բ) Սխալանքները</h3>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - $M_3$ և $\omega_3$</h3>
+<p>$f'''(x)=120x^3-96x$։ Նրա ծայրային արժեքը $f'''(2)=960-192=768$ է, իսկ ներսում՝ $f''''=360x^2-96=0$ կետերում
+($x^2=\frac{4}{15}$), $|f'''|$-ը մոտ $33$ է։ Ուրեմն $M_3=768$։ Հանգույցային արտադրյալը՝
+$\omega_3(x)=(x+\sqrt3)\,x\,(x-\sqrt3)=x^3-3x$, $|\omega_3(-1)|=2$, իսկ $\max_{[-2,2]}|\omega_3|=\frac{4^3}{2^5}=2$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 4</span> - գնահատականները</h3>
+$$\begin{gathered}|f(-1)-P_2(-1)|\le\frac{768}{3!}\cdot2=256,\\ \max_{[-2,2]}|f-P_2|\le\frac{768}{3!}\cdot2=256.\end{gathered}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $f(x)-P_2(x)=x^6-4x^4+3x^2=x^2(x^2-1)(x^2-3)$։ $x=-1$-ում այն զրո է՝
+$f(-1)=2=P_2(-1)$, այսինքն՝ $x=-1$-ում սխալանք չկա։ Մեծագույն արժեքը $[-2,2]$-ում $12$ է՝ $x=\pm2$ կետերում։ Գնահատականը ճիշտ
+է, բայց շատ կոպիտ ($256$ իրական $12$-ի փոխարեն), քանի որ $|f'''|$-ը $768$-ին մոտ է միայն հատվածի ծայրերում։ Ինտերակտիվ
+նկարում ընտրեք «Խնդիր 26»։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $P_2(x)=5-3x^2$։ (բ) Երկու գնահատականն էլ $256$ են, իսկ իրական արժեքներն են $|f(-1)-P_2(-1)|=0$ և $\max|f-P_2|=12$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="table-wrap"><table class="tbl"><thead><tr><th></th><th>Լագրանժի տեսք</th><th>Նյուտոնի տեսք</th></tr></thead>
+<tbody>
+<tr><td>Բանաձևը</td><td>$\sum_k y_k\,\ell_k(x)$</td><td>$\sum_k f[x_0,\dots,x_k]\,(x-x_0)\cdots(x-x_{k-1})$</td></tr>
+<tr><td>Գործակիցները</td><td>$y_k$-երը, բազիսային բազմանդամներով</td><td>բաժանված տարբերություններ (աղյուսակ)</td></tr>
+<tr><td>Նոր հանգույց</td><td>բոլոր $\ell_k$-երը փոխվում են</td><td>աղյուսակի մեկ նոր տող և մեկ նոր գումարելի</td></tr>
+<tr><td>Արժեքը մեկ կետում</td><td>մոտ $n^2$ բազմապատկում</td><td>$n$ բազմապատկում (Հորների սխեմա)</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table class="tbl"><thead><tr><th></th><th>Հավասարահեռ հանգույցներ</th><th>Չեբիշևյան հանգույցներ</th></tr></thead>
+<tbody>
+<tr><td>$\max_{[-1,1]}|\omega_{n+1}|$, $n=10$</td><td>$\approx8{,}53\cdot10^{-3}$</td><td>$2^{-10}\approx9{,}77\cdot10^{-4}$ (նվազագույնը)</td></tr>
+<tr><td>Ռունգեի ֆունկցիա, $n=20$</td><td>սխալանքը $\approx59{,}82$</td><td>սխալանքը $\approx0{,}0153$</td></tr>
+<tr><td>Հանգույցները</td><td>$a+\frac{b-a}{n}k$</td><td>$\frac{a+b}{2}+\frac{b-a}{2}\cos\frac{(2k+1)\pi}{2(n+1)}$</td></tr>
+</tbody></table></div>
+<p>Հիմնական բանաձևերը՝</p>
+<ul>
+  <li>սխալանքը՝ $f(x)-P_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,\omega_{n+1}(x)$,</li>
+  <li>բաժանված տարբերությունը և ածանցյալը՝ $f[x_0,\dots,x_k]=\frac{f^{(k)}(\xi)}{k!}$,</li>
+  <li>չեբիշևյան հանգույցներ՝ $\max_{[a,b]}|\omega_{n+1}|=\frac{(b-a)^{n+1}}{2^{2n+1}}$։</li>
+</ul>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li>Բաժանված տարբերության հայտարարում վերցնել հարևան հանգույցների տարբերությունը, ոչ թե ծայրայինների՝ $x_{i+k}-x_i$։</li>
+  <li>Նյուտոնի տեսքում $f[x_0,\dots,x_k]$-ն բազմապատկել $(x-x_0)\cdots(x-x_k)$-ով։ Արտադրյալը վերջանում է $(x-x_{k-1})$-ով։</li>
+  <li>Մոռանալ, որ $n+1$ հանգույցի ինտերպոլացիոն բազմանդամի աստիճանը կարող է $n$-ից փոքր լինել (խնդիրներ 2բ, 3, 12)։</li>
+  <li>Գնահատականում $|f^{(n+1)}|$-ը վերցնել մեկ կետում (օրինակ՝ հենց $x$-ում), ոչ թե նրա մեծագույն արժեքը հատվածում
+  (խնդիրներ 15, 16)։</li>
+  <li>Չեբիշևյան հանգույցները չբերել $[a,b]$-ի վրա. $\cos\frac{(2k+1)\pi}{2(n+1)}$ բանաձևը միայն $[-1,1]$-ի համար է
+  (խնդիրներ 25, 26)։</li>
+  <li>Կարծել, որ հավասարահեռ հանգույցներն ավելացնելով սխալանքը միշտ փոքրանում է (Ռունգեի երևույթ)։</li>
+  <li>Հանգույցներից դուրս բազմանդամին վստահել այնքան, որքան հանգույցների միջև (խնդիր 16)։</li>
+</ul>
+</div>
+
+<h3>Հարցեր ինքնաստուգման համար</h3>
+<ol>
+  <li>Ինչո՞ւ է ինտերպոլացիոն բազմանդամը միակը։ <span class="muted">(երկու այդպիսի բազմանդամի տարբերությունն ունի $n+1$ արմատ)</span></li>
+  <li>Ինչո՞ւ նոր հանգույց ավելացնելիս Նյուտոնի տեսքի հին գործակիցները չեն փոխվում։ <span class="muted">($a_k$-ն կախված է միայն $x_0,\dots,x_k$-ից)</span></li>
+  <li>Ինչի՞ է հավասար $f[x_0,\dots,x_n]$-ը, եթե $f$-ը $n$-րդ աստիճանի բազմանդամ է։ <span class="muted">(ավագ անդամի գործակցին, խնդիր 7)</span></li>
+  <li>Որտեղի՞ց է գալիս $(n+1)!$-ը սխալանքի բանաձևում։ <span class="muted">(Ռոլլի թեորեմը՝ $n+1$ անգամ, և $\omega_{n+1}^{(n+1)}=(n+1)!$)</span></li>
+  <li>Ինչո՞ւ է չեբիշևյան հանգույցների դեպքում $\max|\omega_{n+1}|=2^{-n}$։ <span class="muted">($\omega_{n+1}=2^{-n}T_{n+1}$)</span></li>
+  <li>Ինչո՞ւ են Ռունգեի ֆունկցիայի համար հավասարահեռ հանգույցները վատ։ <span class="muted">(վերջին ինտերակտիվ նկարը)</span></li>
+</ol>
+<p>Խնդիրների ցանկի հաջորդ բաժինը <a href="splines.html">սպլայններն են</a>։ Այնտեղ Ռունգեի երևույթից խուսափում ենք ոչ թե
+հանգույցներն ընտրելով, այլ ամեն փոքր հատվածում ցածր աստիճանի բազմանդամ վերցնելով։</p>
 </div>
 </details>
 

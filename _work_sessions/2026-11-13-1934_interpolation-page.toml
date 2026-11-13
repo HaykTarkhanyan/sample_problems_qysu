@@ -1,0 +1,51 @@
+title = "Interpolation page (problem list block B, problems 1-26) finished in a worktree, not merged or published"
+date = "2026-11-13"
+time = "19:34"  # local, start of the second agent's part (the first agent did M1 before)
+
+areas = [
+  "site/numerical (interpolation.html, index.html card)",
+  "site/assets/js/num-interp.js",
+  "numerical_methods/checks (interpolation_check.py, interp_widgets_check.mjs)",
+  "numerical_methods/README.md (status row)",
+]
+
+done = [
+  "Took over the previous agent's branch worktree-agent-af2415197c4328b85 (M1: intro, existence, Lagrange, problems 1-4) by a merge; its gitignored notes (logs/interpolation_statements.md, page images) copied into the worktree.",
+  "M2: Newton theory section (derivation of the coefficients, definition, theorem, lecture example plus an added point, Horner evaluation, four properties with a proof in details.deep), divided-difference Python cell, predict block on the denominator, w-dd widget wired in (six cases); problems 5-13 with statement, steps, check and answer; fractions cell for 10-11, NewtonInterpolation cell for 13.",
+  "M3: error section (theorem, pointwise and global estimates, cos example, Rolle proof and the link to property 4, predict block on extrapolation, w-err widget); problems 14-18 with Python cells for 14, 15, 16, 17 (and static matplotlib code for 14); node-choice section (Runge table, Chebyshev polynomials and their trigonometric form with proof, predict + w-cheb, Chebyshev nodes, minimax theorem with proof, general interval, Runge cell, predict + w-nodes); problems 19-26 with cells for 20, 23, 25 (static matplotlib for 20 and 23); closing #exam section (two summary tables, key formulas, typical mistakes, self-check questions, link to splines).",
+  "M1 display formulas that were too wide for a phone were split. Widths were estimated from KaTeX glyph metrics with a scratch script (KaTeX __renderToHTMLTree, 19.36 px per em, limits 316 / 288 px); the same script rates 7 splines.html formulas slightly over, so it errs on the safe side. No browser check.",
+  "num-interp.js: sci() now shows 3 significant digits for 0.01 <= |v| < 1 (the w-err check expected 0,0311 and the widget printed 0,031). interp_widgets_check.mjs: the 'every widget exercised' assert compares sorted lists (page order w-cheb before w-nodes is intended).",
+  "Index card (before the splines card) and README status row (before the C row).",
+  "Gates on the final state: check_site all checks passed; lint --style 0 errors, no hints; interpolation_check.py all checks passed (0.5 s); run_page_blocks 13/13 blocks ran (0.4 s); interp_widgets_check.mjs all five widgets ran, 995 TeX strings rendered.",
+]
+
+pending = [
+  "Main session: maths and Armenian pass, browser check at 1280 / 390 px in both themes (widgets, formula overflow, the divided-difference tables), one independent math review, merge with the sibling pages (index.html and README.md conflict by design), search index rebuild.",
+  "README.md still has the old row 'B | ... | - | next; not started' below the C row; remove it in the merge.",
+]
+
+next = [
+  "Merge, review, publish. Then the next block per DECISIONS #20: A 16-45 (nonlinear equations).",
+]
+
+files = [
+  "site/numerical/interpolation.html",
+  "site/numerical/index.html",
+  "site/assets/js/num-interp.js",
+  "numerical_methods/checks/interpolation_check.py",
+  "numerical_methods/checks/interp_widgets_check.mjs",
+  "numerical_methods/README.md",
+]
+
+commits = [
+  "54956be Interpolation page, M2: Newton form, divided differences, problems 5-13",
+  "M3 commit: error and Chebyshev sections, problems 14-26, exam section, index card, README row, this log",
+]
+
+notes = """
+Terms without a glossary row: Horner scheme = «Հորների սխեմա», Runge phenomenon = «Ռունգեի երևույթ» (as on the splines
+page), extrapolation = «էքստրապոլացիա», Chebyshev nodes = «չեբիշևյան հանգույցներ» (problem list), leading coefficient
+written as «ավագ անդամի գործակից» (row 545 gives «ավագ անդամ» for "leading coefficient").
+Problem 23 of the list plots the points i = 0..n-1; the page restates it with all n + 1 points and says so in a note.
+Problem 25's "3-րդ կարգի չեբիշևյան հանգույցներ" is read as the three roots of T3 (part b uses P2).
+"""

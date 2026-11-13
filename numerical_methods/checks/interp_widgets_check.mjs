@@ -292,5 +292,5 @@ if (widgets["w-cheb"]) {
   ran.push("w-cheb");
 }
 
-assert.deepEqual(ran, Object.keys(widgets), "a widget on the page was not exercised");
+assert.deepEqual([...ran].sort(), Object.keys(widgets).sort(), "a widget on the page was not exercised");
 console.log(`num-interp.js widgets on the mock DOM: ${ran.join(", ")} ran, ${texCount} TeX strings rendered: all checks passed`);
