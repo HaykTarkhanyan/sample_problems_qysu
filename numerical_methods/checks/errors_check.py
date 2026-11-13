@@ -492,6 +492,11 @@ close(fa, 1.767330, 1e-6); close(lo, 1.764499, 1e-6)
 assert 0.002831 < abs11 < 0.002832 and 0.001602 < rel11 < 0.001603 and abs11 < 0.01 / (2 * lo) < 0.002834
 for astar in np.linspace(a11 - 0.01, a11 + 0.01, 2001)[1:-1]:
     assert abs(fa - math.sqrt(astar + 1)) < abs11 and abs(fa - math.sqrt(astar + 1)) / fa < rel11
+assert f"{abs11:.7f}" == "0.0028314" and f"{rel11:.7f}" == "0.0016021" and round(100 * rel11, 2) == 0.16
+assert f"{0.01 / (1.767330 + 1.764499):.7f}" == "0.0028314" and f"{0.0028314 / 1.767330:.7f}" == "0.0016021"
+assert Fr("1.76") ** 2 == Fr("3.0976") < Fr("3.1134567") and f"{0.01 / 3.52:.6f}" == "0.002841" and 0.01 / 3.52 < 0.00285
+assert f"{0.01 / (2 * lo):.7f}" == "0.0028337" and round(100 * 0.01 / a11, 1) == 0.5 and round(0.01 / a11 / rel11) == 3
+assert f"{max(abs(fa - math.sqrt(s_ + 1)) for s_ in [a11 - 0.00999999, a11 + 0.00999999]):.7f}" == "0.0028314"
 f11 = lambda x: 1 / (1 + x) + x * x
 a, s = Fr("-0.791322"), Fr("-0.8")
 assert f11(s) == Fr("5.64") and 1 + a == Fr("0.208678") and a * a == Fr("0.626190507684")
@@ -507,6 +512,12 @@ close(1 / 0.0417356, 23.96036, 1e-6); close(float(relerr(a, s)), 0.010966, 1e-4)
 close(26.6 * 0.008678, 0.230835, 1e-5)
 close(float(abs11b) / 0.008678, 25.55, 1e-3); close(float(rel11b) / float(relerr(a, s)), 3.73, 2e-3)
 assert f"{float(rel11b) / float(relerr(a, s)):.1f}" == "3.7"           # the func-theory paragraph: "about 3.7 times"
+assert (f"{float(f11(a)):.6f}", f"{1 / 0.208678:.6f}", f"{float(abs11b):.6f}", f"{float(rel11b):.6f}") == \
+    ("5.418263", "4.792072", "0.221737", "0.040924")
+assert f"{100 * float(rel11b):.1f}" == "4.1" and f"{100 * float(relerr(a, s)):.1f}" == "1.1"
+assert f"{float(abs11b) / 0.008678:.2f}" == "25.55" and f"{abs(float((a + s) - 1 / ((1 + a) * (1 + s)))):.2f}" == "25.55"
+assert f"{1 / 0.0417356:.2f}" == "23.96" and Fr(-1) / Fr("0.04") - Fr("1.6") == Fr("-26.6") and (1 + s) ** 2 == Fr("0.04")
+assert f"{26.6 * 0.008678:.4f}" == "0.2308" and 1 / (1 + s) == 5 and s * s == Fr("0.64")
 
 # ---------------------------------------------------------------- A12
 for _ in range(3000):
@@ -537,6 +548,12 @@ for _ in range(4000):
         r = relerr(a, s1)
         assert relerr(1 / a, 1 / s1) == e1 / abs(s1) <= r / (1 - r)
 assert relerr(Fr(1, 2), 1 / Fr("1.8")) == Fr(1, 9) == Fr(1, 10) / (1 - Fr(1, 10))
+# A13: equality when a1, a2 > 0 and both approximations are too large (used in A15)
+for _ in range(500):
+    a1, a2 = Fr(random.randint(1, 900), 37), Fr(random.randint(1, 900), 41)
+    s1, s2 = a1 + Fr(random.randint(1, 300), 97), a2 + Fr(random.randint(1, 300), 89)
+    e1, e2 = abserr(a1, s1), abserr(a2, s2)
+    assert abserr(a1 * a2, s1 * s2) == a1 * e2 + a2 * e1 + e1 * e2
 assert relerr(Fr(1, 2), 1 / Fr("2.2")) == Fr(1, 11)
 log.info(f"A13, A14: product and reciprocal bounds OK on random data; a = 2, a* = 1.8: relerr(1/a, 1/a*) = 1/9 "
          f"= {1/9:.4f} = r/(1-r) with r = 0.1; a* = 2.2 gives 1/11 = {1/11:.4f}")
@@ -556,7 +573,12 @@ assert relerr(a, Fr("1.1")) == Fr("0.1") == relerr(b, Fr("2.2"))
 assert Fr("0.1") + Fr("0.1") + Fr("0.1") * Fr("0.1") == Fr("0.21")
 worst15b = max(relerr(a * b, (a + Fr(i, 100)) * (b + Fr(j, 100))) for i in range(-10, 11) for j in range(-20, 21))
 assert worst15b == Fr("0.21")
-assert relerr(a * b, Fr("0.9") * Fr("1.8")) == Fr("0.19")
+assert relerr(a * b, Fr("0.9") * Fr("1.8")) == Fr("0.19") and Fr("0.9") * Fr("1.8") == Fr("1.62")
+assert Fr("2.42") - 2 == Fr("0.42") and Fr("0.42") / 2 == Fr("0.21") and Fr("0.1") + Fr("0.3") == Fr("0.4") <= Fr("0.5")
+assert Fr("3.63") - 3 == Fr("0.63")
+# summary box, typical mistake: rounding step by step from the end
+assert fl(Fr("0.12345"), 3, "round") == Fr("0.123") and fl(fl(Fr("0.12345"), 4, "round"), 3, "round") == Fr("0.124")
+assert fl(Fr("0.12345"), 4, "round") == Fr("0.1235")
 log.info("A15: (a) a* = 1.2, b* = 3.6 gives 4.32, abserr 0.69 > 0.5 (largest possible); a* = 1, b* = 3 gives 0.63; "
          "(b) a* = 1.1, b* = 2.2 gives 2.42, relerr 0.21 > 0.1 (largest possible); 0.9 * 1.8 gives 0.19")
 
