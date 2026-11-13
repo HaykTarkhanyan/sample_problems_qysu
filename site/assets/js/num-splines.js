@@ -362,7 +362,7 @@
         }
       }
       const ok = lines.every(l => l.j.every(v => Math.abs(v) < 1e-9));
-      out("msg").textContent = lines.map(l => `x = ${num(l.x, 2)}՝ թռիչքները (աջ − ձախ)՝ S-ի ${num(l.j[0], 3)}, S'-ի ${num(l.j[1], 3)}, S''-ի ${num(l.j[2], 3)}`).join("; ") +
+      out("msg").textContent = lines.map(l => `x = ${num(l.x, 2)}՝ թռիչքները (աջ − ձախ)՝ S-ի ${num(l.j[0], 3)}, S'-ի ${num(l.j[1], 3)}, S''-ի ${num(l.j[2], 3)}`).join(". ") +
         (ok ? "։ Բոլոր թռիչքները զրո են, ուրեմն խորանարդային սպլայն է։" : "։ Կա ոչ զրոյական թռիչք, ուրեմն խորանարդային սպլայն չէ։");
     }
     btns.forEach(b => b.addEventListener("click", () => { press(btns, b); draw(b.dataset.case); }));
@@ -425,7 +425,7 @@
       Q.tex(out("formula"), `P(x) = ${polyTex(cs, 4)},\\qquad \\Phi=\\sum r_i^2 = ${texNum(phi, 4)}`, false);
       out("msg").textContent = Math.abs(delta) < 1e-9
         ? `Սա նվազագույնն է։ Շարժեք սահիչը՝ ազատ անդամը փոխելու համար, և հետևեք Φ-ին։`
-        : `Ազատ անդամը շեղված է ${num(delta, 2)}-ով, և Φ-ն մեծացել է ${num(phi - phiMin, 4)}-ով (= n·δ² = ${xs.length}·${num(delta * delta, 4)})։`;
+        : `Ազատ անդամը շեղված է ${num(delta, 2)}-ով, և Φ-ն մեծացել է ${num(phi - phiMin, 4)}-ով (= (m+1)·δ² = ${xs.length}·${num(delta * delta, 4)})։`;
     }
     degBtns.forEach(b => b.addEventListener("click", () => { deg = Number(b.dataset.deg); press(degBtns, b); draw(); }));
     dataBtns.forEach(b => b.addEventListener("click", () => { press(dataBtns, b); slider.value = 0; load(b.dataset.set); }));

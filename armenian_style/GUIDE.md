@@ -270,6 +270,9 @@ Reason: the verb ending (-ենք) already says "we". Wikipedia writes «Երբ �
 - Fine, do not rewrite (owner, 2026-11-13, A44): «Բազմությունը, դա ... է», «Իր հերթին, ...» and «դեր
   չի խաղում». They look like Russian patterns («это», «в свою очередь», «не играет роли») but read
   as normal Armenian to the owner. This guide used to list the first two as calques.
+- Also fine as written (owner, 2026-11-13, A49, all four from the splines page): «$|f''|$-ն աճում է
+  $t$-ից», «$\Phi$-ն ողորկ ֆունկցիա է գործակիցներից» (a function "of" something with «-ից»), «ուղիղ
+  վերևի բանաձևերով» («ուղիղ» as "directly") and «ինքնաբերաբար» for "holds automatically".
 - Allowed, the shorter form is only a style choice: «իրենից ներկայացնում է n-մուլտիբազմություն» may
   stay (owner, A28); «n-մուլտիբազմություն է» is lighter.
 - Allowed, shorter preferred where it fits: «$B$-ն հանդես է գալիս որպես $C$-ի տարր» -> «$B$-ն $C$-ի

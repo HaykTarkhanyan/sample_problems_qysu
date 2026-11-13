@@ -37,5 +37,11 @@ towards textbook Armenian and over-suspects Russian patterns that native speaker
 - When the owner does not select an item, that is not a confirmation. On 2026-11-13 rows 806 and 730
   were first recorded as "deliberately left as written" from a non-answer; the owner was asked again
   and only then confirmed them.
+- Added the same night, from the pass on `site/numerical/splines.html`: four more phrasings that
+  "sounded off" to the model were put to the owner instead of being rewritten, and all four were
+  fine (A49: «աճում է $t$-ից», «ֆունկցիա է գործակիցներից», «ուղիղ վերևի բանաձևերով», «ինքնաբերաբար»).
+  That makes the naturalness alarms 1 right out of 9. What did hold up on that page were the
+  checkable things: a glossary term («կշռավորված միջին»), a declension («ուղղով», not «ուղիղով»), a
+  stale description of the Python cell buttons, and wording that was ambiguous as logic.
 - Theories tested and disproven here, so nobody tries them again: "numeral + plural in definitions",
   "«Իր հերթին» / «X-ը, դա» / «դեր չի խաղում» are calques to remove", "rows 806 and 730 are slips".

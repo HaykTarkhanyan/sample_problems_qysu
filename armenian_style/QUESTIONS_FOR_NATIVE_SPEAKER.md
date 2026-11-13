@@ -15,7 +15,7 @@ need to answer the open ones.
 |--------|-----|
 | **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
-| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48 |
+| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
 | **Open** | none |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
@@ -342,3 +342,7 @@ c) other. **Owner:** a.
 **A48. «Անհրաժեշտ է, որ ...» or «Անհրաժեշտ է, որպեսզի ...»?** The Committee page gives the rule for
 other verbs («նախընտրելի է», «պնդում է», «ժամանակն է»), not for «անհրաժեշտ է» / «պետք է».
 a) «որ»  b) both fine  c) «որպեսզի». **Owner:** a.
+
+**A49. Four phrasings on the splines page: fine, or rewrite?** «$|f''|$-ն աճում է $t$-ից», «$\Phi$-ն
+ողորկ ֆունկցիա է գործակիցներից», «ուղիղ վերևի բանաձևերով», «ինքնաբերաբար» (for "holds automatically").
+I doubted all four. **Owner:** all four are fine.

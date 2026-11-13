@@ -229,7 +229,8 @@ widget, etc.).
   self-contained (it runs in a fresh namespace), uses only numpy unless the text says the block downloads SciPy
   (~14 MB), prints its results, and its output matches the numbers in the text. Armenian comments and strings
   are fine; no Latin `:` or `;` right after an Armenian letter (the lint checks code too), use `՝`. Run all
-  blocks locally before publishing (extract the `pre.py` blocks and `exec` them with the `animations/` env).
+  blocks locally before publishing (`uv run --project animations python numerical_methods/checks/run_page_blocks.py`, about 3 s: it
+  extracts the `pre.py` blocks and runs each one in a fresh namespace).
 - Display math must fit 316 px (288 px inside a box): split long formulas with `aligned` / `gathered`, and write
   two-piece functions in a problem statement inline («$[a,b]$-ում $p(x)$-ին և ...») instead of a wide `cases`.
   Never put Armenian inside `\text{}` (KaTeX fonts have no Armenian glyphs); use $S(x_0^-)$ / $S(x_0^+)$ style

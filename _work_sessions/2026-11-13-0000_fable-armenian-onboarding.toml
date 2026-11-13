@@ -24,6 +24,9 @@ done = [
   "The solutions skill (.claude/skills/pedagogical-solutions/SKILL.md) taught `Ինչու՞` and forbade the ASCII mijaket; fixed, and it now points to armenian_style/ and the lint.",
   "Article after a formula: a probe built on the spoken-name table checked 1572 articles and found 18 wrong. Fixed the 5 on live probability / numerical pages («$k$-ը,» twice, «$n-k$-ը», «$F_W$-ը», «$S$-ն,»); 13 in the discrete sheets stay parked. Lint: hint article-after-symbol, error che-eli, primes read «շտրիխ», Greek letters and j known; self-test 79 -> 95.",
   "Owner answers: discrete sweep 'not now' (asked again); A47 primes are read «շտրիխ»; A48 «Անհրաժեշտ է, որ ...».",
+  "Pass on site/numerical/splines.html (owner: 'do a pass on its Armenian and try to improve it'). Read all 1052 lines and re-derived the maths of all 17 problems: no math errors. 12 fixes: stale note about an «Խմբագրել» button that no longer exists (cells are edited in place), glossary term «կշռավորված միջին», «ուղղով» (was «ուղիղով»), «թռիչք ունի» twice (glossary noun, was «թռչում է»), «ըստ $a_j$-ի ածանցելիս», an ambiguous «որը չափում է $f''$-ը», an unclear bound in problem 3 step 2, where $1/(2n^2)$ comes from, word order in problem 4, the name «անկյունագծային գերիշխում» in the proof, an idea box for problem 10. Widget text: no ';' between clauses, '(m+1)·δ²' to match the page's notation.",
+  "Four doubtful phrasings went to the owner (A49): all four fine, nothing changed. New folded block under problem 10 (owner said yes): natural spline through four points, a 2x2 system, M = (0, 2, 4, 0), numbers in splines_check.py, two lines in the SciPy cell.",
+  "New numerical_methods/checks/run_page_blocks.py: runs every runnable Python block of a page locally in a fresh namespace (10 of 10 ran, 2.7 s). Browser check at 390 px: 0 KaTeX errors, 0 overflowing formulas, widgets show the new text.",
 ]
 
 pending = [
@@ -51,7 +54,8 @@ commits = [
   "7fff498 Armenian guide: second model check (Fable 5.2), owner answers folded in, lint ով/ովքեր exception (docs and lint only, no Pages run)",
   "c36f87f Armenian: owner answers A40-A46, glossary fixes after a full read, two new lint rules (Pages run 43333623307 passed, 13 Nov 01:01 local)",
   "ba5d2c2 two learnings; rows 806 and 730 recorded as confirmed by the owner (asked a second time after a heads-up note pointed out that 'not selected' is not 'confirmed')",
-  "fourth commit (third round): source spot-check, skill fix, article-after-symbol hint and 5 article fixes on live pages, che-eli, primes, A47-A48",
+  "76cdc8d (third round): source spot-check, skill fix, article-after-symbol hint and 5 article fixes on live pages, che-eli, primes, A47-A48 (Pages run passed, 13 Nov 01:17 local)",
+  "fifth commit: splines page pass (12 fixes, four-point example, run_page_blocks.py), A49",
 ]
 
 notes = """

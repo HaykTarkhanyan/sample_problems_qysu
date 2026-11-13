@@ -8,10 +8,11 @@ reference only (gitignored); this map is what gets committed.
 
 | ARM block | topic | site page | status |
 |-----------|-------|-----------|--------|
-| C | splines + least squares (problems 1-17) | `site/numerical/splines.html` | built 2026-11-11 (proof of concept): theory, 17 solutions, 4 widgets, 10 runnable Python blocks, 1 Manim video; numbers checked by `checks/splines_check.py`, widget math by `checks/widgets_check.mjs`, math review in `reviews/` |
+| C | splines + least squares (problems 1-17) | `site/numerical/splines.html` | built 2026-11-11 (proof of concept): theory, 17 solutions, 4 widgets, 10 runnable Python blocks, 1 Manim video; numbers checked by `checks/splines_check.py`, widget math by `checks/widgets_check.mjs`, math review in `reviews/`; language and content pass on 2026-11-13 (12 fixes, plus a folded four-point natural-spline example under problem 10) |
 | A, B, D, E | errors + nonlinear equations, interpolation, integration, linear systems | - | not started |
 
-Folders: `checks/` (number re-computation for each page), `reviews/` (independent math reviews).
+Folders: `checks/` (number re-computation for each page; `run_page_blocks.py` runs every runnable Python
+block of a page locally, each in a fresh namespace), `reviews/` (independent math reviews).
 
 ## Files
 

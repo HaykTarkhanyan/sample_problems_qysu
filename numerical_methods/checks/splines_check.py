@@ -163,6 +163,21 @@ assert np.allclose(cs(gg), np.abs(gg) ** 3 - 3 * gg**2 - gg + 2)
 close(cs(0, 2), -6)
 log.info(f"C10: M1 = S''(0) = {cs(0, 2):.6f}; S = |x|^3 - 3x^2 - x + 2  OK; S(0.5) = {cs(0.5):.6f}")
 
+# ---------- C10, folded "more" block: four points (0,0),(1,0),(2,2),(3,7), a 2x2 system ----------
+M1, M2 = np.linalg.solve(np.array([[4.0, 1.0], [1.0, 4.0]]), np.array([12.0, 18.0]))
+close(M1, 2)
+close(M2, 4)
+cs4 = CubicSpline([0, 1, 2, 3], [0, 0, 2, 7], bc_type="natural")
+for xk, mk in zip([0, 1, 2, 3], [0, 2, 4, 0]):
+    close(cs4(xk, 2), mk)
+g1, g2, g3 = np.linspace(0, 1, 21), np.linspace(1, 2, 21), np.linspace(2, 3, 21)
+assert np.allclose(cs4(g1), g1**3 / 3 - g1 / 3)
+assert np.allclose(cs4(g2), (2 - g2) ** 3 / 3 + 2 * (g2 - 1) ** 3 / 3 - (2 - g2) / 3 + 4 * (g2 - 1) / 3)
+assert np.allclose(cs4(g3), 2 * (3 - g3) ** 3 / 3 + 4 * (3 - g3) / 3 + 7 * (g3 - 2))
+close(cs4(1, 1), 2 / 3)
+close(cs4(2, 1), 11 / 3)
+log.info(f"C10 more (4 points): M = (0, {M1:.6f}, {M2:.6f}, 0); three pieces OK; S'(1) = {cs4(1, 1):.6f}, S'(2) = {cs4(2, 1):.6f}")
+
 
 # ---------- C11 / C12: unknown coefficients ----------
 def solve(A, b):

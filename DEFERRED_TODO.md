@@ -5,7 +5,9 @@ Topics cut from current work so they are not lost.
 - **Numerical analysis, remaining problem-list blocks** A (errors + nonlinear equations, 45 problems),
   B (interpolation, 26), D (integration, 25), E (linear systems, 16), with PSS 1 of the current course as a
   separate page or merged into A. `numerical_methods/README.md` has the map. (2026-11-11)
-- **Native Armenian read of `site/numerical/splines.html`** (model-written, linted only). (2026-11-11)
+- **Native Armenian read of `site/numerical/splines.html`** (model-written). A model pass was done on
+  2026-11-13 (full read against the guide and glossary, 12 fixes, 4 doubtful phrasings put to the owner
+  and all 4 kept), but nobody native has read it end to end yet. (2026-11-11)
 - **Student feedback on runnable Python**: is the ~9 MB first load acceptable on phones; do they edit and rerun;
   would plots in the output help (matplotlib in Pyodide, ~10 MB more) (DECISIONS #16). (2026-11-11)
 - **More Manim videos** if the first one helps: candidates are the linear-spline error parabola
