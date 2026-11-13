@@ -359,6 +359,14 @@ close(s28[2], 1 + 2 / math.log(2))
 log.info(f"A28 Newton x_1 = {n28[1]}, x_2 = {n28[2]:.6f}; secant x_2 = {s28[2]:.6f}; root e^2 = {math.e**2:.6f}")
 n28l = newton(f28, lambda x: 1 / x, 1.0, 6)
 log.info(f"A28 Newton further: {[round(v, 6) for v in n28l[3:]]}")
+# Newton / secant theory: order of two secant steps; Newton on a double root halves the error
+shown(golden**2, "2.618"); close(golden**2, golden + 1)
+assert newton(lambda x: x * x, lambda x: 2 * x, 1.0, 5) == [1.0, 0.5, 0.25, 0.125, 0.0625, 0.03125]
+shown(math.e**2, "7.389056"); shown(math.e**2, "7.3891"); shown(n28[2], "5.704163"); shown(n28[2], "5.7042")
+shown(s28[2], "3.885390"); shown(s28[2], "3.8854"); shown(math.exp(3), "20.09")
+for v, s in zip(n28l[3:6], ["7.180422", "7.386083", "7.389056"]):
+    shown(v, s)
+assert all(x * (3 - math.log(x)) > 0 for x in [0.5, 7, 20]) and 20.1 * (3 - math.log(20.1)) < 0
 
 # ---------- A29: x^3 - x + 1 = 0, Newton from 1 ----------
 f29 = lambda x: x**3 - x + 1
@@ -369,6 +377,10 @@ r29 = brentq(f29, -2, -1)
 k29 = next(i for i, v in enumerate(n29) if abs(v - r29) < 1e-6)
 log.info(f"A29 x_1 = {n29[1]}, x_2 = {n29[2]}, x_3 = {n29[3]:.4f}; root {r29:.6f}; first n with error < 1e-6: {k29}")
 log.info(f"A29 path: {[round(v, 3) for v in n29[:k29 + 1]]}")
+assert k29 == 19 and all(0 < v <= 3 for v in n29[2:13]) and n29[13] < 0 and abs(n29[2] - r29) > abs(n29[0] - r29)
+assert f29(1) == 1 and df29(1) == 2
+shown(r29, "-1.32"); shown(r29, "-1.324718"); shown(f29(1 / math.sqrt(3)), "0.615")
+close(f29(1 / math.sqrt(3)), 1 - 2 / (3 * math.sqrt(3)))
 
 # ---------- A30: three examples for Newton's method ----------
 fa30 = lambda x: x**3 + 2 * x * x + 4
@@ -386,6 +398,15 @@ nc30 = newton(fc30, lambda x: 3 * x * x - 2, 0.0, 4)
 assert nc30 == [0.0, 1.0, 0.0, 1.0, 0.0]
 rc30 = np.roots([1, 0, -2, 2])
 assert (np.abs(rc30.imag) < 1e-9).sum() == 1
+assert (fa30(2), dfa30(2), fa30(1), dfa30(1)) == (20, 20, 7, 7)
+shown(ra30[np.abs(ra30.imag) < 1e-9].real[0], "-2.594")
+for v, s in [(nb30[1], "1.27067"), (nb30[2], "0.83196"), (abs(nb30[1] - math.log(2)), "0.5775"),
+             (abs(nb30[2] - math.log(2)), "0.1388"), (abs(n29[1] - r29), "1.8247"), (abs(n29[2] - r29), "4.3247")]:
+    shown(v, s)
+assert (fc30(0), fc30(1)) == (2, 1)
+cmin30 = math.sqrt(2 / 3)
+close(fc30(cmin30), 2 - 4 / 3 * cmin30); shown(fc30(cmin30), "0.911"); assert fc30(-cmin30) > 0
+shown(rc30[np.abs(rc30.imag) < 1e-9].real[0], "-1.769")
 log.info(f"A30 (a) x^3+2x^2+4 from 2: {na30}, f'(0) = 0, root {ra30[np.abs(ra30.imag) < 1e-9].real[0]:.5f}")
 log.info(f"A30 (b) e^x-2 from 2: x_1 = {nb30[1]:.5f}, x_2 = {nb30[2]:.5f}, distances {abs(nb30[1] - math.log(2)):.4f}, {abs(nb30[2] - math.log(2)):.4f}; "
          f"A29 distances {abs(n29[1] - r29):.4f}, {abs(n29[2] - r29):.4f}")
@@ -403,6 +424,11 @@ s31 = run_until(lambda xs: xs[-1] - f17(xs[-1]) * (xs[-1] - xs[-2]) / (f17(xs[-1
 assert abs(n31[-1] - math.log(2)) < 1e-15 and abs(s31[-1] - math.log(2)) < 1e-15
 log.info(f"A31 Newton from 1: last index {len(n31) - 1}, x = {n31[-1]:.15f}; secant from 0, 1: last index {len(s31) - 1}, x = {s31[-1]:.15f}; ln 2 = {math.log(2):.15f}")
 log.info(f"A31 Newton iterates {[round(v, 12) for v in n31]}")
+assert (len(n31) - 1, len(s31) - 1) == (5, 8)
+LN2F = math.log(2)
+shown(n31[1], "0.735759"); shown(n31[2], "0.694042"); shown(n31[3], "0.693148"); shown(LN2F, "0.693147180559945")
+assert abs(n31[3] - LN2F) > 1e-12 > abs(n31[4] - LN2F)               # Newton: error < 1e-12 first at x_4
+assert abs(s31[6] - LN2F) > 1e-12 > abs(s31[7] - LN2F)               # secant: first at x_7
 log.info(f"A31 secant iterates {[round(v, 12) for v in s31]}")
 
 # ---------- A32: x_{n+1} = x_n/2 + 1/x_n ----------
@@ -420,6 +446,12 @@ assert abs(fpi(g32, 10.0, 6)[6] - math.sqrt(2)) < 1e-6
 for x in [0.3, 1.0, 7.0]:
     close(g32(x) - math.sqrt(2), (x - math.sqrt(2)) ** 2 / (2 * x))    # quadratic error identity
     close(g32(x), x - (x * x - 2) / (2 * x))                           # Newton for x^2 - 2
+t32a, t32b = fpi(g32, 1.0, 6), fpi(g32, 10.0, 6)                    # the table on the page
+for v, s in zip(t32a[1:], ["1.5", "1.41666667", "1.41421569", "1.41421356", "1.41421356", "1.41421356"]):
+    shown(v, s)
+for v, s in zip(t32b[1:], ["5.1", "2.74607843", "1.73719487", "1.44423809", "1.41452566", "1.41421360"]):
+    shown(v, s)
+shown(math.sqrt(2), "1.41421356"); shown(abs(t32b[6] - math.sqrt(2)), "3.4e-08")
 log.info(f"A32 sqrt 2 = {math.sqrt(2):.10f}; x_6 from 10: error {abs(fpi(g32, 10.0, 6)[6] - math.sqrt(2)):.2e}")
 
 # ---------- A33: largest root of e^{x^2} - 3 by Newton, |f| < 1e-3 ----------
@@ -433,6 +465,15 @@ for x0 in [1.0, 2.0]:
     log.info(f"A33 x_0 = {x0}: {len(xs) - 1} steps, x = {xs[-1]:.8f}, f = {f33(xs[-1]):.2e}, |x - r| = {abs(xs[-1] - r33):.2e}; iterates {[round(v, 6) for v in xs]}")
     assert abs(xs[-1] - r33) < 1e-3
 log.info(f"A33 root sqrt(ln 3) = {r33:.8f}")
+x33 = newton(f33, df33, 1.0, 2)
+assert abs(f33(x33[1])) >= 1e-3 > abs(f33(x33[2]))                   # stops after two steps from x_0 = 1
+x33b = [2.0]
+while abs(f33(x33b[-1])) >= 1e-3:
+    x33b.append(x33b[-1] - f33(x33b[-1]) / df33(x33b[-1]))
+assert len(x33b) - 1 == 6                                            # six steps from x_0 = 2
+shown(r33, "1.04814707"); shown(r33, "1.048147"); shown(x33[1], "1.051819"); shown(x33[2], "1.048168")
+shown(abs(f33(x33[2])), "1.3e-04"); shown(df33(r33), "6.29"); close(df33(r33), 6 * r33)
+shown(abs(x33[2] - r33), "2.1e-05")
 
 # ---------- A34: minimum of x^4 + x^2 - 2x + 1 ----------
 f34 = lambda x: x**4 + x * x - 2 * x + 1
@@ -445,6 +486,10 @@ close(n34[2], 5 / 7)
 c34 = brentq(d34, 0, 1)
 x3_34 = Fr(5, 7) - (4 * Fr(5, 7) ** 3 + 2 * Fr(5, 7) - 2) / (12 * Fr(5, 7) ** 2 + 2)
 assert x3_34 == Fr(843, 1393) and 4 * Fr(5, 7) ** 3 + 2 * Fr(5, 7) - 2 == Fr(304, 343) and 12 * Fr(5, 7) ** 2 + 2 == Fr(398, 49)
+for v, s in [(n34[2], "0.714286"), (n34[2], "0.7143"), (n34[3], "0.605169"), (float(x3_34), "0.605169"),
+             (n34[4], "0.590022"), (c34, "0.589755"), (f34(c34), "0.289273")]:
+    shown(v, s)
+assert dd34(1) == 14 and dd34(0) == 2
 log.info(f"A34 x_1 = {n34[1]}, x_2 = {n34[2]:.6f} = 5/7, x_3 = {n34[3]:.6f} = {x3_34}, x_4 = {n34[4]:.6f}; c = {c34:.6f}, f(c) = {f34(c34):.6f}, f(5/7) = {f34(5 / 7):.6f}")
 
 # ---------- A35: x^5 + x^3 + 8 = 0, secant from 0, 1 ----------
@@ -454,6 +499,12 @@ assert f35(0) == 8 and f35(1) == 10 and s35[2] == -4.0
 r35 = brentq(f35, -2, -1)
 log.info(f"A35 x_2 = {s35[2]}, f(-4) = {f35(-4.0)}, x_3 = {s35[3]:.5f}; root {r35:.6f}; f(-2) = {f35(-2)}, f(-1) = {f35(-1)}")
 log.info(f"A35 secant path {[round(v, 4) for v in s35]}")
+assert f35(-4.0) == -1080 and f35(-2) == -32 and f35(-1) == 6 and len(s35) == 13
+assert all(abs(v - r35) > 0.5 for v in s35[2:])                       # twelve steps from 0, 1: never near the root
+s35b = secant(f35, -2.0, -1.0, 8)
+assert len(s35b) == 9 and abs(s35b[-1] - r35) < 1e-6
+shown(r35, "-1.395097")
+log.info(f"A35 secant from -2, -1: {[round(v, 6) for v in s35b]}")
 
 # ---------- A36: secant examples with x_3 undefined ----------
 s36 = secant(lambda x: x * x, 1.0, -2.0, 5)
@@ -465,12 +516,18 @@ r36 = np.roots([2, -5, 1, 4])
 assert (np.abs(r36.imag) < 1e-9).sum() == 1
 cp36 = (5 + math.sqrt(19)) / 6
 assert f36(cp36) > 0.9
+shown(f36(cp36), "0.985"); shown(r36[np.abs(r36.imag) < 1e-9].real[0], "-0.715")
+close(6 * cp36**2 - 10 * cp36 + 1, 0, 1e-12)
 log.info(f"A36 x^2 from 1, -2: {s36}; 2x^3-5x^2+x+4 from 0, 1: {s36b}, local min f({cp36:.4f}) = {f36(cp36):.4f}, root {r36[np.abs(r36.imag) < 1e-9].real[0]:.5f}")
 
 # ---------- A37: the limit of the secant sequence for e^x - 2 ----------
 s37 = secant(f17, 0.0, 1.0, 9)
 close(s37[2], 1 + (2 - math.e) / (math.e - 1))
 assert abs(s37[-1] - math.log(2)) < 1e-14
+close(s37[2], 1 / (math.e - 1))
+for v, s in zip(s37[2:7], ["0.581977", "0.676693", "0.694081", "0.693139", "0.693147"]):
+    shown(v, s)
+assert s37[:9] == s31[:9]                                             # the same numbers as the secant in A31
 log.info(f"A37 x_2..x_6 = {[round(v, 8) for v in s37[2:7]]}, ln 2 = {math.log(2):.8f}")
 
 # ---------- A38: fixed points ----------
