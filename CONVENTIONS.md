@@ -16,7 +16,7 @@ Recurring decisions for this repo, written down once they were made twice.
 - ը/ն article: `-ն` before a vowel **sound**, `-ը` otherwise. Words starting with ե, ո (not ու) and
   «և» start with a consonant sound, so they take `-ը` («թիվը երկու», «$x$-ը և»), except the
   auxiliaries եմ/ես/ենք/եք/են («տարրերն են») (source: «Հայոց լեզու 7» pp. 26-27, Language Committee;
-  `armenian_style/SOURCE_FINDINGS.md` A1). «ով» / «ովքեր» are said with օ and count as vowel-initial.
+  `armenian_style/SOURCE_FINDINGS.md` A1). Before «ով» / «ովքեր» both articles are fine (A43).
   After a symbol, go by how it is read (table in `armenian_style/GUIDE.md` A1b): «$A$-ն» («ա»),
   «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). A symbol whose spoken name ends
   in a consonant takes `-ը` unless the NEXT word starts with a vowel: «$F$-ը մոնոտոն», «$F$-ն անընդհատ»
@@ -28,7 +28,10 @@ Recurring decisions for this repo, written down once they were made twice.
   box title «Ընդհանուր հնարք» (not «Փոխանցելի տեխնիկա»); «չ-» only on verbs and participles,
   adjectives take «ոչ» or «ան-» («ոչ լավ», never «չլավ»; «-ելի» words too: «անլուծելի», never
   «չլուծելի»); heads = «ղուշ», tails = «գիր»; statistical sample = «նմուշ»; standard deviation =
-  «ստանդարտ շեղում»; «հզոր մեթոդ» is fine.
+  «ստանդարտ շեղում»; «հզոր մեթոդ» is fine; plural imperatives carry no stress mark («Գտեք»,
+  «Ստուգեք»), only «տե՛ս» does; a comma after the openers «Վերջապես», «Մյուս կողմից»,
+  «Մասնավորապես»; a long definition keeps its «որը» clause. Decimals take a comma («3,5», `3{,}5` in
+  TeX); a dot only in code.
 - Before publishing Armenian text, run `python -I armenian_style/lint_armenian.py <files>` (0 errors) and
   skim `armenian_style/POLISH_CHECKLIST.md`.
 - Composition is LEFT-TO-RIGHT in this course: $(f\cdot g)(x)=g(f(x))$, $\sigma\circ\rho$ = first σ then ρ.

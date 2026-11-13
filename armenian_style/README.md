@@ -8,11 +8,11 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
 |------|------------|
 | `GUIDE.md` | The rules: top-10 summary, then each rule as wrong -> right with reason, confidence and evidence, ordered by how often the mistake appears in LLM text. Start here. |
 | `POLISH_CHECKLIST.md` | The order in which to polish a text (lint, terms, negation, calques, rhythm, final check). |
-| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 39 points (A1-A39), each answerable in a few words. All are settled: 10 by sources, 29 by the owner (status table at the top). A new doubt gets the next free `A` number. |
+| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 46 points (A1-A46), each answerable in a few words. All are settled: 10 by sources, 36 by the owner (status table at the top). A new doubt gets the next free `A` number. |
 | `OWNER_ANSWERS.md` | The owner's decisions from the interviews of 2026-11-10 and 2026-11-13, one line each. They override GUIDE.md if the two ever differ. |
 | `SOURCE_FINDINGS.md` | What the Language Committee recommendations, the ministry textbooks «Հայոց լեզու 7/11» and two academic sources say about each question, with citations; new rules from those sources. Added 2026-11-10. |
 | `GLOSSARY_REPORT.md` | Review of `glossary_Apr.csv` (read-only): 20 findings with row numbers and severity. |
-| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (71 cases). Not wired into CI or `check_site.mjs`. |
+| `lint_armenian.py` | Mechanical lint. `python -I armenian_style/lint_armenian.py FILE...` (errors, exit 1), `--style` (adds hints, exit code unchanged), `--selftest` (79 cases). Not wired into CI or `check_site.mjs`. |
 | `check_glossary.py` | Mechanical checks on the glossary CSV: `python -I armenian_style/check_glossary.py`. |
 | `_sources/` | Gitignored. Downloaded reference texts, my own paragraphs, analysis scripts and their outputs (see below). |
 
@@ -64,6 +64,16 @@ The owner asked whether the rules still apply to a newer model. What was done:
    the owner keeps the singular (A38).
 5. The lint change was checked on all site pages, widget scripts and polished sheets before and
    after: the same 18 errors and 316 hints both times.
+6. Terminology self-test: 60 random glossary rows (seed 509) translated from memory before reading
+   the glossary; 48 matched, 12 did not (`_sources/term_selftest_sample.py`, `term_selftest_compare.py`).
+7. Convention counts over 66 files and about 101,600 Armenian words (`_sources/probe_conventions.py`,
+   `probe_conventions2.py`): imperatives with and without the stress mark, decimal separators, the
+   mark after sentence openers, «մոտ». The mixed ones went to the owner (A40, A41); decimals turned
+   out consistent (comma) and were written down as a rule.
+8. A second subagent read all 1061 glossary rows (about 5 minutes); each reported row was checked by
+   hand, then put to the owner (A46). Seven rows changed; see GLOSSARY_REPORT.md.
+9. After the second round the lint got `imperative-stress`, `see-without-stress` and the hint
+   `opener-punct`; the 8 places the two error rules found were fixed the same day.
 
 Limits: one run of 697 words; the first baseline came from another model on another day; «Այն» and
 «որը» were counted by pattern, not by reading each use; «ով / ովքեր» and the spoken names of g, h, q

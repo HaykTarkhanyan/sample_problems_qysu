@@ -62,3 +62,33 @@ the rule is the owner's own usage, not an import.
 - The ⚠ / † markers of `discrete/glossary_discrete_focused.md` against the CSV.
 - Whether the course textbooks (Ահարոնյան-Իսրաելյան, Սևաստյանով) use the same probability terms;
   they are not in the repo as text.
+
+## Update 2026-11-13: full read, and the CSV was changed
+
+Everything above describes the file as it was on 2026-11-10. On 2026-11-13 a Fable 5.2 subagent
+read all rows line by line (the file has 1061 rows, not 1060: the last line has no trailing
+newline, so `wc -l` undercounts). Each reported row was checked by hand and then put to the owner
+(`OWNER_ANSWERS.md`, A46). Row numbers did not move: every fix was made in place.
+
+| Row | Was | Now | Why |
+|-----|-----|-----|-----|
+| 315 | `equality,հավասարում` | `equality,հավասարություն` | rows 315 and 316 were swapped (compare «անհավասարություն», and «հավասարում» for equation in rows 59, 112, 264, 708, 963) |
+| 316 | `equation,հավասարություն` | `equation,հավասարում` | same swap |
+| 509 | «միջակայքային գնատահական» | «միջակայքային գնահատական» | typo (finding 1 above) |
+| 172 | «կարգընթացություն» | «հաշվարկելիություն» | owner, A30 (finding 10) |
+| 288 | «բաժանվող տարբերություն» | «բաժանված տարբերություն» | "divided", not "divisible"; owner, 2026-11-13 |
+| 505 | «միջին արժեքի թեորեմ» | «միջանկյալ արժեքի թեորեմ» | "intermediate", not "mean"; the owner first kept the row, then corrected it the same hour |
+| 961 | `symmetry group` | `symmetric group` | the Armenian «սիմետրիկ խումբ» is S_n; the English side was wrong |
+
+Asked and deliberately left as written, so do not "fix" them: row 806 «քառակուսեցման բանաձև», row
+730 «մասնակի ածանցյալով [դիֆերենցիալ] հավասարում». Row 545 «ավագ անդամ» was confirmed earlier (A27).
+
+Still as on 2026-11-10: the duplicate row 258 (kept on purpose: deleting it would shift every row
+number cited in GUIDE.md and in this file), the trailing spaces in rows 287 and 292, the missing
+comma in row 190, the U+2024 dots (23 rows) and the «․․․» ellipsis in row 1031. None of them was
+put to the owner.
+
+The full read also ran scripted checks: no Latin or Cyrillic letters inside Armenian words, no stray
+characters, no near-duplicate spellings, no proper name transliterated two ways. Limits: the
+"mistranslation" judgements rest on the model's own knowledge of Armenian usage, with no outside
+source, and the repo's pages copy the glossary, so they prove nothing either way.

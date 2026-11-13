@@ -43,7 +43,8 @@ gap in discourse words is a signal, not proof.
    «Փոխանցելի տեխնիկա» (= "Transferable technique"). («Ահա ...» is fine: A12.)
 7. **Vary «Ուստի»:** it is correct but runs at 117 per 10k words in our LLM text vs 9.8 in the
    Language Committee's prose and 1.7 in the grade-7 textbook (A3).
-8. **Fewer «որը» clauses:** use a participle («2-ի բաժանվող թիվ») or two sentences.
+8. **Fewer «որը» chains:** a short modifier becomes a participle («2-ի բաժանվող թիվ»), a chain becomes
+   two sentences. A long definition keeps its «որը» clause (owner, A45).
 9. **Active voice with a named actor:** «Կոլմոգորովը տվել է աքսիոմները», not «... Կոլմոգորովի կողմից առաջարկված».
 10. **Terms come from the glossary and the owner's answers**, never from a literal translation or
     from general knowledge (injective = ինյեկտիվ, not ներարկում; event = պատահույթ; statistical
@@ -83,10 +84,9 @@ end), and `;` has no place in Armenian prose. Keyboards make the Latin `:` easy,
 - **ե-, ո- and «և» take «-ը»:** «Արամն եկավ» -> «Արամը եկավ», «Բազմությունն որպես» -> «Բազմությունը
   որպես», «$x$-ն և $y$-ը» -> «$x$-ը և $y$-ը», «$f$-ն ոչ միակն է» -> «$f$-ը ոչ միակն է». Only the
   auxiliaries are exempt: «տարրերն են», «$x_1$-ն են».
-- **«ով» and «ովքեր» are the one exception among ո-words:** they are said with օ, not վօ, so «-ն»
-  before them is right by the house rule («Խնդիրն ո՞վ է լուծել»). Since 2026-11-13 the lint no longer
-  flags «-ն» there; it does not demand it either. (Standard pronunciation rule; not checked against a
-  cited source in this repo and not put to the owner.)
+- **«ով» and «ովքեր»:** both articles are fine before them («Խնդիրն ո՞վ է լուծել», «Խնդիրը ո՞վ է
+  լուծել»; owner, 2026-11-13, A43). They are said with օ, not վօ, which is why «-ն» is not the error
+  it is before other ո-words. The lint flags neither form (since 2026-11-13).
 
 Reason: after a consonant-final word the article is «-ը»; «-ն» is a linking form used when the next
 word starts with a vowel sound and no pause separates them. Word-initial ե, ո and «և» are said յէ,
@@ -146,7 +146,8 @@ site already has «$\varepsilon$-ը» (`site/probability/w12-continuous.html:159
 single Latin letters and digits (with one subscript): «$\varepsilon$-ն փոքր» and «$f(x)$-ն դրական»
 pass it, so Greek letters and longer formulas are on the writer. When the reading of a formula is
 unclear, put a noun after it and let the noun carry the article («$f$ ֆունկցիան»). Confidence: high
-for the principle; the spoken names of g, h, q and w were not put to the owner.
+for the principle. The owner confirmed h = «հաշ» (2026-11-13, A42) and raised no objection to g =
+«ժե», q = «կու», w = «դուբլվե», r = «էռ», y = «իգրեկ», z = «զետ» when shown them.
 
 ### S1. «Ուստի» on autopilot (style)
 
@@ -165,9 +166,11 @@ professor's own lectures use «հետևաբար», «որտեղից», «ինչ�
 
 ### S2. «որը» relative clauses where Armenian prefers a participle (style)
 
-- «Պատահական մեծությունը ֆունկցիա է, որը յուրաքանչյուր ելքին համապատասխանեցնում է իրական թիվ»
-  -> «Պատահական մեծությունը յուրաքանչյուր ելքին իրական թիվ համապատասխանեցնող ֆունկցիա է»
 - «թվեր, որոնք բաժանվում են 3-ի» -> «3-ի բաժանվող թվեր»
+- Keep the clause in a long definition: «Պատահական մեծությունը ֆունկցիա է, որը յուրաքանչյուր ելքին
+  համապատասխանեցնում է իրական թիվ» reads better than «Պատահական մեծությունը յուրաքանչյուր ելքին
+  իրական թիվ համապատասխանեցնող ֆունկցիա է» (owner, 2026-11-13, A45; this guide used to recommend the
+  second form). A long participle phrase before the noun is heavier than the clause it replaces.
 
 Reason: English "which/that" invites a «որը» clause every sentence. Armenian packs the same
 content into participles in -ող / -ած / -ված placed before the noun.
@@ -257,8 +260,9 @@ Reason: the verb ending (-ենք) already says "we". Wikipedia writes «Երբ �
 ### C2. Russian calques (calque)
 
 - «X-ը հիմք է հանդիսանում Y-ի համար» -> «X-ը Y-ի հիմքն է»
-- «Բազմությունը, դա ...» -> «Բազմությունը ... է»
-- «Իր հերթին, ...» (= "в свою очередь") -> «Իսկ ...» / drop
+- Fine, do not rewrite (owner, 2026-11-13, A44): «Բազմությունը, դա ... է», «Իր հերթին, ...» and «դեր
+  չի խաղում». They look like Russian patterns («это», «в свою очередь», «не играет роли») but read
+  as normal Armenian to the owner. This guide used to list the first two as calques.
 - Allowed, the shorter form is only a style choice: «իրենից ներկայացնում է n-մուլտիբազմություն» may
   stay (owner, A28); «n-մուլտիբազմություն է» is lighter.
 - Allowed, shorter preferred where it fits: «$B$-ն հանդես է գալիս որպես $C$-ի տարր» -> «$B$-ն $C$-ի
@@ -269,9 +273,8 @@ it formal and gives «լինել» as the plain synonym: https://en.wiktionary.o
 others follow the same pattern («представлять собой», «это», «в свою очередь», «выступать в
 качестве»). LLMs pick these up from Armenian web text, which has many of them.
 
-- Confidence: medium for «հանդիսանալ» (one dictionary source). «Բազմությունը, դա ...» and «Իր
-  հերթին» were never put to the owner: needs native check. The Language Committee pages do not list
-  any of them. «իրենից ներկայացնում է» may be used (A28). «հանդես գալ որպես» is not an error: the
+- Confidence: medium for «հանդիսանալ» (one dictionary source), the only pattern in this section
+  that is still rewritten. The Language Committee pages do not list any of them. «իրենից ներկայացնում է» may be used (A28). «հանդես գալ որպես» is not an error: the
   ministry textbook uses it in its own explanations («հանդես են գալիս որպես նախադասության ...
   անդամներ», «Հայոց լեզու 7», p. 27), so replacing it is a style choice for brevity (A5: allowed,
   prefer the shorter form).
@@ -378,6 +381,11 @@ The rule:
 - «Խոսքը՞» -> «Խո՞սքը»; «Բառարանը՞» -> «Բառարա՞նը» (never on the article ը)
 - Repeated conjunctions carry ՛: «և՛ 3-ի, և՛ 5-ի», «թե՛ ..., թե՛ ...», «ո՛չ ..., ո՛չ ...»; a
   prohibition stresses «մի»: «Մի՛ շտապեք»
+- Plural imperatives carry no stress mark in this repo: «Գտեք», «Ստուգեք», «Նկատեք», not «Նկատե՛ք».
+  The one fixed exception is «տե՛ս», always with the mark (house rule, owner 2026-11-13, A40; about
+  1000 imperatives were already bare and 6 were not, «տե՛ս» had the mark 42 times of 44). School
+  punctuation rules do list imperatives among the words that take the mark; the saved Committee page
+  «Շեշտ» does not address positive imperatives, so this is a house choice, not a correction.
 
 Reason: the marks are written over the stressed vowel, which is almost always the last syllable's;
 in «ու» they go on the «ո». A mark after a consonant is always misplaced. The article ը is never
@@ -388,7 +396,8 @@ stressed, so the mark moves to the syllable before it. Exceptions where the stre
   last syllable's vowel, on ո in ու, not on a positive auxiliary, and on the syllable before a final ը).
 - Evidence: `discrete/solutions/Practice5_Solutions_ARM.tex:193, 205`. The polished text has no
   ՞ on auxiliaries and none on ը (checked 2026-11-10).
-- Lint: `qmark-on-u`, `mark-after-consonant`, `qmark-on-aux`, `mark-on-schwa`.
+- Lint: `qmark-on-u`, `mark-after-consonant`, `qmark-on-aux`, `mark-on-schwa`, `imperative-stress`,
+  `see-without-stress`.
 
 ### P3. ՝ after «այսինքն», «օրինակ» and similar (house rule)
 
@@ -398,6 +407,10 @@ stressed, so the mark moves to the syllable before it. Exceptions where the stre
 - «Այսպիսով, ...» / «Այսպիսով ...» -> «Այսպիսով՝ ...» at the start of a sentence (A16, source)
 - «Հետևաբար $0<x$ ...» -> «Հետևաբար, $0<x$ ...»: a comma after sentence-initial «Հետևաբար» (A16,
   owner; no source covers it)
+- «Վերջապես՝ ...» / «Մյուս կողմից՝ ...» / «Մասնավորապես՝ ...» -> «Վերջապես, ...», «Մյուս կողմից, ...»,
+  «Մասնավորապես, ...»: a comma after these openers too (owner, 2026-11-13, A41; the site had comma,
+  ՝ and nothing mixed). Not asked: «Վերջապես» as the plain adverb "at last" inside its clause
+  («Վերջապես ստացանք պատասխանը») is not a parenthetical and takes no mark.
 
 - Confidence: source-backed for «այսինքն՝» (Language Committee 8 of 8, and the grade-11 textbook's
   own text), «Օրինակ՝» (Committee 54 vs 3, grade-7 textbook 74 vs 3, the comma cases being
@@ -406,7 +419,7 @@ stressed, so the mark moves to the syllable before it. Exceptions where the stre
   practice (L. Sargsyan, YSU Bulletin, Philology 2017/1, pp. 51-60,
   https://journals.ysu.am/index.php/bulletin-ysu-philology/article/download/6473/vol_8_no1_2017_pp_051-060_pdf/11234;
   known from the search abstract only, the PDF did not extract).
-- Lint: `aysinqn-but`.
+- Lint: `aysinqn-but`; `--style` hint `opener-punct` (the opener marks decided in A16 and A41).
 
 ### P4. The mijaket is ASCII `.` (house rule, owner-decided)
 
@@ -438,6 +451,8 @@ on fresh text and replace them with `.`.
 - standard deviation = «ստանդարտ շեղում» (row 928; A24, owner), not «միջին քառակուսային շեղում»
 - probability mass function: «բաշխման օրենք» on the site (A26, owner); the glossary's «հավանականային
   ֆունկցիա» (row 787) stays as an alternative
+- asked on 2026-11-13 and deliberately left as written: row 806 «քառակուսեցման բանաձև» and row 730
+  «մասնակի ածանցյալով [դիֆերենցիալ] հավասարում». Do not "correct" them (A46).
 
 - Confidence: high (glossary is authoritative). The three "not ..." forms are common LLM calques
   from general knowledge; none occurs in the repo today, so they are preventive. The owner-decided
@@ -481,6 +496,9 @@ on fresh text and replace them with `.`.
 - Hyphen: plain `-` (house rule; A35 resolved a: neither the Language Committee pages nor the
   grade-7 textbook use U+058A). Wikipedia uses the Armenian hyphen 65 times; do not copy it.
 - The self-check heading is «Ստուգեք ինքներդ ձեզ» (A18, owner), not the calqued «Ստուգեք ձեզ».
+- Decimals take a comma: «3,5», and `3{,}5` inside TeX; a dot appears only in code blocks. The pages
+  are consistent (1026 decimals with a comma and 0 with a dot outside code, 2026-11-13). Existing
+  practice, not put to the owner.
 
 ## Rules from the Language Committee not covered above
 
@@ -542,9 +560,9 @@ are listed for new text, especially the probability word problems.
 
 - «Այս բաշխման մոտ միջինը ...» -> «Այս բաշխման միջինը ...»; «Ինձ մոտ հարց առաջացավ» -> «Իմ մեջ
   ...»; «նրանց մոտ չի ստացվում» -> «նրանց չի հաջողվում»
-- Probably the same calque in the "in X's work" sense: «ավելի վաղ հանդիպում է Դը Մուավրի մոտ» ->
-  «... Դը Մուավրի աշխատանքներում» (from the 2026-11-13 Fable baseline; my reading of the Committee
-  rule, needs native check; the lint has no hint for «մոտ»).
+- The same calque in the "in X's work" sense: «ավելի վաղ հանդիպում է Դը Մուավրի մոտ» -> «... Դը
+  Մուավրի աշխատանքներում» (owner, 2026-11-13, A44; from the Fable baseline). The lint has no hint for
+  «մոտ»; all 24 uses on the site on that day were the spatial sense.
 - The spatial sense is fine: «լուսացույցի մոտ», «$x_0$-ի մոտ». [«Մոտ»]
 
 ### O8. Dates
@@ -593,3 +611,10 @@ for a statistical sample and «միջին քառակուսային շեղում�
 մոտ» (O7) and chains of «Այն» openers (S4). For a newer model the mechanical rules are mostly a
 safety net. The owner-decided terms, the Russian calques and the rhythm rules are where the reading
 pass has to look.
+
+Terminology was tested the same day: 60 glossary rows drawn at random (seed 509) and translated
+from memory before the glossary was read. 48 matched the glossary term and 12 did not («ինցիդենտության
+մատրից» for «կցության մատրից», «բազմապատիկ արմատ» for «պատիկ արմատ», «երկրաչափական միջին» for «միջին
+երկրաչափական», «անկյունագծային գերակշռում» for «անկյունագծային գերիշխում», ...). None was wrong
+mathematics, but one term in five would have broken T1. Recall is not good enough: grep the glossary
+every time (`_sources/term_selftest_sample.py`, `term_selftest_compare.py`).

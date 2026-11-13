@@ -33,13 +33,17 @@ ERROR rules are mechanical with a low false-positive rate on this repo's text:
                         (Language Committee «Հարցական», «Շեշտ»)                         [P2]
   u-capital             ՈՒ before a lowercase letter (Ուջան) or Ու inside an all-caps word (ՏՈՒՆ)
                         (Language Committee «Ու»)                                         [P5]
+  imperative-stress     a stress mark on a plural imperative (Նկատե՛ք -> Նկատեք; house rule, owner A40)  [P2]
+  see-without-stress    bare «տես» (write «տե՛ս»; house rule, owner A40)                    [P2]
 
 STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
   calque phrases (հանդիսանում է, Փոխանցելի տեխնիկա, հարկադրել, աշխատում է for "works",
   կարևոր է նշել, հեշտ է տեսնել, պետք է նշել), filler (պարզապես, իրականում),
   redundant «մենք», passive «... կողմից», «ոչ մի / ոչինչ / երբեք» sentences with no negative verb,
   «արդյունքում» (Russian «в результате»; Committee «Արդյունքում»), «իրականացնել» (overused;
-  Committee «Իրականացնել, կատարել, անել»), and per-file density of «Ուստի» / «հենց» / sentence-initial «Սա».
+  Committee «Իրականացնել, կատարել, անել»), the mark after a sentence opener («Հետևաբար,» «Վերջապես,»
+  «Մյուս կողմից,» «Մասնավորապես,» with a comma, «Այսպիսով՝» with ՝; owner A16, A41), and per-file
+  density of «Ուստի» / «հենց» / sentence-initial «Սա».
 """
 import re
 import sys
@@ -82,6 +86,9 @@ ERROR_RULES = [
     ("che-adjective", CHE_RE),
     ("mark-on-schwa", re.compile("\u0568[\u055e\u055b\u055c]")),
     ("u-capital", re.compile("\u0548\u0552[\u0561-\u0586]|\u0548\u0582(?=[\u0531-\u0556])|(?<=[\u0531-\u0556])\u0548\u0582")),
+    # house rules, owner 2026-11-13 (A40): plural imperatives carry no stress mark, \u00ab\u057f\u0565\u055b\u057d\u00bb always does
+    ("imperative-stress", re.compile(rf"[{ARM}]{{2,}}\u0565\u055b\u0584(?![{ARM}])")),
+    ("see-without-stress", re.compile(rf"(?<![{ARM}])[\u054f\u057f]\u0565\u057d(?![{ARM}\u055b])")),
 ]
 
 STYLE_RULES = [
@@ -99,6 +106,9 @@ STYLE_RULES = [
     ("passive-koxmic", re.compile(r"(?<![\u0531-\u0587])կողմից(?![\u0531-\u0587])")),
     ("calque-ardyunqum", re.compile(rf"(?<![{ARM}])[Աա]րդյունքում(?![{ARM}])")),
     ("overuse-irakanacnel", re.compile(rf"(?<![{ARM}])[Իի]րականաց")),
+    # sentence openers, owner A16 / A41: «Հետևաբար,» «Վերջապես,» «Մյուս կողմից,» «Մասնավորապես,» but «Այսպիսով՝»
+    ("opener-punct", re.compile(rf"(?:Վերջապես|Մյուս կողմից|Մասնավորապես)՝|(?<![{ARM}])Հետևաբար(?![{ARM},])"
+                                rf"|(?<![{ARM}])Այսպիսով(?![{ARM}՝])")),
 ]
 DENSITY = [("density-usti", re.compile(r"(?<![\u0531-\u0587])[Ոո]ւստի(?![\u0531-\u0587])"), 30),
            ("density-henc", re.compile(r"(?<![\u0531-\u0587])հենց(?![\u0531-\u0587])"), 25),
@@ -312,6 +322,13 @@ def selftest():
         ("ՈՒջան", ".txt", "u-capital"),
         ("ՏՈւՆ", ".txt", "u-capital"),
         ("Ուջան և ՏՈՒՆ", ".txt", None),
+        # house rules of 2026-11-13 (A40): no stress mark on plural imperatives, «տե՛ս» with the mark
+        ("Նկատե՛ք, որ թիվը զույգ է։", ".txt", "imperative-stress"),
+        ("Նկատեք, որ թիվը զույգ է։", ".txt", None),
+        ("Մի՛ շտապեք։", ".txt", None),                          # prohibition: the mark is on մի
+        ("Պատասխանը (տես նկար 2) պարզ է։", ".txt", "see-without-stress"),
+        ("Պատասխանը (տե՛ս նկար 2) պարզ է։", ".txt", None),
+        ("Գրենք այդ տեսքով։", ".txt", None),                    # տեսք is not տես
     ]
     style_cases = [
         ("Ոչ մի $y$ չի աշխատում։", ".tex", "calque-works"),
@@ -321,6 +338,8 @@ def selftest():
         ("Թիվը զույգ է, ուստի բաժանվում է։ " * 6, ".txt", "density-usti"),
         ("Արդյունքում՝ ստանում ենք երեք տարր։", ".txt", "calque-ardyunqum"),
         ("Ստուգում ենք իրականացնում։", ".txt", "overuse-irakanacnel"),
+        ("Վերջապես՝ ստուգենք պատասխանը։", ".txt", "opener-punct"),
+        ("Հետևաբար $x>0$։", ".tex", "opener-punct"),
     ]
     failed = 0
     for text, suffix, expected in cases:

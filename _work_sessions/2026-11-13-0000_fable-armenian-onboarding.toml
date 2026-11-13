@@ -16,11 +16,16 @@ done = [
   "POLISH_CHECKLIST.md: removed the instructions the owner had overruled («Ահա», «հզոր», «իրենից ներկայացնում է», «հանդես է գալիս որպես», scare quotes); added the ե/ո/և article check, the «-ելի» note and the owner-decided terms.",
   "lint_armenian.py: «ով», «ովքեր» (also «ո՞վ», «ովքե՞ր») no longer flagged by article-n-before-yeo; docstring synced with the removed hints; self-test 66 -> 71 cases, all pass. Before/after run on all site pages, widget scripts and polished sheets: identical (18 errors, 316 hints).",
   "README, OWNER_ANSWERS, QUESTIONS (A37-A39), CONVENTIONS and DEFERRED_TODO updated to match.",
+  "Second round (owner: 'do more work and ask more questions'). Terminology self-test: 60 random glossary rows (seed 509) translated from memory, 48 matched, 12 did not. Convention probe over 66 files / about 101,600 Armenian words: about 1000 bare plural imperatives against 6 marked, «տե՛ս» 42 of 44, decimals 1026 with a comma against 0 with a dot outside code, openers mixed.",
+  "Full glossary read by a second subagent (1061 rows, about 5 min, about 135k tokens); every reported row checked by hand. Applied after the owner's answers: rows 315/316 swap (equality/equation), 509, 172, 288 «բաժանված տարբերություն», 505 «միջանկյալ արժեքի թեորեմ», 961 English -> symmetric group. Rows 806 and 730 asked and left as written.",
+  "Owner answers A40-A46: no stress mark on plural imperatives («տե՛ս» keeps it); comma after «Վերջապես», «Մյուս կողմից», «Մասնավորապես»; h = «հաշ»; both articles fine before «ով»; «Իր հերթին», «X-ը, դա ... է», «դեր չի խաղում» are fine, «X-ի մոտ» for an author is a calque; a long definition keeps its «որը» clause; the glossary rows.",
+  "Lint: new error rules imperative-stress and see-without-stress, new hint opener-punct; self-test 71 -> 79. The 8 errors they found were fixed (3 stress marks in P1 / P2-3 sheets and their site copies, 2 bare «տես» in splines.html), plus 10 opener marks on the probability pages and P5. Lint on site + sheets back to the 18 known errors that wait for the discrete sweep; search index rebuilt; check_site passes.",
 ]
 
 pending = [
-  "Glossary fixes still wait for the owner's OK (row 509 typo, rows 257/258 duplicate, row 172 -> «հաշվարկելիություն»).",
-  "Not put to the owner: «Բազմությունը, դա ...», «Իր հերթին», «X-ի մոտ» in the 'in X's work' sense, the spoken names of g, h, q, w.",
+  "PDFs of P1, P2-3 and P5 lag their .tex by 4 punctuation marks until the deferred discrete sweep rebuilds them.",
+  "Glossary cosmetics not put to the owner: duplicate row 258 (kept on purpose), trailing spaces, U+2024 dots.",
+  "Wrong guesses of mine this session, all corrected by the owner: plural in «Երկու բազմություններ հավասար են» (A38), «Իր հերթին» and «X-ը, դա ...» as calques (A44), «-ն» as the only form before «ով» (A43).",
 ]
 
 next = [
@@ -32,6 +37,9 @@ files = [
   "armenian_style/GUIDE.md, armenian_style/POLISH_CHECKLIST.md, armenian_style/README.md, armenian_style/OWNER_ANSWERS.md, armenian_style/QUESTIONS_FOR_NATIVE_SPEAKER.md",
   "armenian_style/lint_armenian.py",
   "CONVENTIONS.md, DEFERRED_TODO.md",
+  "glossary_Apr.csv (7 rows), armenian_style/GLOSSARY_REPORT.md",
+  "site/probability/w02, w08, w10, w11, w12, w13, w14 (opener marks); site/numerical/splines.html («տե՛ս»); site/discrete/p1-sets, p2-3-relations, p5-combinatorics and the matching .tex in discrete/solutions_opus_4_8_ARM/; site/assets/search/*.js (rebuilt)",
+  "gitignored probes: armenian_style/_sources/term_selftest_*.py, probe_conventions.py, probe_conventions2.py",
   "gitignored: armenian_style/_sources/own/fable_paragraphs_raw.md, fable_lint_probe.txt, fable_lint_probe2.txt; armenian_style/_sources/lint_before_2026-11-13.txt, lint_after_2026-11-13.txt",
 ]
 

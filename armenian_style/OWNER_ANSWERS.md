@@ -40,3 +40,10 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A37 | glued «չ-» is wrong on «-ելի» words | «անլուծելի», «անհաշվելի», or a separate «ոչ»; never «չլուծելի», «չհաշվելի». GUIDE N1 had listed «-ելի» with the participles by mistake. |
 | A38 | singular after a numeral, also in definitions | «Երկու բազմություն հավասար են, եթե ...» stays. The model had guessed the plural here; that guess was wrong. |
 | A39 | «հզոր» for a method or tool is normal Armenian | «հզոր մեթոդ», «պարզ, բայց շատ հզոր կանոններ» stay; removed from the calque list (GUIDE C1). |
+| A40 | no stress mark on plural imperatives; «տե՛ս» keeps it | «Գտեք», «Ստուգեք», «Նկատեք»; never «Նկատե՛ք». «տե՛ս» always with the mark. Lint: `imperative-stress`, `see-without-stress`. |
+| A41 | comma after the openers «Վերջապես», «Մյուս կողմից», «Մասնավորապես» | «Վերջապես, ...» like «Հետևաբար,»; «Այսպիսով՝» stays with ՝. Lint hint `opener-punct`. |
+| A42 | h is read «հաշ» | «$h$-ը փոքր է», «$h$-ն» only before a vowel sound. No objection to g = «ժե», q = «կու», w = «դուբլվե», r = «էռ», y = «իգրեկ», z = «զետ». |
+| A43 | before «ով» / «ովքեր» both articles are fine | «Խնդիրն ո՞վ է լուծել» and «Խնդիրը ո՞վ է լուծել»; the lint flags neither. |
+| A44 | «Իր հերթին, ...», «X-ը, դա ... է», «դեր չի խաղում» are fine; «X-ի մոտ» for an author is a calque | The first three are not rewritten (GUIDE C2 had two of them as calques). «հանդիպում է Դը Մուավրի մոտ» -> «... Դը Մուավրի աշխատանքներում». |
+| A45 | a long definition keeps its «որը» clause | «Պատահական մեծությունը ֆունկցիա է, որը ...» is better than the long participle version; participles only for short modifiers («3-ի բաժանվող թվեր»). |
+| A46 | glossary rows | Fixed: rows 315/316 were swapped (equality = «հավասարություն», equation = «հավասարում»); 509 «գնահատական»; 172 «հաշվարկելիություն»; 288 «բաժանված տարբերություն»; 505 «միջանկյալ արժեքի թեորեմ» (first answer was "keep", corrected minutes later: "միջանկյալ is actually better"); 961 English side -> "symmetric group". Asked and left as written: 806 «քառակուսեցման բանաձև», 730 «մասնակի ածանցյալով ...». Duplicate row 258 kept on purpose, so row numbers stay stable. |

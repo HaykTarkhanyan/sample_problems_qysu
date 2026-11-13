@@ -15,7 +15,7 @@ need to answer the open ones.
 |--------|-----|
 | **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
-| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39 |
+| **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46 |
 | **Open** | none |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
@@ -311,3 +311,27 @@ which would allow «չլուծելի խնդիր», «չհաշվելի բազմո
 - b) calque, keep replacing it with «արդյունավետ»
 - c) fine, but prefer «արդյունավետ»
 - **Owner:** a.
+
+**A40. Stress mark on plural imperatives.** The site had «տե՛ս» with the mark 42 times of 44, but
+about 1000 bare imperatives («Գտեք», «Ստուգեք») and 6 marked ones («Նկատե՛ք»).
+- a) no mark on plural imperatives, «տե՛ս» keeps it  b) mark all  c) mark in text, not on buttons
+- **Owner:** a.
+
+**A41. Mark after the openers «Վերջապես», «Մյուս կողմից», «Մասնավորապես»** (comma, ՝ and nothing were mixed).
+- a) comma  b) ՝  c) depends on the word
+- **Owner:** a.
+
+**A42. How is h read?** a) «հաշ» -> «$h$-ը»  b) «հա» -> «$h$-ն». **Owner:** a.
+
+**A43. Article before «ով» / «ովքեր».** a) «Խնդիրն ո՞վ է լուծել»  b) «Խնդիրը ո՞վ է լուծել»  c) both.
+My guess was a. **Owner:** c.
+
+**A44. Which of these are fine?** «Իր հերթին, ...», «X-ը, դա ... է», «... Դը Մուավրի մոտ» (for an
+author), «դեր չի խաղում». **Owner:** all fine except «X-ի մոտ» for an author. I had expected the
+first two to be calques.
+
+**A45. Long definition: «որը» clause or participle?** «Պատահական մեծությունը ֆունկցիա է, որը ...» vs
+«... իրական թիվ համապատասխանեցնող ֆունկցիա է». **Owner:** the «որը» clause.
+
+**A46. Glossary rows** (from a full read of all 1061 rows). Swap 315/316, fix 509, 172, 288, 505,
+961: yes. Rows 806 and 730: leave. Details in `OWNER_ANSWERS.md` and `GLOSSARY_REPORT.md`.

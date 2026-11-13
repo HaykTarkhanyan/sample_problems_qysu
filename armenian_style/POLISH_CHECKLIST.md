@@ -21,7 +21,8 @@ node tools/check_site.mjs site/...html                       # for site pages (p
 Fix every ERROR: Latin `: ; ?` (P1), `ու՞` and marks after consonants (P2), «այսինքն» without ՝
 (P3), U+2024 (write the mijaket as ASCII `.`, P4), dashes, curly quotes, look-alike letters, glued
 «չ + adjective» (N1), «-ը» before a vowel sound (A1; use «-ն», but keep «-ը» before a comma or other
-pause) and «-ն» before a word starting with ե, ո or «և» (A1; use «-ը»). Rerun until clean.
+pause), «-ն» before a word starting with ե, ո or «և» (A1; use «-ը»), a stress mark on a plural
+imperative («Նկատե՛ք» -> «Նկատեք») and a bare «տես» (-> «տե՛ս») (P2). Rerun until clean.
 
 ## 2. Terminology pass
 
@@ -47,16 +48,20 @@ Replace or delete, one by one:
 - English verbs used literally: «աշխատում է» (works), «հարկադրում է» (forces), «կրում է
   տեղեկությունը», «ամենապարզ ձևն ...» (C1). Leave «Ահա ...» and «հզոր մեթոդ» alone: both are fine
   (A12, A39).
-- Russian patterns: «հանդիսանում է», «X, դա ...», «իր հերթին» (C2), «X-ի մոտ» for «у» (O7),
-  «արդյունքում» (O3). «իրենից ներկայացնում է» and «հանդես է գալիս որպես» are allowed (A28, A5);
-  shorten them only where the short form reads better.
+- Russian patterns: «հանդիսանում է» (C2), «X-ի մոտ» for «у», also for an author («Դը Մուավրի մոտ»,
+  O7), «արդյունքում» (O3). Allowed, leave them: «իրենից ներկայացնում է», «հանդես է գալիս որպես»,
+  «X-ը, դա ... է», «իր հերթին», «դեր չի խաղում» (A28, A5, A44); shorten the first two only where
+  the short form reads better.
 - Passive with «... կողմից» -> active verb with the actor as subject (G2).
 - «մենք» before a «-ենք» verb: delete (G1).
 
 ## 5. Rhythm pass (read the text aloud, or have a model read it as a student)
 
 - Count «Ուստի» and sentence-opening «Սա» / «Այն»; if the lint reports a density hint, vary them (S1, S4).
-- Turn «..., որը ...» chains into participles or two sentences (S2).
+- Turn «..., որը ...» chains into short participles or two sentences; a long definition keeps its
+  «որը» clause (S2, A45).
+- Sentence openers: «Հետևաբար,», «Վերջապես,», «Մյուս կողմից,», «Մասնավորապես,» with a comma;
+  «Այսպիսով՝», «Օրինակ՝», «Այսինքն՝» with ՝ (P3; the `--style` hint `opener-punct` finds them).
 - Numerals take a singular noun («երեք տարր», «n տարրից», «Երկու բազմություն հավասար են») (G3, A38).
 - Do not strip scare quotes: they are fine as they are (W2, A29).
 - One idea per sentence, but do not chop proofs into 5-word fragments either.

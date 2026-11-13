@@ -37,15 +37,18 @@ Topics cut from current work so they are not lost.
   copy); box title «Փոխանցելի տեխնիկա» -> «Ընդհանուր հնարք» (72 uses); math «աշխատում է» and
   «հարկադրել» -> plain verbs; «Հետևաբար,» with comma; no «Թող», no «Հեշտ է տեսնել»; mijaket stays
   ASCII "."; then rebuild the PDFs. Run `python -I armenian_style/lint_armenian.py --style` on each
-  sheet. (2026-11-04, rules 2026-11-10)
-- **Glossary fixes waiting for the owner's OK (Q14):** row 509 typo «գնատահական», rows 257/258
-  duplicate, row 172 computability -> «հաշվարկելիություն» (A30), U+2024 in 23 rows
-  (`armenian_style/GLOSSARY_REPORT.md`). (2026-11-10)
+  sheet. (2026-11-04, rules 2026-11-10) Added 2026-11-13: the hint `opener-punct` lists the openers
+  still to fix there («Հետևաբար» without a comma 13 times, «Այսպիսով» without ՝ in P1 and P4). The
+  PDFs of P1, P2-3 and P5 lag their `.tex` by 4 punctuation marks (3 stress marks removed, 1 comma
+  added on 2026-11-13) until this sweep rebuilds them.
+- **Glossary leftovers, none put to the owner:** duplicate row 258 (kept on purpose, row numbers are
+  cited), trailing spaces in rows 287 and 292, missing comma in row 190, U+2024 in 23 rows, «․․․» in
+  row 1031 (`armenian_style/GLOSSARY_REPORT.md`). The real fixes were applied on 2026-11-13.
 - **Armenian lint gaps found in the second model check:** no hint for the Russian «X-ի մոտ» (= «у»;
   the spatial sense would give many false positives), no article check after Greek letters or longer
   formulas («$\varepsilon$-ն փոքր», «$f(x)$-ն դրական» pass), and `che-adjective` does not see
   «չ...ելի» words. The rules are written down (GUIDE.md O7, A1b, N1); only the mechanical check is
-  missing. Also not asked: whether «X-ի մոտ» for "in X's work" is the calque. (2026-11-13)
+  missing. (2026-11-13)
 - **English site pages.** Port the content fixes from the Armenian pass into the English sheets in
   `discrete/solutions_opus_4_8/` first (stars-and-bars gaps wording, P8 n>=3, P7 DOF prose and
   Stirling rule, P5 red dots 15/30/45, P1 contrapositive and mirror claims, P2-3 vertex labels),
