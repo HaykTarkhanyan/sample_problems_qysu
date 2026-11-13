@@ -397,7 +397,7 @@
       pl.dot(r.exact, 0.5, true, "orange", pl.over, 5);
       pl.text(r.exact, 0.5, `a ${SIGN[op]} b = ${sci(r.exact, 4)}`, { "text-anchor": "middle", dy: -10 });
 
-      Q.tex(out("formula"), `\\begin{aligned}${LHS[op]}&=${TEX[op]}\\\\&=${P.numTex(r.bound, 5)}\\end{aligned}`, true);
+      Q.tex(out("formula"), `\\begin{aligned}&${LHS[op]}\\\\&=${TEX[op]}\\\\&=${P.numTex(r.bound, 5)}\\end{aligned}`, true);
       const zero = r.exact === 0;
       show(out("table"), table([
         ["", "բացարձակ", "հարաբերական"],
