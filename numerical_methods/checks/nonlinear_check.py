@@ -108,6 +108,12 @@ assert all(rd[i] == 3.0 ** -(2 * (i + 1) + 1) for i in range(6))   # ratio 3^-(2
 assert 1 < pd_[-1] < 1.12                                     # p_n = (2n+1)/(2n-1) -> 1: order 1
 close(pd_[0], 5 / 3); close(pd_[1], 7 / 5)
 assert 1 + 3.0 ** -(3**4) == 1.0 and 1 + 3.0 ** -(3**3) > 1.0   # in doubles x_4 = 1 exactly, x_3 is not
+# the rows the page's Python cell prints (n -> ratio e_{n+1}/e_n, p_n); lists start at e_1, so index n is e_{n+1}
+assert [round(ra[n - 1], 4) for n in (10, 100, 199)] == [0.5645, 0.942, 0.9703]
+assert [round(pa[n - 2], 4) for n in (10, 100, 199)] == [0.9046, 0.9901, 0.995]
+assert [round(rb[n - 1], 4) for n in (2, 5, 19)] == [0.3571, 0.3342, 0.3333]
+assert [round(pd_[n - 2], 4) for n in (2, 5, 11)] == [1.6667, 1.2222, 1.0952]
+close(float(ec[0]), 1 / 27); close(float(ec[1]), 3.0**-9); close(float(ec[2]), 3.0**-27)
 log.info(f"A16 (a) 1/n^6: ratios n=10: {ra[9]:.4f}, n=100: {ra[99]:.4f} -> 1 (sublinear)")
 log.info(f"A16 (b) 1/(3^n+1): ratios {[round(r, 5) for r in rb[:4]]} -> 1/3 (linear)")
 log.info(f"A16 (c) e_n = 3^-3^n: e_1..e_3 = {[f'{float(e):.3e}' for e in ec[:3]]}, p = {[round(p, 6) for p in pc]} (order 3)")
@@ -222,7 +228,12 @@ assert xs22 == [0.5, 0.25, 0.375] and f22(0.5) == 0.125 and f22(0.25) == -0.4843
 n22 = bisect_steps(1, 1e-6)
 assert n22 == 19 and 2**20 == 1048576 and 2**19 == 524288
 r22 = brentq(f22, 0, 1)
+x19, _ = bisect_mid(f22, 0, 1, 19)
+assert abs(x19[-1] - r22) < 1e-6 and abs(0.375 - r21) <= 1 / 8 and abs(0.375 - r22) <= 1 / 8
 log.info(f"A22 x_0, x_1, x_2 = {xs22}, f(0.375) = {f22(0.375)}, n = {n22}, root {r22:.6f}, |x_2 - r| = {abs(0.375 - r22):.4f}")
+log.info(f"A21 |x_16 - r| = {abs(x16[-1] - r21):.2e}; A22 x_19 = {x19[-1]:.7f}, |x_19 - r| = {abs(x19[-1] - r22):.2e}; "
+         f"predict block: n(1e-3) = {bisect_steps(1, 1e-3)}, n(1e-6) = {bisect_steps(1, 1e-6)}")
+assert (bisect_steps(1, 1e-3), bisect_steps(1, 1e-6)) == (9, 19)
 
 # ---------- A23: a_0 = a_1 = ... for the first k steps only ----------
 f23 = lambda x: x - 0.01                                       # root 0.01 lies in (1/128, 1/64)
@@ -278,7 +289,8 @@ r27 = brentq(f27, 0.1, math.pi / 3)
 L27 = math.pi / 3 - 0.1
 assert d27 == 14 and L27 / 2**14 < 1e-4 <= L27 / 2**13 and abs(x27 - r27) < 5e-5
 log.info(f"A27 f(0.1) = {f27(0.1):.4f}, f(pi/3) = {f27(math.pi / 3):.4f}, length {L27:.6f}, {d27} halvings, "
-         f"last length {L27 / 2**14:.2e}, x = {x27:.6f}, root {r27:.6f}")
+         f"last length {L27 / 2**14:.2e}, x = {x27:.6f}, root {r27:.6f}, |x - r| = {abs(x27 - r27):.1e}, f(x) = {f27(x27):.2e}")
+close(f27(math.pi / 3), 3 / math.pi - math.sqrt(3))
 
 # ---------- A28: ln x - 2 = 0 ----------
 f28 = lambda x: math.log(x) - 2
