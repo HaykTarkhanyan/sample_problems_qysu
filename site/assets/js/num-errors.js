@@ -47,8 +47,8 @@
     const a = ratAbs(x);
     if (a.n === 0n) throw new Error("normExp: zero has no normalized form");
     let e = 0;
-    while (a.n >= a.d * pow10(e)) e++;
-    while (a.n * pow10(1 - e) < a.d) e--;
+    if (a.n >= a.d) while (a.n >= a.d * pow10(e)) e++;
+    else while (a.n * pow10(1 - e) < a.d) e--;
     return e;
   }
   /** t-digit decimal machine number for x: mode "chop" or "round" (next digit >= 5 goes up).
@@ -91,7 +91,7 @@
     if (x > nums[nums.length - 1]) return { over: true, lo: nums[nums.length - 1], hi: Infinity };
     let i = 0, j = nums.length - 1;
     while (j - i > 1) { const k = (i + j) >> 1; if (nums[k] <= x) i = k; else j = k; }
-    return nums[j] === x ? { lo: x, hi: x } : { lo: nums[i], hi: nums[j] };
+    return nums[i] === x || nums[j] === x ? { lo: x, hi: x } : { lo: nums[i], hi: nums[j] };
   }
 
   // ---------------------------------------------------------------- cancellation
