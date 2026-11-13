@@ -178,8 +178,8 @@ assert (n_a, n_c, n_b) == (6, 7, 60)
 for e, s in zip(ea17[:7], ["1.3", "0.58", "0.14", "9.2e-03", "4.2e-05", "8.9e-10", "4.0e-19"]):
     shown(e, s)
 shown(eb17[40], "8e-05")
-for p, s in zip(pc17[3:8], ["1.74", "1.57", "1.64", "1.61", "1.62"]):
-    shown(p, s)
+for p, s in zip(pc17[:8], ["0.48", "2.80", "1.33", "1.74", "1.57", "1.64", "1.61", "1.62"]):
+    shown(p, s)                                                # the eight estimates the text quotes and the cell prints
 shown(golden, "1.618")
 xb_long = xb[:]
 while abs(xb_long[-1] - LN2) >= D("1e-12"):
@@ -306,6 +306,7 @@ f25 = lambda x: x * x * (x - 2) * (x - 5) * (x - 4)
 assert [f25(-1), f25(7), f25(3), f25(1), f25(2)] == [-90, 1470, 18, -12, 0]
 xs25, _ = bisect_mid(f25, -1, 7, 5)
 assert xs25 == [3, 1, 2]
+assert f25(-3) < 0 < f25(3) and bisect_mid(f25, -3, 3, 5)[0] == [0]   # the one way to reach the root 0: a midpoint hits it
 log.info(f"A25 midpoints {xs25}: f(3) = 18, f(1) = -12, f(2) = 0 -> root 2")
 
 # ---------- A26: y = 3x and y = e^x ----------
@@ -500,6 +501,8 @@ r35 = brentq(f35, -2, -1)
 log.info(f"A35 x_2 = {s35[2]}, f(-4) = {f35(-4.0)}, x_3 = {s35[3]:.5f}; root {r35:.6f}; f(-2) = {f35(-2)}, f(-1) = {f35(-1)}")
 log.info(f"A35 secant path {[round(v, 4) for v in s35]}")
 assert f35(-4.0) == -1080 and f35(-2) == -32 and f35(-1) == 6 and len(s35) == 13
+g35 = np.linspace(-3, 3, 60001)
+assert ((5 * g35**4 + 3 * g35**2 > 0) | (np.abs(g35) < 1e-12)).all()  # f' >= 0 with equality only at x = 0
 assert all(abs(v - r35) > 0.5 for v in s35[2:])                       # twelve steps from 0, 1: never near the root
 s35b = secant(f35, -2.0, -1.0, 8)
 assert len(s35b) == 9 and abs(s35b[-1] - r35) < 1e-6
@@ -577,6 +580,8 @@ for x in [-1, -0.3, 0.2, 1]:                                         # (h) is Ne
     close(f39h(x), x - (9 * x + math.cos(2 * x)) / (9 - 2 * math.sin(2 * x)))
     assert abs(f39h(x)) <= 3 / 7
 assert abs(xh[np.abs(dh).argmax()] - 1) < 1e-9                       # max |f'| at x = 1
+fh = -(2 * xh * np.sin(2 * xh) + np.cos(2 * xh)) / (9 - 2 * np.sin(2 * xh))
+assert np.abs(fh).max() <= 3 / 7                                     # (h) maps [-1, 1] into itself, on the whole grid
 log.info("A39 sup|f'|: " + ", ".join(f"{k} {v:.4f}" for k, v in L39.items()) + f"; 3sqrt3/8 = {3 * math.sqrt(3) / 8:.4f}, 40/49 = {40 / 49:.4f}")
 log.info(f"A39 (h) max |f'| at x = {xh[np.abs(dh).argmax()]:.3f}")
 
