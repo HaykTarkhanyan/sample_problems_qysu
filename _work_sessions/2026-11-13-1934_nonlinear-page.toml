@@ -1,0 +1,55 @@
+title = "Nonlinear equations page (block A, problems 16-45) finished in an agent worktree"
+date = "2026-11-13"
+time = "19:34"  # local (WEST)
+
+areas = [
+  "site/numerical (nonlinear.html, index.html card)",
+  "site/assets/js/num-nonlinear.js",
+  "numerical_methods/checks (nonlinear_check.py, nonlinear_widgets_check.mjs)",
+  "numerical_methods/README.md (status row)",
+]
+
+done = [
+  "Took over the stopped agent's branch worktree-agent-a1cf198754d89cc00 (merge c6dff06) and its gitignored notes (logs/nonlinear_statements.md: all 30 statements transcribed).",
+  "Repaired nonlinear_check.py: two wrong expected roundings in A16 (0.9703 -> 0.9704, 0.9901 -> 0.99) and a list too short for p_11; added shown(), which asserts the exact rounding of every number quoted on the page (16-45).",
+  "M1 (c417073): bisection theory (steps, error bound with proof, iteration-count convention x_n = (n+1)-th midpoint as in the lecture), predict block, w-bisect wired, problems 21-27, nonlinear_widgets_check.mjs (all NUMNL numerics), lint fixes in 16-20.",
+  "M2 (fbe1ad6): Newton / secant theory (local quadratic convergence theorem with proof, failure modes, secant order and cost per step), predict block, w-newton wired, problems 28-37.",
+  "M3: fixed-point theory (contraction, Banach theorem with proof, a priori / a posteriori counts, rate q = |g'(r)|), predict block, w-cobweb wired (problem 40 starts from 0, problem 42 added), problems 38-45, #exam section (summary table, typical mistakes, self-check questions), index card, README row.",
+  "Checks: check_site 0 errors, Armenian lint 0 errors, nonlinear_check.py passes (0.4 s), 15/15 page Python blocks run, widget numerics check passes; a throwaway mock-DOM smoke test (scratchpad) clicked every button and dragged every plot of the 4 widgets with no exception and no NaN in any message; a KaTeX-metrics width estimate puts every display formula under 316 px (288 px in boxes).",
+]
+
+pending = [
+  "No browser check (1280 / 390 px, both themes, console) and no independent math review yet.",
+  "site/assets/search/numerical.js not rebuilt (generated file, off limits for the agent); CI rebuilds it on deploy.",
+  "Merge with the two sibling page branches: index.html cards and README status rows touch the same spots.",
+]
+
+next = [
+  "Main session: maths and Armenian pass, browser check, then merge.",
+  "Independent math review of nonlinear.html (report in numerical_methods/reviews/).",
+]
+
+files = [
+  "site/numerical/nonlinear.html",
+  "site/assets/js/num-nonlinear.js",
+  "site/numerical/index.html",
+  "numerical_methods/checks/nonlinear_check.py",
+  "numerical_methods/checks/nonlinear_widgets_check.mjs",
+  "numerical_methods/README.md",
+]
+
+commits = [
+  "c6dff06 merge of the stopped agent's branch",
+  "c417073 M1: bisection theory, problems 21-27, widget numerics check",
+  "fbe1ad6 M2: Newton and secant theory, problems 28-37",
+  "M3: fixed point, problems 38-45, exam section, index card, README row, this log",
+]
+
+notes = """
+Conventions stated on the page: bisection x_0 is the first midpoint and 'n iterations' means stopping at x_n
+(lecture slide 21); Newton / secant 'third approximation' = x_2; fixed point 'n iterations' = g applied n times.
+Problem 45 compares x_5 and x_10 of every method with the same index.
+Terms with no glossary row: Newton's method, fixed-point iteration (problem list: պարզ իտերացիայի մեթոդ),
+iteration (իտերացիա), Banach fixed-point theorem, machine precision, attracting / repelling fixed point,
+stopping condition (problem list: դադարեցման պայման).
+"""
