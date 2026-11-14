@@ -55,6 +55,15 @@
         <li><a href="#p6">Խնդիր 6 - $x^2e^{x^2}$, միջին ուղղանկյուններ</a></li>
         <li><a href="#p7">Խնդիր 7 - $e^{x^2}$, $10^{-3}$ ճշտություն</a></li>
         <li><a href="#p8">Խնդիր 8 - $x^2\cos x$, սեղաններ</a></li>
+        <li><a href="#p9">Խնդիր 9 - $|f''|\le1$ դաս</a></li>
+        <li><a href="#p10">Խնդիր 10 - $x\sin x^2$, $10^{-4}$ ճշտություն</a></li>
+        <li><a href="#p11">Խնդիր 11 - $\frac{1}{x^2+1}$, սեղաններ</a></li>
+        <li><a href="#p12">Խնդիր 12 - $xe^{-x^2}$, $n$-ի ընտրություն</a></li>
+        <li><a href="#p13">Խնդիր 13 - $Af(-3)+4f(a)+Bf(3)$</a></li>
+        <li><a href="#p14">Խնդիր 14 - $\frac{1}{x+1}$, Սիմպսոն</a></li>
+        <li><a href="#p15">Խնդիր 15 - երկու օրինակ</a></li>
+        <li><a href="#p16">Խնդիր 16 - $\sin x$, 9 հանգույց</a></li>
+        <li><a href="#p17">Խնդիր 17 - երեք հանգույցով ինտերպոլացիոն բանաձև</a></li>
 <!-- TOC-MORE -->
       </ol>
     </nav>
@@ -656,6 +665,331 @@ for n in [3, 2, 30, 300]:
     print(f"n = {n:3d}   h = {3 / n:.3f}   T_n = {T:.5f}   սխալանքը = {exact - T:.5f}")
 print("ճշգրիտ արժեքը =", round(exact, 5))</code></pre>
 <div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $T_3\approx-0{,}02184$, (բ) $T_2\approx-0{,}51412$ (ճշգրիտ արժեքը՝ $I\approx0{,}39314$)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p9" open>
+<summary><h2>Խնդիր 9 - $|f''|\le1$ դաս</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 9</div>
+<p>$\int_0^1f(x)\,dx$ ինտեգրալը հաշվում ենք սեղանների ընդհանրացված բանաձևով։ Գնահատեք հանգույցների քանակը, որն ապահովում է
+$0{,}5\cdot10^{-4}$ ճշտություն $\max_{0\le x\le1}|f''(x)|\le1$ պայմանին բավարարող բոլոր $f$ ֆունկցիաների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Ֆունկցիան հայտնի չէ, բայց սխալանքի գնահատականին պետք է միայն
+$K_2$-ը, և պայմանից $K_2\le1$։ Գտնում ենք ամենափոքր $n$-ը, որի դեպքում գնահատականը չի գերազանցում $0{,}5\cdot10^{-4}$-ը։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - անհավասարությունը</h3>
+<p>$b-a=1$ և $h=\frac1n$, ուրեմն</p>
+$$|I-T_n|\le\frac{h^2}{12}K_2\le\frac{1}{12n^2}.$$
+<p>Պահանջում ենք $\frac{1}{12n^2}\le0{,}5\cdot10^{-4}$, այսինքն՝ $n^2\ge\frac{1}{6\cdot10^{-4}}\approx1666{,}67$, $n\ge40{,}82$։
+Ամենափոքր ամբողջ թիվը $n=41$-ն է, այսինքն՝ $42$ հանգույց։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ավելի քիչ հանգույցը չի բավականացնում</h3>
+<p>Դիտարկենք $f(x)=\frac{x^2}{2}$ ֆունկցիան։ $f''\equiv1$, այսինքն՝ այն պատկանում է դասին, և սխալանքի ճշգրիտ բանաձևում
+$f''(\xi)=1$։ Այս ֆունկցիայի համար $T_n-I=\frac{1}{12n^2}$ ճշգրիտ հավասարություն է։ $n=40$-ի դեպքում այն
+$\frac{1}{19200}\approx5{,}208\cdot10^{-5}\gt0{,}5\cdot10^{-4}$ է։ Ուրեմն $n\le40$ դեպքում ճշտությունը երաշխավորված չէ դասի
+բոլոր ֆունկցիաների համար, և $n=41$-ը հնարավոր ամենափոքր պատասխանն է։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $n=41$-ի դեպքում
+$\frac{1}{12\cdot41^2}\approx4{,}957\cdot10^{-5}\le0{,}5\cdot10^{-4}$, իսկ $n=40$-ի դեպքում՝ $\approx5{,}208\cdot10^{-5}$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $n\ge41$ հավասար մաս, այսինքն՝ առնվազն $42$ հանգույց։ Ավելի քիչ հանգույցով ճշտությունը երաշխավորված չէ (օրինակ՝ $f(x)=\frac{x^2}{2}$-ի համար)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p10" open>
+<summary><h2>Խնդիր 10 - $x\sin x^2$, $10^{-4}$ ճշտություն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 10</div>
+<p>Տրված է $\int_{-1}^2x\sin x^2\,dx$ ինտեգրալը։</p>
+<p>(ա) Գտեք հանգույցների քանակ, որը բավարար է սեղանների ընդհանրացված բանաձևով այդ ինտեգրալը $10^{-4}$ ճշտությամբ հաշվելու
+համար։</p>
+<p>(բ) (Python) Գրեք ծրագիր, որը սեղանների ընդհանրացված բանաձևով հաշվում է այդ ինտեգրալը $10^{-4}$ ճշտությամբ։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Պետք է $K_2=\max_{[-1,2]}|f''|$-ի վերին գնահատական։ Ձեռքով
+ստանում ենք պարզ, բայց կոպիտ գնահատական, իսկ Python-ով՝ մեծագույն արժեքը։ Երկու դեպքում էլ ստացված $n$-ը բավարար է։</p></div>
+<h3>(ա) Հանգույցների քանակը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ածանցյալները</h3>
+$$\begin{aligned}f'(x)&=\sin x^2+2x^2\cos x^2,\\ f''(x)&=6x\cos x^2-4x^3\sin x^2.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կոպիտ գնահատական ձեռքով</h3>
+<p>$|\cos x^2|\le1$, $|\sin x^2|\le1$ և $|x|\le2$, այնպես որ $|f''(x)|\le6|x|+4|x|^3\le12+32=44$։ $b-a=3$, $h=\frac3n$, և</p>
+$$\frac{(b-a)h^2}{12}K_2\le\frac{27\cdot44}{12n^2}=\frac{99}{n^2}\le10^{-4}$$
+<p>պայմանից $n^2\ge990000$, $n\ge994{,}99$։ Բավական է $n=995$, այսինքն՝ $996$ հանգույց։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - ավելի ճշգրիտ $K_2$</h3>
+<p>$|f''|$-ի մեծագույն արժեքը (Python-ով, խիտ ցանցի վրա) $K_2\approx17{,}064$ է, $x\approx1{,}583$ կետում։ Ուշադրություն. դա
+հատվածի ծայրը չէ, $|f''(2)|\approx16{,}374$։ Այս $K_2$-ով</p>
+$$n\ge\sqrt{\frac{27\cdot17{,}064}{12\cdot10^{-4}}}\approx619{,}62,$$
+<p>և բավական է $n=620$ ($621$ հանգույց)։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Նախնականը $-\frac12\cos x^2$ է, ուստի
+$I=\frac{\cos1-\cos4}{2}\approx0{,}59697$։ Իրական սխալանքը $n=995$-ի դեպքում $\approx5{,}99\cdot10^{-6}$ է, $n=620$-ի
+դեպքում՝ $\approx1{,}54\cdot10^{-5}$, երկուսն էլ $10^{-4}$-ից փոքր։</div>
+<h3>(բ) Ծրագիրը</h3>
+<p>Ծրագիրը $K_2$-ը գտնում է խիտ ցանցի վրա, $n$-ը՝ գնահատականով, և համեմատում է ճշգրիտ արժեքի հետ։ Վերջին մասը ցույց է տալիս, որ
+$10^{-4}$ ճշտության համար բավական է արդեն $n=244$ (սխալանքը $\approx9{,}96\cdot10^{-5}$), իսկ $n=243$-ի դեպքում սխալանքը
+$\approx1{,}0045\cdot10^{-4}$ է։</p>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def trapezoid(f, a, b, n):
+    x = np.linspace(a, b, n + 1)
+    return (b - a) / n * (np.sum(f(x)) - (f(a) + f(b)) / 2)
+
+f = lambda x: x * np.sin(x**2)
+d2f = lambda x: 6 * x * np.cos(x**2) - 4 * x**3 * np.sin(x**2)
+a, b, eps = -1.0, 2.0, 1e-4
+
+xs = np.linspace(a, b, 300001)
+K2 = np.max(np.abs(d2f(xs)))                     # max|f''| խիտ ցանցի վրա
+n = math.ceil(math.sqrt((b - a)**3 * K2 / (12 * eps)))
+exact = (math.cos(1) - math.cos(4)) / 2          # նախնականը՝ -cos(x^2)/2
+T = trapezoid(f, a, b, n)
+print(f"K2 = {K2:.4f}, x = {xs[np.argmax(np.abs(d2f(xs)))]:.4f}")
+print(f"n = {n}   T_n = {T:.8f}   սխալանքը = {abs(exact - T):.2e}")
+
+m = 1
+while abs(exact - trapezoid(f, a, b, m)) &gt;= eps:
+    m += 1
+print("ամենափոքր n-ը, որի դեպքում սխալանքը &lt; 1e-4՝", m)</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $K_2\le44$ գնահատականով բավարար է $n=995$ ($996$ հանգույց), իսկ $K_2\approx17{,}064$-ով՝ $n=620$ ($621$ հանգույց)։ (բ) $n=620$-ի դեպքում սխալանքը $\approx1{,}54\cdot10^{-5}$ է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p11" open>
+<summary><h2>Խնդիր 11 - $\frac{1}{x^2+1}$, սեղաններ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 11</div>
+<p>Գնահատեք այն սխալանքը, որը թույլ ենք տալիս $\int_0^1\frac{dx}{x^2+1}$ ինտեգրալը</p>
+$$\begin{aligned}&\tfrac{1}{20}\bigl[f(0)+2f(0{,}1)+2f(0{,}2)\\&\quad+\dots+2f(0{,}9)+f(1)\bigr]\end{aligned}$$
+<p>քառակուսեցման բանաձևով մոտարկելիս։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Սա սեղանների ընդհանրացված բանաձևն է $h=0{,}1$ քայլով ($n=10$)՝
+$\frac h2=\frac{1}{20}$, ներքին հանգույցները $2$ գործակցով։ Մնում է գտնել $K_2$-ը։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $K_2$</h3>
+$$\begin{aligned}f''(x)&=\frac{6x^2-2}{(x^2+1)^3},\\ f'''(x)&=\frac{24x(1-x^2)}{(x^2+1)^4}.\end{aligned}$$
+<p>$[0,1]$-ում $f'''\ge0$, այսինքն՝ $f''$-ն աճում է $f''(0)=-2$-ից մինչև $f''(1)=\frac12$, և $K_2=\max|f''|=2$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գնահատականը</h3>
+$$\begin{aligned}|I-T_{10}|&\le\frac{(b-a)h^2}{12}K_2=\frac{0{,}01}{12}\cdot2\\&=\frac{1}{600}\approx1{,}667\cdot10^{-3}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Ճշգրիտ արժեքը՝ $\int_0^1\frac{dx}{x^2+1}=\operatorname{arctg}1=\frac{\pi}{4}\approx0{,}785398$,
+իսկ $T_{10}\approx0{,}784981$։ Իրական սխալանքը $\approx4{,}167\cdot10^{-4}$ է, մոտ չորս անգամ փոքր գնահատականից (կոդը՝
+խնդիր 14-ում)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $|I-T_{10}|\le\frac{1}{600}\approx1{,}667\cdot10^{-3}$ (իրական սխալանքը՝ $\approx4{,}167\cdot10^{-4}$)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p12" open>
+<summary><h2>Խնդիր 12 - $xe^{-x^2}$, $n$-ի ընտրություն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 12</div>
+<p>$n$-ի ո՞ր արժեքների դեպքում կարելի է $\int_{-1}^3xe^{-x^2}\,dx$ ինտեգրալը սեղանների ընդհանրացված բանաձևով մոտարկել
+$10^{-3}$ ճշտությամբ։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գտնում ենք $K_2$-ը ճշգրիտ՝ $f'''=0$ կետերով և ծայրակետերով, և
+լուծում ենք $\frac{(b-a)^3K_2}{12n^2}\le10^{-3}$ անհավասարությունը, որտեղ $b-a=4$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - ածանցյալները</h3>
+$$\begin{aligned}f'(x)&=(1-2x^2)e^{-x^2},\\ f''(x)&=(4x^3-6x)e^{-x^2},\\ f'''(x)&=-(8x^4-24x^2+6)e^{-x^2}.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $|f''|$-ի մեծագույն արժեքը</h3>
+<p>$f'''=0$՝ $4x^4-12x^2+3=0$, $x^2=\frac{3\pm\sqrt6}{2}$, այսինքն՝ $x^2\approx0{,}27526$ կամ $x^2\approx2{,}72474$։ $[-1,3]$
+հատվածում են $x\approx\pm0{,}52465$ և $x\approx1{,}65068$ կետերը։ $|f''|$-ի արժեքները՝</p>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$x$</th><th class="num">$\pm0{,}52465$</th><th class="num">$1{,}65068$</th><th class="num">$-1$</th><th class="num">$3$</th></tr></thead>
+<tbody><tr><td class="num">$|f''(x)|$</td><td class="num">$1{,}95178$</td><td class="num">$0{,}53018$</td><td class="num">$\frac2e\approx0{,}73576$</td><td class="num">$90e^{-9}\approx0{,}01111$</td></tr></tbody></table></div>
+<p>Ուրեմն $K_2\approx1{,}95178$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - $n$-ը</h3>
+$$\frac{4^3\cdot1{,}95178}{12n^2}\le10^{-3}\iff n^2\ge10409{,}5,$$
+<p>այսինքն՝ $n\ge102{,}03$։ Գնահատականը երաշխավորում է ճշտությունը բոլոր $n\ge103$ արժեքների համար։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Նախնականը $-\frac12e^{-x^2}$ է, և $I=\frac{e^{-1}-e^{-9}}{2}\approx0{,}18388$։
+Ուղղակի հաշվարկով $10^{-3}$ ճշտությունը ձեռք է բերվում արդեն $n=23$-ից (սխալանքը $\approx9{,}27\cdot10^{-4}$), իսկ $n=22$-ի
+դեպքում սխալանքը $\approx1{,}013\cdot10^{-3}$ է։ Գնահատականը երաշխիք է, և այն այստեղ շատ զգույշ է։</div>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def trapezoid(f, a, b, n):
+    x = np.linspace(a, b, n + 1)
+    return (b - a) / n * (np.sum(f(x)) - (f(a) + f(b)) / 2)
+
+f = lambda x: x * np.exp(-x**2)
+exact = (math.exp(-1) - math.exp(-9)) / 2
+x2 = (3 - math.sqrt(6)) / 2                       # f'''-ի արմատի քառակուսին
+K2 = math.sqrt(x2) * abs(4 * x2 - 6) * math.exp(-x2)
+n = math.ceil(math.sqrt(4**3 * K2 / (12 * 1e-3)))
+print(f"K2 = {K2:.5f}, գնահատականով n = {n}, սխալանքը = {abs(exact - trapezoid(f, -1, 3, n)):.2e}")
+for m in [22, 23]:
+    print(f"n = {m}   սխալանքը = {abs(exact - trapezoid(f, -1, 3, m)):.3e}")</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> Սխալանքի գնահատականով՝ ցանկացած $n\ge103$։ Ուղղակի հաշվարկով ճշտությունը ձեռք է բերվում արդեն $n\ge23$-ի դեպքում</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p13" open>
+<summary><h2>Խնդիր 13 - $Af(-3)+4f(a)+Bf(3)$</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 13</div>
+<p>Կառուցեք</p>
+$$\begin{gathered}\int_{-3}^3f(x)\,dx\\\approx Af(-3)+4f(a)+Bf(3)\end{gathered}$$
+<p>տեսքի քառակուսեցման բանաձև, որը ճշգրիտ է երկրորդ աստիճանի բազմանդամների համար։ Որոշեք այդ բանաձևի ճշգրտության
+աստիճանը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Երեք անհայտ ունենք՝ $A$, $B$ և $a$ հանգույցը (այստեղ $a$-ն
+հատվածի ծայր չէ)։ Գրում ենք երեք հավասարում՝ $f=1,x,x^2$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - հավասարումները</h3>
+$$\begin{aligned}f=1:&\quad A+4+B=6,\\ f=x:&\quad-3A+4a+3B=0,\\ f=x^2:&\quad9A+4a^2+9B=18.\end{aligned}$$
+<p>Առաջինից $A+B=2$, և երրորդը դառնում է $18+4a^2=18$, այսինքն՝ $a=0$։ Երկրորդից $B-A=0$, ուրեմն $A=B=1$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ճշգրտության աստիճանը</h3>
+<p>Ստացվեց $\int_{-3}^3f(x)\,dx\approx f(-3)+4f(0)+f(3)$, այսինքն՝ Սիմպսոնի բանաձևը $[-3,3]$-ում՝
+$\frac{6}{6}\bigl(f(-3)+4f(0)+f(3)\bigr)$։ Բանաձևը համաչափ է, և $x^3$-ի համար ճշգրիտ է՝ $-27+0+27=0=\int_{-3}^3x^3\,dx$։
+$x^4$-ի համար՝ $81+0+81=162$, իսկ $\int_{-3}^3x^4\,dx=\frac{2\cdot3^5}{5}=97{,}2$։ Ճշգրտության աստիճանը $3$ է։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Սիմպսոնի բանաձևի սխալանքը $-\frac{6^5}{2880}f^{(4)}(\xi)$ է, և
+$f=x^4$-ի համար այն $-\frac{7776}{2880}\cdot24=-64{,}8$ է։ Իսկապես, $97{,}2-162=-64{,}8$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $A=B=1$, $a=0$, $\int_{-3}^3f(x)\,dx\approx f(-3)+4f(0)+f(3)$ (Սիմպսոնի բանաձև), ճշգրտության աստիճանը՝ $3$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p14" open>
+<summary><h2>Խնդիր 14 - $\frac{1}{x+1}$, Սիմպսոն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 14</div>
+<p>Գնահատեք այն սխալանքը, որը թույլ ենք տալիս $\int_0^1\frac{dx}{x+1}$ ինտեգրալը</p>
+$$\begin{aligned}&\tfrac{1}{30}\bigl[f(0)+4f(0{,}1)+2f(0{,}2)\\&\quad+4f(0{,}3)+\dots+4f(0{,}9)+f(1)\bigr]\end{aligned}$$
+<p>քառակուսեցման բանաձևով մոտարկելիս։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Սա Սիմպսոնի ընդհանրացված բանաձևն է $h=0{,}1$ քայլով ($n=10$)՝
+$\frac h3=\frac{1}{30}$, գործակիցները՝ $1,4,2,4,\dots,4,1$։ Գնահատականում պետք է $K_4=\max|f^{(4)}|$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $K_4$</h3>
+<p>$f(x)=\frac{1}{x+1}$, $f^{(4)}(x)=\frac{24}{(x+1)^5}$։ Այն նվազում է, և $K_4=f^{(4)}(0)=24$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գնահատականը</h3>
+$$\begin{aligned}|I-S_{10}|&\le\frac{(b-a)h^4}{180}K_4=\frac{10^{-4}\cdot24}{180}\\&=\frac{1}{75000}\approx1{,}333\cdot10^{-5}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $I=\ln2\approx0{,}693147$, $S_{10}\approx0{,}693150$, իրական սխալանքը
+$\approx3{,}05\cdot10^{-6}$ է՝ գնահատականից փոքր։ Ներքևի կոդը հաշվում է նաև խնդիր 11-ի $T_{10}$-ը։</div>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+x = np.linspace(0, 1, 11)                         # h = 0.1
+c_trap = np.array([1] + [2] * 9 + [1]) / 20       # խնդիր 11-ի գործակիցները
+c_simp = np.array([1] + [4, 2] * 4 + [4, 1]) / 30   # խնդիր 14-ի գործակիցները
+
+T10 = np.sum(c_trap / (x**2 + 1))
+S10 = np.sum(c_simp / (x + 1))
+print(f"Խնդիր 11՝ T10 = {T10:.6f}, pi/4 = {math.pi / 4:.6f}, սխալանքը = {math.pi / 4 - T10:.3e}, գնահատականը = {1 / 600:.3e}")
+print(f"Խնդիր 14՝ S10 = {S10:.6f}, ln 2 = {math.log(2):.6f}, սխալանքը = {S10 - math.log(2):.3e}, գնահատականը = {1 / 75000:.3e}")</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $|I-S_{10}|\le\frac{1}{75000}\approx1{,}333\cdot10^{-5}$ (իրական սխալանքը՝ $\approx3{,}05\cdot10^{-6}$)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p15" open>
+<summary><h2>Խնդիր 15 - երկու օրինակ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 15</div>
+<p>(ա) Անալիտիկորեն կամ գրաֆիկորեն կառուցեք անընդհատ ֆունկցիայի օրինակ, որի համար որևէ $[a,b]$ հատվածում սեղանների
+բանաձևը ճշգրիտ է, իսկ միջին ուղղանկյունների բանաձևը՝ ոչ։</p>
+<p>(բ) Անալիտիկորեն կամ գրաֆիկորեն կառուցեք անընդհատ ֆունկցիայի օրինակ, որի համար որևէ $[a,b]$ հատվածում միջին
+ուղղանկյունների բանաձևը ճշգրիտ է, իսկ Սիմպսոնի բանաձևը՝ ոչ։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Վերցնենք $[-1,1]$ հատվածը։ Այնտեղ $M(f)=2f(0)$, $T(f)=f(-1)+f(1)$,
+$S(f)=\frac13\bigl(f(-1)+4f(0)+f(1)\bigr)$։ Գծային ֆունկցիաների համար երեքն էլ ճշգրիտ են, իսկ $ax^2+c$-ի համար $M$-ը և $T$-ն
+ճշգրիտ են միայն $a=0$ դեպքում։ Դրա համար օրինակը փնտրում ենք $x^4+cx^2$ տեսքով և $c$-ն ընտրում ենք այնպես, որ ճշգրիտ լինի
+պահանջված բանաձևը։</p></div>
+<h3>(ա) Սեղանները ճշգրիտ են, միջին ուղղանկյունները՝ ոչ</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $c$-ն</h3>
+<p>$f(x)=x^4+cx^2$՝ $\int_{-1}^1f\,dx=\frac25+\frac{2c}{3}$, $T(f)=2(1+c)$։ Հավասարությունից $c=-\frac65$։ Բազմապատկելով
+$5$-ով՝ $f(x)=5x^4-6x^2$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ստուգում</h3>
+<p>$\int_{-1}^1(5x^4-6x^2)\,dx=2-4=-2$, $T(f)=(5-6)+(5-6)=-2$, իսկ $M(f)=2f(0)=0\ne-2$։</p></div>
+<h3>(բ) Միջին ուղղանկյունները ճշգրիտ են, Սիմպսոնը՝ ոչ</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $c$-ն</h3>
+<p>$M(x^4+cx^2)=0$, ուրեմն պետք է $\frac25+\frac{2c}{3}=0$, $c=-\frac35$։ Բազմապատկելով $-5$-ով՝ $f(x)=3x^2-5x^4$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ստուգում</h3>
+<p>$\int_{-1}^1(3x^2-5x^4)\,dx=2-2=0=M(f)$, իսկ $S(f)=\frac13(-2+0-2)=-\frac43\ne0$։</p></div>
+<div class="box method"><div class="box-title">Ընդհանուր հնարք</div>
+<p>(ա)-ի տիպի օրինակ է ցանկացած $f=L+g$, որտեղ $L$-ը ծայրակետերով անցնող ուղիղն է, իսկ $g$-ն զրո է $a$-ում և $b$-ում,
+$\int_a^bg\,dx=0$ և $g(c)\ne0$, $c=\frac{a+b}{2}$։ Այդ դեպքում $T(f)=\int_a^bL\,dx=\int_a^bf\,dx$, իսկ
+$M(f)=\int_a^bL\,dx+(b-a)\,g(c)\ne\int_a^bf\,dx$։ Գրաֆիկորեն. $g$-ի գրաֆիկն առանցքից վերև և ներքև ունի հավասար մակերեսներ,
+ծայրերում զրո է, իսկ միջնակետում՝ ոչ։</p>
+</div>
+<div class="check"><span class="check-label">Ստուգում։</span> (ա)-ում $f=5x^4-6x^2$-ի համար $L\equiv-1$ (ծայրերում $f=-1$), և
+$g=5x^4-6x^2+1$ ֆունկցիան զրո է $\pm1$-ում, $\int_{-1}^1g\,dx=0$, $g(0)=1\ne0$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $f(x)=5x^4-6x^2$, $[-1,1]$՝ ինտեգրալը և $T(f)$-ը $-2$ են, իսկ $M(f)=0$։ (բ) $f(x)=3x^2-5x^4$, $[-1,1]$՝ ինտեգրալը և $M(f)$-ը $0$ են, իսկ $S(f)=-\frac43$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p16" open>
+<summary><h2>Խնդիր 16 - $\sin x$, 9 հանգույց</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 16</div>
+<p>(ա) Որոշեք, թե ինչ ճշտությամբ կարելի է հաշվել $\int_0^1\sin x\,dx$ ինտեգրալը Սիմպսոնի ընդհանրացված բանաձևով՝ վերցնելով
+$9$ հանգույց։</p>
+<p>(բ) (Python) Գրեք ծրագիր, որը հաշվում է ինտեգրալի մոտավոր արժեքը։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>$9$ հանգույցը $x_0,\dots,x_8$-ն են, այսինքն՝ $n=8$ և $h=\frac18$
+(Սիմպսոնի բանաձևի համար $n$-ը զույգ է, ինչպես պետք է)։ Գնահատականում պետք է $K_4=\max|f^{(4)}|$։</p></div>
+<h3>(ա) Ճշտությունը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $K_4$</h3>
+<p>$f^{(4)}(x)=\sin x$, որը $[0,1]$-ում աճում է, ուստի $K_4=\sin1\approx0{,}84147$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գնահատականը</h3>
+$$\begin{aligned}|I-S_8|&\le\frac{1\cdot(1/8)^4}{180}\sin1=\frac{\sin1}{737280}\\&\approx1{,}141\cdot10^{-6}.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> $I=1-\cos1\approx0{,}4596977$, $S_8\approx0{,}4596983$, իրական սխալանքը
+$\approx6{,}25\cdot10^{-7}$ է՝ գնահատականից փոքր։</div>
+<h3>(բ) Ծրագիրը</h3>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def simpson(f, a, b, n):
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
+    return (b - a) / n / 3 * (y[0] + y[-1] + 4 * np.sum(y[1:-1:2]) + 2 * np.sum(y[2:-1:2]))
+
+S8 = simpson(np.sin, 0, 1, 8)                     # 9 հանգույց
+exact = 1 - math.cos(1)
+print(f"S8 = {S8:.7f}   ճշգրիտ արժեքը = {exact:.7f}")
+print(f"սխալանքը = {S8 - exact:.3e}   գնահատականը = {math.sin(1) / 737280:.3e}")</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) Սխալանքը չի գերազանցում $\frac{\sin1}{737280}\approx1{,}141\cdot10^{-6}$-ը։ (բ) $S_8\approx0{,}4596983$, իրական սխալանքը՝ $\approx6{,}25\cdot10^{-7}$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p17" open>
+<summary><h2>Խնդիր 17 - երեք հանգույցով ինտերպոլացիոն բանաձև</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 17</div>
+<p>Կառուցեք</p>
+$$\begin{gathered}\int_0^1f(x)\,dx\approx A_0f(0)\\+A_1f\bigl(\tfrac12\bigr)+A_2f(1)\end{gathered}$$
+<p>ինտերպոլացիոն քառակուսեցման բանաձևը։ Այդ բանաձևով հաշվեք $f(x)=\sin\pi x$ և $f(x)=x^2+x$ ֆունկցիաների ինտեգրալների
+մոտավոր արժեքները։ Հաշվեք մոտարկումների սխալանքները։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Երեք հանգույցով ինտերպոլացիոն բանաձևը ճշգրիտ է $1$, $x$, $x^2$
+ֆունկցիաների համար, և այդ երեք հավասարումը որոշում են կշիռները (թեորեմ ինտերպոլացիոն բանաձևերի մասին)։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - կշիռները</h3>
+$$\begin{aligned}A_0+A_1+A_2&=1,\\ \tfrac12A_1+A_2&=\tfrac12,\\ \tfrac14A_1+A_2&=\tfrac13.\end{aligned}$$
+<p>Վերջին երկուսի տարբերությունից $\frac14A_1=\frac16$, $A_1=\frac23$, ապա $A_2=\frac16$, $A_0=\frac16$։ Ստացվեց Սիմպսոնի
+բանաձևը՝ $\int_0^1f\,dx\approx\frac16\bigl(f(0)+4f(\frac12)+f(1)\bigr)$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $f(x)=\sin\pi x$</h3>
+<p>$Q=\frac16(0+4\cdot1+0)=\frac23\approx0{,}66667$, իսկ $\int_0^1\sin\pi x\,dx=\frac2\pi\approx0{,}63662$։ Սխալանքը՝
+$I-Q=\frac2\pi-\frac23\approx-0{,}03005$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - $f(x)=x^2+x$</h3>
+<p>$Q=\frac16\bigl(0+4\cdot\frac34+2\bigr)=\frac56$, և $\int_0^1(x^2+x)\,dx=\frac13+\frac12=\frac56$։ Սխալանքը զրո է, քանի որ
+բանաձևը ճշգրիտ է $3$-ից ոչ բարձր աստիճանի բազմանդամների համար։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $\sin\pi x$-ի համար Սիմպսոնի բանաձևի գնահատականը՝
+$\frac{1}{2880}\max|f^{(4)}|=\frac{\pi^4}{2880}\approx0{,}03382$, և իսկապես $0{,}03005\le0{,}03382$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $A_0=A_2=\frac16$, $A_1=\frac23$ (Սիմպսոնի բանաձև)։ $\sin\pi x$՝ մոտավոր արժեքը $\frac23\approx0{,}66667$, ճշգրիտը՝ $\frac2\pi\approx0{,}63662$, սխալանքը $\approx-0{,}03005$։ $x^2+x$՝ $\frac56$, սխալանքը $0$</div>
 </div>
 </div>
 </details>

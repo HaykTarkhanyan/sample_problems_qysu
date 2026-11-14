@@ -303,6 +303,8 @@ f11 = lambda x: 1 / (1 + x * x)
 f11pp = lambda x: (6 * x * x - 2) / (1 + x * x) ** 3
 assert f11pp(0) == -2 and f11pp(1) == 0.5
 assert np.all(np.diff((6 * xs01 ** 2 - 2) / (1 + xs01 ** 2) ** 3) > 0)
+shown(0.1 ** 2, "0,01", "h^2")
+frac_eq(Fr(1, 100) / 12 * 2, Fr(1, 600), "bound")
 shown(1 / 600, "1,667e-3", "bound 1/600")
 T10 = trap(f11, 0, 1, 10)
 c11 = [1] + [2] * 9 + [1]
@@ -346,7 +348,9 @@ log.info("problem 13")
 assert degree([-3, 0, 3], [1, 4, 1], -3, 3) == 3
 frac_eq(Fr(2 * 3 ** 5, 5), Fr(486, 5), "integral of x^4")
 shown(486 / 5, "97,2", "486/5")
-assert 81 + 81 == 162
+assert 81 + 81 == 162 and 6 ** 5 == 7776
+frac_eq(Fr(486, 5) - 162, -Fr(7776, 2880) * 24, "Simpson error on x^4, [-3,3]")
+shown(-7776 / 2880 * 24, "-64,8", "-6^5/2880 * 24")
 
 # ------------------------------------------------------------------ problem 14
 log.info("problem 14")
