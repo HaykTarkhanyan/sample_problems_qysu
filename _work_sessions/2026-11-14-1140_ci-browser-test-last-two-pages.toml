@@ -1,0 +1,53 @@
+title = "CI browser smoke test, English method names, small cosmetics; integration and linear-systems pages started"
+date = "2026-11-14"
+time = "11:40"  # local (system clock, UTC+1), approximate start; same Claude session as 2026-11-13-0000
+
+areas = [
+  "tools (browser_check.mjs, package.json, package-lock.json)",
+  ".github/workflows/pages.yml",
+  "site/numerical (errors, nonlinear, interpolation, splines), site/assets/js/num-nonlinear.js",
+  "glossary_Apr.csv, armenian_style/GLOSSARY_REPORT.md",
+  "DECISIONS.md (#22, #23), CONVENTIONS.md, DEFERRED_TODO.md",
+]
+
+done = [
+  "Owner request: 'do the last 2 pages, we'll update if needed when we get slides, also do the english term, also do the ci browser test and the small cosmetic thingies'.",
+  "Two Opus builder agents launched, each in its own worktree and branch (process of DECISIONS #21): integration.html (block D, 25 problems) and linear-systems.html (block E, 16 problems), built without lecture slides (DECISIONS #22).",
+  "tools/browser_check.mjs: serves site/ on a local port and opens every page in headless Chrome at 390 px with all sections and solutions opened. Fails on console / script errors, failed or 4xx/5xx requests, .katex-error, display formulas wider than their column, a page wider than the screen, widgets that drew nothing. Root-level stubs are checked as redirects. One dependency: playwright-core 1.65.0 (exact pin, lockfile) with the installed Chrome (channel 'chrome'), no browser download. Wired into pages.yml as the last step before the upload. DECISIONS #23.",
+  "First full run: 37 pages in 53 s, no script error or failed request anywhere; the 22 numerical and probability pages clean. 51 display formulas on the 7 discrete pages scroll sideways (p1 8, p2-3 7, p4 9, p5 5, p6 1, p7 13, p8 8): printed as notes there, parked in DEFERRED_TODO. Second run after that change: all 37 pass, 51 s.",
+  "Font check before trusting the width rule in CI (Linux): a one-off probe measured the room around every display formula on the probability and numerical pages. Smallest room 15 px (w13); only 12 display formulas have Armenian text inside the formula (system-font dependent) and the tightest has 35 px.",
+  "English method names added where the term had no English anywhere on the page. In section headings: nonlinear (rate of convergence, bisection method, Newton's method / secant method), interpolation (Lagrange form, interpolation error), splines (least squares), errors (floating-point numbers, cancellation, error propagation). In the definition or theorem text instead, because the heading grew to 5 lines at 390 px: interpolation (divided difference, Newton form, Chebyshev nodes). Not added where the body already defines the term with its English name (root isolation, fixed-point iteration): once per term (A57).",
+  "Cosmetics: the w-order legend on nonlinear.html now shows only the methods the chosen case plots (no «կիսում» in the 'Խնդիր 17' view); interpolation problem 26 says «Ծայրակետում նրա արժեքը» (glossary row 311), so «ծայրային արժեք» keeps one sense; glossary rows 287 and 292 lost a trailing space and row 190 got the comma between its two senses (1061 rows, CRLF and row numbers unchanged).",
+  "Stale DEFERRED_TODO items removed: the inline formula + suffix line break (already solved in site.js, DECISIONS #14) and the CI smoke test.",
+]
+
+pending = [
+  "Integration and linear-systems builders are still running. When each reports: independent Fable review (report in numerical_methods/reviews/), gates, `node tools/browser_check.mjs --python <page>`, read the reviewer's diff, merge, pagers splines -> integration -> linear-systems, cards on the numerical index, search index, deploy.",
+  "The contents entry for #fixedpoint on nonlinear.html stays shorter than its heading on purpose (short contents entries are the pattern on all four pages).",
+]
+
+next = [
+  "When the lecture slides for blocks D and E arrive: compare notation, method names and the variants taught, and update both pages (DECISIONS #22).",
+  "Discrete pages: split the 51 wide display formulas, then remove WIDE_IS_A_NOTE from tools/browser_check.mjs.",
+]
+
+files = [
+  "tools/browser_check.mjs, tools/package.json, tools/package-lock.json, .gitignore (tools/node_modules/)",
+  ".github/workflows/pages.yml",
+  "site/numerical/errors.html, nonlinear.html, interpolation.html, splines.html; site/assets/js/num-nonlinear.js; site/assets/search/numerical.js (rebuilt)",
+  "glossary_Apr.csv (rows 190, 287, 292), armenian_style/GLOSSARY_REPORT.md",
+  "DECISIONS.md, CONVENTIONS.md, DEFERRED_TODO.md",
+  "gitignored: logs/browser_check/ (run outputs, diag_slack.mjs), logs/review/glossary_cosmetics.py, logs/review/english_terms_in_body.py",
+]
+
+commits = []
+
+notes = """
+The root-level site/p1-sets.html ... are redirect stubs, not copies: the first run of the browser test
+followed them and reported every discrete finding twice (102 lines for 51 formulas).
+
+The convention text says display math must fit 316 px (288 px in a box); the test measured columns of
+330 px (303 or 296 px in a box) at a 390 px viewport. Not found out: where the 14 px difference comes
+from. The test compares each formula with its real column, so the figure in CONVENTIONS.md is the more
+cautious of the two and stays as the writing rule.
+"""

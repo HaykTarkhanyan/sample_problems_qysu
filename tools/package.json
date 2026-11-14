@@ -1,0 +1,9 @@
+{
+  "name": "qysu-site-tools",
+  "private": true,
+  "description": "Dependencies of tools/browser_check.mjs only. check_site.mjs and build_search_index.mjs need nothing installed.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "playwright-core": "1.65.0"
+  }
+}

@@ -2,6 +2,54 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 23. A browser smoke test is the last CI step before the upload: playwright-core with the installed Chrome
+- **Date** 2026-11-14 - **status** active (user: "also do the ci browser test"; the tool choice below was made by
+  the model and reported, not picked by the owner from options)
+- **Decision** `tools/browser_check.mjs` serves `site/` on a local port, opens every page in headless Chrome at
+  390 px with all sections and solutions opened, and fails the deploy on: a console or script error, a failed
+  or 4xx/5xx request, a `.katex-error`, a display formula wider than its column, a page wider than the screen,
+  a `.widget` that drew nothing. The root-level stubs (`site/p1-sets.html` ...) are checked as redirects. One
+  dependency: `playwright-core` 1.65.0 (exact pin and lockfile in `tools/`), driving the Chrome that is already
+  installed (`channel: "chrome"`), so no browser is downloaded locally or in CI. `--python` also clicks every
+  Run button; it is local only, because Pyodide comes from a CDN.
+- **Why** `check_site.mjs` renders formulas statically and cannot see what only a browser shows. On 2026-11-14
+  the manual 390 px check found 4 overflowing formulas on the errors page after every other gate had passed
+  (#21), and that check depended on the main session remembering to do it. First full run: 37 pages in 53 s, no
+  script error or failed request anywhere, all 22 numerical and probability pages clean. A throwaway broken
+  copy of the splines page (missing image, script error, an 18-term formula, a cell that raises) failed on all
+  four, so the gate can fail. `--python` ran the 25 cells of two pages in 34 s. The width check is
+  safe to run on Linux: only 12 display formulas on those pages have Armenian text inside the formula (the one
+  thing whose width depends on system fonts), and the tightest of them has 35 px of room.
+- **Alternatives rejected** Puppeteer (same job, but it downloads its own Chrome by default, and the repo's
+  manual browser checks already run on Playwright); `@playwright/test` with its runner and bundled browsers
+  (a test framework for one loop over pages, and `playwright install` downloads a browser on every CI run:
+  my estimate is over 100 MB and the better part of a minute, not measured);
+  jsdom (no layout, so no overflow check, which is the main point); keeping the check manual. Version 1.65.1
+  was one day old on the day of the choice, so the pin is the previous release.
+- **Known gap** On the 7 old discrete pages 51 display formulas scroll sideways at 390 px. They predate the
+  "must fit" rule, so there the script prints a note instead of failing (DEFERRED_TODO.md has the counts).
+- **What would change this** GitHub's ubuntu runner image dropping Chrome (the step then fails loudly: switch
+  to `npx playwright install chromium`); the check turning flaky in CI while passing locally (then the width
+  rule goes back to a local gate and CI keeps the error checks); the discrete formulas getting fixed (remove
+  `WIDE_IS_A_NOTE`).
+
+## 22. Blocks D (integration) and E (linear systems) are built now, without their lecture slides
+- **Date** 2026-11-14 - **status** active (user: "Pls do the last 2 pages, we'll update if needed when we get
+  slides"). It reverses the "D and E once their slides exist" part of #20.
+- **Decision** `integration.html` (block D, 25 problems) and `linear-systems.html` (block E, 16 problems) are
+  built from the problem list alone, in the process of #21 (one Opus builder per page in its own worktree, a full
+  independent review by a Fable agent, then gates, browser check and merge by the main session). The theory
+  sections cover what the problems themselves use, in standard textbook form.
+- **Why** The problem list is the exam material and it is complete for both blocks; the slides only add the
+  lecturer's notation and choice of variants. Waiting would leave 41 of the 129 list problems (45 + 26 + 17 +
+  25 + 16) without a page.
+- **Alternatives rejected** Waiting for the slides (no date for them); building the problems only, with no theory
+  sections (the page pattern of #18 puts short theory before each group of problems, and a page without it
+  would not stand alone).
+- **What would change this** The slides arriving: then compare notation, method names and which variants the
+  lecturer teaches (composite rules and their error constants, Gauss nodes, pivoting, the norms and the
+  convergence conditions of the iterative methods) and update both pages.
+
 ## 21. Three numerical pages built by agents in parallel, each with an independent maths review before publishing
 - **Date** 2026-11-14 - **status** active (user: "launch an indep agent", "use opus and then u do a pass", then
   "fable reviews")

@@ -15,12 +15,12 @@ Topics cut from current work so they are not lost.
   a Fable agent, but read for language only by lint and by a 12-problem sample. The reviewers' and builders'
   doubts (terms with no glossary row, a few maths conventions) are collected at the end of the three reports
   in `numerical_methods/reviews/2026-11-14_*`. (2026-11-14)
-- **Small leftovers on the new numerical pages** (from the reviews, none wrong): on `nonlinear.html` the
-  `w-order` legend shows «կիսում» in the "Խնդիր 17" view, which has no bisection series (needs a small JS change
-  and a browser look), and the TOC entry for `#fixedpoint` is shorter than its heading; on `interpolation.html`
-  «ծայրային արժեք» is used in two senses, problem 23's function does not draw (the plot is a separate block),
-  and problem 26բ could add the sharper pointwise bound. Six owner questions are open: A51-A56 in
-  `armenian_style/QUESTIONS_FOR_NATIVE_SPEAKER.md`. (2026-11-14)
+- **Small leftovers on the new numerical pages** (from the reviews, none wrong): on `interpolation.html`
+  problem 23's function does not draw (the plot is a separate block), and problem 26բ could add the sharper
+  pointwise bound. Done on 2026-11-14: the `w-order` legend hides «կիսում» in the "Խնդիր 17" view, the value at
+  an endpoint is now «ծայրակետում նրա արժեքը» (so «ծայրային արժեք» has one sense), and owner questions A51-A58
+  are answered. Left as is on purpose: the contents entry for `#fixedpoint` is shorter than its heading, like
+  the entries for `#nodes`, `#lsq` and `#arith` (short contents entries are the pattern). (2026-11-14)
 - **Native Armenian read of `site/numerical/splines.html`** (model-written). A model pass was done on
   2026-11-13 (full read against the guide and glossary, 12 fixes, 4 doubtful phrasings put to the owner
   and all 4 kept), but nobody native has read it end to end yet. (2026-11-11)
@@ -42,10 +42,6 @@ Topics cut from current work so they are not lost.
 - **Missing sources** for weeks 10, 15 (Gnedenko ch. 4), the full proof of Lebesgue's decomposition
   for week 13 (Borovkov ch. 3 §2) and Borovkov for week 8; user said not to download more for now.
   (2026-11-10)
-- **Line break between an inline formula and its suffix** («$F(x)$» / «-ն է» on two lines at 390 px,
-  seen on w08, affects every page of both courses): after KaTeX renders (and in `Q.math`/`Q.tex`), wrap
-  each inline `.katex` plus a following text node starting with `-` + Armenian letters in a
-  `span.nowrap`. Shared `site.js` change, so test all pages. (2026-11-10)
 - **Student feedback on the probability pages** (owner collects it): hidden solutions, predict
   prompts, proof boxes (DECISIONS #9, #13 "what would change this"). (2026-11-10)
 
@@ -60,8 +56,9 @@ Topics cut from current work so they are not lost.
   PDFs of P1, P2-3 and P5 lag their `.tex` by 4 punctuation marks (3 stress marks removed, 1 comma
   added on 2026-11-13) until this sweep rebuilds them.
 - **Glossary leftovers, none put to the owner:** duplicate row 258 (kept on purpose, row numbers are
-  cited), trailing spaces in rows 287 and 292, missing comma in row 190, U+2024 in 23 rows, «․․․» in
-  row 1031 (`armenian_style/GLOSSARY_REPORT.md`). The real fixes were applied on 2026-11-13.
+  cited), U+2024 in 23 rows, «․․․» in row 1031 (`armenian_style/GLOSSARY_REPORT.md`). The real fixes
+  were applied on 2026-11-13; the trailing spaces in rows 287 and 292 and the comma in row 190 on
+  2026-11-14.
 - **Discrete sweep, more finds (owner on 2026-11-13: still "not now"):** the lint hint
   `article-after-symbol` lists 13 wrong articles after a formula in P2-3 and P4 (sheet and site copy):
   «$y$-ն բաժանում», «$y$-ն միշտ», «$n$-ն և», «$f$-ն ոչ» (3 places), «$f$-ն երբեք»; all should be
@@ -78,8 +75,12 @@ Topics cut from current work so they are not lost.
 - **Sendable single-file copies of each page.** A small Node script that inlines CSS, JS, KaTeX
   and base64 fonts into `dist/pN-*.standalone.html`. Only if pages actually need to be sent as files
   (DECISIONS #4). (2026-11-03)
-- **Headless-browser smoke test in CI** that opens every page and fails on console errors or a
-  `.katex-error` element, if widget bugs slip past `tools/check_site.mjs`. (2026-11-03)
+- **51 display formulas on the 7 discrete pages scroll sideways at 390 px** (p1: 8, p2-3: 7, p4: 9, p5: 5,
+  p6: 1, p7: 13, p8: 8; `node tools/browser_check.mjs` prints them as notes, and the full list with widths
+  comes from temporarily making `WIDE_IS_A_NOTE` return false). These pages predate the "display math must fit
+  the phone column" rule; five of the seven on p2-3 are matrices only 2 px too wide. Fix by splitting with
+  `aligned` / `gathered` in the site pages (the PDFs have their own page width), then drop the exception from
+  the script. (2026-11-14)
 - **Cross-sheet term alignment** left as-is in the Armenian pass: կրկնությամբ vs կրկնություններով
   զուգորդություններ, ձողիկ vs գծիկ, ֆիքսել family, դասավորություն vs տեղադրություն. (2026-09-07)
 - **Glossary † rows** for project-only terms: կոնտրապոզիցիա, կոնյունկցիա, զույգություն,

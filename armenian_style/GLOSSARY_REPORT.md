@@ -88,9 +88,12 @@ Asked twice and confirmed by the owner as right as written, so do not "fix" them
 730 «մասնակի ածանցյալով [դիֆերենցիալ] հավասարում». Row 545 «ավագ անդամ» was confirmed earlier (A27).
 
 Still as on 2026-11-10: the duplicate row 258 (kept on purpose: deleting it would shift every row
-number cited in GUIDE.md and in this file), the trailing spaces in rows 287 and 292, the missing
-comma in row 190, the U+2024 dots (23 rows) and the «․․․» ellipsis in row 1031. None of them was
-put to the owner.
+number cited in GUIDE.md and in this file), the U+2024 dots (23 rows) and the «․․․» ellipsis in row
+1031. None of them was put to the owner.
+
+Fixed on 2026-11-14 (owner: "do the small cosmetic thingies"): the trailing space inside the Armenian
+field of rows 287 and 292, and the comma between the two numbered senses of row 190 (the field is now
+quoted, like row 287). Row count (1061), CRLF line ends and every row number are unchanged.
 
 The full read also ran scripted checks: no Latin or Cyrillic letters inside Armenian words, no stray
 characters, no near-duplicate spellings, no proper name transliterated two ways. Limits: the

@@ -1,5 +1,5 @@
 # Publishes site/ (plus the 7 Armenian solution PDFs) to GitHub Pages.
-# The QA script must pass first; a failing check blocks the deploy.
+# The QA script and the browser smoke test must pass first; a failing check blocks the deploy.
 name: Deploy site to GitHub Pages
 
 on:
@@ -10,6 +10,9 @@ on:
       - "discrete/solutions_opus_4_8_ARM/*.pdf"
       - "tools/check_site.mjs"
       - "tools/build_search_index.mjs"
+      - "tools/browser_check.mjs"
+      - "tools/package.json"
+      - "tools/package-lock.json"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -47,6 +50,13 @@ jobs:
           bad=$(grep -rhoE 'assets/[^"]+\.(css|js)\?v=[0-9a-f]{8}[^"]' site --include='*.html' | wc -l)
           echo "versioned $n asset links with v=$v ($bad malformed)"
           test "$n" -gt 100 && test "$bad" -eq 0
+      # Runs last, on exactly the files that get uploaded (search index rebuilt, links versioned). It opens
+      # every page in the runner's own Chrome at 390 px and fails on script errors, failed requests, KaTeX
+      # errors, formulas wider than the column and widgets that drew nothing. About a minute.
+      - name: Browser smoke test (every page in Chrome at phone width)
+        run: |
+          npm ci --prefix tools --no-audit --no-fund
+          node tools/browser_check.mjs
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

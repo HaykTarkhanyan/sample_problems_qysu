@@ -149,6 +149,12 @@
       const c = CASES[cur];
       const errs = {};
       Object.keys(c.seqs).forEach(k => { errs[k] = c.seqs[k].map(x => Math.abs(x - c.r)); });
+      // the legend is static HTML: show only the methods this case really plots (problem 17 has no bisection)
+      root.querySelectorAll(".legend span").forEach(sp => {
+        const mark = sp.querySelector("i");
+        const key = Object.keys(CLS).find(k => mark && mark.classList.contains(CLS[k]));
+        sp.style.display = key && !(key in c.seqs) ? "none" : "";
+      });
       let pl;
       if (view === "err") {
         pl = P.plot(out("plot"), { w: 560, h: 300, x0: 0, x1: c.N, y0: -16.6, y1: 0.6,

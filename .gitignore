@@ -350,3 +350,6 @@ logs/
 
 # Agent worktrees (isolated checkouts made by Claude Code agents); never commit them
 .claude/worktrees/
+
+# npm packages of tools/browser_check.mjs (tools/package.json and package-lock.json are tracked)
+tools/node_modules/

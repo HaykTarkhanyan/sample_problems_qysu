@@ -65,6 +65,7 @@ into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discret
 | `site/assets/js/pN.js` | that sheet's widgets only (`p2-3.js` for P2-3) |
 | `site/assets/katex/`, `site/assets/fonts/` | vendored KaTeX 0.19.1 and Noto Serif/Sans Armenian (no CDN) |
 | `tools/check_site.mjs` | QA gate, also run in CI |
+| `tools/browser_check.mjs` (+ `tools/package.json`, `package-lock.json`) | browser smoke test, last CI step before the upload (DECISIONS #23): every page in Chrome at 390 px, fails on script errors, failed requests, KaTeX errors, display formulas wider than their column, a page wider than the screen, widgets that drew nothing. Locally: `npm ci --prefix tools` once, then `node tools/browser_check.mjs [pages]` (~55 s for all); `--python` also clicks every Run button (needs the network, ~20 s per page, local only) |
 | `tools/build_search_index.mjs` | writes `site/assets/search/<course>.js` (search index); CI reruns it before deploy; run it locally after editing pages, `--check` tells whether it is stale |
 | `site/assets/vendor/minisearch-7.2.0.js` | search library (DECISIONS #15), loaded only when the search box opens |
 
@@ -158,6 +159,9 @@ widget, etc.).
    widget computing something new needs its own check).
 4. Visual check in a browser at 1280 px and 390 px, both themes, console clean (orchestrator does
    this with Playwright; subagents must not drive the shared browser).
+5. `node tools/browser_check.mjs site/<page>.html` -> ok. It covers the mechanical part of step 4 (console,
+   requests, overflow at 390 px) and starts its own headless Chrome, so agents may run it; it does not replace
+   looking at the page. On the old discrete pages a display formula that scrolls sideways is only a note.
 
 ## Probability pages (`site/probability/`)
 
@@ -249,3 +253,6 @@ widget, etc.).
   report in `numerical_methods/reviews/`.
 - Browser checks against `python -m http.server` serve cached JS after an edit: before re-testing, refresh the
   cache with `fetch(url, {cache: "reload"})` for each changed file, then reload the page.
+- Before deploying a new or changed page with Python cells: `node tools/browser_check.mjs --python
+  site/numerical/<page>.html` (every Run button clicked in a real browser; a cell passes when its status ends in
+  «մվ»). `run_page_blocks.py` runs the same code in CPython, which is not Pyodide.
