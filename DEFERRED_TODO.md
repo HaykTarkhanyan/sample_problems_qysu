@@ -2,8 +2,13 @@
 
 Topics cut from current work so they are not lost.
 
-- **Numerical analysis, remaining problem-list blocks** D (integration, 25 problems) and E (linear systems,
-  16): both wait for their lecture slides. Blocks A and B were published on 2026-11-14. PSS 1 of the current
+- **Numerical analysis, when the lecture slides for integration and linear systems arrive:** both pages were
+  built without slides on 2026-11-14 (DECISIONS #22), so compare them with the slides and update. What may
+  differ is listed in the two review reports: `numerical_methods/reviews/2026-11-14_integration_math_review.md`
+  points C1-C6 (what n counts in Simpson's rule, the sign of the error, the form of the constants, adaptive
+  methods, Legendre normalisation, Gauss "n") and `..._linear_systems_math_review.md` points D1-D4 (which
+  operations are counted, which LU form is "the" LU method, notation of the iterative methods, the stopping
+  rule behind "26 and 16 steps"). All five blocks of the problem list now have a page. PSS 1 of the current
   course (7 problems) was added to the errors page on 2026-11-14 (sections `#pss1`, `#s1`-`#s7` and a Taylor
   theory section), built by an Opus agent and reviewed by a Fable agent
   (`numerical_methods/reviews/2026-11-14_errors_pss1_math_review.md`). Its Patriot example is written as a

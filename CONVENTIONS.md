@@ -65,7 +65,7 @@ into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discret
 | `site/assets/js/pN.js` | that sheet's widgets only (`p2-3.js` for P2-3) |
 | `site/assets/katex/`, `site/assets/fonts/` | vendored KaTeX 0.19.1 and Noto Serif/Sans Armenian (no CDN) |
 | `tools/check_site.mjs` | QA gate, also run in CI |
-| `tools/browser_check.mjs` (+ `tools/package.json`, `package-lock.json`) | browser smoke test, last CI step before the upload (DECISIONS #23): every page in Chrome at 390 px, fails on script errors, failed requests, KaTeX errors, display formulas wider than their column, a page wider than the screen, widgets that drew nothing. Locally: `npm ci --prefix tools` once, then `node tools/browser_check.mjs [pages]` (~55 s for all); `--python` also clicks every Run button (needs the network, ~20 s per page, local only) |
+| `tools/browser_check.mjs` (+ `tools/package.json`, `package-lock.json`) | browser smoke test, last CI step before the upload (DECISIONS #23): every page in Chrome at 390 px, fails on script errors, failed requests, KaTeX errors, display formulas wider than their column, a page wider than the screen, widgets that drew nothing, KaTeX root signs / braces flattened by CSS. Locally: `npm ci --prefix tools` once, then `node tools/browser_check.mjs [pages]` (~55 s for all); `--python` also clicks every Run button (needs the network, ~20 s per page, local only) |
 | `tools/build_search_index.mjs` | writes `site/assets/search/<course>.js` (search index); CI reruns it before deploy; run it locally after editing pages, `--check` tells whether it is stale |
 | `site/assets/vendor/minisearch-7.2.0.js` | search library (DECISIONS #15), loaded only when the search box opens |
 

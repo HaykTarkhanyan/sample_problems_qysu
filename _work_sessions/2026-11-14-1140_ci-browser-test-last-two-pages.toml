@@ -1,4 +1,4 @@
-title = "CI browser smoke test, English method names, small cosmetics; integration and linear-systems pages started"
+title = "CI browser smoke test, English method names, small cosmetics; integration and linear-systems pages built, reviewed and published"
 date = "2026-11-14"
 time = "11:40"  # local (system clock, UTC+1), approximate start; same Claude session as 2026-11-13-0000
 
@@ -19,10 +19,18 @@ done = [
   "English method names added where the term had no English anywhere on the page. In section headings: nonlinear (rate of convergence, bisection method, Newton's method / secant method), interpolation (Lagrange form, interpolation error), splines (least squares), errors (floating-point numbers, cancellation, error propagation). In the definition or theorem text instead, because the heading grew to 5 lines at 390 px: interpolation (divided difference, Newton form, Chebyshev nodes). Not added where the body already defines the term with its English name (root isolation, fixed-point iteration): once per term (A57).",
   "Cosmetics: the w-order legend on nonlinear.html now shows only the methods the chosen case plots (no «կիսում» in the 'Խնդիր 17' view); interpolation problem 26 says «Ծայրակետում նրա արժեքը» (glossary row 311), so «ծայրային արժեք» keeps one sense; glossary rows 287 and 292 lost a trailing space and row 190 got the comma between its two senses (1061 rows, CRLF and row numbers unchanged).",
   "Stale DEFERRED_TODO items removed: the inline formula + suffix line break (already solved in site.js, DECISIONS #14) and the CI smoke test.",
+  "First CI run of the browser step (Pages run 43588704986): all 37 pages in 36 s, build job 47 s. On the Linux runner discrete/p1-sets has 9 sideways-scrolling formulas against 8 on Windows, so formula widths do depend on system fonts.",
+  "linear-systems.html (block E, 16 problems): Opus builder about 44 min and 497k tokens, Fable reviewer about 21 min and 398k tokens. Review: no wrong answer; one false widget message (w-iter said both methods diverge where Gauss-Seidel can land on the solution) and three imprecise sentences, all fixed by the reviewer. Merged, two small text fixes of mine from the minor findings, deployed (4290bc8, Pages run 43592902699).",
+  "integration.html (block D, 25 problems): Opus builder about 50 min and 557k tokens, Fable reviewer about 31 min and 461k tokens. Review: no wrong answer in the text; three wrong things on screen fixed (Gauss formulas shown without the root sign, a widget message saying the error shrinks where it grows, h instead of h/3 in the typical-mistakes list). The builder's check script asserted nothing wrong but took f'' from the page; the reviewer added finite-difference checks. Merged with the two expected conflicts (numerical index, README).",
+  "Site-wide CSS bug found through that review: `.widget svg { height: auto }` flattened KaTeX root signs and braces inside widgets and figures, 14 formulas on 7 live pages. Fixed by one rule in site.css; the reviewer's per-widget workaround removed; browser_check.mjs now fails on a flattened KaTeX drawing (first version gave 2 false alarms on tall braces, refined to compare with the height KaTeX asks for). Learning file written.",
+  "Pagers: errors -> nonlinear -> interpolation -> splines -> integration -> linear-systems. Numerical index has 6 cards, the hub card lists all six topics, splines problem 4 links to integration.html#simple.",
+  "OWNER_ANSWERS A55: added a note (marked as the model's, not the owner's) that after a vowel-final symbol name the article stays «-ն» also before a formula; the integration builder had read A55 the other way and blamed the lint, which was right.",
 ]
 
 pending = [
-  "Integration and linear-systems builders are still running. When each reports: independent Fable review (report in numerical_methods/reviews/), gates, `node tools/browser_check.mjs --python <page>`, read the reviewer's diff, merge, pagers splines -> integration -> linear-systems, cards on the numerical index, search index, deploy.",
+  "Owner questions from the two reviews, not yet asked: integration C1-C6 (slides), L1-L5 and the builder's 8 wording doubts; linear systems D1-D8 (slides, readings) and D9-D18 (terms and wording). They are in the two review reports.",
+  "Minor review findings left as reported: integration 7-12 (answer box of problem 10, self-check question 5, hypotheses of the composite theorem, a dead branch in setupExact), linear systems 7, 9, 11 (Crout form for 11բ, the stopping rule behind 26 / 16 steps, what an 'operation' is).",
+  "The four agent worktrees and branches of today (two builders, two reviewers) are merged and can be removed once the owner agrees.",
   "The contents entry for #fixedpoint on nonlinear.html stays shorter than its heading on purpose (short contents entries are the pattern on all four pages).",
 ]
 
@@ -40,7 +48,11 @@ files = [
   "gitignored: logs/browser_check/ (run outputs, diag_slack.mjs), logs/review/glossary_cosmetics.py, logs/review/english_terms_in_body.py",
 ]
 
-commits = []
+commits = [
+  "aaf1d1b Browser smoke test in CI, English method names, small cosmetics (Pages run 43588704986 passed)",
+  "6e74ef9 merge of the reviewed linear-systems branch; 4290bc8 post-merge fixes and wiring (Pages run 43592902699 passed)",
+  "8c4846b merge of the reviewed integration branch; the commit after it: site.css root-sign fix, flattened-drawing check, pagers, hub card, docs",
+]
 
 notes = """
 The root-level site/p1-sets.html ... are redirect stubs, not copies: the first run of the browser test

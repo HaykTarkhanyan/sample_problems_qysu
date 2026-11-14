@@ -83,6 +83,17 @@ function measure() {
     hiddenDisplays: displays.filter(el => el.clientWidth === 0).length,
     wide: displays.filter(el => el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1)
       .map(el => `${el.scrollWidth} px in a ${el.clientWidth} px column: ${tex(el)}`),
+    // KaTeX draws root signs, big braces and stretchy arrows as inline svg; a page rule that resizes
+    // "every svg here" flattens them to nothing and 1/√3 then reads as 1/3 (found on 2026-11-14)
+    // Compared with the height KaTeX itself asked for (the svg's height attribute, in em): a tall brace
+    // legitimately contains 0.016em filler pieces.
+    flatDrawings: Array.from(new Set(Array.from(document.querySelectorAll(".katex svg[height]"))
+      .filter(s => {
+        if (s.closest(".katex").getBoundingClientRect().width === 0) return false;
+        const wanted = parseFloat(s.getAttribute("height")) * parseFloat(getComputedStyle(s).fontSize);
+        return wanted >= 2 && s.getBoundingClientRect().height < wanted / 2;
+      })
+      .map(s => tex(s.closest(".katex"))))),
     pageWidth: root.scrollWidth, viewport: root.clientWidth,
     widgets: document.querySelectorAll(".widget").length,
     emptyWidgets: Array.from(document.querySelectorAll(".widget"))
@@ -154,6 +165,7 @@ async function checkPage(context, base, file, opts) {
   }
   if (m.pageWidth > m.viewport + 1) problems.push(`page is ${m.pageWidth} px wide on a ${m.viewport} px screen`);
   m.emptyWidgets.forEach(id => problems.push(`widget drew nothing: ${id}`));
+  m.flatDrawings.forEach(t => problems.push(`root sign, brace or arrow flattened to nothing in: ${t}`));
   let cells = 0;
   if (opts.python) cells = await runPythonCells(page, problems);
   await page.close();

@@ -293,10 +293,6 @@
         tex = snap ? "Q(f)=f\\bigl(-\\tfrac{1}{\\sqrt3}\\bigr)+f\\bigl(\\tfrac{1}{\\sqrt3}\\bigr)" : `Q(f)=f(${P.numTex(-t, 3)})+f(${P.numTex(t, 3)})`;
       }
       Q.tex(out("formula"), tex, true);
-      // site.css sizes every svg inside a widget as a plot (`.widget svg { height: auto }`). That rule also hits the
-      // svg KaTeX draws a root sign with: the sign collapses to 0.1 px and 1/√3 reads as 1/3 (review 2026-11-14).
-      // Give the sign its own height back; remove this line once site.css excludes `.katex svg`.
-      out("formula").querySelectorAll("svg[width]").forEach(s => { s.style.height = "inherit"; });
       const { deg, rows } = exactness(x, w, c.a, c.b, 7);
       const table = Q.el("table", { class: "tbl" });
       const hr = Q.el("tr", {});

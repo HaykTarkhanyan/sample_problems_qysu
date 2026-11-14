@@ -28,6 +28,10 @@ Newest first. Superseded entries stay, marked as such.
   my estimate is over 100 MB and the better part of a minute, not measured);
   jsdom (no layout, so no overflow check, which is the main point); keeping the check manual. Version 1.65.1
   was one day old on the day of the choice, so the pin is the previous release.
+- **Added the same day** A sixth failure: a root sign, brace or arrow that KaTeX draws as svg and that ends up
+  at less than half its intended height. The integration reviewer found that a shared CSS rule flattened root
+  signs inside widgets (1/√3 shown as 1/3); the new check then found 14 such formulas on 7 live pages, all fixed
+  by one rule in `site.css` (`_learnings/2026-11-14-1322_widget-svg-rule-flattens-katex-roots.md`).
 - **Known gap** On the 7 old discrete pages 51 display formulas scroll sideways at 390 px. They predate the
   "must fit" rule, so there the script prints a note instead of failing (DEFERRED_TODO.md has the counts).
 - **What would change this** GitHub's ubuntu runner image dropping Chrome (the step then fails loudly: switch
