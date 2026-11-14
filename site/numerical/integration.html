@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Cpath d=%27M6 22 C10 8 13 8 16 16 S22 25 26 10%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%276%27 cy=%2722%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3Ccircle cx=%2726%27 cy=%2710%27 r=%272.7%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Թվային ինտեգրում</title>
+<meta name="description" content="Թվային անալիզ՝ քառակուսեցման բանաձևեր և ճշգրտության աստիճան, միջին ուղղանկյունների, սեղանների և Սիմպսոնի բանաձևեր, ընդհանրացված բանաձևերի սխալանք, Գաուսի բանաձևեր և Լեժանդրի բազմանդամներ։ 25 լուծված խնդիր, ինտերակտիվ նկարներ և բրաուզերում գործարկվող Python կոդ։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/vendor/code-input-2.9.0/code-input.min.css">
+<link rel="stylesheet" href="../assets/vendor/code-input-2.9.0/autogrow.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/vendor/highlight-11.12.0.min.js"></script>
+<script defer src="../assets/vendor/code-input-2.9.0/code-input.min.js"></script>
+<script defer src="../assets/vendor/code-input-2.9.0/indent.min.js"></script>
+<script defer src="../assets/js/pyrun.js"></script>
+<script defer src="../assets/js/num-integration.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="spl" aria-hidden="true"></span>Թվային անալիզ</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել խնդիրների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Խնդիրների ցանկի 4-րդ բաժին · սլայդները դեռ չկան</div>
+    <h1>Թվային ինտեգրում</h1>
+    <p class="subtitle">Քառակուսեցման բանաձևեր և ճշգրտության աստիճան, միջին ուղղանկյունների, սեղանների և Սիմպսոնի բանաձևեր, ընդհանրացված բանաձևերի սխալանք, Գաուսի բանաձևեր՝ 25 լուծված խնդիր</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս բաժնի մասին</a></li>
+        <li><a href="#quad">Քառակուսեցման բանաձև և ճշգրտության աստիճան</a></li>
+        <li><a href="#p1">Խնդիր 1 - հինգ հանգույց, չորրորդ աստիճան</a></li>
+        <li><a href="#p2">Խնդիր 2 - $0$ և $\frac23$ հանգույցներ</a></li>
+        <li><a href="#p3">Խնդիր 3 - մեկ հանգույց</a></li>
+        <li><a href="#p4">Խնդիր 4 - $ae^x+b\cos\frac{\pi x}{2}$ դաս</a></li>
+        <li><a href="#p5">Խնդիր 5 - եռանկյունաչափական ֆունկցիաներ</a></li>
+        <li><a href="#simple">Միջին ուղղանկյունների, սեղանների և Սիմպսոնի բանաձևեր</a></li>
+        <li><a href="#composite">Ընդհանրացված բանաձևեր և սխալանքի գնահատական</a></li>
+        <li><a href="#p6">Խնդիր 6 - $x^2e^{x^2}$, միջին ուղղանկյուններ</a></li>
+        <li><a href="#p7">Խնդիր 7 - $e^{x^2}$, $10^{-3}$ ճշտություն</a></li>
+        <li><a href="#p8">Խնդիր 8 - $x^2\cos x$, սեղաններ</a></li>
+<!-- TOC-MORE -->
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս բաժնի մասին</h2></summary>
+<div class="sec-body">
+<p>Այստեղ լուծված են թվային անալիզի խնդիրների ցանկի «Թվային ինտեգրում» բաժնի բոլոր 25 խնդիրները։ Խնդիրներ 1-5-ը
+քառակուսեցման բանաձևերի և նրանց ճշգրտության աստիճանի մասին են, 6-17-ը՝ միջին ուղղանկյունների, սեղանների և Սիմպսոնի
+բանաձևերի ու նրանց սխալանքի, 18-25-ը՝ Գաուսի բանաձևերի։ Ամեն խմբից առաջ կարճ տեսություն է։ Այս թեման դեռ չկա
+դասախոսության սլայդներում, դրա համար տեսությունը ստանդարտ դասագրքային շարադրանք է՝ խնդիրների ցանկի նշանակումներով։
+Սլայդները հայտնվելուց հետո էջը կթարմացվի։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Քառակուսեցման բանաձևում ինտեգրալը փոխարինվում է ֆունկցիայի արժեքների կշռավորված գումարով՝</strong>
+  $\int_a^bf(x)\,dx\approx\sum_kA_kf(x_k)$։ Բանաձևի որակի առաջին չափը նրա ճշգրտության աստիճանն է՝ ամենամեծ $m$-ը, որի
+  դեպքում բանաձևը ճշգրիտ է $m$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների համար։</li>
+  <li><strong>Ընդհանրացված բանաձևերի սխալանքը փոքրանում է $h$ քայլի աստիճանի պես։</strong> Միջին ուղղանկյունների և սեղանների
+  բանաձևերում այն համեմատական է $h^2$-ին, Սիմպսոնի բանաձևում՝ $h^4$-ին. $h$-ը կիսելիս սխալանքը փոքրանում է մոտ 4 կամ 16
+  անգամ։ Գնահատականի համար պետք է $|f''|$-ի կամ $|f^{(4)}|$-ի մեծագույն արժեքը հատվածում։</li>
+  <li><strong>$n+1$ հանգույցով բանաձևի ճշգրտության աստիճանը չի կարող գերազանցել $2n+1$-ը։</strong> Այդ սահմանին հասնում է
+  միայն Գաուսի բանաձևը. նրա հանգույցները Լեժանդրի բազմանդամի արմատներն են, իսկ կշիռները միշտ դրական են։</li>
+</ol>
+</div>
+<div class="note"><strong>Պայմանավորվածություններ։</strong> Ընդհանրացված բանաձևերում $[a,b]$ հատվածը տրոհում ենք $n$ հավասար
+մասի. քայլը՝ $h=\frac{b-a}{n}$, հանգույցները՝ $x_i=a+ih$, $i=0,\dots,n$։ Գաուսի բանաձևերի խնդիրներում (18-25) «$n$-ի
+դեպքում» նշանակում է $n+1$ հանգույց, ինչպես խնդիրների ցանկում։ Ցանկում գրված է «քառակուսացման բանաձև», «ինտերպոլյացիոն» և
+«$n$-րդ կարգի բազմանդամ», իսկ այստեղ հետևում ենք տերմինների բառարանին՝ «քառակուսեցման բանաձև», «ինտերպոլացիոն»,
+«$n$-րդ աստիճանի բազմանդամ»։ Խնդիրների պայմանները շարադրված են մեր բառերով, տվյալները չեն փոխված։</div>
+<div class="note"><strong>Python։</strong> Կոդի վանդակի «▶ Գործարկել» կոճակը կոդը կատարում է ձեր բրաուզերում (Pyodide)։
+Առաջին անգամ ներբեռնվում է մոտ 9 ՄԲ, հետո գործարկումն արագ է։ Կոդը կարելի է փոխել հենց վանդակում (օրինակ՝ ֆունկցիան կամ
+$n$-ը) և նորից գործարկել՝ կոճակով կամ Ctrl+Enter-ով։ Առանց ինտերնետի էջը կարդացվում է, բայց կոդը չի գործարկվում։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="quad" open>
+<summary><h2>Քառակուսեցման բանաձև և ճշգրտության աստիճան</h2></summary>
+<div class="sec-body">
+<p>Շատ ինտեգրալներ չենք կարող հաշվել Նյուտոն-Լայբնիցի բանաձևով. օրինակ՝ $e^{-x^2}$ ֆունկցիան չունի տարրական նախնական, և
+$\int_0^1e^{-x^2}\,dx$-ը (առաջին դասախոսության օրինակը) այդպես չի հաշվվում։ Երբեմն էլ $f$-ը հայտնի է միայն մի քանի կետում
+(աղյուսակով)։ Երկու դեպքում էլ ինտեգրալը մոտարկում ենք $f$-ի մի քանի արժեքով։</p>
+<div class="box def"><div class="box-title">Սահմանում (քառակուսեցման բանաձև)</div>
+<p>Դիցուք $x_0,\dots,x_n$-ը $[a,b]$ հատվածի իրարից տարբեր կետեր են, իսկ $A_0,\dots,A_n$-ը՝ թվեր։ Մոտավոր հավասարությունը</p>
+$$\int_a^bf(x)\,dx\approx\sum_{k=0}^nA_kf(x_k)$$
+<p>կոչվում է <strong>քառակուսեցման բանաձև</strong> (quadrature formula), $x_k$ կետերը՝ նրա <strong>հանգույցներ</strong> (nodes), իսկ
+$A_k$ թվերը՝ <strong>կշիռներ</strong> (weights)։ Աջ մասը նշանակում ենք $Q(f)$-ով, իսկ $E(f)=\int_a^bf(x)\,dx-Q(f)$
+տարբերությունը բանաձևի սխալանքն է։</p>
+</div>
+<div class="box def"><div class="box-title">Սահմանում (ճշգրտության աստիճան)</div>
+<p>Բանաձևը <strong>ճշգրիտ է</strong> (exact) $f$ ֆունկցիայի համար, եթե $E(f)=0$։ Բանաձևի <strong>ճշգրտության աստիճանը</strong>
+(degree of exactness) այն ամենամեծ $m$ թիվն է, որի դեպքում բանաձևը ճշգրիտ է $m$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների
+համար։</p>
+</div>
+<div class="box thm"><div class="box-title">Թեորեմ (բավական է ստուգել աստիճանային ֆունկցիաները)</div>
+<p>Բանաձևը ճշգրիտ է $m$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների համար այն և միայն այն դեպքում, երբ ճշգրիտ է
+$1,x,\dots,x^m$ ֆունկցիաների համար՝</p>
+$$\begin{gathered}\sum_{k=0}^nA_kx_k^j=\frac{b^{j+1}-a^{j+1}}{j+1},\\ j=0,1,\dots,m.\end{gathered}$$
+<p>Պատճառը գծայնությունն է. $Q(\alpha f+\beta g)=\alpha Q(f)+\beta Q(g)$, ինտեգրալը նույնպես գծային է, իսկ ամեն բազմանդամ
+$1,x,\dots,x^m$ ֆունկցիաների գծային զուգակցություն է։</p>
+</div>
+<div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
+<p><strong>Անորոշ գործակիցների մեթոդը</strong> (method of undetermined coefficients)։ Անհայտ կշիռների (երբեմն նաև
+հանգույցների) համար գրում ենք թեորեմի հավասարումները $j=0,1,2,\dots$ համար՝ այնքան, որքան անհայտներ կան, և լուծում ենք
+համակարգը։ Հետո ստուգում ենք հաջորդ $j$-երը։ Առաջին $j$-ն, որի համար հավասարությունը խախտվում է, տալիս է ճշգրտության
+աստիճանը՝ $m=j-1$։</p>
+</div>
+<div class="box idea"><div class="box-title">Համաչափության հնարք</div>
+<p>Դիցուք հանգույցները համաչափ են $c=\frac{a+b}{2}$ կետի նկատմամբ, և համաչափ հանգույցների կշիռները հավասար են։ Այդ դեպքում
+բանաձևն ինքնաբերաբար ճշգրիտ է $(x-c)^{2j+1}$ կենտ աստիճանների համար. և՛ ինտեգրալը, և՛ գումարը զրո են։ Մնում է ստուգել
+միայն $1,(x-c)^2,(x-c)^4,\dots$ ֆունկցիաները ($m$-ից ոչ բարձր աստիճանի ամեն բազմանդամ $(x-c)^j$, $j\le m$, ֆունկցիաների
+գծային զուգակցություն է, և թեորեմը ճիշտ է նաև դրանցով)։ Մասնավորապես, այդպիսի բանաձևի ճշգրտության
+աստիճանը կենտ է. եթե այն ճշգրիտ է մինչև զույգ $m$ աստիճանը, ապա ճշգրիտ է նաև $m+1$ աստիճանի համար։</p>
+</div>
+<p>Քառակուսեցման բանաձև կառուցելու բնական ճանապարհը՝ $f$-ը փոխարինել նրա ինտերպոլացիոն բազմանդամով (տե՛ս
+<a href="interpolation.html">ինտերպոլացիայի էջը</a>) և ինտեգրել այն։ Լագրանժի բանաձևից՝</p>
+$$\begin{aligned}\int_a^bP_n(x)\,dx&=\sum_{k=0}^nA_kf(x_k),\\ A_k&=\int_a^b\ell_k(x)\,dx.\end{aligned}$$
+<p>Այս կշիռներով բանաձևը կոչվում է <strong>ինտերպոլացիոն քառակուսեցման բանաձև</strong> (interpolatory quadrature rule)։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (ինտերպոլացիոն բանաձևեր)</div>
+<p>$n+1$ հանգույցով բանաձևն ինտերպոլացիոն է այն և միայն այն դեպքում, երբ նրա ճշգրտության աստիճանն առնվազն $n$ է։ Տրված
+հանգույցների համար այդպիսի կշիռները որոշվում են միարժեքորեն։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Եթե բանաձևն ինտերպոլացիոն է, և $f$-ը $n$-ից ոչ բարձր աստիճանի բազմանդամ է, ապա $P_n=f$ (ինտերպոլացիոն բազմանդամի
+միակությունը), և $Q(f)=\int_a^bP_n\,dx=\int_a^bf\,dx$։ Հակառակ պնդումը. դիցուք բանաձևը ճշգրիտ է $n$-ից ոչ բարձր
+աստիճանի բազմանդամների համար։ $\ell_k$ բազմանդամը $n$-րդ աստիճանի է, $\ell_k(x_k)=1$, իսկ մյուս հանգույցներում
+$\ell_k(x_j)=0$։ Հետևաբար, $\int_a^b\ell_k\,dx=Q(\ell_k)=\sum_jA_j\ell_k(x_j)=A_k$։ Միարժեքությունը. $j=0,\dots,n$ հավասարումների
+համակարգի մատրիցը Վանդերմոնդի մատրից է, որի որոշիչը զրո չէ, քանի որ հանգույցներն իրարից տարբեր են։ ∎</p>
+</div></details>
+<p>Ինտերպոլացիոն բանաձևի կշիռները սովորաբար ավելի հեշտ է գտնել անորոշ գործակիցների մեթոդով, քան $\ell_k$-երն ինտեգրելով։
+Ներքևի կոդը լուծում է $j=0,\dots,n$ հավասարումների համակարգը և գտնում ճշգրտության աստիճանը։</p>
+<pre class="py" data-run><code>import numpy as np
+
+def weights(nodes, a, b):
+    """Ինտերպոլացիոն բանաձևի կշիռները՝ j = 0, ..., n հավասարումներից"""
+    x = np.asarray(nodes, float)
+    m = len(x)
+    V = np.vander(x, m, increasing=True).T          # V[j, k] = x_k^j
+    rhs = [(b**(j + 1) - a**(j + 1)) / (j + 1) for j in range(m)]
+    return np.linalg.solve(V, rhs)
+
+def degree(nodes, A, a, b, jmax=20):
+    """Ճշգրտության աստիճանը՝ առաջին j-ն, որի համար x^j-ի վրա բանաձևը սխալվում է, հանած 1"""
+    for j in range(jmax + 1):
+        exact = (b**(j + 1) - a**(j + 1)) / (j + 1)
+        q = sum(Ak * xk**j for Ak, xk in zip(A, nodes))
+        if abs(q - exact) &gt; 1e-9 * max(1, abs(exact)):
+            return j - 1
+    return jmax
+
+# Խնդիր 1-ի հանգույցները
+nodes = [0, 1/4, 1/2, 3/4, 1]
+A = weights(nodes, 0, 1)
+print("90 * կշիռները =", np.round(90 * A, 10))
+print("ճշգրտության աստիճանը =", degree(nodes, A, 0, 1))</code></pre>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p1" open>
+<summary><h2>Խնդիր 1 - հինգ հանգույց, չորրորդ աստիճան</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 1</div>
+<p>Ապացուցեք, որ</p>
+$$\begin{aligned}&\int_0^1f(x)\,dx\approx\frac{1}{90}\Bigl[7f(0)\\&\quad+32f\bigl(\tfrac14\bigr)+12f\bigl(\tfrac12\bigr)\\&\quad+32f\bigl(\tfrac34\bigr)+7f(1)\Bigr]\end{aligned}$$
+<p>քառակուսեցման բանաձևը ճշգրիտ է չորրորդ աստիճանի բազմանդամների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Պետք է ցույց տալ, որ բանաձևը ճշգրիտ է $4$-ից ոչ բարձր աստիճանի
+բոլոր բազմանդամների համար։ Ըստ թեորեմի՝ բավական է ստուգել $1,x,x^2,x^3,x^4$ ֆունկցիաները։ $\int_0^1x^j\,dx=\frac{1}{j+1}$,
+և $90$-ով բազմապատկելուց հետո պետք է ստուգել</p>
+$$\begin{aligned}&7\cdot0^j+32\bigl(\tfrac14\bigr)^j+12\bigl(\tfrac12\bigr)^j\\&\quad+32\bigl(\tfrac34\bigr)^j+7=\frac{90}{j+1}.\end{aligned}$$
+</div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - հինգ ստուգում</h3>
+<p>Ձախ մասը (երբ $j=0$, $0^0=1$)՝</p>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$j$</th><th class="num">ձախ մաս</th><th class="num">$\frac{90}{j+1}$</th></tr></thead>
+<tbody>
+<tr><td class="num">$0$</td><td class="num">$7+32+12+32+7=90$</td><td class="num">$90$</td></tr>
+<tr><td class="num">$1$</td><td class="num">$0+8+6+24+7=45$</td><td class="num">$45$</td></tr>
+<tr><td class="num">$2$</td><td class="num">$0+2+3+18+7=30$</td><td class="num">$30$</td></tr>
+<tr><td class="num">$3$</td><td class="num">$0+\frac12+\frac32+\frac{27}{2}+7=\frac{45}{2}$</td><td class="num">$22{,}5$</td></tr>
+<tr><td class="num">$4$</td><td class="num">$0+\frac18+\frac34+\frac{81}{8}+7=18$</td><td class="num">$18$</td></tr>
+</tbody></table></div>
+<p>Բոլոր հինգ հավասարություններն էլ ճիշտ են, այնպես որ բանաձևը ճշգրիտ է $4$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների համար։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ավելին՝ ճշգրտության աստիճանը</h3>
+<p>$j=5$-ի դեպքում ձախ մասը $\frac{1}{32}+\frac38+\frac{243}{32}+7=15=\frac{90}{6}$ է, այսինքն՝ բանաձևը ճշգրիտ է նաև
+$x^5$-ի համար։ $j=6$-ի դեպքում՝ $\frac{825}{64}=12{,}890625$, իսկ $\frac{90}{7}\approx12{,}857$։ Ուրեմն բանաձևի ճշգրտության
+աստիճանը $5$ է, մեկով ավելի, քան պահանջված էր։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Հանգույցները և կշիռները համաչափ են $\frac12$ կետի նկատմամբ, դրա համար
+$t=x-\frac12$ փոփոխականով բավական է ստուգել $1$, $t^2$, $t^4$ ֆունկցիաները $[-\frac12,\frac12]$-ում։ $t^2$-ի համար
+$\frac{1}{90}\bigl(2\cdot7\cdot\frac14+2\cdot32\cdot\frac1{16}\bigr)=\frac{1}{90}\cdot\frac{15}{2}=\frac{1}{12}=\int_{-1/2}^{1/2}t^2\,dt$,
+իսկ $t^4$-ի համար $\frac{1}{90}\bigl(2\cdot7\cdot\frac1{16}+2\cdot32\cdot\frac1{256}\bigr)=\frac{1}{90}\cdot\frac98=\frac{1}{80}=\int_{-1/2}^{1/2}t^4\,dt$։
+Կենտ աստիճանների համար բանաձևն ինքնաբերաբար ճշգրիտ է (համաչափության հնարքը), և ստացվում է նույն պատասխանը՝ աստիճանն
+առնվազն $5$ է։ Այս բանաձևը կոչվում է Բուլի բանաձև (Boole's rule)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> Բանաձևը ճշգրիտ է $1,x,\dots,x^4$ ֆունկցիաների համար, հետևաբար նաև $4$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների համար։ Ավելին, նրա ճշգրտության աստիճանը $5$ է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p2" open>
+<summary><h2>Խնդիր 2 - $0$ և $\frac23$ հանգույցներ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 2</div>
+<p>Կառուցեք</p>
+$$\begin{gathered}\int_0^1f(x)\,dx\\\approx A_0f(0)+A_1f\bigl(\tfrac23\bigr)\end{gathered}$$
+<p>քառակուսեցման բանաձևը, որը ճշգրիտ է հնարավորինս բարձր աստիճանի բազմանդամների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Հանգույցները տրված են, անհայտները երկու կշիռներն են։ Երկու
+անհայտի համար գրում ենք երկու հավասարում ($f=1$ և $f=x$), ապա ստուգում ենք հաջորդ աստիճանները։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - կշիռները</h3>
+<p>$f=1$՝ $A_0+A_1=\int_0^11\,dx=1$։ $f=x$՝ $A_1\cdot\frac23=\int_0^1x\,dx=\frac12$, որից $A_1=\frac34$ և $A_0=\frac14$։ Այլ
+կշիռներով բանաձևը ճշգրիտ չէր լինի նույնիսկ առաջին աստիճանի բազմանդամների համար։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - հաջորդ աստիճանները</h3>
+<p>$f=x^2$՝ $\frac34\cdot\frac49=\frac13=\int_0^1x^2\,dx$, բանաձևը ճշգրիտ է։ $f=x^3$՝ $\frac34\cdot\frac{8}{27}=\frac29$, իսկ
+$\int_0^1x^3\,dx=\frac14$, ճշգրիտ չէ։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $x\bigl(x-\frac23\bigr)$ բազմանդամը երկու հանգույցում էլ զրո է,
+և բանաձևը նրա համար տալիս է $0$։ Իսկապես, $\int_0^1x\bigl(x-\frac23\bigr)dx=\frac13-\frac23\cdot\frac12=0$, ինչպես պետք է
+լինի $2$ աստիճանի ճշգրտության դեպքում։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int_0^1f(x)\,dx\approx\frac14f(0)+\frac34f\bigl(\frac23\bigr)$, ճշգրտության աստիճանը՝ $2$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p3" open>
+<summary><h2>Խնդիր 3 - մեկ հանգույց</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 3</div>
+<p>Կառուցեք $\int_{-1}^1f(x)\,dx\approx2f(x_0)$ քառակուսեցման բանաձևը, որը ճշգրիտ է հնարավորինս բարձր աստիճանի բազմանդամների
+համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Կշիռը տրված է ($2$), անհայտը $x_0$ հանգույցն է։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - հանգույցը</h3>
+<p>$f=1$՝ $2=\int_{-1}^11\,dx=2$, ճիշտ է ցանկացած $x_0$-ի համար։ $f=x$՝ $2x_0=\int_{-1}^1x\,dx=0$, որից $x_0=0$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - ճշգրտության աստիճանը</h3>
+<p>$f=x^2$՝ $2\cdot0^2=0$, իսկ $\int_{-1}^1x^2\,dx=\frac23$։ Բանաձևը ճշգրիտ չէ, և աստիճանը $1$ է։ $x_0\ne0$ դեպքում բանաձևը
+ճշգրիտ է միայն հաստատունների համար (աստիճանը $0$ է)։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $2f(0)$-ն $[-1,1]$-ի միջին ուղղանկյունների բանաձևն է՝ $(b-a)f(c)$,
+որի ճշգրտության աստիճանը $1$ է (տե՛ս <a href="#simple">հաջորդ տեսական բաժինը</a>)։ Այն նաև Գաուսի բանաձևն է մեկ հանգույցով
+($n=0$)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $x_0=0$, $\int_{-1}^1f(x)\,dx\approx2f(0)$, ճշգրտության աստիճանը՝ $1$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p4" open>
+<summary><h2>Խնդիր 4 - $ae^x+b\cos\frac{\pi x}{2}$ դաս</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 4</div>
+<p>Գտեք $\int_0^1f(x)\,dx\approx A_0f(0)+A_1f(1)$ քառակուսեցման բանաձևի գործակիցները, որոնց դեպքում բանաձևը ճշգրիտ է
+$f(x)=ae^x+b\cos\frac{\pi x}{2}$ տեսքի բոլոր ֆունկցիաների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Թեորեմի դատողությունը կախված չէ բազմանդամներից. բանաձևը և
+ինտեգրալը գծային են, այնպես որ բանաձևը ճշգրիտ է $ae^x+b\cos\frac{\pi x}{2}$ բոլոր ֆունկցիաների համար այն և միայն այն դեպքում, երբ
+ճշգրիտ է $e^x$-ի և $\cos\frac{\pi x}{2}$-ի համար։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $f(x)=\cos\frac{\pi x}{2}$</h3>
+<p>$\int_0^1\cos\frac{\pi x}{2}\,dx=\frac{2}{\pi}\sin\frac{\pi}{2}=\frac{2}{\pi}$, իսկ բանաձևը տալիս է
+$A_0\cos0+A_1\cos\frac{\pi}{2}=A_0$։ Ուրեմն $A_0=\frac{2}{\pi}\approx0{,}63662$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - $f(x)=e^x$</h3>
+<p>$\int_0^1e^x\,dx=e-1$, իսկ բանաձևը տալիս է $A_0+A_1e$։ Հետևաբար,</p>
+$$\begin{aligned}A_1&=\frac{e-1-\frac{2}{\pi}}{e}\\&=1-\frac1e-\frac{2}{\pi e}\approx0{,}39792.\end{aligned}$$</div>
+<div class="check"><span class="check-label">Ստուգում։</span> Վերցնենք $a=b=1$, այսինքն՝ $f(x)=e^x+\cos\frac{\pi x}{2}$։
+Ինտեգրալը $e-1+\frac{2}{\pi}\approx2{,}35490$ է, իսկ բանաձևը տալիս է $A_0\cdot2+A_1\cdot e\approx2{,}35490$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $A_0=\frac{2}{\pi}\approx0{,}63662$, $A_1=1-\frac1e-\frac{2}{\pi e}\approx0{,}39792$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p5" open>
+<summary><h2>Խնդիր 5 - եռանկյունաչափական ֆունկցիաներ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 5</div>
+<p>Գտեք $\int_0^{2\pi}f(x)\,dx\approx A_0f(0)+A_1f(\pi)$ քառակուսեցման բանաձևի գործակիցները, որոնց դեպքում բանաձևը ճշգրիտ է
+$f(x)=a+b\cos x$ տեսքի բոլոր ֆունկցիաների համար։ Ապացուցեք, որ այդ բանաձևը ճշգրիտ է նաև</p>
+$$f(x)=\sum_{k=0}^n\bigl(a_k\cos(2k+1)x+b_k\sin kx\bigr)$$
+<p>տեսքի ֆունկցիաների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Խնդիր 4-ի պես՝ բավական է ճշգրտությունը $1$ և $\cos x$
+ֆունկցիաների համար, իսկ երկրորդ մասում՝ ամեն $\cos(2k+1)x$ և $\sin kx$ գումարելիի համար առանձին։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - գործակիցները</h3>
+<p>$f=1$՝ $A_0+A_1=2\pi$։ $f=\cos x$՝ $A_0\cos0+A_1\cos\pi=A_0-A_1=\int_0^{2\pi}\cos x\,dx=0$։ Հետևաբար, $A_0=A_1=\pi$, և
+բանաձևը՝ $\int_0^{2\pi}f(x)\,dx\approx\pi\bigl(f(0)+f(\pi)\bigr)$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կենտ կոսինուսներ և սինուսներ</h3>
+<p>Ամբողջ $m\ge1$-ի համար $\int_0^{2\pi}\cos mx\,dx=\int_0^{2\pi}\sin mx\,dx=0$, իսկ $\sin0x=0$։ Ուրեմն բոլոր գումարելիների
+ինտեգրալները զրո են։ Բանաձևի արժեքները՝</p>
+$$\begin{aligned}&\pi\bigl(\cos0+\cos(2k+1)\pi\bigr)=\pi(1-1)=0,\\&\pi\bigl(\sin0+\sin k\pi\bigr)=0.\end{aligned}$$
+<p>Բանաձևը ճշգրիտ է ամեն գումարելիի համար, իսկ գծայնության շնորհիվ նաև նրանց ցանկացած գումարի համար։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Զույգ կոսինուսների համար բանաձևը ճշգրիտ չէ. $f(x)=\cos2x$-ի համար
+ինտեգրալը $0$ է, իսկ $\pi(\cos0+\cos2\pi)=2\pi$։ Կենտ $2k+1$-ը կարևոր է՝ $\cos(2k+1)\pi=-1$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $A_0=A_1=\pi$։ Բանաձևը ճշգրիտ է ամեն $\cos(2k+1)x$ և $\sin kx$ ֆունկցիայի համար (երկու դեպքում էլ ինտեգրալը և բանաձևի արժեքը զրո են), հետևաբար նաև նրանց գծային զուգակցությունների համար</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="simple" open>
+<summary><h2>Միջին ուղղանկյունների, սեղանների և Սիմպսոնի բանաձևեր</h2></summary>
+<div class="sec-body">
+<p>Ամենապարզ ինտերպոլացիոն բանաձևերը ստացվում են, երբ $f$-ը $[a,b]$ հատվածում փոխարինում ենք հաստատունով (արժեքը
+միջնակետում), ծայրակետերով անցնող ուղղով կամ $a$, $c$, $b$ կետերով անցնող պարաբոլով, որտեղ $c=\frac{a+b}{2}$ միջնակետն է։</p>
+<div class="box def"><div class="box-title">Սահմանում (երեք պարզ բանաձև)</div>
+<p><strong>Միջին ուղղանկյունների բանաձևը</strong> (midpoint rule), <strong>սեղանների բանաձևը</strong> (trapezoidal rule) և
+<strong>Սիմպսոնի բանաձևը</strong> (Simpson's rule)՝</p>
+$$M(f)=(b-a)\,f(c),$$
+$$T(f)=\frac{b-a}{2}\bigl(f(a)+f(b)\bigr),$$
+$$\begin{aligned}S(f)=\frac{b-a}{6}\bigl(&f(a)+4f(c)\\&+f(b)\bigr).\end{aligned}$$
+<p>Առաջինն ինտեգրալը փոխարինում է ուղղանկյան մակերեսով, երկրորդը՝ սեղանի մակերեսով, երրորդը՝ պարաբոլի տակի մակերեսով։</p>
+</div>
+<div class="box thm"><div class="box-title">Թեորեմ (պարզ բանաձևերի սխալանքը)</div>
+<p>Դիցուք $I=\int_a^bf(x)\,dx$։ Եթե $f''$-ն անընդհատ է $[a,b]$-ում, ապա գոյություն ունեն $\xi_1,\xi_2\in(a,b)$ կետեր, որ</p>
+$$\begin{aligned}I-M(f)&=\frac{(b-a)^3}{24}\,f''(\xi_1),\\ I-T(f)&=-\frac{(b-a)^3}{12}\,f''(\xi_2).\end{aligned}$$
+<p>Եթե $f^{(4)}$-ն անընդհատ է, ապա որևէ $\xi_3\in(a,b)$ կետում</p>
+$$I-S(f)=-\frac{(b-a)^5}{2880}\,f^{(4)}(\xi_3).$$
+<p>Այսպիսով՝ $M$-ի և $T$-ի ճշգրտության աստիճանը $1$ է, իսկ $S$-ինը՝ $3$։</p>
+</div>
+<div class="box idea"><div class="box-title">Երեք դիտարկում</div>
+<ul>
+  <li><strong>Մեկ հանգույցով միջին ուղղանկյունների բանաձևն ունի նույն ճշգրտության աստիճանը, ինչ երկու հանգույցով սեղանների
+  բանաձևը,</strong> իսկ նրա սխալանքի գործակիցը երկու անգամ փոքր է ($\frac{1}{24}$ և $\frac{1}{12}$) և հակառակ նշանով։</li>
+  <li><strong>Սիմպսոնի բանաձևը ճշգրիտ է նաև խորանարդային բազմանդամների համար,</strong> թեև կառուցված է պարաբոլով.
+  հանգույցները և կշիռները համաչափ են, իսկ այդ դեպքում ճշգրտության աստիճանը կենտ է (համաչափության հնարքը)։</li>
+  <li><strong>$S=\frac{2M+T}{3}$։</strong> Քանի որ $2\cdot\frac{1}{24}-\frac{1}{12}=0$, այս զուգակցության մեջ $M$-ի և $T$-ի
+  սխալանքների $(b-a)^3$-ի կարգի մասերը կրճատվում են, և մնում է $(b-a)^5$-ի կարգի սխալանքը։</li>
+</ul>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Սեղանների բանաձևը։</strong> $T(f)$-ը $f$-ի $P_1$ գծային ինտերպոլացիոն բազմանդամի ինտեգրալն է $a$, $b$ հանգույցներում։
+Ինտերպոլացիայի սխալանքի բանաձևով $f(x)-P_1(x)=\frac{f''(\eta(x))}{2}(x-a)(x-b)$։ $(x-a)(x-b)$ արտադրիչը $[a,b]$-ում նշանը չի
+փոխում (այն $\le0$ է)։ Եթե $m_2$-ը և $M_2$-ը $f''$-ի փոքրագույն և մեծագույն արժեքներն են $[a,b]$-ում, ապա
+$\int_a^b(f-P_1)\,dx$-ը $\frac{m_2}{2}J$-ի և $\frac{M_2}{2}J$-ի միջև է, որտեղ $J=\int_a^b(x-a)(x-b)\,dx=-\frac{(b-a)^3}{6}$։
+Միջանկյալ արժեքի թեորեմով այն հավասար է $\frac{f''(\xi)}{2}J$-ի որևէ $\xi$-ի համար, որից $I-T(f)=-\frac{(b-a)^3}{12}f''(\xi)$։</p>
+<p><strong>Միջին ուղղանկյունների բանաձևը։</strong> Թեյլորի բանաձևով $f(x)=f(c)+f'(c)(x-c)+\frac{f''(\eta(x))}{2}(x-c)^2$։ Գծային
+անդամի ինտեգրալը զրո է, իսկ $(x-c)^2\ge0$, ուստի նույն դատողությամբ
+$I-M(f)=\frac{f''(\xi)}{2}\int_a^b(x-c)^2\,dx=\frac{(b-a)^3}{24}f''(\xi)$։</p>
+<p><strong>Սիմպսոնի բանաձևը։</strong> Ապացույցն ավելի երկար է։ Վերցնենք երրորդ աստիճանի $H$ բազմանդամը, որը $a$, $c$, $b$
+կետերում համընկնում է $f$-ի հետ, և $H'(c)=f'(c)$ (Էրմիտի ինտերպոլացիա)։ $S$-ն օգտագործում է միայն $f(a)$, $f(c)$, $f(b)$
+արժեքները և ճշգրիտ է երրորդ աստիճանի բազմանդամների համար, այնպես որ $S(f)=S(H)=\int_a^bH\,dx$։ Էրմիտի ինտերպոլացիայի սխալանքը՝
+$f(x)-H(x)=\frac{f^{(4)}(\eta(x))}{24}(x-a)(x-c)^2(x-b)$, վերջին արտադրյալը $[a,b]$-ում նշանը չի փոխում, և
+$\int_a^b(x-a)(x-c)^2(x-b)\,dx=-\frac{(b-a)^5}{120}$։ Նույն դատողությամբ $I-S(f)=-\frac{(b-a)^5}{2880}f^{(4)}(\xi)$։ ∎</p>
+</div></details>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Սիմպսոնի բանաձևը $f$-ը փոխարինում է պարաբոլով, այսինքն՝ երկրորդ աստիճանի բազմանդամով։ Ո՞րն է
+նրա ճշգրտության աստիճանը։</p>
+<div class="predict-opts"><button class="btn" type="button">$2$</button><button class="btn" type="button" data-ok>$3$</button><button class="btn" type="button">$4$</button></div>
+<div class="predict-why">Երեք հանգույցով ինտերպոլացիոն բանաձևի աստիճանն առնվազն $2$ է։ Հանգույցներն ու կշիռները համաչափ են $c$-ի
+նկատմամբ, ուստի $(x-c)^3$-ի համար բանաձևն ինքնաբերաբար ճշգրիտ է, և աստիճանը $3$ է։ $4$ չէ. $[-1,1]$-ում
+$\int_{-1}^1t^4\,dt=\frac25$, իսկ $S(t^4)=\frac13(1+0+1)=\frac23$։ Ներքևում ընտրեք «Սիմպսոն»։</div>
+</div>
+
+<div class="widget" id="w-exact">
+  <div class="widget-head"><span>Ճշգրտության աստիճանի ստուգում</span></div>
+  <p class="widget-hint">Ընտրեք բանաձևը։ Աղյուսակում $x^j$ ֆունկցիայի ինտեգրալն է և բանաձևի տված արժեքը՝ $j=0,\dots,7$։ Առաջին
+  չհամընկնող տողը գունավորված է, իսկ նրանից մեկով փոքր $j$-ն ճշգրտության աստիճանն է։ «Երկու հանգույց $\pm t$» տարբերակում շարժեք
+  սահիչը. $Q(f)=f(-t)+f(t)$ բանաձևը $x^2$-ի համար ճշգրիտ է միայն մեկ $t$-ի դեպքում։ Գաուսի բանաձևերը կհանդիպեն վերջին տեսական
+  բաժնում։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="mid" aria-pressed="true">Միջին ուղղանկյուններ</button>
+    <button class="btn" type="button" data-case="trap" aria-pressed="false">Սեղաններ</button>
+    <button class="btn" type="button" data-case="simp" aria-pressed="false">Սիմպսոն</button>
+    <button class="btn" type="button" data-case="p1" aria-pressed="false">Խնդիր 1-ի բանաձևը</button>
+    <button class="btn" type="button" data-case="free" aria-pressed="false">Երկու հանգույց $\pm t$</button>
+    <button class="btn" type="button" data-case="g2" aria-pressed="false">Գաուս, 2 հանգույց</button>
+    <button class="btn" type="button" data-case="g3" aria-pressed="false">Գաուս, 3 հանգույց</button>
+  </div>
+  <div class="slider-row" data-out="trow"><label for="w-exact-t">$t$</label><input type="range" id="w-exact-t" min="0" max="1000" value="500"><span data-out="t"></span></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="table-wrap" data-out="table"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="composite" open>
+<summary><h2>Ընդհանրացված բանաձևեր և սխալանքի գնահատական</h2></summary>
+<div class="sec-body">
+<p>Երկար հատվածում մեկ բանաձևը շատ հանգույցներով վատ ընտրություն է. հավասարահեռ հանգույցներով ինտերպոլացիոն բազմանդամը
+կարող է ուժեղ տատանվել (Ռունգեի երևույթը), իսկ բանաձևի կշիռների մեջ հայտնվում են բացասական թվեր (տե՛ս վերջին ինտերակտիվ
+նկարը)։ Դրա փոխարեն $[a,b]$-ն տրոհում ենք $n$ հավասար մասի և ամեն մասում կիրառում ենք պարզ բանաձև։</p>
+<div class="box def"><div class="box-title">Սահմանում (ընդհանրացված բանաձևեր)</div>
+<p>Դիցուք $h=\frac{b-a}{n}$, $x_i=a+ih$, $i=0,\dots,n$։ <strong>Ընդհանրացված բանաձևերը</strong> (composite rules)՝</p>
+$$\begin{gathered}M_n=h\sum_{i=1}^nf(\bar x_i),\\ \bar x_i=a+\bigl(i-\tfrac12\bigr)h,\end{gathered}$$
+$$\begin{aligned}T_n=h\Bigl[&\tfrac12f(x_0)+f(x_1)+\dots\\&+f(x_{n-1})+\tfrac12f(x_n)\Bigr],\end{aligned}$$
+<p>իսկ զույգ $n$-ի դեպքում՝</p>
+$$\begin{aligned}S_n=\frac h3\Bigl[&f(x_0)+4f(x_1)+2f(x_2)\\&+4f(x_3)+\dots+2f(x_{n-2})\\&+4f(x_{n-1})+f(x_n)\Bigr].\end{aligned}$$
+<p>$M_n$-ը և $T_n$-ը պարզ բանաձևերի գումարներն են $n$ մասի վրա, իսկ $S_n$-ը Սիմպսոնի բանաձևերի գումարն է
+$[x_0,x_2]$, $[x_2,x_4]$, ... զույգ մասերի վրա։ Կենտ համարով հանգույցներն այդ զույգերի միջնակետերն են (գործակիցը $4$), իսկ
+զույգ համարով ներքին հանգույցները պատկանում են երկու հարևան զույգի (գործակիցը $2$)։</p>
+</div>
+<div class="box thm"><div class="box-title">Թեորեմ (ընդհանրացված բանաձևերի սխալանքը)</div>
+<p>Դիցուք $K_2=\max_{[a,b]}|f''|$ և $K_4=\max_{[a,b]}|f^{(4)}|$։ Այդ դեպքում</p>
+$$\begin{aligned}|I-M_n|&\le\frac{(b-a)h^2}{24}\,K_2,\\ |I-T_n|&\le\frac{(b-a)h^2}{12}\,K_2,\\ |I-S_n|&\le\frac{(b-a)h^4}{180}\,K_4.\end{aligned}$$
+<p>Ավելի ճշգրիտ՝ $I-T_n=-\frac{(b-a)h^2}{12}f''(\xi)$ որևէ $\xi\in(a,b)$ կետում, $I-M_n=\frac{(b-a)h^2}{24}f''(\xi)$ և
+$I-S_n=-\frac{(b-a)h^4}{180}f^{(4)}(\xi)$ (ամեն բանաձևում իր $\xi$-ով)։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Վերցնենք սեղանների բանաձևը։ Ամեն $[x_{i-1},x_i]$ մասում պարզ բանաձևի սխալանքը $-\frac{h^3}{12}f''(\xi_i)$ է։ Գումարելով՝</p>
+$$\begin{aligned}I-T_n&=-\frac{h^3}{12}\sum_{i=1}^nf''(\xi_i)\\&=-\frac{h^3n}{12}\cdot\frac1n\sum_{i=1}^nf''(\xi_i).\end{aligned}$$
+<p>Միջին թվաբանականը $f''$-ի փոքրագույն և մեծագույն արժեքների միջև է, և միջանկյալ արժեքի թեորեմով հավասար է որևէ
+$f''(\xi)$-ի, իսկ $h^3n=(b-a)h^2$։ Միջին ուղղանկյունների բանաձևի համար նույն դատողությունը տալիս է
+$\frac{(b-a)h^2}{24}f''(\xi)$։ Սիմպսոնի բանաձևում $\frac n2$ զույգ մաս կա՝ ամեն մեկը $2h$ երկարությամբ, և ամեն զույգի
+սխալանքը $-\frac{(2h)^5}{2880}f^{(4)}(\xi_i)=-\frac{h^5}{90}f^{(4)}(\xi_i)$ է, որից
+$I-S_n=-\frac n2\cdot\frac{h^5}{90}f^{(4)}(\xi)=-\frac{(b-a)h^4}{180}f^{(4)}(\xi)$։ ∎</p>
+</div></details>
+<div class="box method"><div class="box-title">★ Ինչպես ընտրել $n$-ը տրված $\varepsilon$ ճշտության համար</div>
+<ol>
+  <li>Գտնել $K_2$-ը (կամ $K_4$-ը)՝ $|f''|$-ի մեծագույն արժեքը $[a,b]$-ում (ծայրակետերում և $f'''=0$ կետերում)։ Բավական է նաև
+  նրա վերին գնահատականը։</li>
+  <li>Լուծել, օրինակ սեղանների համար, $\frac{(b-a)^3K_2}{12n^2}\le\varepsilon$ անհավասարությունը՝
+  $n\ge\sqrt{\frac{(b-a)^3K_2}{12\varepsilon}}$, և վերցնել ամենափոքր ամբողջ $n$-ը (Սիմպսոնի համար՝ ամենափոքր զույգը)։</li>
+  <li>Հանգույցների քանակը՝ $n$ միջին ուղղանկյունների բանաձևում և $n+1$՝ սեղանների ու Սիմպսոնի բանաձևերում։</li>
+</ol>
+<p>Ստացված $n$-ը երաշխիք է. իրական սխալանքը հաճախ զգալիորեն փոքր է (խնդիրներ 7, 10, 12)։</p>
+</div>
+<p>Երեք բանաձևը Python-ով։ Ստուգում ենք առաջին դասախոսության $\int_0^1e^{-x^2}dx$ օրինակի վրա. ճշգրիտ արժեքը
+$\frac{\sqrt\pi}{2}\,\mathrm{erf}(1)$ է, իսկ $\mathrm{erf}$ ֆունկցիան կա Python-ի <code>math</code> մոդուլում։ Վերջին
+սյունակներում երևում է, թե քանի անգամ է փոքրանում սխալանքը $n$-ը կրկնապատկելիս։</p>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def midpoint(f, a, b, n):
+    h = (b - a) / n
+    return h * np.sum(f(a + (np.arange(n) + 0.5) * h))
+
+def trapezoid(f, a, b, n):
+    x = np.linspace(a, b, n + 1)
+    h = (b - a) / n
+    return h * (np.sum(f(x)) - (f(a) + f(b)) / 2)
+
+def simpson(f, a, b, n):
+    assert n % 2 == 0, "Սիմպսոնի բանաձևում n-ը պետք է զույգ լինի"
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
+    h = (b - a) / n
+    return h / 3 * (y[0] + y[-1] + 4 * np.sum(y[1:-1:2]) + 2 * np.sum(y[2:-1:2]))
+
+f = lambda x: np.exp(-x**2)
+I = math.sqrt(math.pi) / 2 * math.erf(1)
+prev = None
+for n in [2, 4, 8, 16, 32]:
+    e = [abs(I - rule(f, 0, 1, n)) for rule in (midpoint, trapezoid, simpson)]
+    line = f"n = {n:2d}   սխալանքներ՝ M {e[0]:.2e}  T {e[1]:.2e}  S {e[2]:.2e}"
+    if prev:
+        line += "   հարաբերություններ՝ " + "  ".join(f"{p / q:5.2f}" for p, q in zip(prev, e))
+    print(line)
+    prev = e</code></pre>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Սեղանների ընդհանրացված բանաձևում $n$-ը կրկնապատկում ենք, այսինքն՝ $h$-ը կիսում ենք։
+Մոտավորապես քանի՞ անգամ կփոքրանա սխալանքը։</p>
+<div class="predict-opts"><button class="btn" type="button">$2$ անգամ</button><button class="btn" type="button" data-ok>$4$ անգամ</button><button class="btn" type="button">$16$ անգամ</button></div>
+<div class="predict-why">Սխալանքը մոտավորապես $C\,h^2$ է, և $h$-ը կիսելիս այն փոքրանում է մոտ $4$ անգամ։ $2$ անգամ կլիներ
+$h$-ին համեմատական սխալանքի դեպքում (օրինակ՝ ձախ ուղղանկյունների բանաձևում), իսկ $16$ անգամ՝ Սիմպսոնի բանաձևում, որի
+սխալանքը $h^4$-ին է համեմատական։ Ներքևում ընտրեք բանաձևը և շարժեք $n$-ը. ստորին գրաֆիկում $n$-ից կախված սխալանքն է
+լոգարիթմական առանցքներով, որտեղ $C\,h^p$ տեսքի սխալանքն ուղիղ գիծ է՝ $-p$ թեքությամբ։</div>
+</div>
+
+<div class="widget" id="w-comp">
+  <div class="widget-head"><span>Ընդհանրացված բանաձևեր և նրանց սխալանքը</span></div>
+  <p class="widget-hint">Ընտրեք ֆունկցիան (խնդիրներ 7, 6, 8, 14) և բանաձևը, ապա շարժեք $n$-ը։ Վերևում երևում են ուղղանկյունները,
+  սեղանները կամ պարաբոլները, որոնց մակերեսների գումարը մոտավոր արժեքն է, իսկ կարմիր կետերը հանգույցներն են։ Ներքևում երեք
+  բանաձևի սխալանքն է $n=1,\dots,64$ դեպքում՝ լոգարիթմական առանցքներով. ընտրված բանաձևը հոծ գծով է, կարմիր կետը՝ ընթացիկ
+  $n$-ը։ Սիմպսոնի բանաձևում $n$-ը միայն զույգ է։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p7" aria-pressed="true">$e^{x^2}$, $[0,1]$</button>
+    <button class="btn" type="button" data-case="p6" aria-pressed="false">$x^2e^{x^2}$, $[-1,2]$</button>
+    <button class="btn" type="button" data-case="p8" aria-pressed="false">$x^2\cos x$, $[-1,2]$</button>
+    <button class="btn" type="button" data-case="p14" aria-pressed="false">$\frac{1}{x+1}$, $[0,1]$</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-rule="mid" aria-pressed="false">Միջին ուղղանկյուններ</button>
+    <button class="btn" type="button" data-rule="trap" aria-pressed="true">Սեղաններ</button>
+    <button class="btn" type="button" data-rule="simp" aria-pressed="false">Սիմպսոն</button>
+  </div>
+  <div class="slider-row"><label for="w-comp-n">$n$</label><input type="range" id="w-comp-n" min="1" max="32" value="4"><span data-out="n"></span></div>
+  <div data-out="plot"></div>
+  <p class="mass-cap">Ներքևում՝ $|I-Q_n|$-ը $n$-ից կախված (լոգարիթմական առանցքներ). կանաչ՝ միջին ուղղանկյուններ, կապույտ՝ սեղաններ, նարնջագույն՝ Սիմպսոն</p>
+  <div data-out="err"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p6" open>
+<summary><h2>Խնդիր 6 - $x^2e^{x^2}$, միջին ուղղանկյուններ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 6</div>
+<p>Հաշվեք $\int_{-1}^2x^2e^{x^2}\,dx$ ինտեգրալի մոտավոր արժեքը միջին ուղղանկյունների ընդհանրացված բանաձևով՝</p>
+<p>(ա) $n=3$ դեպքում,</p>
+<p>(բ) $h=0{,}5$ դեպքում։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>$[-1,2]$ հատվածի երկարությունը $3$ է, այնպես որ (ա)-ում $h=1$, իսկ
+(բ)-ում $n=6$։ Ամեն մասում $f(x)=x^2e^{x^2}$ ֆունկցիայի արժեքը վերցնում ենք մասի միջնակետում և բազմապատկում $h$-ով։</p></div>
+<h3>(ա) $n=3$, $h=1$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - արժեքները միջնակետերում</h3>
+<p>Միջնակետերը՝ $-0{,}5$, $0{,}5$, $1{,}5$։ $f(\pm0{,}5)=0{,}25\,e^{0{,}25}\approx0{,}321006$, $f(1{,}5)=2{,}25\,e^{2{,}25}\approx21{,}347406$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գումարը</h3>
+$$\begin{aligned}M_3&=1\cdot\bigl(2\cdot0{,}321006+21{,}347406\bigr)\\&=21{,}989418\approx21{,}98942.\end{aligned}$$</div>
+<h3>(բ) $h=0{,}5$, $n=6$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - վեց արժեք</h3>
+<p>Միջնակետերը՝ $\pm0{,}25$, $\pm0{,}75$, $1{,}25$, $1{,}75$։ $f$-ը զույգ է, և $\pm$ կետերում արժեքները նույնն են՝
+$f(\pm0{,}25)\approx0{,}066531$, $f(\pm0{,}75)\approx0{,}987218$, իսկ $f(1{,}25)\approx7{,}454271$, $f(1{,}75)\approx65{,}479137$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գումարը</h3>
+$$\begin{aligned}M_6&=0{,}5\bigl[2(0{,}066531+0{,}987218)\\&\qquad+7{,}454271+65{,}479137\bigr]\\&\approx0{,}5\cdot75{,}04091\approx37{,}52045.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - որքա՞ն ճշգրիտ են պատասխանները</h3>
+<p>Շատ մեծ $n$-ով ($M_{10000}\approx46{,}99965$) ստանում ենք ճշգրիտ արժեքը՝ $I\approx46{,}99965$։ Սխալանքները՝
+$I-M_3\approx25{,}01$ և $I-M_6\approx9{,}48$, այսինքն՝ նույնիսկ $h=0{,}5$-ով մոտարկումը կոպիտ է։ Պատճառը $f''$-ի մեծ արժեքներն
+են՝ $f''(x)=(2+10x^2+4x^4)e^{x^2}$։ Այն զույգ է և աճում է $|x|$-ի հետ, դրա համար $K_2=f''(2)=106e^4\approx5787$։ Թեորեմի
+գնահատականը՝ $\frac{3h^2}{24}K_2$, $h=1$-ի դեպքում $\approx723$ է, $h=0{,}5$-ի դեպքում՝ $\approx181$. ճիշտ է, բայց շատ մեծ։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $f''\gt0$, ուստի $I-M_n=\frac{(b-a)h^2}{24}f''(\xi)\gt0$. միջին
+ուղղանկյունների բանաձևն այս ֆունկցիայի համար միշտ տալիս է ինտեգրալից փոքր արժեք։ Երկու պատասխանն էլ փոքր են
+$46{,}99965$-ից, և $h$-ը կիսելիս մոտենում են նրան։ Վերևի ինտերակտիվ նկարում ընտրեք $x^2e^{x^2}$ ֆունկցիան և միջին
+ուղղանկյունները։</div>
+<pre class="py" data-run><code>import numpy as np
+
+def midpoint(f, a, b, n):
+    h = (b - a) / n
+    xm = a + (np.arange(n) + 0.5) * h          # մասերի միջնակետերը
+    return h * np.sum(f(xm))
+
+f = lambda x: x**2 * np.exp(x**2)
+for n in [3, 6, 100, 10000]:
+    print(f"n = {n:5d}   M_n = {midpoint(f, -1, 2, n):.5f}")</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $M_3\approx21{,}98942$, (բ) $M_6\approx37{,}52045$ (ճշգրիտ արժեքը՝ $I\approx46{,}99965$)</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p7" open>
+<summary><h2>Խնդիր 7 - $e^{x^2}$, $10^{-3}$ ճշտություն</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 7</div>
+<p>Պետք է հաշվել $\int_0^1e^{x^2}\,dx$ ինտեգրալի մոտավոր արժեքը։</p>
+<p>(ա) Գտեք հանգույցների քանակ, որը բավարար է միջին ուղղանկյունների ընդհանրացված բանաձևով ինտեգրալը $10^{-3}$ ճշտությամբ
+հաշվելու համար։</p>
+<p>(բ) (Python) Գրեք ծրագիր, որը միջին ուղղանկյունների ընդհանրացված բանաձևով հաշվում է այդ ինտեգրալը $10^{-3}$ ճշտությամբ։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Պահանջում ենք, որ սխալանքի գնահատականը՝
+$\frac{(b-a)h^2}{24}K_2$, չգերազանցի $10^{-3}$-ը։ Միջին ուղղանկյունների բանաձևում հանգույցները $n$ մասերի միջնակետերն են,
+այնպես որ հանգույցների քանակը $n$ է։</p></div>
+<h3>(ա) Հանգույցների քանակը</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $K_2=\max|f''|$</h3>
+<p>$f'(x)=2xe^{x^2}$, $f''(x)=(2+4x^2)e^{x^2}$։ $[0,1]$-ում երկու արտադրիչն էլ դրական են և աճող, այնպես որ
+$K_2=f''(1)=6e\approx16{,}30969$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - անհավասարությունը</h3>
+<p>$b-a=1$ և $h=\frac1n$, ուրեմն գնահատականը $\frac{6e}{24n^2}=\frac{e}{4n^2}$ է, և</p>
+$$\frac{e}{4n^2}\le10^{-3}\iff n^2\ge250e\approx679{,}57.$$
+<p>Ուրեմն $n\ge\sqrt{250e}\approx26{,}07$, և ամենափոքր ամբողջ թիվը $n=27$-ն է։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $n=26$-ի դեպքում գնահատականը
+$\frac{e}{4\cdot26^2}\approx1{,}0053\cdot10^{-3}\gt10^{-3}$ է, իսկ $n=27$-ի դեպքում՝ $\approx9{,}322\cdot10^{-4}$։</div>
+<h3>(բ) Ծրագիրը</h3>
+<p>Ծրագիրը $n$-ը հաշվում է (ա)-ի գնահատականով, ապա՝ $M_{27}\approx1{,}46234$։ Ճշգրիտ արժեքը ստանում ենք
+$e^{x^2}=\sum_k\frac{x^{2k}}{k!}$ շարքն անդամ առ անդամ ինտեգրելով՝ $I=\sum_{k\ge0}\frac{1}{k!\,(2k+1)}\approx1{,}46265$։ Իրական
+սխալանքը $\approx3{,}11\cdot10^{-4}$ է, մոտ երեք անգամ փոքր թույլատրելիից։ Ծրագրի վերջին մասը ցույց է տալիս, որ բավական է
+նաև $n=16$ (սխալանքը $\approx8{,}84\cdot10^{-4}$), իսկ $n=15$-ի դեպքում սխալանքը $\approx1{,}0055\cdot10^{-3}$ է։
+Գնահատականը երաշխիք է, ոչ թե ճշգրիտ սխալանք։</p>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def midpoint(f, a, b, n):
+    h = (b - a) / n
+    return h * np.sum(f(a + (np.arange(n) + 0.5) * h))
+
+f = lambda x: np.exp(x**2)
+a, b, eps = 0.0, 1.0, 1e-3
+K2 = 6 * math.e                       # max|f''| [0, 1]-ում՝ x = 1 կետում
+n = math.ceil(math.sqrt((b - a)**3 * K2 / (24 * eps)))
+approx = midpoint(f, a, b, n)
+exact = sum(1 / (math.factorial(k) * (2 * k + 1)) for k in range(30))   # e^(x^2)-ի շարքից
+print("n =", n, "  M_n =", approx)
+print("ճշգրիտ արժեքը =", exact, "  սխալանքը =", exact - approx)
+
+# բավական է նաև ավելի փոքր n
+m = 1
+while exact - midpoint(f, a, b, m) &gt; eps:
+    m += 1
+print("ամենափոքր n-ը, որի դեպքում սխալանքը &lt; 1e-3՝", m)</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $n=27$ հանգույց (մասերի միջնակետերը, $h=\frac{1}{27}$)։ (բ) $M_{27}\approx1{,}46234$, սխալանքը $\approx3{,}11\cdot10^{-4}$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p8" open>
+<summary><h2>Խնդիր 8 - $x^2\cos x$, սեղաններ</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 8</div>
+<p>Հաշվեք $\int_{-1}^2x^2\cos x\,dx$ ինտեգրալի մոտավոր արժեքը սեղանների ընդհանրացված բանաձևով՝</p>
+<p>(ա) $h=1$ դեպքում,</p>
+<p>(բ) $n=2$ դեպքում։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>(ա)-ում $n=3$, հանգույցները՝ $-1$, $0$, $1$, $2$։ (բ)-ում
+$h=1{,}5$, հանգույցները՝ $-1$, $0{,}5$, $2$։ Ծայրային արժեքները մտնում են $\frac12$ գործակցով։</p></div>
+<h3>(ա) $h=1$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - արժեքները</h3>
+<p>$f(x)=x^2\cos x$։ $f(-1)=f(1)=\cos1\approx0{,}540302$, $f(0)=0$, $f(2)=4\cos2\approx-1{,}664587$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գումարը</h3>
+$$\begin{aligned}T_3&=\tfrac12f(-1)+f(0)\\&\quad+f(1)+\tfrac12f(2)\\&\approx0{,}270151+0+0{,}540302\\&\quad-0{,}832294\approx-0{,}02184.\end{aligned}$$</div>
+<h3>(բ) $n=2$</h3>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - արժեքը միջին հանգույցում</h3>
+<p>$f(0{,}5)=0{,}25\cos0{,}5\approx0{,}219396$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - գումարը</h3>
+$$\begin{aligned}T_2&=1{,}5\bigl[\tfrac12f(-1)+f(0{,}5)+\tfrac12f(2)\bigr]\\&\approx1{,}5\cdot(-0{,}342747)\approx-0{,}51412.\end{aligned}$$</div>
+<div class="step"><h3><span class="step-num">Քայլ 3</span> - համեմատություն ճշգրիտ արժեքի հետ</h3>
+<p>$x^2\cos x$-ի նախնականը $x^2\sin x+2x\cos x-2\sin x$ է, ուստի</p>
+$$\begin{aligned}I&=2\sin2+4\cos2\\&\quad-\sin1+2\cos1\approx0{,}39314.\end{aligned}$$
+<p>Սխալանքները՝ $I-T_3\approx0{,}41498$ և $I-T_2\approx0{,}90726$։ Երկու մոտարկումն էլ կոպիտ են. այսքան մեծ քայլով սեղանները
+չեն հետևում կորին, որը $x=2$-ի մոտ արագ իջնում է։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> Սխալանքը մոտավորապես $h^2$-ին համեմատական է, դրա համար սխալանքների
+հարաբերությունը պետք է մոտ լինի $\bigl(\frac{1{,}5}{1}\bigr)^2=2{,}25$-ին։ Ստացվում է $\frac{0{,}90726}{0{,}41498}\approx2{,}19$,
+թեև $h$-ը դեռ մեծ է։</div>
+<pre class="py" data-run><code>import numpy as np
+
+def trapezoid(f, a, b, n):
+    x = np.linspace(a, b, n + 1)
+    h = (b - a) / n
+    return h * (np.sum(f(x)) - (f(a) + f(b)) / 2)
+
+f = lambda x: x**2 * np.cos(x)
+exact = 2*np.sin(2) + 4*np.cos(2) - np.sin(1) + 2*np.cos(1)
+for n in [3, 2, 30, 300]:
+    T = trapezoid(f, -1, 2, n)
+    print(f"n = {n:3d}   h = {3 / n:.3f}   T_n = {T:.5f}   սխալանքը = {exact - T:.5f}")
+print("ճշգրիտ արժեքը =", round(exact, 5))</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $T_3\approx-0{,}02184$, (բ) $T_2\approx-0{,}51412$ (ճշգրիտ արժեքը՝ $I\approx0{,}39314$)</div>
+</div>
+</div>
+</details>
+
+<!-- SECTIONS-MORE -->
+
+      <nav class="pager" aria-label="Թեմաներ">
+        <a class="btn" href="splines.html">← Սպլայններ</a>
+        <a class="btn" href="index.html">Բոլոր թեմաները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասընթացի խնդիրների ցանկի հիման վրա։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>
