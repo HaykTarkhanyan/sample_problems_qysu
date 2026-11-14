@@ -17,7 +17,7 @@ need to answer the open ones.
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
 | **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
 | **Answered by the owner, 2026-11-14** (answers listed after A58) | A50, A51, A52, A53, A54, A55, A56, A57, A58 |
-| **Open** | none |
+| **Open** (integration and linear-systems pages, 2026-11-14) | A59, A60, A61, A62, A63, A64, A65, A66, A67, A68 |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
@@ -402,3 +402,59 @@ problem-solving session, that is wrong.
 - **A56:** answer "yes" first (P interpolates the data), then the remark that it is not the theorem's polynomial.
 - **A57:** «մեթոդի սխալանք». The owner added: for important terms also give the English term in brackets.
 - **A58:** «առաջադրանք 1» (written «Առաջադրանք 1 (PSS 1)»).
+
+## Integration and linear-systems pages (2026-11-14, from the builders and the two reviews)
+
+Both pages were written without lecture slides, so none of these terms comes from the lecturer. Full context:
+`numerical_methods/reviews/2026-11-14_integration_math_review.md` (points L1-L5 and the builder's doubts) and
+`numerical_methods/reviews/2026-11-14_linear_systems_math_review.md` (points D9-D18). The page keeps version (a)
+until answered. No guesses from me on these: they are term choices, where the model's ear has been unreliable.
+
+**A59 (open). Pivot** (the entry one divides by in Gaussian elimination; no glossary row).
+- a) «գլխավոր տարր» (page, also «գլխավոր տարրի ընտրություն» for partial pivoting)  b) «առանցքային տարր»
+
+**A60 (open). Forward / back substitution** (solving $Ly=b$ downwards, $Ux=y$ upwards; no glossary row).
+- a) «ուղիղ / հակադարձ տեղադրում» (page)  b) «ուղիղ / հակադարձ ընթացք»
+
+**A61 (open). Induced matrix norm** ($\|A\|=\max\|Ax\|/\|x\|$).
+- a) «մակածված նորմ» (page, by analogy with glossary row 480)  b) «օպերատորային նորմ» (glossary row 699, operator norm)
+
+**A62 (open). Leading principal minor** ($\Delta_k$, the determinant of the upper-left $k\times k$ block).
+- a) «անկյունային մինոր» (page)  b) «գլխավոր անկյունային մինոր»
+
+**A63 (open). Sylvester's criterion.**
+- a) «Սիլվեստրի հայտանիշ» (page)  b) «Սիլվեստրի չափանիշ»
+
+**A64 (open). "The method converges / diverges".** The page uses the verbs «զուգամիտում է» / «տարամիտում է»; the
+problem list writes «զուգամետ է» / «տարամետ է». The glossary has both the nouns (rows 204, 287) and the
+adjectives (rows 178, 207).
+- a) keep the verbs  b) the adjectives, as in the list
+
+**A65 (open). Symmetric nodes and formulas** (integration page: «համաչափ հանգույցներ», box «Համաչափության հնարք»,
+10 uses). Glossary row 960 gives both words for symmetry («համաչափություն, սիմետրիա»), row 959 has symmetric
+matrix = «սիմետրիկ մատրից», which the linear-systems page follows (6 uses); the problem list writes «սիմետրիկ».
+- a) «համաչափ» for nodes and formulas, «սիմետրիկ մատրից» for matrices (as now)  b) «սիմետրիկ» everywhere
+
+**A66 (open). Upper estimate of a derivative bound** ($K_2\le44$; integration page, twice).
+- a) «վերին գնահատական» (page)  b) «վերին եզր» (glossary row 1033, upper bound)
+
+**A67 (open). Single wordings on the linear-systems page:** (1) the answer of problem 15 «ճիշտ ստորին
+եռանկյունաձև մատրիցները», where «ճիշտ» is meant as "exactly those" and can be read as "correct"; (2)
+«դրականություն» as the name of the first norm axiom, next to «դրական որոշյալ» for matrices; (3) «ամենաշատը քանի
+անգամ կարող է $A$-ն «երկարացնել» վեկտորը»; (4) «Մատրիցի կառուցվածքը խնայում է աշխատանք»; (5) the mnemonic
+«$1$ թվանշանն ուղղաձիգ է, ինչպես սյունը».
+- For each: fine, or how would you say it?
+
+**A68 (open). Single wordings on the integration page:** (1) «սխալանքը փոքրանում է $h$ քայլի աստիճանի պես»;
+(2) «Ստացված $n$-ը երաշխիք է»; (3) «Գնահատականը երաշխիք է, և այն այստեղ շատ զգույշ է»; (4) «սեղանները չեն հետևում կորին»;
+(5) «Խնդիր 4-ի պես՝ բավական է...»; (6) the heading «Ավելին՝ որտեղի՞ց են օրթոգոնալությունը և արմատները»;
+(7) «որոշվում են միարժեքորեն»; (8) the reviewer's widget sentence «n-ը կրկնապատկելիս սխալանքն այստեղ մեծանում է
+մոտ 1,6 անգամ (n-ը դեռ փոքր է)։».
+- For each: fine, or how would you say it?
+
+Terms of the two pages with no glossary row, used consistently and not asked one by one: «Գաուսի մեթոդ»,
+«արտաքսում», «բազմապատկիչ», «տողերի տեղափոխություն», «Դուլիթլի / Կրաուտի ձև», «Խոլեսկու վերլուծություն» and
+«Յակոբիի մեթոդ» (both as in the list), «սպեկտրալ շառավիղ», «միավոր գունդ», «խիստ անկյունագծային գերիշխում» (as
+in the list); «ճշգրտության աստիճան» and «միջին ուղղանկյունների բանաձև» (both as in the list), «ընդհանրացված
+բանաձև», «անորոշ գործակիցների մեթոդ», «Գաուսի քառակուսեցման բանաձև», «Լեժանդրի բազմանդամ», «Բուլի բանաձև»,
+«Ռոդրիգեսի բանաձև», «Էրմիտի ինտերպոլացիա».
