@@ -1,0 +1,57 @@
+title = "Linear systems page (block E, problems 1-16) built in an agent worktree"
+date = "2026-11-14"
+time = "11:50"  # local, start of the agent session
+
+areas = [
+  "site/numerical (linear-systems.html, index.html card)",
+  "site/assets/js/num-linsys.js",
+  "numerical_methods/checks (linear_systems_check.py, linsys_widgets_check.mjs)",
+  "numerical_methods/README.md (status row)",
+]
+
+done = [
+  "Read the block from page images (Problems_ARM_2023.pdf p21-24 at 130 dpi), cross-checked every number against the text layer, and wrote all 16 statements to the gitignored logs/linear_systems_statements.md.",
+  "M1: intro (three key ideas, the 'no slides yet' sentence), Gaussian elimination with its operation count (theorem + proof + a counting Python cell + predict block), LU theory (Gauss = LU, Doolittle / Crout formulas, existence iff leading minors != 0, with proof), Cholesky theory (Sylvester's criterion, theorem with proof), problems 1-7, the elimination widget w-lu.",
+  "M2: norms theory (axioms, 1/2/inf/p norms, unit balls, 'norm or not' method box, induced norms, spectral radius) with w-balls and a predict block; problem 8 with the w-cand widget, problem 9 with a vertex-maximum Python check; Jacobi / Gauss-Seidel theory (convergence via ||T|| < 1 and rho(T) < 1, strict diagonal dominance with an infinity-norm proof for Gauss-Seidel) with w-iter and a predict block; problems 10-11.",
+  "M3: problems 12-16, #exam section (summary table, typical mistakes, self-check questions), index card, README row, this log.",
+  "Checks: linear_systems_check.py asserts every number (exact fractions for rational answers, scipy / numpy as the second computation, random tests for the general claims); linsys_widgets_check.mjs for the widget numerics; a throwaway mock-DOM smoke test (scratchpad) clicked every button, dragged every plot and moved the slider of the 4 widgets, rendered every widget TeX string with the vendored KaTeX: no exception, no NaN; it found two bugs (Jacobi array in w-iter, ordinal 1-րդ) that are fixed.",
+]
+
+pending = [
+  "No browser check (1280 / 390 px, both themes, console), no Pyodide click test of the 8 Python cells, no independent math review yet.",
+  "Pager: prev = splines.html, no next link; the main session wires the order with integration.html.",
+  "README 'D, E | not started' row left as it was (only the E row added after C), to keep the merge with the integration page small.",
+  "site/assets/search/numerical.js not rebuilt (generated, off limits).",
+]
+
+next = [
+  "Main session: browser check at 390 px (the 4x4 matrices and the aligned blocks are the width risks), Pyodide run of the cells, merge.",
+  "Independent math review of linear-systems.html (report in numerical_methods/reviews/).",
+  "Update the theory when the lecture slides for this topic exist.",
+]
+
+files = [
+  "site/numerical/linear-systems.html",
+  "site/assets/js/num-linsys.js",
+  "site/numerical/index.html",
+  "numerical_methods/checks/linear_systems_check.py",
+  "numerical_methods/checks/linsys_widgets_check.mjs",
+  "numerical_methods/README.md",
+]
+
+commits = [
+  "bfd6bbe M1: Gaussian elimination, LU, Cholesky, problems E1-E7",
+  "814d902 M2: norms, Jacobi / Gauss-Seidel theory, problems E8-E11",
+  "M3: problems E12-E16, exam section, index card, README row, this log",
+]
+
+notes = """
+Readings chosen: E8(դ) is printed as sum_{n=1}^{inf} x_i^4, read as sum_{i=1}^n x_i^4 (not a norm under any reading);
+E11(դ) names no method, solved with Jacobi (context of (գ)) and the Gauss-Seidel values given in the check box;
+E13 / E16 give no x(0) and no N, the page uses x(0) = 0 and shows several N; E3 / E4 ask for the Crout form.
+Terms with no glossary row: Gaussian elimination (Գաուսի մեթոդ), Jacobi method (Յակոբիի մեթոդ, as in the list),
+Cholesky decomposition (Խոլեսկու վերլուծություն, as in the list), pivot (գլխավոր տարր), forward / back substitution
+(ուղիղ / հակադարձ տեղադրում), forward elimination (արտաքսում), leading principal minor (անկյունային մինոր),
+Sylvester's criterion (Սիլվեստրի հայտանիշ), induced norm (մակածված նորմ, by analogy with row 480), spectral radius
+(սպեկտրալ շառավիղ), unit ball (միավոր գունդ, rows 1026 + 61), Doolittle / Crout form (Դուլիթլի / Կրաուտի ձև).
+"""
