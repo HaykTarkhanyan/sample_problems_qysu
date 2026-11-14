@@ -56,7 +56,7 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A52 | "overflow" and "underflow" stay in English | Each explained once in Armenian; «overflow է տալիս», «overflow-ը». No «գերլցում». |
 | A53 | «ավագ անդամի գործակից» is fine | Leading coefficient on the interpolation page stays as written. |
 | A54 | «կրկնակի արմատ» is fine | Double root on the nonlinear page stays as written. |
-| A55 | «-ը» before a formula | «$x_n$-ը $r$ արմատի», «$S$-ը $f$-ի», «բազմանդամը $x$ կետում»: a following formula counts as a pause, whatever its spoken name starts with. Lint hints `article-after-symbol`, `article-n-before-formula`. |
+| A55 | «-ը» before a formula | «$x_n$-ը $r$ արմատի», «$S$-ը $f$-ի», «բազմանդամը $x$ կետում»: a following formula counts as a pause, whatever its spoken name starts with. Model's note, not part of the owner's answer: the question was only about words and symbol names that end in a consonant; after a name that ends in a vowel the article stays «-ն» as in rule A1, also before a formula («$k$-ն $f$-ի», «$\ell_k$-ն $x_j$ կետում»; a page builder read A55 as covering these too on 2026-11-14). Lint hints `article-after-symbol`, `article-n-before-formula`. |
 | A56 | interpolation problem 1ա: "yes" first, then the remark | P interpolates the data; it is not the degree-at-most-1 polynomial of the uniqueness theorem. |
 | A57 | truncation error = «մեթոդի սխալանք»; important terms also get the English term in brackets | «մեթոդի սխալանք (truncation error)». Applied to the bold defined terms of the four numerical pages. |
 | A58 | PSS 1 = «առաջադրանք 1» | Written «Առաջադրանք 1 (PSS 1)»; not «տնային աշխատանք». |

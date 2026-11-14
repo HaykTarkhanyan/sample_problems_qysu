@@ -19,7 +19,9 @@ Newest first. Superseded entries stay, marked as such.
   copy of the splines page (missing image, script error, an 18-term formula, a cell that raises) failed on all
   four, so the gate can fail. `--python` ran the 25 cells of two pages in 34 s. The width check is
   safe to run on Linux: only 12 display formulas on those pages have Armenian text inside the formula (the one
-  thing whose width depends on system fonts), and the tightest of them has 35 px of room.
+  thing whose width depends on system fonts), and the tightest of them has 35 px of room. First CI run (Pages
+  run 43588704986): all 37 pages passed in 36 s, the whole build job took 47 s. The font effect is real: on the
+  Linux runner `discrete/p1-sets.html` has 9 formulas that scroll sideways, on Windows 8.
 - **Alternatives rejected** Puppeteer (same job, but it downloads its own Chrome by default, and the repo's
   manual browser checks already run on Playwright); `@playwright/test` with its runner and bundled browsers
   (a test framework for one loop over pages, and `playwright install` downloads a browser on every CI run:
