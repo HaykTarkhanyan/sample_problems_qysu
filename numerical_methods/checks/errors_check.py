@@ -1,6 +1,7 @@
 """Recompute every number on site/numerical/errors.html (problem list block A, problems 1-15:
 machine numbers, chopping and rounding, floating-point arithmetic, absolute and relative error,
-cancellation, error bounds).
+cancellation, error bounds; plus the 7 problems of the course's PSS 1: sources of error, 3- and
+2-digit arithmetic, cancellation, abs/rel error, Taylor remainder of e^x, stable softmax, E_n = sum 1/k!).
 
 Run from the repo root (uses the animations/ environment, numpy only):
     uv run --project animations python numerical_methods/checks/errors_check.py
@@ -609,6 +610,273 @@ assert fl(Fr("0.12345"), 3, "round") == Fr("0.123") and fl(fl(Fr("0.12345"), 4, 
 assert fl(Fr("0.12345"), 4, "round") == Fr("0.1235")
 log.info("A15: (a) a* = 1.2, b* = 3.6 gives 4.32, abserr 0.69 > 0.5 (largest possible); a* = 1, b* = 3 gives 0.63; "
          "(b) a* = 1.1, b* = 2.2 gives 2.42, relerr 0.21 > 0.1 (largest possible); 0.9 * 1.8 gives 0.19")
+
+# ================================================================ PSS 1 (the course's first problem set)
+# ---------------------------------------------------------------- PSS 1.1: the clock example under "Patriot"
+# The lecture (2. Error Analysis, slide 15) only names the Patriot failure and links to a description. The three
+# inputs below (23 bits, 100 hours, 1676 m/s) are the page's stated assumptions, not lecture facts; everything
+# else on the page is derived from them here.
+bits = "00011001100110011001100"                      # 0.1 chopped after 23 binary digits
+stored = Fr(int(bits, 2), 2 ** 23)
+assert len(bits) == 23 and stored == Fr(math.floor(Fr(2 ** 23, 10)), 2 ** 23)
+assert stored < Fr(1, 10) < stored + Fr(1, 2 ** 23)    # chopping keeps the lower neighbour
+err_p = Fr(1, 10) - stored
+assert err_p == Fr(1, 10485760) and 10485760 == 10 * 2 ** 20 and f"{float(err_p):.1e}" == "9.5e-08"
+assert err_p / Fr(1, 10) == Fr(1, 2 ** 20) and f"{2.0 ** -20:.1e}" == "9.5e-07"
+ticks = 100 * 3600 * 10
+assert ticks == 3_600_000 == 3.6e6
+assert f"{float(ticks * err_p):.2f}" == "0.34" and round(float(ticks * err_p) * 1676) == 575
+assert round(float(ticks * err_p), 4) == 0.3433                         # as printed by the Python block
+assert 1.0 + eps / 2 == 1.0                                              # the table: 1 (+) eps/2 = 1
+
+
+def partial_sum_e(n):
+    """E_n = sum 1/k!, k = 0..n, in double, term by term as in the page's PSS 1.7 program."""
+    total, term = 0.0, 1.0
+    for k in range(n + 1):
+        if k > 0:
+            term /= k
+        total += term
+    return total
+
+
+stall = [abs(math.e - partial_sum_e(n)) for n in range(1, 21)]
+assert stall[15] > stall[16] == stall[17] == stall[19]                   # the double error stops at n = 17
+log.info(f"PSS 1.1: 0.1 chopped to 23 bits, error 1/10485760 = {float(err_p):.3e} (relative 2^-20); "
+         f"100 h = {ticks} tenths -> {float(ticks * err_p):.4f} s -> {float(ticks * err_p) * 1676:.0f} m at 1676 m/s")
+
+# ---------------------------------------------------------------- PSS 1.2 (a): 3 digits, chopping
+a, b, c = Fr("0.452"), Fr("0.00487"), Fr("0.00513")
+assert all(fl(v, 3, "chop") == v for v in (a, b, c)) and all(fl(v, 2, "round") == v for v in (Fr("0.11"), Fr("0.14")))
+assert b + c == Fr("0.01") and mant(Fr("0.01"), 3) == (100, -1)
+bc = mop(b, c, "+", 3, "chop")
+left = mop(a, bc, "+", 3, "chop")
+assert bc == Fr("0.01") and a + bc == Fr("0.462") and left == Fr("0.462")
+ab_ = mop(a, b, "+", 3, "chop")
+right = mop(ab_, c, "+", 3, "chop")
+assert a + b == Fr("0.45687") and ab_ == Fr("0.456") and ab_ + c == Fr("0.46113") and right == Fr("0.461")
+assert left != right and a + b + c == Fr("0.462") == left
+assert (a + b) - ab_ == Fr("0.00087") and (ab_ + c) - right == Fr("0.00013")
+assert Fr("0.00087") + Fr("0.00013") == Fr("0.001") == left - right
+assert dec_op(dec_op("0.452", "0.00487", "+", 3, "chop"), "0.00513", "+", 3, "chop") == Fr("0.461")
+assert dec_op("0.452", dec_op("0.00487", "0.00513", "+", 3, "chop"), "+", 3, "chop") == Fr("0.462")
+# with rounding instead of chopping the two orders agree here
+ab_r = mop(a, b, "+", 3, "round")
+assert ab_r == Fr("0.457") and ab_r + c == Fr("0.46213") and mop(ab_r, c, "+", 3, "round") == Fr("0.462")
+assert mop(a, mop(b, c, "+", 3, "round"), "+", 3, "round") == Fr("0.462")
+# ---------------------------------------------------------------- PSS 1.2 (b): 2 digits, rounding
+a, b, c = Fr("0.11"), Fr("0.11"), Fr("0.14")
+s_bc = mop(b, c, "+", 2)
+assert b + c == Fr("0.25") and s_bc == Fr("0.25")
+assert a * s_bc == Fr("0.0275") and mant(Fr("0.0275"), 3) == (275, -1)
+lhs = mop(a, s_bc, "*", 2)
+p_ab, p_ac = mop(a, b, "*", 2), mop(a, c, "*", 2)
+rhs = mop(p_ab, p_ac, "+", 2)
+assert lhs == Fr("0.028") and a * b == Fr("0.0121") and p_ab == Fr("0.012") and a * c == Fr("0.0154") and p_ac == Fr("0.015")
+assert p_ab + p_ac == Fr("0.027") and rhs == Fr("0.027") and lhs != rhs
+assert dec_op("0.11", dec_op("0.11", "0.14", "+", 2), "*", 2) == Fr("0.028")
+assert dec_op(dec_op("0.11", "0.11", "*", 2), dec_op("0.11", "0.14", "*", 2), "+", 2) == Fr("0.027")
+exact_d = a * (b + c)
+assert exact_d == Fr("0.0275") == (Fr("0.027") + Fr("0.028")) / 2
+assert abserr(exact_d, lhs) == abserr(exact_d, rhs) == Fr("0.0005")
+assert relerr(exact_d, lhs) == relerr(exact_d, rhs) == Fr(1, 55) and f"{100 / 55:.1f}" == "1.8"
+assert a * b - p_ab == Fr("0.0001") and a * c - p_ac == Fr("0.0004")
+log.info(f"PSS 1.2: (a) chop: b+c -> 0.0100, a+(b+c) -> 0.462; a+b -> 0.456, +c -> 0.461 (exact 0.462; rounding gives "
+         f"0.462 both ways); (b) round: a(b+c) -> 0.028, ab + ac -> 0.012 + 0.015 = 0.027, exact 0.0275, relerr 1/55")
+
+# ---------------------------------------------------------------- PSS 1.3
+ctx40 = decimal.Context(prec=40)
+sq12 = ctx40.sqrt(D(10 ** 12 + 1))
+assert sq12.quantize(D("1e-7")) == D("1000000.0000005") and f"{float(sq12 - 10 ** 6):.0e}" == "5e-07"
+
+
+def rel_to(v, exact):
+    return float(abs(D(v) - exact) / exact)
+
+
+rel_sqrt = {}
+for x in (1e4, 1e8, 1e12, 1e16):
+    naive = math.sqrt(x + 1) - math.sqrt(x)
+    new = 1 / (math.sqrt(x + 1) + math.sqrt(x))
+    exact = ctx40.divide(1, ctx40.sqrt(D(x) + 1) + ctx40.sqrt(D(x)))
+    rel_sqrt[x] = rel_to(naive, exact)
+    assert rel_to(new, exact) < 1e-15                    # "below 1e-15 in all cases"
+    close(float(exact), 1 / (2 * math.sqrt(x)), 1e-3)    # the difference is about 1/(2 sqrt x)
+assert f"{rel_sqrt[1e8]:.1e}" == "1.4e-08" and f"{rel_sqrt[1e12]:.1e}" == "7.6e-06"
+assert math.sqrt(1e16 + 1) - math.sqrt(1e16) == 0.0 and 1e16 + 1 == 1e16
+for x in (0.5, 3.0, 40.0):
+    close(math.sqrt(x + 1) - math.sqrt(x), 1 / (math.sqrt(x + 1) + math.sqrt(x)), 1e-12)
+    close(math.log(x + 1) - math.log(x), math.log1p(1 / x), 1e-12)
+    close(1 - math.cos(x), 2 * math.sin(x / 2) ** 2, 1e-12)
+    close(1 - math.cos(x), math.sin(x) ** 2 / (1 + math.cos(x)), 1e-12)
+assert 1 - math.cos(1e-8) == 0.0                         # the 6b example with the sign flipped
+x = 1e12
+ex_ln = ctx40.ln(ctx40.divide(D(x) + 1, D(x)))
+r_naive, r_lit, r_l1p = rel_to(math.log(x + 1) - math.log(x), ex_ln), rel_to(math.log(1 + 1 / x), ex_ln), rel_to(math.log1p(1 / x), ex_ln)
+assert f"{r_naive:.1e}" == "1.9e-03" and f"{r_lit:.1e}" == "8.9e-05" and r_l1p < 1e-16
+for x in (1e4, 1e8, 1e16):
+    assert rel_to(math.log1p(1 / x), ctx40.ln(ctx40.divide(D(x) + 1, D(x)))) < 1e-16
+# "below 1e-16" holds for the four x of the page's block only, not in general (1/x is itself rounded): the page
+# says "of the order of 1e-16 in general". Example: x = 49 gives 1.65e-16.
+r49 = rel_to(math.log1p(1 / 49.0), ctx40.ln(ctx40.divide(D(50), D(49))))
+assert 1e-16 < r49 < 5e-16
+assert math.log(1e16 + 1) - math.log(1e16) == 0.0 and math.log(1 + 1 / 1e16) == 0.0
+assert math.log1p(1e-16) == 1e-16
+u = Fr(1, 10 ** 6)                                       # the series ln(1+u) = u - u^2/2 + u^3/3 - ...
+close(math.log1p(1e-6), float(u - u ** 2 / 2 + u ** 3 / 3), 1e-15)
+log.info(f"PSS 1.3: sqrt naive relerr {rel_sqrt[1e8]:.1e} (1e8), {rel_sqrt[1e12]:.1e} (1e12), 0 at 1e16; ln at 1e12: naive "
+         f"{r_naive:.1e}, log(1+1/x) {r_lit:.1e}, log1p {r_l1p:.1e}")
+
+# ---------------------------------------------------------------- PSS 1.4
+assert 500 * Fr("0.005") == Fr("2.5") and Fr(5, 10 ** 3) == Fr("0.005")
+assert relerr(500, Fr("497.5")) == Fr("0.005") == relerr(500, Fr("502.5")) and relerr(500, Fr("502.51")) > Fr("0.005")
+assert f"{500 / 1.005:.2f}" == "497.51" and f"{500 / 0.995:.2f}" == "502.51"
+assert abs(500 - Fr(500) / Fr("1.005")) == Fr("0.005") * Fr(500) / Fr("1.005")   # the wrong interval: |500 - x*| = 0.005 x*
+E40 = ctx40.exp(D(1))
+assert str(E40).startswith("2.718281828") and str(E40 - D("2.718")).startswith("0.000281828")
+ab4e, re4e = E40 - D("2.718"), (E40 - D("2.718")) / E40
+assert f"{ab4e:.3e}" == "2.818e-4" and f"{re4e:.3e}" == "1.037e-4"
+E_fr = Fr(str(E40))
+assert norm_exp(E_fr) == 1 and fl(E_fr, 4, "round") == fl(E_fr, 4, "chop") == Fr("2.718")
+assert math.floor(E_fr * 10 ** 4) % 10 == 2             # d5 = 2 < 5
+assert ab4e < D("0.0005") and re4e < D("0.0005") and round(D("0.0005") / re4e) == 5
+# exponent 1, t = 4: the absolute bound 1/2 10^(exponent - t) and the relative bound 1/2 10^(1 - t) are both 1/2 10^-3
+assert Fr(1, 2) * Fr(10) ** (norm_exp(E_fr) - 4) == Fr(1, 2) * Fr(10) ** (1 - 4) == Fr("0.0005")
+assert abserr(E_fr, fl(E_fr, 4, "round")) <= Fr("0.0005") and relerr(E_fr, fl(E_fr, 4, "round")) <= Fr("0.0005")
+assert 1.7 < D("0.0005") / ab4e < 1.8                   # "almost 2 times" below the absolute bound
+assert 4.8 < D("0.0005") / re4e < 4.9                   # "about 5 times" below the relative bound
+assert Fr("0.01") / 1000 == Fr(1, 10 ** 5) and Fr("0.01") / Fr("0.1") == Fr("0.1")
+assert (Fr("0.01") / Fr("0.1")) / (Fr("0.01") / 1000) == 10 ** 4 and 100 * Fr(1, 10 ** 5) == Fr("0.001")
+log.info(f"PSS 1.4: x* in [497.5, 502.5]; e - 2.718 = {ab4e:.4e}, relerr {re4e:.4e}; 0.01/1000 = 1e-5, 0.01/0.1 = 0.1")
+
+# ---------------------------------------------------------------- Taylor section (theory before PSS 1.5)
+f4_2 = sum(Fr(2 ** k, math.factorial(k)) for k in range(5))
+assert f4_2 == 7 == 1 + 2 + 2 + Fr(4, 3) + Fr(2, 3)
+assert Fr(2 ** 5, math.factorial(5)) == Fr(4, 15)
+E2 = ctx40.exp(D(2))
+assert f"{4 * E2 / 15:.2f}" == "1.97" and f"{E2 - 7:.3f}" == "0.389" and E2 - 7 < 4 * E2 / 15
+for n in range(1, 21):                                   # 1/(n+1)! < e - E_n < e/(n+1)!  (exact E_n, 40-digit e)
+    En_exact = sum(Fr(1, math.factorial(k)) for k in range(n + 1))
+    gap = E40 - D(En_exact.numerator) / D(En_exact.denominator)
+    fact = D(math.factorial(n + 1))
+    assert 1 / fact < gap < E40 / fact
+
+# ---------------------------------------------------------------- PSS 1.5: e^x ~ P3(x) on [-0.25, 0.25]
+P3 = lambda x: 1 + x + x * x / 2 + x * x * x / 6
+assert math.factorial(4) == 24 and math.factorial(2) == 2 and math.factorial(3) == 6
+e01, e025, em025 = ctx40.exp(D("0.1")), ctx40.exp(D("0.25")), ctx40.exp(D("-0.25"))
+assert f"{e01:.5f}" == "1.10517" and str(e01).startswith("1.1051709") and f"{e025:.5f}" == "1.28403"
+# (a)
+P3_01 = P3(Fr(1, 10))
+assert P3_01 == 1 + Fr(1, 10) + Fr(5, 1000) + Fr(1, 6000) and Fr(1, 6000) == Fr("0.0001") + Fr(1, 15000)   # 0.0001(6)
+assert P3_01 == Fr("1.1051") + Fr(1, 15000) and Fr(1, 15000) * 10 ** 5 == Fr(20, 3)        # 1.1051666... = 1.1051(6)
+bound_a = e01 * D("0.1") ** 4 / 24
+actual_a = e01 - D(P3_01.numerator) / D(P3_01.denominator)
+assert f"{bound_a:.3e}" == "4.605e-6" and bound_a < D("4.61e-6")
+assert f"{actual_a:.3e}" == "4.251e-6" and D("1e-4") / 24 < actual_a < bound_a and f"{D('1e-4') / 24:.3e}" == "4.167e-6"
+# (b)
+assert Fr("0.25") ** 4 == Fr(1, 256) and 24 * 256 == 6144
+bound_b = e025 / 6144
+assert bound_b < D("2.09e-4") and f"{bound_b:.4e}" == "2.0899e-4"
+assert em025 > D("0.75") and e025 < Fr(4, 3) and Fr(4, 3) / 6144 == Fr(1, 4608) and f"{1 / 4608:.3g}" == "0.000217"
+g = lambda x: ctx40.exp(D(x)) - (1 + D(x) + D(x) ** 2 / 2 + D(x) ** 3 / 6)
+assert f"{g('0.25'):.4e}" == "1.7125e-4" and f"{g('-0.25'):.4e}" == "1.5495e-4" and g("-0.25") < g("0.25") < bound_b
+grid = [D(k) / 1000 for k in range(-250, 251)]
+gv = [g(x) for x in grid]
+assert all(gv[i] > gv[i + 1] for i in range(250)) and all(gv[i] < gv[i + 1] for i in range(250, 500))   # down, then up
+assert max(gv) == g("0.25") and min(gv) == 0
+for x in (-0.25, -0.1, 0.07, 0.25):                      # g'(x) = e^x - P2(x) has the sign of x
+    assert (math.exp(x) - (1 + x + x * x / 2) > 0) == (x > 0)
+# (c)
+assert 2 * Fr("0.25") ** 5 / 5 == Fr(1, 2560) and 24 * 2560 == 61440
+bound_c = e025 / 61440
+assert bound_c < D("2.09e-5") and f"{bound_c:.4e}" == "2.0899e-5"
+crude_c = e025 / (2 * 6144)
+assert f"{crude_c:.2e}" == "1.04e-4" and abs(crude_c / bound_c - 5) < D("1e-20") and Fr(61440, 2 * 6144) == 5
+I_e = e025 - em025
+I_P = Fr(1, 2) + 2 * Fr("0.25") ** 3 / 6
+assert f"{I_e:.7f}" == "0.5052246" and I_P == Fr(97, 192) == Fr("0.505208") + Fr(1, 3 * 10 ** 6)
+assert I_P == 2 * (Fr("0.25") + Fr("0.25") ** 3 / 6)    # odd terms integrate to 0
+actual_c = I_e - D(97) / D(192)
+assert f"{actual_c:.3e}" == "1.630e-5" and 0 < actual_c < bound_c
+log.info(f"PSS 1.5: (a) bound {bound_a:.4e}, actual {actual_a:.4e}; (b) bound e^0.25/6144 = {bound_b:.4e}, actual max "
+         f"g(0.25) = {g('0.25'):.4e} (g(-0.25) = {g('-0.25'):.4e}); (c) bound e^0.25/61440 = {bound_c:.4e}, actual {actual_c:.4e}")
+
+# ---------------------------------------------------------------- PSS 1.6: softmax
+dmax = np.finfo(np.float64).max
+# the threshold is ln(max double) = 709.7827...; the page rounds it up to 709.783, so "x > 709.783 overflows" is true
+# (with 709.78 it would be false for 709.78 < x <= 709.7827: exp(709.782) is finite)
+assert f"{math.log(dmax):.3f}" == "709.783" and math.log(dmax) < 709.783
+assert math.isfinite(math.exp(709.78)) and math.isfinite(math.exp(709.782))
+for big in (709.783, 709.79, 1000.0):
+    try:
+        math.exp(big)
+        raise AssertionError(f"math.exp({big}) did not overflow")
+    except OverflowError:
+        pass
+with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+    assert np.exp(1000.0) == np.inf and np.exp(-1000.0) == 0.0 and math.exp(-746) == 0.0 and math.exp(-745) > 0
+    xs6 = np.array([1000.0, 1001.0, 999.0])
+    naive6 = np.exp(xs6) / np.exp(xs6).sum()
+    assert np.isnan(naive6).all()
+    neg6 = np.array([-1000.0, -1001.0, -999.0])
+    assert np.isnan(np.exp(neg6) / np.exp(neg6).sum()).all()                          # 0/0
+    pair = np.array([0.0, 1000.0])
+    assert np.isinf(np.exp(pair - pair.min())).any()                                   # shifting by the minimum fails
+stable6 = np.exp(xs6 - xs6.max()) / np.exp(xs6 - xs6.max()).sum()
+assert xs6.max() == 1001 and list(xs6 - xs6.max()) == [-1.0, 0.0, -2.0]
+S6 = 1 + ctx40.exp(D(-1)) + ctx40.exp(D(-2))
+p6 = [ctx40.exp(D(-1)) / S6, 1 / S6, ctx40.exp(D(-2)) / S6]
+assert f"{S6:.5f}" == "1.50321" and [f"{p:.5f}" for p in p6] == ["0.24473", "0.66524", "0.09003"]
+assert [f"{p:.2f}" for p in p6] == ["0.24", "0.67", "0.09"] and abs(sum(p6) - 1) < D("1e-25")
+assert p6[1] > p6[0] > p6[2] and sum(round(p, 5) for p in p6) == 1
+for got, want in zip(stable6, p6):
+    assert abs(D(float(got)) - want) < D("1e-15")
+ee = E40
+assert abs(p6[0] - ee / (ee * ee + ee + 1)) < D("1e-25") and abs(p6[1] - ee * ee / (ee * ee + ee + 1)) < D("1e-25")
+assert abs(p6[2] - 1 / (ee * ee + ee + 1)) < D("1e-25")
+x120 = np.array([1.0, 2.0, 0.0])                         # same probabilities: only the differences matter
+assert np.allclose(np.exp(x120) / np.exp(x120).sum(), stable6, rtol=1e-14)
+for _ in range(200):                                    # the shifted denominator lies in [1, n]
+    v = np.array([random.uniform(-2000, 2000) for _ in range(random.randint(1, 8))])
+    den = np.exp(v - v.max()).sum()
+    assert 1 <= den <= len(v)
+log.info(f"PSS 1.6: ln(max double) = {math.log(dmax):.4f}; naive softmax of (1000, 1001, 999) -> nan; stable -> "
+         f"{[f'{float(p):.5f}' for p in p6]}, S = {S6:.5f}")
+
+# ---------------------------------------------------------------- PSS 1.7: E_n = sum 1/k!
+tab = []
+for n in range(1, 21):
+    En = partial_sum_e(n)
+    ae = abs(math.e - En)
+    tab.append((n, En, ae, ae / abs(math.e)))
+smallest = next(n for n, _, _, re_ in tab if re_ < 1e-10)
+assert smallest == 12 and f"{tab[11][3]:.3e}" == "6.360e-11" and f"{tab[10][3]:.3e}" == "8.316e-10"
+assert f"{tab[11][3]:.2e}" == "6.36e-11" and f"{tab[10][3]:.2e}" == "8.32e-10"
+f12, f13 = math.factorial(12), math.factorial(13)
+assert f"{1 / (f12 * math.e):.1e}" == "7.7e-10" and 1 / (f12 * math.e) > 1e-10
+assert f"{1 / (f13 * math.e):.1e}" == "5.9e-11" and f"{1 / f13:.1e}" == "1.6e-10" and 1 / (f13 * math.e) < 1e-10 < 1 / f13
+assert f"{tab[15][2]:.2e}" == "2.22e-15" and all(f"{row[2]:.2e}" == "4.44e-16" for row in tab[16:])
+assert all(f"{row[3]:.2e}" == "1.63e-16" for row in tab[16:]) and tab[16][1] == tab[19][1] != tab[15][1]
+assert tab[16][1] == math.e + np.spacing(math.e)                          # E_17 is one double above math.e
+En20 = sum(Fr(1, math.factorial(k)) for k in range(21))
+method20 = E40 - D(En20.numerator) / D(En20.denominator)
+assert f"{method20:.2e}" == "2.05e-20"
+assert np.spacing(math.e) == 2.0 ** -51 and f"{2.0 ** -51:.2e}" == "4.44e-16" and f"{2.0 ** -52:.2e}" == "2.22e-16"
+assert f"{1 / math.factorial(18):.2e}" == "1.56e-16" and 1 / math.factorial(18) < 2.0 ** -52 < 1 / math.factorial(17)
+assert f"{1 / math.factorial(18):.1e}" == "1.6e-16" and f"{2.0 ** -51:.1e}" == "4.4e-16"
+assert tab[16][1] + 1 / math.factorial(18) == tab[16][1]                  # the next term is absorbed
+assert f"{abs(D(math.e) - E40):.1e}" == "1.4e-16"                         # math.e is not e
+# the predict block: in float32 (about 7 digits) the sum stops changing near n = 10
+s32, t32, sums32 = np.float32(0), np.float32(1), []
+for k in range(16):
+    if k > 0:
+        t32 = np.float32(t32 / np.float32(k))
+    s32 = np.float32(s32 + t32)
+    sums32.append(s32)
+assert sums32[9] != sums32[10] == sums32[15] and round(24 * math.log10(2)) == 7
+log.info(f"PSS 1.7: smallest n with relerr < 1e-10: {smallest} ({tab[11][3]:.3e}; n = 11: {tab[10][3]:.3e}); error stops at "
+         f"{tab[16][2]:.3e} from n = 17 (method error at n = 20: {method20:.3e}); float32 stops changing at n = 10")
 
 # ---------------------------------------------------------------- predict blocks and the summary
 assert Fr(10) ** (1 - 5) == Fr(1, 10 ** 4) and Fr(10) ** (1 - 5) / 2 == Fr(5, 10 ** 5)
