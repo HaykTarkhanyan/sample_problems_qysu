@@ -52,5 +52,12 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A49 | four phrasings on the splines page are fine as written | «$|f''|$-ն աճում է $t$-ից», «$\Phi$-ն ողորկ ֆունկցիա է գործակիցներից», «ուղիղ վերևի բանաձևերով», «ինքնաբերաբար» (= holds automatically). The model had doubted all four. |
 | A50 | base-10 number system = «տասական համակարգ» (2026-11-14) | As in the lecturer's problem list. «տասնորդական» stays for decimal fractions and digits. Applied on the errors page. |
 | - | all solutions may be published, including the sub-part that overlaps the current homework (2026-11-14) | "its fully okay to publish all the solutions". |
-| - | A51-A56 are open: asked on 2026-11-14, answer "ask later" | See `QUESTIONS_FOR_NATIVE_SPEAKER.md`. Do not decide them by ear. |
+| A51 | chopping = «կտրտում» (2026-11-14) | The owner's own word. «կտրտման», «կտրտելիս», «կտրտվում»; not «կտրում», not «հատում». Applied on the errors page and its widgets. |
+| A52 | "overflow" and "underflow" stay in English | Each explained once in Armenian; «overflow է տալիս», «overflow-ը». No «գերլցում». |
+| A53 | «ավագ անդամի գործակից» is fine | Leading coefficient on the interpolation page stays as written. |
+| A54 | «կրկնակի արմատ» is fine | Double root on the nonlinear page stays as written. |
+| A55 | «-ը» before a formula | «$x_n$-ը $r$ արմատի», «$S$-ը $f$-ի», «բազմանդամը $x$ կետում»: a following formula counts as a pause, whatever its spoken name starts with. Lint hints `article-after-symbol`, `article-n-before-formula`. |
+| A56 | interpolation problem 1ա: "yes" first, then the remark | P interpolates the data; it is not the degree-at-most-1 polynomial of the uniqueness theorem. |
+| A57 | truncation error = «մեթոդի սխալանք»; important terms also get the English term in brackets | «մեթոդի սխալանք (truncation error)». Applied to the bold defined terms of the four numerical pages. |
+| A58 | PSS 1 = «առաջադրանք 1» | Written «Առաջադրանք 1 (PSS 1)»; not «տնային աշխատանք». |
 | - | discrete sweep: "not now" (asked again 2026-11-13) | The 7 discrete sheets and their pages stay as they are; new finds go to DEFERRED_TODO. |

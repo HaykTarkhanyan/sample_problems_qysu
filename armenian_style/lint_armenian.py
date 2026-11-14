@@ -45,7 +45,9 @@ STYLE hints (--style; frequency/LLM-signature patterns, need a human decision):
   Committee «Իրականացնել, կատարել, անել»), the mark after a sentence opener («Հետևաբար,» «Վերջապես,»
   «Մյուս կողմից,» «Մասնավորապես,» with a comma, «Այսպիսով՝» with ՝; owner A16, A41), the article after
   an inline formula judged by the spoken name of its last symbol (article-after-symbol: $k$-ը -> $k$-ն,
-  $y$-ն բաժանում -> $y$-ը բաժանում; Latin and Greek letters, digits, primes; GUIDE A1b), and per-file
+  $y$-ն բաժանում -> $y$-ը բաժանում; Latin and Greek letters, digits, primes; GUIDE A1b), the article -ն
+  right before a formula, which counts as a pause (article-n-before-formula, and article-after-symbol
+  for a symbol before a formula; owner A55), and per-file
   density of «Ուստի» / «հենց» / sentence-initial «Սա».
 """
 import re
@@ -68,12 +70,10 @@ NATURAL_N = {"մանրամասն", "ինքն", "երբեմն", "ուրեմն", "
 N_BEFORE_YEO = re.compile(rf"(?<![{ARM}])([{ARM}]*[{CONS_BEFORE_N}]ն)[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
 MATH_N_BEFORE_YEO = re.compile(rf"(?:\$([^$]{{1,24}})\$|\\\((.{{1,24}}?)\\\))-ն[  ~]+(և|[Եե][{ARM}]*|[Ոո](?!ւ)[{ARM}]*)")
 LATIN_CONS_NAMES = set("fhlmnrsxyzFHLMNRSXYZ")  # էֆ հաշ էլ էմ էն էռ էս իքս իգրեկ զետ (h = հաշ: owner A42)
-LATIN_VOWEL_START = set("afilmnorsuxyAFILMNORSUXY")  # names that START with a vowel sound (e left out: unsure)
 GREEK_CONS_NAMES = {"varepsilon", "epsilon"}         # էպսիլոն
 GREEK_VOWEL_NAMES = {"alpha", "beta", "gamma", "delta", "eta", "theta", "vartheta", "lambda", "mu", "nu", "xi", "pi",
                      "rho", "sigma", "tau", "phi", "varphi", "chi", "psi", "omega", "Gamma", "Delta", "Theta",
                      "Lambda", "Xi", "Pi", "Sigma", "Phi", "Psi", "Omega"}
-GREEK_VOWEL_START = {"alpha", "varepsilon", "epsilon", "eta", "omega", "Omega"}
 MATH_WRAP = r"\\(?:mathbf|mathrm|mathit|mathcal|mathbb|bar|hat|tilde|overline|widehat)\{([^{}]*)\}"
 # adjectives / adverbs that must be negated with «ոչ», not glued «չ» (closed list, extend with care)
 CHE_ADJ = ("լավ վատ դատարկ զրոյական բացասական դրական մեծ փոքր հավասար ճիշտ սխալ վերջավոր անվերջ կենտ զույգ "
@@ -197,8 +197,7 @@ def symbol_name_ends_in_consonant(tok):
 
 def sound_after(rest):
     """What follows an article in the same line: 'vowel', 'cons', 'pause', or None (unknown, e.g. end of
-    line). Skips tags, emphasis commands and opening quotes; reads a following formula by the spoken
-    name of its first symbol."""
+    line). Skips tags, emphasis commands and opening quotes. A following formula counts as a pause."""
     r = re.sub(r"<[^>]+>|\\(?:emph|textbf|textit|text)\{|[«(\[{]", " ", rest)
     if re.match(r"\s*[,.;:)։՝]", r):
         return "pause"
@@ -209,19 +208,20 @@ def sound_after(rest):
         if re.match(rf"{CLEAR_VOWEL_START}|[Ոո]վ(?:քեր)?(?![{ARM}])|ես(?![{ARM}])", r):
             return "vowel"
         return "cons"
-    m = re.match(r"\$\s*(?:" + MATH_WRAP + r"|\\([A-Za-z]+)|([A-Za-z])|(\d+))", r)
-    if not m:
-        return None
-    inner, greek, latin, num = m.groups()
-    if inner:
-        latin = inner[:1] if inner[:1].isalpha() else None
-    if greek:
-        return "vowel" if greek in GREEK_VOWEL_START else "cons" if greek in GREEK_VOWEL_NAMES else None
-    if latin:
-        return None if latin in "eE" else "vowel" if latin in LATIN_VOWEL_START else "cons"
-    if num:
-        return "vowel" if num[0] in "89" and not (len(num) == 2 and num[0] == "1") else "cons"
+    if r.startswith("$") or r.startswith("\\("):
+        return "pause"  # a following formula counts as a pause, whatever its spoken name starts with (owner A55)
     return None
+
+
+def article_n_before_formula_hits(raw):
+    """Style hint: a consonant-final word with the article -n right before an inline formula
+    (owner, 2026-11-14, A55: the formula counts as a pause, so the article is the schwa form)."""
+    hits = []
+    for m in re.finditer(rf"(?<![{ARM}])([{ARM}]*[{CONS_BEFORE_N}]ն)[  ~]+(?:\$|\\\()", raw):
+        if m.group(1).lower() in NATURAL_N:
+            continue
+        hits.append(f"{m.group(1)} $...  (-> -ը)")
+    return hits
 
 
 def article_after_symbol_hits(raw):
@@ -303,6 +303,8 @@ def lint_text(text, suffix=".txt", style=False):
                     out.append((i, "hint", rule, line[s:m.end() + 25].strip()))
             for h in article_after_symbol_hits(raw):
                 out.append((i, "hint", "article-after-symbol", h))
+            for h in article_n_before_formula_hits(raw):
+                out.append((i, "hint", "article-n-before-formula", h))
             for sent in re.split("[\u0589]", line):
                 if NEG_WORD.search(sent) and not NEG_VERB.search(NEG_WORD.sub(" ", sent)) and len(sent.split()) > 3:
                     out.append((i, "hint", "negative-word-without-negative-verb", sent.strip()[:80]))
@@ -417,9 +419,13 @@ def selftest():
         ("Ընտրում ենք այն $k$-ը, որտեղ հաջողություն է։", ".tex", "article-after-symbol"),   # կա -> -ն
         ("$y$-ն բաժանում է $x$-ին։", ".tex", "article-after-symbol"),                       # իգրեկ -> -ը
         ("Երեք գրաֆիկը $S$-ն, $S'$-ը և $S''$-ն են։", ".tex", "article-after-symbol"),       # էս + pause
+        ("$F$-ն $x$ կետում թռիչք ունի։", ".tex", "article-after-symbol"),                    # a formula is a pause (A55)
+        ("Բազմանդամն $x$ կետում զրո է։", ".tex", "article-n-before-formula"),              # A55
     ]
     style_absent = [  # (text, suffix, hint that must NOT fire)
-        ("$F$-ն $x$ կետում թռիչք ունի։", ".tex", "article-after-symbol"),        # իքս starts with a vowel
+        ("$F$-ը $x$ կետում թռիչք ունի։", ".tex", "article-after-symbol"),        # «-ը» before a formula (A55)
+        ("Բազմանդամը $x$ կետում զրո է։", ".tex", "article-n-before-formula"),
+        ("Ուրեմն $x>0$։", ".tex", "article-n-before-formula"),                   # natural -ն word
         ("$g'$-ը զրո է դառնում։", ".tex", "article-after-symbol"),               # ժե շտրիխ
         ("$A_n$-ն «առաջին ղուշն է» պատահույթն է։", ".tex", "article-after-symbol"),  # quote, then a vowel
         ("$f$-ն <strong>ինյեկտիվ</strong> է։", ".html", "article-after-symbol"),   # tag, then a vowel

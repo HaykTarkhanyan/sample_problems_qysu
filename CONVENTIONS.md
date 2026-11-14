@@ -17,7 +17,9 @@ Recurring decisions for this repo, written down once they were made twice.
   «և» start with a consonant sound, so they take `-ը` («թիվը երկու», «$x$-ը և»), except the
   auxiliaries եմ/ես/ենք/եք/են («տարրերն են») (source: «Հայոց լեզու 7» pp. 26-27, Language Committee;
   `armenian_style/SOURCE_FINDINGS.md` A1). Before «ով» / «ովքեր» both articles are fine (A43). A primed symbol
-  is read «... շտրիխ» and takes `-ը`: «$g'$-ը», «$S'$-ը» (A47).
+  is read «... շտրիխ» and takes `-ը`: «$g'$-ը», «$S'$-ը» (A47). Right before a formula the article is `-ը`, whatever
+  the formula's spoken name starts with: «$x_n$-ը $r$ արմատի», «բազմանդամը $x$ կետում» (A55; the formula counts as a
+  pause).
   After a symbol, go by how it is read (table in `armenian_style/GUIDE.md` A1b): «$A$-ն» («ա»),
   «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). A symbol whose spoken name ends
   in a consonant takes `-ը` unless the NEXT word starts with a vowel: «$F$-ը մոնոտոն», «$F$-ն անընդհատ»
@@ -224,7 +226,13 @@ widget, etc.).
   list. Terms follow the glossary (`ինտերպոլացիա`), and the course-specific terms are: spline = «սպլայն», linear /
   cubic = «գծային (առաջին կարգի)» / «խորանարդային», natural = «բնական», clamped = «ամրացված ծայրերով»,
   not-a-knot = «"ոչ հանգույց" պայման», node = «հանգույց», partition = «տրոհում», residual = «շեղում», normal
-  equations = «նորմալ հավասարումներ», sum of squares = $\Phi$.
+  equations = «նորմալ հավասարումներ», sum of squares = $\Phi$. Owner-decided on 2026-11-14 (A50-A58): base-10
+  system = «տասական համակարգ», chopping = «կտրտում», "overflow" and "underflow" stay in English (explained once),
+  truncation error = «մեթոդի սխալանք», leading coefficient = «ավագ անդամի գործակից», double root = «կրկնակի արմատ»,
+  PSS 1 = «Առաջադրանք 1 (PSS 1)».
+- Important terms carry the English term in brackets where they are defined, because the lecture slides are in
+  English: «<strong>մեքենայական էպսիլոն</strong> (machine epsilon)», «<strong>անշարժ կետ</strong> (fixed point)»
+  (owner, A57). Once per term, at the bold defining mention, not at every use.
 - Python blocks: `<pre class="py" data-run><code>...</code></pre>` with `<`, `>`, `&` escaped. Every block is
   self-contained (it runs in a fresh namespace), uses only numpy unless the text says the block downloads SciPy
   (~14 MB), prints its results, and its output matches the numbers in the text. Armenian comments and strings

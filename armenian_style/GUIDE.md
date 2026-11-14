@@ -122,7 +122,10 @@ consistency; the «-ը before ե/ո/և» rule is grammar.
 
 **A1b. After a formula, the article follows the spoken name of the symbol.** $A$ is read «ա», so
 «$A$-ն» before any word; $x$ is read «իքս», so «$x$-ը» normally and «$x$-ն» before a vowel sound
-(but «$x$-ը և», «$x$-ը որպես», per A1). The polished sheets already do this consistently: before
+(but «$x$-ը և», «$x$-ը որպես», per A1). **Right before another formula the article is «-ը»**, whatever
+that formula's spoken name starts with: «$x_n$-ը $r$ արմատի», «$S$-ը $f$-ի», and for words too,
+«բազմանդամը $x$ կետում» (owner, 2026-11-14, A55: the formula counts as a pause; lint hints
+`article-after-symbol` and `article-n-before-formula`). The polished sheets already do this consistently: before
 consonant-initial words they write $A$-ն, $B$-ն, $C$-ն, $g$-ն, $t$-ն, $0$-ն but $x$-ը, $y$-ը, $f$-ը,
 $s$-ը, $3$-ը, $6$-ը (counted in `solutions_opus_4_8_ARM/*.tex`). Keep it. A bare number used as a
 noun declines with ս («երկուսը, երկուսի», «Հայոց լեզու 7», p. 56), so «$2$-ը» is right and «$2$-ն»
@@ -459,6 +462,12 @@ on fresh text and replace them with `.`.
   «ընտրանք» for a combinatorial selection (lecture5 p. 3). Decided (A23, owner): «նմուշ» in
   statistics, «ընտրանք» only in combinatorics.
 - standard deviation = «ստանդարտ շեղում» (row 928; A24, owner), not «միջին քառակուսային շեղում»
+- numerical analysis, owner-decided on 2026-11-14 (none has a glossary row): base-10 system = «տասական
+  համակարգ» (A50), chopping = «կտրտում» (A51), "overflow" / "underflow" stay in English, explained once (A52),
+  truncation error = «մեթոդի սխալանք» (A57), leading coefficient = «ավագ անդամի գործակից» (A53), double
+  root = «կրկնակի արմատ» (A54)
+- **important terms get the English term in brackets at the bold defining mention**, once per term, because
+  the lecture slides are in English: «<strong>մեքենայական էպսիլոն</strong> (machine epsilon)» (owner, A57)
 - probability mass function: «բաշխման օրենք» on the site (A26, owner); the glossary's «հավանականային
   ֆունկցիա» (row 787) stays as an alternative
 - confirmed right as written by the owner (asked twice on 2026-11-13): row 806 «քառակուսեցման բանաձև» and row 730
