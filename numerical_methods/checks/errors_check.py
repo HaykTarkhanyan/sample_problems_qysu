@@ -610,6 +610,134 @@ assert fl(Fr("0.12345"), 4, "round") == Fr("0.1235")
 log.info("A15: (a) a* = 1.2, b* = 3.6 gives 4.32, abserr 0.69 > 0.5 (largest possible); a* = 1, b* = 3 gives 0.63; "
          "(b) a* = 1.1, b* = 2.2 gives 2.42, relerr 0.21 > 0.1 (largest possible); 0.9 * 1.8 gives 0.19")
 
+# ================================================================ PSS 1 (the course's first problem set)
+# ---------------------------------------------------------------- PSS 1.1: the Patriot example
+bits = "00011001100110011001100"                      # 0.1 chopped after 23 binary digits
+stored = Fr(int(bits, 2), 2 ** 23)
+assert len(bits) == 23 and stored == Fr(math.floor(Fr(2 ** 23, 10)), 2 ** 23)
+assert stored < Fr(1, 10) < stored + Fr(1, 2 ** 23)    # chopping keeps the lower neighbour
+err_p = Fr(1, 10) - stored
+assert err_p == Fr(1, 10485760) and 10485760 == 10 * 2 ** 20 and f"{float(err_p):.1e}" == "9.5e-08"
+assert err_p / Fr(1, 10) == Fr(1, 2 ** 20) and f"{2.0 ** -20:.1e}" == "9.5e-07"
+ticks = 100 * 3600 * 10
+assert ticks == 3_600_000 == 3.6e6
+assert f"{float(ticks * err_p):.2f}" == "0.34" and round(float(ticks * err_p) * 1676) == 575
+assert round(float(ticks * err_p), 4) == 0.3433                         # as printed by the Python block
+assert 1.0 + eps / 2 == 1.0                                              # the table: 1 (+) eps/2 = 1
+
+
+def partial_sum_e(n):
+    """E_n = sum 1/k!, k = 0..n, in double, term by term as in the page's PSS 1.7 program."""
+    total, term = 0.0, 1.0
+    for k in range(n + 1):
+        if k > 0:
+            term /= k
+        total += term
+    return total
+
+
+stall = [abs(math.e - partial_sum_e(n)) for n in range(1, 21)]
+assert stall[15] > stall[16] == stall[17] == stall[19]                   # the double error stops at n = 17
+log.info(f"PSS 1.1: 0.1 chopped to 23 bits, error 1/10485760 = {float(err_p):.3e} (relative 2^-20); "
+         f"100 h = {ticks} tenths -> {float(ticks * err_p):.4f} s -> {float(ticks * err_p) * 1676:.0f} m at 1676 m/s")
+
+# ---------------------------------------------------------------- PSS 1.2 (a): 3 digits, chopping
+a, b, c = Fr("0.452"), Fr("0.00487"), Fr("0.00513")
+assert all(fl(v, 3, "chop") == v for v in (a, b, c)) and all(fl(v, 2, "round") == v for v in (Fr("0.11"), Fr("0.14")))
+assert b + c == Fr("0.01") and mant(Fr("0.01"), 3) == (100, -1)
+bc = mop(b, c, "+", 3, "chop")
+left = mop(a, bc, "+", 3, "chop")
+assert bc == Fr("0.01") and a + bc == Fr("0.462") and left == Fr("0.462")
+ab_ = mop(a, b, "+", 3, "chop")
+right = mop(ab_, c, "+", 3, "chop")
+assert a + b == Fr("0.45687") and ab_ == Fr("0.456") and ab_ + c == Fr("0.46113") and right == Fr("0.461")
+assert left != right and a + b + c == Fr("0.462") == left
+assert (a + b) - ab_ == Fr("0.00087") and (ab_ + c) - right == Fr("0.00013")
+assert Fr("0.00087") + Fr("0.00013") == Fr("0.001") == left - right
+assert dec_op(dec_op("0.452", "0.00487", "+", 3, "chop"), "0.00513", "+", 3, "chop") == Fr("0.461")
+assert dec_op("0.452", dec_op("0.00487", "0.00513", "+", 3, "chop"), "+", 3, "chop") == Fr("0.462")
+# with rounding instead of chopping the two orders agree here
+ab_r = mop(a, b, "+", 3, "round")
+assert ab_r == Fr("0.457") and ab_r + c == Fr("0.46213") and mop(ab_r, c, "+", 3, "round") == Fr("0.462")
+assert mop(a, mop(b, c, "+", 3, "round"), "+", 3, "round") == Fr("0.462")
+# ---------------------------------------------------------------- PSS 1.2 (b): 2 digits, rounding
+a, b, c = Fr("0.11"), Fr("0.11"), Fr("0.14")
+s_bc = mop(b, c, "+", 2)
+assert b + c == Fr("0.25") and s_bc == Fr("0.25")
+assert a * s_bc == Fr("0.0275") and mant(Fr("0.0275"), 3) == (275, -1)
+lhs = mop(a, s_bc, "*", 2)
+p_ab, p_ac = mop(a, b, "*", 2), mop(a, c, "*", 2)
+rhs = mop(p_ab, p_ac, "+", 2)
+assert lhs == Fr("0.028") and a * b == Fr("0.0121") and p_ab == Fr("0.012") and a * c == Fr("0.0154") and p_ac == Fr("0.015")
+assert p_ab + p_ac == Fr("0.027") and rhs == Fr("0.027") and lhs != rhs
+assert dec_op("0.11", dec_op("0.11", "0.14", "+", 2), "*", 2) == Fr("0.028")
+assert dec_op(dec_op("0.11", "0.11", "*", 2), dec_op("0.11", "0.14", "*", 2), "+", 2) == Fr("0.027")
+exact_d = a * (b + c)
+assert exact_d == Fr("0.0275") == (Fr("0.027") + Fr("0.028")) / 2
+assert abserr(exact_d, lhs) == abserr(exact_d, rhs) == Fr("0.0005")
+assert relerr(exact_d, lhs) == relerr(exact_d, rhs) == Fr(1, 55) and f"{100 / 55:.1f}" == "1.8"
+assert a * b - p_ab == Fr("0.0001") and a * c - p_ac == Fr("0.0004")
+log.info(f"PSS 1.2: (a) chop: b+c -> 0.0100, a+(b+c) -> 0.462; a+b -> 0.456, +c -> 0.461 (exact 0.462; rounding gives "
+         f"0.462 both ways); (b) round: a(b+c) -> 0.028, ab + ac -> 0.012 + 0.015 = 0.027, exact 0.0275, relerr 1/55")
+
+# ---------------------------------------------------------------- PSS 1.3
+ctx40 = decimal.Context(prec=40)
+sq12 = ctx40.sqrt(D(10 ** 12 + 1))
+assert sq12.quantize(D("1e-7")) == D("1000000.0000005") and f"{float(sq12 - 10 ** 6):.0e}" == "5e-07"
+
+
+def rel_to(v, exact):
+    return float(abs(D(v) - exact) / exact)
+
+
+rel_sqrt = {}
+for x in (1e4, 1e8, 1e12, 1e16):
+    naive = math.sqrt(x + 1) - math.sqrt(x)
+    new = 1 / (math.sqrt(x + 1) + math.sqrt(x))
+    exact = ctx40.divide(1, ctx40.sqrt(D(x) + 1) + ctx40.sqrt(D(x)))
+    rel_sqrt[x] = rel_to(naive, exact)
+    assert rel_to(new, exact) < 1e-15                    # "below 1e-15 in all cases"
+    close(float(exact), 1 / (2 * math.sqrt(x)), 1e-3)    # the difference is about 1/(2 sqrt x)
+assert f"{rel_sqrt[1e8]:.1e}" == "1.4e-08" and f"{rel_sqrt[1e12]:.1e}" == "7.6e-06"
+assert math.sqrt(1e16 + 1) - math.sqrt(1e16) == 0.0 and 1e16 + 1 == 1e16
+for x in (0.5, 3.0, 40.0):
+    close(math.sqrt(x + 1) - math.sqrt(x), 1 / (math.sqrt(x + 1) + math.sqrt(x)), 1e-12)
+    close(math.log(x + 1) - math.log(x), math.log1p(1 / x), 1e-12)
+    close(1 - math.cos(x), 2 * math.sin(x / 2) ** 2, 1e-12)
+    close(1 - math.cos(x), math.sin(x) ** 2 / (1 + math.cos(x)), 1e-12)
+assert 1 - math.cos(1e-8) == 0.0                         # the 6b example with the sign flipped
+x = 1e12
+ex_ln = ctx40.ln(ctx40.divide(D(x) + 1, D(x)))
+r_naive, r_lit, r_l1p = rel_to(math.log(x + 1) - math.log(x), ex_ln), rel_to(math.log(1 + 1 / x), ex_ln), rel_to(math.log1p(1 / x), ex_ln)
+assert f"{r_naive:.1e}" == "1.9e-03" and f"{r_lit:.1e}" == "8.9e-05" and r_l1p < 1e-16
+for x in (1e4, 1e8, 1e16):
+    assert rel_to(math.log1p(1 / x), ctx40.ln(ctx40.divide(D(x) + 1, D(x)))) < 1e-16
+assert math.log(1e16 + 1) - math.log(1e16) == 0.0 and math.log(1 + 1 / 1e16) == 0.0
+assert math.log1p(1e-16) == 1e-16
+u = Fr(1, 10 ** 6)                                       # the series ln(1+u) = u - u^2/2 + u^3/3 - ...
+close(math.log1p(1e-6), float(u - u ** 2 / 2 + u ** 3 / 3), 1e-15)
+log.info(f"PSS 1.3: sqrt naive relerr {rel_sqrt[1e8]:.1e} (1e8), {rel_sqrt[1e12]:.1e} (1e12), 0 at 1e16; ln at 1e12: naive "
+         f"{r_naive:.1e}, log(1+1/x) {r_lit:.1e}, log1p {r_l1p:.1e}")
+
+# ---------------------------------------------------------------- PSS 1.4
+assert 500 * Fr("0.005") == Fr("2.5") and Fr(5, 10 ** 3) == Fr("0.005")
+assert relerr(500, Fr("497.5")) == Fr("0.005") == relerr(500, Fr("502.5")) and relerr(500, Fr("502.51")) > Fr("0.005")
+assert f"{500 / 1.005:.2f}" == "497.51" and f"{500 / 0.995:.2f}" == "502.51"
+assert abs(500 - Fr(500) / Fr("1.005")) == Fr("0.005") * Fr(500) / Fr("1.005")   # the wrong interval: |500 - x*| = 0.005 x*
+E40 = ctx40.exp(D(1))
+assert str(E40).startswith("2.718281828") and str(E40 - D("2.718")).startswith("0.000281828")
+ab4e, re4e = E40 - D("2.718"), (E40 - D("2.718")) / E40
+assert f"{ab4e:.3e}" == "2.818e-4" and f"{re4e:.3e}" == "1.037e-4"
+E_fr = Fr(str(E40))
+assert norm_exp(E_fr) == 1 and fl(E_fr, 4, "round") == fl(E_fr, 4, "chop") == Fr("2.718")
+assert math.floor(E_fr * 10 ** 4) % 10 == 2             # d5 = 2 < 5
+assert ab4e < D("0.0005") and re4e < D("0.0005") and round(D("0.0005") / re4e) == 5
+assert Fr(1, 2) * Fr(10) ** (1 - 4) == Fr(1, 2) * Fr(10) ** (1 - 4) == Fr("0.0005")     # e = 1, t = 4: both bounds 1/2 10^-3
+assert 1.7 < D("0.0005") / ab4e < 1.8                   # "almost 2 times" below the absolute bound
+assert Fr("0.01") / 1000 == Fr(1, 10 ** 5) and Fr("0.01") / Fr("0.1") == Fr("0.1")
+assert (Fr("0.01") / Fr("0.1")) / (Fr("0.01") / 1000) == 10 ** 4 and 100 * Fr(1, 10 ** 5) == Fr("0.001")
+log.info(f"PSS 1.4: x* in [497.5, 502.5]; e - 2.718 = {ab4e:.4e}, relerr {re4e:.4e}; 0.01/1000 = 1e-5, 0.01/0.1 = 0.1")
+
 # ---------------------------------------------------------------- predict blocks and the summary
 assert Fr(10) ** (1 - 5) == Fr(1, 10 ** 4) and Fr(10) ** (1 - 5) / 2 == Fr(5, 10 ** 5)
 # propagation predict: relative errors 1% and 1% -> product about 2% (exactly 2.01%)
