@@ -29,6 +29,15 @@ were clean in the real browser; the errors page had 4 formulas wider than the 31
 294 px in a 282 px box). Only the main session's 390 px check found them. An agent without a browser cannot
 close this gate, so the main session must run it on every page.
 
+**"All cells run" from an agent means local Python, not the browser.** `run_page_blocks.py` executes the cells
+with the laptop's CPython and numpy; on the site they run in Pyodide, which ships its own numpy and SciPy. The
+pages were published before anyone pressed Run in a browser. Checked afterwards on the live site, by a script
+that clicks every Run button and reads each cell's status: errors 18 of 18, nonlinear 15 of 15, interpolation
+13 of 13 (its 3 plotting blocks are copy-only by design). Nothing failed, but the order was wrong: this click
+test belongs before the deploy, next to the 390 px check. Pitfall when scripting it: do not look for the
+substring «սխալ» in the output, because «սխալանք» (error, the topic of the page) contains it; a failed cell has
+the status text «սխալ» exactly, a good one has "N մվ".
+
 **Check scripts written by the builder still caught real errors, and the review found a different kind.**
 The reviewers re-solved all 71 problems and found no wrong answer. What they did find were false sentences
 around correct numbers: a bound rounded down, "for any b" that fails near the end of the range, "bisection
