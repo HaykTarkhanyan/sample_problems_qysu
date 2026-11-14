@@ -30,7 +30,7 @@ done = [
 pending = [
   "Owner interview (A59-A66, armenian_style/OWNER_ANSWERS.md): six terms confirmed as written (pivot «գլխավոր տարր», «ուղիղ / հակադարձ տեղադրում», «մակածված նորմ», «Սիլվեստրի հայտանիշ», the verbs «զուգամիտում է / տարամիտում է», «համաչափ»), two changed: «գլխավոր անկյունային մինոր» (6 places on the linear-systems page) and «վերին եզր» for the bound of K2 (2 places on the integration page). Still open: A67 and A68 (13 single wordings), and the slide-dependent points C1-C6 and D1-D4 of the two review reports.",
   "Minor review findings left as reported: integration 7-12 (answer box of problem 10, self-check question 5, hypotheses of the composite theorem, a dead branch in setupExact), linear systems 7, 9, 11 (Crout form for 11բ, the stopping rule behind 26 / 16 steps, what an 'operation' is).",
-  "The four agent worktrees and branches of today (two builders, two reviewers) are merged and can be removed once the owner agrees.",
+  "DONE: the four agent worktrees and branches of today (two builders, two reviewers) were removed after the owner said yes (all four verified as merged into main; statement notes kept in logs/numerical_statements/). Only main exists.",
   "The contents entry for #fixedpoint on nonlinear.html stays shorter than its heading on purpose (short contents entries are the pattern on all four pages).",
 ]
 
