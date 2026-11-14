@@ -285,4 +285,161 @@ assert 32 + 30 + 3 * 3 == 71
 close_mat(sla.cho_solve(sla.cho_factor(np.array(A7, float), lower=True), np.array(b7, float)), x7)
 log.info(f"E6: L = {L6}; E7: L = {L7}, y = {y7}, x = {x7}")
 
+# ---------------------------------------------------------------- norms (theory, predict, E8)
+rng = np.random.default_rng(509)
+for _ in range(200):
+    v = rng.normal(size=int(rng.integers(1, 7)))
+    n1, n2, ni = np.abs(v).sum(), np.sqrt((v * v).sum()), np.abs(v).max()
+    assert ni <= n2 + 1e-12 and n2 <= n1 + 1e-12 and n1 <= len(v) * ni + 1e-12
+assert np.isclose(np.linalg.norm([1, 1], 2), 2**0.5) and np.linalg.norm([1, 1], 1) == 2   # predict: (1,1)
+assert 2 ** (1 / 0.5) > 2                                              # ||(1,1)||_p > ||(1,0)||_p + ||(0,1)||_p for p < 1
+
+
+def f8(part, x):
+    x = np.asarray(x, dtype=float)
+    if part == "a":
+        return max(abs(2 * x[0] - x[1]), abs(x[0] - 2 * x[1]), *np.abs(x[2:]))
+    if part == "b":
+        return max(abs(x[0] - x[1]), abs(x[0] + x[1])) + np.abs(x[2:]).sum()
+    if part == "c":
+        return (np.abs(x) ** 3).sum()
+    if part == "d":
+        return (x**4).sum()
+    if part == "e":
+        return max(2 * abs(x[0]), abs(x[2] - x[1]), *np.abs(x[3:]))
+    if part == "f":
+        return max(abs(2 * x[0] - x[1]), *np.abs(x[2:]))
+
+
+assert round(np.linalg.det([[2, -1], [1, -2]])) == -3                 # (a): T is injective
+for _ in range(300):                                                   # (b) = ||x||_1, (a) and (b) satisfy the axioms
+    n = int(rng.integers(3, 7))
+    x, y, al = rng.normal(size=n), rng.normal(size=n), rng.normal()
+    assert np.isclose(f8("b", x), np.abs(x).sum())
+    for p in "ab":
+        assert np.isclose(f8(p, al * x), abs(al) * f8(p, x)) and f8(p, x + y) <= f8(p, x) + f8(p, y) + 1e-12
+        assert f8(p, x) > 0
+e1n = [1, 0, 0, 0]
+assert f8("c", e1n) == 1 and f8("c", 2 * np.array(e1n)) == 8 and f8("d", 2 * np.array(e1n)) == 16
+for n in (4, 5, 7):
+    assert f8("e", [0, 1, 1] + [0] * (n - 3)) == 0
+for n in (3, 4, 6):
+    assert f8("f", [1, 2] + [0] * (n - 2)) == 0
+assert np.isclose((2 / 1) ** (1 / 3), 2 ** (1 / 3))                    # (c): {f = 2} is {f = 1} scaled by 2^(1/3)
+log.info("E8: (a), (b) norms; (c) f(2x) = 8 f(x); (d) 16; (e) x = (0,1,1,0,...) -> 0; (f) x = (1,2,0,...) -> 0")
+
+# ---------------------------------------------------------------- E9
+A13n = np.array([[4, -1, 1], [2, 5, -2], [-1, 3, 6]])
+col, row = np.abs(A13n).sum(0), np.abs(A13n).sum(1)
+assert list(col) == [7, 9, 9] and list(row) == [6, 9, 10]
+assert list(A13n @ [0, 1, 0]) == [-1, 5, 3] and np.abs(A13n @ [0, 1, 0]).sum() == 9
+assert list(A13n @ [-1, 1, 1]) == [-4, 1, 10] and np.abs(A13n @ [-1, 1, 1]).max() == 10
+assert np.linalg.norm(A13n, 1) == 9 and np.linalg.norm(A13n, np.inf) == 10
+for _ in range(100):                                                    # formula = max over the ball's vertices
+    n = int(rng.integers(1, 6))
+    B = rng.normal(size=(n, n))
+    v1 = max(np.abs(B @ (s * e)).sum() for e in np.eye(n) for s in (1, -1))
+    vi = max(np.abs(B @ np.array(s)).max() for s in itertools.product((1, -1), repeat=n))
+    assert np.isclose(v1, np.abs(B).sum(0).max()) and np.isclose(vi, np.abs(B).sum(1).max())
+    z = rng.normal(size=n)
+    assert np.abs(B @ z).sum() <= np.abs(B).sum(0).max() * np.abs(z).sum() + 1e-12
+log.info("E9: columns 7, 9, 9 -> ||A||_1 = 9; rows 6, 9, 10 -> ||A||_inf = 10")
+
+
+# ---------------------------------------------------------------- iteration theory
+def jacobi_exact(A, b, x0, N):
+    n = len(b)
+    xs = [V(x0)]
+    for _ in range(N):
+        x = xs[-1]
+        xs.append([(b[i] - sum(A[i][j] * x[j] for j in range(n) if j != i)) / A[i][i] for i in range(n)])
+    return xs
+
+
+def gs_exact(A, b, x0, N):
+    n = len(b)
+    xs = [V(x0)]
+    for _ in range(N):
+        x = xs[-1][:]
+        for i in range(n):
+            x[i] = (b[i] - sum(A[i][j] * x[j] for j in range(n) if j != i)) / A[i][i]
+        xs.append(x)
+    return xs
+
+
+def splitting(A):
+    A = np.array(A, dtype=float)
+    D, Lw, Up = np.diag(np.diag(A)), np.tril(A, -1), np.triu(A, 1)
+    return -np.linalg.solve(D, Lw + Up), -np.linalg.solve(D + Lw, Up)
+
+
+def rho(T):
+    return max(abs(np.linalg.eigvals(T)))
+
+
+def errinf(x, xs):
+    return max(abs(a - b) for a, b in zip(x, xs))
+
+
+for _ in range(200):                                                   # 2 x 2: rho(T_GS) = rho(T_J)^2
+    B = rng.normal(size=(2, 2))
+    TJ, TG = splitting(B)
+    assert np.isclose(rho(TG), rho(TJ) ** 2)
+for _ in range(200):                                                   # SDD: ||T_J||_inf = max(alpha + beta) < 1, q <= ||T_J||_inf
+    n = int(rng.integers(2, 6))
+    B = rng.normal(size=(n, n))
+    B[np.diag_indices(n)] = (np.abs(B).sum(1) - np.abs(np.diag(B)) + rng.uniform(0.01, 2)) * rng.choice([-1, 1], n)
+    a = np.abs(B) / np.abs(np.diag(B))[:, None]
+    al = np.array([a[i, :i].sum() for i in range(n)])
+    be = np.array([a[i, i + 1:].sum() for i in range(n)])
+    TJ, TG = splitting(B)
+    assert np.isclose(np.abs(TJ).sum(1).max(), (al + be).max()) and (al + be).max() < 1
+    q = (be / (1 - al)).max()
+    assert q <= (al + be).max() + 1e-12 and rho(TG) <= q + 1e-12
+    e = rng.normal(size=n)                                             # one GS step on the error: ||e1|| <= q ||e0||
+    e1 = e.copy()
+    for i in range(n):
+        e1[i] = -(B[i, :i] @ e1[:i] + B[i, i + 1:] @ e[i + 1:]) / B[i, i]
+    assert np.abs(e1).max() <= q * np.abs(e).max() + 1e-12
+    assert abs(np.linalg.det(B)) > 0                                   # E12: SDD -> invertible
+TJs, _ = splitting([[2, -3], [4, -1]])                                 # predict: equations in the other order
+assert np.allclose(TJs, [[0, 1.5], [4, 0]]) and np.allclose(TJs @ TJs, 6 * np.eye(2))
+shown(rho(TJs), "2.449")
+log.info("iteration theory: 2x2 rho_GS = rho_J^2; SDD bounds; swapped E14: T_J^2 = 6I, rho = 2.449")
+
+# ---------------------------------------------------------------- E10
+A10, b10 = M([[2, -1, 0], [-1, 3, -1], [0, -1, 2]]), V([1, 8, -5])
+TJ10, _ = splitting(A10)
+assert np.isclose(np.abs(TJ10).sum(1).max(), 2 / 3) and list(np.round(np.abs(TJ10).sum(1), 12)) == [0.5, round(2 / 3, 12), 0.5]
+J10 = jacobi_exact(A10, b10, [0, 0, 0], 2)
+assert J10[1] == [Fr(1, 2), Fr(8, 3), Fr(-5, 2)] and J10[2] == [Fr(11, 6), Fr(2), Fr(-7, 6)]
+x10 = V([2, 3, -1])
+assert matvec(A10, x10) == b10 and backward(eliminate(A10)[1], forward(eliminate(A10)[0], b10)) == x10
+assert [errinf(x, x10) for x in J10] == [3, Fr(3, 2), 1]
+assert [Fr(2, 3) ** k * 3 for k in range(3)] == [3, 2, Fr(4, 3)]
+log.info(f"E10: x1 = {J10[1]}, x2 = {J10[2]}, x* = (2, 3, -1)")
+
+# ---------------------------------------------------------------- E11
+A11, b11 = M([[5, -1, 3], [-2, 4, -1], [2, -2, 5]]), V([14, 2, 10])
+L11, U11, st11 = eliminate(A11)
+assert [L11[1][0], L11[2][0], L11[2][1]] == [Fr(-2, 5), Fr(2, 5), Fr(-4, 9)]
+assert st11[0][1] == V([0, Fr(18, 5), Fr(1, 5)]) and st11[0][2] == V([0, Fr(-8, 5), Fr(19, 5)])
+assert Fr(-8, 5) / Fr(18, 5) == Fr(-4, 9) and Fr(19, 5) + Fr(4, 9) * Fr(1, 5) == Fr(35, 9)
+assert U11 == M([[5, -1, 3], [0, Fr(18, 5), Fr(1, 5)], [0, 0, Fr(35, 9)]])
+y11 = forward(L11, b11)
+x11 = backward(U11, y11)
+assert y11 == V([14, Fr(38, 5), Fr(70, 9)]) and x11 == V([2, 2, 2]) and matvec(A11, x11) == b11
+assert 10 - Fr(2, 5) * 14 + Fr(4, 9) * Fr(38, 5) == Fr(70, 9)
+assert [abs(A11[i][i]) - sum(abs(A11[i][j]) for j in range(3) if j != i) for i in range(3)] == [1, 1, 1]
+assert [sum(abs(A11[i][j]) for j in range(3) if j != i) for i in range(3)] == [4, 3, 4]
+TJ11, _ = splitting(A11)
+assert np.isclose(np.abs(TJ11).sum(1).max(), 0.8)
+J11 = jacobi_exact(A11, b11, [-1, -1, 1], 2)
+assert J11[1] == [2, Fr(1, 4), 2] and J11[2] == [Fr(33, 20), 2, Fr(13, 10)]
+assert [errinf(x, x11) for x in J11] == [3, Fr(7, 4), Fr(7, 10)]
+G11 = gs_exact(A11, b11, [-1, -1, 1], 2)
+assert G11[1] == [2, Fr(7, 4), Fr(19, 10)] and G11[2] == [Fr(201, 100), Fr(99, 50), Fr(497, 250)]
+assert [float(v) for v in G11[2]] == [2.01, 1.98, 1.988] and errinf(G11[2], x11) == Fr(1, 50)
+log.info(f"E11: y = {y11}, x = {x11}; Jacobi x1 = {J11[1]}, x2 = {J11[2]}; GS x2 = {G11[2]}")
+
 log.info(f"all checks passed in {time.time() - T0:.2f} s")

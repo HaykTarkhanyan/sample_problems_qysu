@@ -150,6 +150,7 @@
   const SUB = ["₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉"];
   const sub = n => String(n).replace(/\d/g, ch => SUB[ch]);
   const sup = n => String(n).replace(/./g, ch => SUP[ch] || ch);
+  const ord = n => (n === 1 ? "1-ին" : `${n}-րդ`);      // Armenian ordinal: 1-ին, 2-րդ, 3-րդ, ...
   /** 0.000958 -> "9,58·10⁻⁴"; ordinary numbers stay as num(). */
   function sci(v, d = 4) {
     if (v === 0 || (Math.abs(v) >= 0.001 && Math.abs(v) < 1e6)) return num(v, d);
@@ -226,11 +227,11 @@
       const I = s.i + 1, K = s.k + 1;
       let msg;
       if (k === 0) msg = "Սկզբնական մատրիցը, L-ը դեռ միավոր մատրից է։ Շրջանակի մեջ գլխավոր տարրն է։ Սեղմեք «Հաջորդ քայլ»։";
-      else if (s.m.n === 0) msg = `l${sub(I)}${sub(K)} = 0՝ (${I},${K}) տեղում արդեն զրո է, և ${I}-րդ տողը չի փոխվում։`;
+      else if (s.m.n === 0) msg = `l${sub(I)}${sub(K)} = 0՝ (${I},${K}) տեղում արդեն զրո է, և ${ord(I)} տողը չի փոխվում։`;
       else {
         const prev = res.steps[k - 1].U;
         msg = `l${sub(I)}${sub(K)} = ${fstr(prev[s.i][s.k])} / ${fstr(prev[s.k][s.k])} = ${fstr(s.m)}։ ` +
-          `${I}-րդ տողից հանում ենք ${K}-րդ տողը՝ բազմապատկած ${fstr(s.m)}-ով, և (${I},${K}) տեղում ստացվում է 0։`;
+          `${ord(I)} տողից հանում ենք ${ord(K)} տողը՝ բազմապատկած ${fstr(s.m)}-ով, և (${I},${K}) տեղում ստացվում է 0։`;
       }
       if (k > 0) msg += ` Բազմապատկում և բաժանում մինչ այժմ՝ ${s.ops}։`;
       if (stuck) {
@@ -238,7 +239,8 @@
         msg += ` (${z},${z}) տեղի գլխավոր տարրը զրո է, իսկ նրանից ներքև կա ոչ զրոյական տարր։ Առանց տողերի տեղափոխության ` +
           `արտաքսումը կանգ է առնում, ուրեմն A = LU վերլուծություն գոյություն չունի (Δ${sub(z)} = 0)։ Փորձեք տողերը տեղափոխած տարբերակը։`;
       } else if (last && k > 0) {
-        msg += ` Արտաքսումն ավարտված է՝ A = LU։ Ընդամենը ${s.ops} բազմապատկում և բաժանում, և իսկապես (n³ − n)/3 = ${(n ** 3 - n) / 3}։`;
+        msg += ` Արտաքսումն ավարտված է՝ A = LU։ Ընդամենը ${s.ops} բազմապատկում և բաժանում (միայն A-ի տարրերի վրա, առանց աջ մասի), ` +
+          `և իսկապես (n³ − n)/3 = ${(n ** 3 - n) / 3}։`;
       }
       out("msg").textContent = msg;
     }
@@ -379,7 +381,7 @@
     }
     function draw() {
       const c = CASES[cur];
-      const J = jacobi(c.A, c.b, x0, k), G = gaussSeidel(c.A, c.b, x0, k);
+      const J = { xs: jacobi(c.A, c.b, x0, k) }, G = gaussSeidel(c.A, c.b, x0, k);
       pl.clear(pl.main); pl.clear(pl.over);
       lineThrough(c.A[0][0], c.A[0][1], c.b[0], "s-muted");
       lineThrough(c.A[1][0], c.A[1][1], c.b[1], "s-muted");
