@@ -1,0 +1,57 @@
+title = "Integration page (problem list block D, problems 1-25) built by an agent in its own worktree"
+date = "2026-11-14"
+time = "11:54"  # local
+
+areas = [
+  "site/numerical (integration.html, index.html)",
+  "site/assets/js (num-integration.js)",
+  "numerical_methods/checks (integration_check.py, integration_widgets_check.mjs)",
+  "numerical_methods/README.md",
+]
+
+done = [
+  "Read block D of Problems_ARM_2023.pdf from page images (pdftoppm -r 130, PDF pages 17-21) and cross-checked every number against the text layer; the text layer also drops pi (problems 4 and 5), the images show it. All 25 statements readable; transcription with the readings I had to choose in logs/integration_statements.md (gitignored). PrSet1 No. 07 used only to confirm the meaning of n (number of subintervals).",
+  "integration.html: intro with three key ideas and conventions (n = subintervals; Gauss n = n+1 nodes; glossary spelling «քառակուսեցման» instead of the list's «քառակուսացման»; says once that there are no slides yet and the theory is a standard textbook exposition).",
+  "Theory in 4 sections: #quad (quadrature formula, degree of exactness, monomial test, method of undetermined coefficients, symmetry trick, interpolatory formulas with proof), #simple (midpoint / trapezoid / Simpson with error terms, proofs in details.deep), #composite (M_n, T_n, S_n, error bounds with K_2 / K_4, how to choose n), #gauss (degree bound 2n+1, Legendre polynomials, Gauss theorem with proof, nodes table, change of interval).",
+  "Problems 1-25 each in details.sec#pN with restated statement, steps, check and answer box; #exam with summary table, key formulas, typical mistakes, self-check questions.",
+  "3 widgets in num-integration.js: w-exact (degree-of-exactness table for 6 rules plus a symmetric two-node formula with a slider that snaps to 1/sqrt3), w-comp (rectangles / trapezoids / parabolas for 4 functions of the list, error against n on log-log axes), w-gauss (Gauss against equally spaced nodes, weights as stems, negative Newton-Cotes weights at 9 nodes). One predict block before each.",
+  "11 runnable Python blocks (numpy + math only), all run by run_page_blocks.py.",
+  "integration_check.py asserts every number (fractions where rational; reference integrals from closed forms, a series or scipy quad) and fails if the page contains a decimal it does not assert (statement data whitelisted). integration_widgets_check.mjs checks the widget numerics against leggauss / the Python values and runs every widget on a mock DOM.",
+  "Display formulas estimated with logs/width_probe.py (heuristic from KaTeX glyph widths, over-reads by roughly 10 %); everything above ~16 em split.",
+  "Index card after the splines card; README status row after the splines row (the old 'D, E' row left for the main session).",
+]
+
+pending = [
+  "No browser check (agents may not drive the browser): 1280 px and 390 px, both themes, katex-display overflow (estimates only; the S_n definition in a box is the closest call at ~15.4 em estimated), Run buttons under Pyodide.",
+  "One independent math review before publishing (DECISIONS #21).",
+  "Pager: prev = splines, index; the next link (linear systems) and a link from splines.html #exam / problem 4 to this page are for the main session.",
+  "site/assets/search/numerical.js is stale (CI rebuilds it).",
+  "Terms with no glossary row to confirm: degree of exactness «ճշգրտության աստիճան», midpoint rule «միջին ուղղանկյունների բանաձև», composite «ընդհանրացված», method of undetermined coefficients «անորոշ գործակիցների մեթոդ», accuracy «ճշտություն» (list: «ճշգրտություն»).",
+]
+
+next = [
+  "Main session: browser check, review agent, merge (index.html and README.md will conflict with the linear-systems agent), rebuild the search index.",
+  "When the integration slides exist: align notation (the slides may write the composite Simpson rule with m panels and h = (b-a)/(2m), or use monic Legendre polynomials) and add the adaptive methods the course plan lists.",
+]
+
+files = [
+  "site/numerical/integration.html",
+  "site/assets/js/num-integration.js",
+  "site/numerical/index.html",
+  "numerical_methods/checks/integration_check.py",
+  "numerical_methods/checks/integration_widgets_check.mjs",
+  "numerical_methods/README.md",
+  "_work_sessions/2026-11-14-1154_integration-page.toml",
+]
+
+commits = [
+  "9a7bfb0 part 1: theory, problems 1-8, two widgets, checks",
+  "1a5906e part 2: problems 9-17",
+  "part 3: Gauss theory and widget, problems 18-25, exam section, index card, README row, this log",
+]
+
+notes = [
+  "The decimal guard in integration_check.py caught intervals like [-1,2] as decimals at first; it now scans raw '1,2' only outside math (in TeX a decimal is 1{,}2).",
+  "Gauss degree test on plain powers of x over [0,2] reported degree 17 / 19 for 9 / 10 nodes (x^20 is dominated by the right end); the widget now tests powers of (x-c)/r on [-1,1].",
+  "Lint hint article-after-symbol flags vowel-final symbols with -ը even right before a formula (A55 says -ը there); I rephrased with a noun instead («$\\ell_k$ բազմանդամը ...», «$p$ բազմանդամը ...»).",
+]
