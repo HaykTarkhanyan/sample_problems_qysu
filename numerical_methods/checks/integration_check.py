@@ -17,6 +17,7 @@ from pathlib import Path
 
 import numpy as np
 from scipy.integrate import quad
+from scipy.optimize import minimize_scalar
 
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
@@ -100,6 +101,13 @@ frac_eq(Fr(1, 3) - Fr(1, 4), Fr(1, 24) * 2, "I - M for x^2 on [0,1] = (b-a)^3/24
 frac_eq(Fr(1, 3) - Fr(1, 2), -Fr(1, 12) * 2, "I - T for x^2 on [0,1] = -(b-a)^3/12 f''")
 frac_eq(Fr(1, 5) - Fr(1, 6) * (0 + 4 * Fr(1, 16) + 1), -Fr(1, 2880) * 24, "I - S for x^4 on [0,1] = -(b-a)^5/2880 f''''")
 frac_eq(Fr(2, 5) - 2 * Fr(1, 9), Fr(2 ** 5, 4320) * 24, "I - G2 for x^4 on [-1,1] = (b-a)^5/4320 f''''")
+# the three integrals of the proof box, on [0, 1] with c = 1/2 (added by the 2026-11-14 review)
+frac_eq(Fr(1, 3) - Fr(1, 2), -Fr(1, 6), "integral of (x-a)(x-b) = -(b-a)^3/6")
+frac_eq(Fr(1, 3) - Fr(1, 2) + Fr(1, 4), Fr(1, 12), "integral of (x-c)^2 = (b-a)^3/12")
+# x(x-1)(x-1/2)^2 = x^4 - 2x^3 + 5x^2/4 - x/4
+frac_eq(Fr(1, 5) - Fr(1, 2) + Fr(5, 12) - Fr(1, 8), -Fr(1, 120), "integral of (x-a)(x-c)^2(x-b) = -(b-a)^5/120")
+frac_eq(-Fr(1, 120) / 24, -Fr(1, 2880), "Simpson constant = -(1/120)/4!")
+frac_eq(Fr(2 ** 5, 2880), Fr(1, 90), "composite Simpson: (2h)^5/2880 = h^5/90")
 # composite constants: f'' and f'''' are constant, so the error formulas hold exactly
 for n in (1, 2, 5, 10):
     h = Fr(1, n)
@@ -502,6 +510,54 @@ for n in (9, 10):
     shown(G[n], "0,8820813908", f"G_{n}")
 S10_25 = simp(lambda x: math.exp(-x * x), 0, 2, 10)
 shown(abs(S10_25 - I25), "6,5e-6", "Simpson with the same 11 nodes")
+
+# ------------------------------------------------------------------ derivative formulas shown on the page
+# Added by the 2026-11-14 review. The problem blocks above take f'' (f''', f'''') from the page and only look for
+# its maximum; here every derivative formula the page prints is compared with central differences of f itself.
+log.info("derivative formulas")
+
+
+def d1(f, x, h=1e-5):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+
+def d2(f, x, h=1e-4):
+    return (f(x + h) - 2 * f(x) + f(x - h)) / h ** 2
+
+
+def d4(f, x, h=1e-2):
+    return (f(x - 2 * h) - 4 * f(x - h) + 6 * f(x) - 4 * f(x + h) + f(x + 2 * h)) / h ** 4
+
+
+def same(formula, numeric, pts, rel, label):
+    for x in pts:
+        u, v = formula(x), numeric(x)
+        assert abs(u - v) <= rel * max(1.0, abs(u)), f"{label} at x = {x}: formula {u!r}, finite differences {v!r}"
+    log.info(f"  {label}: the page formula agrees with finite differences at {len(pts)} points")
+
+
+same(f6pp, lambda x: d2(f6, x), [-1, -0.3, 0.5, 1.2, 2], 1e-5, "problem 6, f''")
+same(lambda x: 2 * x * math.exp(x * x), lambda x: d1(f7, x), [0, 0.3, 0.7, 1], 1e-6, "problem 7, f'")
+same(lambda x: (2 + 4 * x * x) * math.exp(x * x), lambda x: d2(f7, x), [0, 0.3, 0.7, 1], 1e-5, "problem 7, f''")
+f10p = lambda x: math.sin(x * x) + 2 * x * x * math.cos(x * x)
+f10pp = lambda x: 6 * x * math.cos(x * x) - 4 * x ** 3 * math.sin(x * x)
+same(f10p, lambda x: d1(f10, x), [-1, -0.4, 0.5, 1.583, 2], 1e-6, "problem 10, f'")
+same(f10pp, lambda x: d2(f10, x), [-1, -0.4, 0.5, 1.583, 2], 1e-5, "problem 10, f''")
+same(f11pp, lambda x: d2(f11, x), [0, 0.3, 0.6, 1], 1e-5, "problem 11, f''")
+same(lambda x: 24 * x * (1 - x * x) / (x * x + 1) ** 4, lambda x: d1(f11pp, x), [0, 0.3, 0.6, 1], 1e-6, "problem 11, f'''")
+same(lambda x: (1 - 2 * x * x) * math.exp(-x * x), lambda x: d1(f12, x), [-1, -0.52465, 0.3, 1.65068, 3], 1e-6, "problem 12, f'")
+same(f12pp, lambda x: d2(f12, x), [-1, -0.52465, 0.3, 1.65068, 3], 1e-5, "problem 12, f''")
+same(lambda x: -(8 * x ** 4 - 24 * x * x + 6) * math.exp(-x * x), lambda x: d1(f12pp, x), [-1, -0.52465, 0.3, 1.65068, 3], 1e-6,
+     "problem 12, f'''")
+same(lambda x: 24 / (x + 1) ** 5, lambda x: d4(f14, x), [0, 0.5, 1], 2e-3, "problem 14, f''''")
+same(math.sin, lambda x: d4(math.sin, x), [0.2, 0.6, 1], 2e-3, "problem 16, f'''' = sin x")
+same(lambda x: math.pi ** 4 * math.sin(math.pi * x), lambda x: d4(lambda t: math.sin(math.pi * t), x), [0.2, 0.5, 0.8], 2e-3,
+     "problem 17, f'''' of sin(pi x)")
+# problem 10: the maximum of |f''| with a bounded optimiser as well, not only on a grid
+opt10 = minimize_scalar(lambda x: -abs(f10pp(x)), bounds=(1.3, 1.9), method="bounded", options={"xatol": 1e-12})
+assert abs(-opt10.fun - M2_10) < 1e-9 and abs(opt10.x - 1.58338826) < 1e-6, (opt10.x, -opt10.fun)
+assert max(abs(f10pp(-1)), abs(f10pp(2))) < M2_10
+log.info(f"  problem 10: max |f''| = {-opt10.fun:.9f} at x = {opt10.x:.8f} (bounded optimiser), ends {abs(f10pp(-1)):.5f}, {abs(f10pp(2)):.5f}")
 
 # ------------------------------------------------------------------ widgets: predict blocks
 log.info("predict blocks")

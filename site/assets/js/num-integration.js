@@ -236,7 +236,11 @@
       let msg = `${NAME[rule]} ընդհանրացված բանաձև, n = ${n}, h = ${num(h, 4)}՝ ${SYM[rule]}${String(n).replace(/\d/g, ch => "₀₁₂₃₄₅₆₇₈₉"[ch])} ≈ ${num(val, 6)}, ` +
         `ճշգրիտ արժեքը՝ ${num(c.I, 6)}, սխալանքը՝ ${err < floor ? "≈ 0 (կլորացման մակարդակում)" : "≈ " + sci(err)}։`;
       const err2 = errOf(rule, 2 * n);
-      if (2 * n <= 256 && err2 > floor && err > floor) msg += ` n-ը կրկնապատկելիս սխալանքը փոքրանում է մոտ ${num(err / err2, 1)} անգամ։`;
+      // for a small n the error can grow when n is doubled (x² cos x, midpoint rule, n = 1 -> 2)
+      if (2 * n <= 256 && err2 > floor && err > floor) {
+        msg += err2 < err ? ` n-ը կրկնապատկելիս սխալանքը փոքրանում է մոտ ${num(err / err2, 1)} անգամ։` :
+          ` n-ը կրկնապատկելիս սխալանքն այստեղ մեծանում է մոտ ${num(err2 / err, 1)} անգամ (n-ը դեռ փոքր է)։`;
+      }
       out("msg").textContent = msg;
     }
     function setRule(r) {
@@ -264,9 +268,10 @@
       trap: { x: [0, 1], w: [0.5, 0.5], a: 0, b: 1, tex: "Q(f)=\\tfrac12f(0)+\\tfrac12f(1)" },
       simp: { x: [0, 0.5, 1], w: [1 / 6, 2 / 3, 1 / 6], a: 0, b: 1, tex: "Q(f)=\\tfrac16f(0)+\\tfrac23f\\bigl(\\tfrac12\\bigr)+\\tfrac16f(1)" },
       p1: { x: [0, 0.25, 0.5, 0.75, 1], w: [7, 32, 12, 32, 7].map(v => v / 90), a: 0, b: 1,
-        tex: "\\begin{aligned}Q(f)={}&\\tfrac{1}{90}\\bigl[7f(0)+32f\\bigl(\\tfrac14\\bigr)\\\\&+12f\\bigl(\\tfrac12\\bigr)+32f\\bigl(\\tfrac34\\bigr)+7f(1)\\bigr]\\end{aligned}" },
+        tex: "\\begin{aligned}Q(f)={}&\\tfrac{1}{90}\\bigl[7f(0)+32f\\bigl(\\tfrac14\\bigr)\\\\&+12f\\bigl(\\tfrac12\\bigr)+32f\\bigl(\\tfrac34\\bigr)\\\\&+7f(1)\\bigr]\\end{aligned}" },
       g2: { x: g2.x, w: g2.w, a: -1, b: 1, tex: "Q(f)=f\\bigl(-\\tfrac{1}{\\sqrt3}\\bigr)+f\\bigl(\\tfrac{1}{\\sqrt3}\\bigr)" },
-      g3: { x: g3.x, w: g3.w, a: -1, b: 1, tex: "Q(f)=\\tfrac59f\\bigl(-\\sqrt{\\tfrac35}\\bigr)+\\tfrac89f(0)+\\tfrac59f\\bigl(\\sqrt{\\tfrac35}\\bigr)" },
+      g3: { x: g3.x, w: g3.w, a: -1, b: 1,
+        tex: "\\begin{aligned}Q(f)={}&\\tfrac59f\\bigl(-\\sqrt{\\tfrac35}\\bigr)+\\tfrac89f(0)\\\\&+\\tfrac59f\\bigl(\\sqrt{\\tfrac35}\\bigr)\\end{aligned}" },
       free: { a: -1, b: 1 }
     };
     const T_GAUSS = 1 / Math.sqrt(3);
@@ -288,6 +293,10 @@
         tex = snap ? "Q(f)=f\\bigl(-\\tfrac{1}{\\sqrt3}\\bigr)+f\\bigl(\\tfrac{1}{\\sqrt3}\\bigr)" : `Q(f)=f(${P.numTex(-t, 3)})+f(${P.numTex(t, 3)})`;
       }
       Q.tex(out("formula"), tex, true);
+      // site.css sizes every svg inside a widget as a plot (`.widget svg { height: auto }`). That rule also hits the
+      // svg KaTeX draws a root sign with: the sign collapses to 0.1 px and 1/√3 reads as 1/3 (review 2026-11-14).
+      // Give the sign its own height back; remove this line once site.css excludes `.katex svg`.
+      out("formula").querySelectorAll("svg[width]").forEach(s => { s.style.height = "inherit"; });
       const { deg, rows } = exactness(x, w, c.a, c.b, 7);
       const table = Q.el("table", { class: "tbl" });
       const hr = Q.el("tr", {});
@@ -312,9 +321,11 @@
       const first = rows.find(r => !r.ok);
       const okList = deg === 0 ? "հաստատունների" : deg === 1 ? "1 և x ֆունկցիաների" : `1, x, ..., x${sup(deg)} ֆունկցիաների`;
       const fails = first.j === 1 ? "x-ի" : `x${sup(first.j)}-ի`;
+      // at t = 1/√3 the error of x² is exactly 0: do not print the rounding noise (-2.2e-16)
+      const e2 = key === "free" ? 2 / 3 - x[1] * x[1] * 2 : 0;
       out("msg").textContent = deg >= 7 ? "Բանաձևը ճշգրիտ է աղյուսակի բոլոր աստիճանների համար։" :
         `Ճշգրտության աստիճանը ${deg} է. բանաձևը ճշգրիտ է ${okList} համար, բայց ոչ ${fails} համար։` +
-        (key === "free" ? ` x² ֆունկցիայի համար սխալանքը՝ 2/3 − 2t² ≈ ${sci(2 / 3 - x[1] * x[1] * 2)}։` : "");
+        (key === "free" ? ` x² ֆունկցիայի համար սխալանքը՝ 2/3 − 2t² ${Math.abs(e2) < 1e-12 ? "= 0" : "≈ " + sci(e2)}։` : "");
     }
     caseBtns.forEach(b => b.addEventListener("click", () => { press(caseBtns, b); key = b.dataset.case; draw(); }));
     slider.addEventListener("input", draw);

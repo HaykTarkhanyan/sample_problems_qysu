@@ -241,11 +241,17 @@ if (widgets["w-comp"]) {
     cb.fire("click");
     for (const rb of r.querySelectorAll("[data-rule]")) {
       rb.fire("click");
-      for (const v of [1, 2, 3, 6, 17, 32]) {
+      for (let v = 1; v <= 32; v++) {   // every slider position
         slider.value = v; slider.fire("input");
         const s = clean(outOf(r, "msg"), `w-comp ${cb.dataset.case} ${rb.dataset.rule} n=${v}`);
         clean(outOf(r, "n"), "w-comp n"); pointsOk(r);
         if (rb.dataset.rule === "simp") assert.equal(Number(slider.value) % 2, 0, "Simpson with odd n");
+        // "the error decreases about k times" only with k > 1 (review 2026-11-14: x² cos x, midpoint, n = 1 said 0,6)
+        const dec = s.match(/փոքրանում է մոտ ([\d,]+) անգամ/), inc = s.match(/մեծանում է մոտ ([\d,]+) անգամ/);
+        assert.ok(dec || inc, `w-comp: no doubling sentence: ${s}`);
+        assert.ok(Number((dec || inc)[1].replace(",", ".")) > 1, `w-comp: ratio not above 1: ${s}`);
+        if (cb.dataset.case === "p8" && rb.dataset.rule === "mid" && v === 1) assert.ok(s.includes("0,265") && s.includes("մեծանում է մոտ 1,6 անգամ"), s);
+        else assert.ok(dec, `w-comp: the error grows on doubling n in a case the review did not see: ${s}`);
         if (cb.dataset.case === "p6" && rb.dataset.rule === "mid" && v === 3) assert.ok(s.includes("M₃ ≈ 21,989418") && s.includes("46,999651"), s);
         if (cb.dataset.case === "p6" && rb.dataset.rule === "mid" && v === 6) assert.ok(s.includes("M₆ ≈ 37,520453"), s);
         if (cb.dataset.case === "p8" && rb.dataset.rule === "trap" && v === 3) assert.ok(s.includes("T₃ ≈ −0,02184") && s.includes("0,393141"), s);
@@ -282,6 +288,9 @@ if (widgets["w-exact"]) {
         const t = clean(outOf(r, "msg"), `w-exact free t=${v}`);
         clean(outOf(r, "t"), "w-exact t");
         if (v === 577) assert.ok(t.startsWith("Ճշգրտության աստիճանը 3 է.") && outOf(r, "t").textContent.startsWith("t = 1/√3"), t);
+        // at the Gauss node the error of x² is exactly 0, not rounding noise (review 2026-11-14: it printed −2,22·10⁻¹⁶)
+        if (v === 577) assert.ok(t.endsWith("2/3 − 2t² = 0։"), t);
+        else assert.ok(/2\/3 − 2t² ≈ −?[\d,]+(·10⁻³)?։$/.test(t), t);
         if (v === 500 || v === 1000) assert.ok(t.startsWith("Ճշգրտության աստիճանը 1 է."), t);
         if (v === 0) assert.ok(t.startsWith("Ճշգրտության աստիճանը 1 է."), t);   // 2 f(0): the midpoint rule
       }
