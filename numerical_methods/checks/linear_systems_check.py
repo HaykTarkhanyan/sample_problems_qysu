@@ -23,6 +23,7 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 T0 = time.time()
+Fr.__repr__ = Fr.__str__          # the log prints 3/2 instead of Fraction(3, 2)
 
 
 # ---------------------------------------------------------------- helpers
@@ -441,5 +442,115 @@ G11 = gs_exact(A11, b11, [-1, -1, 1], 2)
 assert G11[1] == [2, Fr(7, 4), Fr(19, 10)] and G11[2] == [Fr(201, 100), Fr(99, 50), Fr(497, 250)]
 assert [float(v) for v in G11[2]] == [2.01, 1.98, 1.988] and errinf(G11[2], x11) == Fr(1, 50)
 log.info(f"E11: y = {y11}, x = {x11}; Jacobi x1 = {J11[1]}, x2 = {J11[2]}; GS x2 = {G11[2]}")
+
+# ---------------------------------------------------------------- E12
+assert det(A10) == 8 and det(A11) == 70 and det(M([[4, -1, 1], [2, 5, -2], [-1, 3, 6]])) == 165
+assert det(M([[1, 1], [1, 1]])) == 0
+log.info("E12: det of the matrices of E10, E11, E13 = 8, 70, 165; [[1,1],[1,1]] singular")
+
+
+# ---------------------------------------------------------------- E13
+def shown_e(v, s):
+    got = f"{float(v):.2e}"
+    assert got == s, f"{v} prints as {got}, the page says {s}"
+
+
+A13, b13 = M([[4, -1, 1], [2, 5, -2], [-1, 3, 6]]), V([7, 4, 2])
+assert [sum(abs(A13[i][j]) for j in range(3) if j != i) for i in range(3)] == [2, 4, 4]
+TJ13, TG13 = splitting(A13)
+assert np.isclose(np.abs(TJ13).sum(1).max(), 0.8)
+x13 = backward(eliminate(A13)[1], forward(eliminate(A13)[0], b13))
+assert x13 == [Fr(94, 55), Fr(10, 33), Fr(7, 15)] and matvec(A13, x13) == b13
+for v, s in zip(x13, ["1.709091", "0.303030", "0.466667"]):
+    shown(v, s)
+J13 = jacobi_exact(A13, b13, [0, 0, 0], 3)
+assert J13[1] == [Fr(7, 4), Fr(4, 5), Fr(1, 3)] and J13[2] == [Fr(28, 15), Fr(7, 30), Fr(9, 40)]
+assert Fr(1, 4) * (7 + Fr(4, 5) - Fr(1, 3)) == Fr(28, 15) and Fr(1, 5) * (4 - 2 * Fr(7, 4) + 2 * Fr(1, 3)) == Fr(7, 30)
+assert Fr(1, 6) * (2 + Fr(7, 4) - 3 * Fr(4, 5)) == Fr(9, 40)
+Af, bf, xsf = np.array(A13, float), np.array(b13, float), np.array(x13, float)
+
+
+def jac_np(N):
+    x, D = np.zeros(3), np.diag(Af)
+    for _ in range(N):
+        x = (bf - (Af - np.diag(D)) @ x) / D
+    return x
+
+
+def gs_np(N):
+    x = np.zeros(3)
+    for _ in range(N):
+        for i in range(3):
+            x[i] = (bf[i] - Af[i, :i] @ x[:i] - Af[i, i + 1:] @ x[i + 1:]) / Af[i, i]
+    return x
+
+
+for N, s in [(1, "4.97e-01"), (2, "2.42e-01"), (3, "1.60e-01"), (10, "3.90e-03"), (26, "9.41e-07")]:
+    shown_e(np.abs(jac_np(N) - xsf).max(), s)
+nJ = next(N for N in range(200) if np.abs(jac_np(N) - xsf).max() < 1e-6)
+assert nJ == 26
+nB = next(N for N in range(200) if 0.8**N * float(Fr(94, 55)) < 1e-6)  # a priori bound (4/5)^N ||e0||, e0 = x*
+assert nB == 65 and errinf(V([0, 0, 0]), x13) == Fr(94, 55)
+shown(rho(TJ13), "0.592")
+log.info(f"E13: x* = {x13}; Jacobi < 1e-6 from N = {nJ}; bound gives N = {nB}; rho(T_J) = {rho(TJ13):.4f}")
+
+# ---------------------------------------------------------------- E14
+A14, b14 = M([[4, -1], [2, -3]]), V([2, -4])
+TJ14, TG14 = splitting(A14)
+assert np.allclose(TJ14, [[0, 1 / 4], [2 / 3, 0]]) and np.allclose(TG14, [[0, 1 / 4], [0, 1 / 6]])
+assert np.isclose(rho(TJ14), 1 / 6**0.5) and np.isclose(rho(TG14), 1 / 6)
+shown(rho(TJ14), "0.408")
+shown(rho(TG14), "0.167")
+assert np.allclose(TJ14 @ TJ14, np.eye(2) / 6)
+J14 = jacobi_exact(A14, b14, [-1, -1], 3)
+G14 = gs_exact(A14, b14, [-1, -1], 3)
+assert J14[1:] == [[Fr(1, 4), Fr(2, 3)], [Fr(2, 3), Fr(3, 2)], [Fr(7, 8), Fr(16, 9)]]
+assert G14[1:] == [[Fr(1, 4), Fr(3, 2)], [Fr(7, 8), Fr(23, 12)], [Fr(47, 48), Fr(143, 72)]]
+x14 = V([1, 2])
+assert matvec(A14, x14) == b14 and 2 * 1 - 12 * 1 + 6 == -4
+assert [errinf(x, x14) for x in J14] == [3, Fr(4, 3), Fr(1, 2), Fr(2, 9)]
+assert [errinf(x, x14) for x in G14] == [3, Fr(3, 4), Fr(1, 8), Fr(1, 48)]
+assert [abs(J14[3][0] - 1), abs(J14[3][1] - 2)] == [Fr(1, 8), Fr(2, 9)]
+assert [abs(G14[3][0] - 1), abs(G14[3][1] - 2)] == [Fr(1, 48), Fr(1, 72)]
+shown(Fr(2, 9), "0.2222")
+shown(Fr(1, 48), "0.0208")
+shown(Fr(2, 9) / Fr(1, 48), "10.7")
+assert Fr(1, 8) / Fr(3, 4) == Fr(1, 48) / Fr(1, 8) == Fr(1, 6)       # GS: exactly 6 times per step
+assert Fr(1, 2) / 3 == Fr(2, 9) / Fr(4, 3) == Fr(1, 6)              # Jacobi: 6 times per two steps
+assert (2 + Fr(2, 3)) / 4 == Fr(2, 3) and (4 + 2 * Fr(1, 4)) / 3 == Fr(3, 2) and Fr(2 - 1, 4) == Fr(1, 4)
+log.info(f"E14: Jacobi {J14[1:]}, GS {G14[1:]}, errors 2/9 and 1/48")
+
+# ---------------------------------------------------------------- E15
+A15, b15 = M([[2, 0], [1, 4]]), V([2, 9])
+G15 = gs_exact(A15, b15, [5, -7], 1)
+assert G15[1] == V([1, 2]) and matvec(A15, G15[1]) == b15 and Fr(9 - 1, 4) == 2
+for _ in range(100):                                                   # lower triangular: x1 = x* for every x0
+    n = int(rng.integers(1, 6))
+    B = np.tril(rng.normal(size=(n, n))) + n * np.eye(n)
+    bb, x0 = rng.normal(size=n), rng.normal(size=n)
+    x = x0.copy()
+    for i in range(n):
+        x[i] = (bb[i] - B[i, :i] @ x[:i] - B[i, i + 1:] @ x[i + 1:]) / B[i, i]
+    assert np.allclose(B @ x, bb)
+for _ in range(100):                                                   # U != 0: x1 depends on x0
+    n = int(rng.integers(2, 6))
+    B = rng.normal(size=(n, n)) + n * np.eye(n)
+    _, TG = splitting(B)
+    assert np.abs(TG).max() > 1e-12                                    # x1 = TG x0 + c is not constant
+assert G14[1] != x14
+log.info("E15: lower triangular with a_ii != 0; example x1 = (1, 2) from x0 = (5, -7)")
+
+# ---------------------------------------------------------------- E16
+G13 = gs_exact(A13, b13, [0, 0, 0], 1)
+assert G13[1] == [Fr(7, 4), Fr(1, 10), Fr(23, 40)]
+assert Fr(1, 5) * (4 - 2 * Fr(7, 4)) == Fr(1, 10) and Fr(1, 6) * (2 + Fr(7, 4) - 3 * Fr(1, 10)) == Fr(23, 40)
+for N, s in [(1, "2.03e-01"), (2, "7.78e-02"), (3, "3.26e-02"), (10, "8.89e-05"), (16, "5.65e-07")]:
+    shown_e(np.abs(gs_np(N) - xsf).max(), s)
+nG = next(N for N in range(200) if np.abs(gs_np(N) - xsf).max() < 1e-6)
+assert nG == 16
+shown(rho(TG13), "0.430")
+shown(16 / 26, "0.62")
+shown(np.log(rho(TJ13)) / np.log(rho(TG13)), "0.62")
+log.info(f"E16: GS < 1e-6 from N = {nG}; rho(T_GS) = {rho(TG13):.4f}")
 
 log.info(f"all checks passed in {time.time() - T0:.2f} s")
