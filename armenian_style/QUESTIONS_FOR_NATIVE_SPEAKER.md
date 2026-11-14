@@ -16,7 +16,8 @@ need to answer the open ones.
 | **Resolved by source** (no answer needed) | A1, A3, A4, A8, A12, A14, A15, A21, A34, A35 |
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
 | **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
-| **Open** | none |
+| **Answered by the owner, 2026-11-14** | A50 |
+| **Open** (put to the owner on 2026-11-14, who said "ask later") | A51, A52, A53, A54, A55, A56 |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
@@ -346,3 +347,38 @@ a) «որ»  b) both fine  c) «որպեսզի». **Owner:** a.
 **A49. Four phrasings on the splines page: fine, or rewrite?** «$|f''|$-ն աճում է $t$-ից», «$\Phi$-ն
 ողորկ ֆունկցիա է գործակիցներից», «ուղիղ վերևի բանաձևերով», «ինքնաբերաբար» (for "holds automatically").
 I doubted all four. **Owner:** all four are fine.
+
+## Added 2026-11-14 (from the builders and reviewers of the three new numerical pages)
+
+**A50. Base-10 number system.** The errors page had «տասնորդական համակարգ» (glossary: decimal =
+«տասնորդական»); the lecturer's problem list writes «տասական հաշվարկման համակարգ».
+- **Owner:** «տասական համակարգ» for the number system. «տասնորդական» stays for decimal fractions and digits.
+
+**A51 (open). Chopping** (dropping digits without rounding; no glossary row, the list writes it in Latin).
+The errors page uses «կտրում».
+- a) «կտրում»  b) «հատում» (also the glossary word for intersection)  c) other
+- My guess: a.
+
+**A52 (open). Overflow / underflow** (no glossary rows). The errors page writes «գերլցում (overflow)» and
+leaves "underflow" in English with an explanation in words.
+- a) keep  b) English for both  c) Armenian words for both: ...
+
+**A53 (open). Leading coefficient.** The interpolation page writes «ավագ անդամի գործակից» 7 times and uses
+«ավագ անդամ» for the leading term. Glossary row 545 gives leading coefficient = «ավագ անդամ» (confirmed in A27).
+- a) keep «ավագ անդամի գործակից»  b) «ավագ անդամ» as in row 545  c) «ավագ գործակից»
+
+**A54 (open). Double root.** The nonlinear page writes «կրկնակի արմատ» 3 times; glossary row 642 has
+multiple root = «պատիկ արմատ».
+- a) keep «կրկնակի արմատ»  b) «երկպատիկ արմատ»
+
+**A55 (open). Article before a formula whose spoken name starts with a vowel.** «$x_n$-ը $r$ արմատի»,
+«$S$-ը $f$-ի», «$f'$-ը $x=1$-ում» ($r$ = «էռ», $f$ = «էֆ», $x$ = «իքս»). Rule A1 read strictly gives «-ն»;
+all four numerical pages mostly write «-ը», the probability pages have both. One decision for every page.
+- a) «-ը» before a formula (the formula counts as a pause)  b) «-ն» when the formula's name starts with a vowel
+- No guess: this is exactly the kind of point where the model's ear has been unreliable.
+
+**A56 (open). Interpolation problem 1ա.** $P(x)=5x^2-x-1$ passes through both data points but has degree 2.
+The page answers in the strict sense: it passes through the points, but the interpolation polynomial of the
+data is the line $-6x-1$. The reviewer notes the lecturer's usage points to the plain answer "yes, P
+interpolates the data".
+- a) keep the strict answer  b) say "yes" first, then add the remark about the degree

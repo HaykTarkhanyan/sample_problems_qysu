@@ -50,4 +50,7 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A47 | a prime is read «շտրիխ» | A primed symbol always ends in a consonant: «$g'$-ը զրո է դառնում», «$S'$-ը», «$S''$-ն են». The lint follows this. |
 | A48 | «Անհրաժեշտ է, որ ...», not «... որպեսզի ...» | «որպեսզի» only for purpose clauses, also after «պետք է», «բավական է». The Committee page names other verbs; for these three the rule is the owner's. |
 | A49 | four phrasings on the splines page are fine as written | «$|f''|$-ն աճում է $t$-ից», «$\Phi$-ն ողորկ ֆունկցիա է գործակիցներից», «ուղիղ վերևի բանաձևերով», «ինքնաբերաբար» (= holds automatically). The model had doubted all four. |
+| A50 | base-10 number system = «տասական համակարգ» (2026-11-14) | As in the lecturer's problem list. «տասնորդական» stays for decimal fractions and digits. Applied on the errors page. |
+| - | all solutions may be published, including the sub-part that overlaps the current homework (2026-11-14) | "its fully okay to publish all the solutions". |
+| - | A51-A56 are open: asked on 2026-11-14, answer "ask later" | See `QUESTIONS_FOR_NATIVE_SPEAKER.md`. Do not decide them by ear. |
 | - | discrete sweep: "not now" (asked again 2026-11-13) | The 7 discrete sheets and their pages stay as they are; new finds go to DEFERRED_TODO. |

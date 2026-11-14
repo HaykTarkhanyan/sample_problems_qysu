@@ -347,3 +347,6 @@ __pycache__/
 logs/
 # Git Bash crash dumps
 *.stackdump
+
+# Agent worktrees (isolated checkouts made by Claude Code agents); never commit them
+.claude/worktrees/

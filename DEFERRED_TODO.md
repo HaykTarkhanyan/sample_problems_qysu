@@ -12,9 +12,12 @@ Topics cut from current work so they are not lost.
   a Fable agent, but read for language only by lint and by a 12-problem sample. The reviewers' and builders'
   doubts (terms with no glossary row, a few maths conventions) are collected at the end of the three reports
   in `numerical_methods/reviews/2026-11-14_*`. (2026-11-14)
-- **Cross-page links between the numerical pages**: `splines.html` mentions the interpolating polynomial and
-  the Runge effect and could link to `interpolation.html`; the pagers of the four pages do not link to each
-  other yet. (2026-11-14)
+- **Small leftovers on the new numerical pages** (from the reviews, none wrong): on `nonlinear.html` the
+  `w-order` legend shows «կիսում» in the "Խնդիր 17" view, which has no bisection series (needs a small JS change
+  and a browser look), and the TOC entry for `#fixedpoint` is shorter than its heading; on `interpolation.html`
+  «ծայրային արժեք» is used in two senses, problem 23's function does not draw (the plot is a separate block),
+  and problem 26բ could add the sharper pointwise bound. Six owner questions are open: A51-A56 in
+  `armenian_style/QUESTIONS_FOR_NATIVE_SPEAKER.md`. (2026-11-14)
 - **Native Armenian read of `site/numerical/splines.html`** (model-written). A model pass was done on
   2026-11-13 (full read against the guide and glossary, 12 fixes, 4 doubtful phrasings put to the owner
   and all 4 kept), but nobody native has read it end to end yet. (2026-11-11)
