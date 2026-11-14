@@ -8,7 +8,7 @@ reference only (gitignored); this map is what gets committed.
 
 | ARM block | topic | site page | status |
 |-----------|-------|-----------|--------|
-| A (1-15) | machine numbers, rounding, errors (problems 1-15) | `site/numerical/errors.html` | built 2026-11-13, reviewed 2026-11-14 (`reviews/2026-11-14_errors_math_review.md`: 4 false statements fixed, no wrong answer): theory, 15 solutions, 4 widgets, 12 runnable Python blocks; numbers checked by `checks/errors_check.py`, widget math by `checks/errors_widgets_check.mjs`; PSS 1 itself is not on the page, and sub-part 6b, which overlaps it, is published by the owner's decision of 2026-11-14 |
+| A (1-15) + PSS 1 | machine numbers, rounding, errors (problems 1-15), plus the 7 problems of PSS 1 | `site/numerical/errors.html` | built 2026-11-13, reviewed 2026-11-14 (`reviews/2026-11-14_errors_math_review.md`: 4 false statements fixed, no wrong answer): theory, 15 solutions, 4 widgets, 12 runnable Python blocks; numbers checked by `checks/errors_check.py`, widget math by `checks/errors_widgets_check.mjs`. PSS 1 added 2026-11-14 (owner: all solutions may be published): sections `#pss1`, `#s1`-`#s7` after problem 15, a Taylor-remainder theory section `#taylor` before PSS 1.5, 6 more Python blocks (18 in all), 2 more predict blocks; PSS 1.3b refers to 6b; numbers asserted in `checks/errors_check.py`; not yet independently reviewed |
 | A (16-45) | nonlinear equations (problems 16-45) | `site/numerical/nonlinear.html` | built 2026-11-13, reviewed 2026-11-14 (`reviews/2026-11-14_nonlinear_math_review.md`: no wrong maths, six small fixes): theory (rate of convergence, isolation, bisection, Newton / secant, fixed point), 30 solutions, 4 widgets, 15 runnable Python blocks; numbers checked by `checks/nonlinear_check.py`, widget math by `checks/nonlinear_widgets_check.mjs` |
 | B | polynomial interpolation (problems 1-26) | `site/numerical/interpolation.html` | built 2026-11-13, reviewed 2026-11-14 (`reviews/2026-11-14_interpolation_math_review.md`: no wrong maths): theory in 5 sections (existence, Lagrange, Newton / divided differences, error, node choice / Chebyshev), 26 solutions, 5 widgets (`num-interp.js`), 13 runnable Python blocks; numbers checked by `checks/interpolation_check.py`, widget math by `checks/interp_widgets_check.mjs` |
 | C | splines + least squares (problems 1-17) | `site/numerical/splines.html` | built 2026-11-11 (proof of concept): theory, 17 solutions, 4 widgets, 10 runnable Python blocks, 1 Manim video; numbers checked by `checks/splines_check.py`, widget math by `checks/widgets_check.mjs`, math review in `reviews/`; language and content pass on 2026-11-13 (12 fixes, plus a folded four-point natural-spline example under problem 10) |
@@ -83,7 +83,7 @@ p89 additional resources.
 arithmetic with chopping / rounding, associativity and distributivity fail; P3 rewrite to avoid
 cancellation; P4 abs/rel error, interval from a relative error bound; P5 Taylor remainder bounds for e^x on
 [-0.25, 0.25] (point, max, integral); P6 stable softmax; P7 **Python**: E_n = Σ 1/k!, error table, when it
-stops improving.
+stops improving. All 7 are solved on `site/numerical/errors.html` (`#s1`-`#s7`, added 2026-11-14).
 
 **`PrSet1.pdf` (Spring 2022)**
 

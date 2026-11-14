@@ -1,0 +1,58 @@
+title = "Errors page: the 7 problems of PSS 1 (the course's first problem set) added after problem 15"
+date = "2026-11-14"
+time = "01:14"  # local
+
+areas = [
+  "site/numerical (errors.html, index.html)",
+  "numerical_methods/checks (errors_check.py)",
+  "numerical_methods/README.md",
+]
+
+done = [
+  "Read the PSS 1 PDF (pdftotext + page images at 130 dpi); all 7 statements readable, transcription in logs/pss1_statements.md (gitignored) with the readings that had to be chosen.",
+  "errors.html: new group after problem 15 and before #exam: #pss1 (introduction: what PSS 1 is, labels PSS 1.1-1.7, sub-parts written (ա) (բ) (գ)), #s1-#s4, a short Taylor theory section #taylor (lecture 2 form f = f_n + R_n, |R_n| <= M|x-x0|^(n+1)/(n+1)!, n = 0 is the mean value theorem, e^x example, the lecture's e^2 example, the bound 1/(n+1)! < e - E_n < e/(n+1)!), then #s5-#s7. Every problem has a restated statement, steps, check and answer box; TOC entries added.",
+  "PSS 1.1: round-off vs truncation ('մեթոդի սխալանք', because 'կտրում' already means chopping on this page), comparison table, the lecture's Patriot example with the arithmetic (0.1 chopped to 23 bits, error 1/10485760, 0.34 s, 575 m) and a Python block.",
+  "PSS 1.2: 3-digit chopping (0.462 vs 0.461; with rounding both orders give 0.462) and 2-digit rounding (0.028 vs 0.027, exact 0.0275 in the middle), Python block with decimal contexts.",
+  "PSS 1.3: sqrt (conjugate), 1 - cos x (refers to 6b, adds only the sign flip), ln(x+1) - ln x = ln(1 + 1/x) and why it must be computed with log1p; Python table of relative errors at x = 1e4 .. 1e16.",
+  "PSS 1.4: [497.5, 502.5] (exact value in the denominator; the divide-by-x* mistake shown), e - 2.718 and its relative error tied to the rounding theorem, 1e-5 against 0.1.",
+  "PSS 1.5: bounds e^0.1/24 * 1e-4 < 4.61e-6, e^0.25/6144 < 2.09e-4, e^0.25/61440 < 2.09e-5, each compared with the true error; no-calculator variant e^0.25 < 4/3; proof that the true maximum is at x = 0.25.",
+  "PSS 1.6: overflow above ln(max double) = 709.78, the shift proof, a = max x_k (and why min fails), p = (0.24473, 0.66524, 0.09003); predict block; Python block.",
+  "PSS 1.7: the full commented program (docstring, partial_sum, errors, print_table, smallest_n), answer n = 12, why the error stalls at 4.44e-16 from n = 17 (absorbed terms, rounding, math.e != e), comparison with the exact method error; predict block.",
+  "Stale text updated: page description, kicker, subtitle, #intro, two cross-links (arith list, hypot box), #exam (3 new summary rows, 3 typical mistakes, 2 self-check questions), the index card, the README status row and PSS 1 paragraph.",
+  "errors_check.py asserts every new number (exact fractions / decimal for the hand arithmetic, format checks of every quoted rounding, the E_n table replicated with the page's algorithm, float32 claim of the predict block).",
+  "Display formulas estimated against the 316 / 288 px limits and split where an estimate came within ~10 %; one inline answer formula (three probabilities, ~305 px) split into three.",
+]
+
+pending = [
+  "No browser check (agents may not drive the browser): 1280 px and 390 px, both themes, katex-display overflow of the new formulas (estimates only).",
+  "One independent math review of the PSS 1 part before publishing.",
+  "site/assets/search/numerical.js is stale (CI rebuilds it before deploy).",
+  "Term choices to confirm with the owner: truncation error = «մեթոդի սխալանք», problem set = «տնային աշխատանք», numerically stable = «թվային առումով կայուն».",
+]
+
+next = [
+  "Main session: browser check at 390 px, review, merge, rebuild the search index.",
+]
+
+files = [
+  "site/numerical/errors.html",
+  "site/numerical/index.html",
+  "numerical_methods/checks/errors_check.py",
+  "numerical_methods/README.md",
+]
+
+commits = [
+  "6ecaa76 Errors page: PSS 1 problems 1-4 (sources of error, associativity and distributivity, cancellation, abs/rel error)",
+  "M2 (this log's commit): Taylor section, PSS 1.5-1.7, checks, stale-text updates",
+]
+
+notes = """
+Milestone 1 was committed by temporarily moving the Taylor section and PSS 1.5-1.7 out of the page (scratch script
+logs/m1_split.py, not committed), running all gates on that state, committing, and restoring; the restored file was
+byte-identical to the backup.
+PSS 1.2a is a chopping effect: with 3-digit rounding (a + b) + c also gives 0.462.
+PSS 1.7: in double E_17 = E_18 = ... = E_20 = math.e + one ulp, so the table shows 4.441e-16 from n = 17; in float32
+the sum stops changing at n = 10 (used in the predict block).
+math.log(1.8e308) is inf in Python (1.8e308 is above the largest double), so the page says "the log of the largest
+double (about 1.8e308) is about 709.78" and the check uses np.finfo(float).max.
+"""

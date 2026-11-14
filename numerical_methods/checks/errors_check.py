@@ -1,6 +1,7 @@
 """Recompute every number on site/numerical/errors.html (problem list block A, problems 1-15:
 machine numbers, chopping and rounding, floating-point arithmetic, absolute and relative error,
-cancellation, error bounds).
+cancellation, error bounds; plus the 7 problems of the course's PSS 1: sources of error, 3- and
+2-digit arithmetic, cancellation, abs/rel error, Taylor remainder of e^x, stable softmax, E_n = sum 1/k!).
 
 Run from the repo root (uses the animations/ environment, numpy only):
     uv run --project animations python numerical_methods/checks/errors_check.py
@@ -737,6 +738,132 @@ assert 1.7 < D("0.0005") / ab4e < 1.8                   # "almost 2 times" below
 assert Fr("0.01") / 1000 == Fr(1, 10 ** 5) and Fr("0.01") / Fr("0.1") == Fr("0.1")
 assert (Fr("0.01") / Fr("0.1")) / (Fr("0.01") / 1000) == 10 ** 4 and 100 * Fr(1, 10 ** 5) == Fr("0.001")
 log.info(f"PSS 1.4: x* in [497.5, 502.5]; e - 2.718 = {ab4e:.4e}, relerr {re4e:.4e}; 0.01/1000 = 1e-5, 0.01/0.1 = 0.1")
+
+# ---------------------------------------------------------------- Taylor section (theory before PSS 1.5)
+f4_2 = sum(Fr(2 ** k, math.factorial(k)) for k in range(5))
+assert f4_2 == 7 == 1 + 2 + 2 + Fr(4, 3) + Fr(2, 3)
+assert Fr(2 ** 5, math.factorial(5)) == Fr(4, 15)
+E2 = ctx40.exp(D(2))
+assert f"{4 * E2 / 15:.2f}" == "1.97" and f"{E2 - 7:.3f}" == "0.389" and E2 - 7 < 4 * E2 / 15
+for n in range(1, 21):                                   # 1/(n+1)! < e - E_n < e/(n+1)!  (exact E_n, 40-digit e)
+    En_exact = sum(Fr(1, math.factorial(k)) for k in range(n + 1))
+    gap = E40 - D(En_exact.numerator) / D(En_exact.denominator)
+    fact = D(math.factorial(n + 1))
+    assert 1 / fact < gap < E40 / fact
+
+# ---------------------------------------------------------------- PSS 1.5: e^x ~ P3(x) on [-0.25, 0.25]
+P3 = lambda x: 1 + x + x * x / 2 + x * x * x / 6
+assert math.factorial(4) == 24 and math.factorial(2) == 2 and math.factorial(3) == 6
+e01, e025, em025 = ctx40.exp(D("0.1")), ctx40.exp(D("0.25")), ctx40.exp(D("-0.25"))
+assert f"{e01:.5f}" == "1.10517" and str(e01).startswith("1.1051709") and f"{e025:.5f}" == "1.28403"
+# (a)
+P3_01 = P3(Fr(1, 10))
+assert P3_01 == 1 + Fr(1, 10) + Fr(5, 1000) + Fr(1, 6000) and Fr(1, 6000) == Fr("0.0001") + Fr(1, 15000)   # 0.0001(6)
+assert P3_01 == Fr("1.1051") + Fr(1, 15000) and Fr(1, 15000) * 10 ** 5 == Fr(20, 3)        # 1.1051666... = 1.1051(6)
+bound_a = e01 * D("0.1") ** 4 / 24
+actual_a = e01 - D(P3_01.numerator) / D(P3_01.denominator)
+assert f"{bound_a:.3e}" == "4.605e-6" and bound_a < D("4.61e-6")
+assert f"{actual_a:.3e}" == "4.251e-6" and D("1e-4") / 24 < actual_a < bound_a and f"{D('1e-4') / 24:.3e}" == "4.167e-6"
+# (b)
+assert Fr("0.25") ** 4 == Fr(1, 256) and 24 * 256 == 6144
+bound_b = e025 / 6144
+assert bound_b < D("2.09e-4") and f"{bound_b:.4e}" == "2.0899e-4"
+assert em025 > D("0.75") and e025 < Fr(4, 3) and Fr(4, 3) / 6144 == Fr(1, 4608) and f"{1 / 4608:.3g}" == "0.000217"
+g = lambda x: ctx40.exp(D(x)) - (1 + D(x) + D(x) ** 2 / 2 + D(x) ** 3 / 6)
+assert f"{g('0.25'):.4e}" == "1.7125e-4" and f"{g('-0.25'):.4e}" == "1.5495e-4" and g("-0.25") < g("0.25") < bound_b
+grid = [D(k) / 1000 for k in range(-250, 251)]
+gv = [g(x) for x in grid]
+assert all(gv[i] > gv[i + 1] for i in range(250)) and all(gv[i] < gv[i + 1] for i in range(250, 500))   # down, then up
+assert max(gv) == g("0.25") and min(gv) == 0
+for x in (-0.25, -0.1, 0.07, 0.25):                      # g'(x) = e^x - P2(x) has the sign of x
+    assert (math.exp(x) - (1 + x + x * x / 2) > 0) == (x > 0)
+# (c)
+assert 2 * Fr("0.25") ** 5 / 5 == Fr(1, 2560) and 24 * 2560 == 61440
+bound_c = e025 / 61440
+assert bound_c < D("2.09e-5") and f"{bound_c:.4e}" == "2.0899e-5"
+crude_c = e025 / (2 * 6144)
+assert f"{crude_c:.2e}" == "1.04e-4" and abs(crude_c / bound_c - 5) < D("1e-20") and Fr(61440, 2 * 6144) == 5
+I_e = e025 - em025
+I_P = Fr(1, 2) + 2 * Fr("0.25") ** 3 / 6
+assert f"{I_e:.7f}" == "0.5052246" and I_P == Fr(97, 192) == Fr("0.505208") + Fr(1, 3 * 10 ** 6)
+assert I_P == 2 * (Fr("0.25") + Fr("0.25") ** 3 / 6)    # odd terms integrate to 0
+actual_c = I_e - D(97) / D(192)
+assert f"{actual_c:.3e}" == "1.630e-5" and 0 < actual_c < bound_c
+log.info(f"PSS 1.5: (a) bound {bound_a:.4e}, actual {actual_a:.4e}; (b) bound e^0.25/6144 = {bound_b:.4e}, actual max "
+         f"g(0.25) = {g('0.25'):.4e} (g(-0.25) = {g('-0.25'):.4e}); (c) bound e^0.25/61440 = {bound_c:.4e}, actual {actual_c:.4e}")
+
+# ---------------------------------------------------------------- PSS 1.6: softmax
+dmax = np.finfo(np.float64).max
+assert f"{math.log(dmax):.2f}" == "709.78" and math.isfinite(math.exp(709.78))
+for big in (709.79, 1000.0):
+    try:
+        math.exp(big)
+        raise AssertionError(f"math.exp({big}) did not overflow")
+    except OverflowError:
+        pass
+with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+    assert np.exp(1000.0) == np.inf and np.exp(-1000.0) == 0.0 and math.exp(-746) == 0.0 and math.exp(-745) > 0
+    xs6 = np.array([1000.0, 1001.0, 999.0])
+    naive6 = np.exp(xs6) / np.exp(xs6).sum()
+    assert np.isnan(naive6).all()
+    neg6 = np.array([-1000.0, -1001.0, -999.0])
+    assert np.isnan(np.exp(neg6) / np.exp(neg6).sum()).all()                          # 0/0
+    pair = np.array([0.0, 1000.0])
+    assert np.isinf(np.exp(pair - pair.min())).any()                                   # shifting by the minimum fails
+stable6 = np.exp(xs6 - xs6.max()) / np.exp(xs6 - xs6.max()).sum()
+assert xs6.max() == 1001 and list(xs6 - xs6.max()) == [-1.0, 0.0, -2.0]
+S6 = 1 + ctx40.exp(D(-1)) + ctx40.exp(D(-2))
+p6 = [ctx40.exp(D(-1)) / S6, 1 / S6, ctx40.exp(D(-2)) / S6]
+assert f"{S6:.5f}" == "1.50321" and [f"{p:.5f}" for p in p6] == ["0.24473", "0.66524", "0.09003"]
+assert [f"{p:.2f}" for p in p6] == ["0.24", "0.67", "0.09"] and abs(sum(p6) - 1) < D("1e-25")
+assert p6[1] > p6[0] > p6[2] and sum(round(p, 5) for p in p6) == 1
+for got, want in zip(stable6, p6):
+    assert abs(D(float(got)) - want) < D("1e-15")
+ee = E40
+assert abs(p6[0] - ee / (ee * ee + ee + 1)) < D("1e-25") and abs(p6[1] - ee * ee / (ee * ee + ee + 1)) < D("1e-25")
+assert abs(p6[2] - 1 / (ee * ee + ee + 1)) < D("1e-25")
+x120 = np.array([1.0, 2.0, 0.0])                         # same probabilities: only the differences matter
+assert np.allclose(np.exp(x120) / np.exp(x120).sum(), stable6, rtol=1e-14)
+for _ in range(200):                                    # the shifted denominator lies in [1, n]
+    v = np.array([random.uniform(-2000, 2000) for _ in range(random.randint(1, 8))])
+    den = np.exp(v - v.max()).sum()
+    assert 1 <= den <= len(v)
+log.info(f"PSS 1.6: ln(max double) = {math.log(dmax):.4f}; naive softmax of (1000, 1001, 999) -> nan; stable -> "
+         f"{[f'{float(p):.5f}' for p in p6]}, S = {S6:.5f}")
+
+# ---------------------------------------------------------------- PSS 1.7: E_n = sum 1/k!
+tab = []
+for n in range(1, 21):
+    En = partial_sum_e(n)
+    ae = abs(math.e - En)
+    tab.append((n, En, ae, ae / abs(math.e)))
+smallest = next(n for n, _, _, re_ in tab if re_ < 1e-10)
+assert smallest == 12 and f"{tab[11][3]:.3e}" == "6.360e-11" and f"{tab[10][3]:.3e}" == "8.316e-10"
+assert f"{tab[11][3]:.2e}" == "6.36e-11" and f"{tab[10][3]:.2e}" == "8.32e-10"
+f12, f13 = math.factorial(12), math.factorial(13)
+assert f"{1 / (f12 * math.e):.1e}" == "7.7e-10" and 1 / (f12 * math.e) > 1e-10
+assert f"{1 / (f13 * math.e):.1e}" == "5.9e-11" and f"{1 / f13:.1e}" == "1.6e-10" and 1 / (f13 * math.e) < 1e-10 < 1 / f13
+assert f"{tab[15][2]:.2e}" == "2.22e-15" and all(f"{row[2]:.2e}" == "4.44e-16" for row in tab[16:])
+assert all(f"{row[3]:.2e}" == "1.63e-16" for row in tab[16:]) and tab[16][1] == tab[19][1] != tab[15][1]
+assert tab[16][1] == math.e + np.spacing(math.e)                          # E_17 is one double above math.e
+En20 = sum(Fr(1, math.factorial(k)) for k in range(21))
+method20 = E40 - D(En20.numerator) / D(En20.denominator)
+assert f"{method20:.2e}" == "2.05e-20"
+assert np.spacing(math.e) == 2.0 ** -51 and f"{2.0 ** -51:.2e}" == "4.44e-16" and f"{2.0 ** -52:.2e}" == "2.22e-16"
+assert f"{1 / math.factorial(18):.2e}" == "1.56e-16" and 1 / math.factorial(18) < 2.0 ** -52 < 1 / math.factorial(17)
+assert f"{1 / math.factorial(18):.1e}" == "1.6e-16" and f"{2.0 ** -51:.1e}" == "4.4e-16"
+assert tab[16][1] + 1 / math.factorial(18) == tab[16][1]                  # the next term is absorbed
+assert f"{abs(D(math.e) - E40):.1e}" == "1.4e-16"                         # math.e is not e
+# the predict block: in float32 (about 7 digits) the sum stops changing near n = 10
+s32, t32, sums32 = np.float32(0), np.float32(1), []
+for k in range(16):
+    if k > 0:
+        t32 = np.float32(t32 / np.float32(k))
+    s32 = np.float32(s32 + t32)
+    sums32.append(s32)
+assert sums32[9] != sums32[10] == sums32[15] and round(24 * math.log10(2)) == 7
+log.info(f"PSS 1.7: smallest n with relerr < 1e-10: {smallest} ({tab[11][3]:.3e}; n = 11: {tab[10][3]:.3e}); error stops at "
+         f"{tab[16][2]:.3e} from n = 17 (method error at n = 20: {method20:.3e}); float32 stops changing at n = 10")
 
 # ---------------------------------------------------------------- predict blocks and the summary
 assert Fr(10) ** (1 - 5) == Fr(1, 10 ** 4) and Fr(10) ** (1 - 5) / 2 == Fr(5, 10 ** 5)
