@@ -64,7 +64,16 @@
         <li><a href="#p15">Խնդիր 15 - երկու օրինակ</a></li>
         <li><a href="#p16">Խնդիր 16 - $\sin x$, 9 հանգույց</a></li>
         <li><a href="#p17">Խնդիր 17 - երեք հանգույցով ինտերպոլացիոն բանաձև</a></li>
-<!-- TOC-MORE -->
+        <li><a href="#gauss">Գաուսի քառակուսեցման բանաձևեր</a></li>
+        <li><a href="#p18">Խնդիր 18 - երկու ազատ հանգույց</a></li>
+        <li><a href="#p19">Խնդիր 19 - $\frac13f(0{,}5)+\frac83f(2{,}5)$</a></li>
+        <li><a href="#p20">Խնդիր 20 - $f(3)$ և $f(5)$</a></li>
+        <li><a href="#p21">Խնդիր 21 - չորս Գաուսի բանաձև</a></li>
+        <li><a href="#p22">Խնդիր 22 - $[-3,2]$, երեք հանգույց</a></li>
+        <li><a href="#p23">Խնդիր 23 - Լեժանդրի բազմանդամների զույգությունը</a></li>
+        <li><a href="#p24">Խնդիր 24 - $[-1,2]$ հատվածը</a></li>
+        <li><a href="#p25">Խնդիր 25 - GQR ֆունկցիա</a></li>
+        <li><a href="#exam">Ամփոփում և տիպիկ սխալներ</a></li>
       </ol>
     </nav>
 
@@ -267,7 +276,7 @@ $\int_0^1x^3\,dx=\frac14$, ճշգրիտ չէ։</p></div>
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - ճշգրտության աստիճանը</h3>
 <p>$f=x^2$՝ $2\cdot0^2=0$, իսկ $\int_{-1}^1x^2\,dx=\frac23$։ Բանաձևը ճշգրիտ չէ, և աստիճանը $1$ է։ $x_0\ne0$ դեպքում բանաձևը
 ճշգրիտ է միայն հաստատունների համար (աստիճանը $0$ է)։</p></div>
-<div class="check"><span class="check-label">Ստուգում։</span> $2f(0)$-ն $[-1,1]$-ի միջին ուղղանկյունների բանաձևն է՝ $(b-a)f(c)$,
+<div class="check"><span class="check-label">Ստուգում։</span> Ստացված բանաձևը $[-1,1]$ հատվածի միջին ուղղանկյունների բանաձևն է՝ $(b-a)f(c)$,
 որի ճշգրտության աստիճանը $1$ է (տե՛ս <a href="#simple">հաջորդ տեսական բաժինը</a>)։ Այն նաև Գաուսի բանաձևն է մեկ հանգույցով
 ($n=0$)։</div>
 <div class="box answer"><span class="answer-label">Պատասխան՝</span> $x_0=0$, $\int_{-1}^1f(x)\,dx\approx2f(0)$, ճշգրտության աստիճանը՝ $1$</div>
@@ -307,7 +316,7 @@ $$\begin{aligned}A_1&=\frac{e-1-\frac{2}{\pi}}{e}\\&=1-\frac1e-\frac{2}{\pi e}\a
 <div class="box problem"><div class="box-title">Խնդիր 5</div>
 <p>Գտեք $\int_0^{2\pi}f(x)\,dx\approx A_0f(0)+A_1f(\pi)$ քառակուսեցման բանաձևի գործակիցները, որոնց դեպքում բանաձևը ճշգրիտ է
 $f(x)=a+b\cos x$ տեսքի բոլոր ֆունկցիաների համար։ Ապացուցեք, որ այդ բանաձևը ճշգրիտ է նաև</p>
-$$f(x)=\sum_{k=0}^n\bigl(a_k\cos(2k+1)x+b_k\sin kx\bigr)$$
+$$\begin{gathered}f(x)=\sum_{k=0}^n\bigl(a_k\cos(2k+1)x\\+b_k\sin kx\bigr)\end{gathered}$$
 <p>տեսքի ֆունկցիաների համար։</p>
 </div>
 <div class="solution">
@@ -319,7 +328,7 @@ $$f(x)=\sum_{k=0}^n\bigl(a_k\cos(2k+1)x+b_k\sin kx\bigr)$$
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - կենտ կոսինուսներ և սինուսներ</h3>
 <p>Ամբողջ $m\ge1$-ի համար $\int_0^{2\pi}\cos mx\,dx=\int_0^{2\pi}\sin mx\,dx=0$, իսկ $\sin0x=0$։ Ուրեմն բոլոր գումարելիների
 ինտեգրալները զրո են։ Բանաձևի արժեքները՝</p>
-$$\begin{aligned}&\pi\bigl(\cos0+\cos(2k+1)\pi\bigr)=\pi(1-1)=0,\\&\pi\bigl(\sin0+\sin k\pi\bigr)=0.\end{aligned}$$
+$$\begin{aligned}&\pi\bigl(\cos0+\cos(2k+1)\pi\bigr)\\&\quad=\pi(1-1)=0,\\&\pi\bigl(\sin0+\sin k\pi\bigr)=0.\end{aligned}$$
 <p>Բանաձևը ճշգրիտ է ամեն գումարելիի համար, իսկ գծայնության շնորհիվ նաև նրանց ցանկացած գումարի համար։</p></div>
 <div class="check"><span class="check-label">Ստուգում։</span> Զույգ կոսինուսների համար բանաձևը ճշգրիտ չէ. $f(x)=\cos2x$-ի համար
 ինտեգրալը $0$ է, իսկ $\pi(\cos0+\cos2\pi)=2\pi$։ Կենտ $2k+1$-ը կարևոր է՝ $\cos(2k+1)\pi=-1$։</div>
@@ -577,7 +586,7 @@ for n in [3, 6, 100, 10000]:
 </div>
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div><p>Պահանջում ենք, որ սխալանքի գնահատականը՝
-$\frac{(b-a)h^2}{24}K_2$, չգերազանցի $10^{-3}$-ը։ Միջին ուղղանկյունների բանաձևում հանգույցները $n$ մասերի միջնակետերն են,
+$\frac{(b-a)h^2}{24}K_2$, չգերազանցի $10^{-3}$-ը։ Միջին ուղղանկյունների բանաձևում հանգույցները $n$ մասի միջնակետերն են,
 այնպես որ հանգույցների քանակը $n$ է։</p></div>
 <h3>(ա) Հանգույցների քանակը</h3>
 <div class="step"><h3><span class="step-num">Քայլ 1</span> - $K_2=\max|f''|$</h3>
@@ -585,7 +594,7 @@ $\frac{(b-a)h^2}{24}K_2$, չգերազանցի $10^{-3}$-ը։ Միջին ուղ�
 $K_2=f''(1)=6e\approx16{,}30969$։</p></div>
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - անհավասարությունը</h3>
 <p>$b-a=1$ և $h=\frac1n$, ուրեմն գնահատականը $\frac{6e}{24n^2}=\frac{e}{4n^2}$ է, և</p>
-$$\frac{e}{4n^2}\le10^{-3}\iff n^2\ge250e\approx679{,}57.$$
+$$\begin{gathered}\frac{e}{4n^2}\le10^{-3}\\\iff n^2\ge250e\approx679{,}57.\end{gathered}$$
 <p>Ուրեմն $n\ge\sqrt{250e}\approx26{,}07$, և ամենափոքր ամբողջ թիվը $n=27$-ն է։</p></div>
 <div class="check"><span class="check-label">Ստուգում։</span> $n=26$-ի դեպքում գնահատականը
 $\frac{e}{4\cdot26^2}\approx1{,}0053\cdot10^{-3}\gt10^{-3}$ է, իսկ $n=27$-ի դեպքում՝ $\approx9{,}322\cdot10^{-4}$։</div>
@@ -642,7 +651,7 @@ $$\begin{aligned}T_3&=\tfrac12f(-1)+f(0)\\&\quad+f(1)+\tfrac12f(2)\\&\approx0{,}
 <div class="step"><h3><span class="step-num">Քայլ 1</span> - արժեքը միջին հանգույցում</h3>
 <p>$f(0{,}5)=0{,}25\cos0{,}5\approx0{,}219396$։</p></div>
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - գումարը</h3>
-$$\begin{aligned}T_2&=1{,}5\bigl[\tfrac12f(-1)+f(0{,}5)+\tfrac12f(2)\bigr]\\&\approx1{,}5\cdot(-0{,}342747)\approx-0{,}51412.\end{aligned}$$</div>
+$$\begin{aligned}T_2&=1{,}5\bigl[\tfrac12f(-1)+f(0{,}5)\\&\qquad+\tfrac12f(2)\bigr]\\&\approx1{,}5\cdot(-0{,}342747)\\&\approx-0{,}51412.\end{aligned}$$</div>
 <div class="step"><h3><span class="step-num">Քայլ 3</span> - համեմատություն ճշգրիտ արժեքի հետ</h3>
 <p>$x^2\cos x$-ի նախնականը $x^2\sin x+2x\cos x-2\sin x$ է, ուստի</p>
 $$\begin{aligned}I&=2\sin2+4\cos2\\&\quad-\sin1+2\cos1\approx0{,}39314.\end{aligned}$$
@@ -802,7 +811,7 @@ $$\begin{aligned}f'(x)&=(1-2x^2)e^{-x^2},\\ f''(x)&=(4x^3-6x)e^{-x^2},\\ f'''(x)
 <tbody><tr><td class="num">$|f''(x)|$</td><td class="num">$1{,}95178$</td><td class="num">$0{,}53018$</td><td class="num">$\frac2e\approx0{,}73576$</td><td class="num">$90e^{-9}\approx0{,}01111$</td></tr></tbody></table></div>
 <p>Ուրեմն $K_2\approx1{,}95178$։</p></div>
 <div class="step"><h3><span class="step-num">Քայլ 3</span> - $n$-ը</h3>
-$$\frac{4^3\cdot1{,}95178}{12n^2}\le10^{-3}\iff n^2\ge10409{,}5,$$
+$$\begin{gathered}\frac{4^3\cdot1{,}95178}{12n^2}\le10^{-3}\\\iff n^2\ge10409{,}5,\end{gathered}$$
 <p>այսինքն՝ $n\ge102{,}03$։ Գնահատականը երաշխավորում է ճշտությունը բոլոր $n\ge103$ արժեքների համար։</p></div>
 <div class="check"><span class="check-label">Ստուգում։</span> Նախնականը $-\frac12e^{-x^2}$ է, և $I=\frac{e^{-1}-e^{-9}}{2}\approx0{,}18388$։
 Ուղղակի հաշվարկով $10^{-3}$ ճշտությունը ձեռք է բերվում արդեն $n=23$-ից (սխալանքը $\approx9{,}27\cdot10^{-4}$), իսկ $n=22$-ի
@@ -860,7 +869,7 @@ $f=x^4$-ի համար այն $-\frac{7776}{2880}\cdot24=-64{,}8$ է։ Իսկապ
 <div class="sec-body">
 <div class="box problem"><div class="box-title">Խնդիր 14</div>
 <p>Գնահատեք այն սխալանքը, որը թույլ ենք տալիս $\int_0^1\frac{dx}{x+1}$ ինտեգրալը</p>
-$$\begin{aligned}&\tfrac{1}{30}\bigl[f(0)+4f(0{,}1)+2f(0{,}2)\\&\quad+4f(0{,}3)+\dots+4f(0{,}9)+f(1)\bigr]\end{aligned}$$
+$$\begin{aligned}&\tfrac{1}{30}\bigl[f(0)+4f(0{,}1)+2f(0{,}2)\\&\quad+4f(0{,}3)+\dots\\&\quad+4f(0{,}9)+f(1)\bigr]\end{aligned}$$
 <p>քառակուսեցման բանաձևով մոտարկելիս։</p>
 </div>
 <div class="solution">
@@ -994,7 +1003,455 @@ $\frac{1}{2880}\max|f^{(4)}|=\frac{\pi^4}{2880}\approx0{,}03382$, և իսկապ�
 </div>
 </details>
 
-<!-- SECTIONS-MORE -->
+<!-- ================================================================== -->
+<details class="sec" id="gauss" open>
+<summary><h2>Գաուսի քառակուսեցման բանաձևեր</h2></summary>
+<div class="sec-body">
+<p>Մինչ այժմ հանգույցները տրված էին, և ընտրում էինք միայն կշիռները. $n+1$ կշիռը թույլ է տալիս ճշգրտություն $n$-րդ աստիճանի
+բազմանդամների համար։ Եթե հանգույցներն էլ են ազատ, անհայտները $2n+2$-ն են, և կարելի է հույս ունենալ, որ բանաձևը ճշգրիտ կլինի
+$1,x,\dots,x^{2n+1}$ ֆունկցիաների համար։ Ավելին հնարավոր չէ։</p>
+<div class="box thm"><div class="box-title">Թեորեմ (ճշգրտության աստիճանի սահմանը)</div>
+<p>$n+1$ հանգույցով ոչ մի քառակուսեցման բանաձև ճշգրիտ չէ $\omega^2(x)=(x-x_0)^2\cdots(x-x_n)^2$ բազմանդամի համար, որի
+աստիճանը $2n+2$ է։ Հետևաբար, ճշգրտության աստիճանը չի գերազանցում $2n+1$-ը։</p>
+</div>
+<p>Իսկապես, $Q(\omega^2)=0$, քանի որ $\omega^2$-ն զրո է բոլոր հանգույցներում, իսկ $\int_a^b\omega^2\,dx\gt0$։</p>
+<div class="box def"><div class="box-title">Սահմանում (Լեժանդրի բազմանդամներ)</div>
+<p><strong>Լեժանդրի բազմանդամները</strong> (Legendre polynomials) սահմանվում են $L_0(x)=1$, $L_1(x)=x$ և</p>
+$$\begin{gathered}(k+1)L_{k+1}(x)=(2k+1)\,x\,L_k(x)\\-k\,L_{k-1}(x)\end{gathered}$$
+<p>ռեկուրենտ առնչությամբ։ Օրինակ՝ $L_2(x)=\frac{3x^2-1}{2}$, $L_3(x)=\frac{5x^3-3x}{2}$։ $L_n$-ը $n$-րդ աստիճանի բազմանդամ է և
+<strong>օրթոգոնալ</strong> (orthogonal) է $n$-ից ցածր աստիճանի բոլոր բազմանդամներին՝</p>
+$$\begin{gathered}\int_{-1}^1L_n(x)\,q(x)\,dx=0,\\ \deg q\lt n.\end{gathered}$$
+<p>Նրա $n$ արմատներն իրական են, իրարից տարբեր և ընկած են $(-1,1)$ միջակայքում։ Որոշ դասագրքերում $L_n$-ը բազմապատկված է
+հաստատունով (օրինակ՝ ավագ անդամի գործակիցը $1$ է). արմատները դրանից չեն փոխվում։</p>
+</div>
+<details class="deep"><summary>Ավելին՝ որտեղի՞ց են օրթոգոնալությունը և արմատները</summary><div class="inner">
+<p><strong>Օրթոգոնալություն։</strong> Նույն բազմանդամները տրվում են Ռոդրիգեսի բանաձևով՝
+$L_n(x)=\frac{1}{2^nn!}\frac{d^n}{dx^n}(x^2-1)^n$։ $\int_{-1}^1L_n\,q\,dx$-ը $n$ անգամ մասերով ինտեգրելիս եզրային անդամները
+զրո են ($(x^2-1)^n$-ի $n$-ից ցածր կարգի ածանցյալները զրո են $\pm1$-ում), իսկ $q^{(n)}=0$, քանի որ $\deg q\lt n$։</p>
+<p><strong>Արմատները։</strong> Դիցուք $L_n$-ը $(-1,1)$-ում նշանը փոխում է միայն $r_1,\dots,r_k$ կետերում, $k\lt n$։ Այդ դեպքում
+$L_n(x)(x-r_1)\cdots(x-r_k)$-ն նշանը չի փոխում և նույնաբար զրո չէ, այնպես որ նրա ինտեգրալը զրո չէ։ Բայց
+$(x-r_1)\cdots(x-r_k)$-ի աստիճանը $k\lt n$ է, և օրթոգոնալության համաձայն ինտեգրալը զրո է։ Ուրեմն $L_n$-ը $(-1,1)$-ում նշանը
+փոխում է առնվազն $n$ անգամ, այսինքն՝ ունի այնտեղ $n$ տարբեր արմատ։</p>
+</div></details>
+<div class="box thm"><div class="box-title">Թեորեմ (Գաուսի բանաձև)</div>
+<p>Դիցուք $t_0,\dots,t_n$-ը $L_{n+1}$-ի արմատներն են, իսկ $A_0,\dots,A_n$-ը՝ այդ հանգույցներով ինտերպոլացիոն բանաձևի կշիռները։
+Այդ դեպքում</p>
+$$\int_{-1}^1f(t)\,dt\approx\sum_{k=0}^nA_kf(t_k)$$
+<p>բանաձևը ճշգրիտ է $2n+1$-ից ոչ բարձր աստիճանի բոլոր բազմանդամների համար։ $n+1$ հանգույցով այլ բանաձև այդ հատկությունը չունի,
+և բոլոր $A_k$ կշիռները դրական են։ Այն կոչվում է <strong>Գաուսի քառակուսեցման բանաձև</strong> (Gaussian quadrature,
+Gauss-Legendre)։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Ճշգրտություն։</strong> Դիցուք $p$-ի աստիճանը չի գերազանցում $2n+1$-ը։ Բաժանենք $p$ բազմանդամը $L_{n+1}$-ի վրա
+մնացորդով՝ $p=q\,L_{n+1}+r$, որտեղ $q$-ի և $r$-ի աստիճանները չեն գերազանցում $n$-ը։ Օրթոգոնալության շնորհիվ
+$\int_{-1}^1q\,L_{n+1}\,dt=0$, ուրեմն $\int_{-1}^1p\,dt=\int_{-1}^1r\,dt$։ Մյուս կողմից, $L_{n+1}(t_k)=0$, դրա համար
+$Q(p)=Q(r)$, իսկ $Q(r)=\int_{-1}^1r\,dt$, քանի որ բանաձևն ինտերպոլացիոն է։</p>
+<p><strong>Կշիռները դրական են։</strong> $\ell_k^2$-ի աստիճանը $2n$ է, հետևաբար
+$0\lt\int_{-1}^1\ell_k^2\,dt=\sum_jA_j\ell_k^2(t_j)=A_k$։</p>
+<p><strong>Միակություն։</strong> Եթե $n+1$ հանգույցով բանաձևի աստիճանն առնվազն $2n+1$ է, ապա $\omega(t)=(t-t_0)\cdots(t-t_n)$-ի
+և $n$-ից ոչ բարձր աստիճանի ցանկացած $q$-ի համար $\int_{-1}^1\omega q\,dt=Q(\omega q)=0$։ Ուրեմն $\omega$-ն օրթոգոնալ է $n$-ից ոչ
+բարձր աստիճանի բոլոր բազմանդամներին, և խնդիր 23-ի դատողությամբ $\omega=c\,L_{n+1}$՝ հանգույցները $L_{n+1}$-ի արմատներն են։ ∎</p>
+</div></details>
+<p>Առաջին երեք բանաձևը՝</p>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$n$</th><th class="num">հանգույցներ $t_k$</th><th class="num">կշիռներ $A_k$</th><th class="num">ճշգրտության աստիճան</th></tr></thead>
+<tbody>
+<tr><td class="num">$0$</td><td class="num">$0$</td><td class="num">$2$</td><td class="num">$1$</td></tr>
+<tr><td class="num">$1$</td><td class="num">$\pm\frac{1}{\sqrt3}\approx\pm0{,}57735$</td><td class="num">$1$, $1$</td><td class="num">$3$</td></tr>
+<tr><td class="num">$2$</td><td class="num">$0$, $\pm\sqrt{\frac35}\approx\pm0{,}77460$</td><td class="num">$\frac89$, $\frac59$</td><td class="num">$5$</td></tr>
+</tbody></table></div>
+<p>Ուրիշ $[a,b]$ հատվածի համար փոխում ենք փոփոխականը՝ $x=\frac{a+b}{2}+\frac{b-a}{2}t$, $dx=\frac{b-a}{2}dt$։ Հանգույցները
+տեղափոխվում են, իսկ կշիռները բազմապատկվում են $\frac{b-a}{2}$-ով՝</p>
+$$\begin{gathered}\int_a^bf(x)\,dx\approx\frac{b-a}{2}\sum_{k=0}^nA_kf(x_k),\\ x_k=\frac{a+b}{2}+\frac{b-a}{2}\,t_k.\end{gathered}$$
+<p>Ճշգրտության աստիճանը նույնն է՝ $2n+1$ (գծային փոխարինումից հետո բազմանդամի աստիճանը չի փոխվում)։ $n=1$ դեպքում
+սխալանքը $\frac{(b-a)^5}{4320}f^{(4)}(\xi)$ է (առանց ապացույցի). նրա գործակիցը փոքր է Սիմպսոնի բանաձևի $\frac{1}{2880}$-ից, թեև
+հանգույցները երկուսն են, ոչ թե երեք։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Ինտեգրալը մոտարկում ենք $3$ հանգույցով, և հանգույցներն էլ ենք ընտրում ազատ։ Առավելագույնը ո՞ր
+աստիճանի բազմանդամների համար կարող է բանաձևը ճշգրիտ լինել։</p>
+<div class="predict-opts"><button class="btn" type="button">$2$</button><button class="btn" type="button">$3$</button><button class="btn" type="button" data-ok>$5$</button></div>
+<div class="predict-why">Երեք կշիռ և երեք հանգույց՝ վեց պարամետր, և Գաուսի բանաձևը ճշգրիտ է $1,x,\dots,x^5$-ի համար։ $2$-ը երեք
+տարբեր հանգույցով ցանկացած ինտերպոլացիոն բանաձևի երաշխիքն է, $3$-ը՝ Սիմպսոնի բանաձևինը (հավասարահեռ հանգույցներ)։ $6$ չի
+կարող լինել. $\omega^2$-ի համար բանաձևը տալիս է $0$։ Ներքևում համեմատեք Գաուսի և հավասարահեռ հանգույցները։</div>
+</div>
+
+<div class="widget" id="w-gauss">
+  <div class="widget-head"><span>Գաուսի հանգույցներ և հավասարահեռ հանգույցներ</span></div>
+  <p class="widget-hint">Ընտրեք ինտեգրալը և հանգույցների քանակը։ Վերևում կապույտ կետերը Գաուսի հանգույցներն են, կարմիր
+  օղակները՝ հավասարահեռ հանգույցները (երկու ծայրերով, իսկ մեկ հանգույցի դեպքում՝ միջնակետը), որոնցով կառուցված է ինտերպոլացիոն
+  բանաձևը։ Ներքևում ամեն հանգույցի կշիռն է՝ բաժանված $b-a$-ի վրա, այնպես որ կշիռների գումարը $1$ է։ Հետևեք, թե ինչպես է
+  փոքրանում Գաուսի բանաձևի սխալանքը, և ինչ է լինում հավասարահեռ բանաձևի կշիռների հետ $9$ հանգույցի դեպքում։</p>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-case="p25" aria-pressed="true">$\int_0^2e^{-x^2}dx$ (խնդիր 25)</button>
+    <button class="btn" type="button" data-case="runge" aria-pressed="false">$\int_{-1}^1\frac{dx}{1+25x^2}$</button>
+  </div>
+  <div class="slider-row"><label for="w-gauss-m">Հանգույցներ</label><input type="range" id="w-gauss-m" min="1" max="10" value="3"><span data-out="m"></span></div>
+  <div data-out="plot"></div>
+  <p class="mass-cap">Ներքևում՝ կշիռները (կապույտ՝ Գաուս, կարմիր՝ հավասարահեռ հանգույցներ)</p>
+  <div data-out="weights"></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p18" open>
+<summary><h2>Խնդիր 18 - երկու ազատ հանգույց</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 18</div>
+<p>Կառուցեք</p>
+$$\begin{gathered}\int_{-1}^1f(x)\,dx\\\approx A_0f(x_0)+A_1f(x_1)\end{gathered}$$
+<p>քառակուսեցման բանաձևը, որը ճշգրիտ է հնարավորինս բարձր աստիճանի բազմանդամների համար։</p>
+<p>(ա) Գտեք նրա ճշգրտության աստիճանը։</p>
+<p>(բ) Հաշվեք $\int_{-1}^1(x-x_0)(x-x_1)\,dx$ և $\int_{-1}^1(x-x_0)(x-x_1)^2\,dx$ ինտեգրալները։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Չորս անհայտ կա ($A_0$, $A_1$, $x_0$, $x_1$), ուստի կարելի է
+պահանջել ճշգրտություն $1,x,x^2,x^3$-ի համար։ Չորս ոչ գծային հավասարումը լուծելու փոխարեն օգտվում ենք
+$\omega(x)=(x-x_0)(x-x_1)$ բազմանդամից. այն զրո է հանգույցներում, և բանաձևը նրա համար տալիս է $0$։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - հանգույցները</h3>
+<p>Գրենք $\omega(x)=x^2+px+q$։ Եթե բանաձևը ճշգրիտ է $3$-ից ոչ բարձր աստիճանի համար, ապա ճշգրիտ է $\omega$-ի և $x\,\omega$-ի
+համար, և երկուսի համար էլ $Q=0$՝</p>
+$$\begin{aligned}\int_{-1}^1\omega\,dx&=\tfrac23+2q=0,\\ \int_{-1}^1x\,\omega\,dx&=\tfrac23\,p=0.\end{aligned}$$
+<p>Ուրեմն $p=0$, $q=-\frac13$, $\omega(x)=x^2-\frac13$, և $x_{0,1}=\mp\frac{1}{\sqrt3}$ (դրանք $L_2$-ի արմատներն են)։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 2</span> - կշիռները</h3>
+<p>$f=1$՝ $A_0+A_1=2$, $f=x$՝ $A_0x_0+A_1x_1=\frac{1}{\sqrt3}(A_1-A_0)=0$, որից $A_0=A_1=1$։</p></div>
+<h3>(ա) Ճշգրտության աստիճանը</h3>
+<p>$x^2$՝ $\frac13+\frac13=\frac23=\int_{-1}^1x^2\,dx$, $x^3$՝ $0=\int_{-1}^1x^3\,dx$ (համաչափություն)։ $x^4$՝
+$\frac19+\frac19=\frac29$, իսկ $\int_{-1}^1x^4\,dx=\frac25$։ Ճշգրտության աստիճանը $3$ է, և ավելին հնարավոր չէ (թեորեմ
+ճշգրտության աստիճանի սահմանի մասին)։</p>
+<h3>(բ) Երկու ինտեգրալը</h3>
+<p>Ինտեգրալների տակ $2$-րդ և $3$-րդ աստիճանի բազմանդամներ են, որոնք զրո են $x_0$-ում և $x_1$-ում։ Բանաձևը նրանց համար տալիս
+է $0$, և ճշգրտության շնորհիվ երկու ինտեգրալն էլ $0$ են։ Ուղղակի հաշվարկով՝ $\int_{-1}^1\bigl(x^2-\frac13\bigr)dx=\frac23-\frac23=0$,
+իսկ $(x-x_0)(x-x_1)^2=\bigl(x^2-\frac13\bigr)(x-x_1)$, և</p>
+$$\begin{aligned}&\int_{-1}^1\bigl(x^3-\tfrac x3\bigr)dx\\&\quad-x_1\int_{-1}^1\bigl(x^2-\tfrac13\bigr)dx\\&=0-0=0.\end{aligned}$$
+<div class="check"><span class="check-label">Ստուգում։</span> Սա Գաուսի բանաձևն է $n=1$ դեպքում (տեսական բաժնի աղյուսակը)։ Ինտերակտիվ
+նկարում, «Ճշգրտության աստիճանի ստուգում» բաժնում, ընտրեք «Երկու հանգույց $\pm t$» և սահիչը տարեք $t\approx0{,}577$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int_{-1}^1f(x)\,dx\approx f\bigl(-\frac{1}{\sqrt3}\bigr)+f\bigl(\frac{1}{\sqrt3}\bigr)$։ (ա) $3$։ (բ) Երկու ինտեգրալն էլ $0$ են</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p19" open>
+<summary><h2>Խնդիր 19 - $\frac13f(0{,}5)+\frac83f(2{,}5)$</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 19</div>
+<p>Արդյո՞ք</p>
+$$\begin{gathered}\int_0^3f(x)\,dx\\\approx\tfrac13f(0{,}5)+\tfrac83f(2{,}5)\end{gathered}$$
+<p>քառակուսեցման բանաձևը Գաուսի բանաձևն է $n=1$ դեպքում։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գաուսի բանաձևը $n=1$ դեպքում ($2$ հանգույց) ճշգրիտ է $3$-ից ոչ
+բարձր աստիճանի բոլոր բազմանդամների համար։ Բավական է գտնել մեկ այդպիսի բազմանդամ, որի համար տրված բանաձևը ճշգրիտ չէ։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $f=1$ և $f=x$</h3>
+<p>$f=1$՝ $\frac13+\frac83=3=\int_0^31\,dx$։ $f=x$՝ $\frac13\cdot\frac12+\frac83\cdot\frac52=\frac16+\frac{20}{3}=\frac{41}{6}$, իսկ
+$\int_0^3x\,dx=\frac92=\frac{27}{6}$։ Բանաձևը ճշգրիտ չէ նույնիսկ գծային ֆունկցիաների համար (նրա ճշգրտության աստիճանը $0$ է)։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $[0,3]$-ում Գաուսի հանգույցներն են
+$\frac32\mp\frac{\sqrt3}{2}\approx0{,}63397$ և $2{,}36603$, իսկ կշիռները՝ $\frac32$ և $\frac32$։ Տրված բանաձևի հանգույցներն ու
+կշիռները տարբեր են։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> Ոչ։ Բանաձևը ճշգրիտ չէ նույնիսկ $f(x)=x$-ի համար ($\frac{41}{6}\ne\frac92$), իսկ Գաուսի բանաձևը ճշգրիտ է մինչև $3$-րդ աստիճանի բազմանդամների համար</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p20" open>
+<summary><h2>Խնդիր 20 - $f(3)$ և $f(5)$</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 20</div>
+<p>Հնարավո՞ր է արդյոք կառուցել $\int_2^6f(x)\,dx\approx A_0f(3)+A_1f(5)$ տեսքի Գաուսի քառակուսեցման բանաձև։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Գաուսի բանաձևը ($n=1$) պետք է ճշգրիտ լինի $3$-ից ոչ բարձր
+աստիճանի բազմանդամների համար, մասնավորապես $\omega(x)=(x-3)(x-5)$-ի համար։</p></div>
+<div class="step"><h3><span class="step-num">Քայլ 1</span> - $\omega$-ի ինտեգրալը</h3>
+<p>$\omega$-ն զրո է երկու հանգույցում, այնպես որ ցանկացած $A_0$, $A_1$ կշիռներով բանաձևը նրա համար տալիս է $0$։ Բայց $t=x-4$
+փոխարինումով</p>
+$$\begin{aligned}&\int_2^6(x-3)(x-5)\,dx\\&=\int_{-2}^2(t^2-1)\,dt\\&=\frac{16}{3}-4=\frac43\ne0.\end{aligned}$$
+<p>Ուրեմն ոչ մի կշիռներով բանաձևը ճշգրիտ չի լինի նույնիսկ երկրորդ աստիճանի բազմանդամների համար։</p></div>
+<div class="check"><span class="check-label">Ստուգում։</span> $[2,6]$-ում Գաուսի հանգույցներն են
+$4\mp\frac{2}{\sqrt3}\approx2{,}84530$ և $5{,}15470$, ոչ թե $3$ և $5$։ $3$ և $5$ հանգույցներով լավագույնն ինտերպոլացիոն բանաձևն
+է՝ $A_0=A_1=2$ ($f=1$՝ $A_0+A_1=4$, $f=x$՝ $3A_0+5A_1=16$), որի ճշգրտության աստիճանը $1$ է։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> Ոչ։ $(x-3)(x-5)$-ի համար ցանկացած այդպիսի բանաձև տալիս է $0$, իսկ ինտեգրալը $\frac43$ է</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p21" open>
+<summary><h2>Խնդիր 21 - չորս Գաուսի բանաձև</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 21</div>
+<p>Կառուցեք Գաուսի քառակուսեցման բանաձևը $n=1$ և $n=2$ դեպքերում $[-3,3]$ և $[-2,1]$ հատվածների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Վերցնում ենք $[-1,1]$-ի աղյուսակը և տեղափոխում ենք
+հանգույցները՝ $x=\frac{a+b}{2}+\frac{b-a}{2}t$, իսկ կշիռները բազմապատկում ենք $\frac{b-a}{2}$-ով։ $n=1$՝ $2$ հանգույց, $n=2$՝
+$3$ հանգույց։</p></div>
+<h3>$[-3,3]$ հատվածը</h3>
+<p>Այստեղ $\frac{a+b}{2}=0$, $\frac{b-a}{2}=3$։ $n=1$՝ հանգույցները $\pm\frac{3}{\sqrt3}=\pm\sqrt3\approx\pm1{,}73205$, կշիռները՝
+$3$՝</p>
+$$\int_{-3}^3f(x)\,dx\approx3f(-\sqrt3)+3f(\sqrt3).$$
+<p>$n=2$՝ հանգույցները $0$ և $\pm3\sqrt{\frac35}=\pm\frac{3\sqrt{15}}{5}\approx\pm2{,}32379$, կշիռները՝ $3\cdot\frac59=\frac53$ և
+$3\cdot\frac89=\frac83$՝</p>
+$$\begin{aligned}\int_{-3}^3f(x)\,dx\approx{}&\tfrac53f\bigl(-\tfrac{3\sqrt{15}}{5}\bigr)\\&+\tfrac83f(0)\\&+\tfrac53f\bigl(\tfrac{3\sqrt{15}}{5}\bigr).\end{aligned}$$
+<h3>$[-2,1]$ հատվածը</h3>
+<p>Այստեղ $\frac{a+b}{2}=-\frac12$, $\frac{b-a}{2}=\frac32$։ $n=1$՝ հանգույցները $-\frac12\mp\frac32\cdot\frac{1}{\sqrt3}=\frac{-1\mp\sqrt3}{2}$,
+այսինքն՝ $\approx-1{,}36603$ և $\approx0{,}36603$, կշիռները՝ $\frac32$՝</p>
+$$\begin{aligned}\int_{-2}^1f(x)\,dx\approx{}&\tfrac32f\bigl(\tfrac{-1-\sqrt3}{2}\bigr)\\&+\tfrac32f\bigl(\tfrac{-1+\sqrt3}{2}\bigr).\end{aligned}$$
+<p>$n=2$՝ հանգույցները $-\frac12$ և $-\frac12\mp\frac32\sqrt{\frac35}=-\frac12\mp\frac{3\sqrt{15}}{10}$, այսինքն՝ $\approx-1{,}66190$
+և $\approx0{,}66190$, կշիռները՝ $\frac32\cdot\frac59=\frac56$ և $\frac32\cdot\frac89=\frac43$՝</p>
+$$\begin{aligned}\int_{-2}^1f(x)\,dx\approx{}&\tfrac56f\bigl(-\tfrac12-\tfrac{3\sqrt{15}}{10}\bigr)\\&+\tfrac43f\bigl(-\tfrac12\bigr)\\&+\tfrac56f\bigl(-\tfrac12+\tfrac{3\sqrt{15}}{10}\bigr).\end{aligned}$$
+<div class="check"><p><span class="check-label">Ստուգում։</span> Կշիռների գումարը հատվածի երկարությունն է՝ $6$ և $3$։ $x^2$-ի
+համար $[-2,1]$-ում, $n=1$՝</p>
+$$\begin{aligned}&\tfrac32\Bigl[\bigl(\tfrac{-1-\sqrt3}{2}\bigr)^2+\bigl(\tfrac{-1+\sqrt3}{2}\bigr)^2\Bigr]\\&=\tfrac32\cdot2=3=\int_{-2}^1x^2\,dx.\end{aligned}$$
+<p>Ներքևի կոդը ստուգում է չորս բանաձևն էլ $x^j$-ի վրա։</p></div>
+<pre class="py" data-run><code>import numpy as np
+
+def gauss_on(n, a, b):
+    """Գաուսի բանաձևի հանգույցները և կշիռները [a, b]-ում՝ n + 1 հանգույց"""
+    t, w = np.polynomial.legendre.leggauss(n + 1)
+    return (a + b) / 2 + (b - a) / 2 * t, (b - a) / 2 * w
+
+for a, b in [(-3, 3), (-2, 1)]:
+    for n in [1, 2]:
+        x, A = gauss_on(n, a, b)
+        print(f"[{a}, {b}], n = {n}   հանգույցներ {np.round(x, 5)}   կշիռներ {np.round(A, 5)}")
+        # ստուգում x^j-ի վրա, j = 0, ..., 2n + 2
+        ok = [bool(abs(A @ x**j - (b**(j + 1) - a**(j + 1)) / (j + 1)) &lt; 1e-9) for j in range(2 * n + 3)]
+        print("    ճշգրիտ է x^j-ի համար՝", ok)</code></pre>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $[-3,3]$՝ $n=1$-ի դեպքում $3f(-\sqrt3)+3f(\sqrt3)$, $n=2$-ի դեպքում $\frac53$, $\frac83$, $\frac53$ կշիռներով $-\frac{3\sqrt{15}}{5}$, $0$, $\frac{3\sqrt{15}}{5}$ հանգույցներում։ $[-2,1]$՝ $n=1$-ի դեպքում $\frac32$ կշիռներով $\frac{-1\mp\sqrt3}{2}$ հանգույցներում, $n=2$-ի դեպքում $\frac56$, $\frac43$, $\frac56$ կշիռներով $-\frac12-\frac{3\sqrt{15}}{10}$, $-\frac12$, $-\frac12+\frac{3\sqrt{15}}{10}$ հանգույցներում</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p22" open>
+<summary><h2>Խնդիր 22 - $[-3,2]$, երեք հանգույց</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 22</div>
+<p>Դիցուք</p>
+$$\begin{gathered}\int_{-3}^2f(x)\,dx\\\approx A\,f(x_0)+B\,f(x_1)+C\,f(x_2)\end{gathered}$$
+<p>քառակուսեցման բանաձևը ($x_0,x_1,x_2\in[-3,2]$) Գաուսի բանաձևն է $n=2$ դեպքում, այսինքն՝ նրա ճշգրտության աստիճանը $5$ է։</p>
+<p>(ա) Ցույց տվեք, որ</p>
+$$\begin{aligned}\int_{-3}^2&(x-x_0)(x-x_1)\\&\times(x-x_2)\,dx=0,\end{aligned}$$
+$$\begin{aligned}\int_{-3}^2&(x-x_0)^2(x-x_1)^2\\&\times(x-x_2)\,dx=0.\end{aligned}$$
+<p>(բ) Հաշվեք $A+B+C$, $Ax_0+Bx_1+Cx_2$ և $Ax_0^5+Bx_1^5+Cx_2^5$ արտահայտությունների արժեքները։</p>
+<p>(գ) Ցույց տվեք, որ $A\gt0$, $B\gt0$ և $C\gt0$։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Բանաձևը ճշգրիտ է $5$-ից ոչ բարձր աստիճանի բոլոր
+բազմանդամների համար. երեք մասն էլ հետևում են դրանից՝ ճիշտ ընտրված բազմանդամներով։ Հանգույցներն իրարից տարբեր են, քանի որ
+երկու հանգույցով բանաձևի ճշգրտության աստիճանը չի գերազանցում $3$-ը։</p></div>
+<h3>(ա) Երկու ինտեգրալը</h3>
+<p>$(x-x_0)(x-x_1)(x-x_2)$-ի աստիճանը $3$ է, $(x-x_0)^2(x-x_1)^2(x-x_2)$-ինը՝ $5$։ Երկուսն էլ զրո են երեք հանգույցում, և բանաձևը
+նրանց համար տալիս է $0$։ Բանաձևը ճշգրիտ է այս աստիճանների համար, ուրեմն երկու ինտեգրալն էլ $0$ են։</p>
+<h3>(բ) Երեք արտահայտությունը</h3>
+<p>Դրանք բանաձևի արժեքներն են $1$, $x$ և $x^5$ ֆունկցիաների համար, ուստի հավասար են ինտեգրալներին՝
+$A+B+C=\int_{-3}^21\,dx=5$, $Ax_0+Bx_1+Cx_2=\int_{-3}^2x\,dx=\frac{4-9}{2}=-\frac52$ և</p>
+$$\begin{aligned}&Ax_0^5+Bx_1^5+Cx_2^5\\&=\int_{-3}^2x^5\,dx=\frac{2^6-3^6}{6}\\&=-\frac{665}{6}.\end{aligned}$$
+<h3>(գ) Կշիռները դրական են</h3>
+<p>Վերցնենք $f(x)=(x-x_1)^2(x-x_2)^2$, որի աստիճանը $4\le5$ է։ $f\ge0$ և նույնաբար զրո չէ, ուստի $\int_{-3}^2f\,dx\gt0$։ Մյուս
+կողմից, $f(x_1)=f(x_2)=0$, և բանաձևը տալիս է $A\,(x_0-x_1)^2(x_0-x_2)^2$։ Ճշգրտության շնորհիվ այդ թիվը դրական է, իսկ
+հանգույցները տարբեր են, հետևաբար $A\gt0$։ Նույն կերպ $(x-x_0)^2(x-x_2)^2$-ով ստանում ենք $B\gt0$, իսկ
+$(x-x_0)^2(x-x_1)^2$-ով՝ $C\gt0$։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> Իրական արժեքները. $[-3,2]$-ում $x_1=-\frac12$,
+$x_{0,2}=-\frac12\mp\frac{\sqrt{15}}{2}\approx-2{,}43649$ և $1{,}43649$, $A=C=\frac{25}{18}$, $B=\frac{20}{9}$։ Իսկապես,
+$A+B+C=\frac{50+40}{18}=5$, և երեք կշիռն էլ դրական են։ (բ)-ի մյուս երկու գումարը նույնպես ստուգված է թվային։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) Երկու ինտեգրալն էլ $0$ են։ (բ) $A+B+C=5$, $Ax_0+Bx_1+Cx_2=-\frac52$, $Ax_0^5+Bx_1^5+Cx_2^5=-\frac{665}{6}\approx-110{,}833$։ (գ) $A$, $B$, $C$ դրական են</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p23" open>
+<summary><h2>Խնդիր 23 - Լեժանդրի բազմանդամների զույգությունը</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 23</div>
+<p>(ա) Ապացուցեք, որ զույգ $n$-երի համար Լեժանդրի $n$-րդ աստիճանի $L_n$ բազմանդամը զույգ ֆունկցիա է, իսկ կենտ $n$-երի համար՝
+կենտ։</p>
+<p>(բ) Ցույց տվեք, որ Լեժանդրի $n$-րդ աստիճանի բազմանդամի արմատները համաչափ են $0$ կետի նկատմամբ։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Պետք է ցույց տալ, որ $L_n(-x)=(-1)^nL_n(x)$։ Բերում ենք երկու
+ապացույց՝ ռեկուրենտ առնչությամբ (մեր սահմանումը) և օրթոգոնալությամբ։ Երկրորդը ճիշտ է, ինչ հաստատունով էլ բազմապատկված լինի
+$L_n$-ը։</p></div>
+<h3>(ա) Ապացույց 1՝ ինդուկցիա</h3>
+<p>$L_0=1$-ը զույգ է, $L_1=x$-ը՝ կենտ։ Դիցուք պնդումը ճիշտ է $k-1$-ի և $k$-ի համար։ Այդ դեպքում</p>
+$$\begin{aligned}&(k+1)L_{k+1}(-x)\\&=(2k+1)(-x)L_k(-x)\\&\qquad-kL_{k-1}(-x)\\&=(-1)^{k+1}\bigl[(2k+1)xL_k(x)\\&\qquad-kL_{k-1}(x)\bigr]\\&=(-1)^{k+1}(k+1)L_{k+1}(x),\end{aligned}$$
+<p>քանի որ $(-1)\cdot(-1)^k=(-1)^{k+1}$ և $(-1)^{k-1}=(-1)^{k+1}$։</p>
+<h3>(ա) Ապացույց 2՝ օրթոգոնալություն</h3>
+<p>Դիցուք $q(x)=L_n(-x)$։ Այն $n$-րդ աստիճանի է, և $n$-ից ցածր աստիճանի ցանկացած $r$-ի համար $t=-x$ փոխարինումով
+$\int_{-1}^1L_n(-x)\,r(x)\,dx=\int_{-1}^1L_n(t)\,r(-t)\,dt=0$, քանի որ $r(-t)$-ն էլ $n$-ից ցածր աստիճանի է։ $q$-ի ավագ անդամի
+գործակիցը $(-1)^n$ անգամ $L_n$-ինն է, ուստի $d=q-(-1)^nL_n$ բազմանդամի աստիճանը $n$-ից ցածր է։ $d$-ն օրթոգոնալ է $n$-ից ցածր
+աստիճանի բոլոր բազմանդամներին, այդ թվում՝ ինքն իրեն՝ $\int_{-1}^1d^2\,dx=0$։ Ուրեմն $d\equiv0$, այսինքն՝
+$L_n(-x)=(-1)^nL_n(x)$։</p>
+<h3>(բ) Արմատները</h3>
+<p>Եթե $L_n(r)=0$, ապա $L_n(-r)=(-1)^nL_n(r)=0$, այսինքն՝ $-r$-ն էլ արմատ է։ Կենտ $n$-ի դեպքում $L_n(0)=-L_n(0)$, և $0$-ն արմատ
+է։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> $L_2=\frac{3x^2-1}{2}$-ի արմատները $\pm\frac{1}{\sqrt3}$ են,
+$L_3=\frac{5x^3-3x}{2}$-ինը՝ $0$ և $\pm\sqrt{\frac35}$ (Գաուսի բանաձևերի աղյուսակի հանգույցները)։ Համաչափությունից հետևում է
+նաև, որ Գաուսի բանաձևի համաչափ հանգույցների կշիռները հավասար են. $-t_k$ հանգույցի բազիսային բազմանդամը $\ell_k(-t)$-ն է,
+և նրա ինտեգրալը $[-1,1]$-ում նույնն է, ինչ $\ell_k$-ինը։ Ապացույց 2-ի դատողությունը (երկու $n$-րդ աստիճանի բազմանդամ, որոնք
+օրթոգոնալ են $n$-ից ցածր աստիճաններին, համեմատական են) օգտագործված է նաև Գաուսի թեորեմի ապացույցում։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) $L_n(-x)=(-1)^nL_n(x)$՝ ինդուկցիայով ռեկուրենտ առնչությունից կամ օրթոգոնալությունից։ (բ) $L_n(r)=0\Rightarrow L_n(-r)=0$, իսկ կենտ $n$-ի դեպքում $0$-ն էլ է արմատ</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p24" open>
+<summary><h2>Խնդիր 24 - $[-1,2]$ հատվածը</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 24</div>
+<p>(ա) Արդյո՞ք</p>
+$$\begin{gathered}\int_{-1}^2f(x)\,dx\approx\tfrac32f(0)+\tfrac32f(1)\end{gathered}$$
+<p>քառակուսեցման բանաձևը Գաուսի բանաձևն է $n=1$ դեպքում։</p>
+<p>(բ) Ինչի՞ է հավասար այդ բանաձևի ճշգրտության աստիճանը։</p>
+<p>(գ) Կառուցեք Գաուսի քառակուսեցման բանաձևը $n=2$ դեպքում $[-1,2]$ հատվածի համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p>Ստուգում ենք $1$, $x$, $x^2$ ֆունկցիաները. Գաուսի բանաձևը ($n=1$)
+պետք է ճշգրիտ լինի մինչև $x^3$-ը։ (գ)-ում տեղափոխում ենք $n=2$-ի աղյուսակը $[-1,2]$։</p></div>
+<h3>(ա) և (բ)</h3>
+<p>$f=1$՝ $\frac32+\frac32=3=\int_{-1}^21\,dx$։ $f=x$՝ $\frac32=\int_{-1}^2x\,dx=\frac{4-1}{2}$։ $f=x^2$՝ բանաձևը տալիս է $\frac32$,
+իսկ $\int_{-1}^2x^2\,dx=\frac{8+1}{3}=3$։ Ճշգրտության աստիճանը $1$ է, ոչ թե $3$, ուստի սա Գաուսի բանաձևը չէ։ $[-1,2]$-ում $n=1$
+Գաուսի հանգույցներն են $\frac12\mp\frac{\sqrt3}{2}\approx-0{,}36603$ և $1{,}36603$։</p>
+<h3>(գ) Գաուսի բանաձևը $n=2$ դեպքում</h3>
+<p>$\frac{a+b}{2}=\frac12$, $\frac{b-a}{2}=\frac32$։ Հանգույցները՝ $\frac12$ և
+$\frac12\mp\frac32\sqrt{\frac35}=\frac12\mp\frac{3\sqrt{15}}{10}\approx-0{,}66190$ և $1{,}66190$, կշիռները՝ $\frac32\cdot\frac59=\frac56$
+և $\frac32\cdot\frac89=\frac43$՝</p>
+$$\begin{aligned}\int_{-1}^2f(x)\,dx\approx{}&\tfrac56f\bigl(\tfrac12-\tfrac{3\sqrt{15}}{10}\bigr)\\&+\tfrac43f\bigl(\tfrac12\bigr)\\&+\tfrac56f\bigl(\tfrac12+\tfrac{3\sqrt{15}}{10}\bigr).\end{aligned}$$
+<div class="check"><span class="check-label">Ստուգում։</span> $x^2$-ի համար՝
+$x_0^2+x_2^2=2\cdot\frac14+2\cdot\frac{27}{20}=\frac{16}{5}$, և $\frac56\cdot\frac{16}{5}+\frac43\cdot\frac14=\frac83+\frac13=3=\int_{-1}^2x^2\,dx$։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> (ա) Ոչ։ (բ) $1$։ (գ) $\int_{-1}^2f\,dx\approx\frac56f\bigl(\frac12-\frac{3\sqrt{15}}{10}\bigr)+\frac43f\bigl(\frac12\bigr)+\frac56f\bigl(\frac12+\frac{3\sqrt{15}}{10}\bigr)$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="p25" open>
+<summary><h2>Խնդիր 25 - GQR ֆունկցիա</h2></summary>
+<div class="sec-body">
+<div class="box problem"><div class="box-title">Խնդիր 25</div>
+<p>(Python) Գրեք <code>GQR(f, a, b, n)</code> Python ֆունկցիա, որը $\int_a^bf(x)\,dx$ ինտեգրալը մոտարկում է $n+1$ հանգույցով
+Գաուսի քառակուսեցման բանաձևով։ $[-1,1]$ հատվածի հանգույցներն ու կշիռները կարելի է հաշվել
+<code>numpy.polynomial.legendre.leggauss</code> ֆունկցիայով կամ գրել սեփական ծրագիր։ Հաշվեք $\int_0^2e^{-x^2}\,dx$ ինտեգրալը
+$n=0,1,\dots,10$ արժեքների համար։</p>
+</div>
+<div class="solution">
+<div class="box idea"><div class="box-title">Գաղափարը</div><p><code>leggauss(n + 1)</code>-ը վերադարձնում է $[-1,1]$-ի $n+1$
+հանգույցը և կշիռները։ Տեղափոխում ենք դրանք $[a,b]$՝ ինչպես տեսական բաժնում։ Ճշգրիտ արժեքը՝
+$\int_0^2e^{-x^2}dx=\frac{\sqrt\pi}{2}\,\mathrm{erf}(2)\approx0{,}8820813908$։</p></div>
+<pre class="py" data-run><code>import math
+import numpy as np
+
+def GQR(f, a, b, n):
+    """Գաուսի բանաձևը n + 1 հանգույցով [a, b] հատվածում"""
+    t, w = np.polynomial.legendre.leggauss(n + 1)
+    x = (a + b) / 2 + (b - a) / 2 * t
+    return (b - a) / 2 * np.sum(w * f(x))
+
+f = lambda x: np.exp(-x**2)
+exact = math.sqrt(math.pi) / 2 * math.erf(2)
+for n in range(11):
+    G = GQR(f, 0, 2, n)
+    print(f"n = {n:2d}   GQR = {G:.10f}   սխալանքը = {abs(G - exact):.2e}")
+
+# նույնը՝ առանց leggauss-ի. L_m-ի արմատները Նյուտոնի մեթոդով, m = n + 1
+def legendre_nodes(m):
+    t = np.cos(np.pi * (np.arange(m) + 0.75) / (m + 0.5))   # սկզբնական մոտարկումներ
+    for _ in range(100):
+        p0, p1 = np.ones_like(t), t.copy()
+        for k in range(1, m):
+            p0, p1 = p1, ((2 * k + 1) * t * p1 - k * p0) / (k + 1)
+        dp = m * (t * p1 - p0) / (t**2 - 1)        # L_m'(t)
+        t = t - p1 / dp
+    return t, 2 / ((1 - t**2) * dp**2)
+
+t, w = legendre_nodes(5)
+t0, w0 = np.polynomial.legendre.leggauss(5)
+order = np.argsort(t)
+print("տարբերությունը leggauss-ից՝", np.max(np.abs(t[order] - t0)), np.max(np.abs(w[order] - w0)))</code></pre>
+<div class="table-wrap"><table class="tbl"><thead><tr><th class="num">$n$</th><th class="num">$\mathrm{GQR}$</th><th class="num">սխալանքը</th></tr></thead>
+<tbody>
+<tr><td class="num">$0$</td><td class="num">$0{,}7357588823$</td><td class="num">$1{,}46\cdot10^{-1}$</td></tr>
+<tr><td class="num">$1$</td><td class="num">$0{,}9194861166$</td><td class="num">$3{,}74\cdot10^{-2}$</td></tr>
+<tr><td class="num">$2$</td><td class="num">$0{,}8788645709$</td><td class="num">$3{,}22\cdot10^{-3}$</td></tr>
+<tr><td class="num">$3$</td><td class="num">$0{,}8822290959$</td><td class="num">$1{,}48\cdot10^{-4}$</td></tr>
+<tr><td class="num">$4$</td><td class="num">$0{,}8820780177$</td><td class="num">$3{,}37\cdot10^{-6}$</td></tr>
+<tr><td class="num">$5$</td><td class="num">$0{,}8820813554$</td><td class="num">$3{,}54\cdot10^{-8}$</td></tr>
+<tr><td class="num">$6$</td><td class="num">$0{,}8820813976$</td><td class="num">$6{,}79\cdot10^{-9}$</td></tr>
+<tr><td class="num">$7$</td><td class="num">$0{,}8820813904$</td><td class="num">$3{,}43\cdot10^{-10}$</td></tr>
+<tr><td class="num">$8$</td><td class="num">$0{,}8820813908$</td><td class="num">$1{,}17\cdot10^{-11}$</td></tr>
+<tr><td class="num">$9$</td><td class="num">$0{,}8820813908$</td><td class="num">$\lt10^{-12}$</td></tr>
+<tr><td class="num">$10$</td><td class="num">$0{,}8820813908$</td><td class="num">$\lt10^{-12}$</td></tr>
+</tbody></table></div>
+<p>Սխալանքը փոքրանում է շատ արագ. $n=4$-ի դեպքում ($5$ հանգույց) այն արդեն $\approx3{,}37\cdot10^{-6}$ է, իսկ $n=9$-ի և
+$n=10$-ի դեպքում՝ $10^{-12}$-ից փոքր։ Համեմատության համար՝ Սիմպսոնի ընդհանրացված բանաձևը նույն $11$ հանգույցով ($10$ մաս)
+տալիս է $\approx6{,}5\cdot10^{-6}$ սխալանք։</p>
+<div class="check"><span class="check-label">Ստուգում։</span> $n=0$-ի դեպքում բանաձևը միջին ուղղանկյունների բանաձևն է՝
+$2e^{-1}\approx0{,}7357588823$։ Ծրագրի երկրորդ մասը սեփական ֆունկցիայով գտնում է նույն հանգույցներն ու կշիռները, ինչ
+<code>leggauss</code>-ը (տարբերությունը կլորացման սխալանքի կարգի է)։</div>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> <code>GQR</code> ֆունկցիան և արժեքները՝ վերևում։ $n=10$-ի դեպքում $\mathrm{GQR}\approx0{,}8820813908$, որը տասը նիշով համընկնում է ճշգրիտ արժեքի հետ</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="table-wrap"><table class="tbl"><thead><tr><th>Բանաձև</th><th class="num">Ճշգրտության աստիճան</th><th>Պարզ բանաձևի սխալանք</th><th>Ընդհանրացված բանաձևի սխալանք</th></tr></thead>
+<tbody>
+<tr><td>Միջին ուղղանկյուններ</td><td class="num">$1$</td><td>$\frac{(b-a)^3}{24}f''(\xi)$</td><td>$\le\frac{(b-a)h^2}{24}K_2$</td></tr>
+<tr><td>Սեղաններ</td><td class="num">$1$</td><td>$-\frac{(b-a)^3}{12}f''(\xi)$</td><td>$\le\frac{(b-a)h^2}{12}K_2$</td></tr>
+<tr><td>Սիմպսոն</td><td class="num">$3$</td><td>$-\frac{(b-a)^5}{2880}f^{(4)}(\xi)$</td><td>$\le\frac{(b-a)h^4}{180}K_4$</td></tr>
+<tr><td>Գաուս, $2$ հանգույց</td><td class="num">$3$</td><td>$\frac{(b-a)^5}{4320}f^{(4)}(\xi)$</td><td>-</td></tr>
+<tr><td>Գաուս, $n+1$ հանգույց</td><td class="num">$2n+1$</td><td>-</td><td>-</td></tr>
+</tbody></table></div>
+<p>Հիմնական բանաձևերը՝</p>
+<ul>
+  <li>ճշգրտություն $m$ աստիճանի համար՝ $\sum_kA_kx_k^j=\int_a^bx^j\,dx$, $j=0,\dots,m$,</li>
+  <li>$n$-ի ընտրությունը սեղանների համար՝ $n\ge\sqrt{\frac{(b-a)^3K_2}{12\varepsilon}}$,</li>
+  <li>Գաուսի բանաձևը $[a,b]$-ում՝ $x_k=\frac{a+b}{2}+\frac{b-a}{2}t_k$, կշիռները $\frac{b-a}{2}A_k$, որտեղ $t_k$-երը $L_{n+1}$-ի
+  արմատներն են։</li>
+</ul>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li>Խառնել $n$-ը (մասերի քանակը) և հանգույցների քանակը. սեղանների և Սիմպսոնի բանաձևերում հանգույցները $n+1$-ն են, միջին
+  ուղղանկյուններում՝ $n$ (խնդիրներ 7, 9, 16)։</li>
+  <li>Սիմպսոնի ընդհանրացված բանաձևում վերցնել կենտ $n$, կամ $h$-ի փոխարեն գործակցում գրել $\frac{h}{6}$ (պարզ բանաձևի
+  $\frac{b-a}{6}$-ը $\frac{2h}{6}=\frac h3$ է)։</li>
+  <li>$K_2$-ը վերցնել մեկ կետում, օրինակ՝ հատվածի ծայրում, ոչ թե մեծագույն արժեքը. խնդիր 10-ում $|f''(2)|\approx16{,}374$, իսկ
+  $K_2\approx17{,}064$։</li>
+  <li>$n\ge26{,}07$-ից վերցնել $n=26$, այսինքն՝ կլորացնել ներքև (խնդիր 7)։</li>
+  <li>Գաուսի հանգույցները $[a,b]$ տեղափոխելիս մոռանալ կշիռների $\frac{b-a}{2}$ արտադրիչը (խնդիրներ 21, 24)։</li>
+  <li>Խնդիրների ցանկի Գաուսի «$n$»-ը հաշվել որպես հանգույցների քանակ. $n=1$ նշանակում է երկու հանգույց։</li>
+  <li>Մոռանալ, որ ճշգրտության աստիճանի համար բանաձևը պետք է ճշգրիտ լինի բոլոր $1,x,\dots,x^m$ ֆունկցիաների համար, ոչ միայն
+  $x^m$-ի։</li>
+</ul>
+</div>
+
+<h3>Ստուգեք ինքներդ ձեզ</h3>
+<ol>
+  <li>Ինչո՞ւ է Սիմպսոնի բանաձևը ճշգրիտ խորանարդային բազմանդամների համար, թեև կառուցված է պարաբոլով։ <span class="muted">(հանգույցների
+  և կշիռների համաչափությունը, տե՛ս համաչափության հնարքը)</span></li>
+  <li>Ինչո՞ւ $n+1$ հանգույցով բանաձևը չի կարող ճշգրիտ լինել $2n+2$ աստիճանի բոլոր բազմանդամների համար։ <span class="muted">($\omega^2$-ի
+  համար $Q=0$, իսկ ինտեգրալը դրական է)</span></li>
+  <li>Ինչո՞ւ են Գաուսի բանաձևի կշիռները դրական։ <span class="muted">($A_k=\int\ell_k^2\,dt$, խնդիր 22գ)</span></li>
+  <li>Քանի՞ անգամ է փոքրանում սխալանքը $h$-ը կիսելիս սեղանների և Սիմպսոնի բանաձևերում։ <span class="muted">(մոտ $4$ և $16$
+  անգամ՝ $h^2$ և $h^4$)</span></li>
+  <li>Նույն թվով հանգույցով ո՞րն է ավելի ճշգրիտ՝ Գաուսի՞, թե՞ հավասարահեռ հանգույցներով բանաձևը։ <span class="muted">(Գաուսինը՝
+  աստիճանը $2n+1$, հավասարահեռինը՝ $n$ կամ $n+1$)</span></li>
+  <li>Ինչպե՞ս ընտրել $n$-ը, որ սխալանքը չգերազանցի $\varepsilon$-ը։ <span class="muted">(գնահատականից, $K_2$-ը կամ $K_4$-ը
+  հատվածի մեծագույն արժեքն է, խնդիրներ 7, 10, 12)</span></li>
+</ol>
+<p>Խնդիրների ցանկի հաջորդ բաժինը գծային հավասարումների համակարգերն են։</p>
+</div>
+</details>
 
       <nav class="pager" aria-label="Թեմաներ">
         <a class="btn" href="splines.html">← Սպլայններ</a>

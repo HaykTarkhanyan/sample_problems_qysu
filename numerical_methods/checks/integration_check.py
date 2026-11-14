@@ -417,6 +417,7 @@ assert abs(2 * (1 / 9) - 2 / 9) < 1e-15 and Fr(2, 9) != Fr(2, 5)
 for poly in (lambda x: (x - x0) * (x - x1), lambda x: (x - x0) * (x - x1) ** 2):
     assert abs(ref(poly, -1, 1)) < 1e-14
 log.info("  both integrals of (b) are 0")
+shown(1 / S3, "0,577", "slider position t ~ 1/sqrt3 in the widget")
 
 # ------------------------------------------------------------------ problem 19
 log.info("problem 19")
