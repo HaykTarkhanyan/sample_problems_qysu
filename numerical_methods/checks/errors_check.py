@@ -612,7 +612,10 @@ log.info("A15: (a) a* = 1.2, b* = 3.6 gives 4.32, abserr 0.69 > 0.5 (largest pos
          "(b) a* = 1.1, b* = 2.2 gives 2.42, relerr 0.21 > 0.1 (largest possible); 0.9 * 1.8 gives 0.19")
 
 # ================================================================ PSS 1 (the course's first problem set)
-# ---------------------------------------------------------------- PSS 1.1: the Patriot example
+# ---------------------------------------------------------------- PSS 1.1: the clock example under "Patriot"
+# The lecture (2. Error Analysis, slide 15) only names the Patriot failure and links to a description. The three
+# inputs below (23 bits, 100 hours, 1676 m/s) are the page's stated assumptions, not lecture facts; everything
+# else on the page is derived from them here.
 bits = "00011001100110011001100"                      # 0.1 chopped after 23 binary digits
 stored = Fr(int(bits, 2), 2 ** 23)
 assert len(bits) == 23 and stored == Fr(math.floor(Fr(2 ** 23, 10)), 2 ** 23)
@@ -713,6 +716,10 @@ r_naive, r_lit, r_l1p = rel_to(math.log(x + 1) - math.log(x), ex_ln), rel_to(mat
 assert f"{r_naive:.1e}" == "1.9e-03" and f"{r_lit:.1e}" == "8.9e-05" and r_l1p < 1e-16
 for x in (1e4, 1e8, 1e16):
     assert rel_to(math.log1p(1 / x), ctx40.ln(ctx40.divide(D(x) + 1, D(x)))) < 1e-16
+# "below 1e-16" holds for the four x of the page's block only, not in general (1/x is itself rounded): the page
+# says "of the order of 1e-16 in general". Example: x = 49 gives 1.65e-16.
+r49 = rel_to(math.log1p(1 / 49.0), ctx40.ln(ctx40.divide(D(50), D(49))))
+assert 1e-16 < r49 < 5e-16
 assert math.log(1e16 + 1) - math.log(1e16) == 0.0 and math.log(1 + 1 / 1e16) == 0.0
 assert math.log1p(1e-16) == 1e-16
 u = Fr(1, 10 ** 6)                                       # the series ln(1+u) = u - u^2/2 + u^3/3 - ...
@@ -733,8 +740,11 @@ E_fr = Fr(str(E40))
 assert norm_exp(E_fr) == 1 and fl(E_fr, 4, "round") == fl(E_fr, 4, "chop") == Fr("2.718")
 assert math.floor(E_fr * 10 ** 4) % 10 == 2             # d5 = 2 < 5
 assert ab4e < D("0.0005") and re4e < D("0.0005") and round(D("0.0005") / re4e) == 5
-assert Fr(1, 2) * Fr(10) ** (1 - 4) == Fr(1, 2) * Fr(10) ** (1 - 4) == Fr("0.0005")     # e = 1, t = 4: both bounds 1/2 10^-3
+# exponent 1, t = 4: the absolute bound 1/2 10^(exponent - t) and the relative bound 1/2 10^(1 - t) are both 1/2 10^-3
+assert Fr(1, 2) * Fr(10) ** (norm_exp(E_fr) - 4) == Fr(1, 2) * Fr(10) ** (1 - 4) == Fr("0.0005")
+assert abserr(E_fr, fl(E_fr, 4, "round")) <= Fr("0.0005") and relerr(E_fr, fl(E_fr, 4, "round")) <= Fr("0.0005")
 assert 1.7 < D("0.0005") / ab4e < 1.8                   # "almost 2 times" below the absolute bound
+assert 4.8 < D("0.0005") / re4e < 4.9                   # "about 5 times" below the relative bound
 assert Fr("0.01") / 1000 == Fr(1, 10 ** 5) and Fr("0.01") / Fr("0.1") == Fr("0.1")
 assert (Fr("0.01") / Fr("0.1")) / (Fr("0.01") / 1000) == 10 ** 4 and 100 * Fr(1, 10 ** 5) == Fr("0.001")
 log.info(f"PSS 1.4: x* in [497.5, 502.5]; e - 2.718 = {ab4e:.4e}, relerr {re4e:.4e}; 0.01/1000 = 1e-5, 0.01/0.1 = 0.1")
@@ -794,8 +804,11 @@ log.info(f"PSS 1.5: (a) bound {bound_a:.4e}, actual {actual_a:.4e}; (b) bound e^
 
 # ---------------------------------------------------------------- PSS 1.6: softmax
 dmax = np.finfo(np.float64).max
-assert f"{math.log(dmax):.2f}" == "709.78" and math.isfinite(math.exp(709.78))
-for big in (709.79, 1000.0):
+# the threshold is ln(max double) = 709.7827...; the page rounds it up to 709.783, so "x > 709.783 overflows" is true
+# (with 709.78 it would be false for 709.78 < x <= 709.7827: exp(709.782) is finite)
+assert f"{math.log(dmax):.3f}" == "709.783" and math.log(dmax) < 709.783
+assert math.isfinite(math.exp(709.78)) and math.isfinite(math.exp(709.782))
+for big in (709.783, 709.79, 1000.0):
     try:
         math.exp(big)
         raise AssertionError(f"math.exp({big}) did not overflow")
