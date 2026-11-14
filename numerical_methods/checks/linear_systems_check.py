@@ -165,6 +165,57 @@ for n, md_, ad_, ratio in [(4, 36, 26, "1.45"), (10, 430, 375, "1.21"), (100, 34
 assert 2**3 == 8                                                      # predict: doubling n -> 8 times the work
 log.info("Gauss counts: n=4: 36, 26; n=10: 430, 375; n=100: 343300, 338250; ratios 1.45, 1.21, 1.02")
 
+
+# Added by the 2026-11-14 review: the other operation counts the page quotes, counted one operation at a time
+# (the page counts all four arithmetic operations: LU about 2n^3/3, the two triangular solves about 2n^2,
+# Cholesky about n^3/3 plus n square roots; the widget w-lu counts (n^3 - n)/3 multiplications and divisions).
+def lu_counts(n):
+    md = ad = 0
+    for k in range(n - 1):
+        for _i in range(k + 1, n):
+            md += 1                                                    # the multiplier l_ik
+            for _j in range(k + 1, n):
+                md += 1
+                ad += 1
+    return md, ad
+
+
+def tri_counts(n):
+    md = ad = 0
+    for i in range(n):                                                 # Ly = b, unit diagonal
+        md += i
+        ad += i
+    for i in range(n):                                                 # Ux = y
+        md += (n - 1 - i) + 1
+        ad += n - 1 - i
+    return md, ad
+
+
+def chol_counts(n):
+    md = ad = roots = 0
+    for k in range(n):
+        md += k                                                        # l_kk: k squares, k subtractions, one root
+        ad += k
+        roots += 1
+        for _i in range(k + 1, n):
+            md += k + 1                                                # l_ik: k products, one division
+            ad += k
+    return md, ad, roots
+
+
+for n in range(1, 60):
+    md, ad = lu_counts(n)
+    assert md == Fr(n**3 - n, 3) and ad == Fr(n**3, 3) - Fr(n * n, 2) + Fr(n, 6)
+    assert sum(tri_counts(n)) == 2 * n * n - n
+    md, ad, roots = chol_counts(n)
+    assert md + ad == Fr(n**3, 3) + Fr(n * n, 2) - Fr(5 * n, 6) and roots == n
+assert lu_counts(4)[0] == 20 and lu_counts(3)[0] == 8                  # the totals the widget w-lu prints
+n = 200                                                                # 2.7 million loop passes, ~0.3 s
+assert abs(sum(lu_counts(n)) / (2 * n**3 / 3) - 1) < 5e-3              # LU: about 2n^3/3
+assert abs(sum(tri_counts(n)) / (2 * n * n) - 1) < 5e-3                # Ly = b and Ux = y: about 2n^2
+assert abs(sum(chol_counts(n)[:2]) / (n**3 / 3) - 1) < 1e-2            # Cholesky: about n^3/3, half of LU
+log.info("LU alone: (n^3 - n)/3 mult/div, total ~2n^3/3; triangular solves 2n^2 - n; Cholesky ~n^3/3 and n roots")
+
 # ---------------------------------------------------------------- E1
 A1, b1 = M([[1, 2, 0, 0], [1, 3, 2, 0], [1, 3, 3, 2], [1, 3, 3, 3]]), V([3, 6, 9, 10])
 L1, U1, st1 = eliminate(A1)

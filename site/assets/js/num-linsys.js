@@ -230,7 +230,8 @@
       else if (s.m.n === 0) msg = `l${sub(I)}${sub(K)} = 0՝ (${I},${K}) տեղում արդեն զրո է, և ${ord(I)} տողը չի փոխվում։`;
       else {
         const prev = res.steps[k - 1].U;
-        msg = `l${sub(I)}${sub(K)} = ${fstr(prev[s.i][s.k])} / ${fstr(prev[s.k][s.k])} = ${fstr(s.m)}։ ` +
+        const par = a => (a.d === 1 ? fstr(a) : `(${fstr(a)})`);      // (−8/5) / (18/5), not −8/5 / 18/5
+        msg = `l${sub(I)}${sub(K)} = ${par(prev[s.i][s.k])} / ${par(prev[s.k][s.k])} = ${fstr(s.m)}։ ` +
           `${ord(I)} տողից հանում ենք ${ord(K)} տողը՝ բազմապատկած ${fstr(s.m)}-ով, և (${I},${K}) տեղում ստացվում է 0։`;
       }
       if (k > 0) msg += ` Բազմապատկում և բաժանում մինչ այժմ՝ ${s.ops}։`;
@@ -415,7 +416,13 @@
       let msg = `x⁽⁰⁾ = (${num(x0[0], 1)}; ${num(x0[1], 1)})։`;
       if (k > 0) msg += ` Յակոբի՝ x⁽${sup(k)}⁾ = ${pt(J.xs[J.xs.length - 1])}, Գաուս-Զեյդել՝ x⁽${sup(k)}⁾ = ${pt(G.xs[G.xs.length - 1])}։`;
       msg += ` ρ(T_J) ≈ ${num(r.J, 3)}, ρ(T_GS) ≈ ${num(r.G, 3)}`;
-      msg += r.J < 1 ? "՝ երկու մեթոդն էլ զուգամիտում են ցանկացած x⁽⁰⁾-ից։" : "՝ երկու մեթոդն էլ տարամիտում են (եթե x⁽⁰⁾ ≠ x*)։";
+      if (r.J < 1) msg += "՝ երկու մեթոդն էլ զուգամիտում են ցանկացած x⁽⁰⁾-ից։";
+      else {
+        // 2 x 2: T_J^2 = t I, so Jacobi leaves every x0 != x*; Gauss-Seidel's first step uses only x2 of x0,
+        // so from x2 = x2* it lands on x* at once, and from any other x2 the error grows by |t| per step
+        msg += `՝ Յակոբիի մեթոդը տարամիտում է, եթե x⁽⁰⁾ ≠ x*, Գաուս-Զեյդելի մեթոդը՝ եթե x₂⁽⁰⁾ ≠ ${num(XS[1], 1)}։`;
+        if (x0[1] === XS[1]) msg += ` Այստեղ x₂⁽⁰⁾ = ${num(XS[1], 1)}, և Գաուս-Զեյդելի մեթոդն առաջին քայլում արդեն տալիս է x* լուծումը։`;
+      }
       out("msg").textContent = msg;
     }
     caseBtns.forEach(b => b.addEventListener("click", () => { cur = b.dataset.case; press(caseBtns, b); k = 0; draw(); }));

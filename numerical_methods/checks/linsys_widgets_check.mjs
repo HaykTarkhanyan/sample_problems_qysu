@@ -91,6 +91,19 @@ near(rs.J, Math.sqrt(6)); near(rs.G, 6);
 const Js = jacobi(As, bs, [-1, -1], 4);
 nearVec(Js[1], [-3.5, -6]); nearVec(Js[2], [-11, -16]);
 nearVec(gaussSeidel(As, bs, [-1, -1], 2).xs[2], [-26, -106]);
+// The w-iter message for the swapped order (added by the 2026-11-14 review): Jacobi leaves every x0 != x*
+// (T_J^2 = 6 I), but Gauss-Seidel's first step uses only x2 of x0, so from x2 = 2 it lands on x* = (1, 2)
+// exactly, and from any other x2 its error grows 6 times per step after the first.
+for (const a of [-1, 0.3, 3.7]) {
+  assert.deepEqual(gaussSeidel(As, bs, [a, 2], 3).xs.slice(1), [[1, 2], [1, 2], [1, 2]]);
+  const e = jacobi(As, bs, [a, 2], 4).map(err);
+  near(e[2], 6 * e[0]); near(e[4], 36 * e[0]);
+}
+for (const x0 of [[1, 2.1], [-1, -1], [4, 1.9]]) {
+  const e = gaussSeidel(As, bs, x0, 4).xs.map(err);
+  near(e[2], 6 * e[1]); near(e[3], 6 * e[2]); near(e[4], 6 * e[3]);
+  assert.ok(e[1] > 0);
+}
 // both still converge to (1, 2) for problem 14 after 30 steps
 assert.ok(err(jacobi(A14, b14, [-1, -1], 30)[30]) < 1e-10 && err(gaussSeidel(A14, b14, [-1, -1], 30).xs[30]) < 1e-15);
 
