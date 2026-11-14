@@ -60,4 +60,12 @@ These close every question in `QUESTIONS_FOR_NATIVE_SPEAKER.md` that the sources
 | A56 | interpolation problem 1ա: "yes" first, then the remark | P interpolates the data; it is not the degree-at-most-1 polynomial of the uniqueness theorem. |
 | A57 | truncation error = «մեթոդի սխալանք»; important terms also get the English term in brackets | «մեթոդի սխալանք (truncation error)». Applied to the bold defined terms of the four numerical pages. |
 | A58 | PSS 1 = «առաջադրանք 1» | Written «Առաջադրանք 1 (PSS 1)»; not «տնային աշխատանք». |
+| A59 | pivot = «գլխավոր տարր» (interview of 2026-11-14, linear-systems page) | Partial pivoting = «գլխավոր տարրի ընտրություն». Not «առանցքային տարր». Page unchanged. |
+| A60 | forward / back substitution = «ուղիղ / հակադարձ տեղադրում» | Not «ուղիղ / հակադարձ ընթացք». Page unchanged. |
+| A61 | induced matrix norm = «մակածված նորմ» | Not «օպերատորային նորմ» (glossary row 699 stays for operator norm in general). Page unchanged. |
+| A62 | leading principal minor = «գլխավոր անկյունային մինոր» | The page had «անկյունային մինոր»; changed in all 6 places of `linear-systems.html`. |
+| A63 | Sylvester's criterion = «Սիլվեստրի հայտանիշ» | Not «չափանիշ». Page unchanged. |
+| A64 | "the method converges / diverges" = the verbs «զուգամիտում է» / «տարամիտում է» | The problem list's adjectives («զուգամետ է») are not used in running text. Page unchanged. |
+| A65 | symmetric nodes and formulas = «համաչափ» | «համաչափ հանգույցներ», «Համաչափության հնարք» on the integration page stay; matrices stay «սիմետրիկ մատրից» (glossary row 959). |
+| A66 | an upper bound of a derivative = «վերին եզր» (glossary row 1033) | Asked about the two places on the integration page («$K_2$-ի վերին եզր») and changed there. The question did not cover «վերին գնահատական» as "upper estimate of an error" on the errors, linear-systems and probability pages (11 uses); those were not touched. |
 | - | discrete sweep: "not now" (asked again 2026-11-13) | The 7 discrete sheets and their pages stay as they are; new finds go to DEFERRED_TODO. |

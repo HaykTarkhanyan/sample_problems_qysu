@@ -17,7 +17,8 @@ need to answer the open ones.
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
 | **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
 | **Answered by the owner, 2026-11-14** (answers listed after A58) | A50, A51, A52, A53, A54, A55, A56, A57, A58 |
-| **Open** (integration and linear-systems pages, 2026-11-14) | A59, A60, A61, A62, A63, A64, A65, A66, A67, A68 |
+| **Answered by the owner, 2026-11-14, second interview** (see `OWNER_ANSWERS.md`): A59 a, A60 a, A61 a, A62 b, A63 a, A64 a, A65 a, A66 b | A59, A60, A61, A62, A63, A64, A65, A66 |
+| **Open** (single wordings on the integration and linear-systems pages) | A67, A68 |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
