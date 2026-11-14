@@ -17,7 +17,7 @@ need to answer the open ones.
 | **Answered by the owner, 2026-11-10** (see `OWNER_ANSWERS.md`) | A2, A5, A6, A7, A9, A10, A11, A13, A16, A17, A18, A19, A20, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31, A32, A33, A36 |
 | **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
 | **Answered by the owner, 2026-11-14** | A50 |
-| **Open** (put to the owner on 2026-11-14, who said "ask later") | A51, A52, A53, A54, A55, A56 |
+| **Open** (A51-A56 put to the owner on 2026-11-14, who said "ask later"; A57-A58 not asked yet) | A51, A52, A53, A54, A55, A56, A57, A58 |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
@@ -382,3 +382,12 @@ The page answers in the strict sense: it passes through the points, but the inte
 data is the line $-6x-1$. The reviewer notes the lecturer's usage points to the plain answer "yes, P
 interpolates the data".
 - a) keep the strict answer  b) say "yes" first, then add the remark about the degree
+
+**A57 (open). Truncation error** (the error of the method, as opposed to round-off). The PSS 1 part of the
+errors page writes «մեթոդի սխալանք», because «կտրում» already means chopping there. Neither the glossary nor
+the lecture gives an Armenian term.
+- a) keep «մեթոդի սխալանք»  b) another term: ...
+
+**A58 (open). What to call PSS 1.** The page calls it «տնային աշխատանք» (homework). If "PSS" stands for a
+problem-solving session, that is wrong.
+- a) «տնային աշխատանք»  b) «խնդիրների լուծման պարապմունք»  c) other: ...

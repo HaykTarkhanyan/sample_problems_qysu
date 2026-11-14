@@ -8,7 +8,7 @@ Guidance and tools for Armenian written by LLMs in this repo. Built 2026-11-10.
 |------|------------|
 | `GUIDE.md` | The rules: top-10 summary, then each rule as wrong -> right with reason, confidence and evidence, ordered by how often the mistake appears in LLM text. Start here. |
 | `POLISH_CHECKLIST.md` | The order in which to polish a text (lint, terms, negation, calques, rhythm, final check). |
-| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 56 points (A1-A56), each answerable in a few words. 50 are settled (10 by sources, 40 by the owner) and 6 are open, A51-A56 (status table at the top). A new doubt gets the next free `A` number. |
+| `QUESTIONS_FOR_NATIVE_SPEAKER.md` | 58 points (A1-A58), each answerable in a few words. 50 are settled (10 by sources, 40 by the owner) and 8 are open, A51-A58 (status table at the top). A new doubt gets the next free `A` number. |
 | `OWNER_ANSWERS.md` | The owner's decisions from the interviews of 2026-11-10 and 2026-11-13, one line each. They override GUIDE.md if the two ever differ. |
 | `SOURCE_FINDINGS.md` | What the Language Committee recommendations, the ministry textbooks «Հայոց լեզու 7/11» and two academic sources say about each question, with citations; new rules from those sources. Added 2026-11-10. |
 | `GLOSSARY_REPORT.md` | Review of `glossary_Apr.csv` (read-only): 20 findings with row numbers and severity. |

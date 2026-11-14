@@ -4,9 +4,12 @@ Topics cut from current work so they are not lost.
 
 - **Numerical analysis, remaining problem-list blocks** D (integration, 25 problems) and E (linear systems,
   16): both wait for their lecture slides. Blocks A and B were published on 2026-11-14. PSS 1 of the current
-  course (7 problems) is still not on the errors page; the owner said on 2026-11-14 that all solutions may be
-  published, so adding it only needs a yes. `numerical_methods/README.md` has the map. (2026-11-11, updated
-  2026-11-14)
+  course (7 problems) was added to the errors page on 2026-11-14 (sections `#pss1`, `#s1`-`#s7` and a Taylor
+  theory section), built by an Opus agent and reviewed by a Fable agent
+  (`numerical_methods/reviews/2026-11-14_errors_pss1_math_review.md`). Its Patriot example is written as a
+  calculation under stated assumptions, because the lecture slide only names the incident; the history can
+  be restored once the two links on the slide are checked. `numerical_methods/README.md` has the map.
+  (2026-11-11, updated 2026-11-14)
 - **Native Armenian read of the three pages published on 2026-11-14** (`errors.html`, `nonlinear.html`,
   `interpolation.html`): written by Opus agents on a Fable start, each given a full independent maths review by
   a Fable agent, but read for language only by lint and by a 12-problem sample. The reviewers' and builders'
