@@ -49,6 +49,12 @@ eq(onto, 6 * S(5, 3), "surjections = 3! S(5,3)");
 eq(3 ** 5 - 3 * 2 ** 5 + 3 * 1 ** 5, 150, "check of problem 1: 243 - 96 + 3");
 eq(150 / 6, 25, "check of problem 1: 150 / 6");
 eq(S(5, 1) + S(5, 2) + S(5, 3), 41, "unlabelled boxes, empty allowed, n=5, k=3");
+eq(3 ** 5 < 6 * 41, true, "w-boxes hint: 243 < 3! * 41 = 246");
+// predict before w-boxes: 4 distinct elements, 2 identical boxes, empty allowed
+eq(S(4, 1) + S(4, 2), 8, "predict w-boxes: S(4,1) + S(4,2) = 8");
+eq(2 ** 4, 16, "predict w-boxes wrong option: distinct boxes 2^4");
+eq(S(4, 2), 7, "predict w-boxes wrong option: no empty box");
+eq(2 * (S(4, 1) + S(4, 2)), 2 ** 4, "two distinct boxes = twice the identical-box count");
 // second check of problem 1: block sizes {3,1,1} and {2,2,1}
 const p53 = allPartitions(5).filter(p => p.length === 3);
 const shape = p => p.map(b => b.length).sort((x, y) => y - x).join("");

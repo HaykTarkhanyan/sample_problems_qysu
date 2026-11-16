@@ -38,6 +38,10 @@
 .p7-layers { display: inline-flex; flex-wrap: wrap; gap: .25rem; }
 .p7-list { margin: .3rem 0; padding-left: 1.2rem; font-size: .95rem; }
 td.p7-target { background: var(--hl); font-weight: 700; }
+/* boxes widget (P1): small 2x2 table; own bounds of the lattice widget (P12) */
+table.p7-boxes th, table.p7-boxes td { padding: .3rem .45rem; font-size: .88rem; }
+table.p7-boxes th { font-weight: 600; }
+.p7-bounds label { white-space: nowrap; }
 table.tbl td.r { text-align: right; }
 </style>
 </head>
@@ -202,14 +206,59 @@ $$\begin{aligned}S(n,k)&=\underbrace{S(n-1,k-1)}_{(1)}\\&+\underbrace{k\,S(n-1,k
   վանդակը» կոճակը կամ որևէ դատարկ վանդակ, որի երկու հարևաններն արդեն հայտնի են՝ այն կստացվի
   <span class="c-blue">վերին-ձախ հարևանից</span>՝ դրան գումարելով $k$ անգամ <span class="c-red">վերին
   հարևանը</span>։ Լրացված վանդակի վրա սեղմելիս ներքևում երևում են դրա բոլոր տրոհումները՝ բաժանված
-  երկու դեպքի. նկատեք, որ դեպքերի քանակները հենց բանաձևի երկու գումարելիներն են։</p>
+  երկու դեպքի. նկատեք, որ դեպքերի քանակները հենց բանաձևի երկու գումարելիներն են։ «Քայլ առ քայլ» ռեժիմում
+  տրոհումները հայտնվում են մեկ առ մեկ, և հաշվիչը ցույց է տալիս, թե երկրորդ դեպքի յուրաքանչյուր տողն ինչու է
+  տալիս $k$ տրոհում։ $S(5,3)$ վանդակը Խնդիր 1-ի պատասխանն է, իսկ $S(6,3)$-ը՝ «Կանխատեսեք» հարցինը։</p>
   <div class="st-grid" data-out="grid" role="group" aria-label="S(n,k) աղյուսակ"></div>
   <div class="widget-controls">
     <button class="btn primary" type="button" data-act="next">Հաջորդ վանդակը</button>
     <button class="btn" type="button" data-act="all">Լրացնել բոլորը</button>
+    <button class="btn" type="button" data-act="step" aria-pressed="false">Քայլ առ քայլ</button>
     <button class="btn" type="button" data-act="reset">Սկզբից</button>
   </div>
   <div class="widget-out" data-out="formula"></div>
+  <div data-out="list"></div>
+</div>
+
+<p><strong>Տարբեր, թե միանման արկղեր։</strong> Խնդիր 1-ում դասերը չպիտակավորված են, և ոչ մի դաս դատարկ չէ։ Եթե
+դասերը փոխարինենք տարբեր արկղերով կամ թույլ տանք դատարկ արկղեր, պատասխանը փոխվում է։ Ստորև չորս դեպքերը համեմատված
+են։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $4$ տարբեր տարրը դնում ենք $2$ միանման արկղում, և արկղը կարող է դատարկ մնալ։ Քանի՞
+տարբերակ կա։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$8$</button><button class="btn" type="button">$16$</button><button class="btn" type="button">$7$</button></div>
+<div class="predict-why">$8=S(4,1)+S(4,2)=1+7$՝ կամ բոլոր տարրերը մեկ արկղում են, կամ զբաղված են երկու արկղն էլ։
+$16=2^4$-ը տարբեր արկղերի պատասխանն է. միանման արկղերի դեպքում ամեն տարբերակ այնտեղ հաշվված է երկու անգամ։ $7$-ը
+կստացվեր, եթե մոռանայինք այն դեպքը, երբ մի արկղը դատարկ է։ Ստուգեք ներքևում՝ $n=4$, $k=2$, միացրեք «Արկղը կարող է
+դատարկ մնալ» կոճակը։</div>
+</div>
+
+<div class="widget" id="w-boxes">
+  <div class="widget-head">Արկղեր՝ տարբեր կամ միանման, դատարկ կամ ոչ</div>
+  <p class="widget-hint">Ընտրեք տարրերի $n$ և արկղերի $k$ քանակը, ապա միացրեք կամ անջատեք երկու կոճակները։ Աղյուսակում
+  չորս դեպքերի պատասխաններն են, ընթացիկ դեպքը գունանշված է, իսկ ներքևում թվարկված են բոլոր տարբերակները (A, B, C, ...
+  տարբեր արկղերն են, ∅-ն՝ դատարկ արկղը)։ Նկատեք, որ միանման արկղերից տարբեր արկղերի անցնելիս ոչ դատարկ դեպքում
+  պատասխանը բազմապատկվում է ճիշտ $k!$-ով, իսկ դատարկ արկղեր թույլատրելիս՝ կարող է բազմապատկվել ավելի փոքր թվով, քանի
+  որ դատարկ արկղերը միմյանց հետ փոխելը նոր տարբերակ չի տալիս (օրինակ՝ $n=5$, $k=3$ դեպքում
+  $3^5=243\lt 3!\cdot41=246$)։ Սկզբնական դեպքը Խնդիր 1-ն է։</p>
+  <div class="widget-controls">
+    <span>$n$՝</span>
+    <button class="btn" type="button" data-act="n-" aria-label="Փոքրացնել n-ը">−</button>
+    <strong data-out="n">5</strong>
+    <button class="btn" type="button" data-act="n+" aria-label="Մեծացնել n-ը">+</button>
+    <span>$k$՝</span>
+    <button class="btn" type="button" data-act="k-" aria-label="Փոքրացնել k-ն">−</button>
+    <strong data-out="k">3</strong>
+    <button class="btn" type="button" data-act="k+" aria-label="Մեծացնել k-ն">+</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="lab" aria-pressed="false">Արկղերը տարբեր են</button>
+    <button class="btn" type="button" data-act="empty" aria-pressed="false">Արկղը կարող է դատարկ մնալ</button>
+    <button class="btn" type="button" data-act="reset">Խնդիր 1-ի դեպքը</button>
+  </div>
+  <div data-out="table"></div>
+  <div class="widget-out" data-out="msg"></div>
   <div data-out="list"></div>
 </div>
 </div><!-- /solution -->
@@ -296,13 +345,19 @@ $300+500-100=700$, և մնում է շրջաններից դուրս գտնվող
   $\operatorname{lcm}(a,b,c)$-ի բազմապատիկ չէ, բաժանումներն այլևս առանց մնացորդի չեն, և պետք են ամբողջ
   մասերը՝ $\lfloor N/d\rfloor$, որտեղ $d$-ն համապատասխան ամենափոքր ընդհանուր բազմապատիկն է։ Եթե բաժանարարները փոխադարձաբար պարզ չեն (օրինակ՝ $6$ և $4$), «և՛ $6$-ի,
   և՛ $4$-ի բազմապատիկ» նշանակում է «$\operatorname{lcm}(6,4)=12$-ի բազմապատիկ», ոչ թե $24$-ի։ Սեղմեք
-  դիագրամի որևէ մասի կամ ներքևի կոճակներից մեկի վրա՝ տեսնելու, թե որ թվերն են ընկնում այնտեղ։</p>
+  դիագրամի որևէ մասի կամ ներքևի կոճակներից մեկի վրա՝ տեսնելու, թե որ թվերն են ընկնում այնտեղ։ Սկզբնական թվերը
+  Խնդիր 7-ինն են. «$6$ և $4$» կոճակը «Կանխատեսեք» հարցն է, իսկ «$N=1200$» կոճակը ցույց է տալիս, թե երբ է
+  կոտորակներով կարճ ճանապարհը սխալ պատասխան տալիս։</p>
   <div class="widget-controls">
     <label>$N=$ <input class="p7-num" type="number" data-in="N" min="1" max="100000" step="1" value="16500"></label>
     <label>$a=$ <input class="p7-num sm" type="number" data-in="a" min="2" max="99" step="1" value="11"></label>
     <label>$b=$ <input class="p7-num sm" type="number" data-in="b" min="2" max="99" step="1" value="5"></label>
     <label>$c=$ <input class="p7-num sm" type="number" data-in="c" min="2" max="99" step="1" value="3"></label>
-    <button class="btn" type="button" data-act="reset">Խնդրի թվերը</button>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-preset="16500,11,5,3">Խնդրի թվերը</button>
+    <button class="btn" type="button" data-preset="120,2,6,4">$6$ և $4$</button>
+    <button class="btn" type="button" data-preset="1200,11,5,3">$N=1200$</button>
   </div>
   <svg viewBox="0 0 380 240" width="380" role="img" aria-label="Վեննի դիագրամ 11-ի բազմապատիկների ներսում">
     <defs>
@@ -449,11 +504,20 @@ $BC$-ին՝ հենց այն տիպի կողմ, որից թույլատրելի �
   համարակալված են $A$-ից, $Q_j\in BC$ կետերը՝ $B$-ից։ Երբ ընտրված է մեկական կետ յուրաքանչյուր կողմից,
   $(i,j)$ ցանցում նշվում է համապատասխան վանդակը $k$-րդ շերտում։ Ցանցի կարմիր վանդակներում կատարվում է
   $B_1$ ($i+j=8$), $B_2$ ($i=k$), $B_3$ ($j=k$) պայմաններից գոնե մեկը. նկատեք, որ յուրաքանչյուր շերտում
-  դրանք երեք ուղիղ են, որոնք մեկ կետով անցնում են միայն $k=4$-ի դեպքում։</p>
+  դրանք երեք ուղիղ են, որոնք մեկ կետով անցնում են միայն $k=4$-ի դեպքում։ Ցանցում կարելի է ընտրել նաև
+  ստեղնաշարով՝ սլաքներով և PageUp / PageDown ստեղներով։ Մասերի $n$ քանակը փոխելիս ($n=8$-ը Խնդիր 10-ն է, $n=5$-ը՝
+  ինքնաստուգման հարցը) $B_1$ պայմանը դառնում է $i+j=n$, իսկ երեք ուղիղները մեկ վանդակում հատվում են միայն զույգ
+  $n$-ի դեպքում՝ $k=n/2$ շերտում։</p>
   <div class="p7-pair" data-out="pair"></div>
   <div class="widget-controls">
     <button class="btn primary" type="button" data-act="random">Պատահական եռանկյուն</button>
     <button class="btn" type="button" data-act="clear">Մաքրել</button>
+    <span class="muted">մասեր՝</span>
+    <button class="btn" type="button" data-act="parts-" aria-label="Պակասեցնել մասերի քանակը">−</button>
+    <strong data-out="parts">8</strong>
+    <button class="btn" type="button" data-act="parts+" aria-label="Ավելացնել մասերի քանակը">+</button>
+  </div>
+  <div class="widget-controls">
     <span class="muted">շերտ $k$՝</span><span class="p7-layers" data-out="layers"></span>
   </div>
   <div class="widget-out" data-out="status"></div>
@@ -584,7 +648,7 @@ $a_i\le x_i\le b_i$ պայմանով հաշվելու համար՝</p>
 </table></div>
 
 <div class="predict">
-<p><strong>Կանխատեսեք։</strong> Ներքևի նկարում $N$-ը փոխվում է $18$-ից $49$, իսկ եզրերը մնում են նույնը։ $N$-ի ո՞ր
+<p><strong>Կանխատեսեք։</strong> Ներքևի նկարում, խնդրի եզրերի դեպքում, $N$-ը կարող է փոխվել $18$-ից $49$։ $N$-ի ո՞ր
 ամենափոքր արժեքի դեպքում է զույգ անդամներից գոնե մեկն առաջին անգամ զրոյից տարբեր դառնում։</p>
 <div class="predict-opts"><button class="btn" type="button" data-ok>$40$</button><button class="btn" type="button">$22$</button><button class="btn" type="button">$34$</button></div>
 <div class="predict-why">$40$։ $y_1\ge12$ և $y_2\ge10$ պայմանները միասին պահանջում են $12+10=22$ միավոր, այսինքն՝
@@ -595,16 +659,24 @@ $34=12+10+12$-ը եռյակ անդամի համար անհրաժեշտ միավ�
 
 <div class="widget" id="w-bounded">
   <div class="widget-head">Լուծումները՝ որպես ցանցի կետեր</div>
-  <p class="widget-hint">Յուրաքանչյուր կետ $(y_1,y_2)$ զույգ է, իսկ $y_3=N'-y_1-y_2$, որտեղ $N'=N-18$։ Կետերի
-  եռանկյունն առանց վերին եզրերի բոլոր լուծումներն են (աստղեր և ձողիկներ), իսկ կապույտ կետերը
-  բավարարում են բոլոր երեք եզրերին։ Սեղմեք ԿԱՍ-ի որևէ անդամի վրա՝ տեսնելու, թե որ կետերն է այն
-  հաշվում. «գերազանցող» լուծումները եռանկյան անկյուններում փոքր եռանկյուններ են, իսկ դրանց հատումները՝
-  զույգ անդամները։ Փոխեք $N$-ը սահիչով (եզրերը մնում են նույնը) և նկատեք, թե երբ են անդամները զրո
-  դառնում։</p>
+  <p class="widget-hint">Յուրաքանչյուր կետ $(y_1,y_2)$ զույգ է, իսկ $y_3=N'-y_1-y_2$, որտեղ $N'$-ը $N$-ից հանած
+  ստորին եզրերի գումարն է (Խնդիր 12-ում $N'=40-18=22$)։ Կետերի եռանկյունն առանց վերին եզրերի բոլոր լուծումներն են
+  (աստղեր և ձողիկներ), իսկ կապույտ կետերը բավարարում են բոլոր երեք եզրերին։ Սեղմեք ԿԱՍ-ի որևէ անդամի վրա՝ տեսնելու,
+  թե որ կետերն է այն հաշվում. «գերազանցող» լուծումները եռանկյան անկյուններում փոքր եռանկյուններ են, իսկ դրանց
+  հատումները՝ զույգ անդամները։ Փոխեք $N$-ը սահիչով և նկատեք, թե երբ են անդամները զրո դառնում։ Եզրերը կարող եք
+  փոխել և ստուգել ձեր սեփական խնդիրը. «Ինքնաստուգում 6» կոճակն ամփոփման 6-րդ հարցն է։</p>
   <div class="widget-controls">
     <label>$N$՝ <input type="range" data-in="N" min="18" max="49" step="1" value="40"></label>
     <strong data-out="n">40</strong>
-    <button class="btn" type="button" data-act="reset">Խնդրի թիվը՝ $40$</button>
+  </div>
+  <div class="widget-controls p7-bounds">
+    <label><input class="p7-num sm" type="number" data-in="lo0" min="0" max="40" step="1" value="4" aria-label="x1-ի ստորին եզրը"> $\le x_1\le$ <input class="p7-num sm" type="number" data-in="hi0" min="0" max="40" step="1" value="15" aria-label="x1-ի վերին եզրը"></label>
+    <label><input class="p7-num sm" type="number" data-in="lo1" min="0" max="40" step="1" value="9" aria-label="x2-ի ստորին եզրը"> $\le x_2\le$ <input class="p7-num sm" type="number" data-in="hi1" min="0" max="40" step="1" value="18" aria-label="x2-ի վերին եզրը"></label>
+    <label><input class="p7-num sm" type="number" data-in="lo2" min="0" max="40" step="1" value="5" aria-label="x3-ի ստորին եզրը"> $\le x_3\le$ <input class="p7-num sm" type="number" data-in="hi2" min="0" max="40" step="1" value="16" aria-label="x3-ի վերին եզրը"></label>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-preset="40|4,15,9,18,5,16">Խնդրի թվերը</button>
+    <button class="btn" type="button" data-preset="10|0,4,0,4,0,4">Ինքնաստուգում 6</button>
   </div>
   <div data-out="plot"></div>
   <div class="chips" data-out="terms"></div>
