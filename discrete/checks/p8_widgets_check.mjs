@@ -22,7 +22,18 @@ for (let p = -6; p <= 6; p++) for (let q = -9; q <= 9; q++) for (const a1 of [-5
   const want = q === 0 ? "first" : disc < 0 ? "complex" : disc === 0 ? "double" : Number.isInteger(Math.sqrt(disc)) ? "int" : "irr";
   eq(A.kind, want, `kind p=${p} q=${q}`);
   kinds[A.kind] = (kinds[A.kind] || 0) + 1;
-  if (A.kind === "complex") continue;
+  if (A.kind === "complex") {
+    // the message prints r = (p ± i·sqrt(-disc)) / 2: check r^2 = p r + q in complex arithmetic
+    for (const sg of [1, -1]) {
+      const re = p / 2, im = sg * Math.sqrt(-disc) / 2;
+      ok(Math.abs(re * re - im * im - (p * re + q)) < 1e-9 && Math.abs(2 * re * im - p * im) < 1e-9, `complex root p=${p} q=${q}`);
+    }
+    continue;
+  }
+  if (A.kind === "irr") for (const r of [A.r1, A.r2]) {
+    ok(Math.abs(r * r - (p * r + q)) < 1e-9, `irrational root p=${p} q=${q}`);
+    ok(Math.abs(r - (p + Math.sign(r - p / 2) * Math.sqrt(disc)) / 2) < 1e-12, "root = (p ± sqrt(disc)) / 2 as printed");
+  }
   for (let n = 1; n <= 10; n++) {
     ok(P.agrees(A.closed(n), rec[n - 1]), `closed form p=${p} q=${q} a=(${a1},${a2}) n=${n}: ${A.closed(n)} vs ${rec[n - 1]}`);
     if (A.kind !== "irr") ok(Number.isInteger(A.closed(n)) && A.closed(n) === rec[n - 1], `exact integer p=${p} q=${q} n=${n}`);
