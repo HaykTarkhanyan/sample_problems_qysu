@@ -239,7 +239,7 @@
       // for a small n the error can grow when n is doubled (x² cos x, midpoint rule, n = 1 -> 2)
       if (2 * n <= 256 && err2 > floor && err > floor) {
         msg += err2 < err ? ` n-ը կրկնապատկելիս սխալանքը փոքրանում է մոտ ${num(err / err2, 1)} անգամ։` :
-          ` n-ը կրկնապատկելիս սխալանքն այստեղ մեծանում է մոտ ${num(err2 / err, 1)} անգամ (n-ը դեռ փոքր է)։`;
+          ` Այստեղ n-ը կրկնապատկելիս սխալանքը մեծանում է մոտ ${num(err2 / err, 1)} անգամ, քանի որ n-ը դեռ փոքր է։`;
       }
       out("msg").textContent = msg;
     }

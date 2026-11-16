@@ -18,7 +18,8 @@ need to answer the open ones.
 | **Answered by the owner, 2026-11-13** (see `OWNER_ANSWERS.md`) | A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47, A48, A49 |
 | **Answered by the owner, 2026-11-14** (answers listed after A58) | A50, A51, A52, A53, A54, A55, A56, A57, A58 |
 | **Answered by the owner, 2026-11-14, second interview** (see `OWNER_ANSWERS.md`): A59 a, A60 a, A61 a, A62 b, A63 a, A64 a, A65 a, A66 b | A59, A60, A61, A62, A63, A64, A65, A66 |
-| **Open** (single wordings on the integration and linear-systems pages) | A67, A68 |
+| **Answered by the owner, 2026-11-16** (see `OWNER_ANSWERS.md`; 4 of the 13 wordings fine, 8 changed, 1 removed) | A67, A68, A69, A70 |
+| **Open** | A71 |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
@@ -451,6 +452,12 @@ matrix = «սիմետրիկ մատրից», which the linear-systems page follow
 (5) «Խնդիր 4-ի պես՝ բավական է...»; (6) the heading «Ավելին՝ որտեղի՞ց են օրթոգոնալությունը և արմատները»;
 (7) «որոշվում են միարժեքորեն»; (8) the reviewer's widget sentence «n-ը կրկնապատկելիս սխալանքն այստեղ մեծանում է
 մոտ 1,6 անգամ (n-ը դեռ փոքր է)։».
+- For each: fine, or how would you say it?
+
+**A71 (open). Two more sentences with «երաշխիք».** In A68 the owner replaced «Ստացված $n$-ը երաշխիք է» by
+«... երաշխավորում է պահանջված ճշտությունը» and dropped «Գնահատականը երաշխիք է» from another sentence. Two
+similar sentences were not shown to the owner and stay as they are: «Գնահատականը երաշխիք է, ոչ թե ճշգրիտ
+սխալանք։» (integration page, composite rules) and «Արագ մեթոդները երաշխիք չեն տալիս։» (nonlinear page, key idea).
 - For each: fine, or how would you say it?
 
 Terms of the two pages with no glossary row, used consistently and not asked one by one: «Գաուսի մեթոդ»,

@@ -2,6 +2,34 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 24. The discrete pages get the teaching pattern of the newer courses, by one agent per page plus a reviewer
+- **Date** 2026-11-16 - **status** active (user: "launch agents to iterate on discrete both in terms of better
+  interactives, better armenian and better pedagogy"; then answers Q47-Q50 of that session)
+- **Decision** Six Opus agents, one per page (P6 and P8 share one), each in its own worktree, do four things on
+  their page: the Armenian sweep with the owner's decided rules (page, widget script and LaTeX sheet), the 51
+  display formulas that scroll sideways on a phone, the teaching pattern of #13 / #18 (three key ideas, predict
+  blocks, folded hints, checks, typical mistakes, a closing `#exam` section), and a review and improvement of
+  the 27 widgets with at most 1-2 new ones per page. Decided by the owner: the discrete pages hide solutions by
+  default like the other two courses (`<body data-try-default data-two-step>`); the new teaching blocks are
+  site-only and the PDFs get the language fixes only; every page gets an independent Fable review of the new
+  content before it is merged. The agents do not compile LaTeX; the main session rebuilds the seven PDFs one at
+  a time.
+- **Why** The discrete pages predate everything learned since 2026-11-10: they had no hidden-solution mode, no
+  predict blocks, no closing section, 18 lint errors against rules decided later, and the only formulas on the
+  site that do not fit a phone. One agent per page keeps each context on one topic and the six merges touch
+  disjoint files. Reviews are not optional here: on the five numerical pages every independent review found at
+  least one false sentence that the builder's own checks had passed.
+- **Alternatives rejected** Doing only the mechanical sweep and the 51 formulas in the main session (the owner
+  asked for pedagogy and interactives too); one agent for all seven pages (too much for one context, and no
+  parallelism); letting agents rewrite prose that "sounds unnatural" (measured 1 right in 9 in this repo: such
+  doubts go to the owner as questions instead); adding the new blocks to the LaTeX sheets as well (the
+  interactive parts cannot go there, and it would double the review).
+- **What would change this** Students or the owner finding the hidden solutions a nuisance on a practice sheet
+  (then drop `data-try-default` on the discrete pages, one word per page); a reviewer finding that an agent
+  changed the mathematics of an existing solution (then that page is redone from the old version by hand).
+  My cost estimate before launch, not measured: about 3 M Opus tokens for the builders and 2.5 M Fable tokens
+  for the reviewers.
+
 ## 23. A browser smoke test is the last CI step before the upload: playwright-core with the installed Chrome
 - **Date** 2026-11-14 - **status** active (user: "also do the ci browser test"; the tool choice below was made by
   the model and reported, not picked by the owner from options)

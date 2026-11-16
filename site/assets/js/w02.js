@@ -352,7 +352,7 @@
       if (kind === "match") out += " Երբ $n$-ը մեծանում է, ճշգրիտ արժեքն արագ մոտենում է $1-e^{-1}\\approx0{,}632$-ին։";
       $("out").innerHTML = out; Q.math($("out"));
       const rows = T.map((t, m) => {
-        const kindTxt = Math.abs(t - exact) < 1e-12 ? "ճշգրիտ արժեք" : m % 2 === 0 ? "վերին գնահատական" : "ստորին գնահատական";
+        const kindTxt = Math.abs(t - exact) < 1e-12 ? "ճշգրիտ արժեք" : m % 2 === 0 ? "վերին եզր" : "ստորին եզր";
         const expr = S.slice(0, m + 1).map((_, j) => (j === 0 ? "S_1" : (j % 2 ? "-" : "+") + `S_${j + 1}`)).join("");
         return `<tr><td class="num">$${m + 1}$</td><td>$${expr}$</td><td class="num">$${t4(t)}$</td><td>${kindTxt}</td></tr>`;
       }).join("");

@@ -236,7 +236,11 @@ widget, etc.).
   PSS 1 = «Առաջադրանք 1 (PSS 1)». Owner-decided on 2026-11-14 for the last two pages (A59-A66): pivot = «գլխավոր
   տարր», forward / back substitution = «ուղիղ / հակադարձ տեղադրում», induced norm = «մակածված նորմ», leading
   principal minor = «գլխավոր անկյունային մինոր», «Սիլվեստրի հայտանիշ», a method «զուգամիտում է» / «տարամիտում է»
-  (verbs), symmetric nodes and formulas = «համաչափ» (matrices: «սիմետրիկ մատրից»), upper bound = «վերին եզր».
+  (verbs), symmetric nodes and formulas = «համաչափ» (matrices: «սիմետրիկ մատրից»). On every page of the site
+  (2026-11-16): upper / lower bound or estimate = «վերին եզր» / «ստորին եզր», never «վերին գնահատական»; the first
+  norm axiom = «դրական որոշյալություն»; a matrix «ձգում է» a vector; a bound that is far from sharp is
+  «կոնսերվատիվ»; not «X-ը երաշխիք է» but «X-ը երաշխավորում է ...». Discrete pages: «դասավորություն» stays (also for
+  the counting terms), "fix" = «ֆիքսել».
 - Important terms carry the English term in brackets where they are defined, because the lecture slides are in
   English: «<strong>մեքենայական էպսիլոն</strong> (machine epsilon)», «<strong>անշարժ կետ</strong> (fixed point)»
   (owner, A57). Once per term, at the bold defining mention, not at every use.
