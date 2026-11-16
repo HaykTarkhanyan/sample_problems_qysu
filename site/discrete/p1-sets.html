@@ -31,7 +31,7 @@
   .p1-eq { font-size: 1.6rem; align-self: center; }
   .p1-panels.p1-nowrap { flex-wrap: nowrap; gap: .4rem; }
   .p1-nowrap .p1-panel { flex: 1 1 0; min-width: 0; max-width: 177px; }
-  .p1-nowrap .p1-panel svg { width: 100%; height: auto; }
+  .p1-nowrap .p1-panel > svg { width: 100%; height: auto; }
   /* P2 nested boxes */
   .p1-mem { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; justify-content: center; align-items: flex-start; margin: .7rem 0 .3rem; }
   .p1-mem-panel { display: flex; flex-direction: column; align-items: center; gap: .3rem; max-width: 100%; }
@@ -50,7 +50,7 @@
   /* P54 Venn pair and truth table */
   .p1-venn2 { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .8rem; }
   .p1-venn2 > div { flex: 1 1 128px; max-width: 220px; min-width: 0; display: flex; flex-direction: column; align-items: center; }
-  .p1-venn2 svg { width: 100%; height: auto; }
+  .p1-venn2 [data-out^="svg"] > svg { width: 100%; height: auto; }
   table.p1-tt th, table.p1-tt td { padding: .25rem .45rem; text-align: center; }
   table.p1-tt tbody tr { cursor: pointer; }
   table.p1-tt td.z { color: var(--muted); }
@@ -73,6 +73,17 @@
   table.p1-sum th:first-child, table.p1-sum td:first-child { width: 44%; }
   table.p1-sum th, table.p1-sum td { padding: .35rem .45rem; }
   ol.p1-self > li { margin: .55rem 0; }
+  /* widgets: typed sets (P2), larger tap targets at phone width, P16 probe, P20 regions; svg rules are
+     direct-child only so KaTeX's own svg (root signs, braces) is never resized */
+  .widget input[type="text"] { font: inherit; font-size: .95rem; width: 8.5rem; max-width: 36vw; padding: .3rem .45rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); }
+  .widget .chip { min-height: 2.1rem; padding: .25rem .6rem; }
+  .widget-controls .btn { min-height: 2.4rem; }
+  .p1-tog .btn { min-width: 2.6rem; min-height: 2.5rem; }
+  .p1-xval { display: inline-block; min-width: 2rem; text-align: center; }
+  .p1-venn1 { display: flex; justify-content: center; }
+  .p1-venn1 > svg { width: 100%; max-width: 270px; height: auto; }
+  table.p1-rows th { text-align: left; font-weight: 600; padding-top: .55rem; }
+  table.p1-tt tbody tr:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
 </style>
 </head>
 <body data-try-default data-two-step>
@@ -257,12 +268,20 @@ $\varnothing$-ն տարր չունի, $\varnothing\subseteq S$ ամեն $S$-ի �
   7, 11)։ Յուրաքանչյուր բազմություն գծված է որպես արկղ, իսկ նրա տարրերը՝ որպես արկղի անմիջական
   պարունակություն։ $x\in S$ ճիշտ է միայն այն դեպքում, երբ $x$-ի ճշգրիտ պատճենը $S$-ի անմիջական տարրերից
   մեկն է (կանաչ շրջանակ). ավելի խորը թաղված պատճենը (կարմիր կետագիծ) $\in$ չի տալիս։ $x\subseteq S$-ի համար
-  պետք է, որ $x$-ի <em>յուրաքանչյուր</em> տարր լինի $S$-ի տարր (նարնջագույն կետագիծ)։</p>
+  պետք է, որ $x$-ի <em>յուրաքանչյուր</em> տարր լինի $S$-ի տարր (նարնջագույն կետագիծ)։ Կարող եք նաև գրել ձեր
+  օրինակը ներքևի դաշտերում՝ թվերով, ձևավոր փակագծերով և ստորակետներով ($\varnothing$-ի փոխարեն գրեք {}), օրինակ՝
+  {1, {1}}, և սեղմել «Ստուգել»։</p>
   <div class="chips" data-out="presets"></div>
   <div class="widget-controls">
     <label>$x=$ <select data-in="x" aria-label="x"></select></label>
     <label>$S=$ <select data-in="S" aria-label="S"></select></label>
   </div>
+  <div class="widget-controls">
+    <label>$x=$ <input type="text" data-in="xt" aria-label="x, ձեր օրինակը" autocomplete="off" spellcheck="false"></label>
+    <label>$S=$ <input type="text" data-in="St" aria-label="S, ձեր օրինակը" autocomplete="off" spellcheck="false"></label>
+    <button class="btn" type="button" data-act="own">Ստուգել</button>
+  </div>
+  <p class="widget-out c-red" data-out="err" hidden></p>
   <div class="p1-mem" data-out="boxes"></div>
   <div class="widget-out" data-out="elem"></div>
   <div class="widget-out" data-out="sub"></div>
@@ -536,18 +555,29 @@ $x=0$։</div>
 
 <div class="widget" id="w-line">
   <div class="widget-head">Բազմությունները թվային առանցքի վրա</div>
-  <p class="widget-hint">Սեղմեք բազմություններից մեկի վրա՝ նրա տարրերը (հաշված անմիջապես $A$, $B$, $C$ սահմանող
-  պայմաններից) կնշվեն առանցքի վրա կանաչով, իսկ ներքևում կերևա պատասխանի նկարագրությունը։ Եզրի կանաչ
-  կետերը նշանակում են, որ բազմությունը շարունակվում է պատուհանից դուրս։ Ձևավոր փակագիծը ներքևում նշում է
-  $\overline{A\cup B}=C\setminus(A\cup B)=\{x\le 0\}$ բազմության կետերը։</p>
+  <p class="widget-hint">Սրանք խնդիր 16-ի հինգ բազմություններն են։ Սեղմեք բազմություններից մեկի վրա՝ նրա
+  տարրերը (հաշված անմիջապես $A$, $B$, $C$ սահմանող պայմաններից) կնշվեն առանցքի վրա կանաչով, իսկ ներքևում
+  կերևա պատասխանի նկարագրությունը։ Եզրի կանաչ կետերը նշանակում են, որ բազմությունը շարունակվում է պատուհանից
+  դուրս։ Ձևավոր փակագիծը ներքևում նշում է $\overline{A\cup B}=C\setminus(A\cup B)=\{x\le 0\}$ բազմության
+  կետերը։ Ապա ընտրեք մեկ $x$ թիվ (− և + կոճակներով կամ առանցքի վրա սեղմելով)՝ կտեսնեք, թե $A$, $B$, $C$-ի
+  սահմանումներից ինչպես է հետևում, թե $x$-ը որ բազմություններին է պատկանում։ Նկատեք $x=0$-ն։</p>
   <div class="p1-line"></div>
   <div class="p1-legend">
     <span><span class="c-red">●</span> դրական զույգեր $A$</span>
     <span><span class="c-blue">○</span> դրական կենտեր $B$</span>
     <span><span class="c-green">●</span> ընտրված բազմության տարրերը</span>
+    <span><span class="c-orange">◯</span> ընտրված $x$-ը</span>
   </div>
   <div class="chips" data-out="sets"></div>
   <div class="widget-out" data-out="members"></div>
+  <div class="widget-controls">
+    <span>$x=$</span>
+    <button class="btn" type="button" data-act="dec" aria-label="x-ը փոքրացնել 1-ով">−</button>
+    <strong class="p1-xval" data-out="x"></strong>
+    <button class="btn" type="button" data-act="inc" aria-label="x-ը մեծացնել 1-ով">+</button>
+    <button class="btn" type="button" data-act="zero">$x=0$</button>
+  </div>
+  <div class="widget-out" data-out="probe"></div>
 </div>
 
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
@@ -752,6 +782,27 @@ $\overline{B}\subseteq A$ է։ Հետևաբար, բոլոր երեքը համա�
 </div>
 </figure>
 
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Տող 1-ի պայմանները ճիշտ են այն և միայն այն դեպքում, երբ Վեննի դիագրամի մի
+որոշակի մաս դատարկ է։ Ո՞ր մասը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$A\setminus B$</button><button class="btn" type="button">$B\setminus A$</button><button class="btn" type="button">$A\cap B$</button></div>
+<div class="predict-why">$A\setminus B$։ $A\subseteq B$ նշանակում է, որ $A$-ի ոչ մի տարր $B$-ից դուրս չէ, այսինքն՝
+$A\setminus B=\varnothing$։ $B\setminus A=\varnothing$ կնշանակեր $B\subseteq A$, իսկ $A\cap B=\varnothing$-ն Տող 2-ի
+պայմանն է։ Նույն ձևով Տող 3-ը կախված է միայն $A\cup B$-ից դուրս մասից։ Ստուգեք ներքևում։</div>
+</div>
+
+<div class="widget" id="w-rows">
+  <div class="widget-head">Երեք տող՝ երեք դատարկ մաս</div>
+  <p class="widget-hint">Երկու շրջանագիծը $U$-ն բաժանում են չորս մասի։ Սեղմեք մասի կոճակը կամ նկարի մասը՝ այն
+  դատարկ դարձնելու կամ նրա մեջ տարր դնելու համար (կապույտ կոճակ՝ մասում տարր կա, $\varnothing$՝ մասը դատարկ է)։
+  Աղյուսակը ցույց է տալիս խնդիր 20-ի տասը պայմանները՝ հաշված այդ կոնկրետ բազմությունների վրա։ Նկատեք, որ
+  յուրաքանչյուր տողի պայմանները միշտ միասին են ճիշտ կամ սխալ, և ամեն տող կախված է միայն մեկ մասից։</p>
+  <div class="widget-controls" data-out="regions"></div>
+  <div class="p1-venn1" data-out="svg"></div>
+  <div class="table-wrap"><table class="tbl p1-rows" data-out="table"></table></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
 Յուրաքանչյուր տողի բոլոր պայմանները համարժեք են. Տող 1-ն ապացուցվում է
 $A\subseteq B$ $\Rightarrow$ $A\cup B=B$ $\Rightarrow$ $A\cap B=A$ $\Rightarrow$ $\overline{B}\subseteq\overline{A}$
@@ -930,7 +981,7 @@ $x\in A$ և $x\notin A$ դեպքերի։</p>
 </div>
 <div class="widget" id="w-venn">
   <div class="widget-head">Նույնության երկու կողմերը՝ մաս առ մաս</div>
-  <p class="widget-hint">Ընտրեք նույնությունը։ Երեք շրջանագծով $U$-ն բաժանվում է $8$ մասի, և յուրաքանչյուր մաս
+  <p class="widget-hint">Ընտրեք նույնությունը՝ խնդիր 54-ի մաս (3)-ը կամ (11)-ը։ Երեք շրջանագծով $U$-ն բաժանվում է $8$ մասի, և յուրաքանչյուր մաս
   աղյուսակի մեկ տող է՝ այն ասում է, թե այդ մասում ընկած $x$ տարրը պատկանում է ($1$), թե ոչ ($0$)
   յուրաքանչյուր բազմությանը։ Դա հենց տարր առ տարր ապացույցն է. երկու կողմերը հավասար են, եթե ձախ և աջ
   կողմերի թավ սյունակները համընկնում են բոլոր $8$ տողում (վերջին սյունակում՝ միայն $\checkmark$)։ Սեղմեք
@@ -1187,6 +1238,35 @@ $A\times B$-ն և $A\times C$-ն միասին՝</p>
   <text x="183" y="122" class="f-muted">=(<tspan class="m">A</tspan>×<tspan class="m">B</tspan>)∪(<tspan class="m">A</tspan>×<tspan class="m">C</tspan>)</text>
 </svg>
 </figure>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> (1)-ի համաձայն՝ $A\times(B\cup C)$-ն բաշխվում է։ Ճի՞շտ է արդյոք նաև
+$(A\cup B)\times(A\cup B)=(A\times A)\cup(B\times B)$-ն ամեն $A$, $B$-ի համար։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Այո, դա նույն բաշխական օրենքն է</button><button class="btn" type="button">Այո, եթե $A$-ն և $B$-ն չհատվող են</button></div>
+<div class="predict-why">Ոչ։ Եթե $a\in A\setminus B$ և $b\in B\setminus A$, ապա $(a,b)$-ն ձախ կողմում է, բայց ոչ
+$A\times A$-ում է, ոչ $B\times B$-ում։ Օրինակ՝ $A=\{1\}$, $B=\{2\}$ և $(1,2)$ զույգը։ (1)-ը և (2)-ը կիրառելով՝ ձախ
+կողմը չորս արտադրյալի միավորում է՝ $(A\times A)\cup(A\times B)\cup(B\times A)\cup(B\times B)$, իսկ աջ կողմում
+$A\times B$-ն և $B\times A$-ն գրված չեն։ Չհատվող ոչ դատարկ $A$, $B$-ի դեպքում այդպիսի զույգ միշտ կա, այնպես որ
+երրորդ պատասխանը ճիշտ հակառակն է։ Ստուգեք ներքևում՝ «ոչ նույնություն» կոճակով։</div>
+</div>
+
+<div class="widget" id="w-prod">
+  <div class="widget-head">Արտադրյալի նույնությունները կետերով</div>
+  <p class="widget-hint">Ընտրեք խնդիր 60-ի նույնություններից մեկը և սեղմեք թվերի վրա՝ $A$, $B$, $C$ բազմությունները
+  փոխելու համար։ Կարմիր կետերը ձախ կողմի զույգերն են, կապույտ օղակները՝ աջ կողմի։ Նույնության դեպքում ամեն
+  կարմիր կետ իր կապույտ օղակի մեջ է, և ամեն օղակ ունի իր կետը, ինչ էլ ընտրեք։ Վերջին կոճակը ոչ նույնություն է.
+  նարնջագույն օղակը ցույց է տալիս զույգ, որը միայն մի կողմում կա։</p>
+  <div class="chips" data-out="ids"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="p1-togs" data-out="togs"></div>
+  <div class="p1-grid"></div>
+  <div class="p1-legend">
+    <span><span class="c-red">●</span> ձախ կողմ</span>
+    <span><span class="c-blue">○</span> աջ կողմ</span>
+    <span><span class="c-orange">◯</span> միայն մի կողմում</span>
+  </div>
+  <div class="widget-out" data-out="verdict"></div>
+</div>
 
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
 Բոլոր վեցն էլ ճիշտ են։ Աջ-արտադրիչ օրենքները (1),(3),(5) հետևում են

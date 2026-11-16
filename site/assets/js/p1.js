@@ -1,8 +1,9 @@
-/* Practice 1 widgets: "in" versus "subset" on nested boxes (P2, also P7 and P11),
-   the derived sets of P16 on a number line, the 8 Venn regions as an
-   element-by-element table (P54), Cartesian products as dot grids (P58 mirror,
-   P60 distributive laws). Pure set logic sits in small functions at the top of
-   each block; they are exported on window.P1 for node checks. */
+/* Practice 1 widgets: "in" versus "subset" on nested boxes, with the student's own sets (P2, also P7
+   and P11), the derived sets of P16 on a number line with a step-by-step membership probe, the three
+   rows of P20 as "which Venn region is empty", the 8 Venn regions as an element-by-element table (P54),
+   Cartesian products as dot grids (P58 mirror, P60 identities). Pure set logic sits in small
+   functions at the top of each block; they are exported on window.P1 for node checks
+   (discrete/checks/p1_widgets_check.mjs). Nothing animates, so reduced motion needs no special case. */
 (function () {
   "use strict";
   const Q = window.QYSU;
@@ -36,6 +37,53 @@
     if (!isSet(x)) return String(x);
     return x.length ? "{" + x.map(plainOf).join(", ") + "}" : "∅";
   }
+  /** Parse what a student typed: "{1, {1}}", "{}", "∅", numbers up to 3 digits. Throws an Error whose
+      message is shown in the widget. maxDepth counts the levels below the outer object. */
+  function parseSet(src, maxDepth = 4, maxLen = 40) {
+    if (/\d\s+-?\d/.test(String(src))) throw new Error("Թվերի միջև դրեք ստորակետ, օրինակ՝ {1, 2}։");
+    const s = String(src).replace(/\s+/g, "");
+    if (!s) throw new Error("Դաշտը դատարկ է։ Գրեք, օրինակ, {1, {1}}։");
+    if (s.length > maxLen) throw new Error(`Շատ երկար է. առավելագույնը ${maxLen} նիշ։`);
+    let i = 0;
+    function item(depth) {
+      if (depth > maxDepth) throw new Error(`Շատ խորը ներդրում. առավելագույնը ${maxDepth} մակարդակ։`);
+      const ch = s[i];
+      if (ch === undefined) throw new Error("Գրառումը կիսատ է։");
+      if (ch === "∅" || ch === "Ø" || ch === "ø") { i++; return []; }
+      if (ch === "{") {
+        i++;
+        const out = [];
+        if (s[i] === "}") { i++; return out; }
+        for (;;) {
+          out.push(item(depth + 1));
+          if (s[i] === ",") { i++; continue; }
+          if (s[i] === "}") { i++; return out; }
+          if (s[i] === undefined) throw new Error("Պակասում է փակող «}» փակագիծը։");
+          throw new Error(`Տարրից հետո սպասվում էր ստորակետ կամ «}», իսկ գրված է «${s[i]}»։`);
+        }
+      }
+      const m = /^-?\d{1,3}(?!\d)/.exec(s.slice(i));
+      if (m) { i += m[0].length; return Number(m[0]); }
+      throw new Error(`Չհաջողվեց կարդալ «${s.slice(i, i + 4)}» հատվածը։ Թույլատրված են թվեր, { }, ստորակետ և ∅։`);
+    }
+    const v = item(0);
+    if (i < s.length) throw new Error(`Վերջում ավելորդ «${s.slice(i)}» հատված կա։`);
+    return v;
+  }
+  /** Drop repeated members (at every level). Returns [value, true if something was dropped]. */
+  function dedupe(x) {
+    if (!isSet(x)) return [x, false];
+    let dropped = false;
+    const seen = new Set(), out = [];
+    for (const m of x) {
+      const [v, d] = dedupe(m);
+      dropped = dropped || d;
+      const c = canon(v);
+      if (seen.has(c)) { dropped = true; continue; }
+      seen.add(c); out.push(v);
+    }
+    return [out, dropped];
+  }
 
   const E0 = [], E1 = [E0], E2 = [E1], E01 = [E0, E1];
   const B11 = [1, 2];
@@ -51,6 +99,24 @@
     ["7՝ A, B", "e0", "e1"], ["7՝ B, C", "e1", "e2"], ["7՝ A, C", "e0", "e2"],
     ["11՝ A, B", "A", "B"], ["11՝ B, C", "B", "C"], ["11՝ C, D", "C", "D"], ["11՝ 1, C", "n1", "C"]
   ];
+  /** The two sentences of the widget for x and S (HTML with $...$); pure, so node can read every one. */
+  function memberMessages(x, S) {
+    const tx = texOf(x), tS = texOf(S), d = depthIn(x, S);
+    const ok = `<strong class="c-green">ճիշտ է</strong>`, no = `<strong class="c-red">սխալ է</strong>`;
+    let e;
+    if (d === 1) e = `${ok}։ $x$-ը $S$-ի թվարկված տարրերից մեկն է (կանաչ շրջանակով)։`;
+    else if (d > 1) e = `${no}։ $x$-ը հանդիպում է $S$-ի ներսում $${d}$ մակարդակ խորը (կարմիր կետագիծ), բայց $S$-ի թվարկված տարրերի մեջ չէ։`;
+    else if (!S.length) e = `${no}։ $S=\\varnothing$-ն ընդհանրապես տարր չունի։`;
+    else if (S.length === 1) e = `${no}։ $S$-ի միակ տարրն է՝ $${texOf(S[0])}$, և $x\\neq ${texOf(S[0])}$։`;
+    else e = `${no}։ $S$-ի թվարկված տարրերն են՝ ${S.map(m => "$" + texOf(m) + "$").join(", ")}, և $x$-ը դրանցից ոչ մեկը չէ։`;
+    let s;
+    if (!isSet(x)) s = `<strong class="muted">իմաստ չունի</strong>՝ $x=${tx}$-ը թիվ է, ոչ թե բազմություն։`;
+    else if (!x.length) s = `${ok}։ Դատարկ բազմությունը ցանկացած բազմության ենթաբազմություն է՝ ստուգելու տարր չկա։`;
+    else if (isSubset(x, S)) s = `${ok}։ $x$-ի յուրաքանչյուր տարր $S$-ի տարր է (նարնջագույն կետագիծ)` +
+      (same(x, S) ? ", և $x=S$։" : "։ Քանի որ $x\\neq S$, պարունակումը խիստ է՝ $x\\subset S$։");
+    else s = `${no}։ $x$-ի $${texOf(x.find(m => !isElem(m, S)))}$ տարրը $S$-ի տարր չէ։`;
+    return { elem: `$${tx}\\in ${tS}$՝ ${e}`, sub: `$${tx}\\subseteq ${tS}$՝ ${s}` };
+  }
 
   /** Nested boxes for obj. mark(node, level) adds classes; level 0 = obj itself. */
   function boxOf(obj, level, mark) {
@@ -73,9 +139,12 @@
 
   function setupMember(root) {
     const selX = root.querySelector('[data-in="x"]'), selS = root.querySelector('[data-in="S"]');
+    const inX = root.querySelector('[data-in="xt"]'), inS = root.querySelector('[data-in="St"]');
+    const ownBtn = root.querySelector('[data-act="own"]');
     const chipsEl = root.querySelector('[data-out="presets"]');
     const boxes = root.querySelector('[data-out="boxes"]');
     const outE = root.querySelector('[data-out="elem"]'), outS = root.querySelector('[data-out="sub"]');
+    const outErr = root.querySelector('[data-out="err"]');
     const label = k => (OBJ[k].name ? OBJ[k].name + " = " : "") + plainOf(OBJ[k].v);
     function fill(sel, onlySets) {
       GROUPS.forEach(([gl, keys]) => {
@@ -83,25 +152,57 @@
         keys.filter(k => !onlySets || isSet(OBJ[k].v)).forEach(k => og.appendChild(Q.el("option", { value: k }, label(k))));
         sel.appendChild(og);
       });
+      sel.appendChild(Q.el("option", { value: "own" }, "(ձեր օրինակը)"));
     }
     fill(selX, false); fill(selS, true);
+    // current objects: { v, name }
+    const cur = { x: OBJ.e0, S: OBJ.e01 };
+    let note = "";
+    const keyOf = (v, onlySets) => Object.keys(OBJ).find(k => (!onlySets || isSet(OBJ[k].v)) && same(OBJ[k].v, v));
+    function pick(kx, kS) {
+      cur.x = OBJ[kx]; cur.S = OBJ[kS]; note = ""; showErr("");
+      selX.value = kx; selS.value = kS;
+      inX.value = plainOf(cur.x.v); inS.value = plainOf(cur.S.v);
+      render();
+    }
+    function showErr(msg) { outErr.textContent = msg; outErr.hidden = !msg; }
+    function own() {
+      let x, S, dx, dS;
+      try { [x, dx] = dedupe(parseSet(inX.value)); } catch (err) { showErr("x՝ " + err.message); return; }
+      try { [S, dS] = dedupe(parseSet(inS.value)); } catch (err) { showErr("S՝ " + err.message); return; }
+      if (!isSet(S)) { showErr("S՝ պետք է բազմություն լինի, օրինակ՝ {1, 2}։"); return; }
+      showErr("");
+      const kx = keyOf(x, false), kS = keyOf(S, true);
+      cur.x = kx ? OBJ[kx] : { v: x }; cur.S = kS ? OBJ[kS] : { v: S };
+      selX.value = kx || "own"; selS.value = kS || "own";
+      note = dx || dS ? "Կրկնվող տարրերը հաշվվում են մեկ անգամ, և դրանք հեռացվել են։" : "";
+      render();
+    }
     const chips = PRESETS.map(([l, x, s]) => {
       const c = Q.el("button", { type: "button", class: "chip" }, l);
-      c.addEventListener("click", () => { selX.value = x; selS.value = s; render(); });
+      c.addEventListener("click", () => pick(x, s));
       chipsEl.appendChild(c);
       return c;
     });
-    selX.addEventListener("change", render); selS.addEventListener("change", render);
+    /** One of the two selects changed: take that object, keep the other one as it is. */
+    function fromSelect(which, sel, inp) {
+      if (sel.value === "own") { own(); return; }
+      cur[which] = OBJ[sel.value]; inp.value = plainOf(cur[which].v); note = ""; showErr("");
+      render();
+    }
+    selX.addEventListener("change", () => fromSelect("x", selX, inX));
+    selS.addEventListener("change", () => fromSelect("S", selS, inS));
+    ownBtn.addEventListener("click", own);
+    [inX, inS].forEach(inp => inp.addEventListener("keydown", ev => { if (ev.key === "Enter") { ev.preventDefault(); own(); } }));
 
-    function panel(letter, key, mark) {
-      const o = OBJ[key];
+    function panel(letter, o, mark) {
       const t = Q.el("div", { class: "p1-ptitle" });
       Q.tex(t, `${letter}=${o.name ? o.name + "=" : ""}${texOf(o.v)}`);
       return Q.el("div", { class: "p1-mem-panel" }, t, boxOf(o.v, 0, mark));
     }
     function render() {
-      const x = OBJ[selX.value].v, S = OBJ[selS.value].v;
-      chips.forEach((c, i) => c.classList.toggle("on", PRESETS[i][1] === selX.value && PRESETS[i][2] === selS.value));
+      const x = cur.x.v, S = cur.S.v;
+      chips.forEach((c, i) => c.classList.toggle("on", same(OBJ[PRESETS[i][1]].v, x) && same(OBJ[PRESETS[i][2]].v, S)));
       const xc = canon(x), xm = isSet(x) ? new Set(x.map(canon)) : null;
       const mark = (node, level) => {
         if (level === 0) return "";
@@ -110,28 +211,14 @@
         if (level === 1 && xm && xm.has(c)) cls.push("p1-sub");
         return cls.join(" ");
       };
-      boxes.replaceChildren(panel("x", selX.value), panel("S", selS.value, mark));
-
-      const tx = texOf(x), tS = texOf(S), d = depthIn(x, S);
-      const ok = `<strong class="c-green">ճիշտ է</strong>`, no = `<strong class="c-red">սխալ է</strong>`;
-      let e;
-      if (d === 1) e = `${ok}։ $x$-ը $S$-ի թվարկված տարրերից մեկն է (կանաչ շրջանակով)։`;
-      else if (d > 1) e = `${no}։ $x$-ը հանդիպում է $S$-ի ներսում $${d}$ մակարդակ խորը (կարմիր կետագիծ), բայց $S$-ի թվարկված տարրերի մեջ չէ։`;
-      else if (!S.length) e = `${no}։ $S=\\varnothing$-ն ընդհանրապես տարր չունի։`;
-      else if (S.length === 1) e = `${no}։ $S$-ի միակ տարրն է՝ $${texOf(S[0])}$, և $x\\neq ${texOf(S[0])}$։`;
-      else e = `${no}։ $S$-ի թվարկված տարրերն են՝ ${S.map(m => "$" + texOf(m) + "$").join(", ")}, և $x$-ը դրանցից ոչ մեկը չէ։`;
-      let s;
-      if (!isSet(x)) s = `<strong class="muted">իմաստ չունի</strong>՝ $x=${tx}$-ը թիվ է, ոչ թե բազմություն։`;
-      else if (!x.length) s = `${ok}։ Դատարկ բազմությունը ցանկացած բազմության ենթաբազմություն է՝ ստուգելու տարր չկա։`;
-      else if (isSubset(x, S)) s = `${ok}։ $x$-ի յուրաքանչյուր տարր $S$-ի տարր է (նարնջագույն կետագիծ)` +
-        (same(x, S) ? ", և $x=S$։" : "։ Քանի որ $x\\neq S$, պարունակումը խիստ է՝ $x\\subset S$։");
-      else s = `${no}։ $x$-ի $${texOf(x.find(m => !isElem(m, S)))}$ տարրը $S$-ի տարր չէ։`;
-      outE.innerHTML = `$${tx}\\in ${tS}$՝ ${e}`;
-      outS.innerHTML = `$${tx}\\subseteq ${tS}$՝ ${s}`;
+      boxes.replaceChildren(panel("x", cur.x), panel("S", cur.S, mark));
+      const msg = memberMessages(x, S);
+      outE.innerHTML = msg.elem + (note ? ` <span class="muted">${note}</span>` : "");
+      outS.innerHTML = msg.sub;
       Q.math(outE); Q.math(outS);
     }
-    selX.value = "e0"; selS.value = "e01";
-    render();
+    showErr("");
+    pick("e0", "e01");
   }
 
   // ================================================================ P16
@@ -154,12 +241,30 @@
   const range = (lo, hi) => Array.from({ length: hi - lo + 1 }, (_, i) => lo + i);
   /** True when def and ans agree on every integer in [lo, hi]. */
   function p16Agree(item, lo, hi) { return range(lo, hi).every(x => item.def(x) === item.ans(x)); }
+  /** num / 2 in TeX: an integer, or a signed \tfrac. */
+  const halfTex = num => (num % 2 === 0 ? String(num / 2) : (num < 0 ? "-" : "") + `\\tfrac{${Math.abs(num)}}{2}`);
+  /** For an integer x: the three one-line derivations from the definitions of A, B, C (TeX), and the
+      membership of x in the five sets of the problem. */
+  function p16Probe(x) {
+    const yA = x / 2, yB = (x + 1) / 2;
+    const yWhy = (yv, num) => (Number.isInteger(yv) ? `y=${yv}${yv >= 1 ? "\\in" : "\\notin"}\\Z^{+}` : `y=${halfTex(num)}\\notin\\Z`);
+    const inn = b => (b ? "\\in" : "\\notin");
+    return {
+      lines: [
+        `${x}=2y\\Rightarrow ${yWhy(yA, x)}\\Rightarrow ${x}${inn(inA16(x))} A`,
+        `${x}=2y-1\\Rightarrow ${yWhy(yB, x + 1)}\\Rightarrow ${x}${inn(inB16(x))} B`,
+        `${x}${x < 10 ? "\\lt" : "\\ge"}10\\Rightarrow ${x}${inn(inC16(x))} C`
+      ],
+      members: P16.map(it => it.def(x))
+    };
+  }
 
   function setupLine(root) {
     const host = root.querySelector(".p1-line");
     const chipsEl = root.querySelector('[data-out="sets"]');
     const out = root.querySelector('[data-out="members"]');
-    const S = 26, OX = 114, OY = 64, LO = -3, HI = 12;
+    const outX = root.querySelector('[data-out="x"]'), outP = root.querySelector('[data-out="probe"]');
+    const S = 26, OX = 114, OY = 64, LO = -3, HI = 12, XMIN = -40, XMAX = 40;
     const X = x => OX + S * x, Y = y => OY - S * y;
     const svg = Q.svg("svg", { viewBox: "0 0 470 116", width: 470, role: "img",
       "aria-label": "Թվային առանցք -3-ից 12. A-ի դրական զույգերը և B-ի դրական կենտերը" });
@@ -188,8 +293,14 @@
          `Q${xm} ${y0 + 5} ${xm + 5} ${y0 + 5} L${x1 - 5} ${y0 + 5} Q${x1} ${y0 + 5} ${x1} ${y0}` }, g);
     const bl = Q.svg("text", { x: xm, y: y0 + 24, "text-anchor": "middle", class: "f-muted", style: "font-size:12px" }, g);
     bl.innerHTML = '{<tspan class="m" style="font-size:13px">x</tspan> ≤ 0}';
+    const gProbe = Q.svg("g", { "pointer-events": "none" }, svg);
+    const gHit = Q.svg("g", {}, svg);   // a transparent tap target over each integer of the window
+    for (let x = LO; x <= HI; x++) {
+      const r = Q.svg("rect", { x: X(x) - S / 2, y: Y(1.5), width: S, height: Y(-0.9) - Y(1.5), fill: "transparent", style: "cursor:pointer" }, gHit);
+      r.addEventListener("click", () => { px = x; render(); });
+    }
 
-    let cur = null;
+    let cur = 0, px = 0;
     const chips = P16.map((item, i) => {
       const c = Q.el("button", { type: "button", class: "chip" });
       Q.tex(c, item.tex);
@@ -197,9 +308,20 @@
       chipsEl.appendChild(c);
       return c;
     });
+    const step = d => { px = Math.max(XMIN, Math.min(XMAX, px + d)); render(); };
+    root.querySelector('[data-act="dec"]').addEventListener("click", () => step(-1));
+    root.querySelector('[data-act="inc"]').addEventListener("click", () => step(1));
+    root.querySelector('[data-act="zero"]').addEventListener("click", () => { px = 0; render(); });
     function render() {
       chips.forEach((c, i) => { c.classList.toggle("on", i === cur); c.setAttribute("aria-pressed", String(i === cur)); });
-      gHl.replaceChildren();
+      gHl.replaceChildren(); gProbe.replaceChildren();
+      if (px >= LO && px <= HI) Q.svg("circle", { cx: X(px), cy: Y(0), r: 9, class: "s-orange f-none", "stroke-width": 2.4 }, gProbe);
+      Q.tex(outX, String(px));
+      const pr = p16Probe(px);
+      outP.innerHTML = `$x=${px}$` + (px < LO || px > HI ? " (պատուհանից դուրս)" : "") + "՝<br>" +
+        pr.lines.map(t => `$${t}$`).join("<br>") + "<br>Ուրեմն " +
+        P16.map((it, i) => `$${px}${pr.members[i] ? "\\in " : "\\notin "}${it.tex}$`).join(", ") + "։";
+      Q.math(outP);
       if (cur == null) {
         out.innerHTML = "Ընտրեք բազմություններից մեկը՝ նրա տարրերը կնշվեն առանցքի վրա կանաչով։";
         return;
@@ -216,6 +338,149 @@
       const cont = dir ? ` Բազմությունը շարունակվում է նաև պատուհանից դուրս՝ ${dir}։` : "";
       out.innerHTML = `$${it.tex}$-ի տարրերը $-3\\le x\\le 12$ պատուհանում՝ $${inWin.join(",\\,")}$։${cont}<br>` +
         `Պատասխանի նկարագրությունը՝ $${it.tex}=${it.ansTex}$, և $-20\\le x\\le 20$ միջակայքում այն ճիշտ համընկնում է սահմանող պայմաններից հաշվածի հետ $\\checkmark$`;
+      Q.math(out);
+    }
+    render();
+  }
+
+  // ================================================================ shared finite-set helpers (numbers only)
+  const uniq = a => [...new Set(a)].sort((p, q) => p - q);
+  const sUni = (X, Y) => uniq(X.concat(Y));
+  const sCap = (X, Y) => X.filter(v => Y.includes(v));
+  const sDif = (X, Y) => X.filter(v => !Y.includes(v));
+  const sSub = (X, Y) => X.every(v => Y.includes(v));
+  const sEq = (X, Y) => sSub(X, Y) && sSub(Y, X);
+  const setTex = a => (a.length ? `\\{${a.join(",")}\\}` : "\\varnothing");
+
+  // ================================================================ P20
+  // The four regions of a two-set Venn diagram. bits[k] = region k has an element; region k gets k + 1.
+  const ROW_REG = ["A\\setdiff B", "A\\cap B", "B\\setdiff A", "\\overline{A\\cup B}"];
+  function rowsSets(bits) {
+    const U = [], A = [], B = [];
+    bits.forEach((b, k) => {
+      if (!b) return;
+      U.push(k + 1);
+      if (k === 0 || k === 1) A.push(k + 1);
+      if (k === 1 || k === 2) B.push(k + 1);
+    });
+    return { U, A, B };
+  }
+  const cmp = (U, X) => sDif(U, X);
+  /** The three rows of problem 20; region = the index of the region whose emptiness decides the row. */
+  const ROWS = [
+    { region: 0, conds: [
+      ["A\\subseteq B", (U, A, B) => sSub(A, B)],
+      ["\\overline{B}\\subseteq\\overline{A}", (U, A, B) => sSub(cmp(U, B), cmp(U, A))],
+      ["A\\cup B=B", (U, A, B) => sEq(sUni(A, B), B)],
+      ["A\\cap B=A", (U, A, B) => sEq(sCap(A, B), A)]] },
+    { region: 1, conds: [
+      ["A\\cap B=\\varnothing", (U, A, B) => sCap(A, B).length === 0],
+      ["A\\subseteq\\overline{B}", (U, A, B) => sSub(A, cmp(U, B))],
+      ["B\\subseteq\\overline{A}", (U, A, B) => sSub(B, cmp(U, A))]] },
+    { region: 3, conds: [
+      ["A\\cup B=U", (U, A, B) => sEq(sUni(A, B), U)],
+      ["\\overline{A}\\subseteq B", (U, A, B) => sSub(cmp(U, A), B)],
+      ["\\overline{B}\\subseteq A", (U, A, B) => sSub(cmp(U, B), A)]] }
+  ];
+  /** Truth values of the ten conditions for a region pattern, computed on the concrete sets. */
+  function rowsEval(bits) { const { U, A, B } = rowsSets(bits); return ROWS.map(r => r.conds.map(([, f]) => f(U, A, B))); }
+  /** The sentence under the table (HTML with $...$). */
+  function rowsMessage(bits) {
+    const vals = rowsEval(bits), { U, A, B } = rowsSets(bits);
+    const parts = ROWS.map((r, i) => {
+      const allT = vals[i].every(v => v), allF = vals[i].every(v => !v);
+      if (!allT && !allF) return `Տող ${i + 1}՝ պայմանները տարբեր են (սա չպետք է լինի)`;
+      const n = r.conds.length === 4 ? "չորսը" : "երեքը";
+      return `Տող ${i + 1}՝ բոլոր ${n} ${allT ? "ճիշտ" : "սխալ"} են, քանի որ $${ROW_REG[r.region]}${bits[r.region] ? "\\neq" : "="}\\varnothing$`;
+    });
+    return parts.join(". ") + `։ Օրինակ՝ $U=${setTex(U)}$, $A=${setTex(A)}$, $B=${setTex(B)}$ (ամեն ոչ դատարկ մասում մեկ տարր)։`;
+  }
+
+  function venn2Svg(prefix, onPick) {
+    const S = 60, OX = 4 + 1.75 * S, OY = 4 + 1.15 * S, r = 0.9 * S;
+    const X = x => OX + S * x, Y = y => OY - S * y;
+    const ux = X(-1.75), uy = Y(1.15), uw = 3.5 * S, uh = 2.3 * S;
+    const C = [[-0.55, 0], [0.55, 0]];
+    const svg = Q.svg("svg", { viewBox: `0 0 ${uw + 8} ${uh + 8}`, width: uw + 8, role: "img", "aria-label": "Վեննի դիագրամ A և B շրջանագծերով" });
+    const defs = Q.svg("defs", {}, svg);
+    C.forEach(([cx0], i) => {
+      const cx = X(cx0), cy = Y(0), n = "AB"[i];
+      Q.svg("circle", { cx, cy, r }, Q.svg("clipPath", { id: `${prefix}-in${n}` }, defs));
+      Q.svg("path", { "clip-rule": "evenodd",
+        d: `M${ux} ${uy}h${uw}v${uh}h${-uw}Z M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z` },
+        Q.svg("clipPath", { id: `${prefix}-out${n}` }, defs));
+    });
+    const CLIPS = [["inA", "outB"], ["inA", "inB"], ["outA", "inB"], ["outA", "outB"]];
+    const rects = CLIPS.map((cl, k) => {
+      const g1 = Q.svg("g", { "clip-path": `url(#${prefix}-${cl[0]})` }, svg);
+      const g2 = Q.svg("g", { "clip-path": `url(#${prefix}-${cl[1]})` }, g1);
+      const rc = Q.svg("rect", { x: ux, y: uy, width: uw, height: uh, fill: "transparent", style: "cursor:pointer" }, g2);
+      rc.addEventListener("click", () => onPick(k));
+      return rc;
+    });
+    const gl = Q.svg("g", { class: "s-ink f-none", "stroke-width": 1.4, "pointer-events": "none" }, svg);
+    Q.svg("rect", { x: ux, y: uy, width: uw, height: uh }, gl);
+    C.forEach(([cx0]) => Q.svg("circle", { cx: X(cx0), cy: Y(0), r }, gl));
+    const gt = Q.svg("g", { "pointer-events": "none" }, svg);
+    Q.svg("text", { x: X(-1.25), y: Y(0.78), "text-anchor": "middle", class: "m", text: "A" }, gt);
+    Q.svg("text", { x: X(1.25), y: Y(0.78), "text-anchor": "middle", class: "m", text: "B" }, gt);
+    Q.svg("text", { x: X(1.65), y: Y(-1.0), "text-anchor": "end", class: "m", style: "font-size:12px", text: "U" }, gt);
+    const PTS = [[-0.95, 0], [0, 0], [0.95, 0], [-1.45, -0.85]];
+    const gMark = Q.svg("g", { "pointer-events": "none" }, svg);
+    return {
+      svg,
+      paint(bits) {
+        rects.forEach((rc, k) => rc.setAttribute("class", bits[k] ? "f-blue-soft" : ""));
+        gMark.replaceChildren();
+        bits.forEach((b, k) => {
+          const [px, py] = PTS[k];
+          if (b) {
+            Q.svg("circle", { cx: X(px), cy: Y(py), r: 4.5, class: "f-ink" }, gMark);
+            Q.svg("text", { x: X(px) + 7, y: Y(py) + 4, class: "mr", style: "font-size:12px", text: String(k + 1) }, gMark);
+          } else {
+            Q.svg("text", { x: X(px), y: Y(py) + 5, "text-anchor": "middle", class: "f-muted p1-vn", style: "font-size:15px", text: "∅" }, gMark);
+          }
+        });
+      }
+    };
+  }
+
+  function setupRows(root) {
+    let bits = [false, true, true, true];   // A inside B, as in the first row of figures above
+    const btnHost = root.querySelector('[data-out="regions"]');
+    const toggle = k => { bits = bits.map((b, i) => (i === k ? !b : b)); render(); };
+    const btns = ROW_REG.map((t, k) => {
+      const b = Q.el("button", { type: "button", class: "btn", "aria-pressed": "false" });
+      Q.tex(b, t);
+      b.addEventListener("click", () => toggle(k));
+      btnHost.appendChild(b);
+      return b;
+    });
+    const V = venn2Svg("p1r", toggle);
+    root.querySelector('[data-out="svg"]').appendChild(V.svg);
+    const table = root.querySelector('[data-out="table"]'), out = root.querySelector('[data-out="msg"]');
+    function render() {
+      btns.forEach((b, k) => {
+        b.setAttribute("aria-pressed", String(bits[k]));
+        b.setAttribute("aria-label", `${["A∖B", "A∩B", "B∖A", "A∪B-ից դուրս"][k]}՝ ${bits[k] ? "տարր կա" : "դատարկ է"}`);
+      });
+      V.paint(bits);
+      const vals = rowsEval(bits);
+      const body = Q.el("tbody");
+      ROWS.forEach((r, i) => {
+        const h = Q.el("th", { colspan: "2" }, `Տող ${i + 1} `);
+        const hs = Q.el("span", { class: "muted" });
+        Q.tex(hs, `(${ROW_REG[r.region]}=\\varnothing\\,?)`);
+        h.appendChild(hs);
+        body.appendChild(Q.el("tr", {}, h));
+        r.conds.forEach(([t], j) => {
+          const c1 = Q.el("td"); Q.tex(c1, t);
+          const v = vals[i][j];
+          body.appendChild(Q.el("tr", {}, c1, Q.el("td", { class: v ? "c-green" : "c-red" }, v ? "ճիշտ ✓" : "սխալ ✗")));
+        });
+      });
+      table.replaceChildren(body);
+      out.innerHTML = rowsMessage(bits);
       Q.math(out);
     }
     render();
@@ -255,6 +520,23 @@
   const inCircle = (i, [x, y]) => (x - VC[i][0]) ** 2 + (y - VC[i][1]) ** 2 < VRAD * VRAD;
   const regionTex = r => r.map((b, i) => `x${b ? "\\in" : "\\notin"} ${"ABC"[i]}`).join(",\\ ");
   const regionPlain = r => r.map((b, i) => `x ${b ? "∈" : "∉"} ${"ABC"[i]}`).join(", ");
+  /** The two sentences under the Venn table (HTML with $...$). */
+  function vennMessages(id, region) {
+    const V = VENN[id], fL = lastFn(V.L), fR = lastFn(V.R), mis = vennMismatches(id);
+    let verdict;
+    if (!mis.length) {
+      verdict = "Ձախ և աջ կողմերի թավ սյունակները համընկնում են բոլոր $8$ տողում, ուստի նույնությունը ճիշտ է $\\checkmark$";
+    } else {
+      const r = REGIONS[mis[0]], one = b => (b ? "\\{1\\}" : "\\varnothing");
+      verdict = `Թավ սյունակները տարբերվում են $${mis.length}$ տողում (✗), ուստի սա նույնություն <strong>չէ</strong>։ ` +
+        `Հակաօրինակ՝ մեկ տարր դնենք առաջին այդպիսի մասում՝ $A=${one(r[0])},\\ B=${one(r[1])},\\ C=${one(r[2])}$. ` +
+        `այդ դեպքում ձախ կողմը $${one(fL(...r))}$ է, իսկ աջը՝ $${one(fR(...r))}$։`;
+    }
+    const r = REGIONS[region], inL = fL(...r), inR = fR(...r);
+    const reg = `Ընտրված մասը՝ $${regionTex(r)}$։ Այստեղ $x${inL ? "\\in " : "\\notin "}${V.L[V.L.length - 1][0]}$ և ` +
+      `$x${inR ? "\\in " : "\\notin "}${V.R[V.R.length - 1][0]}$` + (inL === inR ? "՝ երկու կողմերը համընկնում են $\\checkmark$" : "՝ կողմերը տարբերվում են ✗");
+    return { verdict, region: reg };
+  }
 
   function vennSvg(prefix, onPick) {
     const S = 40, OX = 4 + 2.05 * S, OY = 4 + 1.35 * S;
@@ -323,13 +605,19 @@
         host.appendChild(c);
       });
     }
+    /** "ձախ՝ " + formula, without Armenian inside \text{} (its width depends on the system font). */
+    function caption(host, word, tex) {
+      const m = Q.el("span");
+      Q.tex(m, tex);
+      host.replaceChildren(Q.el("span", {}, word + "՝ "), m);
+    }
     function render() {
       const V = VENN[id];
       idBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
       vL.paint(V.L[sL][1], "f-orange-soft"); vR.paint(V.R[sR][1], "f-blue-soft");
       vL.mark(region); vR.mark(region);
-      Q.tex(capL, `\\text{ձախ՝ }${V.L[V.L.length - 1][0]}`);
-      Q.tex(capR, `\\text{աջ՝ }${V.R[V.R.length - 1][0]}`);
+      caption(capL, "ձախ", V.L[V.L.length - 1][0]);
+      caption(capR, "աջ", V.R[V.R.length - 1][0]);
       stepChips(chipsL, V.L, sL, i => { sL = i; });
       stepChips(chipsR, V.R, sR, i => { sR = i; });
 
@@ -341,7 +629,7 @@
       head.appendChild(Q.el("th", {}, "="));
       const body = Q.el("tbody");
       REGIONS.forEach((r, k) => {
-        const tr = Q.el("tr", { class: k === region ? "hl" : null, title: regionPlain(r) });
+        const tr = Q.el("tr", { class: k === region ? "hl" : null, title: regionPlain(r), tabindex: "0", "aria-label": regionPlain(r) });
         const cell = (v, cls) => Q.el("td", { class: ((v ? "" : "z ") + (cls || "")).trim() || null }, v ? "1" : "0");
         r.forEach(v => tr.appendChild(cell(v)));
         V.L.forEach(([, f], i) => tr.appendChild(cell(f(...r), "cl" + (i === V.L.length - 1 ? " fin" : ""))));
@@ -349,22 +637,14 @@
         const eq = fL(...r) === fR(...r);
         tr.appendChild(Q.el("td", { class: eq ? "c-green" : "bad" }, eq ? "✓" : "✗"));
         tr.addEventListener("click", () => pick(k));
+        tr.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pick(k); } });
         body.appendChild(tr);
       });
       table.replaceChildren(Q.el("thead", {}, head), body);
 
-      const mis = vennMismatches(id);
-      if (!mis.length) {
-        outV.innerHTML = "Ձախ և աջ կողմերի թավ սյունակները համընկնում են բոլոր $8$ տողում, ուստի նույնությունը ճիշտ է $\\checkmark$";
-      } else {
-        const r = REGIONS[mis[0]], one = b => (b ? "\\{1\\}" : "\\varnothing");
-        outV.innerHTML = `Թավ սյունակները տարբերվում են $${mis.length}$ տողում (✗), ուստի սա նույնություն <strong>չէ</strong>։ ` +
-          `Հակաօրինակ՝ մեկ տարր դնենք առաջին այդպիսի մասում՝ $A=${one(r[0])},\\ B=${one(r[1])},\\ C=${one(r[2])}$. ` +
-          `այդ դեպքում ձախ կողմը $${one(fL(...r))}$ է, իսկ աջը՝ $${one(fR(...r))}$։`;
-      }
-      const r = REGIONS[region], inL = fL(...r), inR = fR(...r);
-      outX.innerHTML = `Ընտրված մասը՝ $${regionTex(r)}$։ Այստեղ $x${inL ? "\\in " : "\\notin "}${V.L[V.L.length - 1][0]}$ և ` +
-        `$x${inR ? "\\in " : "\\notin "}${V.R[V.R.length - 1][0]}$` + (inL === inR ? "՝ երկու կողմերը համընկնում են $\\checkmark$" : "՝ կողմերը տարբերվում են ✗");
+      const msg = vennMessages(id, region);
+      outV.innerHTML = msg.verdict;
+      outX.innerHTML = msg.region;
       Q.math(outV); Q.math(outX);
     }
     render();
@@ -372,7 +652,6 @@
 
   // ================================================================ P58, P60
   const VALS = [1, 2, 3, 4, 5];
-  const uniq = a => [...new Set(a)].sort((p, q) => p - q);
   function prod(X, Y) { return X.flatMap(x => Y.map(y => [x, y])); }
   const pk = p => p.join(",");
   function sameSet(P, R) {
@@ -388,6 +667,25 @@
     const b = B.find(v => !A.includes(v));
     if (b !== undefined) return { pair: [A[0], b], step: 2 };
     return null;
+  }
+  /** The two sentences of the mirror widget (HTML with $...$). */
+  function mirrorMessages(A, B) {
+    const AB = prod(A, B), BA = prod(B, A), w = witness(A, B), eq = sameSet(AB, BA);
+    let sizes = `$A=${setTex(A)},\\ B=${setTex(B)}$՝ $|A\\times B|=${AB.length}$, $|B\\times A|=${BA.length}$։`;
+    if (!eq) sizes += " Քանակները միշտ հավասար են ($|A|\\cdot|B|$), բայց բազմությունները տարբեր են։";
+    const sameAB = A.join() === B.join();
+    let v;
+    if (eq && sameAB) v = A.length ? "$A=B$, ուստի յուրաքանչյուր կարմիր կետ ընկած է կապույտ օղակի մեջ՝ $A\\times B=B\\times A$ $\\checkmark$"
+      : "$A=B=\\varnothing$, և երկու արտադրյալներն էլ դատարկ են։";
+    else if (eq) v = "Երկու արտադրյալներն էլ դատարկ են, ուստի $A\\times B=B\\times A$, բայց $A\\neq B$՝ սա Քայլ 0-ի " +
+      (!A.length && B.join() === "1" ? "հակաօրինակն է" : "հակաօրինակի նման է") + ". ոչ դատարկության պայմանն անհրաժեշտ է։";
+    else {
+      const [a, b] = w.pair, pr = `(${a},${b})`;
+      v = `$A\\times B\\neq B\\times A$։ Օրինակ՝ $${pr}\\in A\\times B$ (նարնջագույն օղակ), բայց $${pr}\\notin B\\times A$, քանի որ ` +
+        (w.step === 1 ? `$B\\times A$-ի զույգի <em>առաջին</em> կոորդինատը պետք է $B$-ում լինի, իսկ $${a}\\notin B$ (Քայլ 1)։`
+                      : `$B\\times A$-ի զույգի <em>երկրորդ</em> կոորդինատը պետք է $A$-ում լինի, իսկ $${b}\\notin A$ (Քայլ 2)։`);
+    }
+    return { sizes, verdict: v };
   }
   function gridSvg(host, label) {
     const S = 40, OX = 46, OY = 270;
@@ -442,7 +740,6 @@
     const sync = toggleRows(root.querySelector('[data-out="togs"]'), ["A", "B"], (n, v) => { st[n] = flip(st[n], v); render(); });
     const PRE = [[[1, 2], [3, 4, 5]], [[1, 2], [1, 2, 3]], [[2, 4], [2, 4]], [[], [1]]];
     const chipsEl = root.querySelector('[data-out="presets"]');
-    const setTex = a => (a.length ? `\\{${a.join(",")}\\}` : "\\varnothing");
     const chips = PRE.map(([a, b]) => {
       const c = Q.el("button", { type: "button", class: "chip" });
       Q.tex(c, a.join() === b.join() ? `A=B=${setTex(a)}` : `A=${setTex(a)},\\ B=${setTex(b)}`);
@@ -462,21 +759,76 @@
       BA.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 9.5, class: "s-blue f-none", "stroke-width": 2 }, L));
       AB.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 5.5, class: "f-red" }, L));
       if (w) Q.svg("circle", { cx: G.X(w.pair[0]), cy: G.Y(w.pair[1]), r: 14.5, class: "s-orange f-none", "stroke-width": 2.6 }, L);
-      out1.innerHTML = `$A=${setTex(A)},\\ B=${setTex(B)}$՝ $|A\\times B|=${AB.length}$, $|B\\times A|=${BA.length}$։`;
-      const sameAB = A.join() === B.join();
-      let v;
-      if (eq && sameAB) v = A.length ? "$A=B$, ուստի յուրաքանչյուր կարմիր կետ ընկած է կապույտ օղակի մեջ՝ $A\\times B=B\\times A$ $\\checkmark$"
-        : "$A=B=\\varnothing$, և երկու արտադրյալներն էլ դատարկ են։";
-      else if (eq) v = "Երկու արտադրյալներն էլ դատարկ են, ուստի $A\\times B=B\\times A$, բայց $A\\neq B$՝ սա Քայլ 0-ի " +
-        (!A.length && B.join() === "1" ? "հակաօրինակն է" : "հակաօրինակի նման է") + ". ոչ դատարկության պայմանն անհրաժեշտ է։";
-      else {
-        const [a, b] = w.pair, pr = `(${a},${b})`;
-        v = `$A\\times B\\neq B\\times A$։ Օրինակ՝ $${pr}\\in A\\times B$ (նարնջագույն օղակ), բայց $${pr}\\notin B\\times A$, քանի որ ` +
-          (w.step === 1 ? `$B\\times A$-ի զույգի <em>առաջին</em> կոորդինատը պետք է $B$-ում լինի, իսկ $${a}\\notin B$ (Քայլ 1)։`
-                        : `$B\\times A$-ի զույգի <em>երկրորդ</em> կոորդինատը պետք է $A$-ում լինի, իսկ $${b}\\notin A$ (Քայլ 2)։`);
-      }
-      out2.innerHTML = v;
+      const msg = mirrorMessages(A, B);
+      out1.innerHTML = msg.sizes;
+      out2.innerHTML = msg.verdict;
       Q.math(out1); Q.math(out2);
+    }
+    render();
+  }
+
+  // ---------------------------------------------------------------- P60: the six identities and one non-identity
+  const pUni = (P, R) => { const seen = new Set(P.map(pk)); return P.concat(R.filter(p => !seen.has(pk(p)))); };
+  const pCap = (P, R) => { const b = new Set(R.map(pk)); return P.filter(p => b.has(pk(p))); };
+  const pDif = (P, R) => { const b = new Set(R.map(pk)); return P.filter(p => !b.has(pk(p))); };
+  const PIDS = [
+    { id: "1", L: ["A\\times(B\\cup C)", (A, B, C) => prod(A, sUni(B, C))], R: ["(A\\times B)\\cup(A\\times C)", (A, B, C) => pUni(prod(A, B), prod(A, C))] },
+    { id: "2", L: ["(B\\cup C)\\times A", (A, B, C) => prod(sUni(B, C), A)], R: ["(B\\times A)\\cup(C\\times A)", (A, B, C) => pUni(prod(B, A), prod(C, A))] },
+    { id: "3", L: ["A\\times(B\\cap C)", (A, B, C) => prod(A, sCap(B, C))], R: ["(A\\times B)\\cap(A\\times C)", (A, B, C) => pCap(prod(A, B), prod(A, C))] },
+    { id: "4", L: ["(B\\cap C)\\times A", (A, B, C) => prod(sCap(B, C), A)], R: ["(B\\times A)\\cap(C\\times A)", (A, B, C) => pCap(prod(B, A), prod(C, A))] },
+    { id: "5", L: ["A\\times(B\\setdiff C)", (A, B, C) => prod(A, sDif(B, C))], R: ["(A\\times B)\\setdiff(A\\times C)", (A, B, C) => pDif(prod(A, B), prod(A, C))] },
+    { id: "6", L: ["(B\\setdiff C)\\times A", (A, B, C) => prod(sDif(B, C), A)], R: ["(B\\times A)\\setdiff(C\\times A)", (A, B, C) => pDif(prod(B, A), prod(C, A))] },
+    { id: "x", fake: true, L: ["(A\\cup B)\\times(A\\cup B)", (A, B) => prod(sUni(A, B), sUni(A, B))],
+      R: ["(A\\times A)\\cup(B\\times B)", (A, B) => pUni(prod(A, A), prod(B, B))] }
+  ];
+  /** Both sides of identity k, the first pair that lies on one side only (or null), and the verdict (HTML). */
+  function prodCompare(k, A, B, C) {
+    const it = PIDS[k], L = it.L[1](A, B, C), R = it.R[1](A, B, C);
+    const onlyL = pDif(L, R), onlyR = pDif(R, L);
+    const w = onlyL[0] || onlyR[0] || null;
+    let verdict;
+    if (!w) {
+      verdict = (L.length ? `Երկու կողմերն էլ նույն $${L.length}$ զույգն են $\\checkmark$` : "Երկու կողմերն էլ դատարկ են $\\checkmark$") +
+        (it.fake ? " Այս ընտրությամբ կողմերը համընկնում են, բայց սա նույնություն չէ. փորձեք, օրինակ, $A=\\{1\\}$, $B=\\{2\\}$։"
+                 : " Փոխեք $A$-ն, $B$-ն, $C$-ն. նույնությունը ճիշտ է ամեն ընտրության դեպքում։");
+    } else if (it.fake && onlyL.length) {
+      const [a, b] = w, notIn = (X, n) => (X.includes(a) ? `${b}\\notin ${n}` : `${a}\\notin ${n}`);
+      verdict = `Կողմերը տարբեր են։ $(${a},${b})$ զույգը ձախ կողմում է, քանի որ $${a},${b}\\in A\\cup B$, բայց աջում չէ՝ ` +
+        `$(${a},${b})\\notin A\\times A$, քանի որ $${notIn(A, "A")}$, և $(${a},${b})\\notin B\\times B$, քանի որ $${notIn(B, "B")}$ (նարնջագույն օղակ)։`;
+    } else {
+      verdict = `Կողմերը տարբեր են՝ $(${w[0]},${w[1]})$ զույգը միայն մի կողմում է (նարնջագույն օղակ)։`;
+    }
+    return { L, R, w, verdict };
+  }
+
+  function setupProd(root) {
+    const G = gridSvg(root.querySelector(".p1-grid"), "Նույնության երկու կողմերի զույգերը 5×5 ցանցում");
+    const st = { A: [1, 2], B: [2, 4], C: [3, 4] };
+    let k = 0;
+    const sync = toggleRows(root.querySelector('[data-out="togs"]'), ["A", "B", "C"], (n, v) => { st[n] = flip(st[n], v); render(); });
+    const chipsEl = root.querySelector('[data-out="ids"]');
+    const chips = PIDS.map((it, i) => {
+      const c = Q.el("button", { type: "button", class: "chip", "aria-pressed": "false" }, it.fake ? "ոչ նույնություն" : `(${it.id})`);
+      c.addEventListener("click", () => { k = i; render(); });
+      chipsEl.appendChild(c);
+      return c;
+    });
+    const outF = root.querySelector('[data-out="formula"]'), outV = root.querySelector('[data-out="verdict"]');
+    function render() {
+      sync(st);
+      chips.forEach((c, i) => { c.classList.toggle("on", i === k); c.setAttribute("aria-pressed", String(i === k)); });
+      const it = PIDS[k], res = prodCompare(k, st.A, st.B, st.C);
+      if (!it.fake && res.w) console.error("P60: an identity failed", it.id, st);
+      const P = G.layers.pts;
+      P.replaceChildren();
+      res.R.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 9.5, class: "s-blue f-none", "stroke-width": 2 }, P));
+      res.L.forEach(([p, q]) => Q.svg("circle", { cx: G.X(p), cy: G.Y(q), r: 5.5, class: "f-red" }, P));
+      if (res.w) Q.svg("circle", { cx: G.X(res.w[0]), cy: G.Y(res.w[1]), r: 14.5, class: "s-orange f-none", "stroke-width": 2.6 }, P);
+      const sets = it.fake ? `$A=${setTex(st.A)}$, $B=${setTex(st.B)}$` : `$A=${setTex(st.A)}$, $B=${setTex(st.B)}$, $C=${setTex(st.C)}$`;
+      outF.innerHTML = `Ձախ կողմ՝ $${it.L[0]}$ (կարմիր կետեր), աջ կողմ՝ $${it.R[0]}$ (կապույտ օղակներ)։ ${sets}։` +
+        (it.fake ? ' <span class="muted">$C$-ն այստեղ չի մասնակցում։</span>' : "");
+      outV.innerHTML = res.verdict;
+      Q.math(outF); Q.math(outV);
     }
     render();
   }
@@ -484,14 +836,17 @@
   Q.ready(() => {
     const m = document.getElementById("w-member"); if (m) setupMember(m);
     const l = document.getElementById("w-line"); if (l) setupLine(l);
+    const rw = document.getElementById("w-rows"); if (rw) setupRows(rw);
     const v = document.getElementById("w-venn"); if (v) setupVenn(v);
     const r = document.getElementById("w-mirror"); if (r) setupMirror(r);
+    const p = document.getElementById("w-prod"); if (p) setupProd(p);
   });
   // exported for node checks
   window.P1 = {
-    canon, isElem, isSubset, depthIn, texOf, plainOf, OBJ, PRESETS,
-    inA16, inB16, inC16, P16, p16Agree,
-    REGIONS, VENN, vennMismatches, VC, VRAD, VPTS, inCircle,
-    prod, sameSet, witness
+    canon, isElem, isSubset, depthIn, texOf, plainOf, parseSet, dedupe, memberMessages, OBJ, PRESETS,
+    inA16, inB16, inC16, P16, p16Agree, p16Probe,
+    ROW_REG, ROWS, rowsSets, rowsEval, rowsMessage,
+    REGIONS, VENN, vennMismatches, vennMessages, VC, VRAD, VPTS, inCircle,
+    VALS, prod, sameSet, witness, mirrorMessages, PIDS, prodCompare
   };
 })();

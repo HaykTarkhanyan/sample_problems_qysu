@@ -161,6 +161,15 @@ n++;
 { const A = [1], B = [2], AB = uni(A, B);
   ok(elem(pair(1, 2), prod(AB, AB)), "(1,2) ∈ (A∪B)×(A∪B)");
   ok(!elem(pair(1, 2), uni(prod(A, A), prod(B, B))), "(1,2) ∉ (A×A)∪(B×B)"); }
+// P60 predict: (A∪B)×(A∪B) is the union of the four products; a ∈ A∖B, b ∈ B∖A give a missing pair;
+// for disjoint non-empty A, B a pair is always missing
+for (const A of S3) for (const B of S3) {
+  const AB = uni(A, B), L = prod(AB, AB), R = uni(prod(A, A), prod(B, B));
+  assert.ok(setEq(L, uni(uni(prod(A, A), prod(A, B)), uni(prod(B, A), prod(B, B)))), "four products");
+  for (const a of dif(A, B)) for (const b of dif(B, A)) assert.ok(elem(pair(a, b), L) && !elem(pair(a, b), R), "missing pair");
+  if (A.length && B.length && cap(A, B).length === 0) assert.ok(!setEq(L, R), "disjoint non-empty: not equal");
+}
+n += 3;
 
 // ---------------------------------------------------------------- "what to remember"
 for (const X of S3) for (const Y of S3) for (const Z of S3) if (sub(X, Y) && sub(Y, Z)) assert.ok(sub(X, Z), "⊆ transitive");
