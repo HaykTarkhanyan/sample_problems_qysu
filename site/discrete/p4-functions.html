@@ -29,6 +29,8 @@ svg tspan.m { font-family: "KaTeX_Math", "Times New Roman", serif; font-style: i
 .p4-parts.cols li { margin: .25rem 0; }
 .widget-controls label { display: inline-flex; align-items: center; gap: .4rem; }
 .widget-controls output { font-weight: 700; min-width: 2.2em; }
+.widget-controls select { font: inherit; font-size: 1rem; min-height: 2.5rem; min-width: 5.5rem; padding: .2rem .5rem;
+  border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
 .widget input[type="range"] { width: 11rem; max-width: 45vw; }
 .p4-chain { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .35rem .45rem; margin: .8rem 0 .1rem; }
 .p4-chain .lab { font-weight: 700; min-width: 2.6rem; text-align: right; }
@@ -381,14 +383,21 @@ $f\cdot g$-ն է (դասընթացի կարգը, նախ $f$)՝ ստորին շա
 
 <div class="widget" id="w-pipe">
   <div class="widget-head">Խողովակաշար՝ նախ գործում է ձախ արկղը</div>
-  <p class="widget-hint">Ընտրեք մասը և $x$-ի արժեքը։ Վերին շարքը $f\cdot g$-ն է (նախ $f$, ապա $g$), ստորինը՝
+  <p class="widget-hint">Ընտրեք Խնդիր 4-ի մասը և $x$-ի արժեքը։ Վերին շարքը $f\cdot g$-ն է (նախ $f$, ապա $g$), ստորինը՝
   $g\cdot f$-ը (նախ $g$, ապա $f$)։ Յուրաքանչյուր շարքի տակ նույն արժեքը հաշվված է նաև պատասխանի բանաձևով։
-  Փորձեք նաև $x=-1$ արժեքը՝ (ա) և (գ) մասերում, և $x=0$ արժեքը՝ (գ) մասում։</p>
+  Փորձեք նաև $x=-1$ արժեքը՝ (ա) և (գ) մասերում, և $x=0$ արժեքը՝ (գ) մասում։ «Ձեր զույգը» կոճակով ընտրեք $f$-ը և
+  $g$-ն ցանկից. վանդակը ցույց է տալիս, թե ինչպես է $\square$-ի տեղը դրվում մյուս ֆունկցիան, և երբ է համադրույթը
+  որոշված։ Նկատեք, որ որոշ զույգերի համար կարգը կարևոր չէ, իսկ շատերի համար՝ կարևոր է։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-part="a" aria-pressed="true">(ա)</button>
     <button class="btn" type="button" data-part="b" aria-pressed="false">(բ)</button>
     <button class="btn" type="button" data-part="c" aria-pressed="false">(գ)</button>
+    <button class="btn" type="button" data-part="own" aria-pressed="false">Ձեր զույգը</button>
     <label>$x=$ <input type="range" min="-5" max="5" step="1" value="1" data-in="x" aria-label="x-ի արժեքը"> <output data-out="x">1</output></label>
+  </div>
+  <div class="widget-controls" data-out="own" style="display:none">
+    <label>$f(x)=$ <select data-in="f" aria-label="f ֆունկցիան"></select></label>
+    <label>$g(x)=$ <select data-in="g" aria-label="g ֆունկցիան"></select></label>
   </div>
   <div class="widget-out" data-out="defs" style="text-align:center"></div>
   <div class="p4-chain fg" data-out="fg"></div>
@@ -662,9 +671,10 @@ $|c|\gt\tfrac{16}{3\sqrt3}$, բայց երբեք՝ զրո լուծում։ Սա 
 
 <div class="widget" id="w-arrows">
   <div class="widget-head">Կառուցեք ձեր սեփական ֆունկցիան</div>
-  <p class="widget-hint">Սեղմեք ձախ սյան որևէ կետի վրա՝ նրա սլաքը հաջորդ թիրախին տեղափոխելու համար։
-  Կոճակներով ավելացրեք կամ հեռացրեք մուտքեր և թիրախներ, կամ սկսեք վերևի երեք նկարներից որևէ մեկից։ Կարմիրով
-  նշվում են վկաները՝ բախվող սլաքները և բաց թողնված թիրախները։</p>
+  <p class="widget-hint">Սա Խնդիր 6-ի հարցն է վերջավոր բազմությունների վրա։ Սեղմեք ձախ սյան որևէ կետի վրա՝ նրա սլաքը
+  հաջորդ թիրախին տեղափոխելու համար։ Կոճակներով ավելացրեք կամ հեռացրեք մուտքեր և թիրախներ, կամ սկսեք վերևի երեք
+  նկարներից որևէ մեկից։ Կարմիրով նշվում են վկաները՝ բախվող սլաքները և բաց թողնված թիրախները։ Նկատեք, թե ինչպես է
+  մուտքերի և թիրախների քանակների համեմատությունն արդեն որոշում, թե ինչ կարող է լինել։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-preset="inj">Ինյեկտիվ, ոչ սյուրյեկտիվ</button>
     <button class="btn" type="button" data-preset="surj">Սյուրյեկտիվ, ոչ ինյեկտիվ</button>
@@ -703,7 +713,8 @@ $y=c$ ուղիղը չի հատում գրաֆիկը։</p>
   կետի վրա, կամ օգտագործեք սահիչը)։ Նարնջագույն կետերը հատման կետերն են։ Ներքևում հավաքվում են վկաները՝
   երկու և ավելի հատում տվող ուղիղը հերքում է ինյեկտիվությունը, իսկ գրաֆիկը չհատող ուղիղը՝
   սյուրյեկտիվությունը։ Եթե վկա չենք գտել, դա դեռ ապացույց չէ՝ ապացույցը Քայլ 1-ում է (օրինակ՝ (գ)-ի խիստ
-  աճը)։</p>
+  աճը)։ Վկաների տակ գրված է, թե գտածը Քայլ 1-ի որ պատասխանին է համապատասխանում. «Մաքրել վկաները» կոճակով
+  սկսեք նորից։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-fn="a" aria-pressed="false">(ա) $|x|$</button>
     <button class="btn" type="button" data-fn="b" aria-pressed="true">(բ) $x^2+4$</button>
@@ -714,9 +725,11 @@ $y=c$ ուղիղը չի հատում գրաֆիկը։</p>
   <div class="p4-plot"></div>
   <div class="widget-controls">
     <label>$c=$ <input type="range" min="-1" max="12" step="0.1" value="5" data-in="c" aria-label="Հորիզոնական ուղղի բարձրությունը"> <output data-out="c">5</output></label>
+    <button class="btn" type="button" data-act="reset">Մաքրել վկաները</button>
   </div>
   <div class="widget-out" data-out="count"></div>
   <div class="p4-badges" data-out="badges"></div>
+  <div class="widget-out muted" data-out="summary" style="text-align:center;font-size:.92rem"></div>
 </div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
@@ -844,7 +857,8 @@ $\Ker(f)$-ը կարգավորված զույգերի բազմություն է։
   ($p\to q\to r\to p$)։ Մատրիցի $(x,y)$ վանդակը ներկված է այն և միայն այն դեպքում, երբ $f(x)=f(y)$,
   այսինքն՝ $(x,y)\in\Ker(f)$։ Ինչ էլ որ ընտրեք, անկյունագիծը լիքն է (ռեֆլեքսիվություն), մատրիցը համաչափ է
   անկյունագծի նկատմամբ (սիմետրիկություն), իսկ «Դասավորել ըստ շերտերի» կոճակը սեղմելուց հետո ներկված վանդակները
-  կազմում են լրիվ քառակուսիներ՝ մեկը յուրաքանչյուր շերտի համար (փոխանցականություն)։</p>
+  կազմում են լրիվ քառակուսիներ՝ մեկը յուրաքանչյուր շերտի համար (փոխանցականություն)։ Սկզբնական վիճակը վերևի
+  նկարի օրինակն է. ներկված վանդակների քանակը $|\Ker(f)|$-ն է։</p>
   <div class="cells" data-out="vals" role="group" aria-label="f(1)-ից f(6) արժեքները"></div>
   <div class="p4-kmat"></div>
   <div class="widget-controls">
@@ -1061,8 +1075,9 @@ $f(A)\cap f(B)$-ի հետ։ Ստուգեք ներքևում՝ $1$-ը դրեք $A
   <div class="widget-head">Պատկերներ և հատում</div>
   <p class="widget-hint">Սեղմեք ձախ սյան կետերի վրա։ Ամեն սեղմումով կետն անցնում է հաջորդ վիճակին՝ ոչ մի
   բազմությունում, $A$-ում, $B$-ում, երկուսում էլ։ Համեմատեք $f(A\cap B)$-ն և $f(A)\cap f(B)$-ը (նարնջագույն օղակը նշում է այն
-  արժեքները, որոնք $f(A)\cap f(B)$-ում են, բայց ոչ $f(A\cap B)$-ում)։ $x^2$-ի դեպքում փորձեք կոտրել
-  հավասարությունը, ապա անցեք ինյեկտիվ $x^3$-ին և փորձեք նորից։</p>
+  արժեքները, որոնք $f(A)\cap f(B)$-ում են, բայց ոչ $f(A\cap B)$-ում)։ Սկզբնական վիճակը Քայլ 4-ի օրինակն է։ $x^2$-ի
+  դեպքում փորձեք կոտրել հավասարությունն այլ ձևերով, ապա անցեք ինյեկտիվ $x^3$-ին և փորձեք նորից. նկատեք, որ դա
+  չի հաջողվում։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-fn="sq" aria-pressed="true">$f(x)=x^2$</button>
     <button class="btn" type="button" data-fn="cube" aria-pressed="false">$f(x)=x^3$</button>
@@ -1384,10 +1399,11 @@ $\{1\}$-ը ճիշտ կլիներ ինյեկտիվ $f$-ի դեպքում. այս�
   մեջ։ Առաջին ռեժիմում սեղմեք աջ սյան կետերի վրա՝ $Y$-ն ընտրելու համար, և տեսեք $f^{-1}(Y)$-ը (կապույտ) և
   $f(f^{-1}(Y))$-ը (կանաչ)։ Երկրորդ ռեժիմում ընտրեք $X$-ը ձախ սյունում և տեսեք $f(X)$-ը (կապույտ) և
   $f^{-1}(f(X))$-ը (կանաչ)։ Նկատեք՝ առաջին շրջապտույտը կարող է միայն կորցնել կետեր, երկրորդը՝ միայն
-  ավելացնել։</p>
+  ավելացնել։ Սկզբնական $Y=\{-1,1\}$-ը Քայլ 2-ի օրինակն է, $X=\{1\}$-ը՝ կանխատեսման օրինակը։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-mode="Y" aria-pressed="true">$f(f^{-1}(Y))$</button>
     <button class="btn" type="button" data-mode="X" aria-pressed="false">$f^{-1}(f(X))$</button>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ օրինակին</button>
   </div>
   <div class="p4-sets-svg"></div>
   <div class="widget-out" data-out="sets" style="text-align:center"></div>
