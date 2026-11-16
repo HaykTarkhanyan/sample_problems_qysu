@@ -19,6 +19,7 @@ done = [
   "The builders' 75 questions for the owner are stored in discrete/reviews/2026-11-16_questions_for_owner.md (owner at 23:40: 'store the questions that come, I'll answer all tomorrow').",
   "Six Fable reviewers launched as each builder finished (23:48 to 00:05), each in its own worktree with the builder's branch merged in.",
   "00:10: owner asked to pause ('tell them to pause, we continue later'). Pause message sent to all six reviewers: write the review file as IN PROGRESS with what remains, WIP commit, stop.",
+  "00:23: all six reviewers are stopped with an IN PROGRESS review file committed on their branch (P5 1f2b86f about two thirds done; P2-3 7b013e5; P4 53e4b2e and P7 e7285e9 about one third; P6/P8 1b2833d early; P1 c6f8cf5, stopped by force when the owner had to close the PC, its report was already on disk and was committed from outside). No reviewer has changed a page yet. Findings so far: no wrong answer anywhere; P5 has 2 WRONG items queued in the w-grid widget (a predict why-text pointing to the wrong line, a stale aria-label); P2-3 confirms the false 3.3 sentence and that the ENGLISH sheet still has it (discrete/solutions_opus_4_8/Practice2-3_Relations_Solutions.tex lines 523-525); P7 confirms the «սահման» -> «եզր» replacement is clean (22 places on the page, 20 in the sheet, not 19 / 16).",
 ]
 
 pending = [
