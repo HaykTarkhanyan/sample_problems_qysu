@@ -134,14 +134,17 @@ $\displaystyle \binom{7}{3}\binom{8}{4}=35\cdot 70=2450$</div>
 
 <div class="widget" id="w-lattice">
   <div class="widget-head">Ճանապարհներ ստուգակետով</div>
-  <p class="widget-hint">Սեղմեք ցանցի ցանկացած կետի վրա՝ այն ստուգակետ դարձնելու համար (ստեղնաշարից՝ սլաքներով և Enter-ով)։ «Նոր ճանապարհ»
-  կոճակը գծում է ստուգակետով անցնող պատահական ճանապարհ, իսկ «Քանակները» ցույց է տալիս, թե պայմանին բավարարող
-  քանի ճանապարհ է հասնում յուրաքանչյուր կետի (յուրաքանչյուր թիվ իր ձախ և ներքևի հարևանների գումարն է)։</p>
+  <p class="widget-hint">Սկզբում՝ Խնդիր 8-ը՝ ստուգակետը $(3,4)$-ն է։ Սեղմեք ցանցի ցանկացած կետի վրա՝ այն ստուգակետ
+  դարձնելու համար (ստեղնաշարից՝ սլաքներով և Enter-ով)։ «Նոր ճանապարհ» կոճակը գծում է ստուգակետով անցնող պատահական
+  ճանապարհ, իսկ «Քանակները» ցույց է տալիս, թե պայմանին բավարարող քանի ճանապարհ է հասնում յուրաքանչյուր կետի
+  (յուրաքանչյուր թիվ իր ձախ և ներքևի հարևանների գումարն է)։ «Արգելել $P$-ն» կոճակով հաշվում ենք ստուգակետով
+  <em>չանցնող</em> ճանապարհները։</p>
   <div class="lattice-svg"></div>
   <div class="widget-controls">
     <button class="btn primary" type="button" data-act="path">Նոր ճանապարհ</button>
     <button class="btn" type="button" data-act="counts" aria-pressed="false">Քանակները</button>
-    <button class="btn" type="button" data-act="reset">Վերադառնալ $(3,4)$-ին</button>
+    <button class="btn" type="button" data-act="avoid" aria-pressed="false">Արգելել $P$-ն</button>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ Խնդիր 8-ին</button>
   </div>
   <div class="widget-out" data-out="formula"></div>
   <div class="widget-out" data-out="word"></div>
@@ -151,7 +154,9 @@ $\displaystyle \binom{7}{3}\binom{8}{4}=35\cdot 70=2450$</div>
 $RURRUURU$ ($4$-ական $R$ և $U$)։ Հենց այս «ճանապարհ $=$ բառ» համապատասխանությունն է ամբողջ հաշվարկի
 հիմքը։ Ստուգակետը տեղաշարժելիս նկատեք, որ բանաձևը միշտ նույն տեսքն ունի՝ $P(a,b)$ կետի համար
 $\binom{a+b}{a}\binom{(7-a)+(8-b)}{7-a}$, իսկ երբ $P$-ն համընկնում է $O$-ի կամ $A$-ի հետ, պայմանն այլևս ոչինչ չի
-սահմանափակում, և ստանում ենք բոլոր $\binom{15}{7}=6435$ ճանապարհները։</p>
+սահմանափակում, և ստանում ենք բոլոր $\binom{15}{7}=6435$ ճանապարհները։ Եթե միացնենք և՛ «Քանակները», և՛ «Արգելել
+$P$-ն», $A$-ի մոտ կգրվի $3985=6435-2450$, ճիշտ ինչպես մեթոդի վանդակում. արգելված կետի թիվը $0$ է, իսկ մնացած
+թվերը նորից ձախ և ներքևի հարևանների գումարներն են։</p>
 </div><!-- /solution -->
 </div>
 </details>
@@ -217,14 +222,23 @@ $(6-x_1)+1$ լուծում, ընդամենը՝ $7+6+5+4+3+2+1=28$։ Համակա
 
 <div class="widget" id="w-stars">
   <div class="widget-head">Աստղեր և ձողիկներ</div>
-  <p class="widget-hint">Սեղմեք որևէ աստղի վրա՝ այնտեղ ձողիկ դնելու համար (ամենահին ձողիկը նորից
-  աստղ է դառնում)։ Կամ ընտրեք լուծումը ներքևի ցանկից և տեսեք, թե որ շարքն է այն կոդավորում։</p>
+  <p class="widget-hint">Սկզբում՝ Խնդիր 9-ը՝ $n=6$ աստղ և $k=3$ գումարելի։ Սեղմեք որևէ աստղի վրա՝ այնտեղ ձողիկ
+  դնելու համար (ամենահին ձողիկը նորից աստղ է դառնում), կամ ընտրեք լուծումը ներքևի ցանկից և տեսեք, թե որ շարքն է այն
+  կոդավորում։ «Կարդալ շարքը» կոճակով շարքը կարդացեք նշան առ նշան։ Սահիչներով փոխեք $n$-ը և $k$-ն ու նկատեք, որ
+  ձողիկները միշտ $k-1$-ն են, իսկ լուծումների քանակը՝ $\binom{n+k-1}{k-1}$։</p>
+  <div class="widget-controls">
+    <label>$n=$ <input type="range" min="1" max="8" step="1" value="6" data-in="n" aria-label="աստղերի քանակը n"> <output data-out="n">6</output></label>
+    <label>$k=$ <input type="range" min="2" max="4" step="1" value="3" data-in="k" aria-label="գումարելիների քանակը k"> <output data-out="k">3</output></label>
+  </div>
   <div class="cells" data-out="row" role="group" aria-label="Աստղերի և ձողիկների շարք"></div>
   <div class="widget-out" data-out="tuple" style="text-align:center"></div>
+  <div class="widget-out" data-out="read" aria-live="polite"></div>
   <div class="widget-controls">
+    <button class="btn" type="button" data-act="read">Կարդալ շարքը</button>
     <button class="btn" type="button" data-act="positive" aria-pressed="false">Միայն $x_i\ge 1$</button>
-    <span class="muted" data-out="count"></span>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ Խնդիր 9-ին</button>
   </div>
+  <div class="widget-out" data-out="count"></div>
   <div class="chips" data-out="chips"></div>
 </div>
 
@@ -314,13 +328,17 @@ $302\,400$ է։</p>
 
 <div class="widget" id="w-word">
   <div class="widget-head">Որտեղի՞ց է գալիս հայտարարը</div>
-  <p class="widget-hint">Կրկնվող տառերին տանք ինդեքսներ (մ₁, մ₂, ա₁, ա₂, ա₃)՝ դրանք ժամանակավորապես
-  դարձնելով տարբեր։ Ներքևում երևում են այն բոլոր «ինդեքսավորված» բառերը, որոնք ինդեքսները ջնջելուց հետո
-  դառնում են <em>նույն</em> բառը։ Հենց այսքան անգամ է $10!$-ը հաշվում յուրաքանչյուր իրական բառ։</p>
+  <p class="widget-hint">Սկզբում՝ Խնդիր 11-ի «մաթեմատիկա» բառը։ Կրկնվող տառերին տանք ինդեքսներ (մ₁, մ₂, ա₁, ա₂,
+  ա₃)՝ դրանք ժամանակավորապես դարձնելով տարբեր։ Ներքևում երևում են այն բոլոր «ինդեքսավորված» բառերը, որոնք ինդեքսները
+  ջնջելուց հետո դառնում են <em>նույն</em> բառը։ Հենց այսքան անգամ է $10!$-ը հաշվում յուրաքանչյուր իրական բառ։ Գրեք
+  ձեր բառը (մինչև 12 տառ) և սեղմեք «Հաշվել». «ու»-ն և «և»-ն հաշվվում են որպես մեկ տառ։</p>
   <div class="widget-controls">
-    <button class="btn primary" type="button" data-act="shuffle">Խառնել տառերը</button>
-    <button class="btn" type="button" data-act="latin" aria-pressed="false">Լատինատառ <code>matematika</code></button>
+    <input type="text" data-in="word" value="մաթեմատիկա" maxlength="24" aria-label="Բառ" autocomplete="off" spellcheck="false"
+      style="width:10rem;font:inherit;font-size:1rem;padding:.25rem .55rem;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)">
+    <button class="btn primary" type="button" data-act="count">Հաշվել</button>
+    <button class="btn" type="button" data-act="shuffle">Խառնել տառերը</button>
   </div>
+  <div class="chips" data-out="presets"></div>
   <div class="cells word-tiles" data-out="tiles"></div>
   <div class="widget-out" data-out="explain"></div>
   <div class="chips" data-out="copies"></div>
