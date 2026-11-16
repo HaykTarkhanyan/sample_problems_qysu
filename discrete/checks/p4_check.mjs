@@ -37,6 +37,14 @@ const same = (A, B) => A.length === B.length && A.every(x => B.includes(x));
 const injective = f => new Set(f).size === f.length;
 const surjective = (f, k) => new Set(f).size === k;
 
+// ================================================================ warm-up non-example, Problem 2 hint
+// y^2 = x is not a function R -> R: x = 4 has two y (2 and -2), x = -1 has none
+eq([-3, -2, -1, 0, 1, 2, 3].filter(y => y * y === 4), [-2, 2], "non-example: two y for x=4");
+ok([...Array(2001).keys()].map(i => -10 + i / 100).every(y => y * y !== -1), "non-example: no y for x=-1");
+// hint: u = x^2 - 2 takes exactly the values [-2, inf): minimum -2 at x = 0, every u >= -2 is x^2 - 2 for x = sqrt(u+2)
+near(Math.min(...[...Array(4001).keys()].map(i => (-20 + i / 100) ** 2 - 2)), -2, "P2 hint: min of x^2-2");
+for (const u of [-2, -1.5, 0, 3, 100]) near(Math.sqrt(u + 2) ** 2 - 2, u, `P2 hint: u=${u} is attained`);
+
 // ================================================================ Problem 2: check box (range by solving y = f(x))
 // (զ) y = 1/(x^2-2): x^2 = 2 + 1/y has a real solution with x^2 != 2  <=>  2 + 1/y >= 0  <=>  y > 0 or y <= -1/2
 for (const y of rationals(40, -5, 5)) {

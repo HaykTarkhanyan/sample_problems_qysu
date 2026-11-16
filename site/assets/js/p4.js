@@ -177,7 +177,7 @@
   function hlineSummary(key, seen) {
     const w = WITNESS[key], L = PART_LABEL[key];
     const gotMulti = !!seen.multi, gotZero = seen.zero !== null && seen.zero !== undefined;
-    if (key === "c") return `${L}-ի համար վկաներ չկան՝ $x^3+6$-ը խիստ աճող է և ընդունում է բոլոր արժեքները, ուստի բիյեկտիվ է (ապացույցը՝ Քայլ 1-ում)։`;
+    if (key === "c") return `${L}-ի համար վկաներ չկան՝ $x^3+6$-ը խիստ աճող է և ընդունում է բոլոր արժեքները, այսինքն՝ բիյեկտիվ է (ապացույցը՝ Քայլ 1-ում)։`;
     if (key === "e") return gotMulti
       ? `Ինյեկտիվ չէ։ Սյուրյեկտիվության վկա չկա՝ ամեն հորիզոնական ուղիղ հատում է գրաֆիկը, այնպես որ ${L} ֆունկցիան սյուրյեկտիվ է, բայց ոչ ինյեկտիվ (Քայլ 1)։`
       : "Շարժեք ուղիղը՝ ինյեկտիվությունը հերքող ուղիղ գտնելու համար։";
@@ -296,7 +296,7 @@
         const [bad, good, val] = fgOk ? ["g\\cdot f", "f\\cdot g", r.fg.val] : ["f\\cdot g", "g\\cdot f", r.gf.val];
         msg = `$(${bad})(${x})$-ը որոշված չէ, իսկ $(${good})(${x})${valTex(val).rel}${valTex(val).num}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
       } else if (Math.abs(r.fg.val - r.gf.val) < 1e-9) msg = `Այս $x$-ի համար երկու արժեքները համընկնում են (երկուսն էլ՝ $${show(r.fg.val)}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`;
-      else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${show(r.fg.val)}\\ne ${show(r.gf.val)}$, ուստի $f\\cdot g\\ne g\\cdot f$։`;
+      else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${show(r.fg.val)}\\ne ${show(r.gf.val)}$, հետևաբար $f\\cdot g\\ne g\\cdot f$։`;
       setText($('[data-out="verdict"]'), msg);
     }
     function render() {
