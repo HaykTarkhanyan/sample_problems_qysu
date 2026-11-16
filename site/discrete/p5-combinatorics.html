@@ -13,7 +13,11 @@
 /* Page-only widget styles (Practice 5). */
 .widget .range-label { display: inline-flex; align-items: center; gap: .4rem; }
 .widget input[type="range"] { width: 10rem; max-width: 45vw; }
+#w-row .chip { font-size: .95rem; min-width: 2.5rem; min-height: 2.3rem; }
 #w-row .chip:disabled { opacity: .4; cursor: default; }
+#w-grid .range-label strong { min-width: 1.4rem; text-align: center; }
+#w-mod .mod-tiles { max-height: 15rem; overflow-y: auto; align-content: flex-start; }
+#w-mod input[type="number"] { width: 6.5rem; font: inherit; padding: .3rem .45rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
 #w-row .chip.used { opacity: .2; text-decoration: line-through; }
 #w-ramsey .hit-edge { stroke: transparent; stroke-width: 16; cursor: pointer; }
 #w-ramsey .hit-edge:hover, #w-ramsey .hit-edge:focus { stroke: color-mix(in srgb, var(--orange) 35%, transparent); outline: none; }
@@ -320,18 +324,25 @@ $280$-ը դրանք ընդհանրապես չի հաշվում։ Ստուգեք 
 </div>
 
 <div class="widget" id="w-grid">
-  <div class="widget-head">Բազմապատիկները՝ 15-ական թվով տողերում</div>
-  <p class="widget-hint">Ցանցի յուրաքանչյուր տողում $15$ հաջորդական թիվ է։ Միացրեք կամ անջատեք $5$-ի և $3$-ի
-  բազմապատիկները, իսկ $N$ վերին սահմանը փոխեք սահիչով կամ սեղմելով ցանցի որևէ թվի վրա։ Նկատեք, որ
-  յուրաքանչյուր լրիվ տողում կա $5$-ի ճիշտ $3$, $3$-ի ճիշտ $5$ և $15$-ի ճիշտ $1$ բազմապատիկ (տողի վերջին
-  թիվը), ուստի քանակները հաշվվում են լրիվ տողերով՝ գումարած վերջին, թերի տողը։</p>
+  <div class="widget-head">Բազմապատիկները՝ տող առ տող</div>
+  <p class="widget-hint">Սկզբում ցանցը խնդիր 1.5-ն է՝ $5$-ի և $3$-ի բազմապատիկները $1,2,\dots,699$ թվերի մեջ, ամեն տողում
+  $15$ հաջորդական թիվ։ Միացրեք կամ անջատեք բազմապատիկները, իսկ $N$ վերին սահմանը փոխեք սահիչով, $\pm1$ կոճակներով կամ
+  սեղմելով ցանցի որևէ թվի վրա։ Նկատեք, որ յուրաքանչյուր լրիվ տողում կա $5$-ի ճիշտ $3$, $3$-ի ճիշտ $5$ և $15$-ի ճիշտ
+  $1$ բազմապատիկ (տողի վերջին թիվը), ուստի քանակները հաշվվում են լրիվ տողերով՝ գումարած վերջին, թերի տողը։ Հետո փոխեք
+  $a$ և $b$ բաժանարարները. օրինակ՝ $a=4$, $b=6$ դեպքում կարմիրները $12$-ի բազմապատիկներն են, ոչ թե $24$-ի։</p>
   <div class="grid-svg"></div>
   <div class="widget-controls">
-    <button class="btn" type="button" data-act="m5" aria-pressed="true">$5$-ի բազմապատիկները</button>
-    <button class="btn" type="button" data-act="m3" aria-pressed="true">$3$-ի բազմապատիկները</button>
+    <span class="range-label">$a$՝ <button class="btn" type="button" data-act="a-" aria-label="a-ն փոքրացնել">−</button><strong data-out="a">5</strong><button class="btn" type="button" data-act="a+" aria-label="a-ն մեծացնել">+</button></span>
+    <span class="range-label">$b$՝ <button class="btn" type="button" data-act="b-" aria-label="b-ն փոքրացնել">−</button><strong data-out="b">3</strong><button class="btn" type="button" data-act="b+" aria-label="b-ն մեծացնել">+</button></span>
+  </div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="ma" aria-pressed="true">$5$-ի բազմապատիկները</button>
+    <button class="btn" type="button" data-act="mb" aria-pressed="true">$3$-ի բազմապատիկները</button>
+  </div>
+  <div class="widget-controls">
     <label class="range-label">$N$՝ <input type="range" min="1" max="720" value="699" aria-label="Վերին սահմանը՝ N"></label>
-    <strong data-out="n">699</strong>
-    <button class="btn" type="button" data-act="reset">Վերադառնալ $N=699$-ին</button>
+    <span class="range-label"><button class="btn" type="button" data-act="n-" aria-label="N-ը փոքրացնել 1-ով">−1</button><strong data-out="n">699</strong><button class="btn" type="button" data-act="n+" aria-label="N-ը մեծացնել 1-ով">+1</button></span>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ խնդիր 1.5-ին</button>
   </div>
   <div class="widget-out" data-out="counts"></div>
 </div>
@@ -523,7 +534,8 @@ $5$»-ը ճիշտ է «Նախ ծայրերը» հերթականությամբ՝ 
 
 <div class="widget" id="w-row">
   <div class="widget-head">Նախ ծայրերը, թե՞ ձախից աջ</div>
-  <p class="widget-hint">Հաջորդ տեղը նշված է նարնջագույն շրջանակով, իսկ ներքևում ակտիվ են միայն այն մարդիկ,
+  <p class="widget-hint">Սա խնդիր 2.5-ի շարքն է՝ $6$ տղա (Տ) և $7$ աղջիկ (Ա), ծայրերում՝ տղաներ։
+  Հաջորդ տեղը նշված է նարնջագույն շրջանակով, իսկ ներքևում ակտիվ են միայն այն մարդիկ,
   որոնց կարելի է դնել այնտեղ (Տ՝ տղա, Ա՝ աղջիկ)։ Սեղմեք նրանցից մեկի վրա կամ սեղմեք «Հաջորդ տեղը»՝
   պատահական ընտրության համար։ Համեմատեք երկու հերթականությունները՝ «Նախ ծայրերը» դեպքում թվերը միշտ նույնն
   են, իսկ «Ձախից աջ» դեպքում վերջին տեղի տարբերակների քանակը կախված է նախորդ ընտրություններից։</p>
@@ -681,7 +693,8 @@ $A,B,C$ ամբողջովին կապույտ եռանկյուն։</figcaption>
 
 <div class="widget" id="w-ramsey">
   <div class="widget-head">Ներկեք կողերը՝ առանց միագույն եռանկյան</div>
-  <p class="widget-hint">Սեղմեք կողի վրա, և նրա գույնը կփոխվի՝ բարակ մոխրագույն (դեռ չներկված) → կարմիր
+  <p class="widget-hint">$K_6$-ը խնդիր 2.10-ի $6$ մարդն է, իսկ $K_5$-ը՝ ստուգման $5$ մարդը։ Սեղմեք կողի վրա (կամ
+  ընտրեք այն Tab ստեղնով և սեղմեք Enter), և նրա գույնը կփոխվի՝ բարակ մոխրագույն (դեռ չներկված) → կարմիր
   (ընկերներ) → կապույտ կետագիծ (անծանոթներ) → մոխրագույն։ Միագույն եռանկյունն անմիջապես ընդգծվում է։
   $K_5$-ում «Հնգանկյուն և հնգաստղ» ներկումը ցույց է տալիս, որ $5$ մարդու դեպքում կարելի է խուսափել
   միագույն եռանկյունից։ $K_6$-ում նույն կոճակն այդպես է ներկում $A,B,C,D,E$ մարդկանց միջև կողերը, իսկ
@@ -840,12 +853,18 @@ $$2013 \mid a_{\,j-i}.$$
   <p class="widget-hint">Ամեն քայլում վերցնում ենք հաջորդ անդամը և գտնում նրա $r_n$ մնացորդը $m$-ի վրա բաժանելիս։
   Հսկա թվեր հաշվել պետք չէ՝ $a_{n+1}=10a_n+7$, ուստի հաջորդ մնացորդը $(10r_n+7) \bmod m$ է։ Հետևեք, թե երբ
   է առաջին անգամ կրկնվում մնացորդը (երկու անդամ՝ նույն արկղում)։ Դիրիխլեի սկզբունքը երաշխավորում է, որ դա
-  տեղի կունենա ամենաուշը $(m+1)$-րդ անդամում։ Փորձեք նաև $m=8$-ը, որը փոխադարձաբար պարզ չէ $10$-ի հետ։</p>
+  տեղի կունենա ամենաուշը $(m+1)$-րդ անդամում։ $m=2013$-ը խնդիր 2.12-ն է։ Փորձեք նաև $m=8$-ը, որը փոխադարձաբար
+  պարզ չէ $10$-ի հետ, կամ գրեք ձեր $m$-ը (օրինակ՝ $2014$ կամ $7$)։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-m="2013" aria-pressed="true">$m=2013$</button>
     <button class="btn" type="button" data-m="13" aria-pressed="false">$m=13$</button>
     <button class="btn" type="button" data-m="21" aria-pressed="false">$m=21$</button>
     <button class="btn" type="button" data-m="8" aria-pressed="false">$m=8$</button>
+  </div>
+  <div class="widget-controls">
+    <label class="range-label">Ձեր $m$-ը՝ <input type="number" min="2" max="2100" step="1" inputmode="numeric" placeholder="2-2100" aria-label="Ձեր m-ը, 2-ից մինչև 2100"></label>
+    <button class="btn" type="button" data-act="own">Ցույց տալ</button>
+    <span class="muted" data-out="merr" role="status"></span>
   </div>
   <div class="widget-controls">
     <button class="btn primary" type="button" data-act="step">Հաջորդ անդամը</button>
