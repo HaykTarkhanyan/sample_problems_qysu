@@ -245,7 +245,56 @@ this, and the English sheet still has to be looked at.
   $f$, its mirror moves on the graph of $f^{-1}$  (c) problem 24: a third mode in the rounding widget for
   $f^{-1}(Y_1\cap Y_2)$, $f^{-1}(Y_1\cup Y_2)$ and the complement  (d) none
 
+## P6 - combinations (builder)
+
+- **P6-1 (L, term).** Combinations with repetition: the page writes «կրկնությամբ զուգորդություն» 3 times, plus
+  once in the new note. Lecture 6 §2.5 and the practice sheet heading write «Կրկնություններով զուգորդություններ».
+  (a) «կրկնություններով»  (b) keep «կրկնությամբ»
+- **P6-2 (L, term).** Multinomial coefficient: the page and the course glossary (marked †) say «բազմանդամային
+  գործակից»; lecture 6 §3 says «պոլինոմիալ գործակից».
+  (a) keep «բազմանդամային» and add «(դասախոսության մեջ՝ պոլինոմիալ գործակից)» once  (b) switch to «պոլինոմիալ»
+  everywhere  (c) leave as is
+- **P6-3 (L).** Problem 11 method box: «հաշվեք այն, ինչն իրականում նույն նշանն է, և ոչ թե այն, ինչը տառադարձության
+  մեջ նման է երևում». The lint calls «իրականում» a filler, but here it marks a contrast.
+  (a) keep  (b) «իսկապես»  (c) drop it
+- **P6-4 (L).** Problem 8 check box: the existing «Կոպիտ վերին սահման՝» was changed to «Կոպիտ վերին եզր՝» on the
+  page and the sheet (the same question as P7-1, on one place).
+  (a) keep the change  (b) revert
+- **P6-5 (P).** The statement of problem 9 now has the muted line «Գործնականի թերթիկում այս վարժությունը
+  կրկնությամբ զուգորդությունների բաժնում է (բաժին 2.5)։», so that students in try-first mode know the reading
+  (order matters, zero allowed).
+  (a) keep it  (b) state the reading outright in the statement  (c) remove it and leave the reading to the hint
+- **P6-6 (L, notation).** The lecture's symbol for combinations with repetition: the text extraction lost the
+  accent, so it is not known whether it is an overline or a tilde. Only «$C_n^k$» was added to the summary.
+  The reviewer was asked to look at the lecture PDF page.
+  (a) the owner gives the symbol and it gets added  (b) leave it out
+- **P6-7 (W).** Not built: a toggle in the stars-and-bars widget that groups the 28 ordered solutions into the 7
+  unordered ones.
+  (a) build it  (b) not needed
+
+## P8 - recurrences (builder)
+
+- **P8-1 (L).** Idea box: «երեք դիտարկում պարտադրում է այն». Is «պարտադրել» the same calque as the decided
+  «հարկադրել»?
+  (a) yes: «Այս ընտրությունը կամայական չէ. այն բխում է երեք դիտարկումից։»  (b) no, keep it
+- **P8-2 (L).** The replacement for the math «աշխատել»: «Ահա թե ինչու է ենթադրությունը ճիշտ ընտրված՝» in place
+  of «Ահա ենթադրության աշխատելու իրական պատճառը՝».
+  (a) keep  (b) «…ենթադրությունը հարմար՝»  (c) «Ահա ենթադրության հաջողության բուն պատճառը՝»
+- **P8-3 (L).** Step 3: «կանոնը գործում է նաև հակառակ ուղղությամբ». Is this a calque?
+  (a) yes: «կանոնով կարելի է գնալ նաև հակառակ ուղղությամբ՝ որոշելով նախորդ անդամները»  (b) no, keep it
+- **P8-4 (L).** «Երկու փոխանցելի հնարք՝» was changed to «Երկու ընդհանուր հնարք՝», extending the box-title
+  decision to this phrase.
+  (a) keep  (b) revert
+- **P8-5 (P).** With complex roots the recurrence widget shows the roots and the values and says the page
+  covers only real roots. Practice sheet problem 4 has complex roots.
+  (a) keep it that way  (b) add the trigonometric closed form $\rho^n(C\cos n\theta+D\sin n\theta)$ to the
+  widget and the page
+
 ## Shared-file requests collected from the agents (for the main session, not for the owner)
+
+- P6 / P8: shared `site.css` rules for a text input, for labels and outputs inside widget controls; note in
+  `CONVENTIONS.md` that the reference page p6 now loads `prob.js` and has try-first on, and that
+  `discrete/checks/mockdom.mjs` is a reusable mock DOM for widget checks.
 
 - P7: `tools/browser_check.mjs` does not catch an inline formula clipped inside a narrow box (site.js glues a
   short formula to its full stop, so it cannot wrap); the reviewer was asked for a probe.
