@@ -203,16 +203,22 @@ $a_n$-ի (նարնջագույն) աճը $n$-ի մեծացման հետ գնալ
 
 <div class="widget" id="w-seq">
   <div class="widget-head">Սկզբնական պայմաններից՝ փակ բանաձև</div>
-  <p class="widget-hint">Փոխեք $a_1$ և $a_2$ սկզբնական արժեքները կամ ընտրեք պատրաստի զույգ։ $C$-ն և $D$-ն
-  ամեն անգամ նորից են որոշվում Քայլ 4-ի համակարգից, իսկ աղյուսակը համեմատում է ռեկուրենտ առնչությամբ
-  քայլ առ քայլ հաշված անդամները փակ բանաձևի արժեքների հետ։ Գրաֆիկում կապույտը $D\cdot 3^n$ բաղադրիչն է,
-  կարմիրը՝ հանվող $-C\cdot 2^n$ բաղադրիչը, իսկ նարնջագույնը՝ $a_n$-ը, որը դրանց տարբերությունն է։
-  Երկարացրեք հաջորդականությունը՝ օգտագործելով $n\le$ սահիչը, և նկատեք, թե որ բաղադրիչն է գերիշխում և ինչի է
-  մոտենում $a_n/a_{n-1}$ հարաբերությունը, հատկապես երբ $D=0$։</p>
+  <p class="widget-hint">Սկզբում՝ Խնդիր 2-ը՝ $a_n=5a_{n-1}-6a_{n-2}$, $a_1=2$, $a_2=10$։ Փոխեք $a_1$ և $a_2$ սկզբնական
+  արժեքները, իսկ $p$ և $q$ սահիչներով՝ $a_n=p\,a_{n-1}+q\,a_{n-2}$ կանոնը, կամ ընտրեք պատրաստի օրինակ։ Արմատները,
+  $C$-ն և $D$-ն ամեն անգամ նորից են որոշվում, իսկ աղյուսակը համեմատում է ռեկուրենտ առնչությամբ քայլ առ քայլ հաշված
+  անդամները փակ բանաձևի արժեքների հետ։ Գրաֆիկում կապույտը մեծ արմատի բաղադրիչն է, կարմիրը՝ հանվող բաղադրիչը, իսկ
+  նարնջագույնը՝ $a_n$-ը, որը դրանց տարբերությունն է։ Մեծացրեք $n\le$ սահիչը և նկատեք, թե ինչի է մոտենում
+  $a_n/a_{n-1}$ հարաբերությունը, հատկապես երբ $D=0$ կամ արմատը կրկնակի է։</p>
+  <div class="widget-controls">
+    <label>$p=$ <input type="range" min="-6" max="6" step="1" value="5" data-in="p" aria-label="p"> <output data-out="p">5</output></label>
+    <label>$q=$ <input type="range" min="-9" max="9" step="1" value="-6" data-in="q" aria-label="q"> <output data-out="q">−6</output></label>
+  </div>
+  <div class="widget-out" data-out="rule"></div>
   <div class="widget-controls">
     <label>$a_1=$ <input type="range" min="-5" max="10" step="1" value="2" data-in="a1" aria-label="a1"> <output data-out="a1">2</output></label>
     <label>$a_2=$ <input type="range" min="-10" max="30" step="1" value="10" data-in="a2" aria-label="a2"> <output data-out="a2">10</output></label>
-    <label>$n\le$ <input type="range" min="3" max="8" step="1" value="5" data-in="N" aria-label="n max"> <output data-out="N">5</output></label>
+    <label>$n\le$ <input type="range" min="3" max="10" step="1" value="5" data-in="N" aria-label="n max"> <output data-out="N">5</output></label>
+    <button class="btn" type="button" data-act="reset">Վերադառնալ Խնդիր 2-ին</button>
   </div>
   <div class="chips" data-out="presets"></div>
   <div class="seq-plot"></div>
@@ -378,9 +384,12 @@ $10$ երկարության $880$ երկուական տող պարունակու
   $n$ երկարության բոլոր լավ տողերը (առանց «$00$»-ի)՝ բաժանված Քայլ 2-ի երկու դեպքի. կապույտ մասն
   ավելի կարճ լավ տող է, իսկ կարմիր $1$-ը և նարնջագույն $0$-ն ֆիքսված վերջավորությունն են։ Նկատեք, որ
   խմբերի չափերը նախորդ երկու $f$ արժեքներն են (կարմիր և նարնջագույն շրջանակով կոճակները)։
-  $n=3$-ի դեպքում «$00$» պարունակող տողերը ճիշտ Ստուգման երեք տողերն են։</p>
+  $n=3$-ի դեպքում «$00$» պարունակող տողերը ճիշտ Ստուգման երեք տողերն են, իսկ $n=10$-ը Խնդիր 6-ն է։ «Կառուցել քայլ առ
+  քայլ» կոճակը ցույց է տալիս հակառակ ուղղությունը՝ ինչպես են $n$ երկարության լավ տողերը ստացվում ավելի կարճ լավ
+  տողերից։</p>
   <div class="widget-controls">
     <label>$n=$ <input type="range" min="1" max="10" step="1" value="3" data-in="n" aria-label="n"> <output data-out="n">3</output></label>
+    <button class="btn" type="button" data-act="build">Կառուցել քայլ առ քայլ</button>
     <button class="btn" type="button" data-act="bad" aria-pressed="false">Ցույց տալ «00» պարունակողները</button>
   </div>
   <div class="chips" data-out="fseq"></div>
