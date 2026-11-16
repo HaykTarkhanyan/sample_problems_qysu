@@ -12,6 +12,7 @@
 <script defer src="../assets/katex/katex.min.js"></script>
 <script defer src="../assets/katex/auto-render.min.js"></script>
 <script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
 <script defer src="../assets/js/p1.js"></script>
 <style>
   /* p1 only: math letters in SVG tspans, labelled problem items, panel rows (P20, P54),
@@ -30,7 +31,7 @@
   .p1-eq { font-size: 1.6rem; align-self: center; }
   .p1-panels.p1-nowrap { flex-wrap: nowrap; gap: .4rem; }
   .p1-nowrap .p1-panel { flex: 1 1 0; min-width: 0; max-width: 177px; }
-  .p1-nowrap .p1-panel svg { width: 100%; height: auto; }
+  .p1-nowrap .p1-panel > svg { width: 100%; height: auto; }
   /* P2 nested boxes */
   .p1-mem { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; justify-content: center; align-items: flex-start; margin: .7rem 0 .3rem; }
   .p1-mem-panel { display: flex; flex-direction: column; align-items: center; gap: .3rem; max-width: 100%; }
@@ -49,7 +50,7 @@
   /* P54 Venn pair and truth table */
   .p1-venn2 { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .8rem; }
   .p1-venn2 > div { flex: 1 1 128px; max-width: 220px; min-width: 0; display: flex; flex-direction: column; align-items: center; }
-  .p1-venn2 svg { width: 100%; height: auto; }
+  .p1-venn2 [data-out^="svg"] > svg { width: 100%; height: auto; }
   table.p1-tt th, table.p1-tt td { padding: .25rem .45rem; text-align: center; }
   table.p1-tt tbody tr { cursor: pointer; }
   table.p1-tt td.z { color: var(--muted); }
@@ -67,9 +68,25 @@
   .p1-sw { display: inline-block; width: .85rem; height: .85rem; border-radius: 3px; vertical-align: -.1rem; margin-right: .3rem; }
   .p1-sw.r { background: color-mix(in srgb, var(--red) 30%, transparent); }
   .p1-sw.b { background: color-mix(in srgb, var(--blue) 30%, transparent); }
+  /* #exam: two-column summary table that fits 330 px, self-check list */
+  table.p1-sum { table-layout: fixed; width: 100%; }
+  table.p1-sum th:first-child, table.p1-sum td:first-child { width: 44%; }
+  table.p1-sum th, table.p1-sum td { padding: .35rem .45rem; }
+  ol.p1-self > li { margin: .55rem 0; }
+  /* widgets: typed sets (P2), larger tap targets at phone width, P16 probe, P20 regions; svg rules are
+     direct-child only so KaTeX's own svg (root signs, braces) is never resized */
+  .widget input[type="text"] { font: inherit; font-size: .95rem; width: 8.5rem; max-width: 36vw; padding: .3rem .45rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); }
+  .widget .chip { min-height: 2.1rem; padding: .25rem .6rem; }
+  .widget-controls .btn { min-height: 2.4rem; }
+  .p1-tog .btn { min-width: 2.6rem; min-height: 2.5rem; }
+  .p1-xval { display: inline-block; min-width: 2rem; text-align: center; }
+  .p1-venn1 { display: flex; justify-content: center; }
+  .p1-venn1 > svg { width: 100%; max-width: 270px; height: auto; }
+  table.p1-rows th { text-align: left; font-weight: 600; padding-top: .55rem; }
+  table.p1-tt tbody tr:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
 </style>
 </head>
-<body>
+<body data-try-default data-two-step>
 <header class="site-header"><div class="inner">
   <a class="brand" href="index.html"><span class="graph" aria-hidden="true"></span>Դիսկրետ մաթեմատիկա</a>
   <div class="header-actions">
@@ -98,8 +115,9 @@
         <li><a href="#p16">Խնդիր 16 - Ածանցյալ բազմությունների նկարագրությունը</a></li>
         <li><a href="#p20">Խնդիր 20 - Համարժեք պայմանների երեք ընտանիք</a></li>
         <li><a href="#p54">Խնդիր 54 - Բազմությունների երկու նույնություն (մասեր 3 և 11)</a></li>
-        <li><a href="#p58">Խնդիր 58 - $A\times B=B\times A$-ն հարկադրում է $A=B$</a></li>
+        <li><a href="#p58">Խնդիր 58 - $A\times B=B\times A$-ից հետևում է $A=B$</a></li>
         <li><a href="#p60">Խնդիր 60 - Դեկարտյան արտադրյալի բաշխական օրենքները</a></li>
+        <li><a href="#exam">Ամփոփում և ինքնաստուգում</a></li>
       </ol>
     </nav>
 
@@ -124,9 +142,26 @@ $\subseteq$-ը տարբեր հարաբերություններ են։ (2) <stron
 ($A\subseteq B$ և $A\neq B$), մինչդեռ $\subseteq$-ը թույլ է տալիս հավասարություն։</p>
 <p>Այս թերթիկի ամենաօգտակար սովորությունը՝ երբ խրվում եք, իջեք մեկ տարրի մակարդակին։ Ստորև գրեթե
 յուրաքանչյուր տող պարզապես «ի՞նչ է նշանակում ֆիքսված $x$-ի համար այստեղ պատկանելը» է։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>$\in$-ը և $\subseteq$-ը տարբեր հարցեր են։</strong> $x\in S$ նշանակում է, որ $x$-ը $S$-ի թվարկված
+  տարրերից մեկն է, իսկ $X\subseteq S$՝ որ $X$-ի յուրաքանչյուր տարր $S$-ի տարր է։ $x$-ը և $\{x\}$-ը տարբեր
+  օբյեկտներ են (խնդիրներ 2, 7, 11)։</li>
+  <li><strong>Բազմությունների հավասարությունն ապացուցվում է տարր առ տարր։</strong> $X=Y$ նշանակում է, որ ամեն
+  $x$-ի համար $x\in X\Leftrightarrow x\in Y$, և $\cup$, $\cap$, $\setminus$ նշանները դառնում են «կամ», «և»,
+  «և ոչ» բառերը (խնդիրներ 16, 20, 54, 60)։ Նույնը կարելի է անել երկու պարունակումով՝ $X\subseteq Y$ և
+  $Y\subseteq X$ (խնդիր 58)։</li>
+  <li><strong>Դեկարտյան արտադրյալի տարրը կարգավորված զույգ է։</strong> $(x,y)\in X\times Y$ այն և միայն այն
+  դեպքում, երբ $x\in X$ և $y\in Y$, և կոորդինատների կարգը կարևոր է (խնդիրներ 58, 60)։</li>
+</ol>
+<p>Թերթիկից հետո պետք է կարողանաք որոշել, թե ճի՞շտ է արդյոք $x\in S$-ը կամ $X\subseteq S$-ը, կառուցել այդպիսի
+պայմաններին բավարարող օրինակ, ապացուցել բազմությունների նույնություն և դեկարտյան արտադրյալի նույնություն։</p>
+</div>
 <p class="muted">Նարնջագույն կետով նշված վանդակներն ինտերակտիվ են՝ սեղմեք, փոխեք պարամետրերը և տեսեք,
-թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» կոճակը թաքցնում է լուծումները, որպեսզի նախ ինքներդ
-փորձեք լուծել։</p>
+թե ինչպես է փոխվում պատասխանը։ «Փորձել ինքնուրույն» ռեժիմում (վերևի ✎ կոճակը) լուծումները թաքցված են,
+որպեսզի նախ ինքներդ փորձեք լուծել. խնդրի տակ կարող եք բացել միայն պատասխանը կամ ամբողջ լուծումը։ Ավելի
+դժվար խնդիրների պայմանի տակ կա բացվող «Հուշում», իսկ էջի վերջում՝ <a href="#exam">ամփոփում և ինքնաստուգման
+հարցեր</a>։</p>
 </div>
 </details>
 
@@ -146,11 +181,11 @@ $\subseteq$-ը տարբեր հարաբերություններ են։ (2) <stron
 
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
-<p>$x\in S$ ճիշտ է հենց այն դեպքում, երբ $x$-ը <em>բառացիորեն $S$-ի ձևավոր փակագծերում թվարկված տարրերից
+<p>$x\in S$ ճիշտ է այն և միայն այն դեպքում, երբ $x$-ը <em>բառացիորեն $S$-ի ձևավոր փակագծերում թվարկված տարրերից
 մեկն</em> է՝ ոչ ավելին։ Ուստի կարդանք յուրաքանչյուր բազմություն որպես ցանկ և հարցնենք՝ արդյո՞ք ձախ կողմի
 օբյեկտն աջի թվարկված տարրերից մեկն է։ Միակ նրբությունն այն է, որ տարրերն իրենք կարող են բազմություններ
 լինել, և չպետք է շփոթել $\varnothing$-ը (դատարկ բազմությունը, $0$ տարր) $\{\varnothing\}$-ի հետ (արկղ,
-որ պարունակում է դատարկ բազմությունը, $1$ տարր)։ Դրանք տարբեր օբյեկտներ են, ուստի
+որ պարունակում է դատարկ բազմությունը, $1$ տարր)։ Դրանք տարբեր օբյեկտներ են, հետևաբար
 $\varnothing\neq\{\varnothing\}$։ Վերաբերվեք $\varnothing$-ին և $\{\varnothing\}$-ին որպես երկու տարբեր
 «անունների» և պարզապես անցեք ցանկի վրայով։</p>
 </div>
@@ -176,7 +211,7 @@ $\varnothing\neq\{\varnothing\}$։ Վերաբերվեք $\varnothing$-ին և $\
 
 <div class="check"><span class="check-label">Ստուգում։</span> Համոզվենք, որ 2.3-ն իսկապես սխալ է՝ $\{\{\varnothing\}\}$-ն ունի
 ճիշտ մեկ տարր։ Եթե թե՛ $\varnothing$-ն, թե՛ $\{\varnothing\}$-ն պատկանեին նրան, այն կունենար երկու
-տարբեր տարր։ Չունի, ուստի դրանցից առավելագույնը մեկն է նրանում՝ և 2.2-ն արդեն ճշտեց, որ դա
+տարբեր տարր։ Չունի, հետևաբար դրանցից առավելագույնը մեկն է նրանում՝ և 2.2-ն արդեն ճշտեց, որ դա
 $\{\varnothing\}$-ն է։ $\checkmark$
 </div>
 
@@ -212,24 +247,41 @@ $\{\varnothing\}$-ն է։ $\checkmark$
 <div class="box answer"><span class="answer-label">Պատասխան՝</span> 2.1 Ճիշտ է, 2.2 Ճիշտ է, 2.3 Սխալ է։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> «$x\in S$»-ը միայն այն հարցն է, թե արդյո՞ք $x$-ը $S$-ի վերին մակարդակի
+<p><strong>Ընդհանուր հնարք՝</strong> «$x\in S$»-ը միայն այն հարցն է, թե արդյո՞ք $x$-ը $S$-ի վերին մակարդակի
 ցանկի տարր է։ Մի՛ նայեք տարրերի ներսին։ Եվ միշտ $x$-ն առանձին պահեք $\{x\}$-ից՝ ինչ-որ բան ձևավոր փակագծերում
 փաթաթելը ստեղծում է նոր, տարբեր օբյեկտ մեկ տարրով։</p>
 </div>
 
 <h3>$\in$ թե՞ $\subseteq$՝ ստուգեք ինքներդ</h3>
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> 2.3-ում տեսանք, որ $\varnothing\notin\{\{\varnothing\}\}$։ Իսկ ճի՞շտ է արդյոք
+$\varnothing\subseteq\{\{\varnothing\}\}$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Այո</button><button class="btn" type="button">Ոչ, քանի որ $\varnothing$-ն $\{\{\varnothing\}\}$-ի տարր չէ</button><button class="btn" type="button">Իմաստ չունի, քանի որ $\varnothing$-ն տարր չունի</button></div>
+<div class="predict-why">Այո։ $X\subseteq S$ նշանակում է, որ $X$-ի յուրաքանչյուր տարր $S$-ում է։ $\varnothing$-ն տարր չունի,
+հետևաբար ստուգելու բան չկա, և պայմանը բավարարված է։ Երկրորդ պատասխանը շփոթում է $\subseteq$-ը $\in$-ի հետ.
+$X\subseteq S$-ի համար պետք չէ, որ $X$-ը $S$-ի տարր լինի։ Երրորդը ճիշտ հակառակն է. հենց այն պատճառով, որ
+$\varnothing$-ն տարր չունի, $\varnothing\subseteq S$ ամեն $S$-ի համար։ Ստուգեք ներքևում՝ սեղմեք «2.3»։</div>
+</div>
 <div class="widget" id="w-member">
   <div class="widget-head">Պատկանելություն և պարունակում՝ ներդրված արկղերով</div>
   <p class="widget-hint">Ընտրեք $x$ օբյեկտը և $S$ բազմությունը կամ սեղմեք պատրաստի զույգերից մեկը (Խնդիրներ 2,
   7, 11)։ Յուրաքանչյուր բազմություն գծված է որպես արկղ, իսկ նրա տարրերը՝ որպես արկղի անմիջական
   պարունակություն։ $x\in S$ ճիշտ է միայն այն դեպքում, երբ $x$-ի ճշգրիտ պատճենը $S$-ի անմիջական տարրերից
   մեկն է (կանաչ շրջանակ). ավելի խորը թաղված պատճենը (կարմիր կետագիծ) $\in$ չի տալիս։ $x\subseteq S$-ի համար
-  պետք է, որ $x$-ի <em>յուրաքանչյուր</em> տարր լինի $S$-ի տարր (նարնջագույն կետագիծ)։</p>
+  պետք է, որ $x$-ի <em>յուրաքանչյուր</em> տարր լինի $S$-ի տարր (նարնջագույն կետագիծ)։ Կարող եք նաև գրել ձեր
+  օրինակը ներքևի դաշտերում՝ թվերով, ձևավոր փակագծերով և ստորակետներով ($\varnothing$-ի փոխարեն գրեք {}), օրինակ՝
+  {1, {1}}, և սեղմել «Ստուգել»։</p>
   <div class="chips" data-out="presets"></div>
   <div class="widget-controls">
     <label>$x=$ <select data-in="x" aria-label="x"></select></label>
     <label>$S=$ <select data-in="S" aria-label="S"></select></label>
   </div>
+  <div class="widget-controls">
+    <label>$x=$ <input type="text" data-in="xt" aria-label="x, ձեր օրինակը" autocomplete="off" spellcheck="false"></label>
+    <label>$S=$ <input type="text" data-in="St" aria-label="S, ձեր օրինակը" autocomplete="off" spellcheck="false"></label>
+    <button class="btn" type="button" data-act="own">Ստուգել</button>
+  </div>
+  <p class="widget-out c-red" data-out="err" hidden></p>
   <div class="p1-mem" data-out="boxes"></div>
   <div class="widget-out" data-out="elem"></div>
   <div class="widget-out" data-out="sub"></div>
@@ -249,10 +301,10 @@ $\{\varnothing\}$-ն է։ $\checkmark$
 
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
-<p>$\le$ կամ $\subseteq$ տիպի հարաբերությունների համար շղթայումն աշխատում է՝ $a\le b\le c$ հարկադրում է
+<p>$\le$ կամ $\subseteq$ տիպի հարաբերությունները կարելի է շղթայել՝ $a\le b\le c$-ից հետևում է
 $a\le c$։ Այս վարժության իմաստն այն է, որ <em>$\in$ պատկանելությունը չի շղթայվում</em>։ $A\in B$-ն ասում
 է, որ $A$-ն մեկ մակարդակ ներքև է $B$-ի ներսում՝ $B\in C$-ն ասում է, որ $B$-ն մեկ մակարդակ ներքև է
-$C$-ի ներսում, ուստի $A$-ն այժմ <em>երկու</em> մակարդակ ներքև է $C$-ի ներսում՝ ինչը բոլորովին այլ պնդում
+$C$-ի ներսում, հետևաբար $A$-ն այժմ <em>երկու</em> մակարդակ ներքև է $C$-ի ներսում՝ ինչը բոլորովին այլ պնդում
 է, քան «$A$-ն $C$-ի տարր է»։ Սա տեսնելու ամենապարզ ձևն աշտարակ կառուցելն է, որտեղ յուրաքանչյուր
 բազմությունը ևս մեկ անգամ փաթաթված է ձևավոր փակագծերում։ Դասական աշտարակն է
 $\varnothing,\ \{\varnothing\},\ \{\{\varnothing\}\}$։</p>
@@ -272,7 +324,7 @@ $$A=\varnothing,\qquad B=\{\varnothing\},\qquad C=\{\{\varnothing\}\}.$$
 
 <div class="step"><h3><span class="step-num">Քայլ 3</span> - Ստուգենք չպատկանելությունը</h3>
 <p>$C=\{\{\varnothing\}\}$-ն ունի մեկ տարր՝ $\{\varnothing\}$։ Արդյո՞ք $A=\varnothing$-ն այդ տարրն է։
-Ոչ, $\varnothing\neq\{\varnothing\}$։ Ուստի $A\notin C$։ $\checkmark$</p>
+Ոչ, $\varnothing\neq\{\varnothing\}$։ Հետևաբար, $A\notin C$։ $\checkmark$</p>
 </div>
 
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
@@ -311,10 +363,16 @@ $A,C$ զույգի դեպքում $\varnothing$-ն երևում է $C$-ի ներ
 յուրաքանչյուր $\subset$ խիստ է։</p>
 </div>
 
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Կառուցեք շղթան ձախից աջ։ $A\subset B$-ի համար վերցրեք որևէ $A$ և ավելացրեք նրան մեկ նոր տարր։ $B\in C$-ի
+համար $B$ բազմությունն ամբողջությամբ պետք է լինի $C$-ի թվարկված տարրերից մեկը։ $C\subset D$-ի և $D\subset E$-ի
+համար կրկին բավական է ավելացնել մեկական նոր տարր։</p>
+</div></details>
+
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
 <p>Գլուխկոտրուկը խառնում է երկու տարբեր հարաբերություն մեկ շղթայում, և միակ անհարմար օղակը միջինն է՝
-$B\in C$՝ այստեղ $B$-ն պետք է հանդես գա որպես $C$-ի ամբողջական <em>տարր</em>, ոչ թե ենթաբազմություն։ Ուստի
+$B\in C$՝ այստեղ $B$-ն պետք է լինի $C$-ի ամբողջական <em>տարր</em>, ոչ թե ենթաբազմություն։ Ուստի
 կազմակերպենք $C$-ն այնպես, որ նրա թվարկված տարրերից մեկը հենց $B$ բազմությունը լինի։ Մնացած ամեն ինչ
 սովորական է՝ $X\subset Y$ խիստ պարունակման համար պարզապես վերցնենք $Y$-ը որպես $X$՝ մեկ լրացուցիչ տարր
 ավելացրած։ Նախ կառուցենք $A\subset B$, ապա $C$-ն դարձնենք բազմություն, որ <em>պարունակում է $B$-ն որպես
@@ -322,7 +380,7 @@ $B\in C$՝ այստեղ $B$-ն պետք է հանդես գա որպես $C$-ի �
 </div>
 
 <div class="step"><h3><span class="step-num">Քայլ 1</span> - Խիստ $A\subset B$ զույգը</h3>
-<p>Վերցնենք $A=\{1\}$ և $B=\{1,2\}$։ Այդ դեպքում $A\subseteq B$ և $A\neq B$, ուստի $A\subset B$ (խիստ)։ $\checkmark$</p>
+<p>Վերցնենք $A=\{1\}$ և $B=\{1,2\}$։ Այդ դեպքում $A\subseteq B$ և $A\neq B$, հետևաբար $A\subset B$ (խիստ)։ $\checkmark$</p>
 </div>
 
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - $B$-ն դնենք որպես $C$-ի տարր</h3>
@@ -340,11 +398,31 @@ $$\begin{gathered}D=\{\,\{1,2\},\,3,\,4\,\},\\ E=\{\,\{1,2\},\,3,\,4,\,5\,\}.\en
 $5\in E\setminus D$)։ Երկուսն էլ խիստ։ $\checkmark$</p>
 </div>
 
+<div class="check"><span class="check-label">Ստուգում։</span> Համոզվենք, որ $B\in C$ օղակը պատկանելություն է, ոչ
+թե պարունակում՝ $B=\{1,2\}\not\subseteq C$, քանի որ $1\notin C$ ($C$-ի տարրերն են միայն $\{1,2\}$-ը և $3$-ը)։
+Մնացած օղակները՝ $A\subseteq B$, քանի որ $1\in B$, և $2\in B\setminus A$. $C\subseteq D\subseteq E$, քանի որ ամեն
+քայլում միայն ավելացրինք տարր, և $4\in D\setminus C$, $5\in E\setminus D$։ $\checkmark$</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Այստեղ $B\in C$, բայց $B\not\subseteq C$։ Կարո՞ղ է որևէ բազմություն միաժամանակ լինել
+մեկ այլ բազմության և՛ տարր, և՛ ենթաբազմություն։</p>
+<div class="predict-opts">
+<button class="btn" type="button">Ոչ, $\in$-ը և $\subseteq$-ն իրար բացառում են</button>
+<button class="btn" type="button" data-ok>Այո, օրինակ՝ $\{1\}$-ը և $\{1,\{1\}\}$-ը</button>
+<button class="btn" type="button">Այո, բայց միայն դատարկ բազմությունը</button>
+</div>
+<div class="predict-why">Այո։ $\{1\}\in\{1,\{1\}\}$, քանի որ $\{1\}$-ը թվարկված է, և $\{1\}\subseteq\{1,\{1\}\}$, քանի որ նրա
+միակ տարրը՝ $1$-ը, նույնպես թվարկված է։ $\in$-ը և $\subseteq$-ը տարբեր հարցեր են, ոչ թե հակադիր, հետևաբար
+առաջին պատասխանը սխալ է։ Դատարկ բազմությունը նույնպես օրինակ է ($\varnothing\in\{\varnothing\}$ և
+$\varnothing\subseteq\{\varnothing\}$), բայց ոչ միակը։ Ստուգեք <a href="#w-member">Խնդիր 2-ի վանդակում</a>՝ գրեք
+$x=\{1\}$ և $S=\{1,\{1\}\}$։</div>
+</div>
+
 <p><strong>Շղթան՝ $\in$-ը և $\subset$-ը տարբեր կերպ գծված։</strong> Այստեղ, ի տարբերություն Խնդիր 7-ի
 արկղերի, օվալներն ու արկղերը <em>տիրույթներ</em> են, որոնց ներսում, ինչպես Վեննի դիագրամում, ընկած են
 բազմության տարրերը (միակ բացառությունը $C$-ի ներսի $B$ օվալն է, որը մեկ տարր է)։ Ներդրումը (մեկ օվալ/արկղ մյուսի ներսում) նշանակում է $\subseteq$. բազմությունը՝ որպես
-մեկ <em>առանձին տարր</em> ցանկում, նշանակում է $\in$։ Միակ $\in$ օղակն այն է, որ $B$-ն հանդես է գալիս որպես
-$C$-ի մեկ տարր՝</p>
+մեկ <em>առանձին տարր</em> ցանկում, նշանակում է $\in$։ Միակ $\in$ օղակն այն է, որ $B$-ն
+$C$-ի տարրերից մեկն է՝</p>
 
 <figure class="fig">
 <svg viewBox="0 0 366 120" width="366" role="img" aria-label="Ձախում B = {1,2} օվալը, որի ներսում A = {1} օվալը. աջում C = {B, 3} արկղը, որի մեջ B-ն մեկ տարր է">
@@ -393,9 +471,9 @@ $C$-ի մեկ տարր՝</p>
 $A=\{1\}$, $B=\{1,2\}$, $C=\{\{1,2\},3\}$, $D=\{\{1,2\},3,4\}$, $E=\{\{1,2\},3,4,5\}$։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> «$B\in C$» հարկադրելու համար թվարկեք $B$-ն ինքը որպես $C$-ի տարրերից մեկը
+<p><strong>Ընդհանուր հնարք՝</strong> «$B\in C$» ստանալու համար թվարկեք $B$-ն ինքը որպես $C$-ի տարրերից մեկը
 (մի՛ միաձուլեք $B$-ի տարրերը $C$-ի մեջ՝ դա կտար $B\subseteq C$)։ <em>Խիստ</em> $X\subset Y$ պարունակում
-հարկադրելու համար վերցրեք $Y=X\cup\{\text{մեկ նոր տարր}\}$։</p>
+ստանալու համար վերցրեք $Y=X\cup\{\text{մեկ նոր տարր}\}$։</p>
 </div>
 </div><!-- /solution -->
 </div>
@@ -416,6 +494,11 @@ C=\{x\in\Z:x\lt 10\}.
 <p>Նկարագրեք $\overline{A}$, $\overline{A\cup B}$, $\overline{C}$, $A\setminus C$,
 $C\setminus(A\cup B)$ բազմությունները։</p>
 </div>
+
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Նախ գրեք $A$-ի, $B$-ի և $C$-ի մի քանի տարր։ Ուշադրություն դարձրեք, որ $y$-ը <em>դրական</em> ամբողջ թիվ է, իսկ
+լրացումը վերցվում է $U=\Z$-ում, ոչ թե միայն դրական թվերի մեջ։</p>
+</div></details>
 
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
@@ -448,7 +531,7 @@ $C\setminus(A\cup B)$ բազմությունները։</p>
       $\ge 10$՝ $\{10,12,14,\dots\}$։</li>
   <li>$C\setminus(A\cup B)$՝ $10$-ից ներքև ամբողջ թվեր՝ բոլոր դրական ամբողջ թվերը հեռացրած, թողնելով ոչ
       դրականները՝ $\{0,-1,-2,\dots\}=\{x\in\Z:x\le 0\}$։ Սա <em>նույն</em> բազմությունն է, ինչ
-      $\overline{A\cup B}$-ն (յուրաքանչյուր $x\le 0$ $10$-ից ներքև է, ուստի $\Z^{+}$-ը $\Z$-ից կամ
+      $\overline{A\cup B}$-ն (յուրաքանչյուր $x\le 0$ $10$-ից ներքև է, հետևաբար $\Z^{+}$-ը $\Z$-ից կամ
       $\{x\lt 10\}$-ից հեռացնելը թողնում է նույն բանը)։</li>
 </ul>
 </div>
@@ -460,20 +543,41 @@ $A\setminus C$-ն սկսում է $10$-ից. $\overline{C}$-ն բոլոր $x\ge1
 բոլոր հինգ նկարագրությունները և $C\setminus(A\cup B)=\overline{A\cup B}$ հավասարությունը։ $\checkmark$
 </div>
 
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Պատկանո՞ւմ է արդյոք $0$-ն $A=\{x\in\Z:\exists y\in\Z^{+},\ x=2y\}$
+բազմությանը։</p>
+<div class="predict-opts"><button class="btn" type="button">Այո, $0$-ն զույգ է</button><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Այո, քանի որ $0=2\cdot0$</button></div>
+<div class="predict-why">Ոչ։ $0=2y$ հավասարումից $y=0$, իսկ $0\notin\Z^{+}=\{1,2,3,\dots\}$։ Հետևաբար, $0\notin A$, և $0$-ն
+ընկնում է $\overline{A}$-ի և $\overline{A\cup B}$-ի մեջ։ «$0$-ն զույգ է» ճիշտ է, բայց $A$-ն բոլոր զույգ թվերը չեն,
+այլ միայն <em>դրական</em> զույգերը։ $0=2\cdot0$ գրառման մեջ էլ $y=0$, որը դրական չէ։ Ստուգեք ներքևում՝ ընտրեք
+$x=0$։</div>
+</div>
+
 <div class="widget" id="w-line">
   <div class="widget-head">Բազմությունները թվային առանցքի վրա</div>
-  <p class="widget-hint">Սեղմեք բազմություններից մեկի վրա՝ նրա տարրերը (հաշված անմիջապես $A$, $B$, $C$ սահմանող
-  պայմաններից) կնշվեն առանցքի վրա կանաչով, իսկ ներքևում կերևա պատասխանի նկարագրությունը։ Եզրի կանաչ
-  կետերը նշանակում են, որ բազմությունը շարունակվում է պատուհանից դուրս։ Ձևավոր փակագիծը ներքևում նշում է
-  $\overline{A\cup B}=C\setminus(A\cup B)=\{x\le 0\}$ բազմության կետերը։</p>
+  <p class="widget-hint">Սրանք խնդիր 16-ի հինգ բազմություններն են։ Սեղմեք բազմություններից մեկի վրա՝ նրա
+  տարրերը (հաշված անմիջապես $A$, $B$, $C$ սահմանող պայմաններից) կնշվեն առանցքի վրա կանաչով, իսկ ներքևում
+  կերևա պատասխանի նկարագրությունը։ Եզրի կանաչ կետերը նշանակում են, որ բազմությունը շարունակվում է պատուհանից
+  դուրս։ Ձևավոր փակագիծը ներքևում նշում է $\overline{A\cup B}=C\setminus(A\cup B)=\{x\le 0\}$ բազմության
+  կետերը։ Ապա ընտրեք մեկ $x$ թիվ (− և + կոճակներով կամ առանցքի վրա սեղմելով)՝ կտեսնեք, թե $A$, $B$, $C$-ի
+  սահմանումներից ինչպես է հետևում, թե $x$-ը որ բազմություններին է պատկանում։ Նկատեք $x=0$-ն։</p>
   <div class="p1-line"></div>
   <div class="p1-legend">
     <span><span class="c-red">●</span> դրական զույգեր $A$</span>
     <span><span class="c-blue">○</span> դրական կենտեր $B$</span>
     <span><span class="c-green">●</span> ընտրված բազմության տարրերը</span>
+    <span><span class="c-orange">◯</span> ընտրված $x$-ը</span>
   </div>
   <div class="chips" data-out="sets"></div>
   <div class="widget-out" data-out="members"></div>
+  <div class="widget-controls">
+    <span>$x=$</span>
+    <button class="btn" type="button" data-act="dec" aria-label="x-ը փոքրացնել 1-ով">−</button>
+    <strong class="p1-xval" data-out="x"></strong>
+    <button class="btn" type="button" data-act="inc" aria-label="x-ը մեծացնել 1-ով">+</button>
+    <button class="btn" type="button" data-act="zero">$x=0$</button>
+  </div>
+  <div class="widget-out" data-out="probe"></div>
 </div>
 
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
@@ -482,7 +586,7 @@ $\overline{C}=\{10,11,12,\dots\}$. $A\setminus C=\{10,12,14,\dots\}$.
 $C\setminus(A\cup B)=\{x\le 0\}\ (=\overline{A\cup B})$։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> նախ յուրաքանչյուր բազմություն սահմանող գրառումը վերածեք մեկ պարզ նախադասության
+<p><strong>Ընդհանուր հնարք՝</strong> նախ յուրաքանչյուր բազմություն սահմանող գրառումը վերածեք մեկ պարզ նախադասության
 («դրական զույգեր», «$10$-ից ներքև ամբողջ թվեր»), նկատեք կառուցվածքային փաստը, որ ամեն ինչ պարզ է դարձնում
 ($A\cup B=\Z^{+}$), ապա կարդացեք լրացումները որպես «$U$ հանած բազմությունը» և տարբերությունները՝ որպես
 «պահել, ապա հեռացնել»։ Թվային առանցքի վրա ամեն ինչ դառնում է տեսանելի։</p>
@@ -509,15 +613,21 @@ $C\setminus(A\cup B)=\{x\le 0\}\ (=\overline{A\cup B})$։</div>
 </ul>
 </div>
 
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Չորս պայմանի համարժեքության համար բավական է ապացուցել չորս հետևություն, որոնք փակ ցիկլ են կազմում։ Տող 2-ում
+և Տող 3-ում գրեք յուրաքանչյուր պայմանը մեկ $x$ տարրի համար՝ «եթե $x\in A$, ապա ...» կամ «եթե $x\notin A$, ապա
+...» տեսքով։</p>
+</div></details>
+
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
 <p>«Այս չորս պայմանները համարժեք են» նշանակում է՝ դրանցից որևէ մեկից բխում են մնացած բոլորը։ Բոլոր
 $4\cdot 3=12$ հետևություններն առանձին ապացուցելն ավելորդ աշխատանք է։ Արդյունավետ հնարքը
 <strong>հետևությունների ցիկլն</strong> է՝ ապացուցենք</p>
 $$P_1\Rightarrow P_2\Rightarrow P_3\Rightarrow P_4\Rightarrow P_1.$$
-<p>Հենց ցիկլը փակվում է, կարելի է ցանկացած պայմանից հասնել ցանկացած ուրիշին՝ քայլելով օղակի շուրջ, ուստի
+<p>Հենց ցիկլը փակվում է, կարելի է ցանկացած պայմանից հասնել ցանկացած ուրիշին՝ քայլելով օղակի շուրջ, հետևաբար
 բոլոր չորսը համարժեք են։ Տող 1-ը ցույց ենք տալիս ամբողջությամբ այս ձևով։ Տող 2-ի և 3-ի համար տողի երեք
-պայմանները, մեկ $x$ տարրի մակարդակում, մեկ հետևության երեք վերաձևակերպումներ են (Տող 2-ի համար դա
+պայմանները, մեկ $x$ տարրի մակարդակում, մեկ հետևության երեք վերաձևակերպում են (Տող 2-ի համար դա
 «$x\in A\Rightarrow x\notin B$» է. Տող 3-ի համար՝ «$x\notin A\Rightarrow x\in B$»), ուստի մեկ կարճ
 տարրային փաստարկը փակում է յուրաքանչյուր տողը միանգամից։</p>
 </div>
@@ -530,49 +640,49 @@ A\subseteq B&\Rightarrow A\cup B=B\Rightarrow A\cap B=A\\
 
 <div class="step"><h3><span class="step-num">(ա)</span> $A\subseteq B\Rightarrow A\cup B=B$</h3>
 <p>Միշտ $B\subseteq A\cup B$։ Հակառակը, եթե $x\in A\cup B$, ապա $x\in A$ կամ $x\in B$. առաջին դեպքում
-$A\subseteq B$-ն տալիս է $x\in B$, երկրորդում $x\in B$ արդեն։ Ուստի $A\cup B\subseteq B$։ Երկու
+$A\subseteq B$-ն տալիս է $x\in B$, երկրորդում $x\in B$ արդեն։ Հետևաբար, $A\cup B\subseteq B$։ Երկու
 պարունակումները տալիս են $A\cup B=B$։</p>
 </div>
 <div class="step"><h3><span class="step-num">(բ)</span> $A\cup B=B\Rightarrow A\cap B=A$</h3>
 <p>$A\cup B=B$-ից և $A\subseteq A\cup B$-ից ստանում ենք $A\subseteq B$։ Ապա ցանկացած $x\in A$-ի համար նաև
 $x\in B$, ուստի $x\in A\cap B$. հետևաբար $A\subseteq A\cap B$։ Հակառակը՝ $A\cap B\subseteq A$, միշտ
-ճիշտ է։ Ուստի $A\cap B=A$։</p>
+ճիշտ է։ Այսպիսով՝ $A\cap B=A$։</p>
 </div>
 <div class="step"><h3><span class="step-num">(գ)</span> $A\cap B=A\Rightarrow \overline{B}\subseteq\overline{A}$</h3>
 <p>$A\cap B=A$-ն ասում է $A\subseteq B$ ($A$-ի յուրաքանչյուր տարր $A\cap B$-ում է, հետևաբար $B$-ում)։ Հիմա
 վերցնենք $x\in\overline{B}$, այսինքն՝ $x\notin B$։ Եթե $x$-ը $A$-ում լիներ, ապա $x\in B$՝ $A\subseteq B$-ով՝
-հակասություն։ Ուստի $x\notin A$, այսինքն՝ $x\in\overline{A}$։ Այսպիսով $\overline{B}\subseteq\overline{A}$։</p>
+հակասություն։ Հետևաբար, $x\notin A$, այսինքն՝ $x\in\overline{A}$։ Այսպիսով՝ $\overline{B}\subseteq\overline{A}$։</p>
 </div>
 <div class="step"><h3><span class="step-num">(դ)</span> $\overline{B}\subseteq\overline{A}\Rightarrow A\subseteq B$</h3>
 <p>Այստեղ $A\subseteq B$-ն ստացվում է $\overline{B}\subseteq\overline{A}$ պայմանից կոնտրապոզիցիայով։ Վերցնենք $x\in A$։ Ապա $x\notin\overline{A}$. քանի որ
-$\overline{B}\subseteq\overline{A}$, նաև $x\notin\overline{B}$, այսինքն՝ $x\in B$։ Այսպիսով
+$\overline{B}\subseteq\overline{A}$, նաև $x\notin\overline{B}$, այսինքն՝ $x\in B$։ Այսպիսով՝
 $A\subseteq B$։</p>
 </div>
 <p>Ցիկլը փակ է, ուստի Տող 1-ի բոլոր չորս պայմանները համարժեք են։ $\blacksquare$</p>
 
 <h3>Տող 2 - $A\cap B=\varnothing\Leftrightarrow A\subseteq\overline{B}\Leftrightarrow B\subseteq\overline{A}$</h3>
-<p>Կարդանք յուրաքանչյուր պայմանը մեկ $x$ տարրի համար՝</p>
+<p>Կարդանք յուրաքանչյուր պայմանը մեկ $x$ տարրի համար։ $A\cap B=\varnothing$ նշանակում է, որ ոչ մի $x$ չի
+պատկանում երկուսին, այսինքն՝ ամեն $x$-ի համար ճիշտ է «$x\in A\Rightarrow x\notin B$» հետևությունը՝</p>
 $$\begin{aligned}
 A\cap B=\varnothing
-&\ \Longleftrightarrow\ \text{ոչ մի }x\text{ չի պատկանում երկուսին}\\
 &\ \Longleftrightarrow\ \bigl(x\in A\Rightarrow x\notin B\bigr)\\
 &\ \Longleftrightarrow\ \bigl(x\in A\Rightarrow x\in\overline{B}\bigr)\\
 &\ \Longleftrightarrow\ A\subseteq\overline{B}.
 \end{aligned}$$
 <p>Միջին «$x\in A\Rightarrow x\notin B$» հետևությունը սիմետրիկ է $A,B$-ի նկատմամբ (այն համարժեք է
 «$x\in B\Rightarrow x\notin A$»-ին, այսինքն՝ $x\in B\Rightarrow x\in\overline{A}$, այսինքն՝
-$B\subseteq\overline{A}$)։ Ուստի բոլոր երեքը համարժեք են։ $\blacksquare$</p>
+$B\subseteq\overline{A}$)։ Այսպիսով՝ բոլոր երեքը համարժեք են։ $\blacksquare$</p>
 
 <h3>Տող 3 - $A\cup B=U\Leftrightarrow \overline{A}\subseteq B\Leftrightarrow \overline{B}\subseteq A$</h3>
-<p>Կրկին տարրի մակարդակում՝</p>
+<p>Կրկին տարրի մակարդակում. $A\cup B=U$ նշանակում է, որ ամեն $x$ պատկանում է $A$-ին կամ $B$-ին, այսինքն՝
+ամեն $x$-ի համար ճիշտ է «$x\notin A\Rightarrow x\in B$» հետևությունը՝</p>
 $$\begin{aligned}
 A\cup B=U
-&\ \Longleftrightarrow\ \text{ամեն }x\text{ }A\text{-ում է կամ }B\text{-ում}\\
 &\ \Longleftrightarrow\ \bigl(x\notin A\Rightarrow x\in B\bigr)\\
 &\ \Longleftrightarrow\ \overline{A}\subseteq B.
 \end{aligned}$$
 <p>«$x\notin A\Rightarrow x\in B$» հետևությունը «$x\notin B\Rightarrow x\in A$»-ի կոնտրապոզիցիան է, որը
-$\overline{B}\subseteq A$ է։ Ուստի բոլոր երեքը համարժեք են։ $\blacksquare$</p>
+$\overline{B}\subseteq A$ է։ Հետևաբար, բոլոր երեքը համարժեք են։ $\blacksquare$</p>
 
 <div class="check"><span class="check-label">Ստուգում։</span> $5$-տարրանոց ունիվերսալ բազմության $A,B$ ենթաբազմությունների բոլոր զույգերի վրա ուղիղ
 համակարգչային ստուգումը հաստատում է, որ յուրաքանչյուր տողի ներսում պայմանները միաժամանակ ճիշտ են կամ
@@ -672,6 +782,27 @@ $\overline{B}\subseteq A$ է։ Ուստի բոլոր երեքը համարժեք
 </div>
 </figure>
 
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Տող 1-ի պայմանները ճիշտ են այն և միայն այն դեպքում, երբ Վեննի դիագրամի մի
+որոշակի մաս դատարկ է։ Ո՞ր մասը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$A\setminus B$</button><button class="btn" type="button">$B\setminus A$</button><button class="btn" type="button">$A\cap B$</button></div>
+<div class="predict-why">$A\setminus B$։ $A\subseteq B$ նշանակում է, որ $A$-ի ոչ մի տարր $B$-ից դուրս չէ, այսինքն՝
+$A\setminus B=\varnothing$։ $B\setminus A=\varnothing$ կնշանակեր $B\subseteq A$, իսկ $A\cap B=\varnothing$-ն Տող 2-ի
+պայմանն է։ Նույն ձևով Տող 3-ը կախված է միայն $A\cup B$-ից դուրս մասից։ Ստուգեք ներքևում։</div>
+</div>
+
+<div class="widget" id="w-rows">
+  <div class="widget-head">Երեք տող՝ երեք դատարկ մաս</div>
+  <p class="widget-hint">Երկու շրջանագիծը $U$-ն բաժանում են չորս մասի։ Սեղմեք մասի կոճակը կամ նկարի մասը՝ այն
+  դատարկ դարձնելու կամ նրա մեջ տարր դնելու համար (կապույտ կոճակ՝ մասում տարր կա, $\varnothing$՝ մասը դատարկ է)։
+  Աղյուսակը ցույց է տալիս խնդիր 20-ի տասը պայմանները՝ հաշված այդ կոնկրետ բազմությունների վրա։ Նկատեք, որ
+  յուրաքանչյուր տողի պայմանները միշտ միասին են ճիշտ կամ սխալ, և ամեն տող կախված է միայն մեկ մասից։</p>
+  <div class="widget-controls" data-out="regions"></div>
+  <div class="p1-venn1" data-out="svg"></div>
+  <div class="table-wrap"><table class="tbl p1-rows" data-out="table"></table></div>
+  <div class="widget-out" data-out="msg"></div>
+</div>
+
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
 Յուրաքանչյուր տողի բոլոր պայմանները համարժեք են. Տող 1-ն ապացուցվում է
 $A\subseteq B$ $\Rightarrow$ $A\cup B=B$ $\Rightarrow$ $A\cap B=A$ $\Rightarrow$ $\overline{B}\subseteq\overline{A}$
@@ -679,10 +810,10 @@ $\Rightarrow$ $A\subseteq B$ հետևությունների ցիկլով, իսկ
 երեք ձևով։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> մի քանի պայմանի համարժեքությունը ցույց տալու համար մի՛ ապացուցեք
+<p><strong>Ընդհանուր հնարք՝</strong> մի քանի պայմանի համարժեքությունը ցույց տալու համար մի՛ ապացուցեք
 յուրաքանչյուր զույգային հետևություն՝ ապացուցեք մեկ <em>ցիկլ</em> $P_1\Rightarrow P_2\Rightarrow\cdots\Rightarrow
 P_n\Rightarrow P_1$։ Լրացում ներառող համարժեքությունները հաճախ ամենապարզն են <em>կոնտրապոզիցիայով</em>
-($\overline{B}\subseteq\overline{A}$-ն պարզապես $A\subseteq B$-ն է հակառակ կարդացած)։</p>
+($\overline{B}\subseteq\overline{A}$-ն $A\subseteq B$-ն է հակառակ կարդացած)։</p>
 </div>
 </div><!-- /solution -->
 </div>
@@ -702,6 +833,12 @@ P_n\Rightarrow P_1$։ Լրացում ներառող համարժեքությու
 </ul>
 </div>
 
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Վերցրեք կամայական $x$ և գրեք, թե ինչ է նշանակում $x$-ի պատկանելը յուրաքանչյուր կողմին՝ $\cup$, $\cap$,
+$\setminus$ նշանները փոխարինելով «կամ», «և», «և ոչ» բառերով, իսկ $x\in X\symd Y$-ը՝ «$x$-ը $X$, $Y$-ից ճիշտ մեկում
+է» նախադասությամբ։ (11)-ում առանձին դիտարկեք $x\in A$ և $x\notin A$ դեպքերը։</p>
+</div></details>
+
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
 <p>Բազմությունների նույնությունների միակ հուսալի գործիքը <strong>տարր առ տարր ապացույցն</strong> է՝ $X=Y$
@@ -716,11 +853,12 @@ P_n\Rightarrow P_1$։ Լրացում ներառող համարժեքությու
 <h3>Մաս (3) - $\setminus C$-ի բաշխումը $\cup$-ի վրա</h3>
 <p>Տարր առ տարր՝</p>
 $$\begin{aligned}
-x\in(A\cup B)\setminus C
-&\iff (x\in A\ \text{կամ}\ x\in B)\ \text{և}\ x\notin C\\
-&\iff (x\in A\ \text{և}\ x\notin C)\ \text{կամ}\ (x\in B\ \text{և}\ x\notin C)\\
-&\iff x\in(A\setminus C)\ \text{կամ}\ x\in(B\setminus C)\\
-&\iff x\in(A\setminus C)\cup(B\setminus C).
+&x\in(A\cup B)\setminus C\\
+\iff{}&(x\in A\ \text{կամ}\ x\in B)\ \text{և}\ x\notin C\\
+\iff{}&(x\in A\ \text{և}\ x\notin C)\\
+&\quad\text{կամ}\ (x\in B\ \text{և}\ x\notin C)\\
+\iff{}&x\in(A\setminus C)\ \text{կամ}\ x\in(B\setminus C)\\
+\iff{}&x\in(A\setminus C)\cup(B\setminus C).
 \end{aligned}$$
 <p class="muted">(Երկրորդ անցումում «և»-ը բաշխվում է «կամ»-ի վրա։)</p>
 <p>Քանի որ սա ճիշտ է յուրաքանչյուր $x$-ի համար, երկու բազմությունները հավասար են։ $\blacksquare$</p>
@@ -731,17 +869,15 @@ x\in(A\cup B)\setminus C
 <p><em>Դեպք $x\notin A$.</em> Այդ դեպքում $x\notin A\cap(B\symd C)$ (ձախ կողմ)։ Նաև $x\notin A\cap B$ և
 $x\notin A\cap C$, ուստի $x$-ը <em>ոչ</em> $A\cap B$-ում է, ոչ $A\cap C$-ում, հետևաբար
 $x\notin(A\cap B)\symd(A\cap C)$ (աջ կողմ)։ Երկու կողմերն էլ բացառում են $x$-ը։ $\checkmark$</p>
-<p><em>Դեպք $x\in A$.</em> Այդ դեպքում $x\in A\cap B\iff x\in B$ և $x\in A\cap C\iff x\in C$։ Հետևաբար</p>
+<p><em>Դեպք $x\in A$.</em> Այդ դեպքում $x\in A\cap B\iff x\in B$ և $x\in A\cap C\iff x\in C$։ Հետևաբար,
+$x$-ը $A\cap B$, $A\cap C$ բազմություններից ճիշտ մեկում է այն և միայն այն դեպքում, երբ $B$, $C$-ից ճիշտ
+մեկում է ($x\in A$-ով սա ավտոմատ է)՝</p>
 $$\begin{aligned}
-x\in(A\cap B)\symd(A\cap C)
-&\iff x\text{-ը ճիշտ մեկում է}\ A\cap B,\ A\cap C\text{-ից}\\
-&\iff x\text{-ը ճիշտ մեկում է}\ B,\ C\text{-ից}\\
-&\qquad\text{[}x\in A\text{-ով ավտոմատ]}\\
-&\iff x\in B\symd C\\
-&\iff x\in A\cap(B\symd C)\\
-&\qquad\text{[քանի որ }x\in A\text{]։}
+&x\in(A\cap B)\symd(A\cap C)\\
+\iff{}&x\in B\symd C\\
+\iff{}&x\in A\cap(B\symd C).
 \end{aligned}$$
-<p>Ուստի $\{x\in A\}$-ի վրա երկու կողմերը նույնպես համընկնում են։ Քանի որ երկու դեպքերն էլ համընկնում են,
+<p>Վերջին քայլում օգտվեցինք $x\in A$-ից։ Ուստի $\{x\in A\}$-ի վրա երկու կողմերը նույնպես համընկնում են։ Քանի որ երկու դեպքերն էլ համընկնում են,
 բազմությունները հավասար են։ $\blacksquare$</p>
 
 <div class="check"><span class="check-label">Ստուգում։</span> $4$-տարրանոց հիմքի $A,B,C$ ենթաբազմությունների բոլոր եռյակների վրա ուղիղ թվարկումը
@@ -826,16 +962,26 @@ x\in(A\cap B)\symd(A\cap C)
 համընկնում է «$A\cap B,A\cap C$-ից ճիշտ մեկին»։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> ապացուցեք $X=Y$ տարր առ տարր՝ բացեք $\cup,\cap,\setminus$-ը
+<p><strong>Ընդհանուր հնարք՝</strong> ապացուցեք $X=Y$ տարր առ տարր՝ բացեք $\cup,\cap,\setminus$-ը
 «կամ / և / և ոչ»-ի և պարզեցրեք տրամաբանությունը։ $\symd$-ով ամեն ինչի համար փոխարինեք այն «երկուսից
 ճիշտ մեկում»-ով (զույգության պնդում), և եթե $A$-ի նման փոփոխականը հանդես է գալիս երկու կողմից, բաժանեք
 $x\in A$ և $x\notin A$ դեպքերի։</p>
 </div>
 
 <h3>Տարր առ տարր ապացույցը՝ Վեննի դիագրամի ութ մասով</h3>
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Երեք բազմության նույնությունը ստուգելու համար քանի՞ «տեսակի» տարր պետք է
+դիտարկել։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>$8$</button><button class="btn" type="button">$3$՝ մեկական ամեն բազմությունից</button><button class="btn" type="button">անվերջ շատ, քանի որ $U$-ն կարող է անվերջ լինել</button></div>
+<div class="predict-why">$8$։ Ամեն $x$ տարրի համար կարևոր է միայն, թե այն պատկանո՞ւմ է $A$-ին, $B$-ին, $C$-ին, թե՞ ոչ,
+իսկ այդպիսի պատասխանների հավաքածուները $2^3=8$ են՝ Վեննի դիագրամի $8$ մասը։ Նույն մասում ընկած տարրերը նույն
+կերպ են պատկանում $A$, $B$, $C$-ից $\cup$, $\cap$, $\setminus$, $\symd$ գործողություններով կառուցված ցանկացած
+բազմությանը, հետևաբար $8$ տողի ստուգումը լրիվ ապացույց է, որքան էլ մեծ լինի $U$-ն։ $3$-ը շրջանագծերի քանակն է, ոչ
+թե մասերի։</div>
+</div>
 <div class="widget" id="w-venn">
   <div class="widget-head">Նույնության երկու կողմերը՝ մաս առ մաս</div>
-  <p class="widget-hint">Ընտրեք նույնությունը։ Երեք շրջանագծով $U$-ն բաժանվում է $8$ մասի, և յուրաքանչյուր մաս
+  <p class="widget-hint">Ընտրեք նույնությունը՝ խնդիր 54-ի մաս (3)-ը կամ (11)-ը։ Երեք շրջանագծով $U$-ն բաժանվում է $8$ մասի, և յուրաքանչյուր մաս
   աղյուսակի մեկ տող է՝ այն ասում է, թե այդ մասում ընկած $x$ տարրը պատկանում է ($1$), թե ոչ ($0$)
   յուրաքանչյուր բազմությանը։ Դա հենց տարր առ տարր ապացույցն է. երկու կողմերը հավասար են, եթե ձախ և աջ
   կողմերի թավ սյունակները համընկնում են բոլոր $8$ տողում (վերջին սյունակում՝ միայն $\checkmark$)։ Սեղմեք
@@ -861,28 +1007,33 @@ $x\in A$ և $x\notin A$ դեպքերի։</p>
 
 <!-- ================================================================== -->
 <details class="sec" id="p58" open>
-<summary><h2>Խնդիր 58 - $A\times B=B\times A$-ն հարկադրում է $A=B$</h2></summary>
+<summary><h2>Խնդիր 58 - $A\times B=B\times A$-ից հետևում է $A=B$</h2></summary>
 <div class="sec-body">
 
 <div class="box problem"><div class="box-title">Խնդիր 58</div>
 <p>Ապացուցեք, որ $A\times B=B\times A$-ից հետևում է $A=B$։</p>
 </div>
 
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Վերցրեք $a\in A$ և զույգ կազմեք $B$-ի որևէ տարրի հետ։ Ի՞նչ է ասում $B\times A$-ին պատկանելն այդ զույգի
+առաջին կոորդինատի մասին։ Եվ ի՞նչ կլինի, եթե $B$-ն դատարկ է։</p>
+</div></details>
+
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
 <p>Արտադրյալի տարրը <em>կարգավորված</em> զույգ է, և կարգն է, որ կրում է տեղեկությունը։ Եթե
 $A\times B=B\times A$, ապա ցանկացած զույգ, որ կարելի է կազմել մի ձևով, պետք է ստացվի նաև մյուս
 ձևով, և $(a,b)\in A\times B$-ի առաջին կոորդինատը $B\times A$-ի զույգերի առաջին կոորդինատի հետ
-համեմատելը հարկադրում է $a\in B$։ $A=B$ բազմությունների հավասարությունն ապացուցելու համար ցույց ենք
+համեմատելով ստանում ենք $a\in B$։ $A=B$ բազմությունների հավասարությունն ապացուցելու համար ցույց ենք
 տալիս երկու պարունակում՝ $A\subseteq B$ և $B\subseteq A$։</p>
 <p>Մեկ կարևոր վերապահում, որ պնդումը լռելյայն ենթադրում է՝ պետք է, որ $A$-ն և $B$-ն <em>ոչ դատարկ</em> լինեն։ Եթե որևէ
 մեկը դատարկ է, երկու արտադրյալներն էլ դատարկ են, և ենթադրությունն ինքնաբերաբար ճիշտ է՝ ոչինչ չասելով,
-ուստի եզրակացությունը կարող է ձախողվել։ Նշում ենք հակաօրինակը, ապա ապացուցում պնդումը (նախատեսված) ոչ
+հետևաբար եզրակացությունը կարող է ձախողվել։ Նշում ենք հակաօրինակը, ապա ապացուցում պնդումը (նախատեսված) ոչ
 դատարկ ենթադրությամբ։</p>
 </div>
 
 <div class="step"><h3><span class="step-num">Քայլ 0</span> - Դատարկ բազմության եզրային դեպքը</h3>
-<p>Վերցնենք $A=\varnothing$ և $B=\{1\}$։ Այդ դեպքում $A\times B=\varnothing$ և $B\times A=\varnothing$, ուստի
+<p>Վերցնենք $A=\varnothing$ և $B=\{1\}$։ Այդ դեպքում $A\times B=\varnothing$ և $B\times A=\varnothing$, որտեղից
 $A\times B=B\times A$-ն ճիշտ է, սակայն $A\neq B$։ Ուստի հետևությունը կարող է ձախողվել միայն երբ $A,B$-ից
 <em>ճիշտ մեկն</em> է դատարկ (եթե երկուսն էլ դատարկ են, այն ճիշտ է տրիվիալ կերպով, քանի որ այդ դեպքում
 $A=B=\varnothing$)՝ այսուհետ ենթադրում ենք $A\neq\varnothing$ և $B\neq\varnothing$՝ միակ դեպքը, որ մնում
@@ -891,15 +1042,15 @@ $A=B=\varnothing$)՝ այսուհետ ենթադրում ենք $A\neq\varnothin
 
 <div class="step"><h3><span class="step-num">Քայլ 1</span> - Ցույց տանք $A\subseteq B$</h3>
 <p>Դիցուք $a\in A$ կամայական է։ Քանի որ $B\neq\varnothing$, ընտրենք ինչ-որ $b\in B$։ Այդ դեպքում
-$(a,b)\in A\times B$։ Ենթադրությամբ $A\times B=B\times A$, ուստի $(a,b)\in B\times A$։ $B\times A$-ի
-տարրն իր <em>առաջին</em> կոորդինատն ունի $B$-ում. այդ առաջին կոորդինատը $a$ է, ուստի $a\in B$։ Քանի որ
+$(a,b)\in A\times B$։ Ենթադրությամբ $A\times B=B\times A$, որտեղից $(a,b)\in B\times A$։ $B\times A$-ի
+տարրն իր <em>առաջին</em> կոորդինատն ունի $B$-ում. այդ առաջին կոորդինատը $a$ է, հետևաբար $a\in B$։ Քանի որ
 $a\in A$-ն կամայական էր, $A\subseteq B$։</p>
 </div>
 
 <div class="step"><h3><span class="step-num">Քայլ 2</span> - Ցույց տանք $B\subseteq A$</h3>
 <p>Սիմետրիկ կերպով, դիցուք $b\in B$ կամայական է։ Քանի որ $A\neq\varnothing$, ընտրենք ինչ-որ $a\in A$։ Այդ
 դեպքում $(a,b)\in A\times B=B\times A$, և $B\times A$-ի տարրն իր <em>երկրորդ</em> կոորդինատն ունի $A$-ում.
-այդ երկրորդ կոորդինատը $b$ է, ուստի $b\in A$։ Հետևաբար $B\subseteq A$։</p>
+այդ երկրորդ կոորդինատը $b$ է, հետևաբար $b\in A$։ Այսպիսով՝ $B\subseteq A$։</p>
 </div>
 
 <div class="step"><h3><span class="step-num">Քայլ 3</span> - Եզրակացնենք</h3>
@@ -911,7 +1062,17 @@ $a\in A$-ն կամայական էր, $A\subseteq B$։</p>
 իսկապես բավարարում է ենթադրությանը $A\neq B$-ով՝ ճիշտ ինչպես նշվեց։ $\checkmark$
 </div>
 
-<p><strong>Ինչո՞ւ է փոխատեղումը հարկադրում $A=B$։</strong> Գծենք յուրաքանչյուր զույգ որպես կետ։ $A=\{1,2\}$,
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $A=\{1,2\}$, $B=\{1,2,3\}$։ Ճի՞շտ է արդյոք $A\times B=B\times A$ հավասարությունը։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Այո, քանի որ $|A\times B|=|B\times A|=6$</button><button class="btn" type="button">Այո, քանի որ $A\subseteq B$</button></div>
+<div class="predict-why">Ոչ։ $(1,3)\in A\times B$, բայց $(1,3)\notin B\times A$, քանի որ $B\times A$-ի զույգի երկրորդ
+կոորդինատը պետք է $A$-ում լինի, իսկ $3\notin A$։ Տարրերի քանակը միշտ նույնն է՝ $|A\times B|=|A|\cdot|B|=|B\times A|$,
+բայց հավասար քանակից չի հետևում, որ բազմությունները հավասար են։ $A\subseteq B$-ն էլ բավական չէ. երկու ոչ դատարկ
+բազմությունների դեպքում $A\times B=B\times A$-ից հետևում է $A=B$, իսկ այստեղ $A\neq B$։ Ստուգեք ներքևում՝
+երկրորդ պատրաստի օրինակով։</div>
+</div>
+
+<p><strong>Ինչո՞ւ է $A\times B=B\times A$ հավասարությունից հետևում $A=B$։</strong> Գծենք յուրաքանչյուր զույգ որպես կետ։ $A=\{1,2\}$,
 $B=\{3,4,5\}$-ով երկու արտադրյալները՝ $A\times B$-ն (կետեր $(a,b)$-ում) և $B\times A$-ն (կետեր
 $(b,a)$-ում)՝ ընկնում են <em>տարբեր</em> կետերի վրա՝ դրանք գտնվում են հարթության տարբեր մասերում և չեն կարող
 համընկնել, քանի դեռ $A$-ն և $B$-ն նույն թվերի բազմությունը չեն՝</p>
@@ -945,7 +1106,7 @@ $A=B$-ի դեպքում։</p>
 Ոչ դատարկությունն անհրաժեշտ է՝ $A=\varnothing$, $B=\{1\}$ հակաօրինակ է առանց դրա։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> $A=B$ բազմությունների հավասարությունն ապացուցելու համար ապացուցեք
+<p><strong>Ընդհանուր հնարք՝</strong> $A=B$ բազմությունների հավասարությունն ապացուցելու համար ապացուցեք
 $A\subseteq B$ և $B\subseteq A$ առանձին («վերցրեք կամայական տարր, ցույց տվեք, որ այն մյուսում է»)։ Երբ
 արտադրյալներ են հանդես գալիս, կարդացեք այն կոորդինատը, որ կրում է տեղեկությունը՝ $X\times Y$-ի զույգի առաջին
 կոորդինատը $X$-ում է, երկրորդը՝ $Y$-ում։ Եվ միշտ ստուգեք «ակնհայտ» հետևությունը դատարկ բազմության վրա՝
@@ -972,47 +1133,57 @@ $A\subseteq B$ և $B\subseteq A$ առանձին («վերցրեք կամայակ
 </ul>
 </div>
 
+<details class="extra"><summary>Հուշում</summary><div class="inner">
+<p>Վերցրեք կամայական $(x,y)$ զույգ և օգտվեք այն բանից, որ $(x,y)\in X\times Y$ այն և միայն այն դեպքում, երբ
+$x\in X$ և $y\in Y$։ Դրանից հետո մնում է «և», «կամ», «ոչ» բառերի տրամաբանությունը, ինչպես խնդիր 54-ում։</p>
+</div></details>
+
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
-<p>Արտադրյալի յուրաքանչյուր տարր կարգավորված զույգ է $(x,y)$, և «$(x,y)\in X\times Y$»-ն պարզապես
+<p>Արտադրյալի յուրաքանչյուր տարր կարգավորված զույգ է $(x,y)$, և «$(x,y)\in X\times Y$»-ն
 «$x\in X$ <em>և</em> $y\in Y$» կոնյունկցիան է։ Ուստի հենց որ գրում ենք $(x,y)$ և բացում ենք երկու կողմերն
 առանձին $x$-ի և $y$-ի մասին պնդումների, յուրաքանչյուր նույնություն դառնում է ասույթների տրամաբանության
 փոքրիկ կտոր՝ $\cup$-ն «կամ» է $y$-մասի վրա, $\cap$-ն «և», $\setminus$-ը «և ոչ», իսկ ֆիքսված $x\in A$
-արտադրիչը պարզապես անփոփոխ ուղեկցում է։ Ապացուցենք (1), (3), (5)-ն այս կարգավորված-զույգ $\iff$
+արտադրիչն անփոփոխ ուղեկցում է։ Ապացուցենք (1), (3), (5)-ն այս կարգավորված-զույգ $\iff$
 մեթոդով. (2), (4), (6)-ը <em>նույն</em> ապացույցներն են արտադրյալը մյուս կողմում՝ փոխելով կոորդինատների
 դերերը։</p>
 </div>
 
 <h3>(1) Միավորում աջ արտադրիչի վրա</h3>
 $$\begin{aligned}
-(x,y)\in A\times(B\cup C)
-&\iff x\in A\ \text{և}\ (y\in B\ \text{կամ}\ y\in C)\\
-&\iff (x\in A\ \text{և}\ y\in B)\ \text{կամ}\ (x\in A\ \text{և}\ y\in C)\\
-&\qquad\text{[բաշխական օրենք]}\\
-&\iff (x,y)\in A\times B\ \text{կամ}\ (x,y)\in A\times C\\
-&\iff (x,y)\in(A\times B)\cup(A\times C). \qquad\blacksquare
+&(x,y)\in A\times(B\cup C)\\
+\iff{}&x\in A\ \text{և}\ (y\in B\ \text{կամ}\ y\in C)\\
+\iff{}&(x\in A\ \text{և}\ y\in B)\\
+&\quad\text{կամ}\ (x\in A\ \text{և}\ y\in C)\\
+\iff{}&(x,y)\in A\times B\ \text{կամ}\ (x,y)\in A\times C\\
+\iff{}&(x,y)\in(A\times B)\cup(A\times C). \qquad\blacksquare
 \end{aligned}$$
+<p class="muted">(Երկրորդ անցումում «և»-ը բաշխվում է «կամ»-ի վրա՝ բաշխական օրենք։)</p>
 
 <h3>(3) Հատում աջ արտադրիչի վրա</h3>
 <p>Նույն տարր առ տարր դատողությունը «և»-ով՝</p>
 $$\begin{aligned}
-(x,y)\in A\times(B\cap C)
-&\iff x\in A\ \text{և}\ y\in B\ \text{և}\ y\in C\\
-&\iff (x\in A\ \text{և}\ y\in B)\ \text{և}\ (x\in A\ \text{և}\ y\in C)\\
-&\qquad\text{[$x\in A$-ն ազատ կրկնվում է]}\\
-&\iff (x,y)\in(A\times B)\cap(A\times C). \qquad\blacksquare
+&(x,y)\in A\times(B\cap C)\\
+\iff{}&x\in A\ \text{և}\ y\in B\ \text{և}\ y\in C\\
+\iff{}&(x\in A\ \text{և}\ y\in B)\\
+&\quad\text{և}\ (x\in A\ \text{և}\ y\in C)\\
+\iff{}&(x,y)\in(A\times B)\cap(A\times C). \qquad\blacksquare
 \end{aligned}$$
+<p class="muted">(Երկրորդ անցումում $x\in A$-ն ազատ կրկնվում է։)</p>
 
 <h3>(5) Տարբերություն աջ արտադրիչի վրա</h3>
-$$(x,y)\in A\times(B\setminus C)\iff x\in A\ \text{և}\ y\in B\ \text{և}\ y\notin C.$$
+$$\begin{aligned}
+&(x,y)\in A\times(B\setminus C)\\
+\iff{}&x\in A\ \text{և}\ y\in B\ \text{և}\ y\notin C.
+\end{aligned}$$
 <p>Մյուս կողմում,</p>
 $$\begin{aligned}
-(x,y)\in(A\times B)\setminus(A\times C)
-&\iff (x\in A\ \text{և}\ y\in B)\\
-&\qquad\text{և}\ \neg(x\in A\ \text{և}\ y\in C).
+&(x,y)\in(A\times B)\setminus(A\times C)\\
+\iff{}&(x\in A\ \text{և}\ y\in B)\\
+&\quad\text{և}\ \neg(x\in A\ \text{և}\ y\in C).
 \end{aligned}$$
 <p>Բայց առաջին հատվածն արդեն տալիս է $x\in A$, ուստի $\neg(x\in A\ \text{և}\ y\in C)$-ն վերածվում է
-$y\notin C$-ի։ Հետևաբար սա $x\in A$ և $y\in B$ և $y\notin C$ է՝ նույնական վերևի տողին։ Ուստի երկու
+$y\notin C$-ի։ Հետևաբար, սա $x\in A$ և $y\in B$ և $y\notin C$ է՝ նույնական վերևի տողին։ Այսպիսով՝ երկու
 բազմությունները հավասար են։ $\blacksquare$</p>
 
 <h3>(2), (4), (6) - հայելային պատկերները</h3>
@@ -1021,16 +1192,19 @@ $y\notin C$-ի։ Հետևաբար սա $x\in A$ և $y\in B$ և $y\notin C$ է՝ 
 $(y,x)\in X\times A\iff y\in X$ և $x\in A$-ով. ֆիքսված մասն այժմ $x\in A$ է երկրորդ դիրքում, և
 $\cup,\cap,\setminus$-ը բաշխվում են $y$-մասի վրա ճիշտ ինչպես առաջ։ Կոնկրետ՝</p>
 $$\begin{aligned}
-(y,x)\in(B\cup C)\times A &\iff (y\in B\ \text{կամ}\ y\in C)\ \text{և}\ x\in A\\
-  &\iff (y,x)\in(B\times A)\cup(C\times A),\\[4pt]
-(y,x)\in(B\cap C)\times A &\iff y\in B\ \text{և}\ y\in C\ \text{և}\ x\in A\\
-  &\iff (y,x)\in(B\times A)\cap(C\times A),\\[4pt]
-(y,x)\in(B\setminus C)\times A &\iff y\in B\ \text{և}\ y\notin C\ \text{և}\ x\in A\\
-  &\iff (y,x)\in(B\times A)\setminus(C\times A).\qquad\blacksquare
+&(y,x)\in(B\cup C)\times A\\
+\iff{}&(y\in B\ \text{կամ}\ y\in C)\ \text{և}\ x\in A\\
+\iff{}&(y,x)\in(B\times A)\cup(C\times A),\\[6pt]
+&(y,x)\in(B\cap C)\times A\\
+\iff{}&y\in B\ \text{և}\ y\in C\ \text{և}\ x\in A\\
+\iff{}&(y,x)\in(B\times A)\cap(C\times A),\\[6pt]
+&(y,x)\in(B\setminus C)\times A\\
+\iff{}&y\in B\ \text{և}\ y\notin C\ \text{և}\ x\in A\\
+\iff{}&(y,x)\in(B\times A)\setminus(C\times A).\qquad\blacksquare
 \end{aligned}$$
 
 <div class="check"><span class="check-label">Ստուգում։</span> Բոլոր վեց նույնությունները ստուգվեցին $\{0,1,2\}$-ի $A,B,C$ ենթաբազմությունների
-յուրաքանչյուր եռյակի վրա ուղիղ թվարկումով (ուստի յուրաքանչյուր հնարավոր արտադրյալ համեմատվեց վանդակ առ
+յուրաքանչյուր եռյակի վրա ուղիղ թվարկումով (հետևաբար յուրաքանչյուր հնարավոր արտադրյալ համեմատվեց վանդակ առ
 վանդակ)՝ <em>զրո</em> անհամապատասխանություն։ $\checkmark$
 </div>
 
@@ -1065,20 +1239,152 @@ $A\times B$-ն և $A\times C$-ն միասին՝</p>
 </svg>
 </figure>
 
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> (1)-ի համաձայն՝ $A\times(B\cup C)$-ն բաշխվում է։ Ճի՞շտ է արդյոք նաև
+$(A\cup B)\times(A\cup B)=(A\times A)\cup(B\times B)$-ն ամեն $A$, $B$-ի համար։</p>
+<div class="predict-opts"><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Այո, դա նույն բաշխական օրենքն է</button><button class="btn" type="button">Այո, եթե $A$-ն և $B$-ն չհատվող են</button></div>
+<div class="predict-why">Ոչ։ Եթե $a\in A\setminus B$ և $b\in B\setminus A$, ապա $(a,b)$-ն ձախ կողմում է, բայց ոչ
+$A\times A$-ում է, ոչ $B\times B$-ում։ Օրինակ՝ $A=\{1\}$, $B=\{2\}$ և $(1,2)$ զույգը։ (1)-ը և (2)-ը կիրառելով՝ ձախ
+կողմը չորս արտադրյալի միավորում է՝ $(A\times A)\cup(A\times B)\cup(B\times A)\cup(B\times B)$, իսկ աջ կողմում
+$A\times B$-ն և $B\times A$-ն գրված չեն։ Չհատվող ոչ դատարկ $A$, $B$-ի դեպքում այդպիսի զույգ միշտ կա, այնպես որ
+երրորդ պատասխանը ճիշտ հակառակն է։ Ստուգեք ներքևում՝ «ոչ նույնություն» կոճակով։</div>
+</div>
+
+<div class="widget" id="w-prod">
+  <div class="widget-head">Արտադրյալի նույնությունները կետերով</div>
+  <p class="widget-hint">Ընտրեք խնդիր 60-ի նույնություններից մեկը և սեղմեք թվերի վրա՝ $A$, $B$, $C$ բազմությունները
+  փոխելու համար։ Կարմիր կետերը ձախ կողմի զույգերն են, կապույտ օղակները՝ աջ կողմի։ Նույնության դեպքում ամեն
+  կարմիր կետ իր կապույտ օղակի մեջ է, և ամեն օղակ ունի իր կետը, ինչ էլ ընտրեք։ Վերջին կոճակը ոչ նույնություն է.
+  նարնջագույն օղակը ցույց է տալիս զույգ, որը միայն մի կողմում կա։</p>
+  <div class="chips" data-out="ids"></div>
+  <div class="widget-out" data-out="formula"></div>
+  <div class="p1-togs" data-out="togs"></div>
+  <div class="p1-grid"></div>
+  <div class="p1-legend">
+    <span><span class="c-red">●</span> ձախ կողմ</span>
+    <span><span class="c-blue">○</span> աջ կողմ</span>
+    <span><span class="c-orange">◯</span> միայն մի կողմում</span>
+  </div>
+  <div class="widget-out" data-out="verdict"></div>
+</div>
+
 <div class="box answer"><span class="answer-label">Պատասխան՝</span>
 Բոլոր վեցն էլ ճիշտ են։ Աջ-արտադրիչ օրենքները (1),(3),(5) հետևում են
 $(x,y)\in X\times Y\iff x\in X\wedge y\in Y$-ից՝ բաշխելով բազմության գործողությունը $y$-կոորդինատի վրա,
 մինչդեռ $x\in A$-ն ուղեկցում է. ձախ-արտադրիչ օրենքները (2),(4),(6) նույնն են կոորդինատները փոխած։</div>
 
 <div class="box method"><div class="box-title">★ Հիշարժան մեթոդ</div>
-<p><strong>Փոխանցելի տեխնիկա՝</strong> դեկարտյան արտադրյալը բազմությունների հանրահաշիվը վերածում է կոորդինատների
+<p><strong>Ընդհանուր հնարք՝</strong> դեկարտյան արտադրյալը բազմությունների հանրահաշիվը վերածում է կոորդինատների
 տրամաբանության՝ $(x,y)\in X\times Y\iff (x\in X)\wedge(y\in Y)$։ Արտադրյալի նույնություն ապացուցելու
 համար գրեք ընդհանուր $(x,y)$ զույգ, բացեք երկու կողմերը երկու կոորդինատների մասին «և/կամ/ոչ» պնդումների, և
-օգտագործեք սովորական տրամաբանական բաշխում։ Հաստատուն արտադրիչը (այստեղ $A$) պարզապես հանդես է գալիս՝
+օգտագործեք սովորական տրամաբանական բաշխում։ Հաստատուն արտադրիչը (այստեղ $A$) հանդես է գալիս՝
 անփոփոխ, նույն կոորդինատում երկու կողմից։</p>
 </div>
 
 </div><!-- /solution -->
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և ինքնաստուգում</h2></summary>
+<div class="sec-body">
+<h3>Ամբողջ թերթիկը մեկ աղյուսակում</h3>
+<div class="table-wrap"><table class="tbl p1-sum">
+<thead><tr><th>Խնդրի տեսակը</th><th>Մեթոդը</th></tr></thead>
+<tbody>
+<tr><td>Ճի՞շտ է արդյոք $x\in S$-ը <span class="muted">(<a href="#p2">2</a>, <a href="#p7">7</a>)</span></td><td>թվարկել $S$-ի տարրերը և փնտրել $x$-ը նրանց մեջ</td></tr>
+<tr><td>Ճի՞շտ է արդյոք $X\subseteq S$-ը <span class="muted">(<a href="#w-member">2-ի վանդակը</a>)</span></td><td>ստուգել, որ $X$-ի յուրաքանչյուր տարր $S$-ում է ($\varnothing\subseteq S$ միշտ)</td></tr>
+<tr><td>Կառուցել $\in$ և $\subset$ պայմաններով շղթա <span class="muted">(<a href="#p7">7</a>, <a href="#p11">11</a>)</span></td><td>$B\in C$-ի համար $B$-ն դնել $C$-ի մեջ որպես տարր, խիստ $\subset$-ի համար ավելացնել մեկ նոր տարր</td></tr>
+<tr><td>Նկարագրել տրված բազմությունը <span class="muted">(<a href="#p16">16</a>)</span></td><td>սահմանող պայմանը թարգմանել բառերի, լրացումը վերցնել $U$-ում, պատկերել թվային առանցքի վրա</td></tr>
+<tr><td>Ապացուցել մի քանի պայմանի համարժեքություն <span class="muted">(<a href="#p20">20</a>)</span></td><td>հետևությունների ցիկլ, կոնտրապոզիցիա</td></tr>
+<tr><td>Ապացուցել բազմությունների նույնություն <span class="muted">(<a href="#p54">54</a>)</span></td><td>տարր առ տարր, դեպքերի բաժանում, Վեննի դիագրամի $8$ մասը</td></tr>
+<tr><td>Ապացուցել $X=Y$ <span class="muted">(<a href="#p58">58</a>)</span></td><td>երկու պարունակում՝ $X\subseteq Y$ և $Y\subseteq X$</td></tr>
+<tr><td>Դեկարտյան արտադրյալի նույնություն <span class="muted">(<a href="#p60">60</a>)</span></td><td>կամայական $(x,y)$ զույգ և կոորդինատների տրամաբանություն</td></tr>
+</tbody></table></div>
+
+<h3>Ինչ պետք է հիշել</h3>
+<ul>
+  <li>$x\in S$՝ $x$-ը $S$-ի տարրերից մեկն է. $X\subseteq S$՝ $X$-ի յուրաքանչյուր տարր $S$-ում է։ $\varnothing\subseteq S$
+  ամեն $S$-ի համար, իսկ $\varnothing\in S$՝ ոչ միշտ։</li>
+  <li>$\cup\to$«կամ», $\cap\to$«և», $\setminus\to$«և ոչ», $\overline{X}\to$«$X$-ում չէ» ($U$-ի ներսում),
+  $\symd\to$«ճիշտ մեկում»։</li>
+  <li>$X=Y$ այն և միայն այն դեպքում, երբ $X\subseteq Y$ և $Y\subseteq X$։</li>
+  <li>$A\subseteq B\iff A\cup B=B\iff A\cap B=A\iff\overline{B}\subseteq\overline{A}$ (խնդիր 20, Տող 1)։</li>
+  <li>$(x,y)\in X\times Y$ այն և միայն այն դեպքում, երբ $x\in X$ և $y\in Y$. $(a,b)=(c,d)$ այն և միայն այն
+  դեպքում, երբ $a=c$ և $b=d$։ Վերջավոր բազմությունների համար $|X\times Y|=|X|\cdot|Y|$։</li>
+  <li>$\subseteq$-ը փոխանցական է, իսկ $\in$-ը՝ ոչ (խնդիր 7)։</li>
+</ul>
+
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>«$\varnothing\in\{\{\varnothing\}\}$, քանի որ $\varnothing$-ն երևում է ներսում»</strong> (խնդիր 2.3)։ Ներսում
+  է, բայց երկու մակարդակ խորը. $\{\{\varnothing\}\}$-ի միակ տարրը $\{\varnothing\}$-ն է, և $\varnothing\neq\{\varnothing\}$։</li>
+  <li><strong>«$\varnothing\in S$ ամեն $S$-ի համար»։</strong> Ամեն $S$-ի համար ճիշտ է $\varnothing\subseteq S$-ը, իսկ
+  $\varnothing\in S$ միայն այն դեպքում, երբ $\varnothing$-ն $S$-ի թվարկված տարրերից մեկն է (խնդիր 2.3-ում՝ ոչ)։</li>
+  <li><strong>«$A\in B$ և $B\in C$, ուրեմն $A\in C$»։</strong> $\in$-ը փոխանցական չէ. հակաօրինակը խնդիր 7-ն է՝
+  $\varnothing\in\{\varnothing\}\in\{\{\varnothing\}\}$, բայց $\varnothing\notin\{\{\varnothing\}\}$։</li>
+  <li><strong>«$B\in C$-ի համար վերցնենք $C=\{1,2,3\}$»</strong> (խնդիր 11)։ Այդ դեպքում $B=\{1,2\}\subseteq C$,
+  բայց $B\notin C$. $C$-ի տարրերը $1$, $2$, $3$ թվերն են, և $\{1,2\}$ բազմությունը դրանց մեջ չէ։</li>
+  <li><strong>«$0\in A$, քանի որ $0$-ն զույգ է»</strong> (խնդիր 16)։ $A$-ի սահմանման մեջ $y\in\Z^{+}$, իսկ $0=2y$-ից
+  $y=0$։ Հետևաբար, $0\notin A$, և $0\in\overline{A}$։</li>
+  <li><strong>«$\overline{A}=\{1,3,5,\dots\}$»</strong> (խնդիր 16)։ Լրացումը վերցվում է $U=\Z$-ում, և $\overline{A}$-ն
+  պարունակում է նաև բոլոր $x\le0$ ամբողջ թվերը։</li>
+  <li><strong>Ցիկլը չփակել</strong> (խնդիր 20)։ $P_1\Rightarrow P_2\Rightarrow P_3\Rightarrow P_4$ շղթայից չի հետևում,
+  որ $P_4$-ից կարելի է վերադառնալ $P_1$-ին. պետք է ապացուցել նաև $P_4\Rightarrow P_1$-ը։</li>
+  <li><strong>«$|A\times B|=|B\times A|$, ուրեմն $A\times B=B\times A$»</strong> (խնդիր 58)։ Քանակները միշտ հավասար
+  են, իսկ բազմությունները՝ ոչ. $A=\{1,2\}$, $B=\{3,4,5\}$ դեպքում $(1,3)\in A\times B$, բայց
+  $(1,3)\notin B\times A$։</li>
+  <li><strong>Մոռանալ դատարկ բազմությունը</strong> (խնդիր 58)։ $A=\varnothing$, $B=\{1\}$ դեպքում
+  $A\times B=B\times A=\varnothing$, բայց $A\neq B$։</li>
+</ul>
+</div>
+
+<div class="box method"><div class="box-title">Նույնության նման, բայց ոչ նույնություն</div>
+<ul>
+  <li>$A\cup(B\symd C)\neq(A\cup B)\symd(A\cup C)$, թեև $\cap$-ով նույն տեսքի բանաձևը ճիշտ է (խնդիր 54, մաս 11)։
+  Հակաօրինակ՝ $A=B=C=\{1\}$. ձախ կողմը $\{1\}$ է, աջը՝ $\varnothing$։ Փորձեք <a href="#w-venn">Վեննի
+  վանդակի</a> երրորդ կոճակը։</li>
+  <li>$(A\cup B)\times(A\cup B)\neq(A\times A)\cup(B\times B)$ (համեմատեք խնդիր 60-ի բաշխական օրենքների հետ)։
+  Հակաօրինակ՝ $A=\{1\}$, $B=\{2\}$. ձախ կողմը պարունակում է $(1,2)$ զույգը, աջը՝ ոչ։ Սա նույն սխալն է, ինչ
+  $(a+b)^2=a^2+b^2$ գրելը։</li>
+</ul>
+</div>
+
+<h3>Ստուգեք ինքներդ ձեզ</h3>
+<ol class="p1-self">
+  <li>Կարո՞ղ են միաժամանակ ճիշտ լինել $x\in S$-ը և $x\subseteq S$-ը։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">Այո։ Օրինակ՝ $x=\varnothing$, $S=\{\varnothing\}$.
+  $\varnothing$-ն թվարկված է $S$-ում, և $\varnothing\subseteq S$։ Կամ $x=\{1\}$, $S=\{1,\{1\}\}$. $\{1\}$-ը $S$-ի տարր է,
+  և նրա միակ տարրը՝ $1$-ը, նույնպես $S$-ում է։ $\in$-ը և $\subseteq$-ն իրար չեն բացառում, դրանք տարբեր հարցեր են
+  (<a href="#p2">խնդիր 2</a>, <a href="#p11">խնդիր 11</a>)։</div></details></li>
+  <li>$U=\Z$, իսկ $A$-ն դրական զույգ թվերի բազմությունն է։ Պատկանո՞ւմ են արդյոք $0$-ն և $-4$-ը $\overline{A}$-ին։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">Այո, երկուսն էլ։ $\overline{A}$-ն այն ամբողջ թվերն
+  են, որոնք դրական զույգ չեն, իսկ $0$-ն և $-4$-ը դրական չեն (<a href="#p16">խնդիր 16</a>)։</div></details></li>
+  <li>Քանի՞ հետևություն պետք է ապացուցել $5$ պայմանի համարժեքությունը ցույց տալու համար, եթե օգտվենք ցիկլից։ Իսկ
+  քանի՞սը, եթե առանձին ապացուցենք երկու տարբեր պայմանների միջև բոլոր հետևությունները։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">Ցիկլով՝ $5$, իսկ բոլոր հետևություններն
+  առանձին՝ $5\cdot4=20$ (<a href="#p20">խնդիր 20</a>)։</div></details></li>
+  <li>Ինչո՞ւ է Վեննի դիագրամի $8$ մասի ստուգումը լրիվ ապացույց երեք բազմության նույնության համար։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">Ամեն տարր ընկնում է ճիշտ մեկ մասի մեջ, և նույն մասի
+  տարրերը միևնույն ձևով են պատկանում $A$, $B$, $C$-ին և դրանցից կառուցված ցանկացած բազմությանը։ Հետևաբար, եթե երկու
+  կողմերը համընկնում են $8$ մասից յուրաքանչյուրում, նրանք համընկնում են ամեն տարրի համար (<a href="#p54">խնդիր
+  54</a>)։</div></details></li>
+  <li>$A=\{1\}$, $B=\varnothing$։ Ճի՞շտ է արդյոք $A\times B=B\times A$ հավասարությունը։ Ճի՞շտ է արդյոք $A=B$-ն։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">$A\times B=B\times A=\varnothing$, հետևաբար
+  առաջինը ճիշտ է, իսկ $A\neq B$։ Դրա համար է խնդիր 58-ում անհրաժեշտ, որ $A$-ն և $B$-ն դատարկ չլինեն
+  (<a href="#p58">խնդիր 58</a>)։</div></details></li>
+  <li>Գտեք $A\times(B\setminus C)$-ն և $(A\times B)\setminus(A\times C)$-ն, եթե $A=\{1,2\}$, $B=\{2,3\}$, $C=\{3\}$։
+  <details class="extra"><summary>Պատասխան</summary><div class="inner">$B\setminus C=\{2\}$, հետևաբար
+  $A\times(B\setminus C)=\{(1,2),(2,2)\}$։ Աջ կողմում $A\times B=\{(1,2),(1,3),(2,2),(2,3)\}$ և
+  $A\times C=\{(1,3),(2,3)\}$, և նրանց տարբերությունը նույն $\{(1,2),(2,2)\}$-ն է, ինչպես պահանջում է
+  (5) նույնությունը (<a href="#p60">խնդիր 60</a>)։</div></details></li>
+</ol>
+
+<h3>Ինչ է հաջորդը</h3>
+<p><a href="p2-3-relations.html">Գործնական 2-3</a>-ում բազմությունների լեզուն կիրառվում է հարաբերությունների վրա.
+$A$ և $B$ բազմությունների միջև հարաբերությունը $A\times B$-ի ենթաբազմություն է, և այս թերթիկի կարգավորված զույգերը
+կհանդիպեն ամեն քայլում։</p>
 </div>
 </details>
 
