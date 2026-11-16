@@ -256,7 +256,7 @@
     }
     function fractionLine(v, r) {
       if (gcd(v.a, v.b) !== 1 || gcd(v.a, v.c) !== 1 || gcd(v.b, v.c) !== 1) {
-        return "Կոտորակային կարճ ճանապարհն այստեղ չի աշխատում՝ բաժանարարները զույգ առ զույգ փոխադարձաբար պարզ չեն։";
+        return "Կոտորակներով կարճ ճանապարհն այստեղ կիրառելի չէ՝ բաժանարարները զույգ առ զույգ փոխադարձաբար պարզ չեն։";
       }
       const M = r.A, bc = v.b * v.c, num = M * (v.b - 1) * (v.c - 1);
       const fr = `${M}\\cdot\\frac{${v.b - 1}}{${v.b}}\\cdot\\frac{${v.c - 1}}{${v.c}}`;
@@ -667,7 +667,7 @@
 
       let txt;
       if (!term) txt = "Սեղմեք ԿԱՍ-ի որևէ անդամի վրա՝ դրա կետերը նարնջագույն օղակներով նշելու համար։";
-      else if (!term.idx.length) txt = `$\\binom{${Np}+2}{2}=${term.value}$՝ առանց վերին սահմանների բոլոր լուծումները (ամբողջ եռանկյունը), նշանը՝ $+$։`;
+      else if (!term.idx.length) txt = `$\\binom{${Np}+2}{2}=${term.value}$՝ առանց վերին եզրերի բոլոր լուծումները (ամբողջ եռանկյունը), նշանը՝ $+$։`;
       else {
         const give = term.idx.map(i => cap[i] + 1);
         const remTex = `${Np}-${give.join("-")}=${term.rem}`;
@@ -684,7 +684,8 @@
       const v = m => R.terms.find(t => t.mask === m).value;
       outS.replaceChildren();
       const d = Q.el("div");
-      Q.tex(d, `${v(0)}-(${v(1)}+${v(2)}+${v(4)})+(${v(3)}+${v(6)}+${v(5)})-${v(7)}=${R.total}`, true);
+      // two lines: one line is 321 px at 390 px width, wider than the widget column (296 px)
+      Q.tex(d, `\\begin{aligned}&${v(0)}-(${v(1)}+${v(2)}+${v(4)})\\\\&\\quad+(${v(3)}+${v(6)}+${v(5)})-${v(7)}=${R.total}\\end{aligned}`, true);
       outS.append(d, mathEl("span", { class: brute === R.total ? "" : "c-red" },
         `$N'=${N}-18=${Np}$, ուղիղ թվարկում՝ $${brute}$ ${brute === R.total ? "$\\checkmark$" : "(անհամապատասխանություն)"}`));
     }
