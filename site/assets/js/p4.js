@@ -1,4 +1,4 @@
-/* Practice 4 widgets: composition pipeline (P4), horizontal-line test and a
+/* Practice 4 widgets: composition pipeline with a "your own pair" mode (P4), horizontal-line test and a
    finite arrow-diagram builder (P6), the kernel as a matrix (P10), images vs
    intersections (P19, P22) and preimage round trips (P25).
    Composition is LEFT-TO-RIGHT in this course: dot(f, g)(x) = g(f(x)), i.e.
@@ -84,6 +84,55 @@
     }
     return out;
   }
+  /** Which numbers of the page a pipeline state reproduces ("" when none). */
+  function pipeNote(part, x) {
+    if (part === "a" && x === 1) return "Սա Քայլ 5-ի ստուգումն է։";
+    if ((part === "b" || part === "c") && x === 1) return "Սա «Ստուգում» վանդակի հաշվարկն է։";
+    if (part === "c" && x === 2) return "Սա կանխատեսման հարցն է՝ $(f\\cdot g)(2)=4$։";
+    return "";
+  }
+
+  /** "Your own pair" in the pipeline widget: f and g are picked from this list. tpl(u) substitutes the formula u
+      for x (the method of Problem 4: write g(□), put f(x) in place of □), without simplifying. */
+  const wrapSum = u => (/[+-]/.test(u) ? `(${u})` : u);
+  const wrapPow = u => (u === "x" ? "x" : `\\left(${u}\\right)`);
+  const OWN = [
+    { label: "x²", tex: "x^2", f: x => x * x, tpl: u => `${wrapPow(u)}^2` },
+    { label: "x + 3", tex: "x+3", f: x => x + 3, tpl: u => `${u}+3` },
+    { label: "2x", tex: "2x", f: x => 2 * x, tpl: u => (u === "x" ? "2x" : `2\\cdot ${wrapSum(u)}`) },
+    { label: "1/x", tex: "\\frac{1}{x}", f: x => (x === 0 ? NaN : 1 / x), tpl: u => `\\frac{1}{${u}}`, why: x => (x === 0 ? "բաժանում զրոյի վրա" : "") },
+    { label: "√x", tex: "\\sqrt{x}", f: x => (x < 0 ? NaN : Math.sqrt(x)), tpl: u => `\\sqrt{${u}}`, why: x => (x < 0 ? "բացասական թվի քառակուսի արմատ" : "") },
+    { label: "x³", tex: "x^3", f: x => x ** 3, tpl: u => `${wrapPow(u)}^3` },
+    { label: "|x|", tex: "|x|", f: x => Math.abs(x), tpl: u => `\\left|${u}\\right|` }
+  ];
+  /** Both compositions of OWN[fi] and OWN[gi] at x: substituted formulas, the two steps of each chain and the
+      reason a step is undefined. A NaN input stays NaN. */
+  function ownPipeline(fi, gi, x) {
+    const F = OWN[fi], G = OWN[gi];
+    const run = (A, B) => {
+      const v1 = A.f(x), v2 = Number.isNaN(v1) ? NaN : B.f(v1);
+      const why = Number.isNaN(v1) ? A.why(x) : Number.isNaN(v2) ? B.why(v1) : "";
+      return { v1, val: v2, why };
+    };
+    return { fgTex: G.tpl(F.tex), gfTex: F.tpl(G.tex), fg: run(F, G), gf: run(G, F) };
+  }
+  /** True when f·g and g·f are the same function (same domain, same values) for OWN[fi], OWN[gi]. The grid test is
+      exact for this list: the check script compares it with the pairs found by hand. */
+  function samePair(fi, gi) {
+    const F = OWN[fi], G = OWN[gi];
+    for (let i = -400; i <= 400; i++) {
+      const x = i / 40, a = G.f(F.f(x)), b = F.f(G.f(x));
+      if (Number.isNaN(a) !== Number.isNaN(b)) return false;
+      if (!Number.isNaN(a) && Math.abs(a - b) > 1e-9 * Math.max(1, Math.abs(a))) return false;
+    }
+    return true;
+  }
+  /** A value for display: exact integers as they are, anything else rounded to 2 decimals with ≈ (decimal comma). */
+  function valTex(v) {
+    if (Number.isInteger(v)) return { rel: "=", num: String(v) };
+    const r = Math.round(v * 100) / 100;
+    return { rel: Math.abs(v - r) < 1e-12 ? "=" : "\\approx ", num: String(r).replace(".", "{,}") };
+  }
 
   /** Problem 6 functions R -> R, with the plot window [xmin, xmax, ymin, ymax]. */
   const F6 = {
@@ -118,6 +167,22 @@
     if (key === "d") return c < 0 ? { xs: [], ray: false } : c === 0 ? { xs: [], ray: true } : { xs: [c / 2], ray: false };
     if (key === "e") return { xs: cubicRoots(c), ray: false };
     throw new Error("unknown function " + key);
+  }
+  /** Which witnesses exist for each function of Problem 6 inside its slider range: a line with >= 2 intersections
+      (not injective) and a line with none (not surjective). */
+  const WITNESS = { a: { multi: true, zero: true }, b: { multi: true, zero: true }, c: { multi: false, zero: false },
+    d: { multi: true, zero: true }, e: { multi: true, zero: false } };
+  const PART_LABEL = { a: "(ա)", b: "(բ)", c: "(գ)", d: "(դ)", e: "(ե)" };
+  /** The sentence under the badges: ties the witnesses found so far (seen = {multi, zero}) to the answer of Step 1. */
+  function hlineSummary(key, seen) {
+    const w = WITNESS[key], L = PART_LABEL[key];
+    const gotMulti = !!seen.multi, gotZero = seen.zero !== null && seen.zero !== undefined;
+    if (key === "c") return `${L}-ի համար վկաներ չկան՝ $x^3+6$-ը խիստ աճող է և ընդունում է բոլոր արժեքները, այսինքն՝ բիյեկտիվ է (ապացույցը՝ Քայլ 1-ում)։`;
+    if (key === "e") return gotMulti
+      ? `Ինյեկտիվ չէ։ Սյուրյեկտիվության վկա չկա՝ ամեն հորիզոնական ուղիղ հատում է գրաֆիկը, այնպես որ ${L} ֆունկցիան սյուրյեկտիվ է, բայց ոչ ինյեկտիվ (Քայլ 1)։`
+      : "Շարժեք ուղիղը՝ ինյեկտիվությունը հերքող ուղիղ գտնելու համար։";
+    if (w.multi && w.zero && gotMulti && gotZero) return `Երկու վկան էլ գտնված են՝ ${L} ֆունկցիան ինյեկտիվ չէ և սյուրյեկտիվ չէ։ Սա Քայլ 1-ի պատասխանն է։`;
+    return "Շարժեք ուղիղը վեր և վար՝ մնացած վկան գտնելու համար։";
   }
 
   /** Finite f: {0..m-1} -> {0..n-1} given as map[i]. */
@@ -188,9 +253,15 @@
     const $ = s => root.querySelector(s);
     const inX = $('[data-in="x"]'), outX = $('[data-out="x"]');
     const btns = Array.from(root.querySelectorAll("[data-part]"));
+    const ownRow = $('[data-out="own"]'), selF = $('[data-in="f"]'), selG = $('[data-in="g"]');
     let part = "a";
+    [selF, selG].forEach((sel, k) => {
+      OWN.forEach((o, i) => sel.appendChild(Q.el("option", { value: String(i) }, o.label)));
+      sel.value = String(k === 0 ? 1 : 0);   // start with f(x) = x + 3, g(x) = x^2: x^2 + 6x + 9 against x^2 + 3
+      sel.addEventListener("change", render);
+    });
 
-    function chain(el, steps, first, second, lab) {
+    function chain(el, steps, first, second, lab, why) {
       el.replaceChildren();
       el.append(Q.el("span", { class: "lab" }, texSpan(lab)));
       el.append(Q.el("span", { class: "p4-node" }, texSpan(`x=${inX.value}`)));
@@ -199,28 +270,56 @@
         el.append(Q.el("span", { class: "p4-arr" }, Q.el("span", {}, "կիրառենք ", texSpan(ops[i]))));
         el.append(Q.el("span", { class: "p4-node" + (s.bad ? " bad" : "") }, texSpan(s.tex)));
       });
-      if (steps.some(s => s.bad)) el.append(Q.el("span", { class: "c-red" }, "որոշված չէ (բաժանում զրոյի վրա)"));
+      if (steps.some(s => s.bad)) el.append(Q.el("span", { class: "c-red" }, `որոշված չէ (${why})`));
+    }
+    /** "Your own pair": f and g from the lists, values at x, and the substituted formulas. */
+    function renderOwn(x) {
+      const fi = Number(selF.value), gi = Number(selG.value), F = OWN[fi], G = OWN[gi], r = ownPipeline(fi, gi, x);
+      setText($('[data-out="defs"]'), `$f(x)=${F.tex},\\quad g(x)=${G.tex}$`);
+      const steps = (A, B, res) => {
+        if (Number.isNaN(res.v1)) return [{ tex: `${A}(${x})`, bad: true }];
+        const a = valTex(res.v1), s = [{ tex: `${A}(${x})${a.rel}${a.num}`, bad: false }];
+        if (Number.isNaN(res.val)) s.push({ tex: `${B}(${A}(${x}))`, bad: true });
+        else { const b = valTex(res.val); s.push({ tex: `${B}(${A}(${x}))${b.rel}${b.num}`, bad: false }); }
+        return s;
+      };
+      chain($('[data-out="fg"]'), steps("f", "g", r.fg), "f", "g", "f\\cdot g", r.fg.why);
+      chain($('[data-out="gf"]'), steps("g", "f", r.gf), "g", "f", "g\\cdot f", r.gf.why);
+      setText($('[data-out="fgcheck"]'), `$g(\\square)$-ում $\\square$-ի տեղը դնում ենք $f(x)$-ը՝ $(f\\cdot g)(x)=${r.fgTex}$`);
+      setText($('[data-out="gfcheck"]'), `$f(\\square)$-ում $\\square$-ի տեղը դնում ենք $g(x)$-ը՝ $(g\\cdot f)(x)=${r.gfTex}$`);
+      const fgOk = !Number.isNaN(r.fg.val), gfOk = !Number.isNaN(r.gf.val);
+      const show = val => { const t = valTex(val); return t.rel === "=" ? t.num : `\\approx ${t.num}`; };
+      let msg;
+      if (samePair(fi, gi)) msg = "Այս զույգի համար $f\\cdot g$-ն և $g\\cdot f$-ը նույն ֆունկցիան են (պարզեցրեք բանաձևերը և համոզվեք)։ Դա հատուկ դեպք է. ընտրեք, օրինակ, $x+3$ և $x^2$, և կարգը կփոխի պատասխանը։";
+      else if (!fgOk && !gfOk) msg = `$x=${x}$ կետում երկու համադրույթներն էլ որոշված չեն։ Փորձեք մեկ այլ $x$։`;
+      else if (!fgOk || !gfOk) {
+        const [bad, good, val] = fgOk ? ["g\\cdot f", "f\\cdot g", r.fg.val] : ["f\\cdot g", "g\\cdot f", r.gf.val];
+        msg = `$(${bad})(${x})$-ը որոշված չէ, իսկ $(${good})(${x})${valTex(val).rel}${valTex(val).num}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
+      } else if (Math.abs(r.fg.val - r.gf.val) < 1e-9) msg = `Այս $x$-ի համար երկու արժեքները համընկնում են (երկուսն էլ՝ $${show(r.fg.val)}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`;
+      else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${show(r.fg.val)}\\ne ${show(r.gf.val)}$, հետևաբար $f\\cdot g\\ne g\\cdot f$։`;
+      setText($('[data-out="verdict"]'), msg);
     }
     function render() {
-      const x = Number(inX.value), P = PARTS[part], res = pipeline(part, x);
+      const x = Number(inX.value);
       outX.textContent = String(x).replace("-", "−");
+      if (ownRow) ownRow.style.display = part === "own" ? "" : "none";
+      if (part === "own") { renderOwn(x); return; }
+      const P = PARTS[part], res = pipeline(part, x);
       setText($('[data-out="defs"]'), `$f(x)=${P.fTex},\\quad g(x)=${P.gTex}$`);
-      chain($('[data-out="fg"]'), res.fg.steps, "f", "g", "f\\cdot g");
-      chain($('[data-out="gf"]'), res.gf.steps, "g", "f", "g\\cdot f");
+      chain($('[data-out="fg"]'), res.fg.steps, "f", "g", "f\\cdot g", "բաժանում զրոյի վրա");
+      chain($('[data-out="gf"]'), res.gf.steps, "g", "f", "g\\cdot f", "բաժանում զրոյի վրա");
       const check = (el, c) => setText(el, c.bad
         ? `Պատասխանի բանաձևով՝ $${c.tex}$, որը նույնպես որոշված չէ։`
         : `Պատասխանի բանաձևով՝ $${c.tex}$ $\\checkmark$`);
       check($('[data-out="fgcheck"]'), res.fg.closed);
       check($('[data-out="gfcheck"]'), res.gf.closed);
-      const v = $('[data-out="verdict"]');
       const end = ch => res[ch].steps[res[ch].steps.length - 1].tex.split("=").pop();
-      if (Number.isNaN(res.fg.val)) {
-        setText(v, `$(f\\cdot g)(0)$-ը որոշված չէ, իսկ $(g\\cdot f)(0)=${end("gf")}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`);
-      } else if (Math.abs(res.fg.val - res.gf.val) < 1e-9) {
-        setText(v, `Այս $x$-ի համար երկու արժեքները համընկնում են ($${end("fg")}=${end("gf")}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`);
-      } else {
-        setText(v, `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${end("fg")}\\ne ${end("gf")}$, ուստի $f\\cdot g\\ne g\\cdot f$։`);
-      }
+      let msg;
+      if (Number.isNaN(res.fg.val)) msg = `$(f\\cdot g)(0)$-ը որոշված չէ, իսկ $(g\\cdot f)(0)=${end("gf")}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
+      else if (Math.abs(res.fg.val - res.gf.val) < 1e-9) msg = `Այս $x$-ի համար երկու արժեքները համընկնում են ($${end("fg")}=${end("gf")}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`;
+      else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${end("fg")}\\ne ${end("gf")}$, ուստի $f\\cdot g\\ne g\\cdot f$։`;
+      const note = pipeNote(part, x);
+      setText($('[data-out="verdict"]'), note ? `${msg} ${note}` : msg);
     }
     btns.forEach(b => b.addEventListener("click", () => {
       part = b.dataset.part;
@@ -311,6 +410,8 @@
       else badge("open", "Ինյեկտիվ՝ բախում դեռ չենք գտել");
       if (s.zero !== null) badge("no", `Սյուրյեկտիվ՝ ոչ ($y=${numTex(s.zero)}$ ուղիղը գրաֆիկը չի հատում)`);
       else badge("open", "Սյուրյեկտիվ՝ բաց թողնված արժեք դեռ չենք գտել");
+      const sum = $('[data-out="summary"]');
+      if (sum) setText(sum, hlineSummary(key, s));
     }
     function setC(v) {
       const [, , y0, y1] = F6[key].win;
@@ -334,6 +435,8 @@
     svg.addEventListener("pointercancel", () => { dragging = false; });
     svg.addEventListener("click", e => { if (!dragging) setC(invY(toSvgY(e))); });
     inC.addEventListener("input", () => setC(Number(inC.value)));
+    const resetB = $('[data-act="reset"]');
+    if (resetB) resetB.addEventListener("click", () => { delete seen[key]; c = F6[key].c0; inC.value = c; render(); });
     btns.forEach(b => b.addEventListener("click", () => {
       key = b.dataset.fn; c = F6[key].c0;
       btns.forEach(o => o.setAttribute("aria-pressed", String(o === b)));
@@ -351,7 +454,7 @@
   function setupArrows(root) {
     const $ = s => root.querySelector(s);
     const PRESETS = { inj: [4, [0, 1, 2]], surj: [2, [0, 0, 1, 1]], bij: [3, [0, 1, 2]] };
-    let n = 4, map = [0, 1, 2];
+    let n = 4, map = [0, 1, 2], refocus = null;
     const host = $(".p4-arrows-svg");
 
     function render() {
@@ -377,14 +480,16 @@
         const y = yOf(i, m);
         Q.svg("circle", { cx: DX, cy: y, r: 4, class: "f-ink" }, svg);
         Q.svg("text", { x: DX - 12, y: y + 5, "text-anchor": "end", class: "m", text: DOM_L[i] }, svg);
-        const hit = Q.svg("circle", { cx: DX - 6, cy: y, r: 17, fill: "transparent", class: "hit", tabindex: 0, role: "button",
-          "aria-label": `${DOM_L[i]}-ի սլաքը տեղափոխել հաջորդ թիրախին` }, svg);
+        const hit = Q.svg("circle", { cx: DX - 6, cy: y, r: 20, fill: "transparent", class: "hit", tabindex: 0, role: "button",
+          "data-i": i, "aria-label": `${DOM_L[i]}-ի սլաքը տեղափոխել հաջորդ թիրախին` }, svg);
         Q.svg("title", { text: `Սեղմեք՝ ${DOM_L[i]}-ի սլաքը տեղափոխելու համար` }, hit);
         const go = () => { map[i] = (map[i] + 1) % n; render(); };
         hit.addEventListener("click", go);
-        hit.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+        hit.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); refocus = i; go(); } });
       });
       host.replaceChildren(svg);
+      // the drawing is rebuilt on every change: give the keyboard focus back to the same point
+      if (refocus !== null) { const h = svg.querySelector(`[data-i="${refocus}"]`); refocus = null; if (h) h.focus(); }
 
       const badges = $('[data-out="badges"]');
       badges.replaceChildren();
@@ -460,7 +565,8 @@
       const line = Q.el("div", { style: "text-align:center" });
       line.innerHTML = `Համարժեքության դասերը՝ ոչ դատարկ շերտերը։ $|\\Ker(f)|=${sizes}=${pairs.length}$ զույգ։` +
         (empty.length === 1 ? ` Դատարկ շերտը՝ $f^{-1}(${empty[0]})=\\varnothing$, դաս չէ։` : "") +
-        (empty.length > 1 ? ` Դատարկ շերտերը՝ ${empty.map(b => `$f^{-1}(${b})=\\varnothing$`).join(", ")}, դասեր չեն։` : "");
+        (empty.length > 1 ? ` Դատարկ շերտերը՝ ${empty.map(b => `$f^{-1}(${b})=\\varnothing$`).join(", ")}, դասեր չեն։` : "") +
+        (vals.every((v, i) => v === DEF[i]) ? " Սա Խնդիր 10-ի օրինակն է (նկարը վերևում)։" : "");
       Q.math(line);
       classes.append(chips, line);
 
@@ -481,7 +587,7 @@
   function setupSets(root, modes) {
     const $ = s => root.querySelector(s);
     const host = $(".p4-sets-svg");
-    let fn = "sq", mode = modes[0];
+    let fn = "sq", mode = modes[0], refocus = null;
     let A = [1], Bset = [-1], Y = [-1, 1], X = [1];
     const W = 336, H = 246, DX = 100, CX = 220, yRow = i => 46 + i * 42;
 
@@ -539,12 +645,14 @@
       (clickDomain ? D : Bc).forEach(val => {
         const x0 = clickDomain ? DX - 10 : CX + 10, y0 = clickDomain ? dy(val) : cy(val);
         const hit = Q.svg("rect", { x: x0 - 26, y: y0 - 18, width: 52, height: 36, rx: 8, fill: "transparent", class: "hit", tabindex: 0, role: "button",
-          "aria-label": `${String(val)} կետը` }, svg);
+          "data-v": val, "aria-label": `${String(val)} կետը` }, svg);
         const go = () => { toggle(val); render(); };
         hit.addEventListener("click", go);
-        hit.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+        hit.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); refocus = val; go(); } });
       });
       host.replaceChildren(svg);
+      // the drawing is rebuilt on every change: give the keyboard focus back to the same point
+      if (refocus !== null) { const h = svg.querySelector(`[data-v="${refocus}"]`); refocus = null; if (h) h.focus(); }
       describe();
     }
     function toggle(v) {
@@ -566,7 +674,8 @@
         setText(sets, `$A=${setTeX(A)},\\ B=${setTeX(Bset)},\\ A\\cap B=${setTeX(AB)}$<br>$f(A)=${setTeX(fA)},\\ f(B)=${setTeX(fB)}$<br>` +
           `$f(A\\cap B)=${setTeX(lhs)}$, $\\quad f(A)\\cap f(B)=${setTeX(rhs)}$`);
         let msg;
-        if (sameSet(lhs, rhs)) msg = "Հավասար են։" + (fn === "cube" ? " Ինյեկտիվ ֆունկցիայի դեպքում այդպես կլինի ամեն $A$-ի և $B$-ի համար (Քայլ 2)։" : "");
+        if (sameSet(lhs, rhs)) msg = "Հավասար են։" + (fn === "cube" ? " Ինյեկտիվ ֆունկցիայի դեպքում այդպես կլինի ամեն $A$-ի և $B$-ի համար (Քայլ 2)։"
+          : " Բայց $x^2$-ի համար դա միշտ չէ. փորձեք կոտրել հավասարությունը, օրինակ՝ $A=\\{1\\}$, $B=\\{-1\\}$։");
         else {
           const w = minus(rhs, lhs);
           const v = w[0], pa = preimage(f, D, [v]);
@@ -574,20 +683,24 @@
         }
         if (A.length && Bset.length && !AB.length && sameSet(fA, fB))
           msg += " Սա նաև Խնդիր 22-ի իրավիճակն է՝ $A$ և $B$ բազմությունները չհատվող են և ոչ դատարկ, սակայն $f(A)=f(B)$։";
+        if (fn === "sq" && sameSet(A, [1]) && sameSet(Bset, [-1])) msg += " Սա Խնդիր 19-ի Քայլ 4-ի օրինակն է։";
+        if (fn === "sq" && sameSet(A, [1, 2]) && sameSet(Bset, [-1, 2])) msg += " Սա կանխատեսման օրինակն է։";
         setText(verdict, msg);
       } else if (mode === "Y") {
         const pre = preimage(f, D, Y), back = image(f, pre), lost = minus(Y, back);
         setText(sets, `$Y=${setTeX(Y)}\\ \\longrightarrow\\ f^{-1}(Y)=${setTeX(pre)}\\ \\longrightarrow\\ f(f^{-1}(Y))=${setTeX(back)}$`);
         const fD = image(f, D);
-        if (!lost.length) setText(verdict, `Հավասարություն՝ $f(f^{-1}(Y))=Y$, քանի որ $Y\\subseteq f(A)=${setTeX(fD)}$։`);
-        else setText(verdict, `Պարունակումը խիստ է՝ $${lost.join(",\\,")}$ ${lost.length > 1 ? "արժեքները կորան, քանի որ դրանք" : "արժեքը կորավ, քանի որ այն"} $f$-ի ${lost.length > 1 ? "արժեքներ չեն" : "արժեք չէ"} ($f(A)=${setTeX(fD)}$), և ոչ մի սլաք ${lost.length > 1 ? "դրանց" : "դրան"} չի հասնում։`);
+        const tie = sameSet(Y, [-1, 1]) ? " Սա Խնդիր 25-ի Քայլ 2-ի օրինակն է։" : "";
+        if (!lost.length) setText(verdict, `Հավասարություն՝ $f(f^{-1}(Y))=Y$, քանի որ $Y\\subseteq f(A)=${setTeX(fD)}$։` + tie);
+        else setText(verdict, `Պարունակումը խիստ է՝ $${lost.join(",\\,")}$ ${lost.length > 1 ? "արժեքները կորան, քանի որ դրանք" : "արժեքը կորավ, քանի որ այն"} $f$-ի ${lost.length > 1 ? "արժեքներ չեն" : "արժեք չէ"} ($f(A)=${setTeX(fD)}$), և ոչ մի սլաք ${lost.length > 1 ? "դրանց" : "դրան"} չի հասնում։` + tie);
       } else {
         const img = image(f, X), back = preimage(f, D, img), added = minus(back, X);
         setText(sets, `$X=${setTeX(X)}\\ \\longrightarrow\\ f(X)=${setTeX(img)}\\ \\longrightarrow\\ f^{-1}(f(X))=${setTeX(back)}$`);
-        if (!added.length) setText(verdict, "Հավասարություն՝ $f^{-1}(f(X))=X$, քանի որ $X$-ից դուրս ոչ մի կետ չի բախվում $X$-ի կետերի հետ։");
+        const tie = sameSet(X, [1]) ? " Սա կանխատեսման օրինակն է։" : "";
+        if (!added.length) setText(verdict, "Հավասարություն՝ $f^{-1}(f(X))=X$, քանի որ $X$-ից դուրս ոչ մի կետ չի բախվում $X$-ի կետերի հետ։" + tie);
         else {
           const x = added[0], partner = X.find(t => f(t) === f(x));
-          setText(verdict, `Պարունակումը խիստ է՝ $${added.join(",\\,")}$ ${added.length > 1 ? "կետերն ավելացան" : "կետն ավելացավ"}, քանի որ, օրինակ, $f(${x})=f(${partner})$՝ $f$-ն ինյեկտիվ չէ։`);
+          setText(verdict, `Պարունակումը խիստ է՝ $${added.join(",\\,")}$ ${added.length > 1 ? "կետերն ավելացան" : "կետն ավելացավ"}, քանի որ, օրինակ, $f(${x})=f(${partner})$՝ $f$-ն ինյեկտիվ չէ։` + tie);
         }
       }
     }
@@ -604,6 +717,8 @@
     }));
     const clear = $('[data-act="clear"]');
     if (clear) clear.addEventListener("click", () => { A = []; Bset = []; render(); });
+    const reset = $('[data-act="reset"]');   // back to the examples of the page: Problem 25 and the predict block
+    if (reset) reset.addEventListener("click", () => { Y = [-1, 1]; X = [1]; render(); });
     render();
   }
 
@@ -617,6 +732,7 @@
     on("w-round", setupSets, ["Y", "X"]);
   });
   // exported for node checks
-  window.P4 = { dot, PARTS, pipeline, frac, fracTex, radParts, radTex, F6, levelSet, cubicRoots, classify,
-    kernelPairs, fibres, relProps, image, preimage, inter, minus, sameSet, SETS };
+  window.P4 = { dot, PARTS, pipeline, pipeNote, OWN, ownPipeline, samePair, valTex, frac, fracTex, radParts, radTex, F6,
+    levelSet, cubicRoots, WITNESS, hlineSummary, classify, kernelPairs, fibres, relProps, image, preimage, inter, minus,
+    sameSet, SETS };
 })();
