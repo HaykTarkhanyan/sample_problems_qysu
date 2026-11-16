@@ -383,7 +383,7 @@
     const W = 360, H = 300, ML = 24, MR = 22, MT = 30, MB = 16;
     const host = root.querySelector(".p23-plane");
     const svg = Q.svg("svg", { viewBox: `0 0 ${W} ${H}`, width: W, role: "img",
-      "aria-label": "Հարթության հարաբերություն, դրա ստվերները առանցքների վրա և ճառագայթ" }, host);
+      "aria-label": "Հարթության հարաբերություն, դրա ստվերներն առանցքների վրա և ճառագայթ" }, host);
     const defs = Q.svg("defs", {}, svg);
     const clip = Q.svg("clipPath", { id: "p23-plane-clip" }, defs);
     const clipRect = Q.svg("rect", {}, clip);
@@ -653,7 +653,7 @@
         M = mode === "r" ? reflexiveClosure(M0) : symmetricClosure(M0); base = M0;
         const added = toPairs(M).filter(([i, j]) => !M0[i][j]);
         text = added.length
-          ? `Ավելացվել են ${mode === "r" ? "ակերը" : "հակադարձ զույգերը"}՝ $${S(added)}$։ Արդյունքում՝ $${toPairs(M).length}$ զույգ։`
+          ? `Ավելացվել են ${mode === "r" ? "ակերը" : "հակադարձ զույգերը"}՝ $${S(added)}$։ Այսպիսով՝ $${toPairs(M).length}$ զույգ։`
           : `Ոչինչ չի ավելացվում՝ $\\rho$-ն արդեն ${mode === "r" ? "ռեֆլեքսիվ" : "սիմետրիկ"} է։`;
       } else if (mode === "t") {
         base = M0;
