@@ -1,8 +1,9 @@
-/* Practice 2-3 widgets: shadows of plane relations with witnesses (1.2), composition
-   as three columns of arrows (3.3), a relation editor whose matrix and digraph stay in
-   sync with live R/S/AS/T badges (4.1), and the three closures with a step-through of
-   Warshall's algorithm (7.2). Pure logic sits at the top and is exported on window.P23
-   for node checks.
+/* Practice 2-3 widgets: shadows of plane relations with witnesses (1.2), a fill-in-the-matrix
+   exercise for 2.1 / 2.2, composition as three columns of arrows with a choice of maps (3.3),
+   a relation editor whose matrix and digraph stay in sync with live R/S/AS/T badges and a
+   "decide first" mode (4.1), and the three closures with ready-made relations and a step-through
+   of t(rho) pair by pair or by Warshall's algorithm (7.2). Pure logic sits at the top and is
+   exported on window.P23 for node checks (discrete/checks/p2-3_widgets_check.mjs).
    Composition is LEFT-TO-RIGHT in this course: rho·sigma = first rho, then sigma,
    i.e. (x,z) in rho·sigma iff some y has (x,y) in rho and (y,z) in sigma. */
 (function () {
@@ -65,6 +66,26 @@
     return steps;
   }
   function transitiveClosure(M) { const s = warshallSteps(M); return s.length ? s[s.length - 1].M : copyM(M); }
+  /** The closure one pair at a time, straight from the definition: take the first two-step path i -> j -> k
+      that has no shortcut (the same counterexample the T badge shows), add (i,k), repeat until none is left.
+      One entry per added pair: the path and the matrix after the step. Ends at the transitive closure. */
+  function pairSteps(M) {
+    const steps = [];
+    let W = copyM(M);
+    for (let w = transitiveWitness(W); w; w = transitiveWitness(W)) {
+      W = copyM(W); W[w[0]][w[2]] = 1;
+      steps.push({ path: w, M: W });
+    }
+    return steps;
+  }
+  /** A filled-in matrix against the right one: extra 1s, missing 1s, and whether the student wrote the
+      transpose (rows and columns swapped) of a non-symmetric relation. */
+  function fillVerdict(S, T) {
+    const extra = [], missing = [];
+    S.forEach((r, i) => r.forEach((v, j) => { if (v && !T[i][j]) extra.push([i, j]); if (!v && T[i][j]) missing.push([i, j]); }));
+    const transposed = extra.length > 0 && S.every((r, i) => r.every((v, j) => v === T[j][i]));
+    return { extra, missing, transposed };
+  }
 
   /** Left-to-right composition of finite relations given as [a,b] arrays. */
   function compose(R, S) {
@@ -78,15 +99,34 @@
   }
   /** Every x -> y -> z chain with (x,y) in R and (y,z) in S. */
   function chains(R, S) { return R.flatMap(([x, y]) => S.filter(p => p[0] === y).map(p => [x, y, p[1]])); }
-  const RHO = x => x + 2, SIGMA = x => x * x;
-  /** The finite piece the widget draws: order "rs" = rho·sigma (first rho), "sr" = sigma·rho. */
-  function compositionPiece(order, xs) {
-    const [f, g] = order === "rs" ? [RHO, SIGMA] : [SIGMA, RHO];
+  /** Maps Z -> Z the composition widget offers for rho and sigma (problem 3.3: rho = x+2, sigma = x^2).
+      f = the map, tex(s) = its formula applied to the TeX argument s, svg(v) = label tspans [text, italic]. */
+  const MAPS = {
+    p2: { f: x => x + 2, chip: "$x+2$", tex: s => (/^x\+\d+$/.test(s) ? `x+${Number(s.slice(2)) + 2}` : `${s}+2`), svg: v => [[v, 1], ["+2", 0]] },
+    sq: { f: x => x * x, chip: "$x^2$", tex: s => (s === "x" || /^\|.*\|$/.test(s) ? s : `(${s})`) + "^2", svg: v => [[v, 1], ["²", 0]] },
+    // 2·(2x) must read 4x, not "22x": a bare coefficient times x is doubled
+    dbl: { f: x => 2 * x, chip: "$2x$", tex: s => (/^\d*x$/.test(s) ? `${2 * (Number(s.slice(0, -1)) || 1)}x` : `2${/[+-]/.test(s) ? `(${s})` : s}`),
+      svg: v => [["2", 0], [v, 1]] },
+    neg: { f: x => -x, chip: "$-x$", tex: s => `-${/[+-]/.test(s) ? `(${s})` : s}`, svg: v => [["−", 0], [v, 1]] },
+    abs: { f: x => Math.abs(x), chip: "$|x|$", tex: s => `|${s}|`, svg: v => [["|", 0], [v, 1], ["|", 0]] }
+  };
+  /** The finite piece the widget draws: order "rs" = rho·sigma (first rho), "sr" = sigma·rho;
+      rho = MAPS[a], sigma = MAPS[b]. */
+  function compositionPiece(order, xs, a = "p2", b = "sq") {
+    const [f, g] = order === "rs" ? [MAPS[a].f, MAPS[b].f] : [MAPS[b].f, MAPS[a].f];
     const R = xs.map(x => [x, f(x)]);
     const ys = [...new Set(R.map(p => p[1]))].sort((a, b) => a - b);
     const S = ys.map(y => [y, g(y)]);
     const zs = [...new Set(S.map(p => p[1]))].sort((a, b) => a - b);
     return { R, S, ys, zs, C: compose(R, S), chains: chains(R, S) };
+  }
+  /** First x (tried in the order 1, 0, -1, 2, -2, 3, -3, then -50..50) where rho·sigma and sigma·rho differ,
+      or null. For the five MAPS "null" means they agree on all of Z (asserted in discrete/checks). */
+  function commuteWitness(a, b) {
+    const f = MAPS[a].f, g = MAPS[b].f, differ = x => g(f(x)) !== f(g(x));
+    for (const x of [1, 0, -1, 2, -2, 3, -3]) if (differ(x)) return x;
+    for (let x = -50; x <= 50; x++) if (differ(x)) return x;
+    return null;
   }
 
   /** Problem 1.2 plane relations. */
@@ -142,6 +182,30 @@
       pairs: "(a,c),(c,c),(c,d),(c,e),(e,c),(e,e),(e,f),(a,e)" },
     { id: "z", chip: "Դատարկ", els: [1, 2, 3, 4], pairs: "" }
   ];
+  /** The editor's "random" button: a relation on {1,2,3,4}; rnd() in [0,1). Loops are likelier than other
+      pairs (1/2 vs 3/10) so that reflexive and transitive cases also come up. */
+  const RANDOM_SET = { id: "rnd", els: [1, 2, 3, 4] };
+  function randomRelation(n, rnd) {
+    const M = zeros(n);
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) M[i][j] = rnd() < (i === j ? 0.5 : 0.3) ? 1 : 0;
+    return M;
+  }
+  /** The closure builder's ready-made relations on {1,2,3,4} (indices 0..3). */
+  const CLOSURE_PRESETS = [
+    { id: "p72", chip: "7.2-ի $\\rho$", pairs: [[0, 1], [2, 0], [2, 1], [1, 3]] },
+    { id: "chain", chip: "շղթա $1\\to2\\to3\\to4$", pairs: [[0, 1], [1, 2], [2, 3]] },
+    { id: "cycle", chip: "ցիկլ $1\\to2\\to3\\to1$", pairs: [[0, 1], [1, 2], [2, 0]] },
+    { id: "one", chip: "$\\{(1,2)\\}$", pairs: [[0, 1]] },
+    { id: "empty", chip: "Դատարկ", pairs: [] }
+  ];
+  /** Exercise of 2.1 / 2.2: fill in the matrix of each relation. */
+  const FILL = [
+    { id: "21a", chip: "2.1(ա)", els: ["a", "b", "c", "d", "e"], pairs: "(a,b),(b,a),(b,c),(c,b),(c,a),(a,c),(d,e),(e,d)" },
+    { id: "21b", chip: "2.1(բ)", els: ["a", "b", "c", "d", "e"], pairs: "(a,b),(b,a),(b,c),(c,b),(c,d),(d,c),(c,a),(a,c)" },
+    { id: "22a", chip: "2.2(ա)", els: ["a", "b", "c", "d", "e", "f"], pairs: "(a,b),(b,c),(a,c),(b,e),(c,f),(c,d),(d,f),(f,e)" },
+    { id: "22b", chip: "2.2(բ)", els: ["a", "b", "c", "d", "e", "f"], pairs: "(a,b),(b,c),(d,c),(d,e),(f,e),(f,a),(b,e)" },
+    { id: "22c", chip: "2.2(գ)", els: ["a", "b", "c", "d", "e", "f"], pairs: "(a,c),(c,c),(c,d),(c,e),(e,c),(e,e),(e,f),(a,e)" }
+  ];
   function presetMatrix(p) {
     const n = p.els.length;
     if (p.rel) {
@@ -172,7 +236,7 @@
   const num = v => { const r = Math.round(v * 100) / 100; return String(Object.is(r, -0) ? 0 : r).replace(".", "{,}"); };
   const isLetter = s => /^[a-z]$/i.test(s);
   const pairTex = (a, b) => `(${a},${b})`;
-  const setTexOf = (pairs, tex) => "\\{" + pairs.map(([i, j]) => pairTex(tex[i], tex[j])).join(",") + "\\}";
+  const setTexOf = (pairs, tex) => (pairs.length ? "\\{" + pairs.map(([i, j]) => pairTex(tex[i], tex[j])).join(",") + "\\}" : "\\varnothing");
 
   // ---------------------------------------------------------------- relation view (digraph + matrix)
   const NR = 15;
@@ -321,21 +385,34 @@
     if (k === "AS") return { hl: [[i, j], [j, i]], ghost: [] };
     return { hl: [[i, j], [j, l]], ghost: [[i, l]] };
   }
+  /** Four property badges. Clicking a ✗ badge marks its counterexample in the picture. In quiz mode every
+      badge starts as "?" and the first click on it only reveals it, so the student decides first. */
   function badgeRow(host, onChange) {
-    let active = null;
-    const btns = {};
+    let active = null, quiz = false;
+    const shown = new Set(), btns = {};
     for (const k of ["R", "S", "AS", "T"]) {
       const b = Q.el("button", { type: "button", class: "p23-badge", "aria-pressed": "false" });
-      b.addEventListener("click", () => { active = active === k ? null : k; onChange(); });
+      b.addEventListener("click", () => {
+        if (quiz && !shown.has(k)) shown.add(k); else active = active === k ? null : k;
+        onChange();
+      });
       btns[k] = b;
       host.appendChild(b);
     }
     return {
       marks: pr => (active ? witnessMarks(active, pr[active]) : { hl: [], ghost: [] }),
-      reset() { active = null; },
+      reset() { active = null; shown.clear(); },
+      setQuiz(on) { quiz = on; active = null; shown.clear(); },
+      allShown: () => !quiz || shown.size === 4,
       update(pr, tex) {
         for (const k of ["R", "S", "AS", "T"]) {
           const w = pr[k], b = btns[k];
+          if (quiz && !shown.has(k)) {
+            b.className = "p23-badge";
+            b.setAttribute("aria-pressed", "false");
+            b.replaceChildren(Q.el("span", { class: "t" }, `${PROP_NAME[k]} (${k}) ?`), Q.el("span", {}, "սեղմեք՝ ստուգելու համար"));
+            continue;
+          }
           b.className = "p23-badge " + (w ? "no" : "yes");
           b.setAttribute("aria-pressed", String(active === k));
           b.replaceChildren(Q.el("span", { class: "t" }, `${PROP_NAME[k]} (${k}) ${w ? "✗" : "✓"}`),
@@ -530,18 +607,30 @@
 
   // ================================================================ 3.3 composition columns
   function setupCompose(root) {
-    const XS = [-3, -2, -1, 0, 1, 2, 3], W = 420, ROW = 31, TOP = 50, COLX = [70, 210, 350], R = 13;
+    // 360 wide (was 420): on a 390 px phone the labels were drawn at about 9 px
+    const XS = [-3, -2, -1, 0, 1, 2, 3], W = 360, ROW = 31, TOP = 50, COLX = [46, 180, 314], R = 13;
     const host = root.querySelector(".p23-cols-svg");
     const svg = Q.svg("svg", { viewBox: `0 0 ${W} ${TOP + XS.length * ROW + 4}`, width: W, role: "img",
       "aria-label": "Երեք սյունակ՝ x, y, z, և x→y→z սլաքներ" }, host);
     const why = root.querySelector('[data-out="why"]'), pairsEl = root.querySelector('[data-out="pairs"]');
-    const formula = root.querySelector('[data-out="formula"]');
+    const formula = root.querySelector('[data-out="formula"]'), comm = root.querySelector('[data-out="comm"]');
+    const mapRows = { a: root.querySelector('[data-out="mapA"]'), b: root.querySelector('[data-out="mapB"]') };
     const btns = [...root.querySelectorAll("[data-act]")];
-    let order = "rs", sel = { col: 0, val: 1 };
+    let order = "rs", sel = { col: 0, val: 1 }, a = "p2", b = "sq";
     const NAME = { rs: ["\\rho\\cdot\\sigma", "\\rho", "\\sigma"], sr: ["\\sigma\\cdot\\rho", "\\sigma", "\\rho"] };
+    const COLNAME = ["x", "y", "z"];
 
-    function render() {
-      const pc = compositionPiece(order, XS), cols = [XS, pc.ys, pc.zs];
+    for (const side of ["a", "b"]) {
+      Object.entries(MAPS).forEach(([k, m]) => {
+        const c = Q.el("button", { type: "button", class: "chip", "data-map": k, "aria-pressed": "false" }, m.chip);
+        Q.math(c);
+        c.addEventListener("click", () => { if (side === "a") a = k; else b = k; sel = { col: 0, val: 1 }; render(); });
+        mapRows[side].appendChild(c);
+      });
+    }
+
+    function render(focusKey) {
+      const pc = compositionPiece(order, XS, a, b), cols = [XS, pc.ys, pc.zs];
       const yOf = (c, k) => TOP + ROW * (k + (XS.length - cols[c].length) / 2) + ROW / 2;
       const pos = (c, val) => [COLX[c], yOf(c, cols[c].indexOf(val))];
       const active = pc.chains.filter(t => (sel.pair ? t[0] === sel.pair[0] && t[2] === sel.pair[1] : t[sel.col] === sel.val));
@@ -552,13 +641,10 @@
       [["x", 0], ["y", 1], ["z", 2]].forEach(([l, c]) => Q.svg("text", { x: COLX[c], y: 18, "text-anchor": "middle", class: "m", "font-weight": 700, text: l }, svg));
       const lab = (x, cls, txt) => { const t = Q.svg("text", { x, y: 18, "text-anchor": "middle", class: cls.replace("s-", "f-") }, svg);
         txt.forEach(([s, it]) => Q.svg("tspan", { class: it ? "m" : null, text: s }, t)); };
-      if (order === "rs") {
-        lab(140, clsA, [["ρ", 1], [": ", 0], ["y", 1], [" = ", 0], ["x", 1], ["+2", 0]]);
-        lab(280, clsB, [["σ", 1], [": ", 0], ["z", 1], [" = ", 0], ["y", 1], ["²", 0]]);
-      } else {
-        lab(140, clsA, [["σ", 1], [": ", 0], ["y", 1], [" = ", 0], ["x", 1], ["²", 0]]);
-        lab(280, clsB, [["ρ", 1], [": ", 0], ["z", 1], [" = ", 0], ["y", 1], ["+2", 0]]);
-      }
+      const [first, second] = order === "rs" ? [a, b] : [b, a];
+      const [n1, n2] = order === "rs" ? ["ρ", "σ"] : ["σ", "ρ"];
+      lab((COLX[0] + COLX[1]) / 2, clsA, [[n1, 1], [": ", 0], ["y", 1], [" = ", 0], ...MAPS[first].svg("x")]);
+      lab((COLX[1] + COLX[2]) / 2, clsB, [[n2, 1], [": ", 0], ["z", 1], [" = ", 0], ...MAPS[second].svg("y")]);
       ["մեկնարկ", "միջին", "ավարտ"].forEach((t, c) => Q.svg("text", { x: COLX[c], y: 36, "text-anchor": "middle", class: "f-muted", "font-size": 11, text: t }, svg));
       // arrows: column 0 -> 1 by the first relation, 1 -> 2 by the second
       const arrow = (a, b, cls, lit) => {
@@ -575,9 +661,14 @@
         Q.svg("circle", { cx: x, cy: r1(y), r: R, class: "f-bg" }, svg);
         Q.svg("circle", { cx: x, cy: r1(y), r: R, class: fills[c] + (lit ? " s-orange" : " s-ink"), "stroke-width": lit ? 3 : 1 }, svg);
         Q.svg("text", { x, y: r1(y), dy: ".35em", "text-anchor": "middle", class: "mr", "font-size": 13, text: minus(val) }, svg);
-        const h = Q.svg("circle", { cx: x, cy: r1(y), r: R + 3, fill: "transparent", class: "hit" }, svg);
+        // tabbable and operable with Enter / Space; render() rebuilds the svg, so focus is put back afterwards
+        const key = `${c}:${val}`;
+        const h = Q.svg("circle", { cx: x, cy: r1(y), r: R + 3, fill: "transparent", class: "hit", tabindex: 0, role: "button",
+          "data-key": key, "aria-label": `${COLNAME[c]} = ${minus(val)}` }, svg);
         Q.svg("title", { text: minus(val) }, h);
-        h.addEventListener("click", () => { sel = { col: c, val }; render(); });
+        const pick = () => { sel = { col: c, val }; render(key); };
+        h.addEventListener("click", pick);
+        h.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pick(); } });
       }));
       // why each selected pair is in the composition: the middle value is the witness
       const [nm, f1, f2] = NAME[order];
@@ -590,14 +681,23 @@
         c.addEventListener("click", () => { sel = { pair: [x, z] }; render(); });
         return c;
       }));
-      formula.textContent = order === "rs"
-        ? "Ամբողջ $\\Z$-ի վրա՝ $\\rho\\cdot\\sigma=\\{(x,(x+2)^2)\\}$. վերևում $-3\\le x\\le 3$ կտորն է։"
-        : "Ամբողջ $\\Z$-ի վրա՝ $\\sigma\\cdot\\rho=\\{(x,x^2+2)\\}$. վերևում $-3\\le x\\le 3$ կտորն է։";
+      formula.textContent = `Ամբողջ $\\Z$-ի վրա՝ $${nm}=\\{(x,${MAPS[second].tex(MAPS[first].tex("x"))})\\}$. վերևում $-3\\le x\\le 3$ կտորն է։`;
       Q.math(formula);
-      btns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.act === order)));
+      const w = commuteWitness(a, b), F = MAPS[a].f, G = MAPS[b].f;
+      comm.textContent = (w === null
+        ? "Այս զույգի համար $\\rho\\cdot\\sigma=\\sigma\\cdot\\rho$՝ երկու կարգն էլ ամեն $x$-ի համար նույն արժեքն է տալիս։"
+        : `Այստեղ $\\rho\\cdot\\sigma\\ne\\sigma\\cdot\\rho$՝ $x=${w}$-ում $\\rho\\cdot\\sigma$-ն տալիս է $${G(F(w))}$, իսկ $\\sigma\\cdot\\rho$-ն՝ $${F(G(w))}$։`)
+        + (a === "p2" && b === "sq" ? " Սա 3.3-ի դեպքն է։" : "");
+      Q.math(comm);
+      btns.forEach(x => x.setAttribute("aria-pressed", String(x.dataset.act === order)));
+      for (const side of ["a", "b"]) [...mapRows[side].children].forEach(c => {
+        const on = c.dataset.map === (side === "a" ? a : b);
+        c.classList.toggle("on", on); c.setAttribute("aria-pressed", String(on));
+      });
+      if (focusKey) { const f = svg.querySelector(`[data-key="${focusKey}"]`); if (f) f.focus(); }
     }
-    btns.forEach(b => b.addEventListener("click", () => {
-      order = b.dataset.act;
+    btns.forEach(x => x.addEventListener("click", () => {
+      order = x.dataset.act;
       if (sel.pair || sel.col !== 0) sel = { col: 0, val: 1 };
       render();
     }));
@@ -610,23 +710,32 @@
     const classEl = root.querySelector('[data-out="class"]');
     const view = relView(root.querySelector(".p23-host"));
     const badges = badgeRow(root.querySelector('[data-out="badges"]'), () => render());
-    let cur = PRESETS[0], M = presetMatrix(cur);
+    const quizBtn = root.querySelector('[data-act="quiz"]');
+    let cur = PRESETS[0], M = presetMatrix(cur), quiz = false;
+    // any change of the relation hides the answers again in quiz mode
+    const changed = () => { badges.reset(); render(); };
 
     PRESETS.forEach(p => {
       const c = Q.el("button", { type: "button", class: "chip", "data-id": p.id }, p.chip);
       Q.math(c);
-      c.addEventListener("click", () => { cur = p; M = presetMatrix(p); badges.reset(); render(); });
+      c.addEventListener("click", () => { cur = p; M = presetMatrix(p); changed(); });
       chipsEl.appendChild(c);
     });
+    quizBtn.addEventListener("click", () => { quiz = !quiz; badges.setQuiz(quiz); render(); });
+    root.querySelector('[data-act="random"]').addEventListener("click", () => {
+      cur = RANDOM_SET; M = randomRelation(4, () => Q.randInt(100) / 100); changed();
+    });
+    root.querySelector('[data-act="clear"]').addEventListener("click", () => { M = zeros(cur.els.length); changed(); });
     function render() {
       const pr = props(M), mk = badges.marks(pr), tex = cur.els.map(String);
       view.render({ labels: cur.els.map(minus), pos: cur.pos, M, hl: mk.hl, ghost: mk.ghost, editable: true,
-        onToggle: (i, j) => { M[i][j] = M[i][j] ? 0 : 1; render(); } });
+        onToggle: (i, j) => { M[i][j] = M[i][j] ? 0 : 1; changed(); } });
       badges.update(pr, tex);
       const n = toPairs(M).length;
       setEl.textContent = `$A=\\{${tex.join(",")}\\}$, $|\\rho|=${n}$`;
       Q.math(setEl);
-      classEl.textContent = classText(pr);
+      classEl.textContent = badges.allShown() ? classText(pr) : "Որոշեք ինքներդ, ապա սեղմեք պիտակները մեկ առ մեկ. դասը կերևա, երբ չորսն էլ բացված լինեն։";
+      quizBtn.setAttribute("aria-pressed", String(quiz));
       [...chipsEl.children].forEach(c => c.classList.toggle("on", c.dataset.id === cur.id));
     }
     render();
@@ -634,61 +743,131 @@
 
   // ================================================================ 7.2 closures + Warshall
   function setupClosure(root) {
-    const RHO72 = [[0, 1], [2, 0], [2, 1], [1, 3]];                  // (1,2),(3,1),(3,2),(2,4)
     const labels = ["1", "2", "3", "4"], pos = [[0, 1.5], [1.5, 1.5], [0, 0], [1.5, 0]];
     const view = relView(root.querySelector(".p23-host"));
     const badges = badgeRow(root.querySelector('[data-out="badges"]'), () => render());
     const msg = root.querySelector('[data-out="msg"]'), log = root.querySelector('[data-out="log"]');
-    const tctl = root.querySelector('[data-out="tctl"]'), ectl = root.querySelector('[data-out="ectl"]');
-    const modeBtns = [...root.querySelectorAll("[data-mode]")];
+    const tctl = root.querySelector('[data-out="tctl"]'), actl = root.querySelector('[data-out="actl"]');
+    const chipsEl = root.querySelector('[data-out="presets"]');
+    const modeBtns = [...root.querySelectorAll("[data-mode]")], algBtns = [...root.querySelectorAll("[data-alg]")];
     const stepBtn = root.querySelector('[data-act="step"]');
-    let M0 = fromPairs(4, RHO72), mode = "rho", step = 0;
+    const RHO72 = fromPairs(4, CLOSURE_PRESETS[0].pairs);
+    let M0 = copyM(RHO72), mode = "rho", alg = "pair", step = 0, adopted = null;
     const S = ps => setTexOf(ps, labels);
-    const imp = (i, k, j) => `$${pairTex(labels[i], labels[k])},${pairTex(labels[k], labels[j])}\\Rightarrow${pairTex(labels[i], labels[j])}$`;
+    const P = (i, j) => pairTex(labels[i], labels[j]);
+    const imp = (i, k, j) => `$${P(i, k)},${P(k, j)}\\Rightarrow${P(i, j)}$`;
+    const NAMES = { r: "r(\\rho)", s: "s(\\rho)", t: "t(\\rho)" };
+    const sameM = (A, B) => A.every((r, i) => r.every((v, j) => v === B[i][j]));
 
+    CLOSURE_PRESETS.forEach(p => {
+      const c = Q.el("button", { type: "button", class: "chip", "data-id": p.id }, p.chip);
+      Q.math(c);
+      c.addEventListener("click", () => { M0 = fromPairs(4, p.pairs); step = 0; adopted = null; badges.reset(); render(); });
+      chipsEl.appendChild(c);
+    });
+
+    /** The relation the current tab shows, and the step list of the chosen algorithm for t(rho). */
+    function current() {
+      const steps = alg === "pair" ? pairSteps(M0) : warshallSteps(M0);
+      if (mode === "r") return { M: reflexiveClosure(M0), steps };
+      if (mode === "s") return { M: symmetricClosure(M0), steps };
+      if (mode === "t") return { M: step ? steps[step - 1].M : M0, steps };
+      return { M: M0, steps };
+    }
     function render() {
-      const steps = warshallSteps(M0);
-      let M = M0, base = null, just = [], text;
+      const { M, steps } = current(), nSteps = steps.length, count = toPairs(M).length;
+      let just = [], path = [], text;
       if (mode === "r" || mode === "s") {
-        M = mode === "r" ? reflexiveClosure(M0) : symmetricClosure(M0); base = M0;
         const added = toPairs(M).filter(([i, j]) => !M0[i][j]);
         text = added.length
-          ? `Ավելացվել են ${mode === "r" ? "ակերը" : "հակադարձ զույգերը"}՝ $${S(added)}$։ Այսպիսով՝ $${toPairs(M).length}$ զույգ։`
+          ? `Ավելացվել են ${mode === "r" ? "ակերը" : "հակադարձ զույգերը"}՝ $${S(added)}$։ Այսպիսով՝ $${count}$ զույգ։`
           : `Ոչինչ չի ավելացվում՝ $\\rho$-ն արդեն ${mode === "r" ? "ռեֆլեքսիվ" : "սիմետրիկ"} է։`;
+      } else if (mode === "t" && alg === "pair") {
+        if (!nSteps) text = "$\\rho$-ն արդեն փոխանցական է՝ ամեն երկքայլ ուղի ունի ուղիղ սլաք, և ավելացնելու բան չկա։";
+        else if (!step) text = "Սեղմեք «Հաջորդ քայլ»։ Ամեն քայլում գտնում ենք առաջին $x\\to y\\to z$ երկքայլ ուղին, որը չունի $(x,z)$ ուղիղ սլաք, և ավելացնում ենք այդ սլաքը։";
+        else {
+          const [i, j, k] = steps[step - 1].path;
+          just = [[i, k]]; path = [[i, j], [j, k]];
+          text = `Քայլ ${step}՝ $${labels[i]}\\to${labels[j]}\\to${labels[k]}$ ուղին ուղիղ սլաք չուներ, ավելացրինք $${P(i, k)}$։ `
+            + (step < nSteps ? `Այժմ $${count}$ զույգ։`
+              : `Առանց ուղիղ սլաքի երկքայլ ուղի այլևս չկա՝ $t(\\rho)=${S(toPairs(M))}$, $${count}$ զույգ։`);
+        }
       } else if (mode === "t") {
-        base = M0;
-        if (step) { M = steps[step - 1].M; just = steps[step - 1].added; }
         const addedAll = toPairs(M).filter(([i, j]) => !M0[i][j]);
+        if (step) just = steps[step - 1].added;
         if (!step) text = "Սեղմեք «Հաջորդ քայլ»՝ $1$ գագաթը որպես միջանկյալ թույլատրելու համար։";
-        else if (step < 4) text = `$k=${step}$ քայլից հետո՝ $${toPairs(M).length}$ զույգ${addedAll.length ? `, ավելացվածները՝ $${S(addedAll)}$` : ""}։`;
+        else if (step < nSteps) text = `$k=${step}$ քայլից հետո՝ $${count}$ զույգ${addedAll.length ? `, ավելացվածները՝ $${S(addedAll)}$` : ""}։`;
         else text = addedAll.length
-          ? `Ալգորիթմն ավարտվեց՝ $t(\\rho)=${S(toPairs(M))}$, $${toPairs(M).length}$ զույգ։`
+          ? `Ալգորիթմն ավարտվեց՝ $t(\\rho)=${S(toPairs(M))}$, $${count}$ զույգ։`
           : "Ալգորիթմն ավարտվեց՝ ոչինչ չավելացավ, $\\rho$-ն արդեն փոխանցական էր։";
       } else {
-        text = `$\\rho=${S(toPairs(M0))}$, $${toPairs(M0).length}$ զույգ։`;
+        text = (adopted ? `Նոր $\\rho$-ն նախորդ $${NAMES[adopted]}$-ն է։ ` : "")
+          + `$\\rho=${S(toPairs(M0))}$, $${count}$ զույգ։` + (sameM(M0, RHO72) ? " Սա 7.2-ի $\\rho$-ն է։" : "");
       }
       const pr = props(M), mk = badges.marks(pr);
-      view.render({ labels, pos, M, base, just, hl: mk.hl, ghost: mk.ghost, editable: mode === "rho",
-        onToggle: (i, j) => { M0[i][j] = M0[i][j] ? 0 : 1; step = 0; render(); } });
+      view.render({ labels, pos, M, base: mode === "rho" ? null : M0, just, hl: [...mk.hl, ...path], ghost: mk.ghost,
+        editable: mode === "rho",
+        onToggle: (i, j) => { M0[i][j] = M0[i][j] ? 0 : 1; step = 0; adopted = null; badges.reset(); render(); } });
       badges.update(pr, labels);
       msg.textContent = text;
       Q.math(msg);
       log.replaceChildren(...(mode === "t" ? steps.slice(0, step) : []).map(s => {
+        if (alg === "pair") {
+          const [i, j, k] = s.path;
+          return Q.el("li", {}, imp(i, j, k) + (M0[i][j] && M0[j][k] ? "" : " (օգտագործում է արդեն ավելացված սլաք)") + "։");
+        }
         const k = labels[s.k];
         const parts = [...s.added.map(([i, j]) => imp(i, s.k, j) + " նոր"), ...s.already.map(([i, j]) => imp(i, s.k, j) + ", արդեն կա")];
         return Q.el("li", {}, `$k=${k}$՝ ` + (parts.length ? parts.join(", ") : `$${k}$-ով անցնող երկքայլ ուղի չկա`) + "։");
       }));
       Q.math(log);
       modeBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+      algBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.alg === alg)));
+      [...chipsEl.children].forEach((c, n) => c.classList.toggle("on", sameM(M0, fromPairs(4, CLOSURE_PRESETS[n].pairs))));
       tctl.style.display = mode === "t" ? "" : "none";
-      ectl.style.display = mode === "rho" ? "" : "none";
-      stepBtn.disabled = step >= 4;
+      chipsEl.style.display = mode === "rho" ? "" : "none";
+      actl.style.display = mode !== "rho" && (mode !== "t" || step >= nSteps) ? "" : "none";
+      stepBtn.disabled = step >= nSteps;
     }
     modeBtns.forEach(b => b.addEventListener("click", () => { mode = b.dataset.mode; step = 0; badges.reset(); render(); }));
-    stepBtn.addEventListener("click", () => { if (step < 4) step++; render(); });
-    root.querySelector('[data-act="all"]').addEventListener("click", () => { step = 4; render(); });
+    algBtns.forEach(b => b.addEventListener("click", () => { alg = b.dataset.alg; step = 0; render(); }));
+    stepBtn.addEventListener("click", () => { step = Math.min(step + 1, current().steps.length); render(); });
+    root.querySelector('[data-act="all"]').addEventListener("click", () => { step = current().steps.length; render(); });
     root.querySelector('[data-act="restart"]').addEventListener("click", () => { step = 0; render(); });
-    root.querySelector('[data-act="reset"]').addEventListener("click", () => { M0 = fromPairs(4, RHO72); step = 0; badges.reset(); render(); });
+    root.querySelector('[data-act="adopt"]').addEventListener("click", () => {
+      M0 = copyM(current().M); adopted = mode; mode = "rho"; step = 0; badges.reset(); render();
+    });
+    render();
+  }
+
+  // ================================================================ 2.1 / 2.2 fill in the matrix
+  function setupFill(root) {
+    const chipsEl = root.querySelector('[data-out="rels"]'), setEl = root.querySelector('[data-out="set"]');
+    const msg = root.querySelector('[data-out="msg"]');
+    const view = relView(root.querySelector(".p23-host"));
+    let cur = FILL[0], T = presetMatrix(cur), S = zeros(cur.els.length), checked = false;
+    FILL.forEach(p => {
+      const c = Q.el("button", { type: "button", class: "chip", "data-id": p.id }, p.chip);
+      c.addEventListener("click", () => { cur = p; T = presetMatrix(p); S = zeros(p.els.length); checked = false; render(); });
+      chipsEl.appendChild(c);
+    });
+    root.querySelector('[data-act="check"]').addEventListener("click", () => { checked = true; render(); });
+    root.querySelector('[data-act="clear"]').addEventListener("click", () => { S = zeros(cur.els.length); checked = false; render(); });
+    function render() {
+      const v = fillVerdict(S, T), m = toPairs(T).length, k = toPairs(S).length;
+      view.render({ labels: cur.els, M: S, hl: checked ? v.extra : [], ghost: checked ? v.missing : [], editable: true,
+        onToggle: (i, j) => { S[i][j] = S[i][j] ? 0 : 1; checked = false; render(); } });
+      setEl.textContent = `$\\rho=\\{${cur.pairs}\\}$`;
+      Q.math(setEl);
+      let text;
+      if (!checked) text = `Ցանկում $${m}$ զույգ է, ձեր մատրիցում՝ $${k}$ հատ $1$։ Լրացրեք և սեղմեք «Ստուգել»։`;
+      else if (!v.extra.length && !v.missing.length) text = `Ճիշտ է՝ բոլոր $${m}$ վանդակները տեղում են։ Համեմատեք լուծման նկարի հետ։`;
+      else text = `Սխալ վանդակներ՝ ավելորդ $${v.extra.length}$, պակասող $${v.missing.length}$ (ավելորդները նարնջագույն շրջանակով են, պակասողները՝ կետագծով)։`
+        + (v.transposed ? " Կարծես տողերն ու սյունակները տեղերով փոխված են. տողը սլաքի սկիզբն է, սյունակը՝ վերջը։" : "");
+      msg.textContent = text;
+      Q.math(msg);
+      [...chipsEl.children].forEach(c => c.classList.toggle("on", c.dataset.id === cur.id));
+    }
     render();
   }
 
@@ -697,10 +876,12 @@
     const b = document.getElementById("w-compose"); if (b) setupCompose(b);
     const c = document.getElementById("w-editor"); if (c) setupEditor(c);
     const d = document.getElementById("w-closure"); if (d) setupClosure(d);
+    const e = document.getElementById("w-fill"); if (e) setupFill(e);
   });
   // exported for node checks
   window.P23 = {
-    fromPairs, toPairs, props, classify, reflexiveClosure, symmetricClosure, warshallSteps, transitiveClosure,
-    compose, chains, compositionPiece, PLANE, witnessSet, witness, PRESETS, presetMatrix
+    fromPairs, toPairs, props, classify, reflexiveClosure, symmetricClosure, warshallSteps, transitiveClosure, pairSteps,
+    fillVerdict, compose, chains, compositionPiece, MAPS, commuteWitness, PLANE, witnessSet, witness, PRESETS, presetMatrix,
+    randomRelation, CLOSURE_PRESETS, FILL
   };
 })();

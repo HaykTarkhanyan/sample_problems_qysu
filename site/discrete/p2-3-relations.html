@@ -58,6 +58,11 @@
   .p23-ghost { stroke: var(--orange); stroke-dasharray: 5 4; }
   .p23-dim { opacity: .16; }
   #exam .tbl th, #exam .tbl td { padding: .35rem .4rem; }
+  .p23-maprow { display: flex; align-items: center; justify-content: center; gap: .3rem .5rem; flex-wrap: wrap; margin: .35rem 0 0; }
+  .p23-maprow .chips { margin-top: 0; }
+  /* phones: chips and the slider tall enough to tap (about 30 px instead of 24 px / 16 px) */
+  .widget .chips .chip { padding: .32rem .6rem; font-size: .84rem; }
+  #w-shadow input[type="range"] { width: 11rem; height: 1.8rem; }
   .p23-log { font-size: .93rem; margin: .4rem 0 0; padding-left: 1.3rem; }
   .p23-log li { margin: .1rem 0; }
 </style>
@@ -208,7 +213,8 @@ $[0,\infty)$-ը որոշման տիրույթն է. այս պատասխանը շ
   «Լույս վերևից» ռեժիմում $x_0$ կետով անցնող ուղղաձիգ ճառագայթի վրա կանաչով երևում են բոլոր այն
   $y$-երը, որոնց համար $(x_0,y)\in\rho$։ Եթե գոնե մեկը կա, $x_0$-ն որոշման տիրույթում է (կարմիր ստվերը
   $x$-առանցքի վրա)։ «Լույս կողքից» ռեժիմը նույնն անում է հորիզոնական ճառագայթով՝ արժեքների տիրույթի
-  համար (նարնջագույն ստվերը $y$-առանցքի վրա)։ Փորձեք $x_0\lt 0$ (գ)-ում և $|x_0|\gt 4$ (դ)-ում։</p>
+  համար (նարնջագույն ստվերը $y$-առանցքի վրա)։ Փորձեք $x_0\lt 0$ (գ)-ում և $|x_0|\gt 4$ (դ)-ում։ Սա 1.2-ի (գ), (դ),
+  (է) և (ը) մասերն են, իսկ կարմիր և նարնջագույն ստվերները ներքևի աղյուսակի պատասխաններն են։</p>
   <div class="chips" data-out="rels" role="group" aria-label="Հարաբերություն"></div>
   <div class="widget-controls">
     <button class="btn" type="button" data-act="D" aria-pressed="true">Լույս վերևից՝ $\Dom$</button>
@@ -289,6 +295,22 @@ $\Dom_c=[0,\infty)$, $\Dom_d=\Ran_d=[-4,4]$ և $\Dom=\Ran=\R$ (է),(ը)-ի հա�
   <li>բ) $\{(a,b),(b,a),(b,c),(c,b),(c,d),(d,c),(c,a),(a,c)\}$</li>
   <li>գ) նույն բազմությունը, ինչ (բ)-ն աղբյուրում։</li>
 </ul>
+</div>
+
+<div class="widget" id="w-fill">
+  <div class="widget-head">Լրացրեք մատրիցը</div>
+  <p class="widget-hint">Ընտրեք հարաբերությունը և սեղմեք մատրիցի այն վանդակները, որոնք պետք է լինեն $1$ (տող՝ զույգի
+  առաջին տարրը, սյունակ՝ երկրորդը)։ Դիգրաֆը գծվում է ձեր մատրիցից. գագաթների վրա սեղմելով նույնպես կարելի է սլաք
+  ավելացնել։ «Ստուգել» կոճակը ցույց է տալիս սխալ վանդակները՝ ավելորդ $1$-երը նարնջագույն շրջանակով, պակասողները՝
+  կետագծով։ Սա 2.1-ի և 2.2-ի վարժությունն է. նախ լրացրեք ինքներդ, ապա համեմատեք լուծման հետ։</p>
+  <div class="chips" data-out="rels" role="group" aria-label="Հարաբերություն"></div>
+  <div class="widget-out" data-out="set" style="text-align:center"></div>
+  <div class="p23-host"></div>
+  <div class="widget-controls">
+    <button class="btn primary" type="button" data-act="check">Ստուգել</button>
+    <button class="btn" type="button" data-act="clear">Մաքրել</button>
+  </div>
+  <div class="widget-out" data-out="msg"></div>
 </div>
 
 <div class="solution">
@@ -386,6 +408,9 @@ $\Leftrightarrow$ սիմետրիկ $0/1$ մատրից։ Անկյունագծից
   <li>գ) $\{(a,c),(c,c),(c,d),(c,e),(e,c),(e,e),(e,f),(a,e)\}$</li>
 </ul>
 </div>
+
+<p class="muted">Մատրիցները կարող եք նախ ինքներդ լրացնել 2.1-ի <a href="#w-fill">«Լրացրեք մատրիցը»</a>
+վարժությունում՝ ընտրելով 2.2(ա), 2.2(բ) կամ 2.2(գ)։</p>
 
 <div class="solution">
 <div class="box idea"><div class="box-title">Գաղափարը</div>
@@ -604,17 +629,22 @@ $\sigma\cdot\rho$ և սեղմեք $-2$-ի վրա։</div>
 <div class="widget" id="w-compose">
   <div class="widget-head">Ձախից աջ՝ $x\to y\to z$</div>
   <p class="widget-hint">Ձախ սյունակում $x$ մեկնարկային արժեքներն են, միջինում՝ առաջին հարաբերության տված
-  $y$-երը, աջում՝ երկրորդի տված $z$-երը։ Սեղմեք ցանկացած շրջանի կամ ներքևի զույգերից մեկի վրա՝ տեսնելու այն
-  $x\to y\to z$ ուղիները, որոնք ծնում են համադրույթի զույգերը։ Փոխեք կարգը և նկատեք, որ $\sigma\cdot\rho$-ում
-  միջին սյունակը սեղմվում է՝ $x$-ը և $-x$-ը հանդիպում են նույն $y=x^2$-ում։</p>
+  $y$-երը, աջում՝ երկրորդի տված $z$-երը։ Սեղմեք ցանկացած շրջանի կամ ներքևի զույգերից մեկի վրա (ստեղնաշարով՝ Tab և
+  Enter)՝ տեսնելու այն $x\to y\to z$ ուղիները, որոնք ծնում են համադրույթի զույգերը։ Սկզբում $\rho$-ն $x+2$ է, $\sigma$-ն՝
+  $x^2$, այսինքն՝ 3.3-ի դեպքն է, և ընտրված է $x=1$-ը, ինչպես վերևի նկարում։ Փոխեք կարգը և նկատեք, որ
+  $\sigma\cdot\rho$-ում միջին սյունակը սեղմվում է՝ $x$-ը և $-x$-ը հանդիպում են նույն $y=x^2$-ում։ Ապա ընտրեք այլ
+  $\rho$ և $\sigma$ և գտեք զույգ, որի համար կարգը նշանակություն չունի։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-act="rs" aria-pressed="true">$\rho\cdot\sigma$ (նախ $\rho$)</button>
     <button class="btn" type="button" data-act="sr" aria-pressed="false">$\sigma\cdot\rho$ (նախ $\sigma$)</button>
   </div>
+  <div class="p23-maprow"><span>$\rho$՝</span><div class="chips" data-out="mapA" role="group" aria-label="ρ"></div></div>
+  <div class="p23-maprow"><span>$\sigma$՝</span><div class="chips" data-out="mapB" role="group" aria-label="σ"></div></div>
   <div class="p23-cols-svg"></div>
   <div class="widget-out" data-out="why"></div>
   <div class="chips" data-out="pairs" role="group" aria-label="Համադրույթի զույգերը"></div>
   <div class="widget-out muted" data-out="formula" style="text-align:center"></div>
+  <div class="widget-out" data-out="comm"></div>
 </div>
 </div><!-- /solution -->
 </div>
@@ -796,8 +826,15 @@ $\rho$-ն չէ՝ $(1,1)\notin\rho$, $(2,1)\notin\rho$։ Ստուգեք խմբա�
   նկարում ընդգծելու համար (բացակայող զույգը՝ կետագծով)։ (ա)-(ե) պատրաստի օրինակները 4.1-ի հարաբերությունների
   վերջավոր կտորներ են։ Կտորի վրա գտնված հակաօրինակը (✗) վավեր է նաև ամբողջ հարաբերության համար, իսկ
   ✓-ը միայն համաձայն է եզրակացությանը. ապացույցը վերևի դատողությունն է։ (դ)-ում գագաթները դասավորված են ըստ
-  բաժանելիության (1-ը՝ ներքևում), ուստի $\rho$-ի սլաքներն ուղղված են վերևից ներքև՝ բազմապատիկից դեպի բաժանարար։</p>
+  բաժանելիության (1-ը՝ ներքևում), ուստի $\rho$-ի սլաքներն ուղղված են վերևից ներքև՝ բազմապատիկից դեպի բաժանարար։
+  «Թաքցնել պատասխանները» ռեժիմում պիտակները փակ են. նախ ինքներդ որոշեք, ապա սեղմեք յուրաքանչյուրը՝ ստուգելու համար։
+  «Պատահական» կոճակը տալիս է նոր հարաբերություն $\{1,2,3,4\}$-ի վրա, իսկ «Մաքրել» կոճակը ջնջում է բոլոր զույգերը։</p>
   <div class="chips" data-out="presets" role="group" aria-label="Պատրաստի օրինակներ"></div>
+  <div class="widget-controls">
+    <button class="btn" type="button" data-act="quiz" aria-pressed="false">Թաքցնել պատասխանները</button>
+    <button class="btn" type="button" data-act="random">Պատահական</button>
+    <button class="btn" type="button" data-act="clear">Մաքրել</button>
+  </div>
   <div class="widget-out" data-out="set" style="text-align:center"></div>
   <div class="p23-host"></div>
   <div class="p23-badges" data-out="badges"></div>
@@ -934,7 +971,7 @@ $\checkmark$
 </div>
 
 <div class="check"><span class="check-label">Ստուգում։</span>
-$t(\rho)$-ն ստանանք երկրորդ եղանակով՝ աստիճաններով։ $\rho^2=\rho\cdot\rho=\{(1,4),(3,2),(3,4)\}$ (երկքայլ ուղիները),
+$t(\rho)$-ն ստանանք երկրորդ եղանակով՝ աստիճաններով։ $\rho^2=\{(1,4),(3,2),(3,4)\}$ (երկքայլ ուղիները),
 $\rho^3=\{(3,4)\}$ (միակ եռաքայլ ուղին՝ $3\to1\to2\to4$), իսկ $\rho^4=\varnothing$։ $\rho\cup\rho^2\cup\rho^3$-ը տալիս է
 նույն $6$ զույգը։ Ստացված $t(\rho)$-ն իսկապես փոխանցական է՝ նրա երկքայլ ուղիներն են $1\to2\to4$, $3\to1\to2$,
 $3\to1\to4$ և $3\to2\to4$, և չորսի ուղիղ սլաքներն էլ կան։ Չափերը նույնպես համընկնում են՝ $|r(\rho)|=4+4$ (չորս
@@ -965,34 +1002,46 @@ $z$ (Ուորշալի ալգորիթմը հենց սա է մեքենայացնո
 $(3,4)$, $(1,3)$, $(2,4)$ և $(1,4)$։ $5$-ը ստացվում է, երբ ուղիղ սլաք են ավելացնում միայն $\rho$-ի երկքայլ ուղիների
 համար. $1\to2\to3\to4$ ուղին երեք քայլ է, և նրա $(1,4)$ սլաքն անհրաժեշտ է դառնում միայն $(1,3)$-ը կամ $(2,4)$-ն
 ավելացնելուց հետո։ $3$-ը սխալ է, քանի որ շղթան փոխանցական չէ՝ $(1,2),(2,3)\in\rho$, բայց $(1,3)\notin\rho$։
-Ստուգեք ներքևում՝ $\rho$ ներդիրում հավաքեք այս շղթան մատրիցի վանդակներով և անցեք $t(\rho)$-ի քայլերը։</div>
+Ստուգեք ներքևում՝ $\rho$ ներդիրում ընտրեք «շղթա» օրինակը և անցեք $t(\rho)$-ի քայլերը «Զույգ առ զույգ»
+եղանակով. երկրորդ քայլում $(1,4)$-ն ավելանում է $1\to3\to4$ ուղուց, որի $(1,3)$ սլաքն ավելացվել էր առաջին
+քայլում։</div>
 </div>
 
 <div class="widget" id="w-closure">
   <div class="widget-head">Փակումների կառուցիչ</div>
   <p class="widget-hint">Ընտրեք փակումը։ Սկզբնական սլաքները կապույտ են, ավելացվածները՝ կարմիր, իսկ
   պիտակները ցույց են տալիս, որ ստացված հարաբերությունն արդեն ունի պահանջված հատկությունը (և որ մյուս
-  հատկությունները կարող են կորչել. նայեք AS-ին $s(\rho)$-ում)։ $t(\rho)$-ի համար սեղմեք «Հաջորդ քայլ»՝
-  $k$-րդ քայլում $k$ գագաթը թույլատրվում է որպես միջանկյալ, և $(i,j)$-ն ավելանում է, երբ արդեն կան
-  $(i,k)$ և $(k,j)$ զույգերը։ $\rho$ ներդիրում կարող եք սեղմել մատրիցի վանդակների վրա և փորձել ձեր
-  սեփական հարաբերությունը։</p>
+  հատկությունները կարող են կորչել. նայեք AS-ին $s(\rho)$-ում)։ $t(\rho)$-ի համար սեղմեք «Հաջորդ քայլ»։ «Զույգ առ
+  զույգ» եղանակով ամեն քայլում փակվում է մեկ երկքայլ ուղի, որն ուղիղ սլաք չուներ (ուղին ընդգծված է նարնջագույնով,
+  նոր սլաքը՝ հաստ կարմիր գծով). նկատեք, որ նոր սլաքը կարող է նոր ուղի ստեղծել։ «Ուորշալ» եղանակով $k$-րդ քայլում
+  $k$ գագաթը թույլատրվում է որպես միջանկյալ, և $(i,j)$-ն ավելանում է, երբ արդեն կան $(i,k)$ և $(k,j)$ զույգերը։
+  Սկզբում $\rho$-ն 7.2-ինն է. $\rho$ ներդիրում կարող եք ընտրել այլ օրինակ կամ սեղմել մատրիցի վանդակները և փորձել ձեր
+  սեփական հարաբերությունը։ «Արդյունքը դարձնել նոր $\rho$» կոճակով փակումները կարելի է կիրառել իրար հետևից, օրինակ՝
+  ստանալ $t(s(\rho))$-ն։</p>
   <div class="widget-controls">
     <button class="btn" type="button" data-mode="rho" aria-pressed="true">$\rho$</button>
     <button class="btn" type="button" data-mode="r" aria-pressed="false">$r(\rho)$</button>
     <button class="btn" type="button" data-mode="s" aria-pressed="false">$s(\rho)$</button>
     <button class="btn" type="button" data-mode="t" aria-pressed="false">$t(\rho)$</button>
   </div>
-  <div class="widget-controls" data-out="tctl" style="display:none">
-    <button class="btn primary" type="button" data-act="step">Հաջորդ քայլ</button>
-    <button class="btn" type="button" data-act="all">Բոլոր քայլերը</button>
-    <button class="btn" type="button" data-act="restart">Սկզբից</button>
-  </div>
-  <div class="widget-controls" data-out="ectl">
-    <button class="btn" type="button" data-act="reset">Վերադառնալ 7.2-ի $\rho$-ին</button>
+  <div class="chips" data-out="presets" role="group" aria-label="Պատրաստի հարաբերություններ"></div>
+  <div data-out="tctl" style="display:none">
+    <div class="widget-controls">
+      <button class="btn" type="button" data-alg="pair" aria-pressed="true">Զույգ առ զույգ</button>
+      <button class="btn" type="button" data-alg="warshall" aria-pressed="false">Ուորշալ</button>
+    </div>
+    <div class="widget-controls">
+      <button class="btn primary" type="button" data-act="step">Հաջորդ քայլ</button>
+      <button class="btn" type="button" data-act="all">Բոլոր քայլերը</button>
+      <button class="btn" type="button" data-act="restart">Սկզբից</button>
+    </div>
   </div>
   <div class="p23-host"></div>
   <div class="widget-out" data-out="msg"></div>
   <ol class="p23-log" data-out="log"></ol>
+  <div class="widget-controls" data-out="actl" style="display:none">
+    <button class="btn" type="button" data-act="adopt">Արդյունքը դարձնել նոր $\rho$</button>
+  </div>
   <div class="p23-badges" data-out="badges"></div>
 </div>
 </div><!-- /solution -->
@@ -1069,12 +1118,13 @@ $(3,4)$, $(1,3)$, $(2,4)$ և $(1,4)$։ $5$-ը ստացվում է, երբ ուղ
   <li>$\{1,2,3\}$-ի վրա $\rho=\{(1,2),(2,3),(3,1)\}$ (ցիկլ)։ Քանի՞ զույգ ունի $t(\rho)$-ն (<a href="#p7-2">7.2</a>)։
   <details class="extra"><summary>Պատասխան</summary><div class="inner"><p>$9$, այսինքն՝ բոլոր զույգերը, ակերն էլ։
   Ցիկլով ամեն գագաթից կարելի է հասնել ամեն գագաթի, նաև ինքն իրեն՝ $1\to2\to3\to1$ ուղուց ստացվում է $(1,1)$։ Ուրեմն
-  $t$-ն էլ կարող է ակեր ավելացնել։</p></div></details></li>
+  $t$-ն էլ կարող է ակեր ավելացնել։ Ստուգեք 7.2-ի «Փակումների կառուցիչ» նկարում՝ «ցիկլ» օրինակով։</p></div></details></li>
   <li>$\{1,2\}$-ի վրա $\rho=\{(1,2)\}$։ Համեմատեք $s(t(\rho))$-ն և $t(s(\rho))$-ն (<a href="#p7-2">7.2</a>)։
   <details class="extra"><summary>Պատասխան</summary><div class="inner"><p>$t(\rho)=\rho$, ուրեմն
   $s(t(\rho))=\{(1,2),(2,1)\}$, և այն փոխանցական չէ։ $t(s(\rho))=\{(1,1),(1,2),(2,1),(2,2)\}$՝ $1\to2\to1$ ուղին տալիս է
   $(1,1)$, իսկ $2\to1\to2$-ը՝ $(2,2)$։ Կարգը կարևոր է. $\rho$-ն պարունակող ամենափոքր համարժեքությունը
-  $t(s(r(\rho)))$-ն է։</p></div></details></li>
+  $t(s(r(\rho)))$-ն է։ Ստուգեք 7.2-ի «Փակումների կառուցիչ» նկարում՝ ընտրեք $\{(1,2)\}$ օրինակը, $s(\rho)$, «Արդյունքը
+  դարձնել նոր $\rho$», ապա $t(\rho)$։</p></div></details></li>
 </ol>
 
 <p>Հաջորդ թերթիկը՝ <a href="p4-functions.html">գործնական 4</a>, ֆունկցիաների մասին է։ Ֆունկցիան հարաբերություն է,
