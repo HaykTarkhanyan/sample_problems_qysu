@@ -1,0 +1,57 @@
+title = "Discrete pages: iteration by six agents (Armenian, phone layout, pedagogy, interactives); owner's wording answers for the numerical pages"
+date = "2026-11-16"
+time = "22:53"  # local (system clock, UTC+1); same Claude session as 2026-11-13-0000 and 2026-11-14-1140
+
+areas = [
+  "site/discrete (all 7 pages), site/assets/js/p*.js, discrete/solutions_opus_4_8_ARM/*.tex (in agent branches, NOT merged yet)",
+  "discrete/checks, discrete/reviews (new folders)",
+  "site/numerical and site/probability (owner's wording answers, merged and deployed)",
+  "tools/browser_check.mjs (--strict)",
+  "DECISIONS.md (#24), CONVENTIONS.md, armenian_style/OWNER_ANSWERS.md, QUESTIONS_FOR_NATIVE_SPEAKER.md",
+]
+
+done = [
+  "Status given to the owner; measured what is open on discrete (18 lint errors on pages + sheets, 51 wide display formulas, no try-first mode, no predict blocks, no closing sections).",
+  "Owner: 'launch agents to iterate on discrete both in terms of better interactives, better armenian and better pedagogy'. Six Opus builder agents launched at 23:02-23:05, one per page (P6 and P8 share one), each in its own worktree; DECISIONS #24. tools/browser_check.mjs got --strict (wide formulas on discrete pages become failures).",
+  "Owner interview, answers applied and deployed (dd8661e, Pages run 43969385427 passed): «վերին եզր» / «ստորին եզր» on every page (11 + 5 places), linear-systems wordings («դրական որոշյալություն», «ձգել», new key-idea heading, mnemonic removed), six integration wordings and one widget message. OWNER_ANSWERS A66-A70; A71 open (two more «երաշխիք» sentences).",
+  "Owner decisions for discrete: «դասավորություն» stays, «ֆիքսել» for 'fix', solutions hidden by default (try-first), new teaching blocks site-only (PDFs get language fixes only), an independent Fable reviewer per page.",
+  "All six builders finished between 23:44 and 00:03 (about 3.5 M Opus tokens in total: 531k, 561k, 585k, 566k, 595k, 635k). Every builder reports: 0 lint errors, all wide formulas fixed (51 of 51), try-first on, key-ideas box, predict blocks, hints, typical mistakes, closing #exam section, widgets improved, own check scripts in discrete/checks/. New widgets: w-rows and w-prod (P1), w-fill (P2-3), w-boxes (P7). One maths error reported in old content: the check sentence of problem 3.3 on P2-3.",
+  "The builders' 75 questions for the owner are stored in discrete/reviews/2026-11-16_questions_for_owner.md (owner at 23:40: 'store the questions that come, I'll answer all tomorrow').",
+  "Six Fable reviewers launched as each builder finished (23:48 to 00:05), each in its own worktree with the builder's branch merged in.",
+  "00:10: owner asked to pause ('tell them to pause, we continue later'). Pause message sent to all six reviewers: write the review file as IN PROGRESS with what remains, WIP commit, stop.",
+]
+
+pending = [
+  "NOTHING of the discrete iteration is merged or deployed. The live discrete pages are unchanged.",
+  "Resume the six reviewers (SendMessage to each: continue from your list of what remains). If this session is gone: start a fresh Fable reviewer per page from the reviewer's branch (it contains the builder's work, the partial review file and the WIP commit); the briefs are in this session's transcript, and the reviewers' own scripts are in logs/review_<page>/ of their worktrees (gitignored).",
+  "Then per page: read the reviewer's diff, rerun the gates on merged main (check_site, lint, the page's two check scripts, browser_check --strict), merge. Shared files the agents asked about: site.css (hint style, text input, bigger chips, 2 px padding for a matrix next to a figure), setupPredict from prob.js to site.js, CONVENTIONS.md (discrete pages now load prob.js and have try-first on; discrete/checks/mockdom.mjs).",
+  "Rebuild the seven Armenian PDFs with xelatex, one at a time (the agents edited the .tex sheets, language only, and did not compile). P1, P2-3, P5 were already 4 punctuation marks behind.",
+  "English sheet for practices 2-3: check whether it has the false sentence of problem 3.3 too (the P2-3 reviewer was asked to report it).",
+  "Remove the --strict exception for discrete in tools/browser_check.mjs once all seven pages pass strict on main; update DEFERRED_TODO (51 formulas, language sweep) and discrete/README.md; rebuild the search index; deploy.",
+  "Ask the owner the stored questions with the interview tool (75 from builders, plus the reviewers', plus A71 and Q67: deploy before or after the answers).",
+]
+
+next = [
+  "After the merge: a README in discrete/checks listing the scripts; decide with the owner which of the not-built widget ideas to build.",
+]
+
+files = [
+  "main (committed): tools/browser_check.mjs, DECISIONS.md, CONVENTIONS.md, armenian_style/OWNER_ANSWERS.md, armenian_style/QUESTIONS_FOR_NATIVE_SPEAKER.md, discrete/reviews/2026-11-16_questions_for_owner.md, numerical and probability pages of the wording answers",
+  "builder branches (local only): worktree-agent-a4194ceca56791ce0 (P1), -a31972d6967bdca53 (P2-3), -ac7f1d4e06dafefa2 (P4), -a3d4b88f37eb48051 (P5), -aa352315c5d149aa2 (P7), -a3e17db4c2d73ed9a (P6 and P8)",
+  "reviewer branches (local only, each contains its builder's branch): worktree-agent-aed300134470bc762 (P1), -a58b20a36e1ddfa87 (P2-3), -a6bb734ee2cb0ee0f (P4), -a9f364460e6c9eca3 (P5), -a6ca0b7853e567443 (P7), -aea24eee0df14693c (P6 and P8)",
+]
+
+commits = [
+  "0d15ceb browser_check --strict",
+  "dd8661e owner's wording answers applied; DECISIONS #24 (deployed)",
+  "1bc4045, c05fb4e questions for the owner stored",
+]
+
+notes = """
+Twelve worktrees exist under .claude/worktrees/ (six builders, six reviewers). Merge the REVIEWER branch of
+each page, not the builder's: it contains the builder's commits plus the review fixes.
+
+Two bulk wording changes by builders go beyond what the owner decided and wait for the reviewers and the
+owner: «սահման» -> «եզր» in 36 places of the old text of P7 (question P7-1), and 19 of 33 «ուստի» varied on
+P1 (question P1-9).
+"""
