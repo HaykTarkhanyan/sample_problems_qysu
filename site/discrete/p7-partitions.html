@@ -41,8 +41,8 @@ td.p7-target { background: var(--hl); font-weight: 700; }
 /* boxes widget (P1): small 2x2 table; own bounds of the lattice widget (P12) */
 table.p7-boxes th, table.p7-boxes td { padding: .3rem .45rem; font-size: .88rem; }
 table.p7-boxes th { font-weight: 600; }
-/* 360 px phones: without this the right column is cut inside the scroller ("6^6 = 4665") */
-@media (max-width: 380px) { table.p7-boxes th, table.p7-boxes td { padding: .3rem .22rem; font-size: .78rem; } }
+/* phones narrower than 390 px: without this the right column is cut inside the scroller ("6^6 = 4665" at 360 px) */
+@media (max-width: 389px) { table.p7-boxes th, table.p7-boxes td { padding: .3rem .22rem; font-size: .78rem; } }
 .p7-bounds label { white-space: nowrap; }
 table.tbl td.r { text-align: right; }
 </style>
