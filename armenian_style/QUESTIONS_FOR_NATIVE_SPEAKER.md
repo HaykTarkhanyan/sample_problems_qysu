@@ -19,7 +19,8 @@ need to answer the open ones.
 | **Answered by the owner, 2026-11-14** (answers listed after A58) | A50, A51, A52, A53, A54, A55, A56, A57, A58 |
 | **Answered by the owner, 2026-11-14, second interview** (see `OWNER_ANSWERS.md`): A59 a, A60 a, A61 a, A62 b, A63 a, A64 a, A65 a, A66 b | A59, A60, A61, A62, A63, A64, A65, A66 |
 | **Answered by the owner, 2026-11-16** (see `OWNER_ANSWERS.md`; 4 of the 13 wordings fine, 8 changed, 1 removed) | A67, A68, A69, A70 |
-| **Open** | A71 |
+| **Answered by the owner, 2026-11-18** (see `OWNER_ANSWERS.md`; both sentences reworded) | A71 |
+| **Open** | none |
 
 ## Grammar and punctuation house rules (affect hundreds of places)
 
