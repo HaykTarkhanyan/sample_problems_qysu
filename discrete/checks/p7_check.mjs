@@ -1,10 +1,12 @@
 // Brute-force check of every number on site/discrete/p7-partitions.html (practice 7), including the
 // teaching blocks added on 2026-11-16: predict questions, hints, extra checks, typical mistakes and the
 // closing self-check questions. Everything is recomputed by enumeration, independently of the page's
-// widget script (that one has its own check, p7_widgets_check.mjs). One assert per value.
+// widget script (that one has its own check, p7_widgets_check.mjs). One assert per value. The last block
+// (added by the independent review) also reads the page: the marked option of every predict block.
 //
 // Run from the repo root:  node discrete/checks/p7_check.mjs     (about 0.5 s, no dependencies)
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 let n = 0;
 const eq = (got, want, what) => { assert.equal(got, want, what); n++; };
@@ -276,6 +278,59 @@ for (let k = 1; k <= 4; k++) for (let m = 0; m <= 8; m++) {
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
 for (const [a, b] of [[6, 4], [6, 10], [11, 5], [12, 18]]) for (const N of [100, 120, 1000]) {
   eq(count(N, x => x % a === 0 && x % b === 0), Math.floor(N / (a / gcd(a, b) * b)), `lcm rule: a=${a}, b=${b}, N=${N}`);
+}
+
+// ------------------------------------------------------------------ added by the independent review (2026-11-18)
+// Claims of the page that had no assert, and the predict blocks read from the page itself.
+const lcm = (a, b) => a / gcd(a, b) * b;
+{ // typical mistakes: "the product is right only for pairwise coprime numbers"
+  let pairs = true, triples = true;
+  for (let a = 1; a <= 60; a++) for (let b = 1; b <= 60; b++) if ((lcm(a, b) === a * b) !== (gcd(a, b) === 1)) pairs = false;
+  for (let a = 2; a <= 30; a++) for (let b = a; b <= 30; b++) for (let c = b; c <= 30; c++) {
+    const pairwise = gcd(a, b) === 1 && gcd(a, c) === 1 && gcd(b, c) === 1;
+    if ((lcm(lcm(a, b), c) === a * b * c) !== pairwise) triples = false;
+  }
+  eq(pairs, true, "two numbers: lcm = product exactly when they are coprime (a, b <= 60)");
+  eq(triples, true, "three numbers: lcm = product exactly when they are pairwise coprime (<= 30)");
+  eq(gcd(gcd(6, 10), 15), 1, "6, 10, 15 have no common divisor ...");
+  eq(lcm(lcm(6, 10), 15), 30, "... yet their lcm is 30, not the product 900: 'pairwise' is needed for three numbers");
+  eq(lcm(lcm(11, 5), 3), 165, "problem 7: 11, 5, 3 are pairwise coprime, lcm = 165 = product");
+}
+// typical mistakes: "the signs alternate" in the count of "at least one": an element lying in exactly m of the
+// sets is counted sum_{j=1..m} (-1)^(j+1) C(m,j) = 1 times
+for (let m = 1; m <= 8; m++) {
+  let s = 0;
+  for (let j = 1; j <= m; j++) s += (j % 2 ? 1 : -1) * binom(m, j);
+  eq(s, 1, `alternating signs: an element in exactly ${m} sets is counted once`);
+}
+// problem 12, check by fixing x1: the two inequalities the text states
+for (let a = 4; a <= 15; a++) {
+  eq(24 - a >= 9, true, `x1=${a}: 24 - x1 is not below 9, so x2 >= 9 never binds`);
+  eq(35 - a >= 18, true, `x1=${a}: 35 - x1 is not below 18, so x2 <= 18 is the upper limit`);
+}
+// self-check 1: adding the new element to a class is injective (removing it gives back the base and the class)
+for (let m = 2; m <= 6; m++) for (let k = 1; k < m; k++) {
+  const seen = new Set();
+  for (const base of allPartitions(m - 1).filter(p => p.length === k)) for (let b = 0; b < k; b++) {
+    seen.add(base.map((blk, c) => (c === b ? blk.concat(m) : blk).join(",")).sort().join("|"));
+  }
+  eq(seen.size, k * S(m - 1, k), `self-check 1: the ${k} S(${m - 1},${k}) partitions built from the bases are all different`);
+}
+// the predict blocks of the page: one marked option each, it is the right answer (each value is asserted above),
+// the options are in increasing order, and the right one is not always in the same place (it was first in all six)
+{
+  const page = readFileSync("site/discrete/p7-partitions.html", "utf8");
+  const blocks = [...page.matchAll(/<div class="predict-opts">(.*?)<\/div>/g)].map(m =>
+    [...m[1].matchAll(/<button class="btn" type="button"( data-ok)?>\$(\d+)\$<\/button>/g)].map(b => ({ ok: !!b[1], v: Number(b[2]) })));
+  eq(blocks.length, 6, "six predict blocks on the page");
+  blocks.forEach((opts, i) => {
+    eq(opts.length, 3, `predict ${i + 1}: three options`);
+    eq(opts.filter(o => o.ok).length, 1, `predict ${i + 1}: exactly one option marked right`);
+    eq(opts.map(o => o.v).join(" "), opts.map(o => o.v).sort((x, y) => x - y).join(" "), `predict ${i + 1}: options in increasing order`);
+  });
+  eq(blocks.map(opts => opts.find(o => o.ok).v).join(" "), [S(6, 3), S(4, 1) + S(4, 2), count(120, x => x % 6 === 0 && x % 4 === 0), badLayer[2], HI[1] - LO[1] + 1, firstPair].join(" "),
+    "the marked options are the right answers: 90 8 10 18 10 40");
+  eq(new Set(blocks.map(opts => opts.findIndex(o => o.ok))).size > 1, true, "the right option is not always in the same position");
 }
 
 console.log(`p7_check: ${n} asserts passed`);

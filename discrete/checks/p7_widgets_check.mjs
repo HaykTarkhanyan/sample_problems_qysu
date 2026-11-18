@@ -6,7 +6,7 @@
 //      with the vendored KaTeX (a bad formula fails), outputs must not contain NaN / undefined, and the
 //      widget's own console.error self-checks must stay silent. Key numbers of the page are asserted.
 // No browser, no dependencies.
-// Run from the repo root:  node discrete/checks/p7_widgets_check.mjs           (about 20 s on one core: ~65 000 KaTeX renders)
+// Run from the repo root:  node discrete/checks/p7_widgets_check.mjs           (about 23 s on one core: ~76 000 KaTeX renders)
 //                          node discrete/checks/p7_widgets_check.mjs --dump    also writes every distinct widget
 //                                                                              message to logs/p7_widget_messages.txt
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -183,6 +183,10 @@ for (let n = 1; n <= 6; n++) for (let k = 1; k <= 6; k++) {
     eq(conf.length, v, `boxConfigs(${n},${k},${key})`);
     ok(conf.every(bx => bx.length === k && bx.flat().sort((x, y) => x - y).join() === Array.from({ length: n }, (_, i) => i + 1).join()), `configs of (${n},${k},${key}) use every element once`);
     if (!empty) ok(conf.every(bx => bx.every(b => b.length)), `no empty box in (${n},${k},${key})`);
+    // added by the independent review: the listed configurations are exactly the right ones, each once
+    // (a right count alone would also pass with one configuration repeated and another missing)
+    if (lab) eq(new Set(conf.map(bx => bx.map(b => b.join(",")).join("|"))).size, v, `distinct-box configurations of (${n},${k},${key}) are all different`);
+    else eq(conf.map(canon).sort(), parts.filter(p => (empty ? p.length <= k : p.length === k)).map(canon).sort(), `identical-box configurations of (${n},${k},${key}) = the set partitions`);
   }
   eq(P.boxCount(n, k, true, false), fact(k) * P.boxCount(n, k, false, false), `k! S(n,k) at (${n},${k})`);
   ok(P.boxCount(n, k, true, true) <= fact(k) * P.boxCount(n, k, false, true), `empty allowed: at most k! times at (${n},${k})`);
@@ -385,6 +389,23 @@ const noErrors = what => { eq(errors, [], `${what}: console.error`); };
   for (const c of out(r, "regions").querySelectorAll("button")) { click(c); rec(); }
   click(presets[2]); rec();
   ok(formula().includes("109-(21+36-7)=59") && formula().includes("\\approx58{,}13") && formula().includes("տիպիկ սխալների"), `preset N=1200: ${formula()}`);
+  // Added by the independent review (2026-11-18): the fraction line must not print an approximate value that
+  // looks like a whole number. With two fixed decimals N=356, a=2, b=3, c=71 gave "≈117,00, which is not the
+  // exact 117" (the fraction is 116,995...). Now a third or fourth decimal is added when needed.
+  const typeVenn = (N, a, b, c) => [["N", N], ["a", a], ["b", b], ["c", c]].forEach(([k, x]) => { inp(k).value = String(x); inp(k).fire("input"); });
+  typeVenn(356, 2, 3, 71); rec();
+  ok(formula().includes("\\approx116{,}995$") && formula().includes("=117$, ուղիղ թվարկում՝ $117$"), `fraction line at 356,2,3,71: ${formula()}`);
+  typeVenn(70, 2, 3, 71); rec();
+  ok(formula().includes("\\approx23{,}005$") && formula().includes("=24$, ուղիղ թվարկում՝ $24$"), `fraction line at 70,2,3,71: ${formula()}`);
+  for (const [a, b, c] of [[2, 3, 71], [7, 16, 15], [5, 97, 98], [2, 89, 95], [5, 99, 98]]) {
+    typeVenn(a, a, b, c);
+    for (let M = 1; M <= 150; M++) {
+      inp("N").value = String(a * M); inp("N").fire("input");
+      const f = formula(), m = f.match(/\\approx(\d+)\{,\}(\d+)\$/);
+      if (m) ok(!/^0+$/.test(m[2]) && m[2].length >= 2 && m[2].length <= 4, `approximate value with a visible fractional part at N=${a * M}, ${a},${b},${c}: ${f}`);
+    }
+  }
+  click(presets[2]);
   for (const bad of ["", "0", "abc", "100001", "2.5"]) {
     inp("N").value = bad; inp("N").fire("input"); note(W, formula());
     ok(formula().includes("Մուտքագրեք ամբողջ թվեր") && out(r, "examples").textContent === "", `invalid N "${bad}"`);

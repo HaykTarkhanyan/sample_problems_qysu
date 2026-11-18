@@ -41,6 +41,8 @@ td.p7-target { background: var(--hl); font-weight: 700; }
 /* boxes widget (P1): small 2x2 table; own bounds of the lattice widget (P12) */
 table.p7-boxes th, table.p7-boxes td { padding: .3rem .45rem; font-size: .88rem; }
 table.p7-boxes th { font-weight: 600; }
+/* 360 px phones: without this the right column is cut inside the scroller ("6^6 = 4665") */
+@media (max-width: 380px) { table.p7-boxes th, table.p7-boxes td { padding: .3rem .22rem; font-size: .78rem; } }
 .p7-bounds label { white-space: nowrap; }
 table.tbl td.r { text-align: right; }
 </style>
@@ -194,7 +196,7 @@ $$\begin{aligned}S(n,k)&=\underbrace{S(n-1,k-1)}_{(1)}\\&+\underbrace{k\,S(n-1,k
 
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> Աղյուսակի հաջորդ տողում ինչի՞ է հավասար $S(6,3)$-ը։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$90$</button><button class="btn" type="button">$40$</button><button class="btn" type="button">$75$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$40$</button><button class="btn" type="button">$75$</button><button class="btn" type="button" data-ok>$90$</button></div>
 <div class="predict-why">$S(6,3)=S(5,2)+3\,S(5,3)=15+3\cdot25=90$։ $40=15+25$ ստացվում է, եթե մոռանանք $k=3$
 գործակիցը, բայց նոր տարրը կարող է միանալ երեք դասից ցանկացածին։ $75=3\cdot25$ ստացվում է, եթե մոռանանք այն
 տրոհումները, որոնցում նոր տարրը մենակ է։ Ստուգեք ներքևի աղյուսակում՝ լրացրեք $S(6,3)$ վանդակը։</div>
@@ -227,7 +229,7 @@ $$\begin{aligned}S(n,k)&=\underbrace{S(n-1,k-1)}_{(1)}\\&+\underbrace{k\,S(n-1,k
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> $4$ տարբեր տարրը դնում ենք $2$ միանման արկղում, և արկղը կարող է դատարկ մնալ։ Քանի՞
 տարբերակ կա։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$8$</button><button class="btn" type="button">$16$</button><button class="btn" type="button">$7$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$7$</button><button class="btn" type="button" data-ok>$8$</button><button class="btn" type="button">$16$</button></div>
 <div class="predict-why">$8=S(4,1)+S(4,2)=1+7$՝ կամ բոլոր տարրերը մեկ արկղում են, կամ զբաղված են երկու արկղն էլ։
 $16=2^4$-ը տարբեր արկղերի պատասխանն է. միանման արկղերի դեպքում ամեն տարբերակ այնտեղ հաշվված է երկու անգամ։ $7$-ը
 կստացվեր, եթե մոռանայինք այն դեպքը, երբ մի արկղը դատարկ է։ Ստուգեք ներքևում՝ $n=4$, $k=2$, միացրեք «Արկղը կարող է
@@ -331,7 +333,7 @@ $300+500-100=700$, և մնում է շրջաններից դուրս գտնվող
 
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> $1$-ից $120$ թվերից քանի՞սն են բաժանվում և՛ $6$-ի, և՛ $4$-ի վրա։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$10$</button><button class="btn" type="button">$5$</button><button class="btn" type="button">$20$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$5$</button><button class="btn" type="button" data-ok>$10$</button><button class="btn" type="button">$20$</button></div>
 <div class="predict-why">$10$։ $6$-ի և $4$-ի ընդհանուր բազմապատիկները $\operatorname{lcm}(6,4)=12$-ի բազմապատիկներն են,
 և $120/12=10$։ $5=120/24$ պատասխանը ճիշտ կլիներ միայն փոխադարձաբար պարզ բաժանարարների դեպքում. $6\cdot4=24$, բայց,
 օրինակ, $12$-ն էլ է բաժանվում երկուսի վրա։ $20$-ը միայն $6$-ի բազմապատիկների քանակն է։ Ստուգեք ներքևի նկարում՝
@@ -490,7 +492,7 @@ $BC$-ին՝ հենց այն տիպի կողմ, որից թույլատրելի �
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> Ֆիքսենք $R_2$ գագաթը ($k=2$)։ $(i,j)$ զույգերի $49$ վանդակից քանի՞սն են «վատ», այսինքն՝
 բավարարում են $B_1$, $B_2$, $B_3$ պայմաններից գոնե մեկին։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$18$</button><button class="btn" type="button">$21$</button><button class="btn" type="button">$15$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$15$</button><button class="btn" type="button" data-ok>$18$</button><button class="btn" type="button">$21$</button></div>
 <div class="predict-why">$18$։ Պայմաններից յուրաքանչյուրը $7$ վանդակ է, բայց $7+7+7=21$ գումարում երկու պայմանի
 հատման վանդակները հաշվված են երկու անգամ։ $k=2$ դեպքում այդպիսի վանդակները երեքն են՝ $(2,6)$, $(6,2)$ և $(2,2)$,
 և $21-3=18$։ $15=21-6$ կստացվեր, եթե այդ երեք վանդակը հանեինք երկու անգամ։ Ստուգեք ներքևում՝ ընտրեք $2$-րդ
@@ -551,7 +553,7 @@ $$\begin{gathered}x_1+x_2+x_3=40,\\ 4\le x_1\le 15,\quad 9\le x_2\le 18,\\ 5\le 
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> Ստորին եզրերը վերացնելուց հետո $y_2=x_2-9$, և $0\le y_2\le9$։ Այն լուծումները
 հաշվելու համար, որոնցում $y_2$-ը գերազանցում է իր եզրը, նախապես $y_2$-ին քանի՞ միավոր պետք է տալ։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$10$</button><button class="btn" type="button">$9$</button><button class="btn" type="button">$19$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$9$</button><button class="btn" type="button" data-ok>$10$</button><button class="btn" type="button">$19$</button></div>
 <div class="predict-why">$10$։ «$y_2$-ը գերազանցում է $9$-ը» նշանակում է $y_2\ge10$։ $9$ միավոր տալիս կհաշվեինք նաև
 $y_2=9$ լուծումները, որոնցում $y_2$-ն իր եզրը չի գերազանցում, և դրանք սխալմամբ կհանեինք։ $19=18+1$ կստացվեր, եթե
 տեղաշարժեինք ստորին եզրը, իսկ վերինը՝ ոչ. $x_2\le18$ պայմանից ստացվում է $y_2\le9$, ոչ թե $y_2\le18$։</div>
@@ -650,7 +652,7 @@ $a_i\le x_i\le b_i$ պայմանով հաշվելու համար՝</p>
 <div class="predict">
 <p><strong>Կանխատեսեք։</strong> Ներքևի նկարում, խնդրի եզրերի դեպքում, $N$-ը կարող է փոխվել $18$-ից $49$։ $N$-ի ո՞ր
 ամենափոքր արժեքի դեպքում է զույգ անդամներից գոնե մեկն առաջին անգամ զրոյից տարբեր դառնում։</p>
-<div class="predict-opts"><button class="btn" type="button" data-ok>$40$</button><button class="btn" type="button">$22$</button><button class="btn" type="button">$34$</button></div>
+<div class="predict-opts"><button class="btn" type="button">$22$</button><button class="btn" type="button">$34$</button><button class="btn" type="button" data-ok>$40$</button></div>
 <div class="predict-why">$40$։ $y_1\ge12$ և $y_2\ge10$ պայմանները միասին պահանջում են $12+10=22$ միավոր, այսինքն՝
 $N'=N-18\ge22$ և $N\ge40$ (մյուս երկու զույգը պահանջում են $22$ և $24$ միավոր)։ $22$-ը $N'$-ի արժեքն է, ոչ թե $N$-ի։
 $34=12+10+12$-ը եռյակ անդամի համար անհրաժեշտ միավորների քանակն է. քանի որ $N'\le31$, եռյակ անդամը նկարում միշտ $0$
@@ -736,7 +738,7 @@ $34=12+10+12$-ը եռյակ անդամի համար անհրաժեշտ միավ�
   <li><strong>Տալ $c_i$ միավոր, ոչ թե $c_i+1$։</strong> $y_i\gt c_i$ պայմանը նշանակում է $y_i\ge c_i+1$։ Խնդիր 12-ում $c_i+1$-ի
   փոխարեն $c_i$ միավոր տալիս կստանանք $28$՝ $55$-ի փոխարեն։</li>
   <li><strong>Վերցնել արտադրյալը, ոչ թե ամենափոքր ընդհանուր բազմապատիկը։</strong> «և՛ $6$-ի, և՛ $4$-ի բազմապատիկ»
-  նշանակում է «$12$-ի բազմապատիկ», ոչ թե $24$-ի։ Արտադրյալը ճիշտ է միայն փոխադարձաբար պարզ թվերի դեպքում, ինչպես
+  նշանակում է «$12$-ի բազմապատիկ», ոչ թե $24$-ի։ Արտադրյալը ճիշտ է միայն զույգ առ զույգ փոխադարձաբար պարզ թվերի դեպքում, ինչպես
   Խնդիր 7-ում ($11$, $5$, $3$)։</li>
   <li><strong>Կոտորակներով կարճ ճանապարհը միշտ ճիշտ չէ։</strong> Խնդիր 7-ում $1500\cdot\frac45\cdot\frac23=800$ ճիշտ է,
   քանի որ $1500$-ը $15$-ի բազմապատիկ է։ $N=1200$ դեպքում $11$-ի բազմապատիկները $109$-ն են, և $109\cdot\frac{8}{15}\approx58{,}13$

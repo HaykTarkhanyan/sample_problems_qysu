@@ -408,7 +408,12 @@
       const M = r.A, bc = v.b * v.c, num = M * (v.b - 1) * (v.c - 1);
       const fr = `${M}\\cdot\\frac{${v.b - 1}}{${v.b}}\\cdot\\frac{${v.c - 1}}{${v.c}}`;
       const isInt = num % bc === 0;
-      const val = isInt ? String(num / bc) : (num / bc).toFixed(2).replace(".", "{,}");
+      // Two decimals, more when two would print a whole number ("≈117,00, which is not the exact 117" for
+      // N=356, a=2, b=3, c=71). A non-integer value is at least 1/bc >= 1/9801 away from an integer, so four
+      // decimals always show the difference.
+      let dec = 2;
+      while (!isInt && dec < 4 && /\.0+$/.test((num / bc).toFixed(dec))) dec++;
+      const val = isInt ? String(num / bc) : (num / bc).toFixed(dec).replace(".", "{,}");
       if (M % bc === 0) return `Կոտորակներով՝ $${fr}=${val}$, և սա ճշգրիտ է, քանի որ $${M}$-ը $${bc}$-ի բազմապատիկ է։`;
       if (isInt && num / bc === r.none) return `Կոտորակներով՝ $${fr}=${val}$. համընկնում է, բայց պատահականորեն՝ $${M}$-ը $${bc}$-ի բազմապատիկ չէ։`;
       return `Կոտորակներով՝ $${fr}${isInt ? "=" : "\\approx"}${val}$, ինչը ճշգրիտ $${r.none}$-ը չէ՝ $${M}$-ը $${bc}$-ի բազմապատիկ չէ, այնպես որ պետք են ամբողջ մասերը։`;
