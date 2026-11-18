@@ -225,7 +225,7 @@
     function randomWords() {
       const [a, b] = P;
       if (!avoid) { words = [shuffled(a, b), shuffled(W - a, H - b)]; return; }
-      // a uniform path that misses P: draw paths until one misses (at least 3432 of 6435 miss any inner point)
+      // a uniform path that misses P: draw paths until one misses (at least 3003 of 6435 miss any point other than O and A)
       words = [""];
       if (onCorner()) return;
       for (let t = 0; t < 1000; t++) {

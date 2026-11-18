@@ -117,6 +117,37 @@ const act = (r, name) => r.querySelector(`[data-act="${name}"]`);
   presets[4].click(); ok(rows().length === 10 && rows()[9].textContent.includes("144"), "f(n) preset row 10 = 144");
   presets[3].click(); m = check("double");
   ok(m.cd.includes("միայն մեկ անհայտով, և երկու պայմանին միաժամանակ բավարարել չէր ստացվի"), m.cd);
+  // Added by the independent review (2026-11-17, discrete/reviews/2026-11-16_p8_review.md): states in which the
+  // first version printed something false.
+  const legend = () => clean(out(r, "legend"), "legend");
+  ok(legend().includes("($n$ արտադրիչով բաղադրիչը)") && !legend().includes("մեծ արմատի"), "double root: the blue part is not called the larger root's: " + legend());
+  // (1) a small non-zero constant on the dominant root was printed as 0 (12 slider states); a_10 = 86 784 here
+  set("N", 10); set("p", -6); set("q", 8); set("a1", 8); set("a2", 9); m = check("tiny C");
+  ok(m.cd.includes("$C\\approx0{,}00026$") && !legend().includes("$0\\cdot("), `a non-zero constant printed as 0: ${m.cd} | ${legend()}`);
+  eq(P.recurrence(8, 9, 10, -6, 8)[9], 86784, "a_10 = 86 784 in that state");
+  {   // C and D of that state by Cramer's rule, apart from p8.js: C is about 0,000258, and the formula gives a_10
+    const r1 = (-6 - Math.sqrt(68)) / 2, r2 = (-6 + Math.sqrt(68)) / 2, det = r1 * r2 * (r2 - r1);
+    const C0 = (8 * r2 * r2 - 9 * r2) / det, D0 = (9 * r1 - 8 * r1 * r1) / det;
+    ok(Math.abs(C0 - 0.000258) < 1e-6 && Math.abs(C0 * r1 ** 10 + D0 * r2 ** 10 - 86784) < 1e-3, `C = ${C0}, D = ${D0}`);
+  }
+  for (let p = -6; p <= 6; p++) for (let q = -9; q <= 9; q++) for (let a1 = -5; a1 <= 10; a1++) for (let a2 = -10; a2 <= 30; a2++) {
+    const A2 = P.analyze(p, q, a1, a2);
+    if (A2.kind !== "irr" || (a1 === 0 && a2 === 0)) continue;
+    const t = P.closedTex(A2);   // every printed coefficient of a non-zero constant is non-zero
+    ok(!/(^|[+-])0\\cdot/.test(t), `closed form with a zero coefficient at p=${p} q=${q} a=(${a1},${a2}): ${t}`);
+  }
+  // (2) the dominant root is negative: "larger root" needs "in absolute value"; roots r and -r: blue is the positive one
+  set("p", -6); set("q", 9); set("a1", -5); set("a2", -10); check("negative dominant root");
+  ok(legend().includes("(-7{,}243)^n$ (բացարձակ արժեքով մեծ արմատի բաղադրիչը)"), legend());
+  set("p", 0); set("q", 4); set("a1", 1); set("a2", 3); check("roots -2 and 2");
+  ok(legend().includes("2^n$ (մեծ արմատի բաղադրիչը)"), legend());
+  // (3) p = q = 0: no a_2 * 0^(n-2) (which is a_2 * 0^0 at n = 2)
+  set("p", 0); set("q", 0); set("a1", 2); set("a2", 5); m = check("p = q = 0");
+  ok(!m.cd.includes("0^") && m.cd.includes("$a_n=0$") && m.ratio.includes("բոլոր անդամները $0$ են"), `${m.cd} | ${m.ratio}`);
+  eq(P.recurrence(2, 5, 6, 0, 0), [2, 5, 0, 0, 0, 0], "p = q = 0: zero from the third term on");
+  // (4) complex roots: the message must not say that the method box covers real roots only (its formula has no such limit)
+  set("p", 1); set("q", -1); set("a1", 1); set("a2", 1); m = check("complex");
+  ok(m.cd.includes("կոմպլեքս") && !m.cd.includes("մեթոդի վանդակը"), m.cd);
   // every p, q at three initial pairs and the largest N
   set("N", 10);
   for (const [a1, a2] of [[2, 10], [0, 0], [-5, 30]]) {

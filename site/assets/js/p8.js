@@ -74,8 +74,13 @@
   // ---------------------------------------------------------------- TeX / text formatting
   const minus = s => String(s).replace(/-/g, "−");
   const num = v => minus(Q.fmt(v));
-  /** Decimal with a comma for TeX, at most 3 decimals: 1.618 -> 1{,}618. */
-  const decTex = v => String(Number(v.toFixed(3))).replace(".", "{,}");
+  /** Decimal with a comma for TeX, at most 3 decimals: 1.618 -> 1{,}618. A non-zero value below 0,01 keeps 2
+      significant digits instead, so that a small constant in front of a large root is never printed as 0
+      (p = -6, q = 8, a_1 = 8, a_2 = 9: C = 0,00026 with (-7,123)^n, which is 86 784 at n = 10). */
+  const decTex = v => {
+    const a = Math.abs(v);
+    return String(Number(a >= 1e-9 && a < 0.01 ? v.toPrecision(2) : v.toFixed(3))).replace(".", "{,}");
+  };
   function fracTex({ p, q }) { return q === 1 ? String(p) : `${p < 0 ? "-" : ""}\\tfrac{${Math.abs(p)}}{${q}}`; }
   const baseTex = b => (b < 0 ? `(${b})` : String(b));
   /** c * b^n as TeX for an integer base b; for b > 1 folds c = +-b^k into b^{n+k}, so -2*2^n prints as -2^{n+1}. */
@@ -247,7 +252,11 @@
           const [bc, br, rc, rr] = A.domIsD ? [A.D, A.r2, A.C, A.r1] : [A.C, A.r1, A.D, A.r2];
           blueTex = `${decTex(bc)}\\cdot(${decTex(br)})^n`; redTex = `${decTex(-rc)}\\cdot(${decTex(rr)})^n`;
         }
-        items.push(Q.el("span", {}, sw("var(--blue)"), `$${blueTex}$ (մեծ արմատի բաղադրիչը)`));
+        // What the blue part is. A double root has no "larger" root. When blue belongs to r_1 (the smaller root,
+        // negative and larger in absolute value: roots -7,243 and 1,243), "larger" is false without "in absolute value".
+        const blueNote = A.kind === "double" ? "$n$ արտադրիչով բաղադրիչը"
+          : A.domIsD ? "մեծ արմատի բաղադրիչը" : "բացարձակ արժեքով մեծ արմատի բաղադրիչը";
+        items.push(Q.el("span", {}, sw("var(--blue)"), `$${blueTex}$ (${blueNote})`));
         items.push(Q.el("span", {}, sw("var(--red)"), `$${redTex}$ (հանվող բաղադրիչը)`));
         items.push(Q.el("span", {}, sw("var(--orange)", true), `$a_n${A.kind === "irr" ? "\\approx" : "="}${closedTex(A)}$`));
       } else items.push(Q.el("span", {}, sw("var(--orange)", true), "$a_n$՝ ռեկուրենտ առնչությամբ"));
@@ -258,12 +267,14 @@
     function cdMessage(A, p, q, a1, a2) {
       const eqTex = `r^2=${p === 0 ? "" : (p === 1 ? "" : p === -1 ? "-" : p) + "r"}${q > 0 && p !== 0 ? "+" : ""}${q}`;
       if (A.kind === "first") {
+        // p = 0 too: the rule is a_n = 0, and "a_2 * 0^(n-2) for n >= 2" would read a_2 = a_2 * 0^0 at n = 2
+        if (p === 0) return "$p=0$ և $q=0$, այսինքն՝ կանոնը $a_n=0$ է ($n\\ge3$), իսկ $a_1$-ը և $a_2$-ը հաջորդ անդամների վրա չեն ազդում։";
         return `$q=0$, այսինքն՝ $a_{n-2}$-ը բացակայում է, և կանոնն առաջին կարգի է՝ $a_n=${p === 1 ? "" : p === -1 ? "-" : p}a_{n-1}$։ ` +
           `Ուրեմն $n\\ge2$-ի համար $a_n=a_2\\cdot ${baseTex(p)}^{\\,n-2}$, իսկ $a_1$-ը հաջորդ անդամների վրա չի ազդում։`;
       }
       if (A.kind === "complex") {
         return `Բնութագրիչ հավասարումը՝ $${eqTex}$, դիսկրիմինանտը՝ $p^2+4q=${A.disc}\\lt0$, ուստի արմատները կոմպլեքս են՝ ` +
-          `$r_{1,2}=\\frac{${p}\\pm i\\sqrt{${-A.disc}}}{2}$։ Այս էջի մեթոդի վանդակը միայն իրական արմատներն է դիտարկում, ` +
+          `$r_{1,2}=\\frac{${p}\\pm i\\sqrt{${-A.disc}}}{2}$։ Այս էջում միայն իրական արմատներն ենք դիտարկում, ` +
           "այնպես որ աղյուսակի անդամները հաշվված են միայն ռեկուրենտ առնչությամբ։";
       }
       if (A.kind === "double") {
