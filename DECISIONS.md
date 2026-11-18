@@ -64,7 +64,10 @@ Newest first. Superseded entries stay, marked as such.
   safe to run on Linux: only 12 display formulas on those pages have Armenian text inside the formula (the one
   thing whose width depends on system fonts), and the tightest of them has 35 px of room. First CI run (Pages
   run 43588704986): all 37 pages passed in 36 s, the whole build job took 47 s. The font effect is real: on the
-  Linux runner `discrete/p1-sets.html` has 9 formulas that scroll sideways, on Windows 8.
+  Linux runner `discrete/p1-sets.html` has 9 formulas that scroll sideways, on Windows 8. On 2026-11-18 the
+  step blocked a deploy for the first time, for exactly that reason: one P8 formula with Armenian words inside
+  it measured 347 px in a 330 px column on the runner and fitted on Windows; it was split and the next run
+  passed (run 44309537742).
 - **Alternatives rejected** Puppeteer (same job, but it downloads its own Chrome by default, and the repo's
   manual browser checks already run on Playwright); `@playwright/test` with its runner and bundled browsers
   (a test framework for one loop over pages, and `playwright install` downloads a browser on every CI run:
