@@ -294,7 +294,8 @@
       else if (!fgOk && !gfOk) msg = `$x=${x}$ կետում երկու համադրույթներն էլ որոշված չեն։ Փորձեք մեկ այլ $x$։`;
       else if (!fgOk || !gfOk) {
         const [bad, good, val] = fgOk ? ["g\\cdot f", "f\\cdot g", r.fg.val] : ["f\\cdot g", "g\\cdot f", r.gf.val];
-        msg = `$(${bad})(${x})$-ը որոշված չէ, իսկ $(${good})(${x})${valTex(val).rel}${valTex(val).num}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
+        // the article follows the spoken name of the formula: "... զրո" ends in a vowel, so (f·g)(0)-ն
+        msg = `$(${bad})(${x})$-${x === 0 ? "ն" : "ը"} որոշված չէ, իսկ $(${good})(${x})${valTex(val).rel}${valTex(val).num}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
       } else if (Math.abs(r.fg.val - r.gf.val) < 1e-9) msg = `Այս $x$-ի համար երկու արժեքները համընկնում են (երկուսն էլ՝ $${show(r.fg.val)}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`;
       else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${show(r.fg.val)}\\ne ${show(r.gf.val)}$, հետևաբար $f\\cdot g\\ne g\\cdot f$։`;
       setText($('[data-out="verdict"]'), msg);
@@ -315,7 +316,7 @@
       check($('[data-out="gfcheck"]'), res.gf.closed);
       const end = ch => res[ch].steps[res[ch].steps.length - 1].tex.split("=").pop();
       let msg;
-      if (Number.isNaN(res.fg.val)) msg = `$(f\\cdot g)(0)$-ը որոշված չէ, իսկ $(g\\cdot f)(0)=${end("gf")}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
+      if (Number.isNaN(res.fg.val)) msg = `$(f\\cdot g)(0)$-ն որոշված չէ, իսկ $(g\\cdot f)(0)=${end("gf")}$՝ երկու համադրույթների որոշման տիրույթներն էլ են տարբեր։`;
       else if (Math.abs(res.fg.val - res.gf.val) < 1e-9) msg = `Այս $x$-ի համար երկու արժեքները համընկնում են ($${end("fg")}=${end("gf")}$), բայց դա պատահականություն է՝ մեկ կետում հավասարությունը չի նշանակում, որ ֆունկցիաները հավասար են։ Փորձեք մեկ այլ $x$։`;
       else msg = `Նույն մուտքը՝ $x=${x}$, տարբեր ելքեր՝ $${end("fg")}\\ne ${end("gf")}$, ուստի $f\\cdot g\\ne g\\cdot f$։`;
       const note = pipeNote(part, x);

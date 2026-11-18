@@ -184,7 +184,8 @@ const ran = [];
       allOuts("w-pipe", r);
       const v = clean(out(r, "verdict"), `w-pipe ${b.dataset.part} x=${x}`);
       const res = P.pipeline(b.dataset.part, x);
-      if (Number.isNaN(res.fg.val)) ok(v.includes("որոշված չէ"), v);
+      // «... (0)-ն»: the spoken name ends in «զրո», a vowel, so the article is «-ն» (GUIDE A1b; review of 2026-11-16)
+      if (Number.isNaN(res.fg.val)) ok(v.includes("$(f\\cdot g)(0)$-ն որոշված չէ"), v);
       else if (Math.abs(res.fg.val - res.gf.val) < 1e-9) ok(v.includes("համընկնում են"), `equal values must be called a coincidence: ${v}`);
       else ok(v.includes("տարբեր ելքեր"), v);
       const note = P.pipeNote(b.dataset.part, x);
@@ -212,7 +213,11 @@ const ran = [];
       const v = clean(out(r, "verdict"), `own ${fi},${gi},${x}`);
       if (P.samePair(fi, gi)) ok(v.includes("նույն ֆունկցիան են"), v);
       else if (Number.isNaN(fg) && Number.isNaN(gf)) ok(v.includes("երկու համադրույթներն էլ որոշված չեն"), v);
-      else if (Number.isNaN(fg) || Number.isNaN(gf)) ok(v.includes("որոշման տիրույթներն էլ են տարբեր"), v);
+      else if (Number.isNaN(fg) || Number.isNaN(gf)) {
+        ok(v.includes("որոշման տիրույթներն էլ են տարբեր"), v);
+        // the undefined composition is the one named, with the article of its spoken name («-ն» only after «զրո»)
+        ok(v.startsWith(`$(${Number.isNaN(fg) ? "f\\cdot g" : "g\\cdot f"})(${x})$-${x === 0 ? "ն" : "ը"} որոշված չէ`), v);
+      }
       else if (Math.abs(fg - gf) < 1e-9) ok(v.includes("պատահականություն"), v);
       else ok(v.includes("տարբեր ելքեր"), v);
       ok(clean(out(r, "fgcheck"), "own fg formula").includes(o.fgTex), "own: substituted formula shown");

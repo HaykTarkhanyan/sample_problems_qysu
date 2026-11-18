@@ -80,7 +80,7 @@ const P4 = {
 };
 const dot = (f, g) => x => g(f(x));                       // the course's f·g: first f, then g
 near(P4.b.f(1), Math.sqrt(3), "P4 (բ) f(1) = sqrt3");
-near(dot(P4.b.f, P4.b.g)(1), 6, "P4 (բ) (f·g)(1) = 6 (predict answer)");
+near(dot(P4.b.f, P4.b.g)(1), 6, "P4 (բ) (f·g)(1) = 6 (check box)");
 near(1 + 5, 6, "P4 (բ) x^2+5 at 1");
 near(P4.b.g(1), 4, "P4 (բ) g(1) = 4");
 near(dot(P4.b.g, P4.b.f)(1), Math.sqrt(18), "P4 (բ) (g·f)(1) = sqrt18");
@@ -245,7 +245,7 @@ for (const f of maps(3, 3)) {
   const S = subsets(range(3));
   for (const Y1 of S) for (const Y2 of S) {
     ok(same(pre(f, cap(Y1, Y2)), cap(pre(f, Y1), pre(f, Y2))), "P24 f^-1 respects ∩");
-    ok(same(pre(f, cup(Y1, Y2)), cup(pre(f, Y1), pre(f, Y2))), "P24 f^-1 respects ∪ (self-check Q5)");
+    ok(same(pre(f, cup(Y1, Y2)), cup(pre(f, Y1), pre(f, Y2))), "P24 f^-1 respects ∪ (check box, summary table)");
   }
   for (const Y of S) ok(same(pre(f, range(3).filter(b => !Y.includes(b))), range(3).filter(x => !pre(f, Y).includes(x))), "P24 f^-1 respects complement");
 }
