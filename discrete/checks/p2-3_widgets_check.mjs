@@ -76,6 +76,10 @@ for (const M of samples) {
     const exp = [];
     for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (i !== st.k && j !== st.k && W[i][st.k] && W[st.k][j] && !W[i][j]) exp.push([i, j]);
     if (key(exp.length ? exp : [[]]) !== key(st.added.length ? st.added : [[]])) bad++;
+    // a step that lists nothing means exactly "no i -> k -> j with i, j other than k", which is what its log line
+    // says (review of 2026-11-18: with a loop at k there still are two-step paths through k, such as k -> k -> j)
+    const none = !W.some((row, i) => i !== st.k && row[st.k] && W[st.k].some((v, j) => j !== st.k && v));
+    if ((st.added.length + st.already.length === 0) !== none) bad++;
     W = st.M;
   }
   // pair by pair: every step closes a real two-step path that had no shortcut; ends at t; one step per new pair
@@ -505,6 +509,16 @@ const ran = [];
   mode("rho"); chips[4].fire("click");
   r.querySelectorAll(".cell")[1].fire("click");
   ok(msg().includes("\\rho=\\{(1,2)\\}") && !msg().includes("Նոր"), `w-closure edit: ${msg()}`);
+  // Warshall's line for a step that lists nothing (review of 2026-11-18). The old wording «k-ով անցնող երկքայլ ուղի
+  // չկա» ("no two-step path through k") was false when k has a loop: with r(rho) of 7.2 as the new rho, 3 -> 3 -> 1
+  // and 2 -> 4 -> 4 are two-step paths through 3 and 4. The line now names the paths the step looks at.
+  mode("rho"); chips[0].fire("click"); mode("r"); btn("adopt").fire("click"); mode("t"); alg("warshall"); runAll();
+  eq(log().length, 4, "w-closure Warshall on r(rho): four steps");
+  eq(log()[2], "$k=3$՝ $i\\to 3\\to j$ ուղի ($i,j\\ne 3$) չկա։", "w-closure Warshall on r(rho): line for k=3");
+  eq(log()[3], "$k=4$՝ $i\\to 4\\to j$ ուղի ($i,j\\ne 4$) չկա։", "w-closure Warshall on r(rho): line for k=4");
+  ok(msg().includes("$10$ զույգ"), `w-closure t(r(rho)) has 10 pairs: ${msg()}`);
+  ok(!Object.values(messages).some(set => [...set].some(t => t.includes("անցնող երկքայլ ուղի չկա"))),
+    "w-closure: the old 'no two-step path through k' wording is not printed in any state");
   ran.push(r.id);
 }
 

@@ -27,6 +27,10 @@
   /* the matrix sits in a shrink-to-fit flex item; its max-content width leaves out KaTeX's 2 px .vlist-s strut
      after the closing parenthesis, so the formula scrolled by 2 px on phones: give it that room */
   .p23-pair .katex-display { padding-inline: 2px; }
+  /* "answer only" (try mode, site.css hides everything but .box.answer): the answers of 1.2, 2.1 and 2.2 are a
+     table and figures, and their answer boxes only point at them ("see the table above", "as drawn"), so these
+     parts stay visible together with the box */
+  body.try-mode details.sec .solution.answer-only:not(.revealed) > .p23-ans { display: block; }
   .p23-panels { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; justify-content: center; align-items: flex-end; }
   .p23-panels svg { margin: 0; }
   .p23-halo { paint-order: stroke; stroke: var(--widget-bg); stroke-width: 4px; stroke-linejoin: round; }
@@ -255,7 +259,7 @@ $x,y$ փոխած տալիս է $\Dom=\N$ և $\Ran=\N$։</p>
 $\Dom_c=[0,\infty)$, $\Dom_d=\Ran_d=[-4,4]$ և $\Dom=\Ran=\R$ (է),(ը)-ի համար։ $\checkmark$
 </div>
 
-<div class="table-wrap"><table class="tbl">
+<div class="table-wrap p23-ans"><table class="tbl">
 <thead><tr><th></th><th class="num">$\Dom$</th><th class="num">$\Ran$</th></tr></thead>
 <tbody>
 <tr><td>ա)</td><td class="num">$\{a,c,d\}$</td><td class="num">$\{1,2,4,5\}$</td></tr>
@@ -330,7 +334,7 @@ $(j,i)$-ն նույնպես։ Սիմետրիան երևում է միանգամ�
 $e$ գագաթը կող չունի։ (գ)-ն նույնական է (բ)-ին։</p>
 </div>
 
-<div class="step"><h3><span class="step-num">Քայլ 2</span> - Գծենք գրաֆը և գրենք մատրիցը կողք կողքի</h3>
+<div class="step p23-ans"><h3><span class="step-num">Քայլ 2</span> - Գծենք գրաֆը և գրենք մատրիցը կողք կողքի</h3>
 <figure class="fig">
 <div class="p23-pair">
 <svg viewBox="0 0 239.5 177" width="240" role="img" aria-label="Գրաֆ (ա)՝ abc եռանկյուն և de կող">
@@ -432,7 +436,7 @@ $f\to e$ սլաքները։ $0$-ն $e$ <em>տողի</em> պատասխանն է՝
 
 <p><strong>Մատրիցները կարդանք ցանկերից</strong> (տող $=$ աղբյուր, սյունակ $=$ թիրախ)՝</p>
 
-<figure class="fig">
+<figure class="fig p23-ans">
 <div class="p23-pair">
 <svg viewBox="0 0 214.5 242" width="215" role="img" aria-label="Դիգրաֆ (ա)">
   <circle cx="28.5" cy="53.5" r="16.3" class="f-bg"/><circle cx="28.5" cy="53.5" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="53.5" dy=".35em" text-anchor="middle" class="m">a</text>
@@ -457,7 +461,7 @@ $f\to e$ սլաքները։ $0$-ն $e$ <em>տողի</em> պատասխանն է՝
 </div>
 <figcaption>$b\to e$ սլաքը շրջանցում է $c$ գագաթը. այն $c$-ով <em>չի</em> անցնում ($(c,e)\notin\rho$)։</figcaption>
 </figure>
-<figure class="fig">
+<figure class="fig p23-ans">
 <div class="p23-pair">
 <svg viewBox="0 0 269.5 227" width="270" role="img" aria-label="Դիգրաֆ (բ)">
   <circle cx="28.5" cy="101" r="16.3" class="f-bg"/><circle cx="28.5" cy="101" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="101" dy=".35em" text-anchor="middle" class="m">a</text>
@@ -480,7 +484,7 @@ $f\to e$ սլաքները։ $0$-ն $e$ <em>տողի</em> պատասխանն է՝
 \end{pmatrix}$$</div>
 </div>
 </figure>
-<figure class="fig">
+<figure class="fig p23-ans">
 <div class="p23-pair">
 <svg viewBox="0 0 254.5 229.5" width="255" role="img" aria-label="Դիգրաֆ (գ)՝ c-ի և e-ի ակերով, b-ն մեկուսացված">
   <circle cx="28.5" cy="56" r="16.3" class="f-bg"/><circle cx="28.5" cy="56" r="16.3" class="f-orange-soft s-ink" stroke-width="1"/><text x="28.5" y="56" dy=".35em" text-anchor="middle" class="m">a</text>
@@ -1128,7 +1132,7 @@ $(3,4)$, $(1,3)$, $(2,4)$ և $(1,4)$։ $5$-ը ստացվում է, երբ ուղ
 </ol>
 
 <p>Հաջորդ թերթիկը՝ <a href="p4-functions.html">գործնական 4</a>, ֆունկցիաների մասին է։ Ֆունկցիան հարաբերություն է,
-որում յուրաքանչյուր մուտք ունի ճիշտ մեկ ելք, ինչպես 3.3-ի $\rho$-ն և $\sigma$-ն։</p>
+որում որոշման տիրույթի յուրաքանչյուր տարր ունի ճիշտ մեկ ելք, ինչպես 3.3-ի $\rho$-ն և $\sigma$-ն։</p>
 </div>
 </details>
 

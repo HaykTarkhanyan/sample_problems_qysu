@@ -235,4 +235,41 @@ const allRelations = A => {
   eq(bad, 0, "t(s(r(rho))) = smallest equivalence containing rho");
 }
 
+// ------------------------------------------------------------------ added by the independent review, 2026-11-18
+// The order of the closures: what matters is t after s. rho = {(1,2),(1,3)} on {1,2,3}: s(t(r(rho))) has (2,1)
+// and (1,3) but not (2,3), so it is not transitive; t(s(r(rho))) is everything.
+{
+  const A = [1, 2, 3], R = rel([[1, 2], [1, 3]]);
+  const wrong = sclose(tclose(rclose(R, A)));
+  ok(!isT(wrong) && has(wrong, 2, 1) && has(wrong, 1, 3) && !has(wrong, 2, 3), "wrong order: s(t(r(rho))) is not transitive for rho = {(1,2),(1,3)}");
+  eq(tclose(sclose(rclose(R, A))).size, 9, "right order: t(s(r(rho))) is the full relation for rho = {(1,2),(1,3)}");
+  let bad = 0;
+  for (const Q of allRelations(A)) {
+    const E = tclose(sclose(rclose(Q, A)));
+    if (!same(E, tclose(rclose(sclose(Q), A))) || !same(E, rclose(tclose(sclose(Q)), A))) bad++;
+  }
+  eq(bad, 0, "t(s(r)) = t(r(s)) = r(t(s)) on all relations over 3 elements: r may come anywhere, t must follow s");
+}
+// The closing line names the set the "exactly one output" runs over. Lecture 4, definition 29: f is a function if
+// (x,y),(x,z) in f implies y = z; it may be partial (D_f a proper subset of A). "Every input" without the set read
+// as "every element of A" would define only the everywhere-defined functions.
+ok(page.includes("որում որոշման տիրույթի յուրաքանչյուր տարր ունի ճիշտ մեկ ելք"), "closing line: 'every element of the domain has exactly one output'");
+{
+  // a partial function in the lecture's sense: single-valued, domain smaller than A
+  const A = [1, 2, 3], f = rel([[1, 2], [2, 2]]);
+  const dom = [...new Set(pairsOf(f).map(p => p[0]))];
+  ok(dom.every(x => pairsOf(f).filter(p => p[0] === x).length === 1) && dom.length < A.length, "a single-valued relation with a smaller domain: a function by definition 29, not 'every element of A'");
+}
+// "Answer only" mode: the answer boxes of 1.2, 2.1 and 2.2 point at a table and at figures ("see the table above",
+// "as drawn"), so those parts carry the class that keeps them visible, and the page has the rule for it.
+{
+  const sol = id => { const s = page.slice(page.indexOf(`<details class="sec" id="${id}"`)); return s.slice(s.indexOf('<div class="solution">'), s.indexOf("<!-- /solution -->")); };
+  eq((sol("p1-2").match(/class="table-wrap p23-ans"/g) || []).length, 1, "1.2: the answer table stays visible in answer-only mode");
+  eq((sol("p2-1").match(/class="step p23-ans"/g) || []).length, 1, "2.1: the step with the graphs and matrices stays visible");
+  eq((sol("p2-2").match(/class="fig p23-ans"/g) || []).length, 3, "2.2: the three digraph + matrix figures stay visible");
+  eq((page.match(/p23-ans"/g) || []).length, 5, "five answer parts in all");
+  ok(page.includes("body.try-mode details.sec .solution.answer-only:not(.revealed) > .p23-ans { display: block; }"), "page rule for the answer parts");
+  for (const id of ["p3-3", "p4-1", "p7-2"]) ok(!/Տե՛ս վերևի|ինչպես գծված է|ինչպես ցույց է տրված/.test(sol(id).slice(sol(id).indexOf('class="box answer"')).split("</div>")[0]), `${id}: the answer box is self-contained`);
+}
+
 console.log(`p2-3 page math: ${n} assertions passed`);

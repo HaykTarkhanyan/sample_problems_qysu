@@ -818,7 +818,9 @@
         }
         const k = labels[s.k];
         const parts = [...s.added.map(([i, j]) => imp(i, s.k, j) + " նոր"), ...s.already.map(([i, j]) => imp(i, s.k, j) + ", արդեն կա")];
-        return Q.el("li", {}, `$k=${k}$՝ ` + (parts.length ? parts.join(", ") : `$${k}$-ով անցնող երկքայլ ուղի չկա`) + "։");
+        // "no i -> k -> j with i, j other than k": with a loop at k there are two-step paths through k (k -> k -> j),
+        // so the line names exactly the paths Warshall's step looks at
+        return Q.el("li", {}, `$k=${k}$՝ ` + (parts.length ? parts.join(", ") : `$i\\to ${k}\\to j$ ուղի ($i,j\\ne ${k}$) չկա`) + "։");
       }));
       Q.math(log);
       modeBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
