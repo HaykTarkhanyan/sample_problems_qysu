@@ -64,6 +64,7 @@
       }
       const m = /^-?\d{1,3}(?!\d)/.exec(s.slice(i));
       if (m) { i += m[0].length; return Number(m[0]); }
+      if (/^-?\d{4}/.test(s.slice(i))) throw new Error("Թիվը շատ երկար է. առավելագույնը 3 թվանշան։");
       throw new Error(`Չհաջողվեց կարդալ «${s.slice(i, i + 4)}» հատվածը։ Թույլատրված են թվեր, { }, ստորակետ և ∅։`);
     }
     const v = item(0);

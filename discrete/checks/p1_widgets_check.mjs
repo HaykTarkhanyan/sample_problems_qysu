@@ -76,6 +76,15 @@ for (const bad of ["", "{1,2", "{1;2}", "1}", "{a}", "{{{{{1}}}}}", "{1,,2}", "{
   try { P.parseSet(bad); } catch (e) { assert.ok(/[Ա-և]/.test(e.message), `Armenian error for «${bad}»`); messages.add("parse error: " + e.message); }
   asserts++;
 }
+// a number of four or more digits names the limit (added by the review of 2026-11-16: the general message
+// "allowed: numbers, { }, ..." was shown for a number)
+for (const long of ["1000", "{1000}", "-1234", "{1, 12345}"]) { assert.throws(() => P.parseSet(long), /3 թվանշան/, `«${long}» names the 3-digit limit`); asserts++; }
+// the spellings of the empty set, signs and leading zeros (added by the review)
+eq(P.parseSet("{ }"), [], "parse { }");
+eq(P.parseSet("Ø"), [], "parse Ø");
+eq(P.parseSet("{-0, 007}"), [-0, 7], "parse -0 and 007");
+eq(P.canon(P.parseSet("-0")), P.canon(0), "-0 is the number 0");
+for (const bad of ["1 2", "{1 -2}", "{1 {2}}", "{1}{2}", "1,2", "∅∅", "{1,}", "{,1}", "(1,2)", "{1.5}", "{{{{{{}}}}}}"]) { assert.throws(() => P.parseSet(bad), Error, `should reject «${bad}»`); asserts++; }
 eq(P.dedupe([1, 1]), [[1], true], "dedupe {1,1}");
 eq(P.dedupe([[1, 1], [1]]), [[[1]], true], "dedupe {{1,1},{1}}");
 eq(P.dedupe([1, [1]]), [[1, [1]], false], "dedupe keeps {1,{1}}");

@@ -106,6 +106,8 @@ for (const A of S4) for (const B of S4) for (const C of S4) {
   assert.ok(setEq(dif(uni(A, B), C), uni(dif(A, C), dif(B, C))), "(3)");
   assert.ok(setEq(cap(A, sym(B, C)), sym(cap(A, B), cap(A, C))), "(11)");
   if (!setEq(uni(A, sym(B, C)), sym(uni(A, B), uni(A, C)))) bad++;
+  // the page states when the two sides do coincide (added by the review of 2026-11-16)
+  assert.equal(setEq(uni(A, sym(B, C)), sym(uni(A, B), uni(A, C))), A.length === 0, "A∪(B△C) = (A∪B)△(A∪C) exactly when A = ∅");
   // membership in each side depends only on the Venn region of x (one of 8 triples)
   for (const x of U4) {
     const [a, b, c] = [elem(x, A), elem(x, B), elem(x, C)];
@@ -115,6 +117,7 @@ for (const A of S4) for (const B of S4) for (const C of S4) {
   }
 }
 ok(bad > 0, "A ∪ (B△C) = (A∪B)△(A∪C) fails for some subsets");
+n++;   // the "exactly when A = ∅" assert inside the loop above
 { const A = [1], B = [1], C = [1];
   eq(key(uni(A, sym(B, C))), "{1}", "non-identity: left side {1}");
   eq(key(sym(uni(A, B), uni(A, C))), "{}", "non-identity: right side ∅"); }
@@ -168,8 +171,10 @@ for (const A of S3) for (const B of S3) {
   assert.ok(setEq(L, uni(uni(prod(A, A), prod(A, B)), uni(prod(B, A), prod(B, B)))), "four products");
   for (const a of dif(A, B)) for (const b of dif(B, A)) assert.ok(elem(pair(a, b), L) && !elem(pair(a, b), R), "missing pair");
   if (A.length && B.length && cap(A, B).length === 0) assert.ok(!setEq(L, R), "disjoint non-empty: not equal");
+  // the page states when the two sides do coincide (added by the review of 2026-11-16)
+  assert.equal(setEq(L, R), sub(A, B) || sub(B, A), "(A∪B)×(A∪B) = (A×A)∪(B×B) exactly when A ⊆ B or B ⊆ A");
 }
-n += 3;
+n += 4;
 
 // ---------------------------------------------------------------- "what to remember"
 for (const X of S3) for (const Y of S3) for (const Z of S3) if (sub(X, Y) && sub(Y, Z)) assert.ok(sub(X, Z), "⊆ transitive");
