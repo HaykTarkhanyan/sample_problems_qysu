@@ -82,6 +82,19 @@ ok(digitsOk([0, 1, 0, 1, 0, 1, 0], true) && !digitsOk([0, 1, 0, 1, 0, 1, 0], fal
 
 // ------------------------------------------------------------------ 2.5 rows, ends are boys
 // Small analogue by brute force (b boys, g girls), then the formulas at b = 6, g = 7.
+// Added by the review of 2026-11-16: an exact count at any size. Filling left to right (slot 1 a boy, then anyone),
+// the number of ways to finish depends only on how many boys and girls are left, so it can be summed over those
+// states. needBoy = true counts only the fillings that leave a boy for the last slot.
+const ltrWays = (b, g, needBoy) => {
+  const memo = new Map();
+  const go = (bl, gl) => {
+    if (bl + gl === 1) return needBoy && gl ? 0n : 1n;
+    const key = bl * 100 + gl;
+    if (!memo.has(key)) memo.set(key, (bl ? BigInt(bl) * go(bl - 1, gl) : 0n) + (gl ? BigInt(gl) * go(bl, gl - 1) : 0n));
+    return memo.get(key);
+  };
+  return BigInt(b) * go(b - 1, g);
+};
 for (const [b, g] of [[3, 3], [3, 4], [4, 3]]) {
   const people = range(0, b + g - 1), isBoy = k => k < b, N = b + g;
   let good = 0, ltrAll = 0, ltrGood = 0;
@@ -95,7 +108,13 @@ for (const [b, g] of [[3, 3], [3, 4], [4, 3]]) {
   eq(ltrGood * (N - 1), ltrAll * (b - 1), `2.5 analogue: success share (b-1)/(N-1)`);
   eq(good, ltrGood, "2.5 analogue: successful left-to-right fillings = answer");
   eq(2 * (b * (b - 1) / 2) * fact(N - 2), good, "2.5 analogue: C(b,2)(N-2)! is half the answer");
+  eq(ltrWays(b, g, false), BigInt(ltrAll), `2.5 analogue b=${b} g=${g}: the count over states = enumerated fillings`);
+  eq(ltrWays(b, g, true), BigInt(ltrGood), `2.5 analogue b=${b} g=${g}: the count over states = enumerated successes`);
 }
+// the real row, 6 boys and 7 girls (the widget's sentence "exactly 5/12 of the 6*12! fillings end with a boy")
+eq(ltrWays(6, 7, false), 2874009600n, "2.5 at 6+7: left-to-right fillings, counted over states");
+eq(ltrWays(6, 7, true), 1197504000n, "2.5 at 6+7: fillings that leave a boy for slot 13");
+ok(ltrWays(6, 7, true) * 12n === ltrWays(6, 7, false) * 5n, "2.5 widget note: the share is exactly 5/12");
 eq(6 * 5 * fact(11), 1197504000, "2.5 answer");
 eq(6 * fact(12), 2874009600, "2.5 typical mistake / widget: 6*12!");
 eq(6 * fact(12) * 5 / 12, 1197504000, "2.5 widget note: 6*12! * 5/12 = answer");
@@ -230,6 +249,59 @@ eq(Math.floor(999 / 24), 41, "self-check 2: the wrong floor(999/24)");
   // 25 people, 12 months: some month has at least 3 (and 2 is not the best bound: 25 > 2*12)
   eq(Math.ceil(25 / 12), 3, "know by heart: ceil(25/12)");
   ok(25 > 2 * 12, "know by heart: 25 birthdays cannot fit 2 per month");
+}
+
+// ------------------------------------------------------------------ added by the review of 2026-11-16
+// Claims of the new blocks that no assert covered (the builder's report, section 6).
+{
+  const gcd = (a, b) => { while (b) [a, b] = [b, a % b]; return a; };
+  // key idea 2: floor(N/d) multiples of d in 1..N; "divisible by a and by b" = "divisible by lcm(a, b)";
+  // lcm(a, b) = ab exactly for coprime a, b ("what to remember")
+  let bad = 0;
+  for (let N = 1; N <= 200; N++) for (let dd = 1; dd <= 30; dd++) if (cnt(range(1, N), k => k % dd === 0) !== Math.floor(N / dd)) bad++;
+  eq(bad, 0, "key idea 2: floor(N/d) counts the multiples of d in 1..N");
+  bad = 0;
+  for (let a = 1; a <= 40; a++) for (let b = 1; b <= 40; b++) {
+    let l = 1; while (l % a || l % b) l++;
+    for (let k = 1; k <= 300; k++) if ((k % a === 0 && k % b === 0) !== (k % l === 0)) bad++;
+    if ((l === a * b) !== (gcd(a, b) === 1)) bad++;
+  }
+  eq(bad, 0, "key idea 2: 'a and b' is 'lcm(a, b)'; lcm = ab exactly when gcd = 1");
+  // key idea 3: k objects in n boxes, the fullest box has at least ceil(k/n), and no better bound holds
+  bad = 0;
+  for (let boxes = 1; boxes <= 4; boxes++) for (let k = 1; k <= 7; k++) {
+    let minMax = Infinity;
+    for (let code = 0; code < boxes ** k; code++) {
+      const c = new Array(boxes).fill(0); let t = code;
+      for (let i = 0; i < k; i++) { c[t % boxes]++; t = Math.floor(t / boxes); }
+      minMax = Math.min(minMax, Math.max(...c));
+    }
+    if (minMax !== Math.ceil(k / boxes)) bad++;
+  }
+  eq(bad, 0, "key idea 3: ceil(k/n) is the exact guarantee");
+  // "what to remember": m | a - b <=> same remainder; m | bc and gcd(m, c) = 1 => m | b
+  bad = 0;
+  for (let m = 1; m <= 40; m++) for (let b = 0; b <= 90; b++) for (let c = 1; c <= 40; c++) {
+    if ((b * c) % m === 0 && gcd(m, c) === 1 && b % m !== 0) bad++;
+    if (((b - c) % m === 0) !== (b % m === c % m)) bad++;
+  }
+  eq(bad, 0, "what to remember: the cancellation lemma and 'same remainder'");
+  // self-check 6 and step 3 of 2.12: the difference of two terms is a term followed by zeros
+  const rep = k => BigInt("1".repeat(k));
+  bad = 0;
+  for (let j = 2; j <= 30; j++) for (let i = 1; i < j; i++) {
+    if (rep(j) - rep(i) !== rep(j - i) * 10n ** BigInt(i)) bad++;
+    if (big(j) - big(i) !== big(j - i) * 10n ** BigInt(i)) bad++;
+  }
+  eq(bad, 0, "difference of two repunits (and of two terms 7...7) = a term times 10^i");
+  // typical mistake: for 7, 77, ... some term is divisible by m exactly when gcd(m, 10) = 1
+  bad = 0;
+  for (let m = 2; m <= 300; m++) {
+    let r = 7 % m, hit = false;
+    for (let k = 1; k <= 3 * m && !hit; k++) { hit = r === 0; r = (10 * r + 7) % m; }
+    if (hit !== (gcd(m, 10) === 1)) bad++;
+  }
+  eq(bad, 0, "typical mistake: 10^i can be removed only if gcd(m, 10) = 1 (for this sequence: if and only if)");
 }
 
 console.log(`p5_check: ${n} asserts passed`);

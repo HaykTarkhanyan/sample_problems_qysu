@@ -35,10 +35,11 @@
       out.push(gcd(a, b) === 1
         ? `$\\gcd(${a},${b})=1$, այնպես որ $\\operatorname{lcm}(${a},${b})=${a}\\cdot ${b}=${s.l}$։`
         : `Ուշադրություն՝ $${a}$-ը և $${b}$-ը փոխադարձաբար պարզ չեն, և $\\operatorname{lcm}(${a},${b})=${s.l}$, ոչ թե $${a}\\cdot ${b}=${a * b}$։`);
-      out.push(`Կցման-արտաքսման սկզբունքով՝ $${a}$-ի <em>կամ</em> $${b}$-ի վրա բաժանվողները $${s.ma}+${s.mb}-${s.ml}=${s.union}$ են։`);
       if (N === NDEF && a === ADEF && b === BDEF) {
         out.push(`Սա խնդիր 1.5-ն է՝ պատասխաններն են $${s.ma}$, $${s.ml}$ և $${s.ml}$։`);
       }
+      // keep this line last: the predict block above the widget sends the reader to "the last line" for the "or" count
+      out.push(`Կցման-արտաքսման սկզբունքով՝ $${a}$-ի <em>կամ</em> $${b}$-ի վրա բաժանվողները $${s.ma}+${s.mb}-${s.ml}=${s.union}$ են։`);
     }
     if (!onA && !onB) out.push(`Միացրեք $${a}$-ի կամ $${b}$-ի բազմապատիկները։`);
     return out;
@@ -52,14 +53,14 @@
     const aOut = root.querySelector('[data-out="a"]'), bOut = root.querySelector('[data-out="b"]');
     const step = act => root.querySelector(`[data-act="${act}"]`);
     const out = root.querySelector('[data-out="counts"]');
-    let N = NDEF, a = ADEF, b = BDEF, onA = true, onB = true, L = 0, cells = [], mark = null, markTxt = null;
+    let N = NDEF, a = ADEF, b = BDEF, onA = true, onB = true, L = 0, cells = [], mark = null, markTxt = null, svgEl = null;
 
     /** (Re)draw the empty grid for row length L. */
     function build() {
       L = rowLen(a, b);
       const rows = NMAX / L, W = OX + L * PX + 30, H = OY + rows * PY + 4;
-      const svg = Q.svg("svg", { viewBox: `0 0 ${W} ${H}`, width: W, role: "img",
-        "aria-label": `1-ից ${NMAX} թվերը՝ ${L}-ական թվով տողերում, ${a}-ի և ${b}-ի բազմապատիկները գունավորված` });
+      const svg = Q.svg("svg", { viewBox: `0 0 ${W} ${H}`, width: W, role: "img" });   // aria-label: see render()
+      svgEl = svg;
       host.replaceChildren(svg);
       for (let c = 1; c <= L; c++) {
         if (L > 15 && c !== 1 && c % 5) continue;   // wide rows: label every 5th column only
@@ -82,6 +83,10 @@
     }
     function render() {
       if (L !== rowLen(a, b)) build();
+      // the label names the divisors that are coloured now (the grid is rebuilt only when the row length changes)
+      const shownD = [onA ? a : null, onB ? b : null].filter(Boolean).map(d => `${d}-ի`);
+      svgEl.setAttribute("aria-label", `1-ից ${NMAX} թվերը՝ ${L}-ական թվով տողերում` +
+        (shownD.length ? `, ${shownD.join(" և ")} բազմապատիկները գունավորված` : ""));
       const l = lcm(a, b);
       let seenA = 0, seenB = 0, seenL = 0;
       cells.forEach((rect, i) => {

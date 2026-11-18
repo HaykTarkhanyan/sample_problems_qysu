@@ -266,6 +266,13 @@ if (widgets["w-grid"]) {
   const r = widgets["w-grid"], range = r.querySelector('input[type="range"]');
   let s = say(outOf(r, "counts"), "w-grid start");
   ok(s.includes("Սա խնդիր 1.5-ն է՝ պատասխաններն են $139$, $46$ և $46$։") && s.includes("=326$"), "w-grid default = problem 1.5");
+  // review 2026-11-16, finding 1: the predict block above the widget says that the "or" count is in the last line
+  const lastLine = () => outOf(r, "counts").children.at(-1).textContent;
+  ok(PAGE.includes("պատասխանը վերջին տողում է"), "the predict text that points at the last line of w-grid");
+  ok(lastLine().startsWith("Կցման-արտաքսման սկզբունքով՝") && lastLine().endsWith("$139+233-46=326$ են։"), `w-grid default: last line is ${lastLine()}`);
+  // review finding 2: the drawing's label names the divisors that are coloured now
+  const label = () => r.querySelector(".grid-svg").children[0].attrs["aria-label"];
+  eq(label(), "1-ից 720 թվերը՝ 15-ական թվով տողերում, 5-ի և 3-ի բազմապատիկները գունավորված", "w-grid default label");
   // walk a and b through every pair with the buttons, both sets on, and some N
   for (let i = 0; i < 6; i++) await act(r, "a-").fire("click");
   for (let i = 0; i < 6; i++) await act(r, "b-").fire("click");
@@ -281,6 +288,8 @@ if (widgets["w-grid"]) {
         const svg = r.querySelector(".grid-svg").children[0];
         assert.equal(svg.querySelectorAll("rect[data-k]").length, 720);
         assert.equal(svg.querySelectorAll("rect[data-k]").filter(e => e.attrs.class === "hit f-red" && Number(e.attrs["fill-opacity"]) === 1).length, m.ml);
+        assert.ok(lastLine().startsWith("Կցման-արտաքսման սկզբունքով՝") && lastLine().endsWith(`=${m.union}$ են։`), `w-grid ${a},${b},${N}: last line is ${lastLine()}`);
+        assert.equal(label(), `1-ից 720 թվերը՝ ${P.rowLen(a, b)}-ական թվով տողերում, ${a}-ի և ${b}-ի բազմապատիկները գունավորված`);
       }
       if (b < 6) await act(r, "b+").fire("click");
     }
@@ -291,7 +300,10 @@ if (widgets["w-grid"]) {
   ok(act(r, "a+").disabled, "w-grid: plus disabled at 6");
   // toggles, the +/-1 buttons at the bounds, tapping a cell
   for (const t of ["ma", "mb", "ma", "mb"]) { await act(r, t).fire("click"); say(outOf(r, "counts"), "w-grid toggle"); }
-  await act(r, "ma").fire("click"); await act(r, "mb").fire("click");
+  await act(r, "ma").fire("click");
+  eq(label(), "1-ից 720 թվերը՝ 12-ական թվով տողերում, 2-ի բազմապատիկները գունավորված", "w-grid label, only b = 2 on");
+  await act(r, "mb").fire("click");
+  eq(label(), "1-ից 720 թվերը՝ 12-ական թվով տողերում", "w-grid label, nothing on");
   s = say(outOf(r, "counts"), "w-grid both off");
   ok(s.startsWith("$N=720=") && s.includes("Միացրեք $6$-ի կամ $2$-ի բազմապատիկները։"), `w-grid both off: ${s}`);   // a = 6, b = 2 here
   range.value = 1; await range.fire("input");
