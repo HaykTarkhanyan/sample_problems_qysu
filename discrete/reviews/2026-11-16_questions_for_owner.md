@@ -1,5 +1,12 @@
 # Questions for the owner from the discrete iteration (2026-11-16)
 
+**Status, 2026-11-18: answered.** The owner answered 57 questions in the interview tool (questions that were
+the same on several pages were asked once). The answers are in `armenian_style/OWNER_ANSWERS.md`, rows A72-A76,
+and are applied to the pages and sheets. The widget ideas (P5-12, P1-13, P23-12, P7-10, P4-W, P6-7) are all
+wanted and parked in `DEFERRED_TODO.md`. Not asked, left as the agents wrote them: P5-6, P5-11, P1-14, P7-11,
+P4-P2, P4-P3, P6-5, P6-6, P8-4, and the reviewers' own minor questions (in each `..._review.md`); the ones worth
+a later look are listed in `DEFERRED_TODO.md`. The list below is kept as the record of what was asked.
+
 The owner asked on 2026-11-16 (23:40) to store the questions and answer them all the next day. Every question
 of the six page agents and of their reviewers is collected here as it arrives, by page. Each has the options
 the agent offered, the agent's pick first. Until a question is answered the page keeps option (a).

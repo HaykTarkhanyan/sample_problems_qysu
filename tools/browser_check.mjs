@@ -9,8 +9,7 @@
 //   node tools/browser_check.mjs --python site/numerical/splines.html
 //       also clicks every "Run" button and fails on a cell that ends in an error. Needs the network
 //       (Pyodide comes from a CDN, ~9 MB), ~20 s per page, so it is a local check and not part of CI.
-//   node tools/browser_check.mjs --strict site/discrete/p1-sets.html
-//       wide display formulas on the old discrete pages are failures too (normally only a note there)
+//   (--strict is accepted and does nothing: since 2026-11-18 a wide display formula fails on every page)
 //
 // Uses the Chrome that is already installed (locally and on GitHub's ubuntu runners), so nothing is
 // downloaded besides the npm package. Exit code 1 on any failure.
@@ -124,10 +123,10 @@ async function runPythonCells(page, problems) {
   return n;
 }
 
-/** The old discrete pages were written before the "display math must fit the phone column" rule
-    (CONVENTIONS.md); their long formulas scroll sideways. Listed as notes, not failures (DEFERRED_TODO.md).
-    `--strict` drops the exception: use it while fixing those pages. */
-const WIDE_IS_A_NOTE = rel => !opts.strict && rel.startsWith("discrete/");
+/** No page is excused from the "display math must fit the phone column" rule any more: the old discrete
+    pages, which used to be an exception here, were fixed on 2026-11-18. `--strict` is kept as a no-op so that
+    older command lines still run. */
+const WIDE_IS_A_NOTE = () => false;
 
 /** site/p1-sets.html and its siblings only forward old links to discrete/: check that the target opens. */
 function redirectTarget(file) {

@@ -161,7 +161,7 @@
     return t + "=" + fmtTex(prod);
   }
   /** Explanation under the row (HTML with $...$). */
-  const LTR_SHARE = "Ձախից աջ բոլոր $6\\cdot 12!$ լրացումներից վերջում տղա է մնում ճիշտ $\\tfrac{5}{12}$ մասում " +
+  const LTR_SHARE = "Ձախից աջ բոլոր $6\\cdot 12!$ լրացումների ճիշտ $\\tfrac{5}{12}$-ում է վերջում տղա մնում " +
     "(մնացող մարդը կարող է լինել $12$-ից ցանկացածը, և նրանցից $5$-ը տղա է)՝ $6\\cdot 12!\\cdot\\tfrac{5}{12}=6\\cdot 5\\cdot 11!$, " +
     "նույն պատասխանը, բայց այսպես հաշվելու համար պետք էր առանձին մտածել վերջին տեղի մասին։";
   function rowNote(mode, next, nAllowed, done) {
@@ -487,7 +487,7 @@
       let p = 1;
       for (let t = 0; t < i; t++) p = (p * 10) % m;
       // a_n is odd and ends in 7, so no a_n is divisible by 2 or by 5
-      const why = [m % 2 === 0 ? "կենտ են" : null, m % 5 === 0 ? "$5$-ի վրա չեն բաժանվում" : null].filter(Boolean).join(" և ");
+      const why = [m % 2 === 0 ? "կենտ են" : null, m % 5 === 0 ? "վերջանում են $7$-ով" : null].filter(Boolean).join(" և ");
       out.push(`Բայց $\\gcd(${m},10)=${g}\\ne 1$, ուստի $10^{${i}}$-ը հեռացնել չի կարելի, և իսկապես ` +
         `$a_{${d}}$-ի մնացորդը $${rd}$ է, ոչ թե $0$։` +
         (p === 0 ? ` Ամբողջ բաժանելիությունը զրոներից է՝ $${m}\\mid 10^{${i}}$։` : "") +

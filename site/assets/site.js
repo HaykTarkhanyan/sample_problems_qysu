@@ -222,7 +222,8 @@
       if (!location.hash) return;
       let t = null;
       try { t = document.querySelector(decodeURIComponent(location.hash)); } catch (e) { return; }
-      for (let n = t; n; n = n.parentElement) if (n.tagName === "DETAILS") n.open = true;
+      // the browser could not scroll to a target inside a hidden solution: scroll once it is shown
+      if (t && revealTarget(t)) t.scrollIntoView();
     };
     window.addEventListener("hashchange", openTarget);
     openTarget();
@@ -264,7 +265,18 @@
       document.head.appendChild(s);
     });
   }
-  function revealTarget(t) { for (let n = t; n; n = n.parentElement) if (n.tagName === "DETAILS") n.open = true; }
+  /** Make a link target visible: open every <details> around it and, in try-mode, show the solution it sits in
+      (a link to a widget or a step inside a hidden solution used to do nothing). Returns true if a solution
+      had to be shown. */
+  function revealTarget(t) {
+    for (let n = t; n; n = n.parentElement) if (n.tagName === "DETAILS") n.open = true;
+    const sol = t.closest(".solution");
+    if (!sol || !document.body.classList.contains("try-mode") || sol.classList.contains("revealed")) return false;
+    sol.classList.add("revealed");
+    sol.classList.remove("answer-only");
+    for (let b = sol.previousElementSibling; b && b.classList.contains("reveal-btn"); b = b.previousElementSibling) b.classList.add("hidden");
+    return true;
+  }
 
   // ---------- search: MiniSearch + the course index, both loaded on first open ----------
   const STOP = new Set(["են", "որ", "ու", "այս", "այդ", "մի", "եթե", "ապա", "իսկ", "կամ", "նաև", "էլ", "համար", "հետ", "մեջ", "վրա", "դա", "դրա", "նրա", "որը", "որի"]);

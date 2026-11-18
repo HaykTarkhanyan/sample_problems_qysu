@@ -122,7 +122,7 @@ boolean functions) are included.
 | combination † | զուգորդություն | order does not matter, $C(n,k)$; not in master CSV |
 | binomial | երկանդամ | |
 | binomial coefficient † | բինոմիալ գործակից | $\binom{n}{k}$; not in master CSV |
-| multinomial coefficient † | բազմանդամային գործակից | $\binom{n}{n_1,n_2,\dots}$; not in master CSV |
+| multinomial coefficient † | պոլինոմիալ գործակից | $\binom{n}{n_1,n_2,\dots}$; not in master CSV |
 | inclusion-exclusion principle | կցման-արտաքսման սկզբունք | ⚠ was *Ներառման-բացառման սկզբունք* |
 | pigeonhole principle | Դիրիխլեի սկզբունք | ⚠ was *Աղավնաբների սկզբունք* |
 | Stirling numbers (2nd kind) † | երկրորդ սեռի Ստիռլինգի թվեր | $S(n,k)$; not in master CSV |

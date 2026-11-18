@@ -423,7 +423,7 @@
     };
   }
   const CLASS_HY = { "equivalence": "համարժեքություն (R+S+T)", "partial order": "մասնակի կարգ (R+AS+T)",
-    "preorder": "նախակարգ (R+T, բայց ոչ S, ոչ AS)" };
+    "preorder": "նախնական կարգ (R+T, բայց ոչ S, ոչ AS)" };
   function classText(pr) {
     const c = classify(pr);
     return c.length ? "Դասը՝ " + c.map(x => CLASS_HY[x]).join(" և ") + "։"
@@ -857,14 +857,15 @@
     root.querySelector('[data-act="clear"]').addEventListener("click", () => { S = zeros(cur.els.length); checked = false; render(); });
     function render() {
       const v = fillVerdict(S, T), m = toPairs(T).length, k = toPairs(S).length;
-      view.render({ labels: cur.els, M: S, hl: checked ? v.extra : [], ghost: checked ? v.missing : [], editable: true,
+      // missing cells are only counted, not drawn: a press on an empty matrix must not show the whole answer (owner, 2026-11-18)
+      view.render({ labels: cur.els, M: S, hl: checked ? v.extra : [], ghost: [], editable: true,
         onToggle: (i, j) => { S[i][j] = S[i][j] ? 0 : 1; checked = false; render(); } });
       setEl.textContent = `$\\rho=\\{${cur.pairs}\\}$`;
       Q.math(setEl);
       let text;
       if (!checked) text = `Ցանկում $${m}$ զույգ է, ձեր մատրիցում՝ $${k}$ հատ $1$։ Լրացրեք և սեղմեք «Ստուգել»։`;
       else if (!v.extra.length && !v.missing.length) text = `Ճիշտ է՝ բոլոր $${m}$ վանդակները տեղում են։ Համեմատեք լուծման նկարի հետ։`;
-      else text = `Սխալ վանդակներ՝ ավելորդ $${v.extra.length}$, պակասող $${v.missing.length}$ (ավելորդները նարնջագույն շրջանակով են, պակասողները՝ կետագծով)։`
+      else text = `Սխալ վանդակներ՝ ավելորդ $${v.extra.length}$, պակասող $${v.missing.length}$ (ավելորդները նարնջագույն շրջանակով են, պակասողները գտեք ինքներդ)։`
         + (v.transposed ? " Կարծես տողերն ու սյունակները տեղերով փոխված են. տողը սլաքի սկիզբն է, սյունակը՝ վերջը։" : "");
       msg.textContent = text;
       Q.math(msg);

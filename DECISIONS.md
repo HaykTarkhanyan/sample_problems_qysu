@@ -29,6 +29,21 @@ Newest first. Superseded entries stay, marked as such.
   changed the mathematics of an existing solution (then that page is redone from the old version by hand).
   My cost estimate before launch, not measured: about 3 M Opus tokens for the builders and 2.5 M Fable tokens
   for the reviewers.
+- **Revisited 2026-11-18** (same decision, one part reversed by the owner). The discrete pages do NOT hide
+  their solutions by default: `<body data-two-step>` without `data-try-default`. Reason: on these pages almost
+  every widget sits inside its problem's solution (there are no theory sections), so with hidden solutions a
+  student first saw statements only, and links to widgets did nothing. Each widget shows its problem's answer
+  on its first screen, so it cannot simply move out; reworking the widgets to stand above the solutions is
+  parked (DEFERRED_TODO.md). The «Փորձել ինքնուրույն» button still hides the solutions, and `site.js` now opens
+  a hidden solution when a link points into it.
+- **Outcome** All six builders and all six reviewers finished (measured: 3.5 M Opus tokens for the builders,
+  about 3.3 M Fable tokens for the reviewers, more than my estimate because each review was paused and
+  resumed). No wrong answer on any page. The reviewers found and fixed: 5 false statements, all in widget
+  text (P5 two in `w-grid`, P2-3 one Warshall log line, P8 two in the new `w-seq`), and 12 unclear places. One
+  false sentence in the OLD content was found by a builder and confirmed by its reviewer (the check of
+  problem 3.3 on P2-3, also in the English sheet). The owner answered 57 questions in the interview tool
+  (`armenian_style/OWNER_ANSWERS.md`, A72-A76). After that: 0 lint errors on pages and sheets (18 before), all
+  51 wide display formulas gone, so `tools/browser_check.mjs` no longer excuses the discrete pages.
 
 ## 23. A browser smoke test is the last CI step before the upload: playwright-core with the installed Chrome
 - **Date** 2026-11-14 - **status** active (user: "also do the ci browser test"; the tool choice below was made by

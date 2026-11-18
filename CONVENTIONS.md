@@ -28,7 +28,8 @@ Recurring decisions for this repo, written down once they were made twice.
 - Owner decisions of 2026-11-10 and 2026-11-13 (full list: `armenian_style/OWNER_ANSWERS.md`): mijaket stays ASCII
   `.`; «Հետևաբար,» with a comma at the start of a sentence, «Այսպիսով՝» with ՝; «Դիցուք» /
   «Ենթադրենք», never «Թող»; «ճիշտ մեկ»; no «Հեշտ է տեսնել»; no math «աշխատում է» or «հարկադրել»;
-  box title «Ընդհանուր հնարք» (not «Փոխանցելի տեխնիկա»); «չ-» only on verbs and participles,
+  method boxes carry only their title «★ Հիշարժան մեթոդ» (no bold lead-in: neither «Փոխանցելի տեխնիկա» nor
+  «Ընդհանուր հնարք՝», owner 2026-11-18); «չ-» only on verbs and participles,
   adjectives take «ոչ» or «ան-» («ոչ լավ», never «չլավ»; «-ելի» words too: «անլուծելի», never
   «չլուծելի»); heads = «ղուշ», tails = «գիր»; statistical sample = «նմուշ»; standard deviation =
   «ստանդարտ շեղում»; «հզոր մեթոդ» is fine; plural imperatives carry no stress mark («Գտեք»,
@@ -149,6 +150,28 @@ widget, etc.).
   No external libraries. Must work at 360 px width.
 - `\textcolor` inside KaTeX needs literal colours: read them with
   `getComputedStyle(document.documentElement).getPropertyValue("--blue")`.
+
+### Discrete pages since the iteration of 2026-11-18 (DECISIONS #24)
+
+- `<body data-two-step>`: solutions are OPEN by default (the widgets sit inside them); the «Փորձել ինքնուրույն»
+  button hides them, then each problem offers «Միայն պատասխանը» and «Ցույց տալ լուծումը». A link into a hidden
+  solution opens it (`revealTarget` in `site.js`).
+- Each page has: a «Երեք հիմնական գաղափար» box, `.predict` blocks (so `../assets/js/prob.js` is loaded after
+  `site.js`), folded hints `<details class="extra hint"><summary>Հուշում</summary><div class="inner">...</div>
+  </details>` between `.box.problem` and `.solution`, and a closing `#exam` section (summary table, «Ինչ պետք է
+  հիշել», «Տիպիկ սխալներ», self-check questions with folded answers). A predict question may stand before the
+  solution only if it does not give the problem's own answer away. A hint must not tell the answer.
+- Every page has two node checks in `discrete/checks/`: `<pN>_check.mjs` (every number and claim of the new
+  blocks, by brute force) and `<pN>_widgets_check.mjs` (pure functions against brute force, and every widget
+  driven on a mock DOM; `mockdom.mjs` is the shared mock for P6 and P8). All 14 run in about a minute.
+- Terms decided by the owner on 2026-11-18 (A72-A76): bound of a variable = «եզր»; preorder = «նախնական կարգ»;
+  «կոնտրապոզիցիա»; «կրկնություններով զուգորդություններ» and «պոլինոմիալ գործակից» (as in lecture 6); «տարբեր /
+  միանման արկղեր»; «դասավորություն» stays, also for the counting terms; "fix" = «ֆիքսել»; a numerical check on a
+  grid = «թվային ստուգում»; a function is defined as in lecture 4 (at most one output; «ամենուրեք որոշված» /
+  «մասնակի որոշված»). «ուստի» is varied with «հետևաբար» / «ուրեմն» (about half); «հենց», «պարզապես» and
+  «իրականում» stay where they carry meaning.
+- The Armenian sheets in `discrete/solutions_opus_4_8_ARM/` get language changes only; the teaching blocks are
+  site-only. After editing a sheet rebuild its PDF with xelatex twice (5-13 s per sheet).
 
 ### QA before calling a page done
 

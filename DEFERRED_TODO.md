@@ -50,25 +50,38 @@ Topics cut from current work so they are not lost.
 - **Student feedback on the probability pages** (owner collects it): hidden solutions, predict
   prompts, proof boxes (DECISIONS #9, #13 "what would change this"). (2026-11-10)
 
-- **Armenian language sweep of the discrete .tex + site (user: "later"); rules now DECIDED
-  (2026-11-10, `armenian_style/OWNER_ANSWERS.md` + `SOURCE_FINDINGS.md`):** `-ը` before ե/ո/և
-  (lint finds 4 places: «հայտարարն երբեք», «$f$-ն ոչ» twice, «$n$-ն և», each in a sheet and its site
-  copy); box title «Փոխանցելի տեխնիկա» -> «Ընդհանուր հնարք» (72 uses); math «աշխատում է» and
-  «հարկադրել» -> plain verbs; «Հետևաբար,» with comma; no «Թող», no «Հեշտ է տեսնել»; mijaket stays
-  ASCII "."; then rebuild the PDFs. Run `python -I armenian_style/lint_armenian.py --style` on each
-  sheet. (2026-11-04, rules 2026-11-10) Added 2026-11-13: the hint `opener-punct` lists the openers
-  still to fix there («Հետևաբար» without a comma 13 times, «Այսպիսով» without ՝ in P1 and P4). The
-  PDFs of P1, P2-3 and P5 lag their `.tex` by 4 punctuation marks (3 stress marks removed, 1 comma
-  added on 2026-11-13) until this sweep rebuilds them.
+- **Discrete pages after the iteration of 2026-11-16 / 18** (DECISIONS #24; reports in `discrete/reviews/`):
+  - *Widgets the owner wants, parked for credits:* P5 objects into boxes (Dirichlet); P1 type two set
+    expressions and get the 8-row table; P2-3 composing relations by 0/1 matrices; P2-3 Hasse diagram builder;
+    P4 a horizontal line on $1/(x^2-2)$; P4 mirror of the inverse; P7 drag the bars (stars and bars); P6 group
+    the 28 ordered solutions into the 7 unordered ones. Build with Opus, review with Fable, efficiently.
+  - *Widgets above the solutions:* solutions are open by default because the widgets sit inside them. To hide
+    solutions by default again, each widget first has to work without showing its problem's answer.
+  - *Phones 360 px wide* (the check measures 390): 5 display formulas on P7, 2 on P8 and 1 on P1 scroll
+    sideways there; the Venn table of P1 problem 54 and the closing table of P4 need a sideways swipe.
+  - *Small review leftovers, none wrong:* P4 the count 14 stands in a check box just above the predict question
+    that asks for it; P4 pipeline widget says "coincidence" at every $x\ge0$ for three pairs; P7 problem 10 has
+    no picture with its statement when solutions are hidden; P7 a predict question sits directly above the box
+    that answers it; P6 the word widget counts «եւ» as two letters and wraps its tiles from 11-12 letters; P6
+    the lecture's symbol $\overline{C_n^r}$ for combinations with repetition is not on the page (the lecture's
+    letters are the other way round); P8 the recurrence widget writes $r_{1,2}$ with ± and then gives $r_1$ the
+    minus root.
+  - *Tools:* an inline formula glued to its full stop can be clipped inside a narrow box and
+    `tools/browser_check.mjs` does not see it (probe code in `discrete/reviews/2026-11-16_p7_review.md`; run
+    it on all pages before making it a failure); a cross-line pass for the article rules of
+    `lint_armenian.py` (2 real hits on the old P4 page; needs block-aware joining); `setupPredict` could move
+    from `prob.js` to `site.js` (the discrete pages load `prob.js` only for it); the page-local styles for
+    hints, text inputs, selects and bigger chips could become shared rules in `site.css`.
+  - *English sheets:* only the false 3.3 sentence of practices 2-3 was fixed there; none of the Armenian
+    wording changes has an English counterpart to port, but `discrete/translated_lectures/Lecture4_Functions.md`
+    gives definition 29 as "for all x in A exactly one y", which is not what the lecture says.
+  - *Native read:* the new Armenian of the seven pages (key ideas, hints, predict blocks, typical mistakes,
+    closing sections, widget messages) was written by agents and checked by lint, rules and the owner's 57
+    answers, not read end to end. (2026-11-18)
 - **Glossary leftovers, none put to the owner:** duplicate row 258 (kept on purpose, row numbers are
   cited), U+2024 in 23 rows, «․․․» in row 1031 (`armenian_style/GLOSSARY_REPORT.md`). The real fixes
   were applied on 2026-11-13; the trailing spaces in rows 287 and 292 and the comma in row 190 on
   2026-11-14.
-- **Discrete sweep, more finds (owner on 2026-11-13: still "not now"):** the lint hint
-  `article-after-symbol` lists 13 wrong articles after a formula in P2-3 and P4 (sheet and site copy):
-  «$y$-ն բաժանում», «$y$-ն միշտ», «$n$-ն և», «$f$-ն ոչ» (3 places), «$f$-ն երբեք»; all should be
-  «-ը». One more sits across a line break in `site/discrete/p4-functions.html:763` («$f$-ն» then
-  `<em>ոչ</em>` on the next line), which the per-line lint cannot see.
 - **Armenian lint gaps still open:** no hint for the Russian «X-ի մոտ» (= «у»; all 24 uses on the
   site are the spatial sense, so a hint would only be noise), no article check after longer formulas
   («$f(x)$-ն դրական» passes), and nothing across line breaks. (2026-11-13; the Greek-letter, prime
@@ -80,13 +93,5 @@ Topics cut from current work so they are not lost.
 - **Sendable single-file copies of each page.** A small Node script that inlines CSS, JS, KaTeX
   and base64 fonts into `dist/pN-*.standalone.html`. Only if pages actually need to be sent as files
   (DECISIONS #4). (2026-11-03)
-- **51 display formulas on the 7 discrete pages scroll sideways at 390 px** (p1: 8, p2-3: 7, p4: 9, p5: 5,
-  p6: 1, p7: 13, p8: 8; `node tools/browser_check.mjs` prints them as notes, and the full list with widths
-  comes from temporarily making `WIDE_IS_A_NOTE` return false). These pages predate the "display math must fit
-  the phone column" rule; five of the seven on p2-3 are matrices only 2 px too wide. Fix by splitting with
-  `aligned` / `gathered` in the site pages (the PDFs have their own page width), then drop the exception from
-  the script. (2026-11-14)
-- **Cross-sheet term alignment** left as-is in the Armenian pass: կրկնությամբ vs կրկնություններով
-  զուգորդություններ, ձողիկ vs գծիկ, ֆիքսել family, դասավորություն vs տեղադրություն. (2026-09-07)
 - **Glossary † rows** for project-only terms: կոնտրապոզիցիա, կոնյունկցիա, զույգություն,
   նախակարգ, Ուորշալ. (2026-09-07)

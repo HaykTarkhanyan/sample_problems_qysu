@@ -20,20 +20,24 @@ done = [
   "Six Fable reviewers launched as each builder finished (23:48 to 00:05), each in its own worktree with the builder's branch merged in.",
   "00:10: owner asked to pause ('tell them to pause, we continue later'). Pause message sent to all six reviewers: write the review file as IN PROGRESS with what remains, WIP commit, stop.",
   "00:23: all six reviewers are stopped with an IN PROGRESS review file committed on their branch (P5 1f2b86f about two thirds done; P2-3 7b013e5; P4 53e4b2e and P7 e7285e9 about one third; P6/P8 1b2833d early; P1 c6f8cf5, stopped by force when the owner had to close the PC, its report was already on disk and was committed from outside). No reviewer has changed a page yet. Findings so far: no wrong answer anywhere; P5 has 2 WRONG items queued in the w-grid widget (a predict why-text pointing to the wrong line, a stale aria-label); P2-3 confirms the false 3.3 sentence and that the ENGLISH sheet still has it (discrete/solutions_opus_4_8/Practice2-3_Relations_Solutions.tex lines 523-525); P7 confirms the «սահման» -> «եզր» replacement is clean (22 places on the page, 20 in the sheet, not 19 / 16).",
+  "2026-11-18, 11:55: all twelve worktrees intact; the six reviewers resumed from their lists and finished within about 35 minutes. Results: no wrong answer on any page; 5 false statements found and fixed, all in widget text (P5 two in w-grid, P2-3 one Warshall log line, P8 two in the new w-seq), 12 unclear places fixed; the false 3.3 sentence of the old P2-3 page confirmed (also in the English sheet). Reviewer cost about 3.3 M Fable tokens in total.",
+  "Owner interview while the reviewers ran: 57 questions (Q68-Q124), the 76 stored ones merged to about 55 plus the reviewers' most important ones. Answers in armenian_style/OWNER_ANSWERS.md A72-A76. The eight not-built widget ideas are all wanted and parked (owner: 'i dont have too much credits now').",
+  "Owner reversed one decision (Q124): solutions stay OPEN by default on the discrete pages, because the widgets sit inside the solutions; DECISIONS #24 has a 'Revisited' paragraph.",
+  "The six reviewer branches merged into main without conflicts; gates green on merged main; then the owner's answers applied by small scripts in logs/review/ (lead-ins dropped on 14 files, two predict blocks of P5 moved into their solutions, «ուստի» varied on P2-3, P4, P5 pages and sheets: 40 + 38 places, term and wording changes on all seven pages and sheets, four 'by computer' sentences removed from P4, three P4 hints shortened, the lecture's definition of a function added at the start of P4, fill-in-the-matrix check shows only the count of missing cells).",
+  "site.js: a link into a hidden solution now opens it (revealTarget). tools/browser_check.mjs: the discrete exception is gone, a wide display formula fails on every page. English practices 2-3 sheet: the 3.3 sentence fixed.",
+  "All seven Armenian PDFs and the English practices 2-3 PDF rebuilt (xelatex / pdflatex twice each, 56 s in total, rc 0; only the usual Sylfaen font-shape warnings). Final gates: check_site passes, 0 lint errors on pages, scripts and sheets, all 14 check scripts pass, full-site browser check passes on all 39 pages in 50 s.",
 ]
 
 pending = [
-  "NOTHING of the discrete iteration is merged or deployed. The live discrete pages are unchanged.",
-  "Resume the six reviewers (SendMessage to each: continue from your list of what remains). If this session is gone: start a fresh Fable reviewer per page from the reviewer's branch (it contains the builder's work, the partial review file and the WIP commit); the briefs are in this session's transcript, and the reviewers' own scripts are in logs/review_<page>/ of their worktrees (gitignored).",
-  "Then per page: read the reviewer's diff, rerun the gates on merged main (check_site, lint, the page's two check scripts, browser_check --strict), merge. Shared files the agents asked about: site.css (hint style, text input, bigger chips, 2 px padding for a matrix next to a figure), setupPredict from prob.js to site.js, CONVENTIONS.md (discrete pages now load prob.js and have try-first on; discrete/checks/mockdom.mjs).",
-  "Rebuild the seven Armenian PDFs with xelatex, one at a time (the agents edited the .tex sheets, language only, and did not compile). P1, P2-3, P5 were already 4 punctuation marks behind.",
-  "English sheet for practices 2-3: check whether it has the false sentence of problem 3.3 too (the P2-3 reviewer was asked to report it).",
-  "Remove the --strict exception for discrete in tools/browser_check.mjs once all seven pages pass strict on main; update DEFERRED_TODO (51 formulas, language sweep) and discrete/README.md; rebuild the search index; deploy.",
-  "Ask the owner the stored questions with the interview tool (75 from builders, plus the reviewers', plus A71 and Q67: deploy before or after the answers).",
+  "Parked by the owner for credits: the eight widget ideas and moving widgets above the solutions (DEFERRED_TODO.md, 'Discrete pages after the iteration').",
+  "Open owner question A71 (two «երաշխիք» sentences on the integration and nonlinear pages).",
+  "Not asked, left as the agents wrote them: the minor questions listed at the top of discrete/reviews/2026-11-16_questions_for_owner.md.",
+  "The twelve agent worktrees and branches are merged; remove them once the owner agrees.",
 ]
 
 next = [
-  "After the merge: a README in discrete/checks listing the scripts; decide with the owner which of the not-built widget ideas to build.",
+  "A README in discrete/checks listing the scripts.",
+  "When credits allow: the parked widgets, built with Opus and reviewed with Fable.",
 ]
 
 files = [
