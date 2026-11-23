@@ -2,6 +2,14 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 25. The Armenian guide moves to a global skill; this repo points to it
+
+- **Date / status:** 2026-11-23, active (owner: "make sure that the skill is good and remove the one from sample_problems and just point from there instead")
+- **Decision:** `armenian_style/` now holds only a pointer README and the gitignored `_sources/`. The guide, owner answers, house rules, findings and lint live in `~/.claude/skills/armenian-writing/`. The glossary files stay in this repo for now.
+- **Why:** the owner needs the same Armenian rules in every project. An independent audit of the skill found 12 points before the move; 11 were fixed and one was a false alarm. The script check confirmed each guide file is in the skill unchanged apart from a one-line note.
+- **Alternatives rejected:** keeping both copies (they would drift at the first new decision); a junction from the skill to this folder (the skill would break if this repo moved).
+- **What would change this:** the course needs Armenian rules that should not apply anywhere else; those belong in this repo's `CONVENTIONS.md`.
+
 ## 24. The discrete pages get the teaching pattern of the newer courses, by one agent per page plus a reviewer
 - **Date** 2026-11-16 - **status** active (user: "launch agents to iterate on discrete both in terms of better
   interactives, better armenian and better pedagogy"; then answers Q47-Q50 of that session)

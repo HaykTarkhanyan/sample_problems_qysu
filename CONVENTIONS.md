@@ -4,40 +4,12 @@ Recurring decisions for this repo, written down once they were made twice.
 
 ## Armenian text (all `.tex` and `.html`)
 
+- Follow the global `armenian-writing` skill (`~/.claude/skills/armenian-writing/`): style guide, the owner's decisions (A2-A76), house rules and lint. It moved there on 2026-11-23; the last version in this repo is at commit `af7b31d`.
 - `glossary_Apr.csv` is the authoritative term list; `discrete/glossary_discrete_focused.md` is the
   course view. Grep it before changing any term. Its ⚠ rows invert instinct: inclusion-exclusion =
   **կցման-արտաքսման սկզբունք** (not ներառման-բացառման), monotone = մոնոտոն, loop = ակ,
   singleton = մեկկետանոց, codomain = փոփոխման տիրույթ, pigeonhole = Դիրիխլեի սկզբունք.
-- Reader address is plural / first-person plural everywhere («Դիտարկենք», «հաշվեք»), never singular
-  imperatives («գծիր», «հաշվիր»).
-- Punctuation: full stop `։` (U+0589, never U+2024); `՝` for colon/apposition; `՞` sits on the
-  stressed vowel (`ինչո՞ւ`, `ի՞նչ`, never `ինչու՞`); quotes `« »`; `այսինքն՝` always takes `՝`;
-  no Latin `; : ?` right after Armenian letters; plain hyphen `-`, no em/en dashes.
-- ը/ն article: `-ն` before a vowel **sound**, `-ը` otherwise. Words starting with ե, ո (not ու) and
-  «և» start with a consonant sound, so they take `-ը` («թիվը երկու», «$x$-ը և»), except the
-  auxiliaries եմ/ես/ենք/եք/են («տարրերն են») (source: «Հայոց լեզու 7» pp. 26-27, Language Committee;
-  `armenian_style/SOURCE_FINDINGS.md` A1). Before «ով» / «ովքեր» both articles are fine (A43). A primed symbol
-  is read «... շտրիխ» and takes `-ը`: «$g'$-ը», «$S'$-ը» (A47). Right before a formula the article is `-ը`, whatever
-  the formula's spoken name starts with: «$x_n$-ը $r$ արմատի», «բազմանդամը $x$ կետում» (A55; the formula counts as a
-  pause).
-  After a symbol, go by how it is read (table in `armenian_style/GUIDE.md` A1b): «$A$-ն» («ա»),
-  «$j$-ն» («ժի»), «$2$-ը» / «$Y_2$-ը» / «Քայլ 2-ը» («երկուսը», «երկրորդը»). A symbol whose spoken name ends
-  in a consonant takes `-ը` unless the NEXT word starts with a vowel: «$F$-ը մոնոտոն», «$F$-ն անընդհատ»
-  (F = «էֆ»), «Մեծացրեք $s$-ը։» (lecture 10 usage; I got this backwards once on 2026-11-10). Numeral + singular noun
-  by default («6 մարդ», «3 աստղ»); plural is fine when definite («այդ երեք բազմությունները»).
-- Owner decisions of 2026-11-10 and 2026-11-13 (full list: `armenian_style/OWNER_ANSWERS.md`): mijaket stays ASCII
-  `.`; «Հետևաբար,» with a comma at the start of a sentence, «Այսպիսով՝» with ՝; «Դիցուք» /
-  «Ենթադրենք», never «Թող»; «ճիշտ մեկ»; no «Հեշտ է տեսնել»; no math «աշխատում է» or «հարկադրել»;
-  method boxes carry only their title «★ Հիշարժան մեթոդ» (no bold lead-in: neither «Փոխանցելի տեխնիկա» nor
-  «Ընդհանուր հնարք՝», owner 2026-11-18); «չ-» only on verbs and participles,
-  adjectives take «ոչ» or «ան-» («ոչ լավ», never «չլավ»; «-ելի» words too: «անլուծելի», never
-  «չլուծելի»); heads = «ղուշ», tails = «գիր»; statistical sample = «նմուշ»; standard deviation =
-  «ստանդարտ շեղում»; «հզոր մեթոդ» is fine; plural imperatives carry no stress mark («Գտեք»,
-  «Ստուգեք»), only «տե՛ս» does; a comma after the openers «Վերջապես», «Մյուս կողմից»,
-  «Մասնավորապես»; a long definition keeps its «որը» clause. Decimals take a comma («3,5», `3{,}5` in
-  TeX); a dot only in code.
-- Before publishing Armenian text, run `python -I armenian_style/lint_armenian.py <files>` (0 errors) and
-  skim `armenian_style/POLISH_CHECKLIST.md`.
+- Before publishing Armenian text, run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <files>` (0 errors) and skim the skill's `references/POLISH_CHECKLIST.md`.
 - Composition is LEFT-TO-RIGHT in this course: $(f\cdot g)(x)=g(f(x))$, $\sigma\circ\rho$ = first σ then ρ.
 
 ## Static site (`site/`)
@@ -209,7 +181,7 @@ widget, etc.).
   computation; a "Տիպիկ սխալներ" box; exercises ordered easy -> hard with at least one non-example; a closing
   `#exam` section (one-table summary, oral-exam checklist with proof ideas and links, sample oral questions,
   what's next). Every widget gets a caption saying what the example is.
-- Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see `armenian_style/` A36 for which is which.
+- Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see A36 in the `armenian-writing` skill for which is which.
 - Probability terms fixed across pages (glossary first): countable additivity = «հաշվելի ադիտիվություն» /
   «հաշվելիորեն ադիտիվ» (not «գումարելիություն»; «գումարելի» only for a summand); frequency =
   «հաճախություն»; convolution = «փաթույթ»; mutual / pairwise independence = «ըստ համախմբության անկախ» /
@@ -227,7 +199,7 @@ widget, etc.).
   2026-11-11, user request): hub = white ∑ (`span.sigma`), discrete = small graph with orange nodes
   (`span.graph`), probability = die (`span.die`), numerical = curve through three nodes (`span.spl`). Copy the
   `<link rel="icon">` line and the span from an existing page of the same course.
-- Every new page: also run `python -I armenian_style/lint_armenian.py <page> <script>` (0 errors) and check that
+- Every new page: also run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <page> <script>` (0 errors) and check that
   no `.katex-display` overflows at 390 px; formula boxes with a formula plus its range go in
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of
