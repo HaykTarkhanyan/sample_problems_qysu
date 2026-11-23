@@ -145,7 +145,7 @@ so they depend on the lecture numbering above.
 
 ## Cross-references / things to watch
 
-- The **glossary** (`discrete/glossary_discrete_focused.md`) terminology should match the professor's
+- The **glossary** (`references/glossary_discrete_focused.md` in the `armenian-writing` skill) terminology should match the professor's
   actual Armenian — but the extracted text can't confirm wording (corrupted). Verify against the PDFs.
 - The professor's `Z_n`, floor/ceiling, `Ker(f)`, `C_n^r`/`A_n^r`/`P_n`, `S(n,k)`, `B(n)`, Post-class
   `T0,T1,S,L,M` notation should be reused verbatim in solutions for consistency.

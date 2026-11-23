@@ -5,8 +5,8 @@ Recurring decisions for this repo, written down once they were made twice.
 ## Armenian text (all `.tex` and `.html`)
 
 - Follow the global `armenian-writing` skill (`~/.claude/skills/armenian-writing/`): style guide, the owner's decisions (A2-A76), house rules and lint. It moved there on 2026-11-23; the last version in this repo is at commit `af7b31d`.
-- `glossary_Apr.csv` is the authoritative term list; `discrete/glossary_discrete_focused.md` is the
-  course view. Grep it before changing any term. Its ⚠ rows invert instinct: inclusion-exclusion =
+- The skill's `references/glossary_Apr.csv` is the authoritative term list; its
+  `references/glossary_discrete_focused.md` is the course view. Grep it before changing any term. Its ⚠ rows invert instinct: inclusion-exclusion =
   **կցման-արտաքսման սկզբունք** (not ներառման-բացառման), monotone = մոնոտոն, loop = ակ,
   singleton = մեկկետանոց, codomain = փոփոխման տիրույթ, pigeonhole = Դիրիխլեի սկզբունք.
 - Before publishing Armenian text, run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <files>` (0 errors) and skim the skill's `references/POLISH_CHECKLIST.md`.

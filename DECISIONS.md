@@ -2,9 +2,17 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 26. The glossaries move to the armenian-writing skill too
+
+- **Date / status:** 2026-11-23, active (owner, asked whether to remove them here and point to the skill: "21 yes")
+- **Decision:** `glossary_Apr.csv` and `discrete/glossary_discrete_focused.md` now live only in the skill's `references/` folder, and this repo's docs point there. The header comments in the Armenian `.tex` sheets that name them stay as written.
+- **Why:** with two copies, a new term could land in only one. Nothing executable reads either file: in code, CI and LaTeX the only mentions are `.tex` comments. Both files were byte-identical to the skill's copies when removed.
+- **Alternatives rejected:** keeping both with a sync script (more machinery than one pointer).
+- **What would change this:** a build step starts needing the glossary inside this repo.
+
 ## 25. The Armenian guide moves to a global skill; this repo points to it
 
-- **Date / status:** 2026-11-23, active (owner: "make sure that the skill is good and remove the one from sample_problems and just point from there instead")
+- **Date / status:** 2026-11-23, active, its glossary part superseded by #26 (owner: "make sure that the skill is good and remove the one from sample_problems and just point from there instead")
 - **Decision:** `armenian_style/` now holds only a pointer README and the gitignored `_sources/`. The guide, owner answers, house rules, findings and lint live in `~/.claude/skills/armenian-writing/`. The glossary files stay in this repo for now.
 - **Why:** the owner needs the same Armenian rules in every project. An independent audit of the skill found 12 points before the move; 11 were fixed and one was a false alarm. The script check confirmed each guide file is in the skill unchanged apart from a one-line note.
 - **Alternatives rejected:** keeping both copies (they would drift at the first new decision); a junction from the skill to this folder (the skill would break if this repo moved).

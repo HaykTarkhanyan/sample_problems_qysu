@@ -206,8 +206,8 @@ it in a sibling `*_ARM/` folder (e.g. `discrete/solutions_opus_4_8_ARM/`), filen
 - Translate the box titles: `Խնդիր` (Problem), `Գաղափարը` (The idea), `Հիշարժան մեթոդ` (Method to
   remember), `Պատասխան` (Answer).
 
-**Terminology - faithful to the glossary.** Consult `discrete/glossary_discrete_focused.md` (topic
-sections) and the master `glossary_Apr.csv` before translating; render every math term in its
+**Terminology - faithful to the glossary.** Consult the `armenian-writing` skill's
+`references/glossary_discrete_focused.md` (topic sections) and master `references/glossary_Apr.csv` before translating; render every math term in its
 glossary form (recurrence relation -> ռեկուրենտ առնչություն, characteristic equation -> բնութագրիչ
 հավասարում, determinant -> որոշիչ, superposition -> վերադրում, ...). One term per concept, used
 consistently throughout.
