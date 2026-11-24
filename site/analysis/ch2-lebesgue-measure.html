@@ -70,7 +70,8 @@
   բազմությունը <strong>չափելի</strong> է, եթե տարրական բազմություններով կարելի է մոտարկել ցանկացած ճշտությամբ։ Չափելի
   բազմությունների վրա չափը հաշվելիորեն ադիտիվ է։</li>
   <li><strong>Չափը և հզորությունը տարբեր բաներ են։</strong> Ամեն հաշվելի բազմության չափը զրո է, բայց զրո չափ ունի նաև
-  անհաշվելի Կանտորի բազմությունը։ Եվ գոյություն ունի բազմություն, որին ոչ մի իմաստալից չափ չի կարելի տալ (Վիտալի)։</li>
+  անհաշվելի Կանտորի բազմությունը։ Եվ գոյություն ունի բազմություն, որը չափելի չէ ըստ Լեբեգի՝ նրան հնարավոր չէ երկարություն
+  վերագրել այնպես, որ պահպանվեն հաշվելի ադիտիվությունը և տեղաշարժի նկատմամբ ինվարիանտությունը (Վիտալի)։</li>
 </ol>
 </div>
 <div class="note"><strong>Նշանակումներ։</strong> թեորեմների համարները նույնն են, ինչ նյութում (Թեորեմ 20-38)։ $\mathcal P$-ն
@@ -91,7 +92,8 @@ $$\begin{gathered}A=\bigcup_{i=1}^{n}[a_i,b_i),\\ [a_i,b_i)\cap[a_j,b_j)=\varnot
 դասը $\mathcal P$-ն է։ $A$-ի <strong>չափը</strong> (Լեբեգի չափը) նրա բաղկացուցիչ միջակայքերի երկարությունների գումարն է՝
 $m(A)=\sum_{i=1}^n(b_i-a_i)$։</p>
 </div>
-<p>Կանոնական ներկայացումը միակը չէ՝ $[0,2)=[0,1)\cup[1,2)$։ Ուստի առաջին հարցն այն է, որ չափը կախված չլինի ներկայացումից։
+<p>Կանոնական ներկայացումը միակը չէ՝ $[0,2)=[0,1)\cup[1,2)$։ ($a_i=b_i$ դեպքում $[a_i,b_i)=\varnothing$,
+ուստի $\varnothing\in\mathcal P$։) Ուստի առաջին հարցն այն է, որ չափը կախված չլինի ներկայացումից։
 Դա հետևում է <strong>Լեմմա 4</strong>-ից (եթե $[a,b)$-ն տրոհված է վերջավոր թվով $[a_i,b_i)$-երի, ապա $b-a=\sum(b_i-a_i)$)՝
 երկու ներկայացման $A_i\cap B_j$ հատումները տալիս են ընդհանուր մանրացում։ <strong>Լեմմա 3</strong>-ը (թողնված է որպես
 վարժություն)՝ $A\cap B$, $A\setminus B$, $A\cup B$, $A\symd B$-ն նույնպես տարրական են։ Կիսաբաց միջակայքերն ընտրված են
@@ -159,7 +161,7 @@ $m^*(A)\le\sum_i\bigl(m^*(A_i)+\varepsilon/2^i\bigr)=\sum_im^*(A_i)+\varepsilon$
 <p>$A\subset[0,1)$-ը կոչվում է <strong>չափելի</strong> (measurable), եթե ամեն $\varepsilon\gt0$-ի համար կա $B\in\mathcal P_0$, որ
 $m^*(A\symd B)\lt\varepsilon$։ Չափելի բազմությունների դասը $\mathfrak M$-ն է, և չափելի $A$-ի չափը $\operatorname{mes}(A)=m^*(A)$ է։</p>
 </div>
-<p>Այսինքն՝ չափելի բազմությունը կարելի է ցանկացած ճշտությամբ փոխարինել վերջավոր թվով միջակայքերով, և սխալը (համաչափ
+<p>Այսինքն՝ չափելի բազմությունը կարելի է ցանկացած ճշտությամբ փոխարինել վերջավոր թվով միջակայքերով, և սխալը (սիմետրիկ
 տարբերության արտաքին չափը) փոքր կլինի։ Լեմմա 5-ից հետևում է, որ այդ դեպքում $m(B)$-ն էլ մոտ է $m^*(A)$-ին։</p>
 <div class="box thm"><div class="box-title">Թեորեմ 26 (լրիվություն) և Թեորեմ 27</div>
 <p>(26) Եթե $\operatorname{mes}(A)=0$ և $B\subset A$, ապա $B$-ն չափելի է, և $\operatorname{mes}(B)=0$։<br>
@@ -255,6 +257,7 @@ $G$-ն «ամբողջն» է՝ $[0,1]\setminus G$-ն ունի $0{,}99$-ից ոչ
   <p class="widget-out" data-out="text"></p>
 </div>
 
+<p>Ցանկացած $A\subset\R$-ի արտաքին չափը սահմանվում է Սահմանում 9-ի նույն բանաձևով (այն կարող է լինել $+\infty$)։</p>
 <div class="box thm"><div class="box-title">Թեորեմ 33 և Թեորեմ 34 (ռեգուլյարություն)</div>
 <p>(33) Ցանկացած $A\subset\R$-ի համար $m^*(A)=\inf_{G\supset A}\operatorname{mes}(G)$, որտեղ ինֆիմումը վերցվում է $A$-ն
 պարունակող բաց $G$ բազմություններով։<br>
@@ -269,12 +272,15 @@ $F\subset A\subset G$ և $\operatorname{mes}(G\setminus F)\lt\varepsilon$։</p>
 $m^*(A)\lt\infty$, վերցնենք ծածկույթ $\sum(b_i-a_i)\lt m^*(A)+\varepsilon$ և ընդլայնենք միջակայքերը ձախ՝
 $G=\bigcup_i(a_i-\varepsilon/2^i,b_i)$։ $G$-ն բաց է, $A\subset G$, և $\operatorname{mes}(G)\le\sum(b_i-a_i)+\varepsilon\lt m^*(A)+2\varepsilon$։</p>
 <p><strong>Լեմմա 6։</strong> եթե $A\subset I=(a,b)$ և $\operatorname{mes}(I\setminus A)\lt\varepsilon$, ապա կա փակ $F\subset A$, որ
-$\operatorname{mes}(A\setminus F)\lt2\varepsilon$։ (Թեորեմ 33-ով $I\setminus A$-ն ծածկում ենք բաց $G$-ով, $H=G\cap I$, և
-$F=[a+\varepsilon/2,b-\varepsilon/2]\setminus H$։)</p>
+$\operatorname{mes}(A\setminus F)\lt2\varepsilon$։ (Թեորեմ 33-ով ընտրում ենք բաց $G\supset I\setminus A$, $\operatorname{mes}(G)\lt\varepsilon$, և դնում ենք
+$H=G\cap I$, $F=[a+\varepsilon/2,b-\varepsilon/2]\setminus H$։ Այդ դեպքում $F\subset A$ և
+$A\setminus F\subset H\cup(a,a+\varepsilon/2)\cup(b-\varepsilon/2,b)$։)</p>
 <p><strong>Թեորեմ 34։</strong> Թեորեմ 33-ով ընտրում ենք բաց $G\supset A$, $\operatorname{mes}(G)\lt\operatorname{mes}(A)+\varepsilon/4$։
-$G$-ի բաղկացուցիչ $(a_i,b_i)$ միջակայքերից պահում ենք առաջին $n$-ը (մնացածի գումարը $\lt\varepsilon/4$), ամեն մեկում Լեմմա 6-ով
-գտնում ենք փակ $F_i\subset(a_i,b_i)\cap A$, և $F=\bigcup_{i\le n}F_i$-ը փակ է։ Հաշվարկը տալիս է $\operatorname{mes}(A\setminus F)\le3\varepsilon/4$,
-ուստի $\operatorname{mes}(G\setminus F)\lt\varepsilon$։ $\blacksquare$</p>
+$G$-ի բաղկացուցիչ $(a_i,b_i)$ միջակայքերից պահում ենք առաջին $n$-ը (մնացածի գումարը $\lt\varepsilon/4$), ամեն մեկում Լեմմա 6-ը
+կիրառում ենք $A\cap(a_i,b_i)$-ի և $\varepsilon_i\gt\operatorname{mes}\bigl((a_i,b_i)\setminus A\bigr)$ թվի համար, որտեղ
+$\sum_{i\le n}\varepsilon_i\lt\varepsilon/4$ (հնարավոր է, քանի որ $\sum_i\operatorname{mes}\bigl((a_i,b_i)\setminus A\bigr)=\operatorname{mes}(G\setminus A)\lt\varepsilon/4$),
+և ստանում ենք փակ $F_i\subset(a_i,b_i)\cap A$։ $F=\bigcup_{i\le n}F_i$-ը փակ է, և
+$\operatorname{mes}(A\setminus F)\lt2\sum_{i\le n}\varepsilon_i+\varepsilon/4\lt3\varepsilon/4$, ուրեմն $\operatorname{mes}(G\setminus F)\lt\varepsilon$։ $\blacksquare$</p>
 </div></details>
 </div>
 </details>
@@ -330,7 +336,7 @@ $\pi$-ն նորմալ են։ Զրո չափի բազմության լեզուն �
 <div class="sec-body">
 <div class="box def"><div class="box-title">Սահմանում 12 և Սահմանում 13</div>
 <p>Բազմությունների $\mathcal F$ ընտանիքը կոչվում է <strong>սիգմա-հանրահաշիվ</strong> (նյութում՝ σ-հանրահաշիվ), եթե այն փակ է
-միավորման, հատման, տարբերության և համաչափ տարբերության, ինչպես նաև հաշվելի թվով միավորումների և հատումների նկատմամբ և ունի
+միավորման, հատման, տարբերության և սիմետրիկ տարբերության, ինչպես նաև հաշվելի թվով միավորումների և հատումների նկատմամբ և ունի
 ամենամեծ տարր (միավոր)։<br>
 Առանցքի բաց բազմությունները պարունակող ամենափոքր սիգմա-հանրահաշիվը կոչվում է <strong>բորելյան</strong> սիգմա-հանրահաշիվ՝
 $\mathfrak B$, իսկ նրա տարրերը՝ բորելյան բազմություններ։</p>
@@ -360,8 +366,9 @@ $\mathfrak c$ հատ են։ (Վերջին փաստը նյութում չկա, ա
   <li>Տեղաշարժի նկատմամբ ինվարիանտություն չկա՝ $\operatorname{arctg}$-ի համար $m_g(-\infty,0)=\tfrac\pi2\lt\tfrac{3\pi}4=m_g(-\infty,1)$, թեև
   $(-\infty,1)=(-\infty,0)+1$։</li>
   <li>Մեկ կետը կարող է ունենալ դրական չափ՝ $m_g\{a\}=g(a+0)-g(a)$, որը դրական է, եթե $g$-ն $a$-ում թռիչք ունի։</li>
-  <li>Ոչ չափելի ըստ Լեբեգի բազմությունը (<a href="#vitali">Թեորեմ 36</a>) չափելի է ըստ Ստիլտեսի, եթե $g$-ն հաստատուն է $[0,1]$-ում,
-  և նրա չափը զրո է։</li>
+  <li>Ոչ չափելի ըստ Լեբեգի բազմությունը (<a href="#vitali">Թեորեմ 36</a>) չափելի է ըստ Ստիլտեսի, եթե $g$-ն հաստատուն է $[0,1]$-ը
+  պարունակող բաց միջակայքում (օրինակ՝ $(-1,2)$-ում), և նրա չափը զրո է։ (Միայն $[0,1]$-ում հաստատուն լինելը բավական չէ. եթե
+  $1\in D$, և $g$-ն թռչում է $1$-ից անմիջապես աջ, ապա $m_g\{1\}\gt0$։)</li>
 </ul>
 <p class="muted">Նյութում թռիչքների օրինակը բերված է $g(x)=[x]$ ամբողջ մասով, որն <em>աջից</em> է անընդհատ։ Ձախից անընդհատ
 աստիճանաձև օրինակ է $\lceil x\rceil$-ը (վերև կլորացում)՝ նրա համար $m_g\{n\}=1$ ամեն ամբողջ $n$-ի համար, և
@@ -379,7 +386,8 @@ $m_g\{1\}=g(1+0)-g(1)=2-1=1$), իսկ $2$-ը միջակայքին չի պատկ�
   <div class="widget-head">Ստիլտեսի չափը՝ $g$-ի աճը</div>
   <p class="widget-hint">Ընտրեք $g$-ն և սահիչներով շարժեք $a$-ն ու $b$-ն։ Նարնջագույնը $[a,b)$ միջակայքն է, կապույտ շերտը՝ $g$-ի աճը
   $y$-առանցքի վրա, այսինքն՝ $m_g[a,b)$-ն։ Աստիճանաձև $g$-ի դեպքում ամբողջ «կշիռը» թռիչքների կետերում է (լցված կետը $g(c)$-ն է,
-  դատարկը՝ $g(c+0)$-ն)։ $\operatorname{arctg}$-ի դեպքում կշիռը կենտրոնացած է $0$-ի մոտ, և հեռու միջակայքերը գրեթե զրո չափ ունեն։</p>
+  դատարկը՝ $g(c+0)$-ն)։ $\operatorname{arctg}$-ի դեպքում կշիռը կենտրոնացած է $0$-ի մոտ՝ նույն երկարության միջակայքի չափը $0$-ից հեռանալիս արագ
+  փոքրանում է։</p>
   <div class="chips" data-out="chips"></div>
   <div class="slider-row"><span data-out="alabel"></span><input type="range" data-in="a" min="-3" max="3" step="0.25" value="0.5" aria-label="a"></div>
   <div class="slider-row"><span data-out="blabel"></span><input type="range" data-in="b" min="-3" max="3" step="0.25" value="2" aria-label="b"></div>
@@ -392,7 +400,8 @@ $m_g\{1\}=g(1+0)-g(1)=2-1=1$), իսկ $2$-ը միջակայքին չի պատկ�
 ենթաբազմությունների սիգմա-հանրահաշիվ է՝ $X$ միավորով, $\mu(A)\ge0$, և $\mu$-ն հաշվելիորեն ադիտիվ է։</p>
 </div>
 <p>Օրինակներ՝ $(\R,\mathfrak M,\operatorname{mes})$, $(\R,\mathfrak M_g,m_g)$, չափելի $X\subset\R$-ի վրա Լեբեգի չափի սահմանափակումը,
-Դիրակի չափը ($\mu(B)=1$, եթե $a\in B$, և $0$՝ հակառակ դեպքում), դիսկրետ չափը՝ $\mu(B)=\sum_{a_i\in B}p_i$։ Չափը կոչվում է
+Դիրակի չափը ($\mu(B)=1$, եթե $a\in B$, և $0$՝ հակառակ դեպքում), դիսկրետ չափը՝ $\mu(B)=\sum_{i:\,a_i\in B}p_i$, որտեղ $\{a_i\}$-ն $X$-ի հաշվելի ենթաբազմություն է, $p_i\gt0$ և
+$\sum p_i\lt\infty$։ Չափը կոչվում է
 <strong>լրիվ</strong>, եթե զրո չափի բազմության ամեն ենթաբազմություն չափելի է (Լեբեգի և Ստիլտեսի չափերը լրիվ են)։</p>
 <div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ հավանականությունը չափ է</div>
 <p>1933-ին Կոլմոգորովը հավանականությունների տեսությունը կառուցեց հենց այս լեզվով՝ հավանականային տարածությունը $(\Omega,\mathcal F,P)$
@@ -439,7 +448,7 @@ $+\infty$ է։ Երկու դեպքում էլ հակասություն է։ $\bl
 <div class="sec-body">
 <p>Այս թեորեմները կօգտագործվեն գլուխ 5-ում (մոնոտոն ֆունկցիաների ածանցելիություն)։</p>
 <div class="box def"><div class="box-title">Սահմանում 18</div>
-<p>Դիցուք $E\subset\R$, և $\mathcal V$-ն ոչ վերասերված հատվածների ընտանիք է։ $\mathcal V$-ն $E$-ն ծածկում է <strong>Վիտալիի
+<p>Դիցուք $E\subset\R$, և $\mathcal V$-ն չվերասերված հատվածների ընտանիք է։ $\mathcal V$-ն $E$-ն ծածկում է <strong>Վիտալիի
 իմաստով</strong>, եթե ամեն $x\in E$-ի և $\varepsilon\gt0$-ի համար կա $d\in\mathcal V$, որ $x\in d$ և $\operatorname{mes}(d)\lt\varepsilon$։</p>
 </div>
 <div class="box thm"><div class="box-title">Թեորեմ 37 և Թեորեմ 38 (Վիտալի)</div>
@@ -457,13 +466,14 @@ $+\infty$ է։ Երկու դեպքում էլ հակասություն է։ $\bl
 և $d_1\in\mathcal V_1$-ն ընտրված է այնպես, որ $\operatorname{mes}(d_1)\gt\kappa_1/2$։ Եթե $d_1,\dots,d_n$-ն արդեն ընտրված են և
 $E\not\subset F_n=\bigcup_{i\le n}d_i$, դիցուք $G_n=(a,b)\setminus F_n$ (բաց), $\mathcal V_{n+1}=\{d\in\mathcal V:\ d\subset G_n\}$ (դատարկ
 չէ), $\kappa_{n+1}=\sup_{\mathcal V_{n+1}}\operatorname{mes}(d)$, և $\operatorname{mes}(d_{n+1})\gt\kappa_{n+1}/2$։ Եթե ինչ-որ քայլում
-$E\subset F_m$, ավարտված է։ Հակառակ դեպքում $d_i$-երը չեն հատվում և ընկած են $(a,b)$-ում, ուստի $\sum\operatorname{mes}(d_i)\lt b-a$։</p>
+$E\subset F_m$, ավարտված է։ Հակառակ դեպքում $d_i$-երը չեն հատվում և ընկած են $(a,b)$-ում, ուստի $\sum\operatorname{mes}(d_i)\le b-a$։</p>
 <p>Դիցուք $D_i$-ն $d_i$-ի հետ նույն կենտրոնն ունեցող, $5$ անգամ երկար հատվածն է։ Ցույց տանք, որ $E\setminus S\subset\bigcup_{i\ge n}D_i$
-ամեն $n$-ի համար ($S=\bigcup d_i$)։ Եթե $x\in E\setminus S$, ապա $x\in G_n$, և կա $d\in\mathcal V_n$, $x\in d$։ $d$-ն չի կարող
+ամեն $n$-ի համար ($S=\bigcup d_i$)։ Եթե $x\in E\setminus S$, ապա $x\in G_n$։ $G_n$-ը բաց է, իսկ $\mathcal V$-ն $x$-ը ծածկում է
+Վիտալիի իմաստով, ուստի կա $d\in\mathcal V$, որ $x\in d\subset G_n$, այսինքն՝ $d\in\mathcal V_{n+1}$։ $d$-ն չի կարող
 պատկանել բոլոր $\mathcal V_i$-երին, քանի որ $d\in\mathcal V_i$-ից $\operatorname{mes}(d)\le\kappa_i\lt2\operatorname{mes}(d_i)\to0$։ Դիցուք
-$m$-ն ամենափոքր թիվն է, որի համար $d\cap d_m\ne\varnothing$։ Այդ դեպքում $m\gt n$, $d\in\mathcal V_m$, ուստի
-$\operatorname{mes}(d)\le\kappa_m\lt2\operatorname{mes}(d_m)$, և $d\subset D_m$։ Ուրեմն
-$\operatorname{mes}(E\setminus S)\le\sum_{i\ge n}\operatorname{mes}(D_i)=5\sum_{i\ge n}\operatorname{mes}(d_i)\to0$։</p>
+$m$-ն ամենափոքր թիվն է, որի համար $d\cap d_m\ne\varnothing$։ Այդ դեպքում $m\gt n$ ($d\subset G_n$-ը չի հատվում $d_1,\dots,d_n$-ի հետ),
+$d\in\mathcal V_m$, ուստի $\operatorname{mes}(d)\le\kappa_m\lt2\operatorname{mes}(d_m)$, և $d\subset D_m$։ Ուրեմն
+$m^*(E\setminus S)\le\sum_{i\ge n}\operatorname{mes}(D_i)=5\sum_{i\ge n}\operatorname{mes}(d_i)\to0$, այսինքն՝ $m^*(E\setminus S)=0$։</p>
 <p><strong>Թեորեմ 38։</strong> վերցնում ենք Թեորեմ 37-ի ընտանիքը և $n$-ը, որ $\sum_{i\gt n}\operatorname{mes}(d_i)\lt\varepsilon$։ Այդ դեպքում
 $E\setminus\bigcup_{i\le n}d_i\subset\bigl(E\setminus\bigcup_id_i\bigr)\cup\bigcup_{i\gt n}d_i$, և $m^*\lt0+\varepsilon$։ $\blacksquare$</p>
 </div></details>
@@ -543,8 +553,8 @@ $m_g(\R)=\lim_{x\to+\infty}g-\lim_{x\to-\infty}g=2$։</p>
 միջակայքերն իրար չեն կպչում։</p></div></details>
 <div class="solution">
 <p>Հեռացվածի երկարությունը՝ $\sum_{n\ge1}2^{n-1}5^{-n}=\tfrac15\sum_{j\ge0}\left(\tfrac25\right)^j=\tfrac15\cdot\tfrac53=\tfrac13$, ուստի
-$\operatorname{mes}(P)=1-\tfrac13=\tfrac23$։ (Կառուցումը հնարավոր է՝ $n$-րդ քայլից հետո հատվածների երկարությունները մոտ $2^{-n}$ են՝
-շատ ավելի մեծ, քան $5^{-n-1}$-ը։) $P$-ն փակ է, և նրա լրացման միջակայքերն ընդհանուր ծայրակետ չունեն, ուստի կատարյալ է
+$\operatorname{mes}(P)=1-\tfrac13=\tfrac23$։ (Կառուցումը հնարավոր է՝ $n$-րդ քայլից հետո ամեն հատվածի երկարությունը
+$\tfrac23\cdot2^{-n}+\tfrac13\cdot5^{-n}$ է՝ ավելի մեծ, քան $5^{-n-1}$-ը։) $P$-ն փակ է, և նրա լրացման միջակայքերն ընդհանուր ծայրակետ չունեն, ուստի կատարյալ է
 (Գլուխ 1, <a href="ch1-cardinality.html#open">Թեորեմ 18</a>)։</p>
 <div class="box answer"><span class="answer-label">Պատասխան՝</span> $\operatorname{mes}(P)=\tfrac23$, կատարյալ է</div>
 </div>
@@ -552,7 +562,7 @@ $\operatorname{mes}(P)=1-\tfrac13=\tfrac23$։ (Կառուցումը հնարավ
 <div class="box problem" id="ex5"><div class="box-title">Վարժություն 5 ★</div>
 <p>Ապացուցեք, որ եթե $A\subset\R$-ը չափելի է, և $\operatorname{mes}(A)\gt0$, ապա $A$-ն անհաշվելի է։ Ճի՞շտ է արդյոք հակառակը։</p>
 </div>
-<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Հակադարձ պնդումը (կոնտրապոզիցիան)՝ հաշվելի բազմության չափը …</p></div></details>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Համարժեք պնդումը (կոնտրապոզիցիան)՝ հաշվելի բազմության չափը …</p></div></details>
 <div class="solution">
 <p>Եթե $A$-ն հաշվելի լիներ (կամ վերջավոր), ապա $\operatorname{mes}(A)=\sum\operatorname{mes}\{a_n\}=0$ (Օրինակ 4)։ Ուրեմն
 $\operatorname{mes}(A)\gt0$-ից հետևում է անհաշվելիությունը։ Հակառակը ճիշտ չէ՝ Կանտորի բազմությունն անհաշվելի է, բայց նրա չափը
