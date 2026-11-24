@@ -13,7 +13,9 @@ Recurring decisions for this repo, written down once they were made twice.
 - Owner, 2026-11-24 (after a student's feedback on lecture 13): «մաքուր» and «քսված» are not suitable in a math context.
   An absolutely continuous distribution is «բաշխված է խտությամբ» / «հավասարաչափ բաշխված» (in the sand intuition
   «տարածված»); the two «մաքուր» types are «հիմնական» types; the Cantor step removes «մեջտեղի մասը» (the lecture notes say
-  «մեջտեղի բաց միջակայքը»), not «միջին երրորդը». Applied to lectures 10-15 and real analysis chapters 1-2.
+  «մեջտեղի բաց միջակայքը»), not «միջին երրորդը». Applied to lectures 10-15 and real analysis chapters 1-2. The same day
+  «մաքուր» in the sense "purely / cleanly" was replaced on discrete sheets 1, 4, 5 (pages and `.tex`): «պարզապես»,
+  «ուղղակի», «ամենապարզ», «խիստ աճող» (strictly increasing, glossary), «հանրահաշվական ձևափոխություններով».
 - Composition is LEFT-TO-RIGHT in this course: $(f\cdot g)(x)=g(f(x))$, $\sigma\circ\rho$ = first σ then ρ.
 
 ## Static site (`site/`)
