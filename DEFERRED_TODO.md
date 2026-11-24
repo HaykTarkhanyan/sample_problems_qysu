@@ -10,6 +10,8 @@ Topics cut from current work so they are not lost.
   "hard Armenian wording" part waits for her answer to which 2-3 places were unclear (message drafted in the session
   log). Her answer on the definition (2026-11-24 13:03): she is almost sure the lecturer said nothing about F' = 0 and
   first forgot to say "continuous", so the page's growth-point definition (with continuity) is right as deployed.
+  Her first two wording reports (2026-11-24 16:07, 16:11: «մաքուր» / «քսված» in the intro, «միջին երրորդները» in the
+  Cantor set section) were fixed the same day with short glosses and two static figures; more may follow.
 
 - **Numerical analysis, when the lecture slides for integration and linear systems arrive:** both pages were
   built without slides on 2026-11-14 (DECISIONS #22), so compare them with the slides and update. What may
