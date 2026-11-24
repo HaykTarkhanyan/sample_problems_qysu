@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Cpath d=%27M16 16C13 11 8 11 8 16S13 21 16 16S24 11 24 16S19 21 16 16Z%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%272.6%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գլուխ 2 - Լեբեգի չափ</title>
+<meta name="description" content="Իրական անալիզ, գլուխ 2՝ տարրական բազմություններ, արտաքին չափ, չափելի բազմություններ, հաշվելի ադիտիվություն, ռեգուլյարություն, Ստիլտեսի չափ, ոչ չափելի բազմություն, Վիտալիի թեորեմները։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/ra2.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="inf" aria-hidden="true"></span>Իրական անալիզ</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գլուխ 2</div>
+    <h1>Լեբեգի չափ</h1>
+    <p class="subtitle">Ինչպես «երկարություն» տալ բազմություններին, որոնք միջակայք չեն, ինչու ռացիոնալ թվերի չափը զրո է, և ինչու բոլոր բազմությունները չափ ունենալ չեն կարող</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս գլխի մասին</a></li>
+        <li><a href="#elementary">Տարրական բազմություններ</a></li>
+        <li><a href="#outer">Արտաքին չափ և չափելի բազմություններ</a></li>
+        <li><a href="#additivity">Ադիտիվություն և անընդհատություն</a></li>
+        <li><a href="#line">Չափն ամբողջ առանցքի վրա</a></li>
+        <li><a href="#zero">Զրո չափի բազմություններ</a></li>
+        <li><a href="#sigma">Սիգմա-հանրահաշիվ</a></li>
+        <li><a href="#stieltjes">Ստիլտեսի չափ</a></li>
+        <li><a href="#vitali">Ոչ չափելի բազմություն</a></li>
+        <li><a href="#covering">Վիտալիի թեորեմները</a></li>
+        <li><a href="#mistakes">Տիպիկ սխալներ</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս գլխի մասին</h2></summary>
+<div class="sec-body">
+<p>$[a,b)$ միջակայքի երկարությունը $b-a$ է։ Իսկ ի՞նչ է ռացիոնալ թվերի, Կանտորի բազմության կամ մի բարդ բաց բազմության
+«երկարությունը»։ Լեբեգի գաղափարը՝ բազմությունը ծածկում ենք միջակայքերով, որքան հնարավոր է խնայողաբար, և ծածկույթի
+նվազագույն ընդհանուր երկարությունը համարում ենք բազմության չափը։ Այս գլուխը քայլ առ քայլ կառուցում է այդ չափը։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Սկսում ենք պարզից՝</strong> վերջավոր թվով կիսաբաց միջակայքերի միավորման (տարրական բազմության) չափը
+  երկարությունների գումարն է։ Ամեն ինչ հենվում է այն փաստի վրա, որ այս չափը <em>հաշվելիորեն</em> ադիտիվ է (Թեորեմ 22-24)։</li>
+  <li><strong>Ցանկացած բազմության արտաքին չափը</strong> նրա հաշվելի ծածկույթների ընդհանուր երկարությունների ինֆիմումն է, և
+  բազմությունը <strong>չափելի</strong> է, եթե տարրական բազմություններով կարելի է մոտարկել ցանկացած ճշտությամբ։ Չափելի
+  բազմությունների վրա չափը հաշվելիորեն ադիտիվ է։</li>
+  <li><strong>Չափը և հզորությունը տարբեր բաներ են։</strong> Ամեն հաշվելի բազմության չափը զրո է, բայց զրո չափ ունի նաև
+  անհաշվելի Կանտորի բազմությունը։ Եվ գոյություն ունի բազմություն, որին ոչ մի իմաստալից չափ չի կարելի տալ (Վիտալի)։</li>
+</ol>
+</div>
+<div class="note"><strong>Նշանակումներ։</strong> թեորեմների համարները նույնն են, ինչ նյութում (Թեորեմ 20-38)։ $\mathcal P$-ն
+տարրական բազմությունների դասն է, $m$-ը՝ նրանց չափը, $m^*$-ը՝ արտաքին չափը, $\mathfrak M$-ը՝ չափելի բազմությունների դասը,
+$\operatorname{mes}$-ը՝ Լեբեգի չափը։ Գլուխ 1-ի արդյունքներն օգտագործվում են՝ հատկապես բաց բազմության կառուցվածքը
+(<a href="ch1-cardinality.html#open">Թեորեմ 15</a>) և Կանտորի բազմությունը։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="elementary" open>
+<summary><h2>Տարրական բազմություններ և նրանց չափը</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 7 և Սահմանում 8</div>
+<p>Սահմանափակ $A\subset\R$ բազմությունը կոչվում է <strong>տարրական</strong>, եթե</p>
+$$\begin{gathered}A=\bigcup_{i=1}^{n}[a_i,b_i),\\ [a_i,b_i)\cap[a_j,b_j)=\varnothing,\ i\ne j.\end{gathered}$$
+<p>Այսպիսի ներկայացումը կոչվում է կանոնական, իսկ $[a_i,b_i)$-երը՝ $A$-ի բաղկացուցիչ միջակայքեր։ Տարրական բազմությունների
+դասը $\mathcal P$-ն է։ $A$-ի <strong>չափը</strong> (Լեբեգի չափը) նրա բաղկացուցիչ միջակայքերի երկարությունների գումարն է՝
+$m(A)=\sum_{i=1}^n(b_i-a_i)$։</p>
+</div>
+<p>Կանոնական ներկայացումը միակը չէ՝ $[0,2)=[0,1)\cup[1,2)$։ Ուստի առաջին հարցն այն է, որ չափը կախված չլինի ներկայացումից։
+Դա հետևում է <strong>Լեմմա 4</strong>-ից (եթե $[a,b)$-ն տրոհված է վերջավոր թվով $[a_i,b_i)$-երի, ապա $b-a=\sum(b_i-a_i)$)՝
+երկու ներկայացման $A_i\cap B_j$ հատումները տալիս են ընդհանուր մանրացում։ <strong>Լեմմա 3</strong>-ը (թողնված է որպես
+վարժություն)՝ $A\cap B$, $A\setminus B$, $A\cup B$, $A\symd B$-ն նույնպես տարրական են։ Կիսաբաց միջակայքերն ընտրված են
+հենց այն պատճառով, որ դրանք առանց կրկնության «կպչում» են իրար։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 20, 21 և Հետևանք 5, 6</div>
+<ul>
+  <li>(20) <strong>Վերջավոր ադիտիվություն՝</strong> զույգ առ զույգ չհատվող $A_i\in\mathcal P$-երի համար
+  $m\bigl(\bigcup_{i=1}^nA_i\bigr)=\sum_{i=1}^nm(A_i)$։</li>
+  <li>(21) Եթե չհատվող $A_i$-երը $A$-ում են, ապա $\sum m(A_i)\le m(A)$, իսկ եթե $A\subset\bigcup_{i=1}^nA_i$, ապա
+  $m(A)\le\sum m(A_i)$։ Մասնավորապես, $A\subset B\Rightarrow m(A)\le m(B)$ (մոնոտոնություն)։</li>
+  <li>(Հ5) Առաջին անհավասարությունը ճիշտ է նաև հաշվելի թվով $A_i$-երի համար։ (Հ6) $m(A\cup B)=m(A)+m(B)-m(A\cap B)$։</li>
+</ul>
+</div>
+<p>Այս ամենը վերջավոր է և գրեթե ակնհայտ։ Գլխի առաջին իսկական թեորեմը հետևյալն է՝ ծածկույթը կարող է լինել
+<em>հաշվելի</em>։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 22 (հաշվելի կիսաադիտիվություն)</div>
+<p>Եթե $[\alpha,\beta)\subset\bigcup_{i=1}^{\infty}[a_i,b_i)$, ապա $\beta-\alpha\le\sum_{i=1}^{\infty}(b_i-a_i)$։</p>
+</div>
+<p>Ինչո՞ւ է սա դժվար։ Հաշվելի թվով միջակայքերը կարող են դասավորված լինել շատ խճճված ձևով (օրինակ՝ ռացիոնալ կետերի շուրջ), և
+վերջավոր դեպքի «գումարենք ու համեմատենք» փաստարկը չի օգնում։ Լուծումը <strong>կոմպակտությունն</strong> է՝ փակ հատվածը
+ծածկող բաց միջակայքերից կարելի է ընտրել վերջավոր ենթածածկույթ (Հայնե-Բորելի լեմմա), և դրանով խնդիրը բերվում է վերջավոր
+դեպքին։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 22, 23, 24)</summary><div class="inner">
+<p><strong>Թեորեմ 22։</strong> վերցնենք $\varepsilon\gt0$ և ընտրենք $\beta'$ ու $a_i'$ թվեր՝
+$\beta-\varepsilon\lt\beta'\lt\beta$, $a_i-\varepsilon/2^i\lt a_i'\lt a_i$։ Այդ դեպքում $[\alpha,\beta']\subset\bigcup_i(a_i',b_i)$՝
+փակ հատվածը ծածկված է բաց միջակայքերով։ Հայնե-Բորելի լեմմայով կա $n$, որ $[\alpha,\beta')\subset\bigcup_{i=1}^n[a_i',b_i)$, և
+Թեորեմ 21-ից</p>
+$$\begin{aligned}\beta-\alpha&\lt\beta'-\alpha+\varepsilon\le\sum_{i=1}^n(b_i-a_i')+\varepsilon\\&\lt\sum_{i=1}^{\infty}(b_i-a_i)+2\varepsilon.\end{aligned}$$
+<p>$\varepsilon$-ը կամայական է։ $\blacksquare$</p>
+<p><strong>Թեորեմ 23։</strong> եթե $[a,b)$-ն հաշվելի թվով չհատվող $[a_i,b_i)$-երի միավորումն է, ապա Հետևանք 5-ից
+$\sum m[a_i,b_i)\le m[a,b)$, իսկ Թեորեմ 22-ից՝ $m[a,b)\le\sum m[a_i,b_i)$։</p>
+<p><strong>Թեորեմ 24 (հաշվելի ադիտիվություն $\mathcal P$-ում)։</strong> եթե $A=\bigcup_iB_i$, որտեղ $A,B_i\in\mathcal P$, և $B_i$-երը
+չեն հատվում, ապա $m(A)=\sum m(B_i)$։ Գրենք $A=\bigcup_pA_p$, $B_i=\bigcup_jB_{ij}$ (կանոնական ներկայացումներ) և
+$C_{pij}=A_p\cap B_{ij}$։ Ամեն $A_p$ միջակայք $C_{pij}$-երի հաշվելի չհատվող միավորում է, և Թեորեմ 23-ը թույլ է տալիս
+գումարել ըստ $A_p$-ի, իսկ դրական շարքերի գումարման կարգը կարելի է փոխել։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="outer" open>
+<summary><h2>Արտաքին չափ և չափելի բազմություններ</h2></summary>
+<div class="sec-body">
+<p>Սկզբում սահմանափակվում ենք $[0,1)$-ով. $\mathcal P_0$-ն $[0,1)$-ում ընկած տարրական բազմություններն են։</p>
+<div class="box def"><div class="box-title">Սահմանում 9</div>
+<p>$A\subset[0,1)$ բազմության <strong>արտաքին չափը</strong> (outer measure)՝</p>
+$$m^*(A)=\inf_{A\subset\bigcup_i[a_i,b_i)}\ \sum_{i=1}^{\infty}(b_i-a_i),$$
+<p>որտեղ ինֆիմումը վերցվում է $A$-ն ծածկող միջակայքերի բոլոր հաջորդականություններով։</p>
+</div>
+<p>Միշտ $0\le m^*(A)\le1$, $\mathcal P_0$-ի վրա $m^*=m$ (Թեորեմ 22-ից), և $A\subset B\Rightarrow m^*(A)\le m^*(B)$։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 25 և Լեմմա 5</div>
+<p>(25) <strong>Արտաքին չափի հաշվելի կիսաադիտիվություն՝</strong> եթե $A\subset\bigcup_{i=1}^\infty A_i$, ապա
+$m^*(A)\le\sum_im^*(A_i)$։<br>
+(Լ5) $|m^*(A)-m^*(B)|\le m^*(A\symd B)$։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 25։</strong> ամեն $A_i$-ի համար ընտրենք ծածկույթ $A_i\subset\bigcup_j[a_{ij},b_{ij})$, որի երկարությունների
+գումարը $\le m^*(A_i)+\varepsilon/2^i$։ Բոլոր $[a_{ij},b_{ij})$-երը միասին ծածկում են $A$-ն, ուստի
+$m^*(A)\le\sum_i\bigl(m^*(A_i)+\varepsilon/2^i\bigr)=\sum_im^*(A_i)+\varepsilon$։ «$\varepsilon/2^i$ հնարքը» այս գլխում կհանդիպի
+շատ անգամ։</p>
+<p><strong>Լեմմա 5։</strong> $A\subset B\cup(A\symd B)$, ուստի $m^*(A)\le m^*(B)+m^*(A\symd B)$։ Նույնը՝ $A$-ի և $B$-ի դերերը
+փոխելով։ $\blacksquare$</p>
+</div></details>
+<div class="box def"><div class="box-title">Սահմանում 10</div>
+<p>$A\subset[0,1)$-ը կոչվում է <strong>չափելի</strong> (measurable), եթե ամեն $\varepsilon\gt0$-ի համար կա $B\in\mathcal P_0$, որ
+$m^*(A\symd B)\lt\varepsilon$։ Չափելի բազմությունների դասը $\mathfrak M$-ն է, և չափելի $A$-ի չափը $\operatorname{mes}(A)=m^*(A)$ է։</p>
+</div>
+<p>Այսինքն՝ չափելի բազմությունը կարելի է ցանկացած ճշտությամբ փոխարինել վերջավոր թվով միջակայքերով, և սխալը (համաչափ
+տարբերության արտաքին չափը) փոքր կլինի։ Լեմմա 5-ից հետևում է, որ այդ դեպքում $m(B)$-ն էլ մոտ է $m^*(A)$-ին։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 26 (լրիվություն) և Թեորեմ 27</div>
+<p>(26) Եթե $\operatorname{mes}(A)=0$ և $B\subset A$, ապա $B$-ն չափելի է, և $\operatorname{mes}(B)=0$։<br>
+(27) Եթե $A_1$-ը և $A_2$-ը չափելի են, ապա չափելի են նաև $A_1\setminus A_2$-ը, $A_1\cup A_2$-ը, $A_1\cap A_2$-ը, $A_1\symd A_2$-ը
+և $[0,1)\setminus A_1$-ը։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 26։</strong> մոնոտոնությունից $m^*(B)=0$, այսինքն՝ $m^*(B\symd\varnothing)=0$, և $\varnothing\in\mathcal P_0$։</p>
+<p><strong>Թեորեմ 27։</strong> դիցուք $m^*(A_1\symd B_1)\lt\varepsilon$ և $m^*(A_2\symd B_2)\lt\varepsilon$, $B_1,B_2\in\mathcal P_0$։ Քանի որ</p>
+$$\begin{aligned}&(A_1\setminus A_2)\symd(B_1\setminus B_2)\\&\quad\subset(A_1\symd B_1)\cup(A_2\symd B_2),\end{aligned}$$
+<p>ապա $m^*\bigl((A_1\setminus A_2)\symd(B_1\setminus B_2)\bigr)\lt2\varepsilon$, և $B_1\setminus B_2\in\mathcal P_0$։ Մնացածը
+հետևում է բազմությունների հանրահաշվից՝ $A_1\cap A_2=A_1\setminus(A_1\setminus A_2)$, լրացումը $[0,1)\setminus A_1$ է,
+միավորումը՝ լրացումների հատման լրացումը, $A_1\symd A_2=(A_1\setminus A_2)\cup(A_2\setminus A_1)$։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="additivity" open>
+<summary><h2>Չափի հաշվելի ադիտիվություն և անընդհատություն</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Թեորեմ 28-31</div>
+<ul>
+  <li>(28) Վերջավոր ադիտիվություն՝ չհատվող չափելի $A_i$-երի համար $\operatorname{mes}\bigl(\bigcup_{i=1}^nA_i\bigr)=\sum_{i=1}^n\operatorname{mes}(A_i)$։</li>
+  <li>(29) Չափելի բազմությունների հաշվելի միավորումը և հատումը չափելի են։</li>
+  <li>(30) <strong>Հաշվելի ադիտիվություն՝</strong> չհատվող չափելի $A_i$-երի համար $\operatorname{mes}\bigl(\bigcup_{i=1}^\infty A_i\bigr)=\sum_{i=1}^\infty\operatorname{mes}(A_i)$։</li>
+  <li>(31) <strong>Անընդհատություն՝</strong> եթե $A_1\subset A_2\subset\cdots$, ապա $\operatorname{mes}\bigl(\bigcup A_i\bigr)=\lim\operatorname{mes}(A_i)$, իսկ
+  եթե $B_1\supset B_2\supset\cdots$, ապա $\operatorname{mes}\bigl(\bigcap B_i\bigr)=\lim\operatorname{mes}(B_i)$։</li>
+</ul>
+</div>
+<p>Սա այն պահն է, երբ «երկարությունը» դառնում է իսկական չափ։ Թեորեմ 30-ի ապացույցն ունի երկու կես՝ $\ge$-ը գալիս է վերջավոր
+ադիտիվությունից (ամեն վերջավոր մասնակի գումար $\le\operatorname{mes}(A)$), իսկ $\le$-ը՝ արտաքին չափի կիսաադիտիվությունից
+(Թեորեմ 25)։ Եթե ծանոթ եք հավանականությունների տեսությանը, սրանք նույն հատկություններն են, ինչ հավանականության
+աքսիոմներում (<a href="../probability/w03-continuity.html">հավանականության անընդհատությունը</a>)։ Դա պատահական չէ, տե՛ս
+<a href="#stieltjes">Ստիլտեսի չափի բաժինը</a>։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 28 (երկու բազմություն)։</strong> դիցուք $m^*(A_i\symd B_i)\lt\varepsilon$, $B_i\in\mathcal P_0$, $A=A_1\cup A_2$,
+$B=B_1\cup B_2$։ Լեմմա 5-ից $|m(B_i)-m^*(A_i)|\lt\varepsilon$։ $A_1\cap A_2=\varnothing$, ուրեմն $B_1\cap B_2\subset(A_1\symd B_1)\cup(A_2\symd B_2)$,
+և $m(B_1\cap B_2)\lt2\varepsilon$։ Հետևաբար, $m(B)=m(B_1)+m(B_2)-m(B_1\cap B_2)\ge m^*(A_1)+m^*(A_2)-4\varepsilon$։ Քանի որ
+$A\symd B\subset(A_1\symd B_1)\cup(A_2\symd B_2)$, ունենք $m^*(A\symd B)\lt2\varepsilon$, և կրկին Լեմմա 5-ից
+$m^*(A)\ge m(B)-2\varepsilon\ge m^*(A_1)+m^*(A_2)-6\varepsilon$։ Հակառակ անհավասարությունը Թեորեմ 25-ն է։</p>
+<p><strong>Թեորեմ 29։</strong> $A=\bigcup A_i$-ն գրենք չհատվող $B_1=A_1$, $B_i=A_i\setminus\bigcup_{j\lt i}A_j$ չափելի բազմությունների
+միավորման տեսքով։ Թեորեմ 28-ից $\sum_{i\le n}\operatorname{mes}(B_i)\le1$, ուրեմն շարքը զուգամետ է, և $\sum_{i\gt n}\operatorname{mes}(B_i)\lt\varepsilon$
+որևէ $n$-ի համար։ $C=\bigcup_{i\le n}B_i$-ն չափելի է (Թեորեմ 27), այսինքն՝ $m^*(C\symd D)\lt\varepsilon$ որևէ $D\in\mathcal P_0$-ի համար, և
+$A\symd D\subset(C\symd D)\cup\bigcup_{i\gt n}B_i$-ից $m^*(A\symd D)\lt2\varepsilon$։ Հատումը՝ լրացումներով։</p>
+<p><strong>Թեորեմ 30։</strong> ամեն $n$-ի համար $\sum_{i\le n}\operatorname{mes}(A_i)=\operatorname{mes}\bigl(\bigcup_{i\le n}A_i\bigr)\le\operatorname{mes}(A)$,
+և $n\to\infty$։ Հակառակը՝ Թեորեմ 25։</p>
+<p><strong>Թեորեմ 31։</strong> աճող դեպքում $C_1=A_1$, $C_i=A_i\setminus A_{i-1}$-երը չեն հատվում, և Թեորեմ 30-ից
+$\operatorname{mes}(A)=\operatorname{mes}(A_1)+\sum_{i\ge2}\bigl(\operatorname{mes}(A_i)-\operatorname{mes}(A_{i-1})\bigr)=\lim\operatorname{mes}(A_n)$։
+Նվազող դեպքում անցնում ենք $A_i=[0,1)\setminus B_i$ լրացումներին։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="line" open>
+<summary><h2>Չափն ամբողջ առանցքի վրա և ռեգուլյարություն</h2></summary>
+<div class="sec-body">
+<p>Նույն կառուցումն անցնում է ցանկացած $[a,b)$-ի վրա։ Ամբողջ առանցքի համար առանցքը կտրում ենք միավոր կտորների։</p>
+<div class="box def"><div class="box-title">Սահմանում 11</div>
+<p>$A\subset\R$-ը չափելի է, եթե ամեն $n\in\Z$-ի համար $A_n=A\cap[n,n+1)$-ը չափելի է, և $\operatorname{mes}(A)=\sum_{n\in\Z}\operatorname{mes}(A_n)$։</p>
+</div>
+<p>Այժմ չափը կարող է լինել $+\infty$՝ $\operatorname{mes}[0,+\infty)=+\infty$։ Բոլոր հատկությունները մնում են (վարժություն նյութում),
+բացի մեկից՝ <strong>վերևից անընդհատությունը խախտվում է</strong>։ $B_n=[n,+\infty)$-երը նվազում են, $\bigcap B_n=\varnothing$, բայց
+$\operatorname{mes}(B_n)=+\infty$ ամեն $n$-ի համար։ (Թեորեմ 31-ի 2-րդ կետը ճիշտ է, եթե $\operatorname{mes}(B_1)\lt\infty$։)</p>
+<div class="box thm"><div class="box-title">Թեորեմ 32 (տեղաշարժի նկատմամբ ինվարիանտություն)</div>
+<p>Եթե $A$-ն չափելի է, և $c\in\R$, ապա $A+c=\{a+c:\ a\in A\}$-ն չափելի է, և $\operatorname{mes}(A+c)=\operatorname{mes}(A)$։</p>
+</div>
+<p>Օրինակներ (նյութի 2-6)՝ բոլոր միջակայքերը չափելի են, և $\operatorname{mes}[a,b]=\operatorname{mes}(a,b)=b-a$ ($(a,b)$-ն
+$\left[a+\tfrac1n,b\right)$-երի աճող միավորումն է)։ Մեկ կետի չափը զրո է։ <strong>Ամեն հաշվելի բազմության չափը զրո է</strong>՝
+$\operatorname{mes}\{a_1,a_2,\dots\}=\sum\operatorname{mes}\{a_n\}=0$, մասնավորապես $\operatorname{mes}(\Q)=0$։ Բաց $G$-ի չափը նրա
+բաղկացուցիչ միջակայքերի երկարությունների գումարն է (Գլուխ 1-ի Թեորեմ 15-ով)։ Եթե $F\subset[a,b]$-ը փակ է, և $a,b\in F$, ապա
+$\operatorname{mes}(F)=b-a-\operatorname{mes}(G)$, որտեղ $G=[a,b]\setminus F$։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $[0,1]$-ի ռացիոնալ կետերն ամենուրեք խիտ են։ Ամեն $r_i$-ի շուրջ վերցնենք $\varepsilon/2^i$
+երկարությամբ բաց միջակայք, $\varepsilon=0{,}01$։ Ստացված $G$ բաց բազմությունը պարունակում է բոլոր ռացիոնալները։ Որքա՞ն է
+$\operatorname{mes}(G)$-ն առավելագույնը։</p>
+<div class="predict-opts"><button class="btn" type="button">$1$, քանի որ $G$-ն ամենուրեք խիտ է</button><button class="btn" type="button" data-ok>$0{,}01$</button><button class="btn" type="button">$\infty$, քանի որ միջակայքերն անվերջ շատ են</button></div>
+<div class="predict-why">Կիսաադիտիվությունից $\operatorname{mes}(G)\le\sum_i\varepsilon/2^i=\varepsilon=0{,}01$։ Խիտ լինելը չի նշանակում, որ
+$G$-ն «ամբողջն» է՝ $[0,1]\setminus G$-ն ունի $0{,}99$-ից ոչ պակաս չափ, թեև ոչ մի միջակայք չի պարունակում։ Անվերջ թվով
+միջակայքերի երկարությունները կարող են ունենալ վերջավոր գումար, ինչպես $\sum2^{-i}=1$։</div>
+</div>
+
+<div class="widget" id="w-cover">
+  <div class="widget-head">Ռացիոնալ թվերը՝ ծածկված շատ կարճ միջակայքերով</div>
+  <p class="widget-hint">$[0,1]$-ի ռացիոնալ թվերը շարված են $0,1,\tfrac12,\tfrac13,\tfrac23,\tfrac14,\dots$ հերթականությամբ (կարմիր կետեր),
+  և $i$-րդի շուրջ վերցված է $\varepsilon/2^i$ երկարությամբ միջակայք (կապույտ)։ Փոքրացրեք $\varepsilon$-ը սահիչով։ Կարմիր կետերը մնում են ծածկված,
+  իսկ կապույտի ընդհանուր երկարությունը փոքրանում է մինչև $0{,}01$։ Նկատեք՝ $\varepsilon=1$ դեպքում արդեն երևում են կապույտի միջև
+  բացերը։</p>
+  <div class="slider-row"><span data-out="epslabel"></span><input type="range" data-in="eps" min="0" max="6" step="1" value="0" aria-label="ε"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+
+<div class="box thm"><div class="box-title">Թեորեմ 33 և Թեորեմ 34 (ռեգուլյարություն)</div>
+<p>(33) Ցանկացած $A\subset\R$-ի համար $m^*(A)=\inf_{G\supset A}\operatorname{mes}(G)$, որտեղ ինֆիմումը վերցվում է $A$-ն
+պարունակող բաց $G$ բազմություններով։<br>
+(34) Եթե $A$-ն սահմանափակ է և չափելի, ապա ամեն $\varepsilon\gt0$-ի համար կան $G$ բաց և $F$ փակ բազմություններ, որ
+$F\subset A\subset G$ և $\operatorname{mes}(G\setminus F)\lt\varepsilon$։</p>
+</div>
+<p>Ռեգուլյարությունն ասում է՝ չափելի բազմությունը «ներսից» մոտարկվում է փակ, «դրսից»՝ բաց բազմություններով։ Բաց և փակ
+բազմությունների կառուցվածքը գիտենք (Գլուխ 1), ուրեմն չափելի բազմությունների մասին շատ բան կարելի է ապացուցել նրանց
+միջոցով։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 33։</strong> $m^*(A)\le\operatorname{mes}(G)$ ամեն $G\supset A$-ի համար՝ մոնոտոնությունից։ Հակառակը՝ եթե
+$m^*(A)\lt\infty$, վերցնենք ծածկույթ $\sum(b_i-a_i)\lt m^*(A)+\varepsilon$ և ընդլայնենք միջակայքերը ձախ՝
+$G=\bigcup_i(a_i-\varepsilon/2^i,b_i)$։ $G$-ն բաց է, $A\subset G$, և $\operatorname{mes}(G)\le\sum(b_i-a_i)+\varepsilon\lt m^*(A)+2\varepsilon$։</p>
+<p><strong>Լեմմա 6։</strong> եթե $A\subset I=(a,b)$ և $\operatorname{mes}(I\setminus A)\lt\varepsilon$, ապա կա փակ $F\subset A$, որ
+$\operatorname{mes}(A\setminus F)\lt2\varepsilon$։ (Թեորեմ 33-ով $I\setminus A$-ն ծածկում ենք բաց $G$-ով, $H=G\cap I$, և
+$F=[a+\varepsilon/2,b-\varepsilon/2]\setminus H$։)</p>
+<p><strong>Թեորեմ 34։</strong> Թեորեմ 33-ով ընտրում ենք բաց $G\supset A$, $\operatorname{mes}(G)\lt\operatorname{mes}(A)+\varepsilon/4$։
+$G$-ի բաղկացուցիչ $(a_i,b_i)$ միջակայքերից պահում ենք առաջին $n$-ը (մնացածի գումարը $\lt\varepsilon/4$), ամեն մեկում Լեմմա 6-ով
+գտնում ենք փակ $F_i\subset(a_i,b_i)\cap A$, և $F=\bigcup_{i\le n}F_i$-ը փակ է։ Հաշվարկը տալիս է $\operatorname{mes}(A\setminus F)\le3\varepsilon/4$,
+ուստի $\operatorname{mes}(G\setminus F)\lt\varepsilon$։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="zero" open>
+<summary><h2>Զրո չափի բազմություններ և Կանտորի բազմությունը</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Թեորեմ 35</div>
+<p>Կանտորի կատարյալ բազմության չափը զրո է։</p>
+</div>
+<p>Իրոք՝ հեռացված միջակայքերի երկարությունների գումարը $\sum_k2^{k-1}3^{-k}=1$ է (<a href="ch1-cardinality.html#cantor-set">Գլուխ 1</a>),
+ուստի $\operatorname{mes}(C)=1-1=0$։ Այսպիսով՝ <strong>հզորությունը և չափը կապված չեն</strong>՝ կոնտինուում հզորությամբ բազմությունների
+մեջ կան և՛ անվերջ չափ ունեցողներ ($\R$), և՛ զրո չափ ունեցողներ ($C$)։ Մի քանի այլ «տարօրինակ» օրինակ նյութից՝</p>
+<ul>
+  <li>Անսահմանափակ բազմություն՝ վերջավոր չափով՝ $\bigcup_{n\in\Z,\,n\ne0}\left[n,n+\tfrac1{n^2}\right]$, $\operatorname{mes}=2\sum_{n\ge1}\tfrac1{n^2}=\tfrac{\pi^2}3$։</li>
+  <li>Ամենուրեք խիտ բաց բազմություն՝ վերջավոր չափով՝ $G=\bigcup_n\bigl(r_n-n^{-2},r_n+n^{-2}\bigr)$, որտեղ $\{r_n\}=\Q$, $\operatorname{mes}(G)\le\sum\tfrac2{n^2}\lt\infty$
+  (նույն գաղափարը, ինչ վերևի նկարում)։</li>
+</ul>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Կանտորի կառուցման մեջ $n$-րդ քայլում հեռացնենք ոչ թե միջին երրորդը, այլ $4^{-n}$ երկարությամբ
+միջին միջակայքն ամեն մնացած հատվածից։ Ստացված բազմությունը նույնպես փակ է և ոչ մի միջակայք չի պարունակում։ Ինչքա՞ն կլինի
+նրա չափը։</p>
+<div class="predict-opts"><button class="btn" type="button">$0$, ինչպես Կանտորի բազմությանը</button><button class="btn" type="button" data-ok>$\tfrac12$</button><button class="btn" type="button">$1$, քանի որ քիչ ենք հեռացնում</button></div>
+<div class="predict-why">Հեռացվածը՝ $\sum_n2^{n-1}4^{-n}=\tfrac14\sum_{j\ge0}2^{-j}=\tfrac12$, ուրեմն մնում է $\tfrac12$։ «Միջակայք չի պարունակում»
+չի նշանակում «չափը զրո է»։ Իսկ $1$ չի կարող լինել, քանի որ բաց միջակայքեր հեռացվել են, և նրանց երկարությունները դրական են։</div>
+</div>
+
+<div class="widget" id="w-fat">
+  <div class="widget-head">Կանտորի բազմությունը և «հաստ» Կանտորի բազմությունը</div>
+  <p class="widget-hint">Ընտրեք կառուցումը և շարժեք $n$ սահիչը։ Ամեն տող մեկ քայլ է։ Երկու դեպքում էլ ամեն հատվածից հեռացվում է
+  միջին բաց մասը, և սահմանում մնում է փակ բազմություն՝ առանց ոչ մի միջակայքի։ Համեմատեք մնացած երկարությունները՝ մեկը ձգտում է
+  զրոյի, մյուսը՝ $\tfrac12$-ի։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="klabel"></span><input type="range" data-in="k" min="0" max="7" step="1" value="3" aria-label="n"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ «համարյա բոլոր» թվերը նորմալ են</div>
+<p>Թիվը կոչվում է նորմալ (10-ական համակարգում), եթե նրա թվանշանների մեջ ամեն թվանշան հանդիպում է $\tfrac1{10}$ հաճախությամբ,
+ամեն երկնիշ համակցություն՝ $\tfrac1{100}$ հաճախությամբ, և այդպես շարունակ։ 1909-ին Էմիլ Բորելն ապացուցեց, որ ոչ նորմալ թվերի
+բազմության չափը զրո է, այսինքն՝ «համարյա բոլոր» թվերը նորմալ են։ Եվ այնուամենայնիվ, մինչ օրս ոչ ոք չի ապացուցել, որ $\sqrt2$-ը կամ
+$\pi$-ն նորմալ են։ Զրո չափի բազմության լեզուն թույլ է տալիս պնդումներ անել «գրեթե բոլոր» օբյեկտների մասին՝ առանց կոնկրետ
+օբյեկտի մասին որևէ բան իմանալու։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="sigma" open>
+<summary><h2>Սիգմա-հանրահաշիվ և բորելյան բազմություններ</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 12 և Սահմանում 13</div>
+<p>Բազմությունների $\mathcal F$ ընտանիքը կոչվում է <strong>սիգմա-հանրահաշիվ</strong> (նյութում՝ σ-հանրահաշիվ), եթե այն փակ է
+միավորման, հատման, տարբերության և համաչափ տարբերության, ինչպես նաև հաշվելի թվով միավորումների և հատումների նկատմամբ և ունի
+ամենամեծ տարր (միավոր)։<br>
+Առանցքի բաց բազմությունները պարունակող ամենափոքր սիգմա-հանրահաշիվը կոչվում է <strong>բորելյան</strong> սիգմա-հանրահաշիվ՝
+$\mathfrak B$, իսկ նրա տարրերը՝ բորելյան բազմություններ։</p>
+</div>
+<p>Թեորեմներ 27, 29-ից $\mathfrak M$-ը սիգմա-հանրահաշիվ է (առանցքի վրա միավորը $\R$-ն է), և այն պարունակում է բոլոր բաց ու փակ
+բազմությունները, ուստի $\mathfrak B\subset\mathfrak M$։ Ներդրումը խիստ է՝ զրո չափի բազմության բոլոր ենթաբազմությունները չափելի
+են (Թեորեմ 26), իսկ Կանտորի բազմությունն ունի $2^{\mathfrak c}$ ենթաբազմություն, մինչդեռ բորելյան բազմությունները «միայն»
+$\mathfrak c$ հատ են։ (Վերջին փաստը նյութում չկա, այն բերված է որպես կողմնակի նշում։)</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="stieltjes" open>
+<summary><h2>Ստիլտեսի չափ</h2></summary>
+<div class="sec-body">
+<p>Լեբեգի չափում $[a,b)$-ի «կշիռը» $b-a$ է։ Իսկ եթե կշիռը տարբեր տեղերում տարբեր լինի։ Դիցուք $g$-ն առանցքի վրա չնվազող և
+ձախից անընդհատ ֆունկցիա է։</p>
+<div class="box def"><div class="box-title">Սահմանում 14-16</div>
+<p>Տարրական $A=\bigcup[a_i,b_i)$-ի <strong>Ստիլտեսի չափը</strong> (Լեբեգ-Ստիլտեսի չափ)՝ $m_g(A)=\sum_i\bigl(g(b_i)-g(a_i)\bigr)$։
+Արտաքին չափը $m_g^*$, չափելի բազմությունների $\mathfrak M_g$ դասը և $\operatorname{mes}_g$ չափը սահմանվում են բառացի այնպես,
+ինչպես Լեբեգի դեպքում, $b-a$-ն փոխարինելով $g(b)-g(a)$-ով։ $g(x)=x$ դեպքում ստանում ենք Լեբեգի չափը։</p>
+</div>
+<p><strong>Նմանություններ։</strong> նույն գործողությունների նկատմամբ փակություն, հաշվելի ադիտիվություն, անընդհատություն,
+ռեգուլյարություն։ <strong>Տարբերություններ՝</strong></p>
+<ul>
+  <li>$g(x)=\operatorname{arctg}x$ դեպքում $m_g(\R)=\pi$, թեև $\operatorname{mes}(\R)=+\infty$։</li>
+  <li>Տեղաշարժի նկատմամբ ինվարիանտություն չկա՝ $\operatorname{arctg}$-ի համար $m_g(-\infty,0)=\tfrac\pi2\lt\tfrac{3\pi}4=m_g(-\infty,1)$, թեև
+  $(-\infty,1)=(-\infty,0)+1$։</li>
+  <li>Մեկ կետը կարող է ունենալ դրական չափ՝ $m_g\{a\}=g(a+0)-g(a)$, որը դրական է, եթե $g$-ն $a$-ում թռիչք ունի։</li>
+  <li>Ոչ չափելի ըստ Լեբեգի բազմությունը (<a href="#vitali">Թեորեմ 36</a>) չափելի է ըստ Ստիլտեսի, եթե $g$-ն հաստատուն է $[0,1]$-ում,
+  և նրա չափը զրո է։</li>
+</ul>
+<p class="muted">Նյութում թռիչքների օրինակը բերված է $g(x)=[x]$ ամբողջ մասով, որն <em>աջից</em> է անընդհատ։ Ձախից անընդհատ
+աստիճանաձև օրինակ է $\lceil x\rceil$-ը (վերև կլորացում)՝ նրա համար $m_g\{n\}=1$ ամեն ամբողջ $n$-ի համար, և
+$m_g(\Z)=+\infty$, մինչդեռ $\operatorname{mes}(\Z)=0$։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $g(x)=\lceil x\rceil$։ Որքա՞ն է $m_g[0{,}5;\ 2)$-ը։</p>
+<div class="predict-opts"><button class="btn" type="button">$1{,}5$՝ միջակայքի երկարությունը</button><button class="btn" type="button" data-ok>$1$</button><button class="btn" type="button">$2$</button></div>
+<div class="predict-why">$m_g[0{,}5;\ 2)=g(2)-g(0{,}5)=2-1=1$։ $[0{,}5;\ 2)$-ում $\lceil x\rceil$-ը թռչում է միայն $x=1$-ից աջ (թռիչքի կետը $1$-ն է,
+$m_g\{1\}=g(1+0)-g(1)=2-1=1$), իսկ $2$-ը միջակայքին չի պատկանում։ $1{,}5$-ը Լեբեգի չափն է։ $2$-ը կստացվեր, եթե $2$-ի թռիչքն էլ
+հաշվեինք, այսինքն՝ $[0{,}5;\ 2]$ փակ հատվածի համար։</div>
+</div>
+
+<div class="widget" id="w-stieltjes">
+  <div class="widget-head">Ստիլտեսի չափը՝ $g$-ի աճը</div>
+  <p class="widget-hint">Ընտրեք $g$-ն և սահիչներով շարժեք $a$-ն ու $b$-ն։ Նարնջագույնը $[a,b)$ միջակայքն է, կապույտ շերտը՝ $g$-ի աճը
+  $y$-առանցքի վրա, այսինքն՝ $m_g[a,b)$-ն։ Աստիճանաձև $g$-ի դեպքում ամբողջ «կշիռը» թռիչքների կետերում է (լցված կետը $g(c)$-ն է,
+  դատարկը՝ $g(c+0)$-ն)։ $\operatorname{arctg}$-ի դեպքում կշիռը կենտրոնացած է $0$-ի մոտ, և հեռու միջակայքերը գրեթե զրո չափ ունեն։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="alabel"></span><input type="range" data-in="a" min="-3" max="3" step="0.25" value="0.5" aria-label="a"></div>
+  <div class="slider-row"><span data-out="blabel"></span><input type="range" data-in="b" min="-3" max="3" step="0.25" value="2" aria-label="b"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+
+<div class="box def"><div class="box-title">Սահմանում 17 (չափով օժտված տարածություն)</div>
+<p>$(X,\mathcal F,\mu)$ եռյակը կոչվում է <strong>չափով օժտված տարածություն</strong> (measure space), եթե $X\ne\varnothing$, $\mathcal F$-ը $X$-ի
+ենթաբազմությունների սիգմա-հանրահաշիվ է՝ $X$ միավորով, $\mu(A)\ge0$, և $\mu$-ն հաշվելիորեն ադիտիվ է։</p>
+</div>
+<p>Օրինակներ՝ $(\R,\mathfrak M,\operatorname{mes})$, $(\R,\mathfrak M_g,m_g)$, չափելի $X\subset\R$-ի վրա Լեբեգի չափի սահմանափակումը,
+Դիրակի չափը ($\mu(B)=1$, եթե $a\in B$, և $0$՝ հակառակ դեպքում), դիսկրետ չափը՝ $\mu(B)=\sum_{a_i\in B}p_i$։ Չափը կոչվում է
+<strong>լրիվ</strong>, եթե զրո չափի բազմության ամեն ենթաբազմություն չափելի է (Լեբեգի և Ստիլտեսի չափերը լրիվ են)։</p>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ հավանականությունը չափ է</div>
+<p>1933-ին Կոլմոգորովը հավանականությունների տեսությունը կառուցեց հենց այս լեզվով՝ հավանականային տարածությունը $(\Omega,\mathcal F,P)$
+չափով օժտված տարածություն է, որում $P(\Omega)=1$։ Ստիլտեսի չափը հավանականության բաշխումն է՝ եթե $g=F$-ը պատահական
+մեծության բաշխման ֆունկցիան է, $F(x)=P(\xi\lt x)$, ապա $m_F[a,b)=F(b)-F(a)=P(a\le\xi\lt b)$, և թռիչքի կետում
+$m_F\{a\}=F(a+0)-F(a)=P(\xi=a)$։ Ահա թե ինչու է հավանականության դասընթացում $F$-ը <a href="../probability/w10-cdf-properties.html">ձախից
+անընդհատ</a>, ինչպես այստեղ $g$-ն։ Իսկ Կանտորի ֆունկցիայով Ստիլտեսի չափը <a href="../probability/w13-singular.html">սինգուլյար
+բաշխումն</a> է՝ ամբողջ կշիռը զրո Լեբեգի չափ ունեցող Կանտորի բազմության վրա է։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="vitali" open>
+<summary><h2>Ըստ Լեբեգի ոչ չափելի բազմություն</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Թեորեմ 36 (Վիտալի)</div>
+<p>Գոյություն ունի $D\subset[0,1]$ բազմություն, որը չափելի չէ ըստ Լեբեգի։</p>
+</div>
+<p><strong>Կառուցումը։</strong> $x,y\in[0,1]$-ն անվանենք համարժեք, եթե $x-y\in\Q$։ Սա համարժեքության հարաբերություն է, և $[0,1]$-ը
+տրոհվում է չհատվող դասերի (յուրաքանչյուրը հաշվելի է՝ $x+\Q$-ի մի մաս)։ Ամեն դասից վերցնենք <em>ճիշտ մեկ</em> կետ՝ դրանք են $D$-ն։</p>
+<p><strong>Ինչու $D$-ն չափելի չէ։</strong> դիցուք $r_1,r_2,\dots$-ն $[-1,1]$-ի ռացիոնալ թվերն են, և $D_n=D+r_n$։ Ենթադրենք $D$-ն
+չափելի է։ Թեորեմ 32-ից ամեն $D_n$ չափելի է, և $\operatorname{mes}(D_n)=\operatorname{mes}(D)$։ $D_n$-երը չեն հատվում (եթե
+$d+r_n=d'+r_m$, ապա $d-d'\in\Q$, ուստի $d=d'$, $n=m$), և</p>
+$$[0,1]\subset\bigcup_nD_n\subset[-1,2]$$
+<p>(ամեն $x\in[0,1]$ համարժեք է որևէ $y\in D$-ի, և $x-y\in[-1,1]$-ը ռացիոնալ է)։ Հաշվելի ադիտիվությունից
+$1\le\sum_n\operatorname{mes}(D)\le3$։ Եթե $\operatorname{mes}(D)=0$, գումարը $0$ է, իսկ եթե $\operatorname{mes}(D)\gt0$, գումարը
+$+\infty$ է։ Երկու դեպքում էլ հակասություն է։ $\blacksquare$</p>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստեր՝ ընտրության աքսիոմը և Բանախ-Տարսկու պարադոքսը</div>
+<p>«Ամեն դասից վերցնենք մեկ կետ» քայլը չի նշում, թե <em>որ</em> կետը։ Այն օգտագործում է <strong>ընտրության աքսիոմը</strong>։ 1970-ին
+Ռոբերտ Սոլովեյը ցույց տվեց, որ առանց այդ աքսիոմի (բայց նրա թույլ տարբերակով և որոշ լրացուցիչ ենթադրությամբ) հակասություն
+չի առաջանում, եթե ենթադրենք, որ իրական թվերի <em>բոլոր</em> ենթաբազմությունները չափելի են ըստ Լեբեգի։ Այսինքն՝ ոչ չափելի բազմություն բացահայտ կառուցել չի
+կարելի։</p>
+<p>Ոչ չափելի բազմություններով են բացատրվում նաև ամենատարօրինակ արդյունքները։ Բանախ-Տարսկու պարադոքսը (1924) պնդում է, որ
+եռաչափ գունդը կարելի է կտրել վերջավոր թվով կտորների և դրանք տեղաշարժերով ու պտույտներով հավաքել նույն չափի <em>երկու</em>
+գնդի։ Կտորները ոչ չափելի են, հետևաբար ծավալի պահպանման հետ հակասություն չկա։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="covering" open>
+<summary><h2>Ծածկույթների վերաբերյալ Վիտալիի թեորեմները</h2></summary>
+<div class="sec-body">
+<p>Այս թեորեմները կօգտագործվեն գլուխ 5-ում (մոնոտոն ֆունկցիաների ածանցելիություն)։</p>
+<div class="box def"><div class="box-title">Սահմանում 18</div>
+<p>Դիցուք $E\subset\R$, և $\mathcal V$-ն ոչ վերասերված հատվածների ընտանիք է։ $\mathcal V$-ն $E$-ն ծածկում է <strong>Վիտալիի
+իմաստով</strong>, եթե ամեն $x\in E$-ի և $\varepsilon\gt0$-ի համար կա $d\in\mathcal V$, որ $x\in d$ և $\operatorname{mes}(d)\lt\varepsilon$։</p>
+</div>
+<div class="box thm"><div class="box-title">Թեորեմ 37 և Թեորեմ 38 (Վիտալի)</div>
+<p>Եթե $\mathcal V$-ն սահմանափակ $E$-ն ծածկում է Վիտալիի իմաստով, ապա<br>
+(37) կա $d_i\in\mathcal V$ զույգ առ զույգ չհատվող հատվածների վերջավոր կամ հաշվելի ընտանիք, որ $\operatorname{mes}\bigl(E\setminus\bigcup_id_i\bigr)=0$,<br>
+(38) ամեն $\varepsilon\gt0$-ի համար կա այդպիսի <em>վերջավոր</em> ընտանիք, որ $m^*\bigl(E\setminus\bigcup_id_i\bigr)\lt\varepsilon$։</p>
+</div>
+<p><strong>Գաղափարը։</strong> հատվածներն ընտրում ենք «ագահաբար»՝ ամեն քայլում վերցնում ենք դեռ ազատ տեղում ընկած ամենամեծերից
+մեկը (առնվազն մնացածների առավելագույն երկարության կեսը)։ Չհատվող հատվածների երկարությունների գումարը վերջավոր է, ուստի
+դրանք արագ փոքրանում են։ Եթե $E$-ի որևէ կետ ծածկված չմնա, նրա մոտ գտնվող փոքր հատվածն անպայման հատում է ընտրված $d_m$-երից
+մեկին, և ընկնում է $d_m$-ի <em>հնգապատիկ</em> ընդլայնման մեջ։ Ուստի չծածկված մասը պարունակվում է $\bigcup_{i\ge n}D_i$-ում,
+որի չափը $\le5\sum_{i\ge n}\operatorname{mes}(d_i)\to0$։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 37։</strong> $E\subset(a,b)$։ Դիցուք $\mathcal V_1$-ը $(a,b)$-ում ընկած հատվածներն են, $\kappa_1=\sup_{d\in\mathcal V_1}\operatorname{mes}(d)$,
+և $d_1\in\mathcal V_1$-ն ընտրված է այնպես, որ $\operatorname{mes}(d_1)\gt\kappa_1/2$։ Եթե $d_1,\dots,d_n$-ն արդեն ընտրված են և
+$E\not\subset F_n=\bigcup_{i\le n}d_i$, դիցուք $G_n=(a,b)\setminus F_n$ (բաց), $\mathcal V_{n+1}=\{d\in\mathcal V:\ d\subset G_n\}$ (դատարկ
+չէ), $\kappa_{n+1}=\sup_{\mathcal V_{n+1}}\operatorname{mes}(d)$, և $\operatorname{mes}(d_{n+1})\gt\kappa_{n+1}/2$։ Եթե ինչ-որ քայլում
+$E\subset F_m$, ավարտված է։ Հակառակ դեպքում $d_i$-երը չեն հատվում և ընկած են $(a,b)$-ում, ուստի $\sum\operatorname{mes}(d_i)\lt b-a$։</p>
+<p>Դիցուք $D_i$-ն $d_i$-ի հետ նույն կենտրոնն ունեցող, $5$ անգամ երկար հատվածն է։ Ցույց տանք, որ $E\setminus S\subset\bigcup_{i\ge n}D_i$
+ամեն $n$-ի համար ($S=\bigcup d_i$)։ Եթե $x\in E\setminus S$, ապա $x\in G_n$, և կա $d\in\mathcal V_n$, $x\in d$։ $d$-ն չի կարող
+պատկանել բոլոր $\mathcal V_i$-երին, քանի որ $d\in\mathcal V_i$-ից $\operatorname{mes}(d)\le\kappa_i\lt2\operatorname{mes}(d_i)\to0$։ Դիցուք
+$m$-ն ամենափոքր թիվն է, որի համար $d\cap d_m\ne\varnothing$։ Այդ դեպքում $m\gt n$, $d\in\mathcal V_m$, ուստի
+$\operatorname{mes}(d)\le\kappa_m\lt2\operatorname{mes}(d_m)$, և $d\subset D_m$։ Ուրեմն
+$\operatorname{mes}(E\setminus S)\le\sum_{i\ge n}\operatorname{mes}(D_i)=5\sum_{i\ge n}\operatorname{mes}(d_i)\to0$։</p>
+<p><strong>Թեորեմ 38։</strong> վերցնում ենք Թեորեմ 37-ի ընտանիքը և $n$-ը, որ $\sum_{i\gt n}\operatorname{mes}(d_i)\lt\varepsilon$։ Այդ դեպքում
+$E\setminus\bigcup_{i\le n}d_i\subset\bigl(E\setminus\bigcup_id_i\bigr)\cup\bigcup_{i\gt n}d_i$, և $m^*\lt0+\varepsilon$։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="mistakes" open>
+<summary><h2>Տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>«Զրո չափ նշանակում է հաշվելի»։</strong> Կանտորի բազմության չափը զրո է, բայց այն անհաշվելի է։ Ճիշտ է միայն
+  հակառակը՝ հաշվելի $\Rightarrow$ զրո չափ։</li>
+  <li><strong>«Խիտ բաց բազմությունը մեծ չափ ունի»։</strong> Ռացիոնալները պարունակող բաց բազմության չափը կարող է լինել
+  կամայապես փոքր (<a href="#w-cover">նկարը</a>)։</li>
+  <li><strong>«Միջակայք չպարունակող բազմության չափը զրո է»։</strong> «Հաստ» Կանտորի բազմությունը և $[0,1]\setminus\Q$-ն
+  միջակայք չեն պարունակում, բայց նրանց չափերը $\tfrac12$ և $1$ են։</li>
+  <li><strong>Վերևից անընդհատությունը կիրառել անվերջ չափի դեպքում։</strong> $[n,+\infty)$-երի հատումը դատարկ է, իսկ չափերը
+  $+\infty$ են։ Պետք է $\operatorname{mes}(B_1)\lt\infty$։</li>
+  <li><strong>Արտաքին չափը համարել ադիտիվ բոլոր բազմությունների համար։</strong> $m^*$-ը միայն կիսաադիտիվ է։ Ադիտիվությունը
+  երաշխավորված է չափելի բազմությունների համար, և Վիտալիի բազմությունը ցույց է տալիս, որ դա իսկապես սահմանափակում է։</li>
+  <li><strong>Ստիլտեսի չափում մոռանալ թռիչքները։</strong> $m_g[a,b)=g(b)-g(a)$-ը ներառում է $a$-ի թռիչքը, բայց ոչ $b$-ինը
+  ($g$-ն ձախից անընդհատ է)։ Փակ $[a,b]$-ի համար $m_g[a,b]=g(b+0)-g(a)$։</li>
+</ul>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Վարժությունները դասավորված են հեշտից դժվար։ ★-ով նշվածները քննական մակարդակի են։</p>
+
+<div class="box problem" id="ex1"><div class="box-title">Վարժություն 1</div>
+<p>Գտեք $[0,1]\setminus\Q$-ի չափը։ Պարունակո՞ւմ է այն որևէ միջակայք։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$[0,1]=([0,1]\setminus\Q)\cup([0,1]\cap\Q)$, և երկու մասերն էլ
+չափելի են։</p></div></details>
+<div class="solution">
+<p>$[0,1]\cap\Q$-ն հաշվելի է, հետևաբար նրա չափը $0$ է, և ադիտիվությունից $\operatorname{mes}([0,1]\setminus\Q)=1-0=1$։ Միջակայք չի
+պարունակում, քանի որ ամեն միջակայքում ռացիոնալ թիվ կա։ Լրիվ չափ ունեցող բազմությունը կարող է «ծակոտկեն» լինել։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $1$, միջակայք չի պարունակում</div>
+</div>
+
+<div class="box problem" id="ex2"><div class="box-title">Վարժություն 2</div>
+<p>Գտեք $A=\bigcup_{n=1}^{\infty}\left[n,\ n+2^{-n}\right]$ բազմության չափը։ Սահմանափա՞կ է այն։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Հատվածները չեն հատվում։ Օգտվեք հաշվելի ադիտիվությունից։</p></div></details>
+<div class="solution">
+<p>$2^{-n}\lt1$, ուստի $[n,n+2^{-n}]$-երը չեն հատվում, և $\operatorname{mes}(A)=\sum_{n\ge1}2^{-n}=1$։ $A$-ն սահմանափակ չէ (պարունակում
+է բոլոր բնական թվերը)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\operatorname{mes}(A)=1$, անսահմանափակ է</div>
+</div>
+
+<div class="box problem" id="ex3"><div class="box-title">Վարժություն 3</div>
+<p>$g(x)=0$, երբ $x\le0$, $g(x)=x$, երբ $0\lt x\le1$, և $g(x)=2$, երբ $x\gt1$ (վերևի նկարի «խառը $g$»-ն)։ Համոզվեք, որ $g$-ն
+չնվազող է և ձախից անընդհատ, և գտեք $m_g[0,1)$-ը, $m_g\{1\}$-ը, $m_g\left[\tfrac12,2\right)$-ը և $m_g(\R)$-ը։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$m_g[a,b)=g(b)-g(a)$, $m_g\{a\}=g(a+0)-g(a)$։ Որտե՞ղ է $g$-ն թռիչք
+ունենում։</p></div></details>
+<div class="solution">
+<p>$g$-ն չնվազող է, միակ թռիչքը $x=1$-ում է, և $g(1)=1=\lim_{x\to1-0}g(x)$, ուրեմն ձախից անընդհատ է։
+$m_g[0,1)=g(1)-g(0)=1$, $m_g\{1\}=g(1+0)-g(1)=2-1=1$, $m_g\left[\tfrac12,2\right)=g(2)-g\left(\tfrac12\right)=2-\tfrac12=\tfrac32$,
+$m_g(\R)=\lim_{x\to+\infty}g-\lim_{x\to-\infty}g=2$։</p>
+<p class="muted">Եթե $g$-ն բաժանենք $2$-ի, կստանանք <a href="../probability/w13-singular.html">հավանականության բաշխման ֆունկցիա</a>՝
+կեսը հավասարաչափ $[0,1]$-ում, կեսը՝ $1$ կետում (խառը բաշխում)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $1$, $1$, $\tfrac32$, $2$</div>
+</div>
+
+<div class="box problem" id="ex4"><div class="box-title">Վարժություն 4</div>
+<p>$[0,1]$-ից $n$-րդ քայլում ամեն մնացած հատվածից հեռացնենք $5^{-n}$ երկարությամբ միջին բաց միջակայքը։ Գտեք ստացված $P$
+բազմության չափը։ Կատարյա՞լ է արդյոք $P$-ն։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$n$-րդ քայլում հեռացվում է $2^{n-1}$ միջակայք։ Հեռացված
+միջակայքերն իրար չեն կպչում։</p></div></details>
+<div class="solution">
+<p>Հեռացվածի երկարությունը՝ $\sum_{n\ge1}2^{n-1}5^{-n}=\tfrac15\sum_{j\ge0}\left(\tfrac25\right)^j=\tfrac15\cdot\tfrac53=\tfrac13$, ուստի
+$\operatorname{mes}(P)=1-\tfrac13=\tfrac23$։ (Կառուցումը հնարավոր է՝ $n$-րդ քայլից հետո հատվածների երկարությունները մոտ $2^{-n}$ են՝
+շատ ավելի մեծ, քան $5^{-n-1}$-ը։) $P$-ն փակ է, և նրա լրացման միջակայքերն ընդհանուր ծայրակետ չունեն, ուստի կատարյալ է
+(Գլուխ 1, <a href="ch1-cardinality.html#open">Թեորեմ 18</a>)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\operatorname{mes}(P)=\tfrac23$, կատարյալ է</div>
+</div>
+
+<div class="box problem" id="ex5"><div class="box-title">Վարժություն 5 ★</div>
+<p>Ապացուցեք, որ եթե $A\subset\R$-ը չափելի է, և $\operatorname{mes}(A)\gt0$, ապա $A$-ն անհաշվելի է։ Ճի՞շտ է արդյոք հակառակը։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Հակադարձ պնդումը (կոնտրապոզիցիան)՝ հաշվելի բազմության չափը …</p></div></details>
+<div class="solution">
+<p>Եթե $A$-ն հաշվելի լիներ (կամ վերջավոր), ապա $\operatorname{mes}(A)=\sum\operatorname{mes}\{a_n\}=0$ (Օրինակ 4)։ Ուրեմն
+$\operatorname{mes}(A)\gt0$-ից հետևում է անհաշվելիությունը։ Հակառակը ճիշտ չէ՝ Կանտորի բազմությունն անհաշվելի է, բայց նրա չափը
+զրո է (Թեորեմ 35)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> անհաշվելի է, հակառակը սխալ է (Կանտորի բազմություն)</div>
+</div>
+
+<div class="box problem" id="ex6"><div class="box-title">Վարժություն 6 ★</div>
+<p>Ապացուցեք, որ եթե չափելի $A\subset[0,1]$-ի չափը $1$ է, ապա $A$-ն ամենուրեք խիտ է $[0,1]$-ում։ Ճի՞շտ է արդյոք, որ $A$-ն պարունակում է
+որևէ միջակայք։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Եթե $A$-ն խիտ չլիներ, $[0,1]$-ում կլիներ $A$-ից զերծ միջակայք։ Ինչքա՞ն
+կլիներ $[0,1]\setminus A$-ի չափը։</p></div></details>
+<div class="solution">
+<p>Եթե որևէ $(c,d)\subset[0,1]$ միջակայք $A$-ի հետ չհատվեր, ապա $\operatorname{mes}([0,1]\setminus A)\ge d-c\gt0$, և
+$\operatorname{mes}(A)\le1-(d-c)\lt1$՝ հակասություն։ Միջակայք պարունակելը պարտադիր չէ՝ $A=[0,1]\setminus\Q$-ն
+(<a href="#ex1">Վարժություն 1</a>)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> խիտ է, միջակայք կարող է չպարունակել</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<h3>Կառուցման քայլերը մեկ աղյուսակում</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>քայլ</th><th>ինչ է սահմանվում</th><th>գլխավոր փաստը</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>$m$ տարրական բազմությունների վրա</td><td>հաշվելի ադիտիվություն (Թ. 22-24, կոմպակտություն)</td></tr>
+<tr><td>2</td><td>$m^*$ ցանկացած $A\subset[0,1)$-ի համար</td><td>կիսաադիտիվություն (Թ. 25)</td></tr>
+<tr><td>3</td><td>$\mathfrak M$՝ մոտարկվողները</td><td>սիգմա-հանրահաշիվ, հաշվելի ադիտիվություն (Թ. 27-31)</td></tr>
+<tr><td>4</td><td>$\operatorname{mes}$ ամբողջ $\R$-ի վրա</td><td>ինվարիանտություն, ռեգուլյարություն (Թ. 32-34)</td></tr>
+<tr><td>5</td><td>$m_g$ (Ստիլտես)</td><td>նույն կառուցումը, $b-a\to g(b)-g(a)$</td></tr>
+</tbody></table></div>
+
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասախոսության նյութից, ոչ թե դասախոսի քննական հարցերից։</p>
+<ol>
+  <li>Տարրական բազմության չափի կոռեկտությունը (Լեմմա 4, $C_{ij}$-եր)։</li>
+  <li>Թեորեմ 22՝ հաշվելի կիսաադիտիվությունը (<a href="#elementary">ապացույցը</a>)։ Գաղափարը՝ $\varepsilon/2^i$, փակ հատված, վերջավոր ենթածածկույթ։</li>
+  <li>Արտաքին չափի կիսաադիտիվությունը, չափելիության սահմանումը, Թեորեմ 27-ը (<a href="#outer">բաժինը</a>)։</li>
+  <li>Վերջավոր և հաշվելի ադիտիվություն, անընդհատություն (<a href="#additivity">բաժինը</a>)։ Ինչու վերևից անընդհատությունը պահանջում է վերջավոր չափ։</li>
+  <li>Թեորեմ 33-34՝ ռեգուլյարություն (<a href="#line">բաժինը</a>)։</li>
+  <li>Հաշվելի բազմության և Կանտորի բազմության չափը, «տարօրինակ» օրինակներ (<a href="#zero">բաժինը</a>)։</li>
+  <li>Ստիլտեսի չափը և նրա տարբերությունները Լեբեգի չափից (<a href="#stieltjes">բաժինը</a>)։</li>
+  <li>Վիտալիի ոչ չափելի բազմությունը (<a href="#vitali">ապացույցը</a>)։ Գաղափարը՝ $1\le\sum\operatorname{mes}(D)\le3$։</li>
+  <li>Վիտալիի ծածկույթի թեորեմը (<a href="#covering">ապացույցը</a>)։ Գաղափարը՝ ագահ ընտրություն և հնգապատիկ ընդլայնում։</li>
+</ol>
+
+<h3>Ինքնաստուգման հարցեր</h3>
+<details class="extra"><summary>Ինչո՞ւ են տարրական բազմությունները կազմված կիսաբաց միջակայքերից</summary><div class="inner">
+<p>Կիսաբաց միջակայքերն առանց կրկնության և առանց բացերի «կպչում» են իրար ($[0,1)\cup[1,2)=[0,2)$), հետևաբար տարրական բազմությունների
+միավորումը, հատումը և տարբերությունը կրկին տարրական են (Լեմմա 3)։ Փակ հատվածներով $[0,1]\cup[1,2]$-ում $1$-ը կհաշվվեր երկու անգամ,
+իսկ բացերով այն կկորչեր։</p></div></details>
+<details class="extra"><summary>Որտե՞ղ է Թեորեմ 22-ի ապացույցում օգտագործվում իրական թվերի լրիվությունը</summary><div class="inner">
+<p>Հայնե-Բորելի լեմմայում (փակ հատվածի կոմպակտություն)։ Ռացիոնալ թվերի «առանցքի» վրա այն սխալ է, և այնտեղ $\Q\cap[0,1]$-ը
+կարելի է ծածկել ընդհանուր $\varepsilon$ երկարությամբ «միջակայքերով», այսինքն՝ Թեորեմ 22-ը չէր գործի։</p></div></details>
+<details class="extra"><summary>Կարո՞ղ է Վիտալիի $D$ բազմության արտաքին չափը զրո լինել</summary><div class="inner">
+<p>Ոչ՝ զրո արտաքին չափ ունեցող բազմությունը չափելի է (Թեորեմ 26)։ Ուրեմն $m^*(D)\gt0$, բայց $D$-ն չափելի չէ։</p></div></details>
+<details class="extra"><summary>Ինչո՞վ է $m_g$-ն տարբերվում $\operatorname{mes}$-ից $g=\operatorname{arctg}$ դեպքում</summary><div class="inner">
+<p>$m_g(\R)=\pi$ (վերջավոր), տեղաշարժի նկատմամբ ինվարիանտություն չկա, և $0$-ի շրջակայքը «կշռում է» ավելի, քան հեռու միջակայքերը։
+Կետերի չափը զրո է, քանի որ $\operatorname{arctg}$-ն անընդհատ է։</p></div></details>
+
+<h3>Ինչ է հաջորդը</h3>
+<p><strong>Գլուխ 3՝ չափելի ֆունկցիաներ։</strong> Չափելի բազմություններից անցնում ենք ֆունկցիաներին՝ $f$-ը չափելի է, եթե
+$\{x:\ f(x)\lt c\}$ բազմությունները չափելի են։ Սրանք են այն ֆունկցիաները, որոնք կարելի է ինտեգրել ըստ Լեբեգի։ Այս էջը պատրաստվում է։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Գլուխներ">
+        <a class="btn" href="ch1-cardinality.html">← Գլուխ 1</a>
+        <a class="btn" href="index.html">Բոլոր գլուխները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասախոսության նյութի հիման վրա։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>
