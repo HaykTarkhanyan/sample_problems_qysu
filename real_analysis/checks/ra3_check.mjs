@@ -30,7 +30,7 @@ ok(JSON.stringify(ones) === "[2,3,6,11]", `exercise 3: ${ones}`);
 // mes{f_n > 1/2} = 2^-k < 0.1 exactly when n >= 17.
 for (let n = 2; n <= 40; n++) ok((2 ** -km(n).k < 0.1) === (n >= 17), `exercise 3 second part at n = ${n}`);
 // Riesz subsequence n = 2^k + 1: f_n = 1 only on (0, 2^-k], so f_n(x) -> 0 for x > 0.
-for (let k = 0; k <= 10; k++) ok(tw(2 ** k + 1, 1, 2 ** k) === 1 && tw(2 ** k + 1, 1, 2 ** k + 1e9) === 1 || k > 0, "subsequence");
+for (let k = 0; k <= 10; k++) ok(tw(2 ** k + 1, 1, 2 ** k) === 1 && tw(2 ** k + 1, 1, 2 ** k - 0.5) === 0, `subsequence k = ${k}`);
 ok(tw(2 ** 10 + 1, 1, 1000) === 0, "subsequence leaves x = 1/1000 behind");
 
 // Theorem 58 approximation: 0 <= f - f_n < 2^-n on a fine grid, f_n takes values k/2^n.

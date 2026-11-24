@@ -23,7 +23,8 @@
   const simple = (v, n) => Math.floor(v * 2 ** n) / 2 ** n;
   const FUNS = {
     sq: { f: x => x * x },
-    sin: { f: x => 0.5 + 0.45 * Math.sin(2 * Math.PI * x) },
+    // phase 0.3 keeps every grid value off the dyadic band edges (sin(2 pi) is not exactly 0 in floating point)
+    sin: { f: x => 0.5 + 0.45 * Math.sin(2 * Math.PI * x + 0.3) },
     jump: { f: x => (x < 0.6 ? 0.8 * x : 0.3 + 0.7 * x) }
   };
 
@@ -86,12 +87,20 @@
       // the chosen band [k/2^n, (k+1)/2^n) on the y axis and its level set E_k on the x axis
       const lo = k / bands, hi = (k + 1) / bands;
       Q.svg("rect", { x: L, y: sy(hi), width: R - L, height: sy(lo) - sy(hi), class: "f-orange-soft" }, svg);
-      let run = null, measure = 0;
+      // pieces of E_k: runs of grid points inside the band, with both ends located by bisection (exact lengths)
+      const inB = x => { const v = f(x); return v >= lo && v < hi; };
+      const cut = (a, b) => { const ia = inB(a); for (let t = 0; t < 40; t++) { const m = (a + b) / 2; if (inB(m) === ia) a = m; else b = m; } return (a + b) / 2; };
       const segs = [];
+      let measure = 0, i0 = null;
       xs.forEach((x, i) => {
-        const inside = f(x) >= lo && f(x) < hi;
-        if (inside && run === null) run = x;
-        if ((!inside || i === xs.length - 1) && run !== null) { const end = inside ? x : xs[i - 1]; segs.push([run, end]); measure += end - run; run = null; }
+        const inside = inB(x), last = i === xs.length - 1;
+        if (inside && i0 === null) i0 = i;
+        if (i0 !== null && (!inside || last)) {
+          const i1 = inside ? i : i - 1;
+          const a = i0 === 0 ? 0 : cut(xs[i0 - 1], xs[i0]);
+          const b = i1 === xs.length - 1 ? 1 : cut(xs[i1], xs[i1 + 1]);
+          segs.push([a, b]); measure += b - a; i0 = null;
+        }
       });
       segs.forEach(([a, b]) => Q.svg("rect", { x: sx(a), y: sy(0) - 4, width: Math.max(1.5, sx(b) - sx(a)), height: 8, class: "f-orange s-orange" }, svg));
       // f (blue) and the simple function (orange steps)
@@ -108,7 +117,7 @@
       Q.svg("path", { d, fill: "none", class: "s-orange", "stroke-width": 2.2 }, svg);
       if (maxErr >= 2 ** -n) throw new Error("w-simple: error not below 2^-n");
       textOut(out, ["Նարնջագույն աստիճանաձև ֆունկցիան ", { tex: `f_{${n}}` }, "-ն է՝ ընդունում է ", { tex: `\\tfrac{k}{${bands}}` },
-        " արժեքը ", { tex: "E_k" }, "-ի վրա։ Ամենամեծ սխալը՝ ", { tex: `\\approx${dec(maxErr, 4)}\\lt2^{-${n}}` }, "։ Ընտրված շերտի համար ",
+        " արժեքը ", { tex: "E_k" }, "-ի վրա։ Ամենամեծ սխալը՝ ", { tex: `\\approx${(Math.floor(maxErr * 1e4) / 1e4).toFixed(4).replace(".", "{,}")}\\lt2^{-${n}}` }, "։ Ընտրված շերտի համար ",
         { tex: `E_{${k}}=\\left\\{\\tfrac{${k}}{${bands}}\\le f\\lt\\tfrac{${k + 1}}{${bands}}\\right\\}` }, "-ն (նարնջագույն x-առանցքի վրա) ",
         { tex: String(segs.length) }, " կտորից է, չափը՝ ", { tex: `\\approx${dec(measure, 3)}` }, "։"]);
     }
@@ -178,8 +187,8 @@
       const ones = [];
       for (let j = 2; j <= NMAX; j++) if (tw(j, p, q)) ones.push(j);
       textOut(out, [{ tex: `n=${n}=2^{${k}}+${m}` }, "՝ ", { tex: `f_n=1` }, " ", { tex: `\\left(\\tfrac{${m - 1}}{${2 ** k}},\\tfrac{${m}}{${2 ** k}}\\right]` },
-        "-ում, ուստի ", { tex: `\\operatorname{mes}\\{f_n\\gt\\sigma\\}=2^{-${k}}` }, "։ ", { tex: `x_0=\\tfrac{${p}}{${q}}` }, " կետում ",
-        { tex: `f_n(x_0)=${tw(n, p, q)}` }, "։ Ներքևում՝ ", { tex: "f_2(x_0),\\dots,f_{63}(x_0)" }, "։ Մեկերը (նարնջագույն) հայտնվում են ամեն շարքում՝ ",
+        "-ում, ուստի ", { tex: `\\operatorname{mes}\\{f_n\\gt\\sigma\\}\\le2^{-${k}}` }, "։ ", { tex: `x_0=\\tfrac{${p}}{${q}}` }, " կետում ",
+        { tex: `f_n(x_0)=${tw(n, p, q)}` }, "։ Ներքևում՝ ", { tex: "f_2(x_0),\\dots,f_{63}(x_0)" }, "։ Մեկերը (նարնջագույն) հայտնվում են ամեն շրջանում՝ ",
         { tex: ones.join(",") }, ", ուստի ", { tex: "f_n(x_0)" }, "-ն չի զուգամիտում։ Կապույտ եզրով ", { tex: "n=2^k+1" }, " ենթահաջորդականությունն է՝ ",
         { tex: "f_{2^k+1}=1" }, " միայն ", { tex: "(0,2^{-k}]" }, "-ում, և այն ձգտում է ", { tex: "0" }, "-ի ամեն ", { tex: "x\\gt0" }, "-ում։"]);
     }
