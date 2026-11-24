@@ -250,11 +250,11 @@
     list: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
   };
   const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
-  /** "probability" / "discrete" / "numerical" for pages inside a course folder, else null (hub, redirect stubs). */
+  /** "probability" / "discrete" / "numerical" / "analysis" for pages inside a course folder, else null (hub, redirect stubs). */
   function courseFromPath() {
     const parts = location.pathname.split("/").filter(Boolean);
     const dir = location.pathname.endsWith("/") ? parts[parts.length - 1] : parts[parts.length - 2];
-    return dir === "probability" || dir === "discrete" || dir === "numerical" ? dir : null;
+    return ["probability", "discrete", "numerical", "analysis"].includes(dir) ? dir : null;
   }
   function loadScript(src) {
     return new Promise((resolve, reject) => {

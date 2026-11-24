@@ -132,6 +132,8 @@ code, .mono { font-family: Consolas, "Courier New", monospace; font-size: .92em;
   radial-gradient(circle at 71% 71%, #fff 0 1.8px, transparent 2.3px), #0033a0; }
 /* Numerical analysis pages: a curve through three nodes (same design as their favicon). */
 .brand .spl { flex: none; width: 18px; height: 18px; border-radius: 4px; background: #0033a0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 22 C10 8 13 8 16 16 S22 25 26 10' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='6' cy='22' r='3.2' fill='%23F2A800'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23F2A800'/%3E%3Ccircle cx='26' cy='10' r='3.2' fill='%23F2A800'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+/* Real analysis pages: an infinity sign with an orange centre (same design as their favicon). */
+.brand .inf { flex: none; width: 18px; height: 18px; border-radius: 4px; background: #0033a0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 16C13 11 8 11 8 16S13 21 16 16S24 11 24 16S19 21 16 16Z' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23F2A800'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
 .header-actions { margin-left: auto; display: flex; gap: .45rem; flex-wrap: wrap; }
 
 .btn {
