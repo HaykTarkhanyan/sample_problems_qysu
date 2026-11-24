@@ -2,6 +2,13 @@
 
 Topics cut from current work so they are not lost.
 
+- **Real analysis, when the weekly limit allows (owner, 2026-11-24: "We do later if i have more limits"):** one
+  independent math review per page for `site/analysis/ch1-cardinality.html`, `ch2-lebesgue-measure.html` and
+  `ch3-measurable-functions.html` (all deployed without one), checked against the student's notes in the gitignored
+  `student_feedback/nare_avetisyan/2026-11-24_telegram/files/` and the outlines in `real_analysis/README.md`. Same
+  student's other request is also open: unclear Armenian wording in `site/probability/w13-singular.html`, compared
+  with her lecture notes (`files/2026-11-24_nare_notes_lecture13_p1.jpg`, `_p2.jpg`).
+
 - **Numerical analysis, when the lecture slides for integration and linear systems arrive:** both pages were
   built without slides on 2026-11-14 (DECISIONS #22), so compare them with the slides and update. What may
   differ is listed in the two review reports: `numerical_methods/reviews/2026-11-14_integration_math_review.md`
