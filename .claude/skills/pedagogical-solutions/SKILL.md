@@ -206,16 +206,16 @@ it in a sibling `*_ARM/` folder (e.g. `discrete/solutions_opus_4_8_ARM/`), filen
 - Translate the box titles: `Խնդիր` (Problem), `Գաղափարը` (The idea), `Հիշարժան մեթոդ` (Method to
   remember), `Պատասխան` (Answer).
 
-**Terminology - faithful to the glossary.** Consult the `armenian-writing` skill's
+**Terminology - faithful to the glossary.** Consult the `armenian-style-guide` skill's
 `references/glossary_discrete_focused.md` (topic sections) and master `references/glossary_Apr.csv` before translating; render every math term in its
 glossary form (recurrence relation -> ռեկուրենտ առնչություն, characteristic equation -> բնութագրիչ
 հավասարում, determinant -> որոշիչ, superposition -> վերադրում, ...). One term per concept, used
 consistently throughout.
 
-**Language rules live in the global `armenian-writing` skill, not here.** Before writing or translating,
+**Language rules live in the global `armenian-style-guide` skill, not here.** Before writing or translating,
 load that skill and read `CONVENTIONS.md` ("Armenian text"). The owner's decisions in the skill's
 `references/OWNER_ANSWERS.md` override everything else. After writing, run
-`python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py --style <file>` until it reports 0 errors, then follow the
+`python -I ~/.claude/skills/armenian-style-guide/scripts/lint_armenian.py --style <file>` until it reports 0 errors, then follow the
 skill's `references/POLISH_CHECKLIST.md`. The points below are only the ones that bite first.
 
 **Armenian punctuation** (the ASCII-clean rule does NOT apply here - the source is necessarily
@@ -232,7 +232,7 @@ Unicode):
 **Independent check (step 6, adapted):** dispatch a native-fluent Armenian reviewer agent to verify
 (1) terminology faithfulness against the glossary, (2) math fidelity vs the English source,
 (3) fluency, and (4) punctuation (`։`/`՝`/`՞`/`« »`, no Latin `.` as a sentence terminator; an ASCII
-`.` between two clauses is the mijaket and is allowed). Give the reviewer the `armenian-writing` skill's `references/GUIDE.md`
+`.` between two clauses is the mijaket and is allowed). Give the reviewer the `armenian-style-guide` skill's `references/GUIDE.md`
 and `references/OWNER_ANSWERS.md`: a model's own ear for "natural" Armenian was wrong 4 times out of 5 on
 2026-11-13 (`_learnings/2026-11-13-0106_*`), so doubts go to the owner as questions, not as rewrites.
 
@@ -246,7 +246,7 @@ Before declaring done, confirm each item honestly:
       *why*, numbered steps, a check, an answer box, and (where it teaches a method) a method box.
 - [ ] Every numeric / counting / recurrence answer was independently recomputed and matched.
 - [ ] The compiler ran twice with no errors (`pdflatex` for English, **`xelatex`** for Armenian) and the PDF was actually viewed (not assumed).
-- [ ] English source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`). For Armenian, instead: full stops use `։`, quotes use `« »`, no Latin `:` `;` `?`, no Latin `.` as a sentence terminator, and `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py` reports 0 errors (see the Armenian variant section).
+- [ ] English source is ASCII-clean: no U+2014 em-dash, no ` -- ` en-dash, no straight `"` (quotes use `\textquotedbl{}`). For Armenian, instead: full stops use `։`, quotes use `« »`, no Latin `:` `;` `?`, no Latin `.` as a sentence terminator, and `python -I ~/.claude/skills/armenian-style-guide/scripts/lint_armenian.py` reports 0 errors (see the Armenian variant section).
 - [ ] The independent check was done (or, if running as a subagent, the from-scratch re-derivation
       was done and flagged for a follow-up pass).
 - [ ] Only the `.tex` and `.pdf` remain in the folder (aux files and temp PNGs removed).

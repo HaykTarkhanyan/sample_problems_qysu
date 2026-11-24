@@ -11,8 +11,8 @@ GitHub Pages, built from `site/`.
 | Discrete mathematics | `site/discrete/`, `discrete/` | 7 practice sheets as LaTeX/PDF (English and Armenian) and as site pages |
 | Group theory | `group_theory/` | practice 10, kept for reference, not maintained |
 
-Other folders: `armenian_style/` (pointer to the global `armenian-writing` skill, which holds the Armenian style guide and lint), `animations/` (Manim scenes), `tools/`
-(site QA and search index builder). The `armenian-writing` skill also holds the master English-Armenian term list.
+Other folders: `armenian_style/` (pointer to the global `armenian-style-guide` skill, which holds the Armenian style guide and lint), `animations/` (Manim scenes), `tools/`
+(site QA and search index builder). The `armenian-style-guide` skill also holds the master English-Armenian term list.
 
 How things are built and checked: `CLAUDE.md`, `CONVENTIONS.md`, and the reasons behind each choice in
 `DECISIONS.md`.

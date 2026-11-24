@@ -1,7 +1,7 @@
 # Course conventions and statement-verification notes
 
 Read this before solving. Fuller background lives in the repo at
-`memory/professor_notes_map.md` and the `armenian-writing` skill's `references/glossary_discrete_focused.md`.
+`memory/professor_notes_map.md` and the `armenian-style-guide` skill's `references/glossary_discrete_focused.md`.
 
 ## Notation and conventions the professor uses (match these in solutions)
 

@@ -4,12 +4,12 @@ Recurring decisions for this repo, written down once they were made twice.
 
 ## Armenian text (all `.tex` and `.html`)
 
-- Follow the global `armenian-writing` skill (`~/.claude/skills/armenian-writing/`): style guide, the owner's decisions (A2-A76), house rules and lint. It moved there on 2026-11-23; the last version in this repo is at commit `af7b31d`.
+- Follow the global `armenian-style-guide` skill (`~/.claude/skills/armenian-style-guide/`): style guide, the owner's decisions (A2-A76), house rules and lint. It moved there on 2026-11-23; the last version in this repo is at commit `af7b31d`.
 - The skill's `references/glossary_Apr.csv` is the authoritative term list; its
   `references/glossary_discrete_focused.md` is the course view. Grep it before changing any term. Its ⚠ rows invert instinct: inclusion-exclusion =
   **կցման-արտաքսման սկզբունք** (not ներառման-բացառման), monotone = մոնոտոն, loop = ակ,
   singleton = մեկկետանոց, codomain = փոփոխման տիրույթ, pigeonhole = Դիրիխլեի սկզբունք.
-- Before publishing Armenian text, run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <files>` (0 errors) and skim the skill's `references/POLISH_CHECKLIST.md`.
+- Before publishing Armenian text, run `python -I ~/.claude/skills/armenian-style-guide/scripts/lint_armenian.py <files>` (0 errors) and skim the skill's `references/POLISH_CHECKLIST.md`.
 - Owner, 2026-11-24 (after a student's feedback on lecture 13): «մաքուր» and «քսված» are not suitable in a math context.
   An absolutely continuous distribution is «բաշխված է խտությամբ» / «հավասարաչափ բաշխված» (in the sand intuition
   «տարածված»); the two «մաքուր» types are «հիմնական» types; the Cantor step removes «մեջտեղի մասը» (the lecture notes say
@@ -188,7 +188,7 @@ widget, etc.).
   computation; a "Տիպիկ սխալներ" box; exercises ordered easy -> hard with at least one non-example; a closing
   `#exam` section (one-table summary, oral-exam checklist with proof ideas and links, sample oral questions,
   what's next). Every widget gets a caption saying what the example is.
-- Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see A36 in the `armenian-writing` skill for which is which.
+- Coin sides: «ղուշ» / «գիր» (owner), never «գերբ»; see A36 in the `armenian-style-guide` skill for which is which.
 - Probability terms fixed across pages (glossary first): countable additivity = «հաշվելի ադիտիվություն» /
   «հաշվելիորեն ադիտիվ» (not «գումարելիություն»; «գումարելի» only for a summand); frequency =
   «հաճախություն»; convolution = «փաթույթ»; mutual / pairwise independence = «ըստ համախմբության անկախ» /
@@ -210,7 +210,7 @@ widget, etc.).
   2026-11-11, user request): hub = white ∑ (`span.sigma`), discrete = small graph with orange nodes
   (`span.graph`), probability = die (`span.die`), numerical = curve through three nodes (`span.spl`). Copy the
   `<link rel="icon">` line and the span from an existing page of the same course.
-- Every new page: also run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <page> <script>` (0 errors) and check that
+- Every new page: also run `python -I ~/.claude/skills/armenian-style-guide/scripts/lint_armenian.py <page> <script>` (0 errors) and check that
   no `.katex-display` overflows at 390 px; formula boxes with a formula plus its range go in
   `\begin{gathered}...\\...\end{gathered}`. Never put «∎» inside `$$` (KaTeX has no glyph): use `\blacksquare`.
 - Before publishing a page: `node tools/check_site.mjs`, `node --check` on the scripts, numeric re-check of

@@ -98,8 +98,8 @@ inventing new ones:
 
 ## Armenian terminology and punctuation
 
-- **Language rules live in the global `armenian-writing` skill** (`~/.claude/skills/armenian-writing/`). Use it for all Armenian text.
-- **`references/glossary_Apr.csv` in the `armenian-writing` skill is the master, authoritative**
+- **Language rules live in the global `armenian-style-guide` skill** (`~/.claude/skills/armenian-style-guide/`). Use it for all Armenian text.
+- **`references/glossary_Apr.csv` in the `armenian-style-guide` skill is the master, authoritative**
   English→Armenian terminology list (hand-written, ~1060 terms, all of math).
   **`references/glossary_discrete_focused.md`** there is the scoped, topic-organized view for this
   course, rebuilt from that CSV. Consult the glossary

@@ -46,7 +46,7 @@ Topics cut from current work so they are not lost.
   (where h²/8 comes from) and least-squares residual squares shrinking to the optimum. (2026-11-11)
 
 - **Native Armenian read of the probability pages** (all 15 written by the model, linted with
-  the `armenian-writing` skill's lint against the owner's decided rules, never read end to end by a
+  the `armenian-style-guide` skill's lint against the owner's decided rules, never read end to end by a
   native speaker). (2026-11-10)
 - **Questions for the lecturer / a student's notes** (from the math reviews, 2026-11-11): does the
   lecturer use Sevastyanov's broad definition of «singular» (any continuous F without a density)? It
@@ -90,7 +90,7 @@ Topics cut from current work so they are not lost.
     closing sections, widget messages) was written by agents and checked by lint, rules and the owner's 57
     answers, not read end to end. (2026-11-18)
 - **Glossary leftovers, none put to the owner:** duplicate row 258 (kept on purpose, row numbers are
-  cited), U+2024 in 23 rows, «․․․» in row 1031 (`references/GLOSSARY_REPORT.md` in the `armenian-writing` skill). The real fixes
+  cited), U+2024 in 23 rows, «․․․» in row 1031 (`references/GLOSSARY_REPORT.md` in the `armenian-style-guide` skill). The real fixes
   were applied on 2026-11-13; the trailing spaces in rows 287 and 292 and the comma in row 190 on
   2026-11-14.
 - **Armenian lint gaps still open:** no hint for the Russian «X-ի մոտ» (= «у»; all 24 uses on the
