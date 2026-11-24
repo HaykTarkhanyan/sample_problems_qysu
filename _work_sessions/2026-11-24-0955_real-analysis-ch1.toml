@@ -15,11 +15,13 @@ done = [
   "site/analysis/ch2-lebesgue-measure.html: Theorems 20-38, 4 predict blocks, 3 fact boxes, typical mistakes, 6 exercises, exam section; links to probability lectures 3, 10, 13",
   "Widgets in site/assets/js/ra2.js: w-cover (rationals covered by intervals of total length eps), w-fat (Cantor vs fat Cantor), w-stieltjes (m_g[a,b) and point masses for 4 g)",
   "real_analysis/checks/ra2_check.mjs: widget helpers + every number on the page; QA gate, lint, browser check ok; Playwright look fixed a misleading cover picture (1 px minimum width)",
+  "Chapter 3 (owner: 'Do 03 as well'): read all 16 pages, outline + typos in real_analysis/README.md",
+  "site/analysis/ch3-measurable-functions.html: Theorems 39-58, 4 predict blocks, 3 fact boxes (weak/strong LLN, Luzitania, Lebesgue's wallet), 6 exercises, exam table of the three convergence types",
+  "Widgets in site/assets/js/ra3.js: w-simple (Theorem 58 value bands), w-egorov (x^n), w-typewriter (in measure, nowhere pointwise, Riesz subsequence); real_analysis/checks/ra3_check.mjs; all checks ok; Playwright look fixed a jump drawn as a vertical line",
 ]
 pending = [
-  "No independent math review of the chapter 1 and chapter 2 pages yet (the probability rule asks for one before publishing); both were deployed without one because of the weekly usage limit",
-  "Chapter 3 (measurable functions, 16 pp.) page",
-  "ch2 page: 'ուստի' density hint (44 per 10k words, limit 30), not an error",
+  "No independent math review of the chapter 1, 2 and 3 pages yet (the probability rule asks for one before publishing); all three were deployed without one because of the weekly usage limit",
+  "ch2 and ch3 pages: 'ուստի' density hint (44 and 51 per 10k words, limit 30), not an error",
   "Nare's other request: unclear Armenian wording in probability lecture 13 (compare with her notes in student_feedback/)",
 ]
 next = [

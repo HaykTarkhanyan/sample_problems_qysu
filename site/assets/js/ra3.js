@@ -95,7 +95,9 @@
       });
       segs.forEach(([a, b]) => Q.svg("rect", { x: sx(a), y: sy(0) - 4, width: Math.max(1.5, sx(b) - sx(a)), height: 8, class: "f-orange s-orange" }, svg));
       // f (blue) and the simple function (orange steps)
-      Q.svg("polyline", { points: xs.map(x => `${sx(x).toFixed(1)},${sy(f(x)).toFixed(1)}`).join(" "), fill: "none", class: "s-blue", "stroke-width": 2 }, svg);
+      // break the graph at jumps (a step of more than 0.05 between neighbouring grid points)
+      const fd = xs.map((x, i) => (i && Math.abs(f(x) - f(xs[i - 1])) > 0.05 ? "M" : i ? "L" : "M") + sx(x).toFixed(1) + " " + sy(f(x)).toFixed(1)).join(" ");
+      Q.svg("path", { d: fd, fill: "none", class: "s-blue", "stroke-width": 2 }, svg);
       let d = "", prev = null, maxErr = 0;
       xs.forEach(x => {
         const v = simple(f(x), n);
