@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Cpath d=%27M16 16C13 11 8 11 8 16S13 21 16 16S24 11 24 16S19 21 16 16Z%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%272.6%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գլուխ 3 - Չափելի ֆունկցիաներ</title>
+<meta name="description" content="Իրական անալիզ, գլուխ 3՝ չափելի ֆունկցիաներ, համարյա ամենուրեք զուգամիտություն, Եգորովի և Ռիսի թեորեմները, ըստ չափի զուգամիտություն, Լուզինի թեորեմը, պարզ ֆունկցիաներ։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/ra3.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="inf" aria-hidden="true"></span>Իրական անալիզ</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գլուխ 3</div>
+    <h1>Չափելի ֆունկցիաներ</h1>
+    <p class="subtitle">Որ ֆունկցիաներն են «բավական լավը» Լեբեգի ինտեգրալի համար, զուգամիտության երեք տեսակ և ինչու ամեն չափելի ֆունկցիա «համարյա անընդհատ» է</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս գլխի մասին</a></li>
+        <li><a href="#definition">Սահմանում և հայտանիշ</a></li>
+        <li><a href="#operations">Գործողություններ և սահմաններ</a></li>
+        <li><a href="#ae">Համարյա ամենուրեք</a></li>
+        <li><a href="#egorov">Եգորովի թեորեմը</a></li>
+        <li><a href="#measure">Ըստ չափի զուգամիտություն</a></li>
+        <li><a href="#luzin">Լուզինի թեորեմը</a></li>
+        <li><a href="#simple">Պարզ ֆունկցիաներ</a></li>
+        <li><a href="#mistakes">Տիպիկ սխալներ</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս գլխի մասին</h2></summary>
+<div class="sec-body">
+<p>Ռիմանի ինտեգրալի համար ֆունկցիան պետք է «գրեթե անընդհատ» լինի։ Լեբեգի ինտեգրալը (հաջորդ գլուխները) ավելի լայն
+դաս է պահանջում՝ <strong>չափելի</strong> ֆունկցիաներ։ Գաղափարը պարզ է՝ եթե ամեն «$f$-ը փոքր է $c$-ից» բազմության չափը
+կարող ենք հաշվել, ապա կարող ենք հաշվել նաև ինտեգրալը՝ արժեքների շերտերով, ոչ թե $x$-առանցքի կտորներով։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>$f$-ը չափելի է, եթե $\{f\lt c\}$ բազմությունները չափելի են։</strong> Այս դասը փակ է թվաբանական գործողությունների և
+  հաջորդականությունների սահմանի նկատմամբ, քանի որ չափելի բազմությունները սիգմա-հանրահաշիվ են։</li>
+  <li><strong>Զուգամիտության երեք տեսակ՝</strong> համարյա ամենուրեք, հավասարաչափ (բացառելով փոքր բազմություն, Եգորով) և ըստ չափի։
+  Վերջավոր չափի դեպքում առաջինից հետևում է երրորդը, հակառակը ճիշտ է միայն ենթահաջորդականության համար (Ռիս)։</li>
+  <li><strong>Չափելի ֆունկցիան «համարյա անընդհատ» է</strong> (Լուզին) և պարզ ֆունկցիաների հավասարաչափ սահման է։ Վերջինը
+  հենց Լեբեգի ինտեգրալի կառուցման հիմքն է։</li>
+</ol>
+</div>
+<div class="note"><strong>Նշանակումներ։</strong> թեորեմների համարները նույնն են, ինչ նյութում (Թեորեմ 39-58)։ $(X,\mathcal F,\mu)$-ն չափով
+օժտված տարածություն է (<a href="ch2-lebesgue-measure.html#stieltjes">Գլուխ 2, Սահմանում 17</a>), $\mathfrak B$-ն՝ առանցքի բորելյան
+բազմությունները, «հ.ա.»՝ համարյա ամենուրեք։ $\{f\lt c\}$-ն $\{x\in X:\ f(x)\lt c\}$-ի կարճ գրառումն է։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="definition" open>
+<summary><h2>Սահմանում և հայտանիշ</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 19 և Սահմանում 20</div>
+<p>$f:X\to\R$-ը կոչվում է <strong>$\mu$-չափելի</strong> (կամ պարզապես չափելի), եթե ամեն բորելյան $A$-ի համար $f^{-1}(A)\in\mathcal F$։
+$X\subset\R$ և $\mu=\operatorname{mes}$ դեպքում $f$-ը կոչվում է չափելի ըստ Լեբեգի։<br>
+$f:\R\to\R$-ը կոչվում է <strong>բորելյան</strong>, եթե ամեն բորելյան $A$-ի համար $f^{-1}(A)\in\mathfrak B$։</p>
+</div>
+<p>Բորելյան ֆունկցիան չափելի է ըստ Լեբեգի (քանի որ $\mathfrak B\subset\mathfrak M$), հակառակը ճիշտ չէ։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 39, 40, 41</div>
+<p>(39) Անընդհատ ֆունկցիան բորելյան է։ (40) Եթե $f$-ը $\mu$-չափելի է, իսկ $\varphi$-ն բորելյան, ապա $\varphi\circ f$-ը $\mu$-չափելի է։
+(41) Չափելի ֆունկցիայի անընդհատ ֆունկցիան չափելի է (օրինակ՝ $|f|$, $f^2$, $e^{f}$)։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 39։</strong> անընդհատ ֆունկցիայի դեպքում բաց բազմության նախապատկերը բաց է։ Դիցուք $\mathcal G$-ն բաց բազմությունների
+դասն է։ Այդ դեպքում $f^{-1}(\mathcal G)\subset\mathcal G$, ուստի $\mathfrak B(f^{-1}(\mathcal G))\subset\mathfrak B$, որտեղ $\mathfrak B(\cdot)$-ը
+ծնված սիգմա-հանրահաշիվն է։ Մյուս կողմից $\mathfrak B(f^{-1}(\mathcal G))=f^{-1}(\mathfrak B(\mathcal G))$ (ստուգեք ինքնուրույն)։ Ուրեմն
+$f^{-1}(\mathfrak B)\subset\mathfrak B$։</p>
+<p><strong>Թեորեմ 40։</strong> $(\varphi\circ f)^{-1}(A)=f^{-1}(\varphi^{-1}(A))$, որտեղ $\varphi^{-1}(A)\in\mathfrak B$։ Թեորեմ 41-ը հետևում է
+39-ից և 40-ից։ $\blacksquare$</p>
+</div></details>
+<div class="box thm"><div class="box-title">Թեորեմ 42 (չափելիության հայտանիշ)</div>
+<p>$f:X\to\R$-ը չափելի է այն և միայն այն դեպքում, երբ ամեն $c\in\R$-ի համար $\{f\lt c\}\in\mathcal F$։</p>
+</div>
+<p>Գործնականում չափելիությունը ստուգում են հենց այսպես՝ բոլոր բորելյան բազմությունների փոխարեն բավական է նայել միայն
+$(-\infty,c)$ ճառագայթներին։ Պատճառը՝ մնացած բոլոր բորելյան բազմությունները ստացվում են ճառագայթներից հաշվելի թվով
+գործողություններով, իսկ նախապատկերը «համակերպվում է» այդ գործողությունների հետ։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Անհրաժեշտությունը՝ $(-\infty,c)$-ն բորելյան է։ Բավարարությունը՝ քանի որ $\mathcal F$-ը սիգմա-հանրահաշիվ է,</p>
+$$\begin{aligned}\{f\gt b\}&=X\setminus\{f\le b\}\\&=X\setminus\bigcap_{n}\Bigl\{f\lt b+\tfrac1n\Bigr\}\in\mathcal F,\end{aligned}$$
+<p>ուստի $\{a\lt f\lt b\}=\{f\gt a\}\cap\{f\lt b\}\in\mathcal F$։ Ամեն բաց $G$ վերջավոր կամ հաշվելի թվով $(a_i,b_i)$-երի միավորում է
+(<a href="ch1-cardinality.html#open">Թեորեմ 15</a>), ուստի $f^{-1}(G)\in\mathcal F$։ Վերջապես, $\{A:\ f^{-1}(A)\in\mathcal F\}$-ը
+սիգմա-հանրահաշիվ է, որը պարունակում է բաց բազմությունները, ուրեմն պարունակում է $\mathfrak B$-ն։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="operations" open>
+<summary><h2>Գործողություններ և սահմաններ</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Լեմմա 7, 8 և Թեորեմ 43</div>
+<p>Եթե $f$-ը և $g$-ն չափելի են, ապա $\{f\gt g\}$ բազմությունը չափելի է (Լ7), $f+a$-ն և $af$-ը չափելի են (Լ8), և
+$f\pm g$-ն, $fg$-ն, $f/g$-ն (եթե $g\ne0$) չափելի են (Թ43)։</p>
+</div>
+<p><strong>Ինչու։</strong> Լեմմա 7-ի հնարքը ռացիոնալ թվերն են՝ $f(x)\gt g(x)$ նշանակում է, որ նրանց միջև կա ռացիոնալ $r_n$՝</p>
+$$\{f\gt g\}=\bigcup_n\bigl(\{f\gt r_n\}\cap\{g\lt r_n\}\bigr),$$
+<p>իսկ սա հաշվելի միավորում է։ Գումարի համար՝ $\{f+g\lt c\}=\{f\lt c-g\}$, և $c-g$-ն չափելի է (Լ8, Լ7)։ Արտադրյալի համար
+օգտագործվում է $fg=\tfrac14\bigl((f+g)^2-(f-g)^2\bigr)$, իսկ քառակուսին չափելի է Թեորեմ 41-ով։ Քանորդը՝ $f\cdot\tfrac1g$, որտեղ
+$\left\{\tfrac1g\lt c\right\}$-ն արտահայտվում է $g$-ի մակարդակի բազմություններով։</p>
+<div class="box thm"><div class="box-title">Լեմմա 9, Թեորեմ 44, 45</div>
+<p>Եթե $f_n$-երը չափելի են, ապա չափելի են $\sup_nf_n$-ը, $\inf_nf_n$-ը (Լ9), $\varlimsup f_n$-ը, $\varliminf f_n$-ը (Թ44), և եթե
+$f_n(x)\to f(x)$ բոլոր $x$-երի համար, ապա $f$-ը չափելի է (Թ45)։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Լեմմա 9։</strong> $\{\inf_nf_n\lt c\}=\bigcup_n\{f_n\lt c\}$ և
+$\{\sup_nf_n\lt c\}=\bigcup_k\bigcap_n\{f_n\lt c-\tfrac1k\}$։ <strong>Թեորեմ 44։</strong> $\varlimsup f_n=\inf_k\sup_{n\ge k}f_n$, և
+$\varliminf f_n=\sup_k\inf_{n\ge k}f_n$, ուստի կիրառում ենք Լեմմա 9-ը երկու անգամ։ <strong>Թեորեմ 45։</strong> սահմանը, երբ գոյություն ունի,
+հավասար է $\varlimsup f_n$-ին։ $\blacksquare$</p>
+</div></details>
+<p>Նյութի <strong>Դիտողություն 2</strong>-ը կարևոր է՝ այս բոլոր ապացույցներում չափը դեր չի խաղում։ Օգտագործվում է միայն այն, որ
+$\mathcal F$-ը սիգմա-հանրահաշիվ է, այսինքն՝ փակ է հաշվելի գործողությունների նկատմամբ։ Համեմատության համար՝ անընդհատ ֆունկցիաների
+սահմանը կարող է անընդհատ չլինել ($x^n\to$ թռիչք $1$-ում), իսկ չափելիների սահմանը միշտ չափելի է։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="ae" open>
+<summary><h2>Համարյա ամենուրեք և համարժեք ֆունկցիաներ</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 21 և Սահմանում 22</div>
+<p>$P$ հատկությունը տեղի ունի <strong>համարյա ամենուրեք</strong> (almost everywhere, հ.ա.), եթե այն կետերի բազմությունը, որտեղ $P$-ն տեղի
+չունի, ունի զրո չափ։ $f$-ը և $g$-ն <strong>համարժեք</strong> են ($f\sim g$), եթե $f=g$ հ.ա.։</p>
+</div>
+<p>Երկու օրինակ, որոնք ցույց են տալիս, որ «համարժեք է անընդհատ ֆունկցիայի» և «համարյա ամենուրեք անընդհատ է» տարբեր պնդումներ են՝</p>
+<ul>
+  <li><strong>Դիրիխլեի ֆունկցիան</strong> ($1$ ռացիոնալ կետերում, $0$ իռացիոնալներում) ոչ մի կետում անընդհատ չէ, բայց համարժեք է
+  $0$ անընդհատ ֆունկցիային, քանի որ $\operatorname{mes}(\Q)=0$։</li>
+  <li><strong>$\operatorname{sgn}x$-ը</strong> խզվող է միայն $x=0$-ում, այսինքն՝ հ.ա. անընդհատ է, բայց համարժեք չէ ոչ մի անընդհատ ֆունկցիայի
+  (ցանկացած $g\sim\operatorname{sgn}$ $0$-ից ձախ և աջ ընդունում է $-1$ և $1$ արժեքները համարյա բոլոր կետերում, և չի կարող անընդհատ
+  լինել $0$-ում)։</li>
+</ul>
+<div class="box thm"><div class="box-title">Թեորեմ 46 և Թեորեմ 47</div>
+<p>(46) Եթե $f$-ը չափելի է, և $g\sim f$, ապա $g$-ն չափելի է։ (47) Եթե չափելի $f_n$-երը հ.ա. զուգամիտում են $f$-ին, ապա $f$-ը չափելի է։</p>
+</div>
+<p>Երկուսն էլ հենվում են չափի <strong>լրիվության</strong> վրա (<a href="ch2-lebesgue-measure.html#outer">Գլուխ 2, Թեորեմ 26</a>)՝ զրո չափի
+բազմության ցանկացած ենթաբազմություն չափելի է, ուստի այնտեղ ֆունկցիան կարող ենք փոխել ինչպես ուզենք։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 46։</strong> $A=\{f\ne g\}$, $\mu(A)=0$, $B=X\setminus A$։ Այդ դեպքում
+$\{g\lt c\}=\bigl(A\cap\{g\lt c\}\bigr)\cup\bigl(B\cap\{f\lt c\}\bigr)$։ Առաջինը զրո չափի բազմության ենթաբազմություն է (չափելի է
+լրիվությունից), երկրորդը՝ երկու չափելի բազմության հատում։</p>
+<p><strong>Թեորեմ 47։</strong> դիցուք $A$-ն այն կետերն են, որտեղ զուգամիտություն չկա, $\mu(A)=0$, և $\chi=0$ $A$-ում, $\chi=1$ դրսում։
+$g_n=f_n\chi\to g=f\chi$ ամենուրեք, ուստի $g$-ն չափելի է (Թ45), իսկ $f\sim g$ (Թ46)։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="egorov" open>
+<summary><h2>Եգորովի թեորեմը</h2></summary>
+<div class="sec-body">
+<p>Կետային զուգամիտությունը թույլ է, հավասարաչափը՝ ուժեղ։ Եգորովի թեորեմն ասում է, որ վերջավոր չափի տարածության վրա դրանց
+տարբերությունը «փոքր» է՝ կետային զուգամիտությունը դառնում է հավասարաչափ, եթե հեռացնենք կամայապես փոքր չափի բազմություն։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 48 և Թեորեմ 49 (Եգորով)</div>
+<p>Դիցուք $\mu(X)\lt\infty$, և չափելի $f_i$-երը զուգամիտում են $f$-ին ամենուրեք (Թ48) կամ համարյա ամենուրեք (Թ49)։ Այդ դեպքում ամեն
+$\delta\gt0$-ի համար կա $X_\delta\subset X$, որ</p>
+<ol>
+  <li>$\mu(X_\delta)\gt\mu(X)-\delta$,</li>
+  <li>$f_i\to f$ հավասարաչափ $X_\delta$-ի վրա։</li>
+</ol>
+</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $f_n(x)=x^n$-ը $[0,1]$-ում կետային զուգամիտում է ($0$-ի, երբ $x\lt1$, և $1$-ի, երբ $x=1$)։ Որտե՞ղ
+չկա հավասարաչափ զուգամիտություն։</p>
+<div class="predict-opts"><button class="btn" type="button">Միայն $x=1$ կետում</button><button class="btn" type="button" data-ok>$1$-ի ցանկացած շրջակայքում</button><button class="btn" type="button">Ամբողջ $[0,1]$-ում, ոչ մի մասում</button></div>
+<div class="predict-why">Ամեն $n$-ի համար կա $x\lt1$ (օրինակ՝ $x=2^{-1/n}$), որտեղ $x^n=\tfrac12$, ուստի $[1-\delta,1)$-ում $\sup|f_n|$-ը
+ձգտում չէ զրոյի, ինչքան էլ փոքր լինի $\delta$-ն։ «Միայն $x=1$-ում» սխալ է, քանի որ հավասարաչափությունը մեկ կետի մասին չէ, այլ ամբողջ
+բազմության։ Իսկ $[0,1-\delta]$-ում $\sup|f_n|=(1-\delta)^n\to0$, այսինքն՝ հավասարաչափ զուգամիտությունը կա (Եգորովի $X_\delta$-ն)։</div>
+</div>
+
+<div class="widget" id="w-egorov">
+  <div class="widget-head">$x^n$-ը և Եգորովի բազմությունը</div>
+  <p class="widget-hint">Կապույտը $f_n(x)=x^n$-ն է, մոխրագույնները՝ նախորդ մի քանի $n$-երը։ Կարմիր շերտը $[1-\delta,1]$-ն է, որը հեռացնում
+  ենք։ Նարնջագույն ընդհատ գիծը $[0,1-\delta]$-ում $f_n$-ի ամենամեծ արժեքն է։ Մեծացրեք $n$-ը՝ գիծն իջնում է զրոյի։ Փոքրացրեք $\delta$-ն՝
+  պետք է ավելի մեծ $n$, բայց զուգամիտությունը մնում է հավասարաչափ։</p>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="1" max="60" step="1" value="5" aria-label="n"></div>
+  <div class="slider-row"><span data-out="dlabel"></span><input type="range" data-in="d" min="0.05" max="0.5" step="0.05" value="0.2" aria-label="δ"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 48։</strong> զուգամիտությունը նշանակում է</p>
+$$X=\bigcap_{k=1}^\infty\bigcup_{n=1}^\infty\bigcap_{i\ge n}\Bigl\{|f_i-f|\lt\tfrac1k\Bigr\}.$$
+<p>Դիցուք $X_n^k=\bigcap_{i\ge n}\{|f_i-f|\lt\tfrac1k\}$։ Ամեն $k$-ի համար $X_n^k$-երը չափելի են, աճում են ըստ $n$-ի, և նրանց միավորումը
+$X$-ն է։ Չափի անընդհատությունից կա $n_k$, որ $\mu(X\setminus X_{n_k}^k)\lt\delta/2^k$։ Դիցուք $X_\delta=\bigcap_kX_{n_k}^k$։ Այդ դեպքում
+$\mu(X\setminus X_\delta)\le\sum_k\delta/2^k=\delta$ (խիստ անհավասարության համար վերցրեք $\delta/2^{k+1}$), իսկ $X_\delta$-ում ամեն $k$-ի
+համար $|f_i-f|\lt\tfrac1k$, երբ $i\ge n_k$, այսինքն՝ զուգամիտությունը հավասարաչափ է։ <strong>Թեորեմ 49։</strong> նախ հեռացնում ենք
+զրո չափի բազմությունը, որտեղ զուգամիտություն չկա։ $\blacksquare$</p>
+</div></details>
+<p class="muted">Պայմանը $\mu(X)\lt\infty$ անհրաժեշտ է՝ $\R$-ում $f_n=\chi_{[n,n+1]}\to0$ ամենուրեք, բայց եթե
+$\operatorname{mes}(\R\setminus X_\delta)\lt\delta\lt1$, ապա $X_\delta$-ն ամեն $[n,n+1]$-ում կետ ունի, և $\sup_{X_\delta}f_n=1$ ամեն $n$-ի
+համար։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="measure" open>
+<summary><h2>Ըստ չափի զուգամիտություն և Ռիսի թեորեմը</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 23</div>
+<p>Չափելի $f_i$-երն <strong>ըստ չափի զուգամիտում են</strong> $f$-ին ($f_i\Rightarrow f$), եթե ամեն $\sigma\gt0$-ի համար</p>
+$$\lim_{i\to\infty}\mu\{|f_i-f|\gt\sigma\}=0.$$
+</div>
+<p>Այսինքն՝ ամեն ճշտության համար «վատ» կետերի բազմությունը փոքրանում է, բայց այն կարող է ամեն անգամ <em>տեղաշարժվել</em>։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 50 և Թեորեմ 51 (Ռիս)</div>
+<p>(50) Եթե $\mu(X)\lt\infty$, և $f_i\to f$ հ.ա., ապա $f_i\Rightarrow f$։<br>
+(51) Եթե $f_i\Rightarrow f$, ապա կա $f_{i_k}$ ենթահաջորդականություն, որը հ.ա. զուգամիտում է $f$-ին։</p>
+</div>
+<p>Թեորեմ 50-ը Եգորովից է՝ $X_\varepsilon$-ից դուրս «վատ» կետերի չափը $\lt\varepsilon$ է։ Հակառակը ճիշտ չէ, և հաջորդ օրինակը
+(նյութում բերված է Թեորեմ 50-ից հետո) ցույց է տալիս, թե ինչու։ $(0,1]$-ում, $n=2^k+m$, $m=1,\dots,2^k$ համար $f_n$-ը հավասար է $1$-ի
+$\left(\tfrac{m-1}{2^k},\tfrac m{2^k}\right]$ միջակայքում, և $0$-ի՝ դրսում։ Միջակայքը «վազում է» $(0,1]$-ով ձախից աջ, ամեն շրջանում
+կիսով չափ կարճանալով, ինչպես գրամեքենայի կառքը։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Այս «գրամեքենայի» հաջորդականության համար ո՞րն է ճիշտ։</p>
+<div class="predict-opts"><button class="btn" type="button">$f_n(x)\to0$ ամեն $x$-ում, քանի որ միջակայքը կարճանում է</button><button class="btn" type="button" data-ok>$f_n\Rightarrow0$, բայց $f_n(x)$-ը չի զուգամիտում ոչ մի $x$-ում</button><button class="btn" type="button">Ոչ ըստ չափի, ոչ կետային զուգամիտություն չկա</button></div>
+<div class="predict-why">$\operatorname{mes}\{f_n\gt\sigma\}=2^{-k}\to0$, ուրեմն $f_n\Rightarrow0$։ Բայց ամեն շրջանում միջակայքն անցնում է ամբողջ $(0,1]$-ով,
+ուստի ամեն $x$-ի համար $f_n(x)=1$ անվերջ շատ անգամ և $f_n(x)=0$ նույնպես անվերջ շատ անգամ, և սահման չկա։ Առաջին տարբերակը
+շփոթում է երկարության փոքրանալը կետային զուգամիտության հետ։</div>
+</div>
+
+<div class="widget" id="w-typewriter">
+  <div class="widget-head">«Գրամեքենա»՝ ըստ չափի, բայց ոչ կետային</div>
+  <p class="widget-hint">Սահիչով ընտրեք $n$-ը։ Վերևում նարնջագույնն այն միջակայքն է, որտեղ $f_n=1$, կարմիր գիծը՝ $x_0$ կետը (ընտրեք
+  կոճակներով)։ Ներքևի վանդակները $f_2(x_0),f_3(x_0),\dots,f_{63}(x_0)$-ն են՝ նարնջագույնը $1$ է։ Նկատեք՝ մեկերը չեն վերջանում (մեկական
+  ամեն շրջանում), բայց միջակայքի երկարությունը ձգտում է $0$-ի։ Կապույտ եզրով վանդակները Ռիսի ենթահաջորդականությունն են։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="2" max="63" step="1" value="11" aria-label="n"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 50, 51)</summary><div class="inner">
+<p><strong>Թեորեմ 50։</strong> Եգորովով կա $X_\varepsilon$, $\mu(X_\varepsilon)\gt\mu(X)-\varepsilon$, որի վրա զուգամիտությունը հավասարաչափ է։
+Ուրեմն կա $N$, որ $|f_i-f|\le\sigma$ $X_\varepsilon$-ում, երբ $i\ge N$, և $\mu\{|f_i-f|\gt\sigma\}\le\mu(X\setminus X_\varepsilon)\lt\varepsilon$։</p>
+<p><strong>Թեորեմ 51։</strong> ըստ չափի զուգամիտությունից ընտրենք $i_1\lt i_2\lt\cdots$, որ $\mu(E_k)\lt2^{-k}$, որտեղ
+$E_k=\{|f_{i_k}-f|\gt2^{-k}\}$։ Դիցուք $D_n=\bigcap_{k\ge n}(X\setminus E_k)$ և $A=\bigcup_nD_n$։ Այդ դեպքում
+$\mu(X\setminus D_n)\le\sum_{k\ge n}2^{-k}=2^{1-n}$, $D_n$-երն աճում են, և անընդհատությունից $\mu(X\setminus A)=0$։ Եթե $x\in A$, ապա
+$x\in D_n$ որևէ $n$-ի համար, և $|f_{i_k}(x)-f(x)|\le2^{-k}$, երբ $k\ge n$, այսինքն՝ $f_{i_k}(x)\to f(x)$։ $\blacksquare$</p>
+</div></details>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ մեծ թվերի օրենքի երկու տարբերակ</div>
+<p>Հավանականության մեջ $\mu=P$-ն է, «հ.ա.»-ն կոչվում է «համարյա հաստատապես», իսկ ըստ չափի զուգամիտությունը՝ «ըստ հավանականության»։
+Մեծ թվերի օրենքն ունի հենց այս երկու տարբերակը՝ <strong>թույլը</strong> (միջին թվաբանականն ըստ հավանականության ձգտում է մաթսպասմանը)
+և <strong>ուժեղը</strong> (ձգտում է համարյա հաստատապես)։ Թեորեմ 50-ից հետևում է, որ ուժեղն իրոք ավելի ուժեղ է, իսկ «գրամեքենան» ցույց է
+տալիս, որ դրանք համարժեք չեն։ Ուժեղ օրենքն առաջինն ապացուցեց Բորելը 1909-ին, Բեռնուլիի սխեմայի համար։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="luzin" open>
+<summary><h2>Լուզինի թեորեմը և հետևանքները</h2></summary>
+<div class="sec-body">
+<p>Նյութն օգտագործում է անալիզից հայտնի երկու լեմմա։ <strong>Լեմմա 10՝</strong> եթե $F=\bigcup_{i=1}^nF_i$, որտեղ $F_i$-երը չհատվող փակ
+բազմություններ են, և $f=c_i$ $F_i$-ում, ապա $f\in C(F)$։ <strong>Լեմմա 11՝</strong> փակ $F\subset[0,1]$-ի վրա անընդհատ $f$-ը կարելի է
+շարունակել մինչև $g\in C[0,1]$՝ նույն $\max|\cdot|$-ով (միջակայքերում գծային լցումով, որը գլուխ 1-ի Թեորեմ 16-ով միշտ հնարավոր է)։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 52 և Թեորեմ 54 (Լուզին)</div>
+<p>(52) Եթե $f:[a,b]\to\R$-ը չափելի է, և $m\le f\le M$, ապա ամեն $\varepsilon\gt0$-ի համար կա $\varphi\in C[a,b]$, որ
+$\operatorname{mes}\{f\ne\varphi\}\lt\varepsilon$ և $m\le\varphi\le M$։<br>
+(54) Նույնը ճիշտ է ցանկացած հ.ա. վերջավոր չափելի $f$-ի համար (առանց $m$, $M$ սահմանափակման)։</p>
+</div>
+<p>Այսինքն՝ ամեն չափելի ֆունկցիա «համարյա անընդհատ» է՝ փոխելով այն կամայապես փոքր չափի բազմության վրա, ստանում ենք անընդհատ ֆունկցիա։
+Օրինակ՝ Դիրիխլեի ֆունկցիան տարբերվում է $\varphi\equiv0$-ից միայն $\Q$-ի վրա, որի չափը զրո է։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 52։</strong> կարող ենք համարել $[a,b]=[0,1]$, $0\le f\le1$։ Ամեն $n$-ի համար դիցուք
+$E_k^{(n)}=\bigl\{\tfrac{k-1}n\lt f\le\tfrac kn\bigr\}$, $k=0,1,\dots,n$։ Սրանք չափելի են, չեն հատվում և ծածկում են $[0,1]$-ը։ Ռեգուլյարությունից
+(<a href="ch2-lebesgue-measure.html#line">Թեորեմ 34</a>) կան փակ $F_k^{(n)}\subset E_k^{(n)}$, որ $\operatorname{mes}(E_k^{(n)}\setminus F_k^{(n)})\lt\tfrac{\varepsilon}{(n+1)2^n}$։
+Դիցուք $F_n=\bigcup_kF_k^{(n)}$, $F=\bigcap_nF_n$ (փակ են), և $f_n=\tfrac kn$ $F_k^{(n)}\cap F$-ում։ Լեմմա 10-ով $f_n\in C(F)$, և
+$|f_n-f|\le\tfrac1n$ $F$-ում, ուստի $f\in C(F)$ որպես հավասարաչափ սահման։ Լեմմա 11-ով այն շարունակվում է մինչև $\varphi\in C[0,1]$,
+$0\le\varphi\le1$, և</p>
+$$\operatorname{mes}([0,1]\setminus F)\le\sum_n\sum_{k=0}^n\frac{\varepsilon}{(n+1)2^n}=\varepsilon.$$
+<p><strong>Թեորեմ 53, 54։</strong> $A_k=\{|f|\gt k\}$-երը նվազում են դեպի $\{|f|=\infty\}$, որի չափը զրո է, ուստի $\operatorname{mes}(A_{k_0})\lt\tfrac\varepsilon2$
+որևէ $k_0$-ի համար։ $\psi=f$ $A_{k_0}$-ից դուրս, $\psi=0$ նրանում, սահմանափակ է (Թ53), և Թեորեմ 52-ը $\psi$-ի համար $\tfrac\varepsilon2$-ով
+տալիս է Թեորեմ 54-ը։ $\blacksquare$</p>
+</div></details>
+<div class="box thm"><div class="box-title">Թեորեմ 55 (Բորել), Թեորեմ 56 (Ֆրեշե), Հետևանք 7</div>
+<p>Եթե $f:[a,b]\to\R$-ը չափելի է և հ.ա. վերջավոր, ապա կան $g_n\in C[a,b]$, որ $g_n\Rightarrow f$ (Թ55), կան $h_k\in C[a,b]$, որ $h_k\to f$ հ.ա.
+(Թ56), և կան ռացիոնալ գործակիցներով բազմանդամներ, որոնք հ.ա. զուգամիտում են $f$-ին (Հ7)։</p>
+</div>
+<p>Շղթան՝ Լուզինով $g_n$, որ $\operatorname{mes}\{f\ne g_n\}\lt\tfrac1n$ (սա արդեն ըստ չափի զուգամիտություն է), Ռիսով ենթահաջորդականություն,
+որ հ.ա. զուգամիտում է, և Վայերշտրասի թեորեմով ամեն անընդհատ ֆունկցիա մոտարկվում է բազմանդամներով։</p>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ «Լուզիտանիա»</div>
+<p>Դմիտրի Եգորովը (Թեորեմ 48, 1911) Նիկոլայ Լուզինի ուսուցիչն էր, իսկ Լուզինը (Թեորեմ 52, 1912) դարձավ մոսկովյան մաթեմատիկական
+դպրոցի հիմնադիրներից մեկը։ Նրա աշակերտներն իրենց կատակով անվանում էին «Լուզիտանիա»։ Նրանց մեջ էին Կոլմոգորովը (որը հետագայում
+հավանականությունների տեսությունը կառուցեց չափի լեզվով), Սուսլինը, Ուրիսոնը և ուրիշներ։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="simple" open>
+<summary><h2>Պարզ ֆունկցիաներ</h2></summary>
+<div class="sec-body">
+<div class="box def"><div class="box-title">Սահմանում 24</div>
+<p>Ֆունկցիան կոչվում է <strong>պարզ</strong>, եթե նրա արժեքների բազմությունը վերջավոր է կամ հաշվելի։</p>
+</div>
+<p>Օրինակներ՝ հաստատունը, Դիրիխլեի ֆունկցիան (երկու արժեք), վերջավոր կամ հաշվելի բազմության վրա որոշված ցանկացած ֆունկցիա։
+$f(x)=x$-ն անհաշվելի բազմության վրա պարզ չէ։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 57 և Թեորեմ 58</div>
+<p>(57) $y_1,y_2,\dots$ արժեքներով պարզ $f$-ը չափելի է այն և միայն այն դեպքում, երբ բոլոր $A_n=\{f=y_n\}$ բազմությունները չափելի են։<br>
+(58) $f$-ը չափելի է այն և միայն այն դեպքում, երբ այն պարզ չափելի ֆունկցիաների հավասարաչափ սահման է։</p>
+</div>
+<p>Թեորեմ 58-ի կառուցումն այս գլխի ամենակարևոր պատկերն է՝ <strong>բաժանում ենք արժեքները, ոչ թե $x$-առանցքը</strong>։ Դիցուք</p>
+$$E_k^{(n)}=\Bigl\{\tfrac{k}{2^n}\le f\lt\tfrac{k+1}{2^n}\Bigr\},\quad k\in\Z,$$
+<p>և $f_n=\tfrac{k}{2^n}$ $E_k^{(n)}$-ի կետերում։ $E_k^{(n)}$-երը չափելի են, $f_n$-ը պարզ է, և $|f-f_n|\lt2^{-n}$ ամենուրեք։ Նյութի <strong>Դիտողություններ 3-5</strong>՝ $f_n$-երը կարելի է
+ընտրել աճող (կամ նվազող) հաջորդականությամբ, և եթե $m\le f\le M$, ապա նաև $m\le f_n\le M$։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $f(x)=x^2$ $[0,1]$-ում, $n=1$, այսինքն՝ արժեքները բաժանում ենք $\left[0,\tfrac12\right)$ և $\left[\tfrac12,1\right)$ շերտերի։
+Ո՞րն է $E_1^{(1)}=\bigl\{\tfrac12\le x^2\lt1\bigr\}$ բազմության չափը։</p>
+<div class="predict-opts"><button class="btn" type="button">$\tfrac12$, քանի որ շերտը կեսն է</button><button class="btn" type="button" data-ok>$1-\tfrac{1}{\sqrt2}\approx0{,}29$</button><button class="btn" type="button">$\tfrac14$</button></div>
+<div class="predict-why">$\tfrac12\le x^2\lt1$ նշանակում է $\tfrac1{\sqrt2}\le x\lt1$, ուստի չափը $1-\tfrac1{\sqrt2}\approx0{,}293$ է։ Շերտի բարձրությունը
+($\tfrac12$) և նրա նախապատկերի չափը տարբեր բաներ են։ Հենց նախապատկերի չափն է «կշռում» $\tfrac12$ արժեքը Լեբեգի ինտեգրալում։</div>
+</div>
+
+<div class="widget" id="w-simple">
+  <div class="widget-head">Պարզ ֆունկցիաներով մոտարկում (Թեորեմ 58)</div>
+  <p class="widget-hint">Կապույտը $f$-ն է, նարնջագույն աստիճանաձևը՝ $f_n=\tfrac k{2^n}$ պարզ ֆունկցիան։ $n$ սահիչը մանրացնում է արժեքների
+  շերտերը, $k$ սահիչն ընտրում է մեկ շերտ (նարնջագույն գոտին)։ $x$-առանցքի վրա երևում է այդ շերտի $E_k$ նախապատկերը։ Նկատեք՝ $E_k$-ն
+  կարող է բաղկացած լինել մի քանի կտորից, և սխալը միշտ $2^{-n}$-ից փոքր է, անկախ ֆունկցիայի «վատությունից» (նաև թռիչքով)։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="0" max="6" step="1" value="2" aria-label="n"></div>
+  <div class="slider-row"><span data-out="klabel"></span><input type="range" data-in="k" min="0" max="3" step="1" value="2" aria-label="k"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ Լեբեգի դրամապանակը</div>
+<p>Լեբեգն իր ինտեգրալը բացատրում էր պարտքը վճարելու օրինակով։ Կարելի է գրպանից դրամները հանել այն հերթականությամբ, ինչպես պատահի,
+և գումարել (Ռիման՝ $x$-առանցքի կտորներով)։ Կարելի է նաև նախ դասավորել դրամներն ըստ արժեքի՝ բոլոր հազարանոցները մի կույտ, բոլոր
+հարյուրանոցները՝ մեկ այլ, և ամեն արժեք բազմապատկել իր քանակով (Լեբեգ՝ արժեքների շերտերով)։ Արդյունքը նույնն է, բայց երկրորդ
+ճանապարհը հարմար է շատ ավելի «խառը» ֆունկցիաների համար։ «Քանակը» հենց $\operatorname{mes}(E_k)$-ն է։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="mistakes" open>
+<summary><h2>Տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>«Հ.ա. անընդհատ» և «համարժեք է անընդհատ ֆունկցիայի» շփոթելը։</strong> $\operatorname{sgn}$-ն առաջինն է, բայց ոչ երկրորդը,
+  Դիրիխլեի ֆունկցիան՝ երկրորդը, բայց ոչ առաջինը։</li>
+  <li><strong>Եգորովը կիրառել անվերջ չափի դեպքում։</strong> $\R$-ում $\chi_{[n,n+1]}\to0$ ամենուրեք, բայց ոչ մի մեծ բազմության վրա
+  հավասարաչափ չէ։ Թեորեմ 50-ն էլ է պահանջում $\mu(X)\lt\infty$։</li>
+  <li><strong>«Ըստ չափի զուգամիտությունից հետևում է հ.ա.»։</strong> Ոչ՝ «գրամեքենան»։ Հետևում է միայն ենթահաջորդականության համար (Ռիս)։</li>
+  <li><strong>Լուզինը կարդալ որպես «$f$-ն անընդհատ է մի մեծ բազմության կետերում»։</strong> Թեորեմն ասում է, որ $f$-ը <em>համընկնում է</em>
+  անընդհատ $\varphi$-ի հետ մեծ բազմության վրա։ Դիրիխլեի ֆունկցիան ոչ մի կետում անընդհատ չէ, բայց համընկնում է $0$-ի հետ
+  $[0,1]\setminus\Q$-ի վրա։</li>
+  <li><strong>$|f|$-ի չափելիությունից $f$-ի չափելիությունը եզրակացնելը։</strong> Տե՛ս <a href="#ex6">Վարժություն 6</a>-ը։</li>
+</ul>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Վարժությունները դասավորված են հեշտից դժվար։ ★-ով նշվածները քննական մակարդակի են։</p>
+
+<div class="box problem" id="ex1"><div class="box-title">Վարժություն 1</div>
+<p>Ապացուցեք, որ եթե $f$-ը չափելի է, ապա ամեն $c$-ի համար $\{f=c\}$ բազմությունը չափելի է։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Գրեք $\{f=c\}$-ն երկու չափելի բազմության տարբերության տեսքով։</p></div></details>
+<div class="solution">
+<p>$\{f=c\}=\{f\le c\}\setminus\{f\lt c\}$, և $\{f\le c\}=\bigcap_n\{f\lt c+\tfrac1n\}$ (Թեորեմ 42-ի ապացույցից)։ Երկուսն էլ չափելի են,
+ուրեմն նրանց տարբերությունը նույնպես։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\{f=c\}=\{f\le c\}\setminus\{f\lt c\}$</div>
+</div>
+
+<div class="box problem" id="ex2"><div class="box-title">Վարժություն 2</div>
+<p>Դիրիխլեի $\chi$ ֆունկցիայի համար (Լուզինի թեորեմի ոգով) գտեք $\varphi\in C[0,1]$, որ $\operatorname{mes}\{\chi\ne\varphi\}=0$։ Կա՞ արդյոք
+անընդհատ $\varphi$, որ $\chi=\varphi$ <em>ամենուրեք</em>։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Ո՞ր արժեքն է $\chi$-ն ընդունում համարյա բոլոր կետերում։</p></div></details>
+<div class="solution">
+<p>$\varphi\equiv0$՝ $\{\chi\ne0\}=\Q\cap[0,1]$, որի չափը $0$ է։ Ամենուրեք հավասար անընդհատ ֆունկցիա չկա, քանի որ $\chi$-ն ոչ մի կետում
+անընդհատ չէ (ամեն միջակայքում ունի և՛ $0$, և՛ $1$ արժեքներ)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\varphi\equiv0$; ամենուրեք հավասար անընդհատ ֆունկցիա չկա</div>
+</div>
+
+<div class="box problem" id="ex3"><div class="box-title">Վարժություն 3</div>
+<p>«Գրամեքենայի» հաջորդականության համար գտեք բոլոր $n\le16$-ները, որոնց համար $f_n\left(\tfrac3{10}\right)=1$։ Ո՞ր $n$-երի համար է
+$\operatorname{mes}\{f_n\gt\tfrac12\}\lt0{,}1$։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$n=2^k+m$-ի համար $f_n=1$ $\left(\tfrac{m-1}{2^k},\tfrac m{2^k}\right]$-ում։ Ամեն $k$-ի
+համար մեկ $m$ կա, որ միջակայքը պարունակում է $\tfrac3{10}$-ը։</p></div></details>
+<div class="solution">
+<p>$k=0$՝ $n=2$, $(0,1]$։ $k=1$՝ $\tfrac3{10}\in\left(0,\tfrac12\right]$, $m=1$, $n=3$։ $k=2$՝ $\left(\tfrac14,\tfrac12\right]$, $m=2$, $n=6$։
+$k=3$՝ $\left(\tfrac28,\tfrac38\right]$, $m=3$, $n=11$։ Ուրեմն $n\in\{2,3,6,11\}$։ $\operatorname{mes}\{f_n\gt\tfrac12\}=2^{-k}\lt0{,}1$, երբ
+$k\ge4$, այսինքն՝ $n\ge17$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $n=2,3,6,11$; $\operatorname{mes}\lt0{,}1$, երբ $n\ge17$</div>
+</div>
+
+<div class="box problem" id="ex4"><div class="box-title">Վարժություն 4</div>
+<p>$f_n(x)=x^n$ $[0,1]$-ում։ $\delta\gt0$-ի համար գրեք Եգորովի $X_\delta$ բազմությունը բացահայտ և ապացուցեք, որ այն բավարարում է
+թեորեմի երկու պայմաններին։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Վերցրեք $X_\delta=\left[0,1-\tfrac\delta2\right]$։</p></div></details>
+<div class="solution">
+<p>$X_\delta=\left[0,1-\tfrac\delta2\right]$՝ $\operatorname{mes}(X_\delta)=1-\tfrac\delta2\gt1-\delta$։ Այնտեղ սահմանը $f=0$ է, և
+$\sup_{X_\delta}|x^n-0|=\left(1-\tfrac\delta2\right)^n\to0$, այսինքն՝ զուգամիտությունը հավասարաչափ է։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $X_\delta=\left[0,1-\tfrac\delta2\right]$</div>
+</div>
+
+<div class="box problem" id="ex5"><div class="box-title">Վարժություն 5</div>
+<p>$f(x)=x^2$ $[0,1]$-ում։ Գրեք Թեորեմ 58-ի $f_2$ պարզ ֆունկցիան՝ նշելով $E_k^{(2)}$ բազմությունները, և ստուգեք, որ $|f-f_2|\lt\tfrac14$։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$\tfrac k4\le x^2\lt\tfrac{k+1}4$ նշանակում է $\tfrac{\sqrt k}2\le x\lt\tfrac{\sqrt{k+1}}2$։</p></div></details>
+<div class="solution">
+<p>$E_0=\left[0,\tfrac12\right)$, $E_1=\left[\tfrac12,\tfrac{\sqrt2}2\right)$, $E_2=\left[\tfrac{\sqrt2}2,\tfrac{\sqrt3}2\right)$, $E_3=\left[\tfrac{\sqrt3}2,1\right)$,
+$E_4=\{1\}$, և $f_2=\tfrac k4$ $E_k$-ում ($0,\tfrac14,\tfrac12,\tfrac34,1$)։ Ամեն $E_k$-ում $\tfrac k4\le x^2\lt\tfrac{k+1}4$, ուստի $0\le f-f_2\lt\tfrac14$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f_2=\tfrac k4$, երբ $\tfrac{\sqrt k}2\le x\lt\tfrac{\sqrt{k+1}}2$ ($k=0,\dots,3$), $f_2(1)=1$</div>
+</div>
+
+<div class="box problem" id="ex6"><div class="box-title">Վարժություն 6 ★</div>
+<p>Ապացուցեք, որ եթե $f$-ը չափելի է, ապա $|f|$-ը չափելի է։ Բերեք օրինակ, որ $|f|$-ը չափելի է, բայց $f$-ը՝ ոչ։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Օգտվեք Վիտալիի ոչ չափելի $D$ բազմությունից
+(<a href="ch2-lebesgue-measure.html#vitali">Գլուխ 2</a>)։</p></div></details>
+<div class="solution">
+<p>$|f|=\varphi\circ f$, որտեղ $\varphi(t)=|t|$-ն անընդհատ է (Թեորեմ 41)։ Օրինակ՝ $f=1$ $D$-ում և $f=-1$ $[0,1]\setminus D$-ում։ Այդ
+դեպքում $|f|\equiv1$-ը չափելի է, բայց $\{f\gt0\}=D$-ն չափելի չէ, ուստի $f$-ը չափելի չէ։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f=\chi_D-\chi_{[0,1]\setminus D}$</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<h3>Զուգամիտության տեսակները մեկ աղյուսակում ($\mu(X)\lt\infty$)</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>տեսակ</th><th>ինչ է նշանակում</th><th>կապը</th></tr></thead>
+<tbody>
+<tr><td>հավասարաչափ</td><td>$\sup|f_n-f|\to0$</td><td>$\Rightarrow$ բոլոր մնացածը</td></tr>
+<tr><td>հ.ա.</td><td>$f_n(x)\to f(x)$ զրո չափի բազմությունից դուրս</td><td>$\Rightarrow$ հավասարաչափ $X_\delta$-ում (Եգորով), $\Rightarrow$ ըստ չափի (Թ50)</td></tr>
+<tr><td>ըստ չափի</td><td>$\mu\{|f_n-f|\gt\sigma\}\to0$</td><td>$\Rightarrow$ հ.ա. միայն ենթահաջորդականության համար (Ռիս)</td></tr>
+</tbody></table></div>
+
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասախոսության նյութից, ոչ թե դասախոսի քննական հարցերից։</p>
+<ol>
+  <li>Չափելիության սահմանումը և Թեորեմ 42-ի հայտանիշը (<a href="#definition">ապացույցը</a>)։</li>
+  <li>Գործողություններ և սահմաններ՝ Լեմմա 7-ի ռացիոնալ թվերի հնարքը, $fg$-ի բանաձևը, $\sup$/$\inf$/$\varlimsup$ (<a href="#operations">բաժինը</a>)։</li>
+  <li>Համարժեք ֆունկցիաներ, լրիվության դերը (Թ46, Թ47), Դիրիխլեի և $\operatorname{sgn}$ օրինակները (<a href="#ae">բաժինը</a>)։</li>
+  <li>Եգորովի թեորեմը (<a href="#egorov">ապացույցը</a>)։ Գաղափարը՝ $X_n^k$ բազմություններ և $\delta/2^k$։</li>
+  <li>Թեորեմ 50, «գրամեքենան», Ռիսի թեորեմը (<a href="#measure">ապացույցը</a>)։</li>
+  <li>Լուզինի թեորեմը (<a href="#luzin">ապացույցը</a>)։ Գաղափարը՝ մակարդակի բազմություններ, ներսից փակ բազմություններ, հավասարաչափ սահման, շարունակում։</li>
+  <li>Պարզ ֆունկցիաներ և Թեորեմ 58-ի կառուցումը (<a href="#simple">բաժինը</a>)։</li>
+</ol>
+
+<h3>Ինքնաստուգման հարցեր</h3>
+<details class="extra"><summary>Ինչո՞ւ է Թեորեմ 42-ում բավական $\{f\lt c\}$-ն ստուգել միայն $c$-ի համար, ոչ թե բոլոր բորելյան բազմությունների</summary><div class="inner">
+<p>$\{A:\ f^{-1}(A)\in\mathcal F\}$-ը սիգմա-հանրահաշիվ է, և եթե այն պարունակում է բոլոր $(-\infty,c)$-երը, պարունակում է նաև նրանցից
+ծնված ամենափոքր սիգմա-հանրահաշիվը, որը $\mathfrak B$-ն է։</p></div></details>
+<details class="extra"><summary>Չափելի ֆունկցիաների սահմանը միշտ չափելի՞ է։ Իսկ անընդհատների սահմանը՝ անընդհա՞տ</summary><div class="inner">
+<p>Չափելիներինը՝ այո (Թ45, Թ47)։ Անընդհատներինը՝ ոչ՝ $x^n$-ի սահմանը $[0,1]$-ում խզվող է $1$-ում։ Հենց սա է չափելի ֆունկցիաների
+դասի առավելությունը։</p></div></details>
+<details class="extra"><summary>Լուզինի թեորեմից հետևո՞ւմ է, որ չափելի ֆունկցիան անընդհատ է համարյա բոլոր կետերում</summary><div class="inner">
+<p>Ոչ։ Դիրիխլեի ֆունկցիան չափելի է, բայց ոչ մի կետում անընդհատ չէ։ Լուզինն ասում է միայն, որ $f$-ը <em>համընկնում է</em> անընդհատ ֆունկցիայի
+հետ մեծ բազմության վրա, իսկ $f$-ի սահմանափակումն այդ բազմության վրա անընդհատ է։</p></div></details>
+
+<h3>Ինչ է հաջորդը</h3>
+<p><strong>Լեբեգի ինտեգրալը։</strong> Պարզ ֆունկցիայի ինտեգրալը սահմանվում է որպես $\sum_ky_k\,\mu\{f=y_k\}$, իսկ ցանկացած չափելի
+ֆունկցիայինը՝ Թեորեմ 58-ի մոտարկումներով։ Դասախոսության նյութի հաջորդ գլուխներն այս կայքում դեռ չկան։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Գլուխներ">
+        <a class="btn" href="ch2-lebesgue-measure.html">← Գլուխ 2</a>
+        <a class="btn" href="index.html">Բոլոր գլուխները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասախոսության նյութի հիման վրա։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>
