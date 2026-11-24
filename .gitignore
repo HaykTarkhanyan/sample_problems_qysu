@@ -344,6 +344,8 @@ numerical_methods/*.pdf
 # Manim environment and its render cache; finished videos are copied to site/assets/video/
 animations/.venv/
 animations/media/
+# manim writes its caches relative to the current folder, e.g. when a scene is imported from scenes/
+animations/scenes/media/
 __pycache__/
 # Logs of committed scripts (numerical_methods/checks/*.py write logs/<script>.log)
 logs/

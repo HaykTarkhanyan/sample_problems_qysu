@@ -2,6 +2,24 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 28. Groundwork for LLM-written Manim videos: a render-and-check tool, an authoring guide, no narration engine yet
+
+- **Date / status:** 2026-11-24, active (owner: "prep as much as you can for our future task video generation project")
+- **Decision:** scenes are written against `animations/AUTHORING.md` and the cheat sheet
+  `_knowledge/manim_llm_video/llm_cheatsheet_manim_ce_0_22.md`, and checked with `animations/tools/render_check.py`
+  (render, loud failure with the scene line, frames picked at the end of each pause, one contact sheet for a
+  vision review, a frame-border check; `HouseScene` in `scenes/_template.py` warns about off-screen objects).
+  Three probability videos (lectures 7, 10, 13) are rendered but not yet on the pages. No TTS engine is chosen.
+- **Why:** the research (`_knowledge/manim_llm_video/research.md`) found that LLM-written Manim rarely runs on the
+  first try and that error feedback plus frame review fixes most of it (TheoremExplainAgent: 0-7% to 91-96% after
+  5 repair rounds), while dumping the docs into the prompt made it worse. A curated cheat sheet and a fast check
+  loop are the cheap parts of that. Only the standard library and what manim already installs (PyAV, Pillow,
+  numpy) are used.
+- **Alternatives rejected:** installing manim-voiceover now (untested with manim 0.22, and the engine choice is the
+  owner's); an unattended API pipeline (worth it only past about 30 videos per course).
+- **What would change this:** the owner picks a TTS engine after a listening test (research.md Q1: Azure
+  hy-AM voices are the cheapest with word timings), or videos grow past a few MB (DECISIONS #17).
+
 ## 27. Real analysis becomes a fourth site course, built on a student's lecture notes, one page per chapter
 
 - **Date / status:** 2026-11-24, active (owner: Q1 "New site course", Q2 "Chapter 1 page, done well")
