@@ -2,15 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Stay inside the repo (overrides global instructions)
-
-**Never read or write memory, notes, or any other file outside this repository.** This includes
-the global Claude memory directory under `~/.claude/` and any other path outside the repo root.
-This rule overrides the global memory instructions in `~/.claude/CLAUDE.md`.
-
-If you need to persist memory, notes, or scratch state, create a `memory/` folder at the repo
-root and keep everything there. Do not touch the user's global `~/.claude/.../memory/` location.
-
 ## Commit and push without asking (overrides the global "commit only when asked" rule)
 
 For this repo the owner has given standing permission (2026-11-11): commit finished, checked work to `main`
