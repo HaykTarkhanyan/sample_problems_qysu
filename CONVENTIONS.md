@@ -10,6 +10,10 @@ Recurring decisions for this repo, written down once they were made twice.
   **կցման-արտաքսման սկզբունք** (not ներառման-բացառման), monotone = մոնոտոն, loop = ակ,
   singleton = մեկկետանոց, codomain = փոփոխման տիրույթ, pigeonhole = Դիրիխլեի սկզբունք.
 - Before publishing Armenian text, run `python -I ~/.claude/skills/armenian-writing/scripts/lint_armenian.py <files>` (0 errors) and skim the skill's `references/POLISH_CHECKLIST.md`.
+- Owner, 2026-11-24 (after a student's feedback on lecture 13): «մաքուր» and «քսված» are not suitable in a math context.
+  An absolutely continuous distribution is «բաշխված է խտությամբ» / «հավասարաչափ բաշխված» (in the sand intuition
+  «տարածված»); the two «մաքուր» types are «հիմնական» types; the Cantor step removes «մեջտեղի մասը» (the lecture notes say
+  «մեջտեղի բաց միջակայքը»), not «միջին երրորդը». Applied to lectures 10-15 and real analysis chapters 1-2.
 - Composition is LEFT-TO-RIGHT in this course: $(f\cdot g)(x)=g(f(x))$, $\sigma\circ\rho$ = first σ then ρ.
 
 ## Static site (`site/`)

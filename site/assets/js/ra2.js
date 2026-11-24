@@ -127,7 +127,7 @@
         { tex: "n\\to\\infty" }, ", այն ձգտում է ", { tex: lim }, "-ի։ ", mode === "c" ? "Կանտորի բազմության չափը զրո է (Թեորեմ 35)։"
           : "Ստացված բազմությունը փակ է և ոչ մի միջակայք չի պարունակում, բայց նրա չափը դրական է։"]);
     }
-    [["c", "Կանտոր՝ միջին երրորդները"], ["f", "«Հաստ» Կանտոր՝ 1/4ⁿ"]].forEach(([key, name]) => {
+    [["c", "Կանտոր՝ մեջտեղի 1/3-ը"], ["f", "«Հաստ» Կանտոր՝ 1/4ⁿ"]].forEach(([key, name]) => {
       const ch = Q.el("button", { type: "button", class: "chip" + (key === mode ? " on" : ""), text: name });
       ch.addEventListener("click", () => { mode = key; chipHost.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === ch)); draw(); });
       chipHost.appendChild(ch);
