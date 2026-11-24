@@ -1,0 +1,5 @@
+datetime,model,voice,chars,tokens_in,tokens_audio,audio_s,usd_est,out
+2026-11-24T20:13:45,gemini-3.8-flash-tts,Kore,562,296,1107,44.3,0.01011,cantor_flash-tts_Kore.wav
+2026-11-24T20:13:59,gemini-3.8-flash-tts,Charon,562,296,1148,45.9,0.01048,cantor_flash-tts_Charon.wav
+2026-11-24T20:14:14,gemini-3.8-flash-tts,Sadaltager,562,296,1232,49.3,0.01124,cantor_flash-tts_Sadaltager.wav
+2026-11-24T20:14:22,gemini-3.8-flash-lite-tts,Kore,562,296,1061,42.4,0.00651,cantor_flash-lite-tts_Kore.wav
