@@ -1,9 +1,13 @@
 """Gemini text-to-speech for narration tests (standard library only, no SDK).
 
 Usage (from animations/):
-    uv run python tools/tts_gemini.py say TEXT_FILE OUT.wav [--voice Kore] [--model gemini-3.8-flash-tts]
+    uv run python tools/tts_gemini.py say TEXT_FILE OUT.wav [--voice Sadaltager] [--model gemini-3.8-flash-tts]
                                      [--style "calm university lecturer"]
+    uv run python tools/tts_gemini.py beats narration/<scene>.hy.json media/narration/<scene>/
     uv run python tools/tts_gemini.py voices [--lang hy-AM]
+
+`beats` synthesizes one clip per beat and writes manifest.json (text and duration per beat), which a scene
+based on scenes/narration.py (NarratedScene) reads to play each clip and wait until it has been spoken.
 
 The API key is read from the environment variable named by --key-name (default GEMINI_API_KEY_VOICE) or, if
 unset, from the line KEY=... in ~/OneDrive/Desktop/00_notes/.secrets/api_keys.env. The key is never printed.
@@ -21,6 +25,7 @@ import io
 import json
 import logging
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -34,6 +39,10 @@ ROOT = Path(__file__).resolve().parents[2]
 ENV_FILE = Path.home() / "OneDrive/Desktop/00_notes/.secrets/api_keys.env"
 LEDGER = Path(__file__).resolve().parents[1] / "tts_ledger.csv"
 API = "https://generativelanguage.googleapis.com/v1beta"
+# Owner's choice after the listening test on 2026-11-24 (DECISIONS #29): Sadaltager on 3.8 Flash TTS
+DEFAULT_VOICE = "Sadaltager"
+DEFAULT_MODEL = "gemini-3.8-flash-tts"
+DEFAULT_STYLE = "Calm, clear university lecturer explaining mathematics to students, moderate pace"
 PRICES = {  # USD per 1M tokens: (text input, audio output)
     "gemini-3.8-flash-tts": (0.50, 9.0),
     "gemini-3.8-flash-lite-tts": (0.50, 6.0),
@@ -57,16 +66,33 @@ def api_key(name):
     return key
 
 
-def request(method, url, key, body=None):
+def request(method, url, key, body=None, retries=6):
+    """One API call. 429 (rate limit) and 5xx are retried with growing waits, honouring the server's
+    suggested retryDelay; any other error, or running out of retries, raises."""
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(url, data=data, method=method,
-                                 headers={"x-goog-api-key": key, "Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=120) as r:
-            return json.load(r)
-    except urllib.error.HTTPError as e:
-        log.error("HTTP %s from %s: %s", e.code, url.split("?")[0], e.read().decode("utf-8", "replace")[:800])
-        raise
+    for attempt in range(retries + 1):
+        req = urllib.request.Request(url, data=data, method=method,
+                                     headers={"x-goog-api-key": key, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            text = e.read().decode("utf-8", "replace")
+            if (e.code == 429 or e.code >= 500) and attempt < retries:
+                wait = 10 * 2 ** attempt
+                m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', text)
+                if m:
+                    wait = max(wait, float(m.group(1)) + 1)
+                if wait > 300:
+                    # a daily quota (2026-11-24: the free tier gave a 44156 s delay after about 10 TTS calls)
+                    log.error("HTTP %s with a %.0f s retry delay: quota exhausted for this key, try --key-name "
+                              "with another project's key or wait. %s", e.code, wait, text[:300])
+                    raise
+                log.warning("HTTP %s, retry %d/%d in %.0f s", e.code, attempt + 1, retries, wait)
+                time.sleep(wait)
+                continue
+            log.error("HTTP %s from %s: %s", e.code, url.split("?")[0], text[:800])
+            raise
 
 
 def to_wav(audio, mime):
@@ -116,6 +142,38 @@ def say(args):
                      f"{seconds:.1f}", f"{usd:.5f}", out.name])
 
 
+def beats(args):
+    """Synthesize every beat of a narration JSON ([{"key", "text"}, ...]) into OUT_DIR/<key>.wav and write
+    OUT_DIR/manifest.json with each beat's text and duration. A beat whose text, voice and model are unchanged
+    since the last run is reused (no API call)."""
+    spec = json.loads(Path(args.beats_file).read_text(encoding="utf-8"))
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    man_path = out_dir / "manifest.json"
+    old = json.loads(man_path.read_text(encoding="utf-8")) if man_path.exists() else {}
+    manifest = {"voice": args.voice, "model": args.model, "style": args.style, "beats": {}}
+    for b in spec:
+        wav = out_dir / f"{b['key']}.wav"
+        prev = old.get("beats", {}).get(b["key"])
+        if (prev and prev["text"] == b["text"] and old.get("voice") == args.voice and old.get("model") == args.model
+                and old.get("style") == args.style and wav.exists()):
+            log.info("reuse %s (%.1f s)", b["key"], prev["seconds"])
+            manifest["beats"][b["key"]] = prev
+            continue
+        txt = out_dir / f"{b['key']}.txt"
+        txt.write_text(b["text"], encoding="utf-8")
+        say(argparse.Namespace(key_name=args.key_name, text_file=str(txt), out=str(wav), voice=args.voice,
+                               model=args.model, style=args.style))
+        with wave.open(str(wav), "rb") as w:
+            seconds = w.getnframes() / w.getframerate()
+        manifest["beats"][b["key"]] = {"text": b["text"], "file": wav.name, "seconds": round(seconds, 3)}
+        # saved after every beat, so a failure later keeps the clips already paid for
+        man_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    man_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    total = sum(v["seconds"] for v in manifest["beats"].values())
+    log.info("manifest %s: %d beats, %.1f s of speech", man_path, len(manifest["beats"]), total)
+
+
 def voices(args):
     key = api_key(args.key_name)
     q = {"page_size": 1000}
@@ -134,17 +192,22 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--key-name", default="GEMINI_API_KEY_VOICE")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    s = sub.add_parser("say")
-    s.add_argument("text_file")
-    s.add_argument("out")
-    s.add_argument("--voice", default="Kore")
-    s.add_argument("--model", default="gemini-3.8-flash-tts")
-    s.add_argument("--style", default="")
+    for name in ("say", "beats"):
+        p = sub.add_parser(name)
+        if name == "say":
+            p.add_argument("text_file")
+            p.add_argument("out")
+        else:
+            p.add_argument("beats_file")
+            p.add_argument("out_dir")
+        p.add_argument("--voice", default=DEFAULT_VOICE)
+        p.add_argument("--model", default=DEFAULT_MODEL)
+        p.add_argument("--style", default=DEFAULT_STYLE)
     v = sub.add_parser("voices")
     v.add_argument("--lang", default="")
     args = ap.parse_args()
     t0 = time.time()
-    {"say": say, "voices": voices}[args.cmd](args)
+    {"say": say, "beats": beats, "voices": voices}[args.cmd](args)
     log.info("done in %.1f s", time.time() - t0)
 
 

@@ -3,3 +3,14 @@ datetime,model,voice,chars,tokens_in,tokens_audio,audio_s,usd_est,out
 2026-11-24T20:13:59,gemini-3.8-flash-tts,Charon,562,296,1148,45.9,0.01048,cantor_flash-tts_Charon.wav
 2026-11-24T20:14:14,gemini-3.8-flash-tts,Sadaltager,562,296,1232,49.3,0.01124,cantor_flash-tts_Sadaltager.wav
 2026-11-24T20:14:22,gemini-3.8-flash-lite-tts,Kore,562,296,1061,42.4,0.00651,cantor_flash-lite-tts_Kore.wav
+2026-11-24T20:42:33,gemini-3.8-flash-tts,Sadaltager,79,49,167,6.7,0.00153,start.wav
+2026-11-24T20:42:38,gemini-3.8-flash-tts,Sadaltager,208,105,435,17.4,0.00397,step1.wav
+2026-11-24T20:42:42,gemini-3.8-flash-tts,Sadaltager,126,70,272,10.9,0.00248,step2.wav
+2026-11-24T20:42:47,gemini-3.8-flash-tts,Sadaltager,143,77,282,11.3,0.00258,steps.wav
+2026-11-24T20:42:51,gemini-3.8-flash-tts,Sadaltager,143,81,316,12.6,0.00288,limit.wav
+2026-11-24T20:44:03,gemini-3.8-flash-tts,Sadaltager,79,49,185,7.4,0.00169,start.wav
+2026-11-24T20:54:05,gemini-3.8-flash-tts,Sadaltager,208,105,435,17.4,0.00397,step1.wav
+2026-11-24T20:54:09,gemini-3.8-flash-tts,Sadaltager,126,70,267,10.7,0.00244,step2.wav
+2026-11-24T20:54:14,gemini-3.8-flash-tts,Sadaltager,143,77,268,10.7,0.00245,steps.wav
+2026-11-24T20:54:19,gemini-3.8-flash-tts,Sadaltager,143,81,311,12.4,0.00284,limit.wav
+2026-11-24T20:54:24,gemini-3.8-flash-tts,Sadaltager,153,84,332,13.3,0.00303,bound.wav

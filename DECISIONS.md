@@ -2,6 +2,23 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 29. Narration: Gemini 3.8 Flash TTS, voice Sadaltager, one clip per beat synced in the scene
+
+- **Date / status:** 2026-11-24, active (owner, after the listening test: "Lets do gemini", then "I like the third
+  one, it was male voice" = Sadaltager on `gemini-3.8-flash-tts`)
+- **Decision:** narration text is written per beat (`animations/narration/<scene>.hy.json`, symbols spelled out in
+  words), synthesized with `animations/tools/tts_gemini.py beats` (REST, standard library only, cached per beat,
+  cost ledger `animations/tts_ledger.csv`), and played by `scenes/narration.py` (`NarratedScene.say` /
+  `finish_beat`), which also writes an `.srt` subtitle file. First narrated video: `CantorStaircaseNarrated`.
+- **Why:** owner's choice by ear among 4 samples (Kore, Charon, Sadaltager on Flash; Kore on Flash-Lite), about
+  $0.01 per 45 s of audio. Gemini has no native hy-AM voice; the prebuilt voices speak Armenian by language
+  detection. One clip per beat needs no word timings and keeps re-synthesis cheap (only changed beats).
+- **Alternatives rejected:** Azure hy-AM voices (cheaper, word timings, but needs a new account; not chosen);
+  manim-voiceover (untested with manim 0.22, and per-beat clips do the same job here); ElevenLabs (5x the price).
+- **What would change this:** the free-tier daily quota (hit after about 10 TTS calls on one key; the script now
+  fails fast and `--key-name` switches keys) becoming a bottleneck (then enable billing on the key), Armenian
+  pronunciation problems in longer scripts, or Gemini's price change on 2027-01-01.
+
 ## 28. Groundwork for LLM-written Manim videos: a render-and-check tool, an authoring guide, no narration engine yet
 
 - **Date / status:** 2026-11-24, active (owner: "prep as much as you can for our future task video generation project")
