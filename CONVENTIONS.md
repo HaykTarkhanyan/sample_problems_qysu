@@ -190,6 +190,10 @@ widget, etc.).
   syllabus); marginal = «մարգինալ (միաչափ)»; distribution law = «բաշխման օրենք»; σ-algebra =
   «սիգմա-հանրահաշիվ» (glossary row 899; the short form «σ-հանրահաշիվ» appears once, as a note at the
   lecture 1 definition); closed under convolution = «փաթույթի նկատմամբ փակ» (never «կայուն», which means stable).
+- Lecture 13 follows the lecturer as seen in a student's notes (owner Q4/Q5, 2026-11-24): Lebesgue decomposition is
+  written $F=c_1F_d+c_2F_{ac}+c_3F_s$ (the lecture writes $c_1F_1+c_2F_2+c_3F_3$, said once; $F_n$ stays for the Cantor
+  staircases); "singular" is first defined as in the lecture (continuous, growth points «աճի կետեր» of Lebesgue measure 0),
+  then the wide sense ($F'=0$ a.e.) that Lebesgue's theorem needs, with the strictly increasing $\eta$ as the reason.
 - Page file names: `site/probability/wNN-topic.html` with two-digit NN (`w01-events`, `w02-axioms`, `w03-continuity`,
   `w04-classical-geometric`, `w05-conditional-independence`, `w06-total-bayes`, `w07-bernoulli`,
   `w08-random-variable`, `w10-cdf-properties`, `w11-discrete`,

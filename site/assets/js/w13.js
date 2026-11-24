@@ -2,7 +2,7 @@
    Widgets: w-set (Cantor set level by level; the ternary digits of a point decide when it is removed),
    w-stair (staircases F_n -> Cantor function C; exact C(x) from ternary digits),
    w-sample (Cantor random variable from random digits; empirical F vs C; zoom shows self-similarity),
-   w-mix (F = a1 F_d + a2 F_ac + a3 F_s, with a "find the coefficients" test mode),
+   w-mix (F = c1 F_d + c2 F_ac + c3 F_s, with a "find the coefficients" test mode),
    w-quiz (which type is this F?), fig-example (worked decomposition example).
    Convention: F(x) = P(xi < x). The Cantor function is computed from ternary digits: exactly
    (integer arithmetic) at rational points, to about 1e-10 for doubles. Pure helpers are exported
@@ -322,7 +322,7 @@
     setup();
   }
 
-  // ---------- w-mix: F = a1 F_d + a2 F_ac + a3 F_s ----------
+  // ---------- w-mix: F = c1 F_d + c2 F_ac + c3 F_s ----------
   // F_d: values 1/4 and 3/4 with probability 1/2 each; F_ac: uniform on [0, 1]; F_s: Cantor. F(x) = P(X < x).
   const FD = x => (x <= 0.25 ? 0 : x <= 0.75 ? 0.5 : 1);
   const FAC = x => clamp(x, 0, 1);
@@ -387,11 +387,11 @@
         Q.tex($("formula"), `\\begin{gathered}F\\left(${xt}\\right)=${ft(Fx)}${atom ? `,\\\\ F\\left(${xt}+0\\right)=${ft(Fp)}` : ""}\\end{gathered}`, true);
         return;
       }
-      $("lab").innerHTML = `$a_1=${ft(a1)}$ (թռիչքների գումարը), $a_2=${ft(a2)}$ (թեքությունը $\\left(\\tfrac13,\\tfrac23\\right)$-ում), $a_3=1-a_1-a_2=${ft(a3)}$ (Կանտորի մասը)։`;
+      $("lab").innerHTML = `$c_1=${ft(a1)}$ (թռիչքների գումարը), $c_2=${ft(a2)}$ (թեքությունը $\\left(\\tfrac13,\\tfrac23\\right)$-ում), $c_3=1-c_1-c_2=${ft(a3)}$ (Կանտորի մասը)։`;
       Q.math($("lab"));
       const terms = [[a1, FD(x)], [a2, FAC(x)], [a3, cantor(x)]].map(([c, v]) => `${ft(c)}\\cdot${ft(v)}`);
       Q.tex($("formula"), `\\begin{aligned}F\\left(${xt}\\right)&=${terms[0]}+${terms[1]}\\\\&\\quad+${terms[2]}=${ft(Fx)}` +
-        (atom ? `,\\\\ F\\left(${xt}+0\\right)&=F\\left(${xt}\\right)+\\tfrac{a_1}{2}=${ft(Fp)}` : "") + "\\end{aligned}", true);
+        (atom ? `,\\\\ F\\left(${xt}+0\\right)&=F\\left(${xt}\\right)+\\tfrac{c_1}{2}=${ft(Fp)}` : "") + "\\end{aligned}", true);
     }
     function newTest() {
       const cur = a.join();
@@ -405,7 +405,7 @@
       go.addEventListener("click", () => check(ins, msg));
       ins.forEach(inp => inp.addEventListener("keydown", e => { if (e.key === "Enter") go.click(); }));
       box.append(Q.el("p", { class: "widget-hint" }, "Նկարում միայն $F$-ն է։ Քաշելով $x$-ը՝ կարդացեք $F$-ի արժեքները (ներքևում), գտեք գործակիցները և գրեք դրանք (կոտորակով՝ 1/4, կամ 0,25)։"),
-        Q.el("div", { class: "widget-controls" }, Q.el("span", {}, "$a_1=$"), ins[0], Q.el("span", {}, "$a_2=$"), ins[1], Q.el("span", {}, "$a_3=$"), ins[2], go, msg));
+        Q.el("div", { class: "widget-controls" }, Q.el("span", {}, "$c_1=$"), ins[0], Q.el("span", {}, "$c_2=$"), ins[1], Q.el("span", {}, "$c_3=$"), ins[2], go, msg));
       Q.math(box);
       draw();
     }
@@ -414,11 +414,11 @@
       if (v.some(t => !isFinite(t))) { msg.textContent = "Լրացրեք երեք թիվ, օրինակ՝ 1/4 կամ 0,25։"; return; }
       const ans = test.ans, ok = v.every((t, i) => Math.abs(t - ans[i]) < 0.01);
       const [a1, a2, a3] = ans, F1 = mixF(ans, 1 / 3), F2 = mixF(ans, 2 / 3);
-      const jumps = a1 > 0 ? `Թռիչքները $\\tfrac14$ և $\\tfrac34$ կետերում են, յուրաքանչյուրը՝ $${ft(a1 / 2)}$, ուրեմն $a_1=${ft(a1)}$։ ` : "Թռիչքներ չկան, ուրեմն $a_1=0$։ ";
+      const jumps = a1 > 0 ? `Թռիչքները $\\tfrac14$ և $\\tfrac34$ կետերում են, յուրաքանչյուրը՝ $${ft(a1 / 2)}$, ուրեմն $c_1=${ft(a1)}$։ ` : "Թռիչքներ չկան, ուրեմն $c_1=0$։ ";
       const fb = Q.el("div", { class: "quiz-fb " + (ok ? "ok" : "bad") });
       fb.innerHTML = `<strong>${ok ? "Ճիշտ է։" : "Ոչ այնքան։"}</strong> ${jumps}` +
-        `$\\left(\\tfrac13,\\tfrac23\\right)$-ում թռիչքներ չկան, իսկ $C$-ն հաստատուն է, ուստի $F$-ը գծային է $a_2$ թեքությամբ՝ ` +
-        `$a_2=3\\bigl(F(\\tfrac23)-F(\\tfrac13)\\bigr)=3\\bigl(${ft(F2)}-${ft(F1)}\\bigr)=${ft(a2)}$։ Մնացածը Կանտորի մասն է՝ $a_3=${ft(a3)}$։ Ներքևում՝ երեք մասերը։`;
+        `$\\left(\\tfrac13,\\tfrac23\\right)$-ում թռիչքներ չկան, իսկ $C$-ն հաստատուն է, ուստի $F$-ը գծային է $c_2$ թեքությամբ՝ ` +
+        `$c_2=3\\bigl(F(\\tfrac23)-F(\\tfrac13)\\bigr)=3\\bigl(${ft(F2)}-${ft(F1)}\\bigr)=${ft(a2)}$։ Մնացածը Կանտորի մասն է՝ $c_3=${ft(a3)}$։ Ներքևում՝ երեք մասերը։`;
       test = null;
       sync();
       $("test").innerHTML = ""; $("test").append(fb); Q.math(fb);
@@ -435,16 +435,16 @@
   const QZ = [
     { tex: "F(x)=C(x)", x: [-0.25, 1.25], ans: "s", cantor: true,
       d: () => makeDist({ cont: cantor, lo: 0, hi: 1 }),
-      expl: "Սինգուլյար։ Կանտորի ֆունկցիան անընդհատ է (թռիչքներ չունի), իսկ նրա ածանցյալը զրո է բոլոր հեռացված միջակայքերում, այսինքն՝ համարյա ամենուրեք։ Լեբեգի վերլուծության մեջ $a_3=1$։" },
+      expl: "Սինգուլյար։ Կանտորի ֆունկցիան անընդհատ է (թռիչքներ չունի), իսկ նրա ածանցյալը զրո է բոլոր հեռացված միջակայքերում, այսինքն՝ համարյա ամենուրեք։ Լեբեգի վերլուծության մեջ $c_3=1$։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le0\\\\ \\tfrac12+\\tfrac x4, & 0\\lt x\\le2\\\\ 1, & x\\gt2\\end{cases}", x: [-1, 3], ans: "mix",
       d: () => makeDist({ atoms: [{ x: 0, p: 0.5 }], cont: x => 0.5 * piece(x, 0, 2, t => t / 2), lo: 0, hi: 2 }),
-      expl: "Խառը՝ $a_1=\\tfrac12$ (թռիչք $0$-ում) և $a_2=\\int_0^2\\tfrac14\\,dx=\\tfrac12$, իսկ $a_3=0$։ Սա լուսացույցի օրինակն է (դաս 10)։" },
+      expl: "Խառը՝ $c_1=\\tfrac12$ (թռիչք $0$-ում) և $c_2=\\int_0^2\\tfrac14\\,dx=\\tfrac12$, իսկ $c_3=0$։ Սա լուսացույցի օրինակն է (դաս 10)։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le0\\\\ x^2, & 0\\lt x\\le1\\\\ 1, & x\\gt1\\end{cases}", x: [-0.5, 1.5], ans: "ac",
       d: () => makeDist({ cont: x => piece(x, 0, 1, t => t * t), lo: 0, hi: 1 }),
       expl: "Բացարձակ անընդհատ՝ խտությունը $f(x)=2x$ է $(0,1)$-ում, և $\\int_0^1 2x\\,dx=1$։" },
     { tex: "F(x)=\\tfrac12\\bigl(x+C(x)\\bigr),\\quad 0\\le x\\le1", x: [-0.25, 1.25], ans: "mix", cantor: true,
       d: () => makeDist({ cont: x => 0.5 * (FAC(x) + cantor(x)), lo: 0, hi: 1 }),
-      expl: "Խառը։ $F$-ն անընդհատ է, բայց $F'=\\tfrac12$ համարյա ամենուրեք, ուրեմն $a_2=\\int_0^1\\tfrac12\\,dx=\\tfrac12$, իսկ մնացած $a_3=\\tfrac12$-ը Կանտորի մասն է։ Ուշադրություն՝ $F$-ն անընդհատ է և խտություն չունի, բայց սինգուլյար չէ։" },
+      expl: "Խառը։ $F$-ն անընդհատ է, բայց $F'=\\tfrac12$ համարյա ամենուրեք, ուրեմն $c_2=\\int_0^1\\tfrac12\\,dx=\\tfrac12$, իսկ մնացած $c_3=\\tfrac12$-ը Կանտորի մասն է։ Ուշադրություն՝ $F$-ն անընդհատ է և խտություն չունի, բայց սինգուլյար չէ։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le0\\\\ \\tfrac13, & 0\\lt x\\le1\\\\ 1, & x\\gt1\\end{cases}", x: [-1, 2], ans: "d",
       d: () => makeDist({ atoms: [{ x: 0, p: 1 / 3 }, { x: 1, p: 2 / 3 }], lo: 0, hi: 1 }),
       expl: "Դիսկրետ՝ թռիչքներ $0$-ում ($\\tfrac13$) և $1$-ում ($\\tfrac23$), որոնց գումարը $1$ է։ Թռիչքների միջև $F$-ը հաստատուն է։" },
@@ -456,7 +456,7 @@
       expl: "Բացարձակ անընդհատ։ Հորիզոնական հատվածը չի խանգարում՝ այնտեղ խտությունը $0$ է։ Խտությունը $\\tfrac12$ է $(0,1)$-ում և $(2,3)$-ում, իսկ մնացած տեղում՝ $0$։" },
     { tex: "F(x)=\\begin{cases}\\tfrac12C(x), & x\\le\\tfrac12\\\\ \\tfrac12+\\tfrac12C(x), & x\\gt\\tfrac12\\end{cases}", x: [-0.25, 1.25], ans: "mix", cantor: true,
       d: () => makeDist({ atoms: [{ x: 0.5, p: 0.5 }], cont: x => 0.5 * cantor(x), lo: 0, hi: 1 }),
-      expl: "Խառը՝ թռիչք $\\tfrac12$ կետում ($a_1=\\tfrac12$) և Կանտորի մաս ($a_3=\\tfrac12$)։ Խտություն ունեցող մաս չկա, քանի որ $F'=0$ համարյա ամենուրեք, ուրեմն $a_2=0$։ Մեկ թռիչքը բաշխումը դիսկրետ չի դարձնում։" },
+      expl: "Խառը՝ թռիչք $\\tfrac12$ կետում ($c_1=\\tfrac12$) և Կանտորի մաս ($c_3=\\tfrac12$)։ Խտություն ունեցող մաս չկա, քանի որ $F'=0$ համարյա ամենուրեք, ուրեմն $c_2=0$։ Մեկ թռիչքը բաշխումը դիսկրետ չի դարձնում։" },
     { tex: "F(x)=\\begin{cases}0, & x\\le0\\\\ 1-e^{-x}, & x\\gt0\\end{cases}", x: [-0.5, 5], ans: "ac",
       d: () => makeDist({ cont: x => (x <= 0 ? 0 : 1 - Math.exp(-x)), lo: 0, hi: 40 }),
       expl: "Բացարձակ անընդհատ՝ ցուցչային բաշխում, խտությունը $e^{-x}$ է, երբ $x\\gt0$։" }
