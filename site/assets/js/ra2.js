@@ -84,9 +84,10 @@
       Q.svg("line", { x1: L, y1: 34, x2: R, y2: 34, class: "s-ink", "stroke-width": 1.2 }, svg);
       iv.forEach(([a, b]) => {
         const x0 = sx(Math.max(a, -0.02)), x1 = sx(Math.min(b, 1.02));
-        Q.svg("rect", { x: x0, y: 24, width: Math.max(1, x1 - x0), height: 20, class: "f-blue-soft s-blue", "stroke-width": 0.6, "fill-opacity": 0.55 }, svg);
+        // true width (no outline, no minimum): most intervals are far thinner than a pixel, and that is the point
+        Q.svg("rect", { x: x0, y: 22, width: Math.max(0.15, x1 - x0), height: 24, class: "f-blue", "fill-opacity": 0.5 }, svg);
       });
-      rs.forEach(r => Q.svg("circle", { cx: sx(r), cy: 34, r: 1.8, class: "f-red" }, svg));
+      rs.forEach(r => Q.svg("circle", { cx: sx(r), cy: 34, r: 1.3, class: "f-red" }, svg));
       [0, 0.5, 1].forEach(v => Q.svg("text", { x: sx(v), y: 62, "text-anchor": "middle", "font-size": 11, class: "f-muted", text: v === 0.5 ? "1/2" : String(v) }, svg));
       const sum = eps * (1 - 2 ** -N), uni = unionLength(iv);
       textOut(out, ["Առաջին ", { tex: String(N) }, " ռացիոնալ թվերը ծածկված են։ Միջակայքերի երկարությունների գումարը՝ ",

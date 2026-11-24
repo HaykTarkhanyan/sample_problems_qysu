@@ -211,7 +211,8 @@ widget, etc.).
 
 ## Real analysis pages (`site/analysis/`)
 
-- One page per chapter of the student's notes (DECISIONS #27): `ch1-cardinality.html` + `assets/js/ra1.js` (loaded after
+- One page per chapter of the student's notes (DECISIONS #27): `ch1-cardinality.html` + `assets/js/ra1.js`,
+  `ch2-lebesgue-measure.html` + `assets/js/ra2.js` (each loaded after
   `prob.js`, which gives predict blocks and `#deep-btn`). Brand icon `<span class="inf">` and the infinity favicon (copy
   both from `ch1-cardinality.html`). Outline and source typos per chapter in `real_analysis/README.md`.
 - Page pattern = probability (DECISIONS #13), and theorem / definition numbers exactly as in the notes ("Թեորեմ 5"), so
@@ -221,7 +222,11 @@ widget, etc.).
   «անհաշվելի», «կոնտինուում», «բաղկացուցիչ միջակայք», «մեկուսացված կետ», «կատարյալ բազմություն»; surjective =
   «սյուրյեկտիվ» (glossary), not «վերադիր». The student asked for interesting facts and applications: they go in
   `.box.method` boxes titled «Հետաքրքիր փաստ՝ ...», only facts we are sure of (names, years).
-- Widget math is checked by `node real_analysis/checks/ra1_check.mjs` (brute force, under 1 s).
+- Widget math and page numbers are checked by `node real_analysis/checks/ra1_check.mjs` and `ra2_check.mjs` (under 1 s
+  each). Measure terms (glossary): «չափ», «արտաքին չափ», «չափելի», «տարրական բազմություն», «կիսաադիտիվ», «ռեգուլյարություն»,
+  «սիգմա-հանրահաշիվ» (the notes write σ-հանրահաշիվ, said once), «բորելյան», «չափով օժտված տարածություն», «Ստիլտեսի չափ».
+- Widget pictures show true sizes: no minimum width or outline on intervals that are meant to be tiny (a 1 px minimum
+  made 60 intervals of total length 0,2 look like full coverage).
 
 ## Numerical analysis pages (`site/numerical/`)
 
