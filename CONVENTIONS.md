@@ -23,7 +23,8 @@ into `site/pdf/`, then deploys `site/`). Reference implementation: `site/discret
 
 | path | what |
 |------|------|
-| `site/index.html` | hub: one card per course (numerical, probability, discrete) |
+| `site/index.html` | hub: one card per course (numerical, real analysis, probability, discrete) |
+| `site/analysis/index.html`, `site/analysis/chN-topic.html` | real analysis landing page and one page per chapter of the notes |
 | `site/numerical/index.html`, `site/numerical/<topic>.html` | numerical analysis landing page and one page per problem-list block (`splines.html` = block C) |
 | `site/assets/js/pyrun.js` | runnable Python blocks (Pyodide from CDN on first Run, DECISIONS #16) |
 | `site/assets/js/num-<topic>.js` | that numerical page's widgets (`num-splines.js`) |
@@ -207,6 +208,20 @@ widget, etc.).
   themes (no `.katex-display` overflow on phones), and one independent math review (all 15 lectures have had one by 2026-11-11, reports in
   `probability/reviews/`; a new page gets one before publishing). When several reviewers run in parallel, each
   edits only its own page and lists cross-page problems for the orchestrator, who decides them once.
+
+## Real analysis pages (`site/analysis/`)
+
+- One page per chapter of the student's notes (DECISIONS #27): `ch1-cardinality.html` + `assets/js/ra1.js` (loaded after
+  `prob.js`, which gives predict blocks and `#deep-btn`). Brand icon `<span class="inf">` and the infinity favicon (copy
+  both from `ch1-cardinality.html`). Outline and source typos per chapter in `real_analysis/README.md`.
+- Page pattern = probability (DECISIONS #13), and theorem / definition numbers exactly as in the notes ("Թեորեմ 5"), so
+  the page and the PDF can be read side by side. Cardinality is written $|A|$ (the notes use a double overline, said once
+  on the page); power set $\exp(A)$ as in the notes; $\mathfrak a$, $\mathfrak c$.
+- Terms as in the notes, all matching the glossary: «փոխմիարժեք արտապատկերում», «համարժեք», «հզորություն», «հաշվելի» /
+  «անհաշվելի», «կոնտինուում», «բաղկացուցիչ միջակայք», «մեկուսացված կետ», «կատարյալ բազմություն»; surjective =
+  «սյուրյեկտիվ» (glossary), not «վերադիր». The student asked for interesting facts and applications: they go in
+  `.box.method` boxes titled «Հետաքրքիր փաստ՝ ...», only facts we are sure of (names, years).
+- Widget math is checked by `node real_analysis/checks/ra1_check.mjs` (brute force, under 1 s).
 
 ## Numerical analysis pages (`site/numerical/`)
 

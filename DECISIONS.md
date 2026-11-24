@@ -2,6 +2,14 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 27. Real analysis becomes a fourth site course, built on a student's lecture notes, one page per chapter
+
+- **Date / status:** 2026-11-24, active (owner: Q1 "New site course", Q2 "Chapter 1 page, done well")
+- **Decision:** `site/analysis/` holds one page per chapter of the real analysis notes a student sent (`ch1-cardinality.html` first), with a hub card, the probability teaching pattern (DECISIONS #13), and the notes' own theorem numbers. The source PDFs stay local in the gitignored `student_feedback/`; pages are in our own words.
+- **Why:** the student is behind and asked for interactive pages on exactly these files. Keeping the notes' numbering lets her move between the page and the PDF. The PDFs have no text layer, so pages were read as images (`pdftoppm -r 100`); chapter 1's outline is saved in `real_analysis/README.md` so nobody has to read the images again.
+- **Alternatives rejected:** unlisted pages (the site is for these students anyway); local-only HTML for her (no updates, no search, her language fixes could not land on the site); quick drafts of all three chapters at once (shallow, more rework).
+- **What would change this:** the lecturer objects to pages built on the notes, or the course's official notes change numbering (then cite by topic instead).
+
 ## 26. The glossaries move to the armenian-writing skill too
 
 - **Date / status:** 2026-11-23, active (owner, asked whether to remove them here and point to the skill: "21 yes")

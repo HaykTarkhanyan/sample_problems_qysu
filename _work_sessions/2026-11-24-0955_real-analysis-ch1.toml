@@ -1,0 +1,30 @@
+title = "Real analysis course: chapter 1 page (cardinality)"
+date = "2026-11-24"
+time = "09:55"
+areas = ["site/analysis", "site/assets", "real_analysis", "tools"]
+done = [
+  "Read Nare's request (student_feedback/nare_avetisyan/README.md); owner chose: new site course, chapter 1 done well first",
+  "Read all 16 pages of chapter 1 as images (PDF has no text layer); outline + source typos in real_analysis/README.md",
+  "site/analysis/ch1-cardinality.html: Theorems 1-19 with the notes' numbering, proofs in details.deep, 3 predict blocks, 6 'interesting fact' boxes, typical mistakes, 6 exercises with hints and solutions, exam section",
+  "Widgets in site/assets/js/ra1.js: w-list (diagonal listing of Q, Theorem 9), w-cantor (Theorem 7 on a 4-element set), w-trisect (Theorem 10 trisection proof)",
+  "site/analysis/index.html landing page, hub card, .brand .inf icon, course detection in site.js, search index for 'analysis'",
+  "real_analysis/checks/ra1_check.mjs: brute-force check of the widget math (65536 maps psi, 2002 trisection runs)",
+  "QA: check_site all passed, Armenian lint 0 errors, browser_check ok at 390 px, Playwright look at all 3 widgets (fixed: path over labels, too-wide Cantor table, clipped SVG label, formula suffix wrapping)",
+  "DECISIONS #27, CONVENTIONS 'Real analysis pages'",
+]
+pending = [
+  "No independent math review of the chapter 1 page yet (the probability rule asks for one before publishing); it was deployed without one because of the weekly usage limit",
+  "Chapter 2 (Lebesgue measure, 24 pp.) and chapter 3 (measurable functions, 16 pp.) pages",
+  "Nare's other request: unclear Armenian wording in probability lecture 13 (compare with her notes in student_feedback/)",
+]
+next = [
+  "Ask the owner whether to run one independent math review of ch1-cardinality.html",
+  "Chapter 2: render pages with pdftoppm -r 100, write the outline into real_analysis/README.md first, then the page (ra2.js)",
+]
+files = [
+  "site/analysis/ch1-cardinality.html", "site/analysis/index.html", "site/assets/js/ra1.js", "site/assets/search/analysis.js",
+  "site/assets/site.css", "site/assets/site.js", "site/index.html", "tools/build_search_index.mjs",
+  "real_analysis/README.md", "real_analysis/checks/ra1_check.mjs", "DECISIONS.md", "CONVENTIONS.md",
+]
+commits = ["aaf7c5c", "see git log for the follow-up commit"]
+notes = "Source notes use exp(A) for the power set and a double overline for cardinality. Read tool reports the PDFs as password-protected; pdftoppm renders them fine."

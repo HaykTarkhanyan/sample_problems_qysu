@@ -70,9 +70,17 @@
   const fr = (p, q) => (q === 1 ? String(p) : `\\tfrac{${p}}{${q}}`);
   const dec = (v, d = 6) => v.toFixed(d).replace(".", "{,}");
   function texInto(host, src) { const s = Q.el("span"); Q.tex(s, src); host.appendChild(s); return s; }
+  /** Text and {tex} parts into host. A suffix glued to a formula ("-ից", "։") stays on its line with it. */
   function textOut(host, parts) {
     host.textContent = "";
-    parts.forEach(x => { if (typeof x === "string") host.appendChild(document.createTextNode(x)); else texInto(host, x.tex); });
+    let wrap = null; // nowrap span around the last formula
+    parts.forEach(x => {
+      if (typeof x !== "string") { wrap = Q.el("span", { style: "white-space:nowrap" }); texInto(wrap, x.tex); host.appendChild(wrap); return; }
+      let s = x;
+      if (wrap) { const g = (s.match(/^\S+/) || [""])[0]; if (g) { wrap.appendChild(document.createTextNode(g)); s = s.slice(g.length); } }
+      wrap = null;
+      host.appendChild(document.createTextNode(s));
+    });
   }
 
   // ---------- w-list: the positive rationals in one list ----------
@@ -92,20 +100,25 @@
       }
       const at = (p, q) => [X0 + (p - 0.5) * C, Y0 + (q - 0.5) * C];
       const seen = new Map(cells.slice(0, step).map((c, i) => [c.p + "/" + c.q, i]));
+      const cellAt = (p, q) => { const i = seen.get(p + "/" + q); return i === undefined ? null : cells[i]; };
       for (let q = 1; q <= N; q++) {
         for (let p = 1; p <= N; p++) {
-          const i = seen.get(p + "/" + q), c = i === undefined ? null : cells[i];
+          const c = cellAt(p, q);
           const cls = !c ? "f-bg s-grid" : c.fresh ? "f-blue-soft s-blue" : "f-bg s-grid";
           Q.svg("rect", { x: X0 + (p - 1) * C + 2, y: Y0 + (q - 1) * C + 2, width: C - 4, height: C - 4, rx: 6, class: cls, "stroke-width": 1.2 }, svg);
-          const [cx, cy] = at(p, q);
+        }
+      }
+      if (step > 1) { // the path goes under the labels so they stay readable
+        const pts = cells.slice(0, step).map(c => at(c.p, c.q).join(",")).join(" ");
+        Q.svg("polyline", { points: pts, fill: "none", class: "s-orange", "stroke-width": 1.4, "stroke-opacity": 0.45 }, svg);
+      }
+      for (let q = 1; q <= N; q++) {
+        for (let p = 1; p <= N; p++) {
+          const c = cellAt(p, q), [cx, cy] = at(p, q);
           Q.svg("text", { x: cx, y: cy + (c && c.fresh ? 0 : 5), "text-anchor": "middle", "font-size": 14, class: c && !c.fresh ? "f-muted" : "f-ink", text: p + "/" + q }, svg);
           if (c && c.fresh) Q.svg("text", { x: cx, y: cy + 14, "text-anchor": "middle", "font-size": 10, class: "f-blue", text: "r" + c.num }, svg);
           if (c && !c.fresh) Q.svg("line", { x1: cx - 13, y1: cy + 9, x2: cx + 13, y2: cy - 7, class: "s-muted", "stroke-width": 1.4 }, svg);
         }
-      }
-      if (step > 1) {
-        const pts = cells.slice(0, step).map(c => at(c.p, c.q).join(",")).join(" ");
-        Q.svg("polyline", { points: pts, fill: "none", class: "s-orange", "stroke-width": 1.6, "stroke-opacity": 0.75 }, svg);
       }
       if (step > 0) {
         const c = cells[step - 1], [cx, cy] = at(c.p, c.q);
@@ -155,7 +168,6 @@
       const t = Q.el("table", { class: "tbl" });
       const head = Q.el("tr", {}, Q.el("th", { text: "a \\ b" }));
       for (let b = 1; b <= n; b++) head.appendChild(Q.el("th", { class: "num", text: String(b) }));
-      head.appendChild(Q.el("th", { text: "ψ(a)" }));
       head.appendChild(Q.el("th", { text: "a-ն" }));
       t.appendChild(Q.el("thead", {}, head));
       const body = Q.el("tbody");
@@ -163,26 +175,21 @@
         const tr = Q.el("tr", {}, Q.el("td", { class: "num", text: String(a + 1) }));
         for (let b = 0; b < n; b++) {
           const on = !!(psi[a] >> b & 1);
-          const btn = Q.el("button", { type: "button", class: "cell-btn", "aria-pressed": on ? "true" : "false", "aria-label": `${b + 1} ∈ ψ(${a + 1})`, text: on ? "✓" : "·" });
+          const btn = Q.el("button", { type: "button", class: "cell-btn", style: "min-width:2rem;height:2.2rem;font-size:1.05rem", "aria-pressed": on ? "true" : "false", "aria-label": `${b + 1} ∈ ψ(${a + 1})`, text: on ? "✓" : "·" });
           if (a === b) btn.style.outline = "2px solid var(--orange)";
           btn.addEventListener("click", () => { psi[a] ^= 1 << b; note = ""; draw(); });
           tr.appendChild(Q.el("td", { class: "num" }, btn));
         }
-        const st = Q.el("td");
-        texInto(st, setTex(psi[a]));
-        tr.appendChild(st);
         const good = !!(psi[a] >> a & 1);
         tr.appendChild(Q.el("td", { text: good ? "լավ" : "վատ", style: good ? "color:var(--blue)" : "color:var(--red)" }));
         body.appendChild(tr);
       }
       const vr = Q.el("tr", { class: "hl" }, Q.el("td", { text: "V" }));
       for (let b = 0; b < n; b++) vr.appendChild(Q.el("td", { class: "num", text: V >> b & 1 ? "✓" : "·" }));
-      const vt = Q.el("td");
-      texInto(vt, setTex(V));
-      vr.appendChild(vt);
       vr.appendChild(Q.el("td", { text: "" }));
       body.appendChild(vr);
       t.appendChild(body);
+      t.querySelectorAll("td, th").forEach(c => { c.style.padding = ".2rem .3rem"; }); // fits 282 px on phones
       tab.appendChild(Q.el("div", { class: "table-wrap" }, t));
       const hit = psi.findIndex(m => m === V);
       if (hit >= 0) throw new Error("w-cantor: V equals psi(" + (hit + 1) + "), Theorem 7 broken");
@@ -244,7 +251,7 @@
       if (steps.length) {
         const s = steps[steps.length - 1], pk = Math.floor(s.k / 3), pn = s.n - 1;
         const [p, q] = list[s.n - 1];
-        Q.svg("text", { x: L, y: 78, class: "f-muted", "font-size": 11, text: `մեծացված՝ I${sub(pn)}-ը երեք մասի բաժանված, a${sub(s.n)}-ը կարմիր` }, svg);
+        Q.svg("text", { x: L, y: 78, class: "f-muted", "font-size": 11, text: `մեծացված՝ I${sub(pn)}-ը և a${sub(s.n)}-ը (կարմիր)` }, svg);
         const zx = v => L + v * (R - L) / 3;
         for (let j = 0; j < 3; j++) Q.svg("rect", { x: zx(j) + 1, y: 92, width: (R - L) / 3 - 2, height: 18, rx: 3, class: j === s.k - 3 * pk ? "f-blue-soft s-blue" : "f-bg s-grid", "stroke-width": 1.3 }, svg);
         const rel = (p / q - pk / 3 ** pn) * 3 ** pn; // position of a_n inside I_{n-1}, 0..1 when inside
