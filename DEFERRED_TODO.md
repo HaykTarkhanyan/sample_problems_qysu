@@ -6,8 +6,9 @@ Topics cut from current work so they are not lost.
   independent math review per page for `site/analysis/ch1-cardinality.html`, `ch2-lebesgue-measure.html` and
   `ch3-measurable-functions.html` (all deployed without one), checked against the student's notes in the gitignored
   `student_feedback/nare_avetisyan/2026-11-24_telegram/files/` and the outlines in `real_analysis/README.md`. Same
-  student's other request is also open: unclear Armenian wording in `site/probability/w13-singular.html`, compared
-  with her lecture notes (`files/2026-11-24_nare_notes_lecture13_p1.jpg`, `_p2.jpg`).
+  student's lecture 13 request: definitions and notation were matched to her notes on 2026-11-24 (commit 60c5c9f); the
+  "hard Armenian wording" part waits for her answer to which 2-3 places were unclear (message drafted in the session
+  log), and whether the lecturer's definition of singular is exactly the growth-point one.
 
 - **Numerical analysis, when the lecture slides for integration and linear systems arrive:** both pages were
   built without slides on 2026-11-14 (DECISIONS #22), so compare them with the slides and update. What may

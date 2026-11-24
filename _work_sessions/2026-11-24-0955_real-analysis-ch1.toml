@@ -18,10 +18,13 @@ done = [
   "Chapter 3 (owner: 'Do 03 as well'): read all 16 pages, outline + typos in real_analysis/README.md",
   "site/analysis/ch3-measurable-functions.html: Theorems 39-58, 4 predict blocks, 3 fact boxes (weak/strong LLN, Luzitania, Lebesgue's wallet), 6 exercises, exam table of the three convergence types",
   "Widgets in site/assets/js/ra3.js: w-simple (Theorem 58 value bands), w-egorov (x^n), w-typewriter (in measure, nowhere pointwise, Riesz subsequence); real_analysis/checks/ra3_check.mjs; all checks ok; Playwright look fixed a jump drawn as a vertical line",
+  "Learning _learnings/2026-11-24-1100_scanned-pdfs-read-as-images.md",
+  "Probability lecture 13 vs Nare's notes (owner Q4/Q5): lecturer's growth-point definition of singular first, wide sense F' = 0 a.e. with the eta example, coefficients a_i -> c_i (page + w13.js labels), lecture's F_1, F_2 named, sum as 1/3 + 2/9 + ..., 'without proof in lecture' note; commit 60c5c9f",
 ]
 pending = [
   "No independent math review of the chapter 1, 2 and 3 pages yet (the probability rule asks for one before publishing); all three were deployed without one because of the weekly usage limit",
   "ch2 and ch3 pages: 'ուստի' density hint (44 and 51 per 10k words, limit 30), not an error",
+  "Lecture 13 wording: waiting for Nare to name the 2-3 unclear places and confirm the lecturer's definition. Message for Hayk to send: 'Նարե ջան, նոթերդ նայեցինք, շատ օգնեցին։ Երկու կարճ հարց ունեմ՝ 1. Դասախոսը սինգուլյար բաշխումը հենց այդպե՞ս սահմանեց՝ անընդհատ է, և աճի կետերի բազմության Լեբեգի չափը 0 է։ Թե՞ որևէ տեղ ասաց նաև, որ F'(x)=0 համարյա ամենուրեք։ 2. Կայքի 13-րդ դասում ո՞ր 2-3 տեղն էր ամենաանհասկանալին։ Կարող ես ուղղակի պատճենել այդ նախադասությունները կամ նկարել էկրանը։'",
   "Nare's other request: unclear Armenian wording in probability lecture 13 (compare with her notes in student_feedback/)",
 ]
 next = [
