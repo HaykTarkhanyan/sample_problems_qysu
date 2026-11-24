@@ -65,6 +65,67 @@ mention the notes' notation once), power set = `exp(A)`, a = countable cardinali
   (1/2) Σ (2/3)^i = 1. C = ∩_k ∪_j Δ_j^k.
 - Th 19: |C| = c (left/right choices at each step give a 0-1 sequence; bijection C -> B).
 
+## Chapter 2 outline (Լեբեգի չափ, pp. 17-40), numbering as in the notes
+
+Notation: P = elementary sets, P_0 = elementary subsets of [0,1), m = measure of elementary sets, m* = outer
+measure, M = measurable sets, mes = Lebesgue measure; g, m_g, M_g, mes_g for Stieltjes.
+
+2.1 Elementary sets
+- Def 7: bounded A elementary if A = ∪_{i<=n} [a_i, b_i), pairwise disjoint (canonical representation, not
+  unique: [0,2) = [0,1) ∪ [1,2)); ∅ ∈ P. Lemma 3: P closed under ∩, \, ∪, Δ (left as exercise).
+- Lemma 4: [a,b) = disjoint ∪ [a_i,b_i) (finite) => b - a = Σ (b_i - a_i).
+- Def 8: m(A) = Σ (b_i - a_i); well defined (C_ij = A_i ∩ B_j).
+- Th 20: finite additivity. Th 21: (1) disjoint A_i ⊂ A => Σ m(A_i) <= m(A); (2) A ⊂ ∪ A_i => m(A) <= Σ m(A_i);
+  monotone. Cor 5: same as (1) for countably many.
+- Th 22 (countable semi-additivity): [α,β) ⊂ ∪_{i>=1} [a_i,b_i) => β - α <= Σ (b_i - a_i). Proof: β' < β,
+  a_i' = a_i - ε/2^i, compact [α,β'] covered by open (a_i', b_i), finite subcover, Th 21(2).
+- Th 23: [a,b) = countable disjoint ∪ [a_i,b_i) => m[a,b) = Σ m[a_i,b_i). Th 24: countable additivity on P.
+  Cor 6: m(A ∪ B) = m(A) + m(B) - m(A ∩ B).
+
+2.2 Outer measure, measurable sets (inside [0,1))
+- Def 9: m*(A) = inf Σ (b_i - a_i) over covers A ⊂ ∪ [a_i,b_i). 0 <= m* <= 1, m* = m on P_0, monotone.
+- Th 25: countable semi-additivity of m* (ε/2^i covers). Lemma 5: |m*(A) - m*(B)| <= m*(AΔB).
+- Def 10: A measurable if for every ε there is B ∈ P_0 with m*(AΔB) < ε; mes(A) = m*(A). P_0 ⊂ M.
+- Th 26 (completeness): mes(A) = 0, B ⊂ A => B ∈ M, mes(B) = 0. Th 27: M closed under \, ∪, ∩, Δ, complement.
+
+2.3 Countable additivity and continuity
+- Th 28: finite additivity (ε-approximation by B_1, B_2, error 6ε). Th 29: countable ∪ and ∩ measurable.
+- Th 30: countable additivity. Th 31 (continuity): increasing => mes(∪) = lim; decreasing => mes(∩) = lim.
+
+2.4 Regularity and other properties
+- Same construction on any [a,b). Def 11: A ⊂ R measurable if every A ∩ [n, n+1) is; mes(A) = Σ_n mes(A ∩ [n,n+1)),
+  may be +∞. Same properties on R, except continuity from above: B_n = [n, ∞), mes(∩) = 0 != +∞.
+- Th 32: translation invariance mes(A + c) = mes(A).
+- Ex 2: intervals, mes = b - a. Ex 3: a point has measure 0. Ex 4: countable sets (Q) measure 0. Ex 5: open G
+  measurable, mes(G) = Σ lengths of component intervals. Ex 6: closed F ⊂ [a,b], a,b ∈ F: mes F = b - a - mes G.
+- Th 33: m*(A) = inf over open G ⊃ A of mes(G). Lemma 6: A ⊂ I = (a,b), mes(I \ A) < ε => closed F ⊂ A with
+  mes(A \ F) < 2ε. Th 34 (regularity): bounded measurable A => F ⊂ A ⊂ G, F closed, G open, mes(G \ F) < ε.
+- Th 35: Cantor set has measure 0. Unbounded set with finite measure ∪_{n != 0} [n, n + 1/n^2]. Open dense G =
+  ∪ (r_n - n^-2, r_n + n^-2) with mes G <= Σ 2/n^2 < ∞.
+- Def 12: σ-algebra (closed under the set operations, countable ∪ and ∩, has a unit). M is a σ-algebra.
+  Def 13: Borel σ-algebra B = smallest σ-algebra containing the open sets.
+
+2.5 Stieltjes measure
+- g non-decreasing, left-continuous. Def 14: m_g(A) = Σ (g(b_i) - g(a_i)). Def 15: outer m_g*. Def 16: M_g, mes_g.
+- Same properties (closure, countable additivity, continuity, regularity). Differences: arctan gives m_g(R) = π;
+  no translation invariance (m_g(-∞,0) = π/2 < 3π/4 = m_g(-∞,1)); m_g{a} = g(a+0) - g(a) > 0 at a jump;
+  g = [x] gives m_g(Z) = +∞; the non-measurable set of Th 36 is Stieltjes-measurable if g is constant on [0,1].
+- Def 17: measure space (X, F, μ). Examples: (R, M, mes), (R, M_g, m_g), restriction to X ∈ M, Dirac measure,
+  discrete Σ p_i. Restriction (A, F_A, μ_A). Complete measure.
+- 2.5.1, Th 36 (Vitali): x ~ y iff x - y ∈ Q; D = one point per class; D_n = D + r_n, r_n = rationals of [-1,1];
+  [0,1] ⊂ ∪ D_n ⊂ [-1,2] gives 1 <= Σ mes(D) <= 3, impossible.
+
+2.6 Vitali covering theorems (used in chapter 5)
+- Def 18: V covers E in Vitali's sense if every x ∈ E lies in segments d ∈ V of arbitrarily small length.
+- Th 37: bounded E => finite or countable disjoint d_i ∈ V with mes(E \ ∪ d_i) = 0 (greedy: mes(d_{n+1}) > κ/2,
+  D_i = d_i enlarged 5 times). Th 38: for every ε a finite disjoint family with m*(E \ ∪ d_i) < ε.
+
+## Typos noticed in the chapter 2 source (do not copy)
+
+- p. 36: the example g(x) = [x] (integer part) is right-continuous, but 2.5 asks for left-continuous g, and with
+  m_g{a} = g(a+0) - g(a) the integer part would give m_g{n} = 0. A left-continuous step function such as the
+  ceiling ⌈x⌉ gives m_g{n} = 1 and m_g(Z) = +∞ as intended.
+
 ## Typos noticed in the chapter 1 source (do not copy)
 
 - p. 2: "ψ = φ∘ψ" for the composition A -> C (should be the composite of φ then ψ). The site writes ψ(φ(a)).
