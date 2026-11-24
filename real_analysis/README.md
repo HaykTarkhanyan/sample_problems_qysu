@@ -120,6 +120,49 @@ measure, M = measurable sets, mes = Lebesgue measure; g, m_g, M_g, mes_g for Sti
 - Th 37: bounded E => finite or countable disjoint d_i ∈ V with mes(E \ ∪ d_i) = 0 (greedy: mes(d_{n+1}) > κ/2,
   D_i = d_i enlarged 5 times). Th 38: for every ε a finite disjoint family with m*(E \ ∪ d_i) < ε.
 
+## Chapter 3 outline (Չափելի ֆունկցիաներ, pp. 41-56), numbering as in the notes
+
+3.1 Definition and basic properties ((X, F, μ) a measure space, B = Borel sets)
+- Def 19: f: X -> R is μ-measurable if f^-1(A) ∈ F for every Borel A (Lebesgue measurable when X ⊂ R, μ = mes).
+  Def 20: f: R -> R is Borel if f^-1(A) ∈ B. Borel => Lebesgue measurable; not conversely.
+- Th 39: continuous => Borel. Th 40: f measurable, φ Borel => φ∘f measurable. Th 41: continuous of measurable.
+- Th 42: f measurable iff {f < c} ∈ F for every c. Lemma 7: {f > g} measurable (via rationals r_n).
+  Lemma 8: f + a, af measurable. Th 43: f ± g, fg (via ((f+g)^2 - (f-g)^2)/4), f/g (g != 0) measurable.
+- Lemma 9: sup_n f_n, inf_n f_n measurable. Th 44: limsup, liminf. Th 45: pointwise limit measurable.
+  Remark 2: what matters is that F is a σ-algebra.
+
+3.2 Almost everywhere convergence, Egorov and Riesz
+- Def 21: a.e. = outside a null set. Def 22: f ~ g if f = g a.e. Dirichlet ~ 0 but nowhere continuous; sgn is
+  a.e. continuous but not ~ to any continuous function.
+- Th 46: g ~ f, f measurable => g measurable (completeness). Th 47: a.e. limit of measurable is measurable.
+- Th 48 (Egorov): f_i -> f everywhere on X => for every δ a set X_δ with μ(X_δ) > μ(X) - δ and uniform
+  convergence on X_δ (sets X_n^k = ∩_{i>=n} {|f_i - f| < 1/k}). Th 49: same for a.e. convergence.
+- 3.2.1 Def 23: convergence in measure f_i => f: μ{|f_i - f| > σ} -> 0. Th 50: a.e. => in measure (via Egorov).
+  Converse false: n = 2^k + m, m = 1..2^k, f_n = indicator of ((m-1)/2^k, m/2^k] on (0,1] ("typewriter").
+- Th 51 (Riesz): in measure => a subsequence converges a.e. (μ(E_k) < 2^-k, D_n = ∩_{k>=n} (X \ E_k)).
+
+3.3 Luzin's theorem
+- Lemma 10: a function constant on each of finitely many disjoint closed sets is continuous on their union.
+  Lemma 11: a continuous f on a closed F ⊂ [0,1] extends to g ∈ C[0,1] with the same max |.|.
+- Th 52 (Luzin 1): measurable, m <= f <= M on [a,b] => for every ε a continuous φ, m <= φ <= M,
+  mes{f != φ} < ε (level sets E_k^(n) = {(k-1)/n < f <= k/n}, closed F_k^(n) inside, F = ∩ F_n, uniform limit).
+- Th 53: a.e. finite measurable => bounded measurable ψ with mes{f != ψ} < ε. Th 54 (Luzin 2): continuous φ
+  with mes{f != φ} < ε. Th 55 (Borel): continuous g_n converging in measure. Th 56 (Fréchet): continuous h_k
+  converging a.e. Cor 7: polynomials with rational coefficients converging a.e. (Weierstrass).
+
+3.4 Simple functions
+- Def 24: simple = finitely or countably many values. Examples: constants, Dirichlet, any f on a countable set;
+  f(x) = x on an uncountable set is not simple.
+- Th 57: simple f measurable iff every {f = y_n} measurable. Th 58: f measurable iff a uniform limit of simple
+  measurable functions: f_n = k/2^n on {k/2^n <= f < (k+1)/2^n}, |f - f_n| < 2^-n. Remarks 3-5: f_n can be chosen
+  increasing (or decreasing), and m <= f_n <= M when m <= f <= M.
+
+## Typos noticed in the chapter 3 source (do not copy)
+
+- p. 50, Th 51 (3.2.5): "μ(x) - 2^(1-n)" should be μ(X); the proof switches between f_{i_k} and f_{n_k}.
+- p. 51, Lemma 11: "D ⊂ [0,1] closed and f ∈ C(F)" mixes D and F. p. 51, Th 52 proof: k = 0, 1, ..., n (not 0, 2).
+- p. 49: n = 2^k + m starts at n = 2, so the "typewriter" sequence has no f_1.
+
 ## Typos noticed in the chapter 2 source (do not copy)
 
 - p. 36: the example g(x) = [x] (integer part) is right-continuous, but 2.5 asks for left-continuous g, and with
