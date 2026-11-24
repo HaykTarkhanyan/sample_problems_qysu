@@ -336,6 +336,8 @@ probability/books/
 armenian_style/_sources/
 # A student's handwritten lecture notes (photos): local reference only, never committed
 probability/notes_from_student/
+# Students' messages, notes and lecture files sent to us (Telegram etc.): local reference only, never committed
+student_feedback/
 
 # Numerical analysis: lecture slides and problem lists are local reference only (user, 2026-11-11: "we won't care about pdfs")
 numerical_methods/*.pdf
