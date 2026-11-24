@@ -157,6 +157,13 @@ measure, M = measurable sets, mes = Lebesgue measure; g, m_g, M_g, mes_g for Sti
   measurable functions: f_n = k/2^n on {k/2^n <= f < (k+1)/2^n}, |f - f_n| < 2^-n. Remarks 3-5: f_n can be chosen
   increasing (or decreasing), and m <= f_n <= M when m <= f <= M.
 
+## Math reviews (2026-11-24)
+
+One independent review per page in `reviews/2026-11-24_ch{1,2,3}_math_review.md`; no wrong answer or invalid proof
+was found, and all findings were applied the same day. Each report ends with further slips in the notes that the
+page avoids (for example chapter 2: Th 37 proof "d ∈ V_n" should be V_{n+1}; chapter 1: Corollary 1 exists between
+Theorems 8 and 9). Check those lists before writing a new page from the same notes.
+
 ## Typos noticed in the chapter 3 source (do not copy)
 
 - p. 50, Th 51 (3.2.5): "μ(x) - 2^(1-n)" should be μ(X); the proof switches between f_{i_k} and f_{n_k}.

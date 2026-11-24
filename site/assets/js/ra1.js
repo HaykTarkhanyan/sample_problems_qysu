@@ -68,7 +68,6 @@
 
   /** "1/2" as TeX: \tfrac12, integers as they are. */
   const fr = (p, q) => (q === 1 ? String(p) : `\\tfrac{${p}}{${q}}`);
-  const dec = (v, d = 6) => v.toFixed(d).replace(".", "{,}");
   function texInto(host, src) { const s = Q.el("span"); Q.tex(s, src); host.appendChild(s); return s; }
   /** Text and {tex} parts into host. A suffix glued to a formula ("-ից", "։") stays on its line with it. */
   function textOut(host, parts) {
@@ -255,13 +254,16 @@
         const zx = v => L + v * (R - L) / 3;
         for (let j = 0; j < 3; j++) Q.svg("rect", { x: zx(j) + 1, y: 92, width: (R - L) / 3 - 2, height: 18, rx: 3, class: j === s.k - 3 * pk ? "f-blue-soft s-blue" : "f-bg s-grid", "stroke-width": 1.3 }, svg);
         const rel = (p / q - pk / 3 ** pn) * 3 ** pn; // position of a_n inside I_{n-1}, 0..1 when inside
-        if (rel >= 0 && rel <= 1) Q.svg("circle", { cx: L + rel * (R - L), cy: 101, r: 5, class: "f-red" }, svg);
+        if (inside(pk, pn, p, q)) Q.svg("circle", { cx: L + Math.min(1, Math.max(0, rel)) * (R - L), cy: 101, r: 5, class: "f-red" }, svg); // exact test, rel only for the x position
         else Q.svg("text", { x: W / 2, y: 132, "text-anchor": "middle", "font-size": 11, class: "f-red", text: `a${sub(s.n)}-ը I${sub(pn)}-ից դուրս է՝ ցանկացած մաս հարմար է` }, svg);
       }
       if (!steps.length) { out.textContent = "Սեղմեք «Հաջորդ քայլը»։"; log.textContent = ""; return; }
+      // z is only known to lie in I_n: print that interval (left end rounded down, right end rounded up)
+      const lo6 = (Math.floor(a * 1e6) / 1e6).toFixed(6).replace(".", "{,}"), hi6 = (Math.ceil(b * 1e6) / 1e6).toFixed(6).replace(".", "{,}");
+      const none = n === 1 ? [{ tex: "a_1" }, "-ը "] : [{ tex: `a_1,\\dots,a_{${n}}` }, "-ից ոչ մեկը "];
       textOut(out, ["Քայլ " + n + "։ ", { tex: `I_{${n}}=\\left[\\frac{${k}}{${3 ** n}},\\frac{${k + 1}}{${3 ** n}}\\right]` }, ", երկարությունը՝ ", { tex: `3^{-${n}}` },
-        "։ ", { tex: `a_1,\\dots,a_{${n}}` }, "-ից ոչ մեկը ", { tex: `I_{${n}}` }, "-ում չէ։ Ընդհանուր ", { tex: "z" }, " կետը ", { tex: `I_{${n}}` },
-        "-ում է՝ ", { tex: `z\\approx${dec((a + b) / 2)}` }, "։"]);
+        "։ ", ...none, { tex: `I_{${n}}` }, "-ում չէ։ Ընդհանուր ", { tex: "z" }, " կետը ", { tex: `I_{${n}}` },
+        "-ում է՝ ", { tex: `${lo6}\\le z\\le${hi6}` }, "։"]);
       log.textContent = "";
       steps.forEach(st => {
         const [p, q] = list[st.n - 1];

@@ -2,11 +2,9 @@
 
 Topics cut from current work so they are not lost.
 
-- **Real analysis, when the weekly limit allows (owner, 2026-11-24: "We do later if i have more limits"):** one
-  independent math review per page for `site/analysis/ch1-cardinality.html`, `ch2-lebesgue-measure.html` and
-  `ch3-measurable-functions.html` (all deployed without one), checked against the student's notes in the gitignored
-  `student_feedback/nare_avetisyan/2026-11-24_telegram/files/` and the outlines in `real_analysis/README.md`. Same
-  student's lecture 13 request: definitions and notation were matched to her notes on 2026-11-24 (commit 60c5c9f); the
+- **Real analysis:** the three math reviews ran on 2026-11-24 evening (reports in `real_analysis/reviews/`) and
+  their findings were applied the same day. Today's probability lecture 13 edits have had no independent review.
+  Same student's lecture 13 request: definitions and notation were matched to her notes on 2026-11-24 (commit 60c5c9f); the
   "hard Armenian wording" part waits for her answer to which 2-3 places were unclear (message drafted in the session
   log). Her answer on the definition (2026-11-24 13:03): she is almost sure the lecturer said nothing about F' = 0 and
   first forgot to say "continuous", so the page's growth-point definition (with continuity) is right as deployed.
