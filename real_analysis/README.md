@@ -278,8 +278,14 @@ Theorems 8 and 9). Check those lists before writing a new page from the same not
 - p. 86, Th 81 calls both μ and ν signed measures; ∫ f dμ needs μ to be a (finite) measure, as at the start of 4.7.
   The site states it that way.
 
-The chapter 4 page (2026-11-25) has had no independent math review yet. The chapter 3 review found no wrong answer
-but 15 smaller findings, so one is worth running before students rely on the page.
+- Found by the 2026-11-25 review, also avoided on the page: p. 61, (4.1.8) has φ_k μ(V_k) where μ(Y_nk) is meant;
+  p. 62, Th 62, the last sum runs over n instead of i; p. 64, Th 64 proof says "f + g" for αf + βg; p. 66, Th 66,
+  "|f| + ε < φ + ε" should be ≤; p. 68, Th 69 proof takes φ only measurable, Th 63 needs it simple; p. 73, Th 73,
+  "< K + μ(A)" should be ≤. Gaps the notes share with the first version of the page: Fubini needs complete factor
+  measures, Lemma 13 never states that liminf f_n is integrable, Def 26 is shown to extend Def 25 in one direction only.
+
+Chapter 4 math review: `reviews/2026-11-25_ch4_math_review.md` (0 major, 3 minor, 7 nits, no wrong answer or invalid
+proof); all ten findings were applied the same day.
 
 ## Typos noticed in the chapter 3 source (do not copy)
 

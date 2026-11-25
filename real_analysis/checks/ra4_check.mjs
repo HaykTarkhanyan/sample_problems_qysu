@@ -1,4 +1,5 @@
-// Checks the pure helpers of site/assets/js/ra4.js and the numbers on the chapter 4 page.
+// Checks the pure helpers of site/assets/js/ra4.js and the numbers quoted on the chapter 4 page (the numbers are
+// written into this script by hand; it does not read the HTML, so a changed number on the page is not caught).
 // Run: node real_analysis/checks/ra4_check.mjs   (about 2 s; measured 1.7 s)
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -29,8 +30,9 @@ for (const key of Object.keys(FUNS)) for (let n = 1; n <= 7; n++) {
 // the sine part integrates to 0 over a period; jump integral 0.144 + 0.12 + 0.224 = 0.488
 let simpsonSin = 0;
 for (let i = 0; i < 20000; i++) simpsonSin += FUNS.sin.f((i + 0.5) / 20000) / 20000;
-near(simpsonSin, 0.5, 1e-9, "sin exact integral");
-near(0.8 * 0.36 / 2 + 0.3 * 0.4 + 0.35 * (1 - 0.36), 0.488, 1e-12, "jump exact integral");
+near(simpsonSin, FUNS.sin.exact, 1e-9, "sin exact integral");
+near(0.8 * 0.36 / 2 + 0.3 * 0.4 + 0.35 * (1 - 0.36), FUNS.jump.exact, 1e-12, "jump exact integral");
+near(1 / 3, FUNS.sq.exact, 1e-15, "x^2 exact integral");
 // predict block: |∫f - ∫f_n| <= 2^-n mu(A) < 0.01 first at n = 7
 ok(2 ** -6 > 0.01 && 2 ** -7 < 0.01, "predict: n = 7 is the first with 2^-n < 0.01");
 
@@ -52,10 +54,15 @@ for (let i = 1; i <= 5000; i++) {
   near(s2, ESC.sqrt.env(x), 1e-12, `sqrt envelope at ${x}`);
   ok(ESC.sqrt.env(x) <= 1 / Math.sqrt(x) + 1e-12, `sqrt envelope <= 1/sqrt(x) at ${x}`);
 }
-const envI = sqrtEnvInt(), envBig = sqrtEnvInt(5000000);
-near(envI, envBig, 2e-3, "sqrt envelope integral, K = 2e5 vs 5e6");
-ok(envBig < 2, "sqrt envelope integral below ∫ 1/sqrt(x) = 2");
-console.log(`sqrt envelope integral ≈ ${envBig.toFixed(4)}`);
+// independent bracket: the partial sum to 1e7 plus a tail in (0, 2/sqrt(1e7)) (Σ_{k>K} k^-1.5 < 2/sqrt(K))
+const envI = sqrtEnvInt();
+let part = 0;
+for (let k = 1; k <= 1e7; k++) part += 1 / (Math.sqrt(k) * (k + 1));
+ok(envI > part && envI < part + 2 / Math.sqrt(1e7), `sqrt envelope integral ${envI} outside [${part}, ${part + 2 / Math.sqrt(1e7)}]`);
+near(envI, 1.860025, 1e-5, "sqrt envelope integral (review value 1.860025)");
+ok(envI < 2, "sqrt envelope integral below ∫ 1/sqrt(x) = 2");
+ok(envI.toFixed(2) === "1.86", "the widget prints ≈1,86");
+console.log(`sqrt envelope integral ≈ ${envI.toFixed(6)}`);
 // harmonic: Σ_{k<=K} 1/(k+1) grows without bound
 let H = 0;
 for (let k = 1; k <= 1e6; k++) H += 1 / (k + 1);
@@ -111,8 +118,15 @@ for (const x of [0.1, 0.5, 0.9]) {
   for (let i = 0; i < N; i++) { const y = (i + 0.5) / N; s += (x * x - y * y) / (x * x + y * y) ** 2 / N; }
   near(s, 1 / (1 + x * x), 1e-6, `exercise 5 inner integral at x=${x}`);
 }
-// exercise 6: ∫_R 1/(1+x^2) = π, and Σ ∫_{[n,n+1)} 1/(1+|x|) >= Σ 1/(2+|n|) diverges
-near(2 * Math.atan(1e9), Math.PI, 1e-8, "exercise 6: arctan limits");
+// exercise 6: the telescoping sum Σ_n (arctan(n+1) - arctan n) tends to π; the lower bound Σ_{n>=0} 1/(n+2) for g
+// has unbounded partial sums
+let tele = 0;
+for (let n = -100000; n < 100000; n++) tele += Math.atan(n + 1) - Math.atan(n);
+near(tele, 2 * Math.atan(100000), 1e-9, "exercise 6: telescoping arctan sum equals 2 arctan(1e5)");
+ok(Math.PI - tele > 0 && Math.PI - tele < 3e-5, "exercise 6: partial sum approaches π from below");
+let lower = 0;
+for (let n = 0; n <= 1e6; n++) lower += 1 / (n + 2);
+ok(lower > 13, "exercise 6: Σ 1/(n+2) partial sum > 13 at 1e6");
 
 console.log(`${fails ? "FAILED" : "ok"}: ra4 helpers and page numbers, ${fails} failures`);
 process.exit(fails ? 1 : 0);

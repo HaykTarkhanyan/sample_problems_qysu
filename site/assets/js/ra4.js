@@ -49,11 +49,12 @@
     sqrt: { f: (n, x) => (x > 0 && x < 1 / n ? Math.sqrt(n) : 0), env: x => Math.sqrt(Math.ceil(1 / x) - 1), int: n => 1 / Math.sqrt(n) },
     pow: { f: (n, x) => x ** n, env: x => x, int: n => 1 / (n + 1) }
   };
-  /** ∫_0^1 sqrt(ceil(1/x) - 1) dx = Σ_k sqrt(k) (1/k - 1/(k+1)) = Σ_k 1 / (sqrt(k) (k+1)); the tail after K is < 2/sqrt(K). */
+  /** ∫_0^1 sqrt(ceil(1/x) - 1) dx = Σ_k sqrt(k) (1/k - 1/(k+1)) = Σ_k 1 / (sqrt(k) (k+1)). The tail after K is close to
+      ∫_{K+1/2}^∞ dx / (sqrt(x) (x+1)) = π - 2 arctan sqrt(K + 1/2) (midpoint rule on a convex summand). */
   function sqrtEnvInt(K = 200000) {
     let s = 0;
     for (let k = 1; k <= K; k++) s += 1 / (Math.sqrt(k) * (k + 1));
-    return s + 1 / Math.sqrt(K); // the tail lies between 0 and 2/sqrt(K): take the middle
+    return s + Math.PI - 2 * Math.atan(Math.sqrt(K + 0.5));
   }
 
   /** Smallest denominator q of a fraction p/q in [(k-1)/2^n, k/2^n] (exact integer test). */
@@ -164,7 +165,7 @@
       if (!(gap >= -1e-9 && gap < h)) throw new Error("w-lebsum: Lebesgue sum not within 2^-n below the integral");
       textOut(out, ["Շերտերի մակերեսների գումարը ", { tex: `\\int_0^1 f_{${n}}\\,dx=\\sum_j 2^{-${n}}\\operatorname{mes}\\{f\\ge j/2^{${n}}\\}\\approx${dec(sum, 4)}` },
         " է, իսկ ", { tex: `\\int_0^1 f\\,dx=${key === "sq" ? "\\tfrac13" : dec(exact, 3)}` }, "։ Տարբերությունը՝ ",
-        { tex: `\\approx${dec(Math.max(gap, 0), 4)}\\lt2^{-${n}}=${dec(h, 4)}` }, "։ Ամեն շերտի լայնությունը հաշվում ենք մեկ անգամ, անկախ նրանից, թե քանի կտորից է այն բաղկացած։"]);
+        { tex: `\\approx${dec(Math.max(gap, 0), 4)}\\lt2^{-${n}}=${dec(h, 7)}` }, "։ Ամեն շերտի լայնությունը հաշվում ենք մեկ անգամ, անկախ նրանից, թե քանի կտորից է այն բաղկացած։"]);
     }
     chips(root.querySelector("[data-out=chips]"), [["sq", "f(x) = x²"], ["sin", "սինուսոիդ"], ["jump", "թռիչքով"]], key, k => { key = k; draw(); });
     inN.addEventListener("input", draw);
