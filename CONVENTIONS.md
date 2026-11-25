@@ -222,7 +222,8 @@ widget, etc.).
 ## Real analysis pages (`site/analysis/`)
 
 - One page per chapter of the student's notes (DECISIONS #27): `ch1-cardinality.html` + `assets/js/ra1.js`,
-  `ch2-lebesgue-measure.html` + `assets/js/ra2.js`, `ch3-measurable-functions.html` + `assets/js/ra3.js` (each loaded after
+  `ch2-lebesgue-measure.html` + `assets/js/ra2.js`, `ch3-measurable-functions.html` + `assets/js/ra3.js`,
+  `ch4-lebesgue-integral.html` + `assets/js/ra4.js` (each loaded after
   `prob.js`, which gives predict blocks and `#deep-btn`). Brand icon `<span class="inf">` and the infinity favicon (copy
   both from `ch1-cardinality.html`). Outline and source typos per chapter in `real_analysis/README.md`.
 - Page pattern = probability (DECISIONS #13), and theorem / definition numbers exactly as in the notes ("Թեորեմ 5"), so
@@ -236,6 +237,14 @@ widget, etc.).
   `ra3_check.mjs` (under 1 s each). Chapter 3 terms: «չափելի ֆունկցիա», «բորելյան ֆունկցիա», «համարյա ամենուրեք (հ.ա.)»,
   «համարժեք ֆունկցիաներ», «ըստ չափի զուգամիտություն», «պարզ ֆունկցիա», theorem names Եգորով, Ռիս, Լուզին, Բորել, Ֆրեշե. Measure terms (glossary): «չափ», «արտաքին չափ», «չափելի», «տարրական բազմություն», «կիսաադիտիվ», «ռեգուլյարություն»,
   «սիգմա-հանրահաշիվ» (the notes write σ-հանրահաշիվ, said once), «բորելյան», «չափով օժտված տարածություն», «Ստիլտեսի չափ».
+- Chapter 4 terms (`ra4_check.mjs`, about 2 s). From the glossary: «ինտեգրելի», «Լեբեգի թեորեմ (մաժորանտով զուգամիտության
+  թեորեմ)», «Բ. Լևիի թեորեմ (մոնոտոն զուգամիտության թեորեմ)», «Ֆատուի լեմմա», «բացարձակ անընդհատ», «անիսկական ինտեգրալ»,
+  «Մարկովի անհավասարություն». Not in the glossary, taken from the notes: «նշանափոխ չափ» (signed measure), «չափերի արտադրյալ»
+  (product measure), «սիգմա-վերջավոր» (notes: σ-վերջավոր), «Չեբիշևի անհավասարություն», «Դարբուի գումարներ». Ours, by analogy
+  with the glossary's «հաջորդական սահման»: «հաջորդական ինտեգրալ» (iterated integral). Thomae's function = «Ռիմանի ֆունկցիա»
+  (Russian-school name), written $r$. "Integrable on A" = «$A$-ի վրա ինտեգրելի» (the notes: «$A$ բազմությամբ», said once).
+- Widget headings (`.widget-head`) hold plain text only: a formula there becomes its own flex column and the heading breaks
+  into three narrow pieces at 390 px (found on the chapter 4 page).
 - Widget pictures show true sizes: no minimum width or outline on intervals that are meant to be tiny (a 1 px minimum
   made 60 intervals of total length 0,2 look like full coverage).
 

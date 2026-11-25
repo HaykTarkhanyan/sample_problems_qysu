@@ -1,0 +1,30 @@
+title = "Real analysis course: chapter 4 page (Lebesgue integral)"
+date = "2026-11-25"
+time = "10:43"
+areas = ["site/analysis", "site/assets/js", "real_analysis", "student_feedback (local only)"]
+done = [
+  "Moved the new source PDF real_analysis/Գլուխ 4.pdf to the gitignored student_feedback/nare_avetisyan/2026-11-24_telegram/files/real_analysis_ch4_lebesgue_integral.pdf (next to chapters 1-3)",
+  "Read all 30 pages (notes pp. 57-86) as images; outline of sections 4.1-4.7 (Defs 25-35, Lemmas 12-13, Theorems 59-81, Examples 7-8) and 11 source typos in real_analysis/README.md",
+  "site/analysis/ch4-lebesgue-integral.html: 11 sections, proofs in details.deep, 5 predict blocks, 4 fact boxes (expectation and Markov/Chebyshev, Lebesgue 1902 / Levi and Fatou 1906, Fubini 1907 / Tonelli 1909, densities as Radon-Nikodym derivatives with links to probability lectures 12, 13, 16), typical mistakes, 6 exercises, exam table of the limit theorems",
+  "site/assets/js/ra4.js: w-lebsum (Lebesgue sum as horizontal layers), w-escape (Example 7 vs sqrt(n) and x^n, with sup_k f_k as the smallest majorant), w-darboux (dyadic Darboux sums for x^2, a jump, Thomae, Dirichlet), w-improper ((1/x) sin(1/x): conditional vs absolute)",
+  "real_analysis/checks/ra4_check.mjs: level sets vs closed forms, Lebesgue sums within 2^-n, envelopes by brute force, qmin by brute force, Thomae S_n, improper integrals vs Si, every number quoted on the page; 0 failures in 1.7 s",
+  "Wired in: analysis index card, hub card text, chapter 3 'what next' link and pager, search index rebuilt",
+  "QA: check_site all passed, Armenian lint 0 errors and 0 hints on the new files (fixed 6 article hints, one calque, cut «ուստի» from 34 to under the density limit), browser_check ok at 390 px after splitting 11 too-wide display formulas, Playwright look at all 4 widgets (fixed: formula in widget heading broke the flex row, last tick label clipped)",
+  "CONVENTIONS: chapter 4 files and terms, plain-text widget headings",
+]
+pending = [
+  "No independent math review of the chapter 4 page yet (chapters 1-3 got one each on 2026-11-24)",
+  "Terms not in the glossary, taken from the notes or chosen by analogy, not confirmed by the owner: «նշանափոխ չափ», «չափերի արտադրյալ», «հաջորդական ինտեգրալ» (iterated), «Ռիմանի ֆունկցիա» for Thomae's function",
+  "Old chapter 3 lint hints (density-usti 57 per 10k, two negative-word hints) are untouched",
+]
+next = [
+  "Ask the owner whether to run one independent math review of ch4-lebesgue-integral.html (one subagent)",
+  "When chapter 5 arrives: it uses the Vitali covering theorems of chapter 2 (section 2.6)",
+]
+files = [
+  "site/analysis/ch4-lebesgue-integral.html", "site/assets/js/ra4.js", "real_analysis/checks/ra4_check.mjs",
+  "site/analysis/index.html", "site/analysis/ch3-measurable-functions.html", "site/index.html",
+  "site/assets/search/analysis.js", "real_analysis/README.md", "CONVENTIONS.md",
+]
+commits = ["see git log: 'Real analysis chapter 4'"]
+notes = "Poppler tools (pdfinfo, pdftotext, pdftoppm) fail on the Armenian file name; copy to an ASCII name first. Playwright MCP screenshots may only be saved under the repo (.playwright-mcp/), not the scratchpad."

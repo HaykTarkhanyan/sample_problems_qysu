@@ -3,10 +3,13 @@
 Site-first course, started 2026-11-24 on a request from a student (Nare): interactive pages built on exactly the
 chapters of her course's lecture notes. The source PDFs are local only, in the gitignored
 `student_feedback/nare_avetisyan/2026-11-24_telegram/files/` (`real_analysis_ch1_cardinality.pdf` 16 pp.,
-`real_analysis_ch2_lebesgue_measure.pdf` 24 pp., `real_analysis_ch3_measurable_functions.pdf` 16 pp.). They are
-typeset LaTeX printed to PDF without a text layer: render pages with `pdftoppm -r 100 -png` and read the images.
+`real_analysis_ch2_lebesgue_measure.pdf` 24 pp., `real_analysis_ch3_measurable_functions.pdf` 16 pp.,
+`real_analysis_ch4_lebesgue_integral.pdf` 30 pp., added 2026-11-25). They are typeset LaTeX printed to PDF without a
+text layer: render pages with `pdftoppm -r 100 -png` and read the images. Poppler tools fail on an Armenian file name
+(`Գլուխ 4.pdf`), so copy or rename to ASCII first.
 
-Pages: `site/analysis/` (`ch1-cardinality.html`, script `site/assets/js/ra1.js`). Content is in our own words,
+Pages: `site/analysis/` (`ch1-cardinality.html` ... `ch4-lebesgue-integral.html`, scripts `site/assets/js/ra1.js` ...
+`ra4.js`, checks `real_analysis/checks/ra1_check.mjs` ... `ra4_check.mjs`). Content is in our own words,
 with the notes' theorem numbers kept so a student can match them ("Թեորեմ 5 (նյութում)").
 
 ## Chapter 1 outline (Բազմության հզորություն), numbering as in the notes
@@ -157,12 +160,126 @@ measure, M = measurable sets, mes = Lebesgue measure; g, m_g, M_g, mes_g for Sti
   measurable functions: f_n = k/2^n on {k/2^n <= f < (k+1)/2^n}, |f - f_n| < 2^-n. Remarks 3-5: f_n can be chosen
   increasing (or decreasing), and m <= f_n <= M when m <= f <= M.
 
+## Chapter 4 outline (Լեբեգի ինտեգրալ, pp. 57-86), numbering as in the notes
+
+Intro: Riemann splits the domain, Lebesgue splits the range; the integral works on any measure space, not only R^n.
+Sections 4.1-4.4 assume (X, F, μ) is a finite, complete measure space (μ(X) < +∞, subsets of null sets are null).
+Notation: ∫_A f(x) dμ; (L) and (R) for Lebesgue and Riemann in 4.4; μ_Z = μ_X ⊗ μ_Y in 4.6. Properties are numbered
+«Հատկություն 1-8» across 4.1-4.2; corollaries and examples continue the chapter 3 / chapter 2 numbering.
+
+4.1 Simple functions (pp. 57-62)
+- Def 25: simple measurable f with values y_1, y_2, ... is integrable on A ∈ F if Σ y_n μ(A_n) converges
+  absolutely, A_n = {x ∈ A: f(x) = y_n}; ∫_A f dμ := Σ y_n μ(A_n). Absolute convergence is needed so that the sum
+  does not depend on the order of the values (Riemann rearrangement).
+- Lemma 12: A = disjoint ∪ B_i, f = c_i on B_i (c_i need not be distinct) => f integrable iff Σ |c_i| μ(B_i) < ∞,
+  and then ∫_A f = Σ c_i μ(B_i) (group the B_i by value, rearrange a positive series).
+- Th 59 (linearity) via C_nk = F_n ∩ G_k and Lemma 12. Th 60: bounded simple measurable, m <= f <= M =>
+  integrable and m μ(A) <= ∫ <= M μ(A). Properties 1-4: f >= 0 => ∫ >= 0; f >= g => ∫f >= ∫g; μ(A) = 0 => ∫ = 0;
+  equivalent (a.e. equal) f, g are integrable together with equal integrals.
+- Th 61: |f| <= φ a.e., φ simple integrable => f integrable and |∫ f| <= ∫ φ (Y_nk = F_n ∩ V_k).
+- Th 62 (countable additivity): f integrable on A = disjoint ∪ A_i => integrable on each A_i, ∫_A = Σ ∫_{A_i}.
+  Th 63 (converse): integrable on each A_i and Σ ∫_{A_i} |f| < ∞ => integrable on A.
+
+4.2 General case (pp. 63-70)
+- Def 26: measurable f is integrable on A if there are simple integrable f_n converging to f uniformly on A;
+  ∫_A f := lim ∫_A f_n. Three checks: the limit exists (Cauchy: |∫f_n - ∫f_m| <= μ(A) sup|f_n - f_m|), does not
+  depend on the sequence (interleave g_1, f_1, g_2, f_2, ...), agrees with Def 25 for simple f (f_n = f).
+- Th 64 linearity. Th 65: bounded measurable, m <= f <= M => integrable, m μ(A) <= ∫ <= M μ(A) (Remark 5 of ch3
+  gives m <= f_n <= M). Properties 5-8 = Properties 1-4 for general f.
+- Th 66: |f| <= φ a.e., φ integrable => f integrable, |∫ f| <= ∫ φ (approximate f, φ within ε by simple
+  f~, φ~ (Th 58), |f~| < φ~ + 2ε, error 4ε μ(A)).
+- Th 67: measurable f is integrable iff |f| is; |∫ f| <= ∫ |f|. Remark 6: measurability is needed: with a
+  non-measurable D ⊂ [0,1] (Th 36), the function 1 on D, -1 off D is not measurable, though its modulus 1 is integrable.
+- Th 68 (countable additivity), with a simple φ within ε: error 2ε μ(A). Consequence: integrable on A => on every
+  measurable B ⊂ A. Th 69 (converse): Σ ∫_{A_i} |f| < ∞ => integrable on A (simple φ within 1, Th 63).
+- Th 70 (absolute continuity): for every ε there is δ with μ(e) < δ => ∫_e |f| < ε (A_n = {n-1 <= |f| < n},
+  tail Σ_{n>=N} < ε/2, δ = ε/(2N)).
+- Chebyshev inequality (unnumbered): μ{|f| >= λ} <= (1/λ) ∫_A |f|. Cor 8: ∫_A |f| = 0 => f = 0 a.e.
+
+4.3 Limit under the integral sign (pp. 70-75)
+- Th 71 (Lebesgue, dominated, in measure): f_n => f in measure on A, |f_n| <= φ, φ integrable => f, f_n integrable
+  and lim ∫ f_n = ∫ f (Riesz subsequence gives |f| <= φ a.e.; B_n = {|f - f_n| <= ε/(2μ(A))}, C_n = A \ B_n,
+  absolute continuity with ε/4).
+- Ex 7: f_n = n on (0, 1/n), 0 elsewhere: f_n -> 0 everywhere on [0,1], but ∫_{[0,1]} f_n = 1. No integrable
+  majorant (sup_n f_n ≈ 1/x).
+- Th 72 (Lebesgue, a.e. convergence) from Th 71. The majorant may hold only a.e. Cor 9 (bounded convergence):
+  f_n -> f a.e., |f_n| <= M => (4.3.2).
+- Th 73 (Levi, monotone): f_n <= f_{n+1}, ∫_A f_n <= K => f_n converges a.e. to an integrable f and (4.3.2)
+  (assume f_n >= 0, otherwise f_n - f_1; Chebyshev gives μ(E_n^(m)) <= K/m, so f < ∞ a.e.; majorant ψ = m on
+  B_m = {m-1 <= f < m}, Σ m μ(B_m) < K + μ(A)).
+- Th 74 (series of nonnegative functions): f_n >= 0, Σ ∫ f_n < ∞ => Σ f_n converges a.e. and ∫ Σ = Σ ∫.
+  "Each of the two follows from the other" (Th 73 <=> Th 74).
+- Lemma 13 (Fatou): f_n >= 0 integrable => ∫ liminf f_n <= liminf ∫ f_n (F_m = inf_{k>=m} f_{n_k}, Levi).
+  Th 75 (Fatou): f_n >= 0 integrable, f_n -> f a.e., ∫ f_n <= K => f integrable, ∫ f <= K.
+
+4.4 Lebesgue vs Riemann (pp. 75-78)
+- Th 76: Riemann integrable on [0,1] => Lebesgue integrable, (L)∫ = (R)∫. Proof: dyadic partitions x_nk = k/2^n,
+  Darboux sums S_n, s_n, step functions f̄_n = M_nk, f_n = m_nk on [x_{n,k-1}, x_nk); f_{n-1} <= f_n <= f <= f̄_n
+  <= f̄_{n-1}; Levi gives f̄, f_ with (L)∫(f̄ - f_) = lim (S_n - s_n); Riemann integrable iff f_ = f = f̄ a.e.
+  Converse false: Dirichlet function (Lebesgue integral 0, not Riemann integrable on any interval).
+- Th 77 (Lebesgue criterion): f Riemann integrable on [0,1] iff bounded and continuous a.e. (at a non-dyadic x,
+  f̄(x) = f_(x) iff f is continuous at x; dyadic points are countable).
+
+4.5 σ-finite measure spaces (pp. 78-82)
+- Def 27: σ-finite = X = disjoint ∪ X_i, μ(X_i) < ∞. Def 28: A measurable if every A ∩ X_i is; μ(A) = Σ μ(A ∩ X_i);
+  does not depend on the split (left as exercise). Lebesgue measure on R is σ-finite.
+- Def 29: f integrable on A if integrable on each A ∩ X_i and Σ ∫_{A∩X_i} |f| < ∞; ∫_A f = Σ ∫_{A∩X_i} f. The
+  modulus in (4.5.1) matters (compare simple functions, Def 25).
+- Properties 1-9 carry over (linearity, monotonicity, equivalence, domination, |f| test, countable additivity,
+  converse, absolute continuity, Chebyshev). Th 65 fails: f(x) = a != 0 on R is not integrable.
+- Th 71, 72 (Lebesgue), 73, 74 (Levi), 75 and Lemma 13 (Fatou) hold; only Th 78 is proved: dominated
+  convergence in measure on a σ-finite space (tail B_m with ∫_{B_m} φ < ε/4, finite part D_m by Th 71).
+- Improper Riemann integral: for f >= 0 with lim_{ε->0} ∫_a^{b-ε} f existing, f is Lebesgue integrable on [a,b].
+  In general: absolutely convergent improper => Lebesgue integrable; f(x) = (1/x) sin(1/x) on (0,1) is improper
+  Riemann integrable on [0,1] but not Lebesgue integrable (|f| is not improper integrable). Same on the whole line.
+
+4.6 Product measures, Fubini (pp. 82-85), finite measure spaces (X, F_X, μ_X), (Y, F_Y, μ_Y), Z = X × Y
+- Def 30: elementary C ⊂ Z = finite disjoint union of rectangles A_i × B_i (A_i ∈ F_X, B_i ∈ F_Y); class P_Z;
+  μ_Z(C) = Σ μ_X(A_i) μ_Y(B_i) (compare Defs 7, 8). P_Z closed under ∩, ∪, \, Δ; μ_Z finitely additive.
+- Def 31: outer measure μ_Z*(C) = inf Σ μ_X(A_n) μ_Y(B_n) over covers by rectangles. Def 32: A measurable if for
+  every ε there is B ∈ P_Z with μ_Z*(A Δ B) < ε; F_Z, μ_Z(A) = μ_Z*(A) (compare Defs 9, 10). F_Z is a σ-algebra,
+  μ_Z countably additive. Def 33: μ_Z = μ_X ⊗ μ_Y, the product measure; (Z, F_Z, μ_Z).
+- Th 79 (Fubini): f μ_Z-integrable on A ∈ F_Z => ∫_A f dμ_Z = ∫_X (∫_{A_x} f dμ_Y) dμ_X = ∫_Y (∫_{A_y} f dμ_X) dμ_Y,
+  A_x = {y: (x, y) ∈ A}, A_y = {x: (x, y) ∈ A}; the inner integrals exist a.e. Unlike Riemann's Fubini, nothing but
+  integrability is assumed. Existence of the iterated integrals does not imply integrability.
+- Th 80: f: A -> R (measurable, see typos) with one of the iterated integrals of |f| finite => f integrable, (4.6.1).
+- Ex 8: A = unit disk, f = xy / (x^2 + y^2)^2, f(0,0) = 0: both iterated integrals are 0 (f odd in y and in x), but
+  ∫_A |f| = ∫_0^1 dr ∫_0^{2π} |sin φ cos φ| / r dφ = ∞.
+
+4.7 Radon-Nikodym (pp. 85-86)
+- ν(A) := ∫_A f dμ for μ-integrable f on X (finite μ); countably additive (4.7.2) by Th 68.
+- Def 34: signed measure (նշանափոխ չափ) = finite-valued, countably additive function on a σ-algebra. ν from (4.7.1)
+  is a signed measure, a measure when f >= 0.
+- Def 35: ν absolutely continuous with respect to μ if μ(A) = 0 => ν(A) = 0. Every ν from (4.7.1) is.
+- Th 81 (Radon-Nikodym): ν absolutely continuous w.r.t. μ (both on the same σ-algebra) => ν(A) = ∫_A f dμ for some
+  μ-integrable f. The notes say the proof is outside the course.
+
 ## Math reviews (2026-11-24)
 
 One independent review per page in `reviews/2026-11-24_ch{1,2,3}_math_review.md`; no wrong answer or invalid proof
 was found, and all findings were applied the same day. Each report ends with further slips in the notes that the
 page avoids (for example chapter 2: Th 37 proof "d ∈ V_n" should be V_{n+1}; chapter 1: Corollary 1 exists between
 Theorems 8 and 9). Check those lists before writing a new page from the same notes.
+
+## Typos noticed in the chapter 4 source (do not copy)
+
+- p. 60, Th 59 proof: "համաձայն լեմմա 10-ի" should be Lemma 12 (Lemma 10 is the chapter 3 continuity lemma).
+- p. 61, Th 61 proof: "F(x) = f_n" should be f(x) = f_n.
+- p. 63: "(f_n(x) - f_m(f))" should be f_m(x).
+- p. 70, Cor 8 proof: "μ{x ∈ A: |f(x)| < 1/n} <= n ∫|f|" should be |f(x)| >= 1/n (the next line uses >=).
+- p. 73, Th 73 proof: "∩_{n=1}^∞ E^(m)" should be ∩_{m=1}^∞.
+- p. 76, Th 76 proof: s_n = 2^-n Σ_{k=1}^{n} m_nk should run to 2^n.
+- p. 81, Th 78: "(X, Fμ)" lacks a comma; the proof says "there is n" and then uses B_m.
+- p. 85, Th 80: f must be μ_Z-measurable; the notes write only f: A -> R. Without measurability the iterated
+  integrals can exist while f is not integrable.
+- p. 85, Ex 8: the outer integrals run over [0,1], but the disk projects onto [-1,1]. The value 0 holds either way,
+  since the inner integral is 0 for every x != 0 (f is odd in the inner variable).
+- p. 67, Remark 6 calls the ±1 function χ_D; on the site it gets another name so it is not read as the indicator.
+- p. 86, Th 81 calls both μ and ν signed measures; ∫ f dμ needs μ to be a (finite) measure, as at the start of 4.7.
+  The site states it that way.
+
+The chapter 4 page (2026-11-25) has had no independent math review yet. The chapter 3 review found no wrong answer
+but 15 smaller findings, so one is worth running before students rely on the page.
 
 ## Typos noticed in the chapter 3 source (do not copy)
 

@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%230033A0%27/%3E%3Cpath d=%27M16 16C13 11 8 11 8 16S13 21 16 16S24 11 24 16S19 21 16 16Z%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%272.6%27 fill=%27%23F2A800%27/%3E%3C/svg%3E">
+<title>Գլուխ 4 - Լեբեգի ինտեգրալ</title>
+<meta name="description" content="Իրական անալիզ, գլուխ 4՝ Լեբեգի ինտեգրալը պարզ և ընդհանուր ֆունկցիաների համար, Լեբեգի, Լևիի և Ֆատուի թեորեմները, համեմատություն Ռիմանի ինտեգրալի հետ, սիգմա-վերջավոր չափ, Ֆուբինիի և Ռադոն-Նիկոդիմի թեորեմները։ Ինտերակտիվ նկարներով։">
+<script>try{var t=localStorage.getItem("qysu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/auto-render.min.js"></script>
+<script defer src="../assets/site.js"></script>
+<script defer src="../assets/js/prob.js"></script>
+<script defer src="../assets/js/ra4.js"></script>
+</head>
+<body data-try-default data-two-step>
+<header class="site-header"><div class="inner">
+  <a class="brand" href="index.html"><span class="inf" aria-hidden="true"></span>Իրական անալիզ</a>
+  <div class="header-actions">
+    <button class="btn" id="deep-btn" type="button" aria-pressed="false" title="Բացել կամ փակել բոլոր ապացույցները">∑ <span class="lbl">Ապացույցներ</span></button>
+    <button class="btn" id="try-btn" type="button" aria-pressed="false" title="Թաքցնել վարժությունների լուծումները՝ նախ ինքներդ փորձելու համար">✎ <span class="lbl">Փորձել ինքնուրույն</span></button>
+    <button class="btn" id="expand-btn" type="button" title="Բացել կամ փակել բոլոր բաժինները">⇕ <span class="lbl">Բոլոր բաժինները</span></button>
+    <button class="btn" id="theme-btn" type="button" aria-pressed="false" title="Մուգ / բաց ռեժիմ">◐</button>
+  </div>
+</div></header>
+
+<main class="page">
+  <div class="page-head">
+    <div class="kicker">Գլուխ 4</div>
+    <h1>Լեբեգի ինտեգրալ</h1>
+    <p class="subtitle">Ինչպես ինտեգրել՝ բաժանելով արժեքները, ոչ թե առանցքը, երբ կարելի է սահմանն անցնել ինտեգրալի նշանի տակ, և ինչ կապ ունի այս ինտեգրալը Ռիմանի ինտեգրալի հետ</p>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Բովանդակություն">
+      <div class="toc-title">Բովանդակություն</div>
+      <ol>
+        <li><a href="#intro">Այս գլխի մասին</a></li>
+        <li><a href="#simple">Պարզ ֆունկցիաներ</a></li>
+        <li><a href="#general">Ընդհանուր դեպքը</a></li>
+        <li><a href="#limits">Սահմանային անցում</a></li>
+        <li><a href="#riemann">Լեբեգ և Ռիման</a></li>
+        <li><a href="#sigma">Սիգմա-վերջավոր չափ</a></li>
+        <li><a href="#fubini">Ֆուբինիի թեորեմը</a></li>
+        <li><a href="#radon">Ռադոն-Նիկոդիմի թեորեմը</a></li>
+        <li><a href="#mistakes">Տիպիկ սխալներ</a></li>
+        <li><a href="#practice">Վարժություններ</a></li>
+        <li><a href="#exam">Ամփոփում և քննություն</a></li>
+      </ol>
+    </nav>
+
+    <div class="content">
+
+<!-- ================================================================== -->
+<details class="sec" id="intro" open>
+<summary><h2>Այս գլխի մասին</h2></summary>
+<div class="sec-body">
+<p>Ռիմանի ինտեգրալում բաժանում ենք <em>որոշման տիրույթը</em>՝ հատվածը կտրում ենք մասերի և գումարում ենք «բարձրություն ×
+երկարություն» արտադրյալները։ Լեբեգն առաջարկեց բաժանել <em>արժեքների տիրույթը</em>՝ հավաքել այն կետերը, որտեղ $f$-ը մոտավորապես
+հավասար է $y$-ի, չափել այդ բազմությունը և գումարել «$y$ × չափ» արտադրյալները։ Դրա համար պետք է, որ այդ բազմությունները չափելի
+լինեն, և հենց դա էր նախորդ գլխի նյութը։ Այս ճանապարհով ինտեգրալը սահմանվում է ցանկացած չափով օժտված տարածության վրա, ոչ միայն
+$\R^n$-ում, և շատ ավելի լավ է «համակերպվում» սահմանների հետ։</p>
+<div class="box idea"><div class="box-title">Երեք հիմնական գաղափար</div>
+<ol>
+  <li><strong>Նախ պարզ ֆունկցիաներ, հետո սահման։</strong> Պարզ ֆունկցիայի ինտեգրալը $\sum_ny_n\,\mu\{f=y_n\}$ շարքն է, որը պետք է
+  բացարձակ զուգամիտի։ Ցանկացած չափելի $f$-ի ինտեգրալը նրան հավասարաչափ մոտարկող պարզ ֆունկցիաների ինտեգրալների սահմանն է։</li>
+  <li><strong>Սահմանն ինտեգրալի նշանի տակ անցնելու համար բավական է ինտեգրելի մաժորանտը</strong> (Լեբեգ) կամ մոնոտոնությունը (Լևի),
+  իսկ ոչ բացասական ֆունկցիաների համար միշտ ճիշտ է Ֆատուի անհավասարությունը։ Հավասարաչափ զուգամիտություն պետք չէ։</li>
+  <li><strong>Լեբեգի ինտեգրալն ընդլայնում է Ռիմանի ինտեգրալը։</strong> Ըստ Ռիմանի ինտեգրելի ֆունկցիան ինտեգրելի է նաև ըստ Լեբեգի՝ նույն
+  արժեքով, և ըստ Ռիմանի ինտեգրելի են ճիշտ այն սահմանափակ ֆունկցիաները, որոնք հ.ա. անընդհատ են։ Կրկնակի ինտեգրալը հաշվում են
+  հաջորդական ինտեգրալներով (Ֆուբինի)։</li>
+</ol>
+</div>
+<div class="note"><strong>Նշանակումներ։</strong> թեորեմների համարները նույնն են, ինչ նյութում (Թեորեմ 59-81, Սահմանում 25-35, Լեմմա 12, 13)։
+4.1-4.4 բաժիններում, ինչպես նյութում, $(X,\mathcal F,\mu)$-ն <strong>վերջավոր</strong> ($\mu(X)\lt\infty$) և <strong>լրիվ</strong> չափով
+օժտված տարածություն է (<a href="ch2-lebesgue-measure.html#stieltjes">Գլուխ 2, Սահմանում 17</a>), իսկ $A\in\mathcal F$։ Նյութը գրում է
+«$f$-ը $A$ բազմությամբ ինտեգրելի է», մենք՝ «$f$-ն ինտեգրելի է $A$-ի վրա»։ «Հատկություն 1-8»-ը նյութի համարակալումն է, իսկ Հետևանքներն
+ու Օրինակները շարունակում են նախորդ գլուխների համարները։</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="simple" open>
+<summary><h2>Պարզ ֆունկցիաների ինտեգրալը</h2></summary>
+<div class="sec-body">
+<p>Պարզ ֆունկցիան ընդունում է վերջավոր կամ հաշվելի թվով արժեքներ (<a href="ch3-measurable-functions.html#simple">Գլուխ 3,
+Սահմանում 24</a>)։ Նրա ինտեգրալը սահմանելը հեշտ է՝ ամեն արժեք բազմապատկում ենք այն բազմության չափով, որտեղ ֆունկցիան ընդունում է այդ
+արժեքը։</p>
+<div class="box def"><div class="box-title">Սահմանում 25</div>
+<p>Դիցուք $f$-ը պարզ չափելի ֆունկցիա է՝ $y_1,y_2,\dots$ (իրարից տարբեր) արժեքներով, և $A_n=\{x\in A:\ f(x)=y_n\}$։ $f$-ը կոչվում է
+<strong>ինտեգրելի $A$-ի վրա</strong> (integrable), եթե</p>
+$$\sum_ny_n\,\mu(A_n)$$
+<p>շարքը <strong>բացարձակ</strong> զուգամիտում է։ Այդ դեպքում շարքի գումարը կոչվում է $f$-ի <strong>Լեբեգի ինտեգրալ</strong> (Lebesgue
+integral) $A$-ի վրա՝</p>
+$$\int_Af(x)\,d\mu:=\sum_ny_n\,\mu(A_n).$$
+</div>
+<p>Վերջավոր թվով արժեքների դեպքում շարքը վերջավոր գումար է, և պայմանն ինքնաբերաբար կատարվում է։ Բացարձակ զուգամիտությունը պետք է
+հաշվելի թվով արժեքների դեպքում՝ $y_n$-երի համարակալումը մեր ընտրությունն է, և ինտեգրալը չպետք է կախված լինի դրանից։ Պայմանական
+զուգամետ շարքի անդամների տեղերը փոխելով կարելի է ստանալ ցանկացած գումար (Ռիմանի թեորեմ), իսկ բացարձակ զուգամետ շարքի գումարը կախված
+չէ անդամների կարգից։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> $(0,1]$-ում դիցուք $g=(-1)^n\tfrac{2^n}{n}$ $\left(2^{-n},2^{1-n}\right]$ միջակայքում, $n=1,2,\dots$։ Այդ
+միջակայքի երկարությունը $2^{-n}$ է, և $\sum_ny_n\operatorname{mes}(A_n)=\sum_n\tfrac{(-1)^n}{n}=-\ln2$։ Ինտեգրելի՞ է $g$-ն $(0,1]$-ի վրա։</p>
+<div class="predict-opts"><button class="btn" type="button">Այո, և $\int g=-\ln2$</button><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Կախված է նրանից, թե ինչ կարգով գումարենք</button></div>
+<div class="predict-why">$\sum_n|y_n|\operatorname{mes}(A_n)=\sum_n\tfrac1n=\infty$, ուստի Սահմանում 25-ի պայմանը չի կատարվում։ $-\ln2$-ը պայմանական
+զուգամետ շարքի գումարն է այս մեկ կարգով։ Արժեքներն այլ կարգով դասավորելով կստանայինք այլ թիվ, և հենց այդ պատճառով է սահմանումը պահանջում
+բացարձակ զուգամիտություն։ Երրորդ տարբերակը նկարագրում է այն իրավիճակը, որից սահմանումը խուսափում է։</div>
+</div>
+
+<div class="box thm"><div class="box-title">Լեմմա 12</div>
+<p>Դիցուք $A=\bigcup_iB_i$, որտեղ $B_i\in\mathcal F$-երը չեն հատվում, և $f=c_i$ $B_i$-ում ($c_i$-երը կարող են կրկնվել)։ $f$-ն ինտեգրելի է
+$A$-ի վրա այն և միայն այն դեպքում, երբ $\sum_i|c_i|\,\mu(B_i)\lt\infty$, և այդ դեպքում $\int_Af\,d\mu=\sum_ic_i\,\mu(B_i)$։</p>
+</div>
+<p>Լեմման թույլ է տալիս ինտեգրալը հաշվել ցանկացած հարմար տրոհմամբ, ոչ միայն «մեկ արժեք՝ մեկ բազմություն» տրոհմամբ։ Ապացույցում $B_i$-երը
+խմբավորում ենք ըստ արժեքի՝ $A_n=\bigcup_{i:\,c_i=y_n}B_i$, և օգտվում ենք չափի հաշվելի ադիտիվությունից և դրական շարքի անդամների
+տեղափոխելիությունից։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 59, 60, 61 և Հատկություն 1-4</div>
+<p>Այստեղ $f$-ը, $g$-ն և $\varphi$-ն պարզ չափելի ֆունկցիաներ են։</p>
+<ul>
+  <li>(59, գծայնություն) Եթե $f$-ը և $g$-ն ինտեգրելի են, ապա $\alpha f+\beta g$-ն նույնպես ինտեգրելի է, և
+  $\int_A(\alpha f+\beta g)\,d\mu=\alpha\int_Af\,d\mu+\beta\int_Ag\,d\mu$։</li>
+  <li>(60) Եթե $m\le f\le M$, ապա $f$-ն ինտեգրելի է, և $m\,\mu(A)\le\int_Af\,d\mu\le M\,\mu(A)$։</li>
+  <li>(Հատկություն 1-4) Ինտեգրելի ֆունկցիաների համար՝ եթե $f\ge0$, ապա $\int_Af\ge0$։ Եթե $f\ge g$, ապա $\int_Af\ge\int_Ag$։ Եթե
+  $\mu(A)=0$, ապա $\int_Af=0$։ Համարժեք ֆունկցիաները միաժամանակ ինտեգրելի են կամ ոչ, և նրանց ինտեգրալները հավասար են։</li>
+  <li>(61) Եթե $|f|\le\varphi$ հ.ա., և $\varphi$-ն ինտեգրելի է, ապա $f$-ն ինտեգրելի է, և $\left|\int_Af\,d\mu\right|\le\int_A\varphi\,d\mu$։</li>
+</ul>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 59, 61)</summary><div class="inner">
+<p><strong>Թեորեմ 59։</strong> դիցուք $f$-ի արժեքները $f_n$-երն են, $g$-ինը՝ $g_k$-երը, $F_n=\{f=f_n\}$, $G_k=\{g=g_k\}$ և
+$C_{nk}=F_n\cap G_k$։ $C_{nk}$-ի վրա $\alpha f+\beta g=\alpha f_n+\beta g_k$, և</p>
+$$\begin{aligned}&\sum_{n,k}|\alpha f_n+\beta g_k|\,\mu(C_{nk})\\&\quad\le|\alpha|\sum_n|f_n|\,\mu(F_n)\\&\quad+|\beta|\sum_k|g_k|\,\mu(G_k)\lt\infty.\end{aligned}$$
+<p>Լեմմա 12-ով $\alpha f+\beta g$-ն ինտեգրելի է, իսկ նույն շարքերն առանց մոդուլների տալիս են գծայնության բանաձևը։</p>
+<p><strong>Թեորեմ 61։</strong> զրո չափի բազմության վրա $f$-ը փոխելով (Հատկություն 4) կարող ենք համարել, որ $|f|\le\varphi$ ամենուրեք։ Դիցուք
+$\varphi$-ի արժեքները $\varphi_k$-երն են, և $Y_{nk}=F_n\cap\{\varphi=\varphi_k\}$։ $Y_{nk}$-ի վրա $|f_n|\le\varphi_k$, հետևաբար</p>
+$$\begin{aligned}\sum_n|f_n|\,\mu(F_n)&=\sum_{n,k}|f_n|\,\mu(Y_{nk})\\&\le\sum_{n,k}\varphi_k\,\mu(Y_{nk})\\&=\int_A\varphi\,d\mu.\end{aligned}$$
+<p>Ուրեմն $f$-ն ինտեգրելի է, և $\left|\int_Af\right|=\left|\sum_nf_n\,\mu(F_n)\right|\le\sum_n|f_n|\,\mu(F_n)\le\int_A\varphi$։ $\blacksquare$</p>
+</div></details>
+<div class="box thm"><div class="box-title">Թեորեմ 62 և Թեորեմ 63 (հաշվելի ադիտիվություն)</div>
+<p>Դիցուք $A=\bigcup_{i=1}^\infty A_i$, որտեղ $A_i$-երը չափելի են և չեն հատվում, իսկ $f$-ը պարզ չափելի ֆունկցիա է։<br>
+(62) Եթե $f$-ն ինտեգրելի է $A$-ի վրա, ապա այն ինտեգրելի է յուրաքանչյուր $A_i$-ի վրա, և</p>
+$$\int_Af\,d\mu=\sum_{i=1}^\infty\int_{A_i}f\,d\mu.$$
+<p>(63) Հակառակը՝ եթե $f$-ն ինտեգրելի է յուրաքանչյուր $A_i$-ի վրա, և $\sum_i\int_{A_i}|f|\,d\mu\lt\infty$, ապա $f$-ն ինտեգրելի է $A$-ի վրա։</p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Թեորեմ 62։</strong> դիցուք $B_n=\{f=y_n\}$ և $B_{i,n}=A_i\cap B_n$։ Չափի հաշվելի ադիտիվությունից $\mu(B_n)=\sum_i\mu(B_{i,n})$, և
+բացարձակ զուգամետ կրկնակի շարքի գումարման կարգը փոխելով՝</p>
+$$\begin{aligned}\int_Af\,d\mu&=\sum_ny_n\sum_i\mu(B_{i,n})\\&=\sum_i\sum_ny_n\,\mu(B_{i,n})\\&=\sum_i\int_{A_i}f\,d\mu.\end{aligned}$$
+<p><strong>Թեորեմ 63։</strong> նույն հաշվարկը $|y_n|$-երով ցույց է տալիս, որ $\sum_n|y_n|\,\mu(B_n)=\sum_i\int_{A_i}|f|\lt\infty$, այսինքն՝ $f$-ն
+ինտեգրելի է։ Մոդուլի պայմանն անհրաժեշտ է՝ Կանխատեսման $g$-ն ինտեգրելի է յուրաքանչյուր $\left(2^{-n},2^{1-n}\right]$-ի վրա, $\sum_n\int g=-\ln2$
+շարքը զուգամետ է, բայց $g$-ն ինտեգրելի չէ $(0,1]$-ի վրա։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="general" open>
+<summary><h2>Լեբեգի ինտեգրալն ընդհանուր դեպքում</h2></summary>
+<div class="sec-body">
+<p>Ամեն չափելի ֆունկցիա պարզ չափելի ֆունկցիաների հավասարաչափ սահման է (<a href="ch3-measurable-functions.html#simple">Գլուխ 3,
+Թեորեմ 58</a>)։ Ուստի բնական է ինտեգրալը սահմանել որպես այդ պարզ ֆունկցիաների ինտեգրալների սահման։</p>
+<div class="box def"><div class="box-title">Սահմանում 26</div>
+<p>Չափելի $f$-ը կոչվում է ինտեգրելի $A$-ի վրա, եթե գոյություն ունի ինտեգրելի պարզ $f_n$ ֆունկցիաների հաջորդականություն, որը $A$-ի վրա
+<strong>հավասարաչափ</strong> զուգամիտում է $f$-ին։ Այդ դեպքում</p>
+$$\int_Af(x)\,d\mu:=\lim_{n\to\infty}\int_Af_n(x)\,d\mu.$$
+</div>
+<p><strong>Ինչո՞ւ է սահմանումը ճիշտ։</strong> Պետք է ստուգել երեք բան։</p>
+<ol>
+  <li><strong>Սահմանը գոյություն ունի։</strong> Թեորեմ 59, 61 և 60-ով
+  $\left|\int_Af_n-\int_Af_m\right|\le\int_A|f_n-f_m|\le\mu(A)\sup_A|f_n-f_m|\to0$, այսինքն՝ ինտեգրալների հաջորդականությունը ֆունդամենտալ
+  է։ Այստեղ է օգտագործվում $\mu(A)\lt\infty$ պայմանը։</li>
+  <li><strong>Սահմանը կախված չէ $f_n$-երի ընտրությունից։</strong> Եթե $g_n$-երը մեկ այլ այդպիսի հաջորդականություն են, ապա
+  $g_1,f_1,g_2,f_2,\dots$-ն նույնպես հավասարաչափ զուգամիտում է $f$-ին։ Նրա ինտեգրալների հաջորդականությունը զուգամետ է, ուրեմն երկու
+  ենթահաջորդականություններն ունեն նույն սահմանը։</li>
+  <li><strong>Պարզ $f$-ի համար ստացվում է Սահմանում 25-ը։</strong> Բավական է վերցնել $f_n=f$։</li>
+</ol>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Թեորեմ 58-ի $f_n$-ի համար $0\le f-f_n\lt2^{-n}$։ Ո՞րն է ամենափոքր $n$-ը, որի համար $0\le\int_{[0,1]}f-\int_{[0,1]}f_n\lt0{,}01$
+<em>ցանկացած</em> չափելի $0\le f\le1$ ֆունկցիայի համար։</p>
+<div class="predict-opts"><button class="btn" type="button">$n=4$</button><button class="btn" type="button" data-ok>$n=7$</button><button class="btn" type="button">Կախված է $f$-ից, ընդհանուր պատասխան չկա</button></div>
+<div class="predict-why">$0\le\int(f-f_n)\le2^{-n}\operatorname{mes}[0,1]=2^{-n}$, իսկ $2^{-6}\approx0{,}016$, $2^{-7}\approx0{,}0078$։ $n=6$-ը բավական չէ բոլոր
+ֆունկցիաների համար՝ եթե $f$-ը հաստատուն է և մի փոքր պակաս $\tfrac{k+1}{2^6}$-ից, ապա տարբերությունը համարյա $2^{-6}$ է։ Գնահատականը կախված է
+միայն $n$-ից և $\mu(A)$-ից, ոչ թե $f$-ից, և հենց դրա համար է Սահմանում 26-ը պահանջում հավասարաչափ զուգամիտություն։</div>
+</div>
+
+<div class="widget" id="w-lebsum">
+  <div class="widget-head">Լեբեգի գումար՝ հորիզոնական շերտերով</div>
+  <p class="widget-hint">Կապույտ կորը $f$-ն է։ Արժեքների առանցքը բաժանված է $2^{-n}$ բարձրությամբ շերտերի։ $j$-րդ շերտը (նարնջագույն կամ
+  կապույտ գոտի) ծածկում է $\{f\ge j/2^n\}$ բազմությունը, և նրա մակերեսը $2^{-n}\operatorname{mes}\{f\ge j/2^n\}$ է։ Բոլոր շերտերը միասին
+  Թեորեմ 58-ի $f_n$ պարզ ֆունկցիայի ինտեգրալն են։ Մեծացրեք $n$-ը և համեմատեք $\int f$-ի հետ։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="1" max="7" step="1" value="2" aria-label="n"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+<p>Շերտերով գումարը նույն $\sum_k\tfrac k{2^n}\operatorname{mes}(E_k)$-ն է, որտեղ $E_k=\bigl\{\tfrac k{2^n}\le f\lt\tfrac{k+1}{2^n}\bigr\}$՝ $\tfrac k{2^n}$
+արժեքը բաժանված է $k$ շերտի (Լեմմա 12-ի ոգով)։ Ռիմանի գումարը հաշվում է $x$-առանցքի կտորներով, իսկ այստեղ ամեն շերտի համար անհրաժեշտ է միայն
+մեկ թիվ՝ $\{f\ge j/2^n\}$ բազմության չափը, որքան էլ «խառը» լինի այդ բազմությունը։</p>
+
+<div class="box thm"><div class="box-title">Թեորեմ 64-67 և Հատկություն 5-8</div>
+<ul>
+  <li>(64) Գծայնությունը՝ ինչպես Թեորեմ 59-ում։</li>
+  <li>(65) Սահմանափակ չափելի ֆունկցիան ինտեգրելի է, և եթե $m\le f\le M$, ապա $m\,\mu(A)\le\int_Af\,d\mu\le M\,\mu(A)$։</li>
+  <li>(Հատկություն 5-8) Հատկություն 1-4-ը ճիշտ են ցանկացած ինտեգրելի ֆունկցիաների համար։</li>
+  <li>(66) Եթե $f$-ը չափելի է, $|f|\le\varphi$ հ.ա., և $\varphi$-ն ինտեգրելի է, ապա $f$-ն ինտեգրելի է, և $\left|\int_Af\,d\mu\right|\le\int_A\varphi\,d\mu$։</li>
+  <li>(67) Չափելի $f$-ը և $|f|$-ը միաժամանակ ինտեգրելի են կամ ոչ, և $\left|\int_Af\,d\mu\right|\le\int_A|f|\,d\mu$։</li>
+</ul>
+</div>
+<p>Թեորեմ 65-ը հետևում է Թեորեմ 60-ից. <a href="ch3-measurable-functions.html#simple">Գլուխ 3-ի Դիտողություն 5</a>-ով $f_n$-երը կարելի է ընտրել
+այնպես, որ $m\le f_n\le M$, իսկ անհավասարություններում անցնում ենք սահմանի։ <strong>Դիտողություն 6</strong>-ը ցույց է տալիս, որ Թեորեմ 67-ում
+չափելիությունը չի կարելի բաց թողնել։ Դիցուք $D\subset[0,1]$-ը ոչ չափելի բազմություն է (<a href="ch2-lebesgue-measure.html#vitali">Գլուխ 2,
+Թեորեմ 36</a>), և $h=1$ $D$-ում, $h=-1$ $[0,1]\setminus D$-ում (նյութում այն նշանակված է $\chi_D$, բայց սա ինդիկատոր ֆունկցիան չէ)։
+$|h|\equiv1$-ն ինտեգրելի է, իսկ $h$-ը նույնիսկ չափելի չէ, ուրեմն ինտեգրելի էլ չէ։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 66, 67)</summary><div class="inner">
+<p><strong>Թեորեմ 66։</strong> կարող ենք համարել, որ $|f|\le\varphi$ ամենուրեք։ Դիցուք $\varepsilon\gt0$։ Թեորեմ 58-ով կան պարզ չափելի $\tilde f$ և
+$\tilde\varphi$ ֆունկցիաներ, որ $|f-\tilde f|\lt\varepsilon$ և $|\varphi-\tilde\varphi|\lt\varepsilon$ $A$-ում։ $\tilde\varphi-\varphi$-ն սահմանափակ է,
+ուրեմն ինտեգրելի (Թ65), հետևաբար $\tilde\varphi$-ն նույնպես ինտեգրելի է։ Քանի որ</p>
+$$|\tilde f|\lt|f|+\varepsilon\le\varphi+\varepsilon\lt\tilde\varphi+2\varepsilon,$$
+<p>Թեորեմ 61-ով $\tilde f$-ն ինտեգրելի է, և $\left|\int_A\tilde f\right|\le\int_A\tilde\varphi+2\varepsilon\mu(A)$։ $\varepsilon=\tfrac1k$-երի համար ստացված
+$\tilde f$-երը հավասարաչափ զուգամիտում են $f$-ին, այսինքն՝ $f$-ն ինտեգրելի է, և</p>
+$$\begin{aligned}\Bigl|\int_Af\Bigr|&\le\Bigl|\int_A\tilde f\Bigr|+\varepsilon\mu(A)\\&\le\int_A\tilde\varphi+3\varepsilon\mu(A)\\&\le\int_A\varphi+4\varepsilon\mu(A).\end{aligned}$$
+<p><strong>Թեորեմ 67։</strong> պարզ ֆունկցիաների համար $f$-ի և $|f|$-ի ինտեգրելիությունը կախված է նույն $\sum_n|y_n|\,\mu(A_n)$ շարքի
+զուգամիտությունից։ Ընդհանուր դեպքում, եթե $f_n\to f$ հավասարաչափ, ապա $|f_n|\to|f|$ հավասարաչափ, և հակառակ ուղղությունը տալիս է Թեորեմ
+66-ը $\varphi=|f|$-ով։ Անհավասարությունը նույնպես Թեորեմ 66-ից է։ $\blacksquare$</p>
+</div></details>
+
+<div class="box thm"><div class="box-title">Թեորեմ 68, 69 (հաշվելի ադիտիվություն) և Թեորեմ 70 (բացարձակ անընդհատություն)</div>
+<p>(68, 69) Թեորեմ 62-ը և 63-ը ճիշտ են ցանկացած չափելի $f$-ի համար։ Մասնավորապես, եթե $f$-ն ինտեգրելի է $A$-ի վրա, ապա այն ինտեգրելի է նաև
+ամեն չափելի $B\subset A$-ի վրա։<br>
+(70) Եթե $f$-ն ինտեգրելի է $A$-ի վրա, ապա ամեն $\varepsilon\gt0$-ի համար կա $\delta\gt0$, որ $\mu(e)\lt\delta$ պայմանից ($e\subset A$ չափելի)
+հետևում է $\int_e|f|\,d\mu\lt\varepsilon$։</p>
+</div>
+<p>Թեորեմ 70-ը նշանակում է, որ ինտեգրալը չի կարող «կենտրոնանալ» շատ փոքր բազմության վրա։ Սահմանափակ $f$-ի համար դա ակնհայտ է՝
+$\int_e|f|\le\mu(e)\sup|f|$։ Ապացույցի հնարքն այն է, որ ինտեգրելի ֆունկցիան «համարյա սահմանափակ» է՝ մեծ արժեքների շերտերի ներդրումը փոքր է։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 70)</summary><div class="inner">
+<p>Դիցուք $A_n=\{n-1\le|f|\lt n\}$, $n\in\N$։ Դրանք չեն հատվում, և $A=\bigcup_nA_n$, հետևաբար Թեորեմ 68-ով $\int_A|f|=\sum_n\int_{A_n}|f|$։
+Ընտրենք $N$, որ $\sum_{n\ge N}\int_{A_n}|f|\lt\tfrac\varepsilon2$, և դիցուք $B_N=\bigcup_{n\lt N}A_n$, $C_N=\bigcup_{n\ge N}A_n$,
+$\delta=\tfrac{\varepsilon}{2N}$։ $B_N$-ի վրա $|f|\lt N$, ուստի $\mu(e)\lt\delta$ դեպքում</p>
+$$\begin{aligned}\int_e|f|&=\int_{e\cap B_N}|f|+\int_{e\cap C_N}|f|\\&\lt N\mu(e)+\frac\varepsilon2\lt\varepsilon.\qquad\blacksquare\end{aligned}$$
+</div></details>
+
+<div class="box thm"><div class="box-title">Չեբիշևի անհավասարություն և Հետևանք 8</div>
+<p>Եթե $f$-ն ինտեգրելի է $A$-ի վրա, ապա ամեն $\lambda\gt0$-ի համար</p>
+$$\mu\{x\in A:\ |f(x)|\ge\lambda\}\le\frac1\lambda\int_A|f|\,d\mu.$$
+<p>(Հ8) Եթե $\int_A|f|\,d\mu=0$, ապա $f=0$ հ.ա.։</p>
+</div>
+<p><strong>Ինչու։</strong> $A_\lambda=\{|f|\ge\lambda\}$-ի վրա $|f|\ge\lambda$, հետևաբար $\int_A|f|\ge\int_{A_\lambda}|f|\ge\lambda\,\mu(A_\lambda)$։ Հետևանքի համար՝
+$\mu\{|f|\ge\tfrac1n\}\le n\cdot0=0$ ամեն $n$-ի համար, և $\{f\ne0\}=\bigcup_n\{|f|\ge\tfrac1n\}$։ (Նյութի ապացույցում գրված $\lt1/n$-ը վրիպակ է, պետք է
+լինի $\ge1/n$։)</p>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ մաթսպասումը Լեբեգի ինտեգրալ է</div>
+<p>Հավանականությունների տեսության մեջ $(X,\mathcal F,\mu)=(\Omega,\mathcal F,P)$, $P(\Omega)=1$, և պատահական մեծության մաթսպասումը հենց Լեբեգի
+ինտեգրալն է՝ $E\xi=\int_\Omega\xi\,dP$։ Չեբիշևի անհավասարությունն այնտեղ գրվում է $P(|\xi|\ge\lambda)\le\tfrac{E|\xi|}{\lambda}$ տեսքով և հաճախ
+կոչվում է Մարկովի անհավասարություն, իսկ Չեբիշևի անունով կոչվում է նույն անհավասարությունը $(\xi-E\xi)^2$-ի համար, այսինքն՝ դիսպերսիայով
+գրված տարբերակը։ Անդրեյ Մարկովը Պաֆնուտի Չեբիշևի աշակերտն էր։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="limits" open>
+<summary><h2>Սահմանային անցում ինտեգրալի նշանի տակ</h2></summary>
+<div class="sec-body">
+<p>Ռիմանի ինտեգրալի համար սահմանն ինտեգրալի նշանի տակ անցնելու սովորական բավարար պայմանը հավասարաչափ զուգամիտությունն էր։ Լեբեգի ինտեգրալի
+համար բավական է, որ ֆունկցիաները զուգամիտեն ըստ չափի կամ համարյա ամենուրեք և բավարարեն մեկ լրացուցիչ պայմանի։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 71 (Լեբեգ, մաժորանտով զուգամիտության թեորեմ)</div>
+<p>Դիցուք չափելի $f_n$-երն ըստ չափի զուգամիտում են $f$-ին $A$-ի վրա, և կա ինտեգրելի $\varphi$, որ</p>
+$$|f_n(x)|\le\varphi(x),\quad x\in A,\ n\in\N.$$
+<p>Այդ դեպքում $f$-ը և $f_n$-երն ինտեգրելի են, և $\displaystyle\lim_{n\to\infty}\int_Af_n\,d\mu=\int_Af\,d\mu$։</p>
+</div>
+<p>$\varphi$-ն կոչվում է ինտեգրելի <strong>մաժորանտ</strong> (dominating function)։ Թեորեմի անգլերեն անունը dominated convergence theorem է։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p>Թեորեմ 66-ով $f_n$-երն ինտեգրելի են։ Ռիսի թեորեմով (<a href="ch3-measurable-functions.html#measure">Գլուխ 3, Թեորեմ 51</a>) որևէ
+ենթահաջորդականություն հ.ա. զուգամիտում է $f$-ին, ուրեմն $|f|\le\varphi$ հ.ա., և $f$-ը նույնպես ինտեգրելի է։ Եթե $\mu(A)=0$, երկու ինտեգրալն էլ $0$
+են։ Այլապես դիցուք $\varepsilon\gt0$։ Թեորեմ 70-ով կա $\delta$, որ $\int_e\varphi\lt\tfrac\varepsilon4$, երբ $\mu(e)\lt\delta$։ Դիցուք
+$B_n=\bigl\{|f-f_n|\le\tfrac{\varepsilon}{2\mu(A)}\bigr\}$ և $C_n=A\setminus B_n$։ Ըստ չափի զուգամիտությունից $\mu(C_n)\to0$, և մեծ $n$-երի համար
+$\mu(C_n)\lt\delta$, և, քանի որ $C_n$-ում $|f-f_n|\le2\varphi$ հ.ա.,</p>
+$$\begin{aligned}\Bigl|\int_Af-\int_Af_n\Bigr|&\le\int_{B_n}|f-f_n|\\&\quad+\int_{C_n}|f-f_n|\\&\le\frac{\varepsilon}{2\mu(A)}\,\mu(B_n)+2\int_{C_n}\varphi\\&\lt\frac\varepsilon2+\frac\varepsilon2.\qquad\blacksquare\end{aligned}$$
+</div></details>
+<p>Ինչու է մաժորանտն անհրաժեշտ, ցույց է տալիս <strong>Օրինակ 7</strong>-ը՝ $f_n=n$ $\left(0,\tfrac1n\right)$-ում և $f_n=0$ $[0,1]$-ի մնացած կետերում։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> Օրինակ 7-ի համար $f_n(x)\to0$ ամեն $x\in[0,1]$-ում։ Ինչի՞ է հավասար $\lim_n\int_{[0,1]}f_n\,d\mu$-ն։</p>
+<div class="predict-opts"><button class="btn" type="button">$0$, քանի որ $f_n\to0$ ամենուրեք</button><button class="btn" type="button" data-ok>$1$</button><button class="btn" type="button">$\infty$, քանի որ $f_n$-ի արժեքն աճում է</button></div>
+<div class="predict-why">$\int_{[0,1]}f_n=n\cdot\tfrac1n=1$ ամեն $n$-ի համար, ուստի սահմանը $1$ է, իսկ $\int_{[0,1]}\lim f_n=\int0=0$։ Մակերեսը չի անհետանում, այլ
+«փախչում է» դեպի $0$ կետը՝ սյունը նեղանում է, բայց նույն չափով բարձրանում։ Ամեն $x\gt0$ կետից սյունը մի պահից հետո հեռանում է ընդմիշտ, այդ պատճառով
+կետային սահմանը $0$ է։</div>
+</div>
+
+<div class="widget" id="w-escape">
+  <div class="widget-head">Մաժորանտ կա՞, թե՞ ոչ</div>
+  <p class="widget-hint">Ընտրեք հաջորդականությունը։ Նարնջագույնը $f_n$-ն է, կապույտ ընդհատ գիծը՝ $\sup_kf_k$-ն, այսինքն՝ ամենափոքր ֆունկցիան,
+  որը կարող է լինել բոլոր $f_n$-երի մաժորանտ։ Ինտեգրելի մաժորանտ կա այն և միայն այն դեպքում, երբ այս ֆունկցիան ինտեգրելի է։ Ուղղահայաց
+  առանցքի մասշտաբը երեք դեպքում տարբեր է (տե՛ս թվերը)։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="1" max="30" step="1" value="4" aria-label="n"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+
+<div class="box thm"><div class="box-title">Թեորեմ 72 (Լեբեգ) և Հետևանք 9</div>
+<p>(72) Թեորեմ 71-ը ճիշտ է նաև, եթե $f_n\to f$ հ.ա. (ըստ չափի զուգամիտության փոխարեն), իսկ մաժորանտի պայմանը բավական է պահանջել հ.ա.։<br>
+(Հ9) Եթե $f_n\to f$ հ.ա. $A$-ի վրա, և $|f_n|\le M$, ապա $\int_Af_n\,d\mu\to\int_Af\,d\mu$։</p>
+</div>
+<p>Վերջավոր չափի դեպքում հ.ա. զուգամիտությունից հետևում է ըստ չափի զուգամիտությունը (<a href="ch3-measurable-functions.html#measure">Թեորեմ
+50</a>), իսկ զրո չափի բազմության վրա արժեքներն ինտեգրալի վրա չեն ազդում։ Հետևանք 9-ում մաժորանտը $\varphi\equiv M$ հաստատունն է, որն ինտեգրելի
+է, քանի որ $\mu(A)\lt\infty$։</p>
+
+<div class="box thm"><div class="box-title">Թեորեմ 73 (Բ. Լևի, մոնոտոն զուգամիտության թեորեմ) և Թեորեմ 74</div>
+<p>(73) Դիցուք ինտեգրելի $f_n$-երն աճում են՝ $f_n(x)\le f_{n+1}(x)$, $x\in A$, և $\int_Af_n\,d\mu\le K$ ամեն $n$-ի համար։ Այդ դեպքում $f_n$-երը հ.ա.
+զուգամիտում են ինչ-որ ինտեգրելի $f$ ֆունկցիայի, և $\lim_n\int_Af_n\,d\mu=\int_Af\,d\mu$։<br>
+(74) Եթե $f_n\ge0$ և $\sum_n\int_Af_n\,d\mu\lt\infty$, ապա $\sum_nf_n$ շարքը հ.ա. զուգամետ է, և $\displaystyle\int_A\sum_{n=1}^\infty f_n\,d\mu=\sum_{n=1}^\infty\int_Af_n\,d\mu$։</p>
+</div>
+<p>Լևիի թեորեմում մաժորանտ չի պահանջվում, այն կառուցվում է ապացույցի ընթացքում։ Թեորեմ 74-ը նույն պնդումն է մասնակի գումարների
+$S_n=f_1+\dots+f_n$ աճող հաջորդականության համար, և նյութում նշված է, որ երկու պնդումներից յուրաքանչյուրը կարելի է ստանալ մյուսից։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 73)</summary><div class="inner">
+<p>Կարող ենք համարել $f_n\ge0$ (այլապես դիտարկում ենք $f_n-f_1$)։ Աճող հաջորդականությունն ամեն կետում ունի սահման՝ $f(x)\le+\infty$։</p>
+<p><strong>$f$-ը հ.ա. վերջավոր է։</strong> Դիցուք $E_n^{(m)}=\{f_n\gt m\}$ և $E^{(m)}=\bigcup_nE_n^{(m)}$։ $E_n^{(m)}$-երն աճում են ըստ $n$-ի, և Չեբիշևի
+անհավասարությամբ $\mu(E_n^{(m)})\le\tfrac1m\int_Af_n\le\tfrac Km$, և չափի անընդհատությամբ $\mu(E^{(m)})\le\tfrac Km$։ Քանի որ
+$\{f=+\infty\}=\bigcap_mE^{(m)}$, այդ բազմության չափը $0$ է։</p>
+<p><strong>Մաժորանտ։</strong> դիցուք $\psi=m$ $B_m=\{m-1\le f\lt m\}$-ի վրա, $m\in\N$։ Քանի որ $0\le f_n\le f\le\psi$, Լեբեգի թեորեմով (Թ72) բավական է
+ապացուցել $\psi$-ի ինտեգրելիությունը, այսինքն՝ $\sum_mm\,\mu(B_m)\lt\infty$։ $D_N=\bigcup_{m\le N}B_m$-ի վրա $\psi\le f+1$ և $f\lt N$, ուստի (Հետևանք
+9-ով $D_N$-ի վրա)</p>
+$$\begin{aligned}\sum_{m=1}^Nm\,\mu(B_m)&=\int_{D_N}\psi\\&\le\int_{D_N}(f+1)\\&=\lim_n\int_{D_N}f_n+\mu(D_N)\\&\le K+\mu(A).\qquad\blacksquare\end{aligned}$$
+</div></details>
+
+<div class="box thm"><div class="box-title">Լեմմա 13 և Թեորեմ 75 (Ֆատու)</div>
+<p>(Լ13) Եթե $f_n\ge0$ ֆունկցիաներն ինտեգրելի են, ապա $\displaystyle\int_A\varliminf_{n\to\infty}f_n\,d\mu\le\varliminf_{n\to\infty}\int_Af_n\,d\mu$։<br>
+(75) Եթե $f_n\ge0$ ֆունկցիաներն ինտեգրելի են, $f_n\to f$ հ.ա., և $\int_Af_n\,d\mu\le K$, ապա $f$-ն ինտեգրելի է, և $\int_Af\,d\mu\le K$։</p>
+</div>
+<p>Օրինակ 7-ում $\int\varliminf f_n=0\lt1=\varliminf\int f_n$, այսինքն՝ Ֆատուի անհավասարությունը կարող է խիստ լինել։ Ոչ բացասականության պայմանն
+էլ է անհրաժեշտ՝ $-f_n$-երի համար $\int\varliminf(-f_n)=0\gt-1=\varliminf\int(-f_n)$։</p>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց</summary><div class="inner">
+<p><strong>Լեմմա 13։</strong> դիցուք $a_n=\int_Af_n$ և $\lambda=\varliminf a_n$։ Եթե $\lambda=\infty$, ապացուցելու բան չկա։ Այլապես ամեն $\varepsilon\gt0$-ի
+համար կա $n_k$ ենթահաջորդականություն, որ $a_{n_k}\to\lambda$ և $a_{n_k}\lt\lambda+\varepsilon$։ Դիցուք $F_m=\inf_{k\ge m}f_{n_k}$։ $F_m$-երն աճում են, և
+$0\le F_m\le f_{n_m}$, հետևաբար $\int_AF_m\lt\lambda+\varepsilon$։ Լևիի թեորեմով</p>
+$$\begin{aligned}\int_A\varliminf_nf_n&\le\int_A\varliminf_kf_{n_k}\\&=\int_A\lim_mF_m=\lim_m\int_AF_m\\&\le\lambda+\varepsilon.\end{aligned}$$
+<p><strong>Թեորեմ 75։</strong> հ.ա. զուգամիտության դեպքում $f=\varliminf f_n$ հ.ա., ուստի լեմմայով $\int_Af=\int_A\varliminf f_n\le\varliminf\int_Af_n\le K$։ $\blacksquare$</p>
+</div></details>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ 1902 և 1906</div>
+<p>Անրի Լեբեգի ինտեգրալի տեսությունը շարադրված է նրա 1902 թվականի ատենախոսության մեջ (<em>Intégrale, longueur, aire</em>)։ Չորս տարի անց՝
+1906-ին, իտալացի Բեպպո Լևին հրապարակեց մոնոտոն զուգամիտության թեորեմը, իսկ ֆրանսիացի Պիեռ Ֆատուն իր ատենախոսության մեջ (եռանկյունաչափական և
+Թեյլորի շարքերի մասին) ապացուցեց այն լեմման, որն այսօր կոչվում է Ֆատուի լեմմա։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="riemann" open>
+<summary><h2>Լեբեգի և Ռիմանի ինտեգրալների համեմատությունը</h2></summary>
+<div class="sec-body">
+<div class="box thm"><div class="box-title">Թեորեմ 76</div>
+<p>Եթե $f:[0,1]\to\R$ ֆունկցիան ինտեգրելի է ըստ Ռիմանի, ապա այն ինտեգրելի է նաև ըստ Լեբեգի, և</p>
+$$(\mathcal L)\int_{[0,1]}f(x)\,dx=(\mathcal R)\int_0^1f(x)\,dx.$$
+</div>
+<p>Հակառակը ճիշտ չէ՝ Դիրիխլեի ֆունկցիան ($1$ ռացիոնալ կետերում, $0$ իռացիոնալներում) ըստ Ռիմանի ինտեգրելի չէ ոչ մի հատվածում, բայց ըստ
+Լեբեգի ինտեգրելի է, և նրա ինտեգրալը $0$ է, քանի որ այն համարժեք է $0$-ին։ Ո՞ր ֆունկցիաներն են ինտեգրելի ըստ Ռիմանի, ճշգրիտ պատասխանում է
+հաջորդ թեորեմը։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 77 (Լեբեգի հայտանիշ)</div>
+<p>$f:[0,1]\to\R$ ֆունկցիան ինտեգրելի է ըստ Ռիմանի այն և միայն այն դեպքում, երբ այն սահմանափակ է և համարյա ամենուրեք անընդհատ (խզման կետերի
+բազմության չափը $0$ է)։</p>
+</div>
+
+<div class="predict">
+<p><strong>Կանխատեսեք։</strong> <strong>Ռիմանի ֆունկցիան</strong> (Thomae's function)՝ $r\left(\tfrac pq\right)=\tfrac1q$ անկրճատելի կոտորակների
+համար ($r(0)=r(1)=1$) և $r(x)=0$ իռացիոնալ $x$-երի համար, խզվող է $[0,1]$-ի բոլոր ռացիոնալ կետերում, իսկ դրանք ամենուրեք խիտ են։ Ինտեգրելի՞
+է այն ըստ Ռիմանի։</p>
+<div class="predict-opts"><button class="btn" type="button">Ոչ, խզման կետերն ամենուրեք խիտ են</button><button class="btn" type="button" data-ok>Այո</button><button class="btn" type="button">Միայն ըստ Լեբեգի</button></div>
+<div class="predict-why">$r$-ն անընդհատ է բոլոր իռացիոնալ կետերում (իռացիոնալ կետի մոտ կան միայն մեծ հայտարարով կոտորակներ), այսինքն՝ խզման կետերը
+ճիշտ ռացիոնալներն են։ Դրանք հաշվելի են, ուրեմն զրո չափի, և Թեորեմ 77-ով $r$-ն ինտեգրելի է ըստ Ռիմանի։ Քանի որ $r=0$ հ.ա., ինտեգրալը $0$ է
+(<a href="#ex4">Վարժություն 4</a>)։ Դիրիխլեի ֆունկցիայի դեպքում խզման կետերը <em>բոլոր</em> կետերն են, և հենց դա է տարբերությունը։</div>
+</div>
+
+<div class="widget" id="w-darboux">
+  <div class="widget-head">Դարբուի վերին և ստորին գումարներ</div>
+  <p class="widget-hint">Ընտրեք ֆունկցիան և $n$-ը։ $[0,1]$-ը բաժանված է $2^n$ հավասար մասի։ Ամեն մասում կապույտ գիծը ֆունկցիայի $\sup$-ն է
+  ($\overline f_n$), նարնջագույնը՝ $\inf$-ը ($\underline f_n$), բարակ գիծը կամ կետերը՝ ֆունկցիան։ Կարմիր մակերեսը $S_n-s_n$-ն է՝ Դարբուի վերին և
+  ստորին գումարների տարբերությունը։ Սահմանափակ ֆունկցիան ինտեգրելի է ըստ Ռիմանի այն և միայն այն դեպքում, երբ այն ձգտում է $0$-ի։</p>
+  <div class="chips" data-out="chips"></div>
+  <div class="slider-row"><span data-out="nlabel"></span><input type="range" data-in="n" min="1" max="7" step="1" value="3" aria-label="n"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+<details class="deep"><summary>Ճշգրիտ ձևակերպում և ապացույց (Թեորեմ 76, 77)</summary><div class="inner">
+<p><strong>Թեորեմ 76։</strong> Ռիմանի իմաստով ինտեգրելի ֆունկցիան սահմանափակ է։ Դիցուք $x_{n,k}=\tfrac k{2^n}$, $\Delta_{nk}=[x_{n,k-1},x_{n,k}]$,
+$M_{nk}=\sup_{\Delta_{nk}}f$, $m_{nk}=\inf_{\Delta_{nk}}f$, և Դարբուի գումարները՝</p>
+$$S_n=\frac1{2^n}\sum_{k=1}^{2^n}M_{nk},\qquad s_n=\frac1{2^n}\sum_{k=1}^{2^n}m_{nk}.$$
+<p>Աստիճանաձև $\overline f_n=M_{nk}$ և $\underline f_n=m_{nk}$ ($[x_{n,k-1},x_{n,k})$-ում) ֆունկցիաների համար</p>
+$$(\mathcal L)\!\int_{[0,1]}\overline f_n=S_n,\quad(\mathcal L)\!\int_{[0,1]}\underline f_n=s_n,$$
+$$\underline f_{n-1}\le\underline f_n\le f\le\overline f_n\le\overline f_{n-1}.$$
+<p>Լևիի թեորեմով $\overline f=\lim\overline f_n$ և $\underline f=\lim\underline f_n$ ֆունկցիաներն ինտեգրելի են, $\underline f\le f\le\overline f$, և
+$(\mathcal L)\int(\overline f-\underline f)=\lim(S_n-s_n)$։ $f$-ն ինտեգրելի է ըստ Ռիմանի այն և միայն այն դեպքում, երբ $S_n-s_n\to0$, այսինքն՝
+(Հետևանք 8-ով) երբ $\underline f=f=\overline f$ հ.ա.։ Այդ դեպքում $f$-ը համարժեք է չափելի $\underline f$-ին, հետևաբար չափելի է (լրիվությունից) և
+ինտեգրելի է ըստ Լեբեգի (Հատկություն 8), և $(\mathcal L)\int f=\lim s_n=(\mathcal R)\int f$։ (Նյութում $s_n$-ի գումարը գրված է մինչև $n$, պետք է լինի
+մինչև $2^n$։)</p>
+<p><strong>Թեորեմ 77։</strong> ըստ վերևի՝ սահմանափակ $f$-ն ինտեգրելի է ըստ Ռիմանի այն և միայն այն դեպքում, երբ $\overline f=\underline f$ հ.ա.։ Եթե
+$x$-ը $\tfrac k{2^n}$ տեսքի չէ, ապա այն գտնվում է իրեն պարունակող բոլոր $\Delta_{nk}$-երի ներսում, և $\overline f(x)=\underline f(x)$ պայմանը
+նշանակում է, որ $f$-ն անընդհատ է $x$ կետում։ $\tfrac k{2^n}$ տեսքի կետերը հաշվելի են և չափին չեն ազդում։ $\blacksquare$</p>
+</div></details>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="sigma" open>
+<summary><h2>Սիգմա-վերջավոր չափ և անիսկական ինտեգրալներ</h2></summary>
+<div class="sec-body">
+<p>Մինչև այժմ $\mu(X)\lt\infty$, բայց իրական առանցքի վրա Լեբեգի չափն անվերջ է։ <a href="ch2-lebesgue-measure.html#line">Գլուխ 2-ում</a>
+$\R$-ի վրա չափը սահմանեցինք $[n,n+1)$ կտորներով։ Նույն գաղափարը կիրառելի է ցանկացած այդպիսի տարածության վրա։</p>
+<div class="box def"><div class="box-title">Սահմանում 27, 28, 29</div>
+<p>(27) $(X,\mathcal F,\mu)$-ն կոչվում է <strong>սիգմա-վերջավոր</strong> (σ-finite, նյութում՝ σ-վերջավոր), եթե $X=\bigcup_{i=1}^\infty X_i$, որտեղ
+$X_i\in\mathcal F$-երը չեն հատվում, և $\mu(X_i)\lt\infty$։<br>
+(28) $A\subset X$-ը չափելի է, եթե բոլոր $A\cap X_i$-երը չափելի են, և $\mu(A)=\sum_i\mu(A\cap X_i)$ (կարող է լինել $+\infty$)։<br>
+(29) $f$-ն ինտեգրելի է $A$-ի վրա, եթե այն ինտեգրելի է յուրաքանչյուր $A\cap X_i$-ի վրա, և</p>
+$$\sum_i\int_{A\cap X_i}|f|\,d\mu\lt\infty.$$
+<p>Այդ դեպքում $\int_Af\,d\mu=\sum_i\int_{A\cap X_i}f\,d\mu$։</p>
+</div>
+<p>Նյութում որպես վարժություն է թողնված ստուգել, որ չափելիությունը և $\mu(A)$-ն կախված չեն $X_i$-երի ընտրությունից։ Մոդուլը (29)-ում կարևոր է
+նույն պատճառով, ինչ Սահմանում 25-ում։ Վերջավոր չափի դեպքի հատկությունները (գծայնություն, մոնոտոնություն, Թեորեմ 66-70, Չեբիշևի
+անհավասարություն) և սահմանային թեորեմները (Լեբեգ, Լևի, Ֆատու) մնում են ճիշտ։ <strong>Չի մնում ճիշտ Թեորեմ 65-ը՝</strong> $f\equiv a\ne0$
+հաստատունը սահմանափակ է և չափելի, բայց $\R$-ի վրա ինտեգրելի չէ, քանի որ $\sum_n\int_{[n,n+1)}|a|\,dx=\sum_n|a|=\infty$։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 78 (Լեբեգ, սիգմա-վերջավոր դեպք)</div>
+<p>Թեորեմ 71-ը ճիշտ է սիգմա-վերջավոր չափով օժտված տարածությունում։</p>
+</div>
+<p>Ապացույցում $A$-ն բաժանում ենք երկու մասի՝ «պոչը» $B_m=\bigcup_{i\gt m}(A\cap X_i)$, որի վրա $\int_{B_m}\varphi\lt\tfrac\varepsilon4$ (քանի որ
+$\sum_i\int_{A\cap X_i}\varphi$ շարքը զուգամետ է), և վերջավոր չափի $D_m=\bigcup_{i\le m}(A\cap X_i)$ մասը, որտեղ կիրառվում է Թեորեմ 71-ը։</p>
+
+<h3>Անիսկական ինտեգրալներ</h3>
+<p>Ռիմանի անիսկական ինտեգրալը Լեբեգի ինտեգրալի մասնավոր դեպք <em>չէ</em>։ Եթե $f\ge0$, և $\lim_{\varepsilon\to0}\int_a^{b-\varepsilon}f\,dx$ սահմանը
+գոյություն ունի (և $f$-ն ինտեգրելի է ըստ Ռիմանի ամեն $[a,b-\varepsilon]$-ում), ապա $f$-ն ինտեգրելի է ըստ Լեբեգի $[a,b]$-ում (Լևիի թեորեմով)։ Ընդհանուր դեպքում՝ եթե անիսկական ինտեգրալը <strong>բացարձակ</strong>
+զուգամետ է, ապա $f$-ն ինտեգրելի է ըստ Լեբեգի, իսկ եթե զուգամետ է միայն պայմանականորեն, ինտեգրելի չէ, քանի որ $|f|$-ն ինտեգրելի չէ (Թեորեմ 67)։
+Նյութի օրինակը՝ $f(x)=\tfrac1x\sin\tfrac1x$, $x\in(0,1]$։ $t=\tfrac1x$ փոխարինմամբ</p>
+$$\int_\varepsilon^1f\,dx=\int_1^{1/\varepsilon}\frac{\sin t}t\,dt,$$
+$$\int_\varepsilon^1|f|\,dx=\int_1^{1/\varepsilon}\frac{|\sin t|}t\,dt.$$
+<div class="widget" id="w-improper">
+  <div class="widget-head">Անիսկական ինտեգրալ՝ պայմանական զուգամիտություն</div>
+  <p class="widget-hint">Սահիչով փոքրացրեք $\varepsilon$-ը (հորիզոնական առանցքը լոգարիթմական է)։ Կապույտը $\int_\varepsilon^1f\,dx$-ն է, կարմիրը՝
+  $\int_\varepsilon^1|f|\,dx$-ը։ Առաջինը տատանվելով կայունանում է, երկրորդն աճում է անսահմանափակ։</p>
+  <div class="slider-row"><span data-out="elabel"></span><input type="range" data-in="e" min="0" max="80" step="1" value="40" aria-label="ε"></div>
+  <div data-out="plot"></div>
+  <p class="widget-out" data-out="text"></p>
+</div>
+<p>Նույն պատկերն է ամբողջ առանցքի վրա՝ $\int_1^\infty\tfrac{\sin t}t\,dt$-ն զուգամետ է որպես անիսկական ինտեգրալ, բայց $\tfrac{\sin t}{t}$-ն ինտեգրելի չէ
+ըստ Լեբեգի $[1,\infty)$-ում։</p>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="fubini" open>
+<summary><h2>Չափերի արտադրյալ և Ֆուբինիի թեորեմը</h2></summary>
+<div class="sec-body">
+<p>Դիցուք $(X,\mathcal F_X,\mu_X)$-ը և $(Y,\mathcal F_Y,\mu_Y)$-ը վերջավոր չափով օժտված տարածություններ են, և $Z=X\times Y$։ Կառուցումը կրկնում է
+Լեբեգի չափի կառուցումը (<a href="ch2-lebesgue-measure.html#elementary">Գլուխ 2</a>), միայն միջակայքերի փոխարեն «ուղղանկյուններն» են՝ $A\times B$,
+որտեղ $A\in\mathcal F_X$, $B\in\mathcal F_Y$։</p>
+<div class="box def"><div class="box-title">Սահմանում 30-33</div>
+<p>(30) $C\subset Z$-ը <strong>տարրական</strong> է, եթե $C=\bigcup_{i=1}^nA_i\times B_i$՝ չհատվող ուղղանկյունների միավորում։ Այդ դեպքում
+$\mu_Z(C):=\sum_i\mu_X(A_i)\,\mu_Y(B_i)$։ Տարրական բազմությունների դասը $\mathcal P_Z$-ն է։<br>
+(31) <strong>Արտաքին չափը</strong>՝ $\mu_Z^*(C)=\inf\sum_n\mu_X(A_n)\,\mu_Y(B_n)$, որտեղ $\inf$-ը վերցվում է $C\subset\bigcup_nA_n\times B_n$
+ծածկույթներով։<br>
+(32) $A\subset Z$-ը չափելի է, եթե ամեն $\varepsilon\gt0$-ի համար կա $B\in\mathcal P_Z$, որ $\mu_Z^*(A\,\Delta\,B)\lt\varepsilon$։ Այդ դեպքում
+$\mu_Z(A):=\mu_Z^*(A)$։ Չափելի բազմությունների դասը $\mathcal F_Z$-ն է։<br>
+(33) $\mu_Z=\mu_X\otimes\mu_Y$-ը կոչվում է $\mu_X$ և $\mu_Y$ <strong>չափերի արտադրյալ</strong> (product measure)։</p>
+</div>
+<p>Ինչպես Լեբեգի չափի դեպքում (Սահմանում 7-10), $\mathcal P_Z$-ը փակ է $\cap$, $\cup$, $\setminus$, $\Delta$ գործողությունների նկատմամբ, $\mathcal F_Z$-ը
+սիգմա-հանրահաշիվ է, և $\mu_Z$-ը հաշվելի ադիտիվ է։ Օրինակ՝ $[a,b]\times[c,d]$ ուղղանկյան $\operatorname{mes}\otimes\operatorname{mes}$ չափը
+$(b-a)(d-c)$ է, այսինքն՝ նրա մակերեսը։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 79 (Ֆուբինի)</div>
+<p>Եթե $f(x,y)$-ը $\mu_Z$-ինտեգրելի է $A\in\mathcal F_Z$-ի վրա, ապա</p>
+$$\begin{aligned}\int_Af\,d\mu_Z&=\int_X\Bigl(\int_{A_x}f(x,y)\,d\mu_Y\Bigr)d\mu_X\\&=\int_Y\Bigl(\int_{A_y}f(x,y)\,d\mu_X\Bigr)d\mu_Y,\end{aligned}$$
+<p>որտեղ $A_x=\{y\in Y:\ (x,y)\in A\}$, $A_y=\{x\in X:\ (x,y)\in A\}$։ Ներքին ինտեգրալները գոյություն ունեն հ.ա.։</p>
+</div>
+<p>Ի տարբերություն Ռիմանի ինտեգրալի համար Ֆուբինիի թեորեմի, այստեղ $f$-ից ոչինչ չի պահանջվում, բացի ինտեգրելիությունից։ Բայց հաջորդական
+ինտեգրալների գոյությունից ինտեգրելիությունը չի հետևում։ Ճիշտ է հետևյալը։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 80</div>
+<p>Դիցուք $A\in\mathcal F_Z$, և $f:A\to\R$-ը $\mu_Z$-չափելի է։ Եթե</p>
+$$\int_X\Bigl(\int_{A_x}|f|\,d\mu_Y\Bigr)d\mu_X\lt\infty$$
+<p>կամ</p>
+$$\int_Y\Bigl(\int_{A_y}|f|\,d\mu_X\Bigr)d\mu_Y\lt\infty,$$
+<p>ապա $f$-ն ինտեգրելի է $A$-ի վրա, և տեղի ունի Ֆուբինիի հավասարությունը։</p>
+</div>
+<p class="muted">Նյութում Թեորեմ 79-ը և 80-ը տրված են առանց ապացույցի։ Թեորեմ 80-ի ձևակերպման մեջ $f$-ի չափելիությունը նշված չէ, բայց առանց դրա
+$f$-ը չի կարող ինտեգրելի լինել։</p>
+
+<div class="predict">
+<p><strong>Կանխատեսեք (Օրինակ 8)։</strong> $A$-ն միավոր շրջանն է, $f(x,y)=\tfrac{xy}{(x^2+y^2)^2}$, $f(0,0)=0$։ Երկու հաջորդական ինտեգրալներն էլ $0$
+են՝ $f$-ը կենտ է ըստ $y$-ի, ուստի $\int_{A_x}f\,dy=0$ ամեն $x\ne0$-ի համար, և նույնը՝ ըստ $x$-ի։ Ինտեգրելի՞ է $f$-ը $A$-ի վրա։</p>
+<div class="predict-opts"><button class="btn" type="button">Այո, և ինտեգրալը $0$ է</button><button class="btn" type="button" data-ok>Ոչ</button><button class="btn" type="button">Այո, բայց ինտեգրալը $0$ չէ</button></div>
+<div class="predict-why">Բևեռային կոորդինատներով $|f|=\tfrac{|\sin\varphi\cos\varphi|}{r^2}$ և $dx\,dy=r\,dr\,d\varphi$, և
+$\int_A|f|=\int_0^1\tfrac{dr}r\int_0^{2\pi}|\sin\varphi\cos\varphi|\,d\varphi=2\int_0^1\tfrac{dr}r=\infty$։ $|f|$-ն ինտեգրելի չէ, ուրեմն $f$-ն էլ
+ինտեգրելի չէ (Թեորեմ 67)։ Թեորեմ 79-ը չի կիրառվում, և հաջորդական ինտեգրալների հավասարությունը պատահական է։ Թեորեմ 80-ի պայմանը նույնպես չի
+կատարվում։</div>
+</div>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ Ֆուբինի և Տոնելի</div>
+<p>Գվիդո Ֆուբինին իր թեորեմը հրապարակեց 1907-ին։ 1909-ին Լեոնիդա Տոնելին ցույց տվեց, որ ոչ բացասական չափելի ֆունկցիաների համար հաջորդական
+ինտեգրալների կարգը միշտ կարելի է փոխել (ինտեգրալները կարող են լինել $+\infty$)։ Հենց սրա վրա է հենված Թեորեմ 80-ը՝ նախ ստուգում ենք $|f|$-ի
+հաջորդական ինտեգրալը։ Հավանականության մեջ Ֆուբինիի թեորեմն օգտագործվում է, օրինակ, անկախ պատահական մեծությունների գումարի բաշխումը հաշվելիս
+(<a href="../probability/w16-independence.html">Դասախոսություն 16</a>)։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="radon" open>
+<summary><h2>Ռադոն-Նիկոդիմի թեորեմը</h2></summary>
+<div class="sec-body">
+<p>Դիցուք $\mu$-ն վերջավոր չափ է, և $f$-ն ինտեգրելի է $X$-ի վրա։ Սահմանենք</p>
+$$\nu(A):=\int_Af\,d\mu,\qquad A\in\mathcal F.$$
+<p>Թեորեմ 68-ով $\nu$-ն հաշվելի ադիտիվ է՝ $\nu\bigl(\bigcup_iA_i\bigr)=\sum_i\nu(A_i)$ չհատվող $A_i$-երի համար։</p>
+<div class="box def"><div class="box-title">Սահմանում 34 և Սահմանում 35</div>
+<p>(34) $\mathcal F$ սիգմա-հանրահաշվի վրա որոշված $\nu$ ֆունկցիան, որն ընդունում է միայն վերջավոր արժեքներ և հաշվելի ադիտիվ է, կոչվում է
+<strong>նշանափոխ չափ</strong> (signed measure)։<br>
+(35) $\nu$-ն կոչվում է $\mu$-ի նկատմամբ <strong>բացարձակ անընդհատ</strong> (absolutely continuous), եթե $\mu(A)=0$ պայմանից հետևում է $\nu(A)=0$։</p>
+</div>
+<p>$\nu(A)=\int_Af\,d\mu$-ն նշանափոխ չափ է (իսկ եթե $f\ge0$, ապա չափ), և այն բացարձակ անընդհատ է $\mu$-ի նկատմամբ (Հատկություն 7)։ Պարզվում է,
+որ ուրիշ բացարձակ անընդհատ նշանափոխ չափեր չկան։</p>
+<div class="box thm"><div class="box-title">Թեորեմ 81 (Ռադոն-Նիկոդիմ)</div>
+<p>Դիցուք $\mu$-ն վերջավոր չափ է, $\nu$-ն՝ նշանափոխ չափ նույն $\mathcal F$ սիգմա-հանրահաշվի վրա, և $\nu$-ն բացարձակ անընդհատ է $\mu$-ի նկատմամբ։ Այդ դեպքում կա
+$\mu$-ինտեգրելի $f$ ֆունկցիա, որ $\nu(A)=\int_Af\,d\mu$ ամեն $A\in\mathcal F$-ի համար։</p>
+</div>
+<p>$f$-ը նշանակում են $\tfrac{d\nu}{d\mu}$ և անվանում են Ռադոն-Նիկոդիմի ածանցյալ։ Թեորեմի ապացույցը, ինչպես նշված է նյութում, դասընթացի ծրագրում
+չէ։</p>
+<div class="box method"><div class="box-title">Հետաքրքիր փաստ՝ որտեղից է գալիս խտությունը</div>
+<p>Անընդհատ պատահական մեծության <a href="../probability/w12-continuous.html">խտությունը</a> հենց Ռադոն-Նիկոդիմի ածանցյալն է՝ $P(\xi\in B)=\int_Bp(x)\,dx$,
+այսինքն՝ $p=\tfrac{dP_\xi}{d\operatorname{mes}}$ (այստեղ պետք է թեորեմի սիգմա-վերջավոր տարբերակը, քանի որ $\operatorname{mes}(\R)=\infty$)։ Խտություն
+գոյություն ունի այն և միայն այն դեպքում, երբ բաշխումը բացարձակ անընդհատ է Լեբեգի չափի նկատմամբ։ <a href="../probability/w13-singular.html">Կանտորի
+բաշխումն</a> այդպիսին չէ՝ Կանտորի բազմության Լեբեգի չափը $0$ է, իսկ հավանականությունը՝ $1$, ուրեմն այն խտություն չունի, թեև բաշխման ֆունկցիան
+անընդհատ է։ Յոհան Ռադոնն ապացուցեց թեորեմը $\R^n$-ի համար 1913-ին, Օտտո Նիկոդիմը՝ ընդհանուր դեպքում 1930-ին։</p>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="mistakes" open>
+<summary><h2>Տիպիկ սխալներ</h2></summary>
+<div class="sec-body">
+<div class="box method"><div class="box-title">Տիպիկ սխալներ</div>
+<ul>
+  <li><strong>«Շարքը զուգամետ է, ուրեմն պարզ ֆունկցիան ինտեգրելի է»։</strong> Պետք է $\sum|y_n|\,\mu(A_n)\lt\infty$ (Սահմանում 25-ից հետո բերված
+  Կանխատեսումը)։ Նույն պատճառով Թեորեմ 63-ում և Սահմանում 29-ում մոդուլներ կան։</li>
+  <li><strong>«Կետային զուգամիտությունից հետևում է ինտեգրալների զուգամիտությունը»։</strong> Ոչ՝ Օրինակ 7։ Պետք է ինտեգրելի մաժորանտ
+  (Լեբեգ) կամ մոնոտոնություն (Լևի)։</li>
+  <li><strong>Ֆատուի անհավասարությունը հավասարություն համարելը։</strong> Այն կարող է խիստ լինել (Օրինակ 7), իսկ առանց $f_n\ge0$ պայմանի՝ սխալ է։</li>
+  <li><strong>«Սահմանափակ չափելի ֆունկցիան միշտ ինտեգրելի է»։</strong> Միայն վերջավոր չափի դեպքում (Թեորեմ 65)։ $\R$-ի վրա $f\equiv1$-ն ինտեգրելի
+  չէ։</li>
+  <li><strong>«Անիսկական ինտեգրալը զուգամետ է, ուրեմն ֆունկցիան ինտեգրելի է ըստ Լեբեգի»։</strong> Միայն բացարձակ զուգամիտության դեպքում
+  ($\tfrac1x\sin\tfrac1x$)։</li>
+  <li><strong>«Հաջորդական ինտեգրալները հավասար են, ուրեմն կրկնակի ինտեգրալը նույնն է»։</strong> Նախ պետք է ստուգել $|f|$-ի ինտեգրելիությունը
+  (Թեորեմ 80, Օրինակ 8, <a href="#ex5">Վարժություն 5</a>)։</li>
+  <li><strong>«Խզման կետերն ամենուրեք խիտ են, ուրեմն ըստ Ռիմանի ինտեգրելի չէ»։</strong> Կարևորը խզման կետերի բազմության չափն է, ոչ թե
+  խտությունը (Ռիմանի ֆունկցիա, Թեորեմ 77)։</li>
+</ul>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="practice" open>
+<summary><h2>Վարժություններ</h2></summary>
+<div class="sec-body">
+<p class="muted">Վարժությունները դասավորված են հեշտից դժվար։ ★-ով նշվածները քննական մակարդակի են։</p>
+
+<div class="box problem" id="ex1"><div class="box-title">Վարժություն 1</div>
+<p>Դիցուք $f=n$ $\left(2^{-n},2^{1-n}\right]$ միջակայքում, $n=1,2,\dots$։ Ապացուցեք, որ $f$-ն ինտեգրելի է $(0,1]$-ի վրա, և հաշվեք
+$\int_{(0,1]}f\,d\mu$-ն (Սահմանում 25)։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Միջակայքի երկարությունը $2^{-n}$ է։ $|x|\lt1$-ի համար
+$\sum_{n\ge1}nx^n=\tfrac x{(1-x)^2}$։</p></div></details>
+<div class="solution">
+<p>$f$-ը պարզ է, $A_n=\left(2^{-n},2^{1-n}\right]$, $\operatorname{mes}(A_n)=2^{-n}$։ Անդամները դրական են, այդ պատճառով բացարձակ զուգամիտությունը նույնն է, ինչ
+զուգամիտությունը՝ $\sum_nn\,2^{-n}=\tfrac{1/2}{(1/2)^2}=2\lt\infty$։ Ուրեմն $f$-ն ինտեգրելի է, և ինտեգրալը $2$ է, թեև $f$-ը սահմանափակ չէ։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int_{(0,1]}f\,d\mu=2$</div>
+</div>
+
+<div class="box problem" id="ex2"><div class="box-title">Վարժություն 2</div>
+<p>Օգտվելով Լևիի թեորեմից $f_n(x)=\min\bigl(\tfrac1{\sqrt x},n\bigr)$ հաջորդականության համար՝ ապացուցեք, որ $\tfrac1{\sqrt x}$-ն ինտեգրելի է $(0,1]$-ի
+վրա, և գտեք ինտեգրալը։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$f_n=n$, երբ $x\lt\tfrac1{n^2}$։ $f_n$-երն անընդհատ են և սահմանափակ, ուստի
+նրանց Լեբեգի ինտեգրալը հավասար է Ռիմանի ինտեգրալին (Թեորեմ 76)։</p></div></details>
+<div class="solution">
+<p>$\int_0^1f_n=n\cdot\tfrac1{n^2}+\int_{1/n^2}^1\tfrac{dx}{\sqrt x}=\tfrac1n+2-\tfrac2n=2-\tfrac1n\le2$։ $f_n$-երն աճում են և ամեն $x\in(0,1]$-ում
+զուգամիտում են $\tfrac1{\sqrt x}$-ին։ Լևիի թեորեմով ($K=2$) սահմանն ինտեգրելի է, և $\int_{(0,1]}\tfrac{dx}{\sqrt x}=\lim_n\bigl(2-\tfrac1n\bigr)=2$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int_{(0,1]}\tfrac{dx}{\sqrt x}=2$</div>
+</div>
+
+<div class="box problem" id="ex3"><div class="box-title">Վարժություն 3</div>
+<p>Օրինակ 7-ի $f_n$-երի համար ($f_n=n$ $\left(0,\tfrac1n\right)$-ում, $0$՝ մնացած կետերում) ապացուցեք, որ $\varphi=\sup_nf_n$-ն ինտեգրելի չէ $[0,1]$-ի
+վրա, և ստուգեք, որ Ֆատուի լեմմայում անհավասարությունը խիստ է։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$\varphi=k$ $\left[\tfrac1{k+1},\tfrac1k\right)$-ում, $k=1,2,\dots$։</p></div></details>
+<div class="solution">
+<p>$x\in\left[\tfrac1{k+1},\tfrac1k\right)$-ի համար $f_j(x)=j$ ճիշտ այն դեպքում, երբ $j\lt\tfrac1x$, այսինքն՝ $j\le k$, ուրեմն $\varphi(x)=k$։ $\varphi$-ն
+ոչ բացասական պարզ ֆունկցիա է, և</p>
+$$\begin{aligned}\sum_kk\,\operatorname{mes}\Bigl[\tfrac1{k+1},\tfrac1k\Bigr)&=\sum_kk\Bigl(\tfrac1k-\tfrac1{k+1}\Bigr)\\&=\sum_k\tfrac1{k+1}=\infty,\end{aligned}$$
+<p>այսինքն՝ $\varphi$-ն ինտեգրելի չէ, և ոչ մի ինտեգրելի մաժորանտ չկա (ցանկացած մաժորանտ $\ge\varphi$)։ Ֆատու՝ $\varliminf f_n=0$ ամենուրեք, ուստի
+$\int\varliminf f_n=0\lt1=\varliminf\int f_n$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int\varphi=\sum_k\tfrac1{k+1}=\infty$; $0\lt1$</div>
+</div>
+
+<div class="box problem" id="ex4"><div class="box-title">Վարժություն 4</div>
+<p>Ապացուցեք, որ Ռիմանի $r$ ֆունկցիան ($r\left(\tfrac pq\right)=\tfrac1q$ անկրճատելի կոտորակների համար, $r(x)=0$ իռացիոնալ $x$-երի համար) անընդհատ
+է բոլոր իռացիոնալ կետերում և խզվող է ռացիոնալներում։ Եզրակացրեք, որ այն ինտեգրելի է ըստ Ռիմանի, և գտեք $\int_0^1r(x)\,dx$-ը։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>Ամեն $\varepsilon\gt0$-ի համար $[0,1]$-ում վերջավոր թվով կոտորակներ կան,
+որոնց համար $\tfrac1q\ge\varepsilon$։</p></div></details>
+<div class="solution">
+<p>Ռացիոնալ $\tfrac pq$ կետում $r=\tfrac1q\gt0$, բայց նրա կամայական մոտ կան իռացիոնալ կետեր, որտեղ $r=0$, հետևաբար $r$-ը խզվող է։ Դիցուք $x_0$-ն
+իռացիոնալ է, և $\varepsilon\gt0$։ $q\le\tfrac1\varepsilon$ հայտարարով կոտորակները $[0,1]$-ում վերջավոր թվով են, ուստի կա $\delta\gt0$, որ
+$(x_0-\delta,x_0+\delta)$-ում դրանցից ոչ մեկը չկա։ Այդ միջակայքում $r(x)\lt\varepsilon$, այսինքն՝ $r$-ն անընդհատ է $x_0$-ում։ Խզման կետերը
+$\Q\cap[0,1]$-ն են՝ զրո չափի բազմություն, և $0\le r\le1$, ուստի Թեորեմ 77-ով $r$-ն ինտեգրելի է ըստ Ռիմանի։ Քանի որ $r=0$ հ.ա., նրա Լեբեգի ինտեգրալը
+$0$ է (Հատկություն 8), և Թեորեմ 76-ով Ռիմանի ինտեգրալը նույնպես $0$ է։ Վիջեթում երևում է, որ $S_n\to0$ (օրինակ՝ $S_7\approx0{,}11$)։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\int_0^1r(x)\,dx=0$</div>
+</div>
+
+<div class="box problem" id="ex5"><div class="box-title">Վարժություն 5 ★</div>
+<p>Ապացուցեք, որ $[0,1]^2$-ում $f(x,y)=\tfrac{x^2-y^2}{(x^2+y^2)^2}$ ֆունկցիայի հաջորդական ինտեգրալները տարբեր են՝</p>
+$$\int_0^1\Bigl(\int_0^1f\,dy\Bigr)dx=\frac\pi4,$$
+$$\int_0^1\Bigl(\int_0^1f\,dx\Bigr)dy=-\frac\pi4.$$
+<p>Ինչո՞ւ սա չի հակասում Ֆուբինիի թեորեմին։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$\dfrac{\partial}{\partial y}\dfrac{y}{x^2+y^2}=\dfrac{x^2-y^2}{(x^2+y^2)^2}$։</p></div></details>
+<div class="solution">
+<p>$x\gt0$-ի համար $\int_0^1f\,dy=\Bigl[\tfrac y{x^2+y^2}\Bigr]_0^1=\tfrac1{1+x^2}$, և $\int_0^1\tfrac{dx}{1+x^2}=\operatorname{arctg}1=\tfrac\pi4$
+($x=0$ կետը չափին չի ազդում)։ Քանի որ $f(y,x)=-f(x,y)$, մյուս կարգով ստացվում է $-\tfrac\pi4$։ Եթե $f$-ն ինտեգրելի լիներ քառակուսու վրա, Թեորեմ 79-ով
+երկու հաջորդական ինտեգրալներն էլ հավասար կլինեին $\int f\,d\mu_Z$-ին։ Ուրեմն $f$-ն ինտեգրելի չէ, և Թեորեմ 80-ով $|f|$-ի ոչ մի հաջորդական ինտեգրալ
+վերջավոր չէ։ Ուղղակի ստուգում՝ բևեռային կոորդինատներով $|f|=\tfrac{|\cos2\varphi|}{r^2}$, և $\int|f|\,r\,dr$-ն տարամետ է $0$-ի մոտ, ինչպես
+$\int\tfrac{dr}r$-ը։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $\tfrac\pi4\ne-\tfrac\pi4$; $f$-ն ինտեգրելի չէ, և Թեորեմ 79-ը չի կիրառվում</div>
+</div>
+
+<div class="box problem" id="ex6"><div class="box-title">Վարժություն 6 ★</div>
+<p>Ինտեգրելի՞ են ըստ Լեբեգի $\R$-ի վրա $f(x)=\tfrac1{1+x^2}$ և $g(x)=\tfrac1{1+|x|}$ ֆունկցիաները (Սահմանում 29, $X_n=[n,n+1)$, $n\in\Z$)։ Ինտեգրելիի
+դեպքում գտեք ինտեգրալը։</p>
+</div>
+<details class="extra hint"><summary>Հուշում</summary><div class="inner"><p>$[n,n+1)$-ի վրա երկու ֆունկցիան էլ ինտեգրելի են ըստ Ռիմանի։ Համեմատեք
+$\sum_n\int_{[n,n+1)}$ շարքը $\operatorname{arctg}$-ի աճերի կամ $\sum\tfrac1n$-ի հետ։</p></div></details>
+<div class="solution">
+<p>$\int_{[n,n+1)}f=\operatorname{arctg}(n+1)-\operatorname{arctg}n\gt0$, և ըստ $n\in\Z$ գումարը հեռադիտակային է՝ $\tfrac\pi2-\bigl(-\tfrac\pi2\bigr)=\pi\lt\infty$։
+Ուրեմն $f$-ն ինտեգրելի է, և $\int_\R f=\pi$։ $g$-ի համար $n\ge0$ դեպքում $[n,n+1)$-ում $g\ge\tfrac1{n+2}$, հետևաբար
+$\sum_n\int_{[n,n+1)}g\ge\sum_{n\ge0}\tfrac1{n+2}=\infty$, և $g$-ն ինտեգրելի չէ, թեև $g(x)\to0$, երբ $|x|\to\infty$։</p>
+<div class="box answer"><span class="answer-label">Պատասխան՝</span> $f$՝ այո, $\int_\R f=\pi$; $g$՝ ոչ</div>
+</div>
+</div>
+</details>
+
+<!-- ================================================================== -->
+<details class="sec" id="exam" open>
+<summary><h2>Ամփոփում և քննությանը պատրաստվելը</h2></summary>
+<div class="sec-body">
+<h3>Սահմանային թեորեմները մեկ աղյուսակում</h3>
+<div class="table-wrap"><table class="tbl">
+<thead><tr><th>թեորեմ</th><th>պայմաններ</th><th>եզրակացություն</th><th>առանց պայմանի</th></tr></thead>
+<tbody>
+<tr><td>Լեբեգ (71, 72)</td><td>$f_n\to f$ ըստ չափի կամ հ.ա., $|f_n|\le\varphi$, $\varphi$-ն ինտեգրելի է</td><td>$\int f_n\to\int f$</td><td>Օրինակ 7 (մաժորանտ չկա)</td></tr>
+<tr><td>Հետևանք 9</td><td>$f_n\to f$ հ.ա., $|f_n|\le M$, $\mu(A)\lt\infty$</td><td>$\int f_n\to\int f$</td><td>$\R$-ում $f_n=1$ $[n,n+1)$-ում և $0$՝ դրսում, $\int f_n=1$, իսկ սահմանը $0$ է</td></tr>
+<tr><td>Լևի (73)</td><td>$f_n\le f_{n+1}$, $\int f_n\le K$</td><td>$f$-ն ինտեգրելի է, $\int f_n\to\int f$</td><td>Օրինակ 7 (մոնոտոն չէ)</td></tr>
+<tr><td>Ֆատու (Լ13, Թ75)</td><td>$f_n\ge0$</td><td>$\int\varliminf f_n\le\varliminf\int f_n$</td><td>$-f_n$ Օրինակ 7-ից</td></tr>
+</tbody></table></div>
+
+<h3>Բանավոր քննության համար՝ ինչ պետք է կարողանալ</h3>
+<p class="muted">Ուշադրություն՝ սա ոչ պաշտոնական ցանկ է՝ կազմված դասախոսության նյութից, ոչ թե դասախոսի քննական հարցերից։</p>
+<ol>
+  <li>Սահմանում 25, ինչու է պետք բացարձակ զուգամիտությունը, Լեմմա 12, Թեորեմ 59-63 (<a href="#simple">բաժինը</a>)։</li>
+  <li>Սահմանում 26 և նրա ճշտության երեք ստուգումները (<a href="#general">բաժինը</a>)։</li>
+  <li>Թեորեմ 66, 67, Դիտողություն 6, հաշվելի ադիտիվություն, բացարձակ անընդհատություն (Թ70), Չեբիշևի անհավասարություն, Հետևանք 8։</li>
+  <li>Լեբեգի թեորեմը և Օրինակ 7, Լևիի թեորեմը, Ֆատուի լեմման և թեորեմը (<a href="#limits">ապացույցները</a>)։</li>
+  <li>Թեորեմ 76-ի ապացույցը Դարբուի գումարներով, Լեբեգի հայտանիշը (<a href="#riemann">բաժինը</a>)։</li>
+  <li>Սիգմա-վերջավոր չափ, Սահմանում 29, ինչու Թեորեմ 65-ը ճիշտ չէ, անիսկական ինտեգրալներ (<a href="#sigma">բաժինը</a>)։</li>
+  <li>Չափերի արտադրյալ, Ֆուբինիի թեորեմը, Թեորեմ 80, Օրինակ 8 (<a href="#fubini">բաժինը</a>)։</li>
+  <li>Նշանափոխ չափ, բացարձակ անընդհատություն, Ռադոն-Նիկոդիմի թեորեմի ձևակերպումը (<a href="#radon">բաժինը</a>)։</li>
+</ol>
+
+<h3>Ինքնաստուգման հարցեր</h3>
+<details class="extra"><summary>Ինչո՞ւ է Սահմանում 26-ում կարևոր, որ $\mu(A)\lt\infty$</summary><div class="inner">
+<p>Առանց դրա $\left|\int f_n-\int f_m\right|\le\mu(A)\sup|f_n-f_m|$ գնահատականը ոչինչ չի տալիս, և հավասարաչափ զուգամիտությունը բավական չէ։ Օրինակ՝
+$\R$-ում $f_n=\tfrac1n$ $[0,n]$-ում և $0$՝ դրսում, հավասարաչափ ձգտում են $0$-ի, բայց $\int f_n=1$ ամեն $n$-ի համար։</p></div></details>
+<details class="extra"><summary>Ըստ Ռիմանի ինտեգրելի ֆունկցիան ինտեգրելի է ըստ Լեբեգի։ Իսկ ըստ Ռիմանի անիսկական իմաստով ինտեգրելի՞ն</summary><div class="inner">
+<p>Միայն եթե անիսկական ինտեգրալը բացարձակ զուգամետ է։ $\tfrac1x\sin\tfrac1x$-ը $(0,1]$-ում ունի զուգամետ անիսկական ինտեգրալ, բայց ըստ Լեբեգի ինտեգրելի
+չէ, քանի որ $\int_\varepsilon^1|f|\to\infty$։</p></div></details>
+<details class="extra"><summary>Ինչո՞ւ Լևիի թեորեմում մաժորանտ պետք չէ</summary><div class="inner">
+<p>Աճող հաջորդականության դեպքում մաժորանտի դերը կատարում է հենց սահմանը։ Ապացույցում նախ Չեբիշևի անհավասարությամբ ցույց ենք տալիս, որ $f$-ը հ.ա.
+վերջավոր է, հետո նրա մակարդակի բազմություններից կառուցում ենք $\psi\ge f$ պարզ ֆունկցիա և $\int f_n\le K$ պայմանով ապացուցում, որ այն ինտեգրելի է։</p></div></details>
+
+<h3>Ինչ է հաջորդը</h3>
+<p>Դասախոսության նյութի հաջորդ գլուխներն այս կայքում դեռ չկան։ Նյութի 5-րդ գլուխն օգտագործում է <a href="ch2-lebesgue-measure.html#covering">Գլուխ 2-ի
+Վիտալիի ծածկույթի թեորեմները</a>։</p>
+</div>
+</details>
+
+      <nav class="pager" aria-label="Գլուխներ">
+        <a class="btn" href="ch3-measurable-functions.html">← Գլուխ 3</a>
+        <a class="btn" href="index.html">Բոլոր գլուխները</a>
+      </nav>
+    </div><!-- /content -->
+  </div><!-- /layout -->
+</main>
+
+<footer class="site-footer">
+  Նյութը գրվել է արհեստական բանականության օգնությամբ՝ դասախոսության նյութի հիման վրա։ Սխալ նկատելու դեպքում գրեք
+  <a href="https://github.com/HaykTarkhanyan/sample_problems_qysu/issues">GitHub-ում</a>։
+</footer>
+<button class="btn to-top" id="to-top" type="button" aria-label="Դեպի վեր">↑</button>
+</body>
+</html>
