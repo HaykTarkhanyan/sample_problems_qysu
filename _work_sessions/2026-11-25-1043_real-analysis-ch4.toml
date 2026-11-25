@@ -14,10 +14,13 @@ done = [
   "Deployed 9d883fb (Pages run ok, 1 min 15 s). Owner Q1: run one independent math review -> real_analysis/reviews/2026-11-25_ch4_math_review.md (one subagent, 18 min): 0 major, 3 minor, 7 nits, no wrong answer",
   "Applied all 10 findings: completeness of the factor measures for Fubini, 'absolutely continuous' in the Radon-Nikodym box, «տելեսկոպիկ» (glossary), Def 26 -> Def 25 direction, Lemma 13 states integrability of liminf f_n, the |f| step for improper integrals, Levi needs bounded integrals in the intro and mistakes list, section names instead of '4.1-4.4', exact 2^-n in w-lebsum, correct tail in sqrtEnvInt (1.860025) and stronger checks in ra4_check.mjs",
   "Owner asked why the 14 problems were not fixed: they were (24 Nov commits 28aa8c5, ca03ca7, 2cc186c); the heads-up note was misleading",
+  "Deployed 40f1515 (Pages run ok, 66 s, finished 11:37 local)",
+  "Two learnings (owner: 'yes save both'): _learnings/2026-11-25-1142_poppler-armenian-filenames.md, _learnings/2026-11-25-1143_formula-in-widget-head-splits-flex.md",
 ]
 pending = [
   "Terms not in the glossary, taken from the notes or chosen by analogy, not confirmed by the owner: «նշանափոխ չափ», «չափերի արտադրյալ», «հաջորդական ինտեգրալ» (iterated), «Ռիմանի ֆունկցիա» for Thomae's function. Asked as Q2 on 2026-11-25, owner: 'later'. Do not record them in OWNER_ANSWERS until answered",
   "Old chapter 3 lint hints (density-usti 57 per 10k, two negative-word hints) are untouched",
+  "20 existing widget headings on 14 pages contain a formula; not checked in a screenshot (short ones probably fit on one line)",
 ]
 next = [
   "Ask the owner whether to run one independent math review of ch4-lebesgue-integral.html (one subagent)",
@@ -27,6 +30,8 @@ files = [
   "site/analysis/ch4-lebesgue-integral.html", "site/assets/js/ra4.js", "real_analysis/checks/ra4_check.mjs",
   "site/analysis/index.html", "site/analysis/ch3-measurable-functions.html", "site/index.html",
   "site/assets/search/analysis.js", "real_analysis/README.md", "CONVENTIONS.md",
+  "real_analysis/reviews/2026-11-25_ch4_math_review.md", "_learnings/2026-11-25-1142_poppler-armenian-filenames.md",
+  "_learnings/2026-11-25-1143_formula-in-widget-head-splits-flex.md",
 ]
-commits = ["see git log: 'Real analysis chapter 4'"]
+commits = ["9d883fb chapter 4 page", "40f1515 apply the math review", "next commit: learnings + this log"]
 notes = "Poppler tools (pdfinfo, pdftotext, pdftoppm) fail on the Armenian file name; copy to an ASCII name first. Playwright MCP screenshots may only be saved under the repo (.playwright-mcp/), not the scratchpad."
