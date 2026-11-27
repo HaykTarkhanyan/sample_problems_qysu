@@ -2,6 +2,23 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 31. Final renders of the long videos: 1080p30, in parallel on a GCP trial VM
+
+- **Date / status:** 2026-11-28, active (owner: "maybe render 1080p instead of 720"; Q2 "GCP VM, in parallel"; Q3 "Yes,
+  start it")
+- **Decision:** the analysis videos are rendered at 1920x1080, 30 fps (`render_check.py --quality f` = manim `-qh --fps
+  30`), on a self-deleting Compute Engine VM of the free-trial account (`animations/cloud/gce_render.sh`: one copy of
+  `animations/` per scene, 12 renders at once, Arial uploaded from Windows, results and render_check sheets to a
+  private bucket). Review galleries are split into standalone pages of at most about 10 MB.
+- **Why:** 18 videos of 2-4 min at 1080p would take 4-6 hours on the laptop, one render at a time. Measured: 18 scenes
+  in about 13 min on n2-custom-12-24576 (setup 3 min), then 4 re-renders in 6 min on n2-custom-8-16384; about $0.20
+  of trial credit in total (estimate from VM minutes; the console lags). 1080p keeps subscripts and small captions
+  sharp; 60 fps would double frames and size for slow animations that gain nothing from it.
+- **Alternatives rejected:** Colab (Manim's Cairo renderer is CPU-only, so its GPU is idle, and it has about 2 vCPUs
+  and no Arial); local overnight (free but 4-6 hours, and it blocks the laptop); 1080p60 (twice the size).
+- **What would change this:** the trial credit ending (19 Feb 2027, or used up), the 12-vCPU quota being raised, or
+  site pages needing 720p copies for size (render those separately with `--quality m`).
+
 ## 30. Mathematical analysis videos: silent, long-form, one per theorem, built on Musoyan part 1, gallery first
 
 - **Date / status:** 2026-11-27, active (owner: all four theorem groups; Q2 "Gallery first"; Q3 "It can even be long
