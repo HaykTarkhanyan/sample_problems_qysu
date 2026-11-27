@@ -168,10 +168,11 @@ class DarbouxSums(AnalysisScene):
                  ("$\\lim\\limits_{\\lambda\\to0}(S-s)=0$", ", այսինքն՝", "$\\lim\\limits_{\\lambda\\to0}\\sum\\omega_i\\Delta x_i=0$", "։"),
                  extra=0.5)
         self.say(("Անհրաժեշտություն՝", "$\\lambda<\\delta$", "դեպքում բոլոր", "$\\sigma$", "-երը", "$(I-\\varepsilon,I+\\varepsilon)$",
-                  "-ում են, իսկ", "$s$", "-ը և", "$S$", "-ը նրանց ճշգրիտ եզրերն են,"),
-                 ("հետևաբար", "$S-s\\le2\\varepsilon$", "։ Բավարարություն՝", "$s\\le I_*\\le I^*\\le S$", "(Դարբուի ստորին և վերին",
-                  "ինտեգրալներ), ուրեմն", "$I_*=I^*=I$", ","),
-                 ("և", "$s\\le\\sigma\\le S$", "-ից՝", "$|\\sigma-I|\\le S-s\\to0$", "։"), extra=0.5)
+                  "-ում են,"),
+                 ("իսկ", "$s$", "-ը և", "$S$", "-ը նրանց ճշգրիտ եզրերն են, հետևաբար", "$S-s\\le2\\varepsilon$", "։"))
+        self.say(("Բավարարություն՝", "$s\\le I_*\\le I^*\\le S$", "(Դարբուի ստորին և վերին ինտեգրալներ)։"),
+                 ("Քանի որ", "$S-s\\to0$", ",", "$I_*=I^*=:I$", ", և", "$s\\le\\sigma\\le S$", "-ից՝",
+                  "$|\\sigma-I|\\le S-s\\to0$", "։"), extra=0.5)
         self.say(("Թեորեմ 3.1։ Եթե", "$f$", "-ն անընդհատ է", "$[a,b]$", "հատվածում, ապա ինտեգրելի է։ Կանտորի թեորեմով մի",
                   "$\\delta$", "-ից փոքր"),
                  ("$\\lambda$", "-ի դեպքում", "$\\omega_i<\\varepsilon$", ", ուստի", "$\\sum\\omega_i\\Delta x_i<\\varepsilon(b-a)$", "։"),
@@ -185,8 +186,8 @@ class DarbouxSums(AnalysisScene):
         ax2.next_to(head, DOWN, buff=0.6).set_x(-1.6)
         rng = np.random.default_rng(509)
         xs = np.sort(rng.uniform(0, 1, 140))
-        top_dots = VGroup(*[Dot(ax2.c2p(x, 1), radius=0.025, color=RED) for x in xs[::2]])
-        bot_dots = VGroup(*[Dot(ax2.c2p(x, 0), radius=0.025, color=RED) for x in xs[1::2]])
+        top_dots = VGroup(*[Dot(ax2.c2p(x, 1), radius=0.04, color=RED) for x in xs[::2]])
+        bot_dots = VGroup(*[Dot(ax2.c2p(x, 0), radius=0.04, color=RED) for x in xs[1::2]])
         side = VGroup(tex(r"\chi(x)=\begin{cases}1, & x\in\mathbb{Q}\\ 0, & x\notin\mathbb{Q}\end{cases}", 32, RED)
                       ).move_to([4.6, 1.3, 0])
         labs = VGroup(tex("1", 28, MUTED).next_to(ax2.c2p(0, 1), LEFT, buff=0.12),

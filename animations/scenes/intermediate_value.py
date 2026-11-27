@@ -127,9 +127,10 @@ class IntermediateValue(AnalysisScene):
         thm2.next_to(head, DOWN, buff=0.3)
         graph_group = VGroup(ax, graph, fa, fb, f_lab, a_lab, b_lab)
         self.unsay()
-        self.play(graph_group.animate.set_opacity(0.15), FadeIn(thm2), run_time=0.9)
+        # FadeOut/FadeIn, not set_opacity: set_opacity(1) would also fill the curve (its fill opacity is 0)
+        self.play(FadeOut(graph_group), FadeIn(thm2), run_time=0.9)
         self.wait(6.0)
-        self.play(FadeOut(thm2), graph_group.animate.set_opacity(1), run_time=0.8)
+        self.play(FadeOut(thm2), FadeIn(graph_group), run_time=0.8)
         self.say(("Վերցնենք", "$f(a)$", "-ի և", "$f(b)$", "-ի միջև ընկած", "$C$", "թիվ։"),
                  anims=[Create(c_line), FadeIn(c_name)])
         shift = ax.c2p(0, 0) - ax.c2p(0, C_LEVEL)

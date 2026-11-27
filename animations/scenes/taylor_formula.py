@@ -129,7 +129,10 @@ class TaylorFormula(AnalysisScene):
         self.say(("Աստիճանը մեծացնելիս բազմանդամը", "$\\sin x$", "-ին մոտ է ավելի ու ավելի լայն միջակայքում,"),
                  ("բայց", "$x_0$", "-ից հեռու այն միշտ հեռանում է։"))
 
-        # ---- Peano's remainder, with the book's proof (lemma 6.1)
+        # ---- Peano's remainder, with the book's proof (lemma 6.1); the plot goes so the 3-row captions do not
+        # sit on the curves
+        self.fade_all(keep=[head])
+        self.cap = None
         self.say(("Թեորեմ 6.1 (Պեանո)։ Եթե", "$x_0$", "-ում կան մինչև", "$n$", "-րդ կարգի ածանցյալներ, ապա"),
                  ("$r_n(x)=o\\big((x-x_0)^n\\big)$", ", այսինքն՝", "$\\dfrac{r_n(x)}{(x-x_0)^n}\\to0$", ", երբ",
                   "$x\\to x_0$", "։"))
@@ -192,7 +195,7 @@ class TaylorFormula(AnalysisScene):
                 cell.move_to([col_x[j], top_y - 0.5 * i, 0])
             table.add(r)
         rule = Line([-4.6, top_y - 0.27, 0], [4.8, top_y - 0.27, 0], color=MUTED, stroke_width=1.5)
-        self.play(FadeIn(head_row), Create(rule), run_time=0.6)
+        self.play(FadeOut(lag), FadeIn(head_row), Create(rule), run_time=0.6)   # the card would overlap the header
         for r in rows[1:]:
             self.play(FadeIn(r), run_time=0.5)
         self.say(("Սխալը միշտ փոքր է գնահատականից։", "$n=6$", "-ի դեպքում արդեն", "$e\\approx2{,}718$", "՝"),

@@ -73,9 +73,9 @@ class SeriesRearrangement(AnalysisScene):
     def construct(self):
         head = title("Շարքերի տեղափոխություններ")
         self.intro(head, card("Թեորեմ 4.3 (Ռիմանի թեորեմ)",
-                              ("Եթե շարքը պայմանականորեն զուգամետ է, ապա յուրաքանչյուր", "$\\alpha$", "թվի համար"),
-                              ("($\\alpha$", "-ն կարող է լինել նաև", "$\\pm\\infty$", ") գոյություն ունի այդ շարքի"),
-                              ("տեղափոխություն, որի գումարը", "$\\alpha$", "է։"),
+                              ("Եթե շարքը պայմանականորեն զուգամետ է, ապա յուրաքանչյուր", "$\\alpha$", "թվի համար,"),
+                              ("նաև", "$\\alpha=\\pm\\infty$", "-ի համար, գոյություն ունի այդ շարքի տեղափոխություն,"),
+                              ("որի գումարը", "$\\alpha$", "է։"),
                               source=SOURCE))
 
         # ---- the series in its own order
@@ -106,7 +106,8 @@ class SeriesRearrangement(AnalysisScene):
         a_line = DashedLine(ax.c2p(0, alpha), ax.c2p(N + 2, alpha), color=ORANGE, stroke_width=2.5, dash_length=0.1)
         a_lab = tex(r"\alpha=1{,}5", 30, ORANGE).next_to(a_line, RIGHT, buff=0.12)
         dots1 = self.plot_sums(ax, terms)
-        self.play(dots0.animate.set_opacity(0.15), Create(a_line), FadeIn(a_lab), run_time=0.8)
+        # the series formula goes: the alpha labels sit at the right end of their lines, where it was
+        self.play(dots0.animate.set_opacity(0.15), Create(a_line), FadeIn(a_lab), FadeOut(side), run_time=0.8)
         self.say(("Ռիմանի կառուցումը։ Վերցնում ենք դրական անդամներ, մինչև գումարն անցնի", "$\\alpha$", "-ից,"),
                  ("հետո բացասականներ, մինչև իջնի", "$\\alpha$", "-ից, և այդպես շարունակ։"))
         self.play(LaggedStart(*[FadeIn(d) for d in dots1], lag_ratio=0.12), run_time=7.0)
@@ -169,7 +170,7 @@ class SeriesRearrangement(AnalysisScene):
         cap_lab = tex(r"\frac{\pi^2}{8}\approx1{,}234", 30, BLUE).next_to(cap_line, RIGHT, buff=0.12)
         goal = DashedLine(ax3.c2p(0, 1.5), ax3.c2p(K + 2, 1.5), color=ORANGE, stroke_width=2.5, dash_length=0.1)
         goal_lab = tex(r"1{,}5", 30, ORANGE).next_to(goal, RIGHT, buff=0.12)
-        side3 = tex(r"1-\frac14+\frac19-\frac1{16}+\dots", 32, INK).move_to([4.7, 2.3, 0])
+        side3 = tex(r"1-\frac14+\frac19-\frac1{16}+\dots", 32, INK).move_to([4.7, 0.0, 0])   # below the 1,5 label
         yn3 = VGroup(*[tex(s, 28, MUTED).next_to(ax3.c2p(0, v), LEFT, buff=0.12) for s, v in (("0", 0), ("1", 1))])
         self.play(Create(ax3), FadeIn(yn3), FadeIn(side3), Create(goal), FadeIn(goal_lab), run_time=0.9)
         self.play(LaggedStart(*[FadeIn(d) for d in dots4], lag_ratio=0.08), Create(cap_line), FadeIn(cap_lab), run_time=4.0)
