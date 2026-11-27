@@ -2,6 +2,22 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 30. Mathematical analysis videos: silent, long-form, one per theorem, built on Musoyan part 1, gallery first
+
+- **Date / status:** 2026-11-27, active (owner: all four theorem groups; Q2 "Gallery first"; Q3 "It can even be long
+  form, house rule doesn't apply, do what's best in terms of quality and understanding"; "No need to voice over")
+- **Decision:** 11 Manim scenes (`math_analysis/README.md` lists them) on the fundamental theorems of V. Musoyan's
+  *Մաթեմատիկական անալիզ*, part 1, each following the book's own proof and ending with counterexamples for the
+  hypotheses. No narration: captions carry the explanation and `scenes/_analysis.py` holds each one for its reading
+  time (1.2 s + 1 s per 13 characters). Videos run 2-2.5 min, so AUTHORING.md's 12-30 s rule and 1.5 MB budget do
+  not apply to them. They go to a local review gallery before any site placement.
+- **Why:** the proofs are the point (halving + nested intervals, Bolzano-Weierstrass, Rolle), and a proof does not fit
+  in 30 s. The videos share one helper so captions, cards and timing stay consistent across the series.
+- **Alternatives rejected:** statement + picture only, 15-30 s (owner chose long form); narration with the Gemini
+  pipeline of #29 (owner: not needed); a new site section right away (owner chose the gallery first).
+- **What would change this:** the owner's review of the gallery (pacing too slow or fast, wanting narration after
+  all), or the site placement decision, which may cut the videos into shorter pieces.
+
 ## 29. Narration: Gemini 3.8 Flash TTS, voice Sadaltager, one clip per beat synced in the scene
 
 - **Date / status:** 2026-11-24, active (owner, after the listening test: "Lets do gemini", then "I like the third
