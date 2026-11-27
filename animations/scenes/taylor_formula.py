@@ -23,7 +23,7 @@ from manim import (
 )
 
 from _analysis import (
-    BLUE, INK, MUTED, ORANGE, RED, AnalysisScene, card, tex, title,
+    BLUE, INK, MUTED, ORANGE, RED, AnalysisScene, card, reading_time, tex, title,
 )
 
 SOURCE = "Վ. Մուսոյան, Մաթեմատիկական անալիզ, մաս 1, կետ 4.6"
@@ -41,11 +41,24 @@ def sin_taylor(x, n):
 
 
 def good_radius(n, step=1e-3):
-    """Largest R with |sin x - P_n(x)| < TOL on [-R, R] (the function and polynomial are odd)."""
+    """Largest grid R with |sin x - P_n(x)| < TOL on [-R, R] (both odd): the last accepted point, not the first
+    one that fails."""
     x = 0.0
-    while abs(math.sin(x) - float(sin_taylor(x, n))) < TOL and x < 7:
+    while abs(math.sin(x + step) - float(sin_taylor(x + step, n))) < TOL and x < 7:
         x += step
     return x
+
+
+def window_range(poly, lo, hi, ymax, step=1e-3):
+    """The largest interval around 0, inside [lo, hi], on which |poly| <= ymax. The polynomial is drawn only there
+    (clipping would draw flat pieces that are not part of it)."""
+    right = 0.0
+    while right + step <= hi and abs(float(poly(right + step))) <= ymax:
+        right += step
+    left = 0.0
+    while left - step >= lo and abs(float(poly(left - step))) <= ymax:
+        left -= step
+    return left, right
 
 
 def sin_poly_tex(n):
@@ -91,8 +104,9 @@ class TaylorFormula(AnalysisScene):
         self.play(Create(ax), Create(g), FadeIn(f_lab), run_time=1.5)
 
         def poly_graph(n):
-            return ax.plot(lambda x: float(np.clip(sin_taylor(x, n), -2.3, 2.3)), x_range=[-7, 7, 0.01],
-                           color=ORANGE, stroke_width=3, use_smoothing=False)
+            lo, hi = window_range(lambda x: sin_taylor(x, n), -7, 7, 2.3)
+            return ax.plot(lambda x: float(sin_taylor(x, n)), x_range=[lo, hi, 0.01], color=ORANGE, stroke_width=3,
+                           use_smoothing=False)
 
         def strip(n):
             r = good_radius(n)
@@ -111,16 +125,42 @@ class TaylorFormula(AnalysisScene):
             self.play(Transform(pg, new_pg), Transform(st, new_st), FadeTransform(ptex, new_tex, stretch=False),
                       run_time=1.4)
             ptex = new_tex
-            self.wait(0.8 if n < SIN_DEGREES[-1] else 0.3)
+            self.wait(max(2.0, reading_time(new_tex)))
         self.say(("Աստիճանը մեծացնելիս բազմանդամը", "$\\sin x$", "-ին մոտ է ավելի ու ավելի լայն միջակայքում,"),
                  ("բայց", "$x_0$", "-ից հեռու այն միշտ հեռանում է։"))
 
-        # ---- Peano's remainder
+        # ---- Peano's remainder, with the book's proof (lemma 6.1)
         self.say(("Թեորեմ 6.1 (Պեանո)։ Եթե", "$x_0$", "-ում կան մինչև", "$n$", "-րդ կարգի ածանցյալներ, ապա"),
                  ("$r_n(x)=o\\big((x-x_0)^n\\big)$", ", այսինքն՝", "$\\dfrac{r_n(x)}{(x-x_0)^n}\\to0$", ", երբ",
                   "$x\\to x_0$", "։"))
-        self.say(("Ապացույցը՝ լեմմա 6.1։", "$r_n$", "-ը և նրա առաջին", "$n$", "ածանցյալները", "$x_0$", "-ում 0 են,"),
-                 ("իսկ Լագրանժի բանաձևը և ինդուկցիան տալիս են", "$r(x)=o\\big((x-x_0)^n\\big)$", "։"), extra=0.5)
+        self.say(("Լեմմա 6.1։ Եթե", "$r(x_0)=r'(x_0)=\\dots=r^{(n)}(x_0)=0$", ", ապա", "$r(x)=o\\big((x-x_0)^n\\big)$", "։"),
+                 ("$r_n=f-P_n$", "-ը բավարարում է այս պայմաններին, քանի որ", "$P_n^{(k)}(x_0)=f^{(k)}(x_0)$", "։"))
+        self.say(("Ինդուկցիա։", "$n=1$", "՝", "$\\dfrac{r(x)}{x-x_0}=\\dfrac{r(x)-r(x_0)}{x-x_0}\\to r'(x_0)=0$", "։"),
+                 ("Քայլ՝ Լագրանժով", "$\\dfrac{r(x)}{(x-x_0)^{n+1}}=\\dfrac{r'(c)}{(c-x_0)^{n}}\\cdot\\left(\\dfrac{c-x_0}{x-x_0}\\right)^{n}$",
+                  ", առաջին արտադրիչը", "$\\to0$", ","),
+                 ("երկրորդը", "$(0,1)$", "-ում է, քանի որ", "$c$", "-ն", "$x_0$", "-ի և", "$x$", "-ի միջև է։"), extra=0.5)
+
+        # ---- the hypotheses matter: |x| and x|x| at 0
+        self.fade_all(keep=[head])
+        self.cap = None
+        pans = []
+        for cx in (-3.4, 3.4):
+            a_ = Axes(x_range=[-1.1, 1.1, 1], y_range=[-1.1, 1.1, 1], x_length=4.4, y_length=3.2, tips=False,
+                      axis_config={"color": MUTED, "include_ticks": False})
+            a_.next_to(head, DOWN, buff=0.7).set_x(cx)
+            pans.append(a_)
+        p1, p2 = pans
+        abs_g = p1.plot(lambda t: abs(t), x_range=[-1, 1], color=RED, stroke_width=4, use_smoothing=False)
+        xabs_g = p2.plot(lambda t: t * abs(t), x_range=[-1, 1], color=BLUE, stroke_width=4)
+        tl = VGroup(tex(r"f(x)=|x|", 30, RED).next_to(p1, DOWN, buff=0.2),
+                    tex(r"f(x)=x|x|", 30, BLUE).next_to(p2, DOWN, buff=0.2))
+        self.play(Create(p1), Create(p2), Create(abs_g), Create(xabs_g), FadeIn(tl), run_time=1.5)
+        self.say(("$|x|$", "-ի համար", "$f'(0)$", "չկա, և", "$|x|=a+bx+o(x)$", "տեսքի ներկայացում չկա՝", "$\\frac{|x|}{x}$",
+                  "-ը 0-ում սահման չունի։"),
+                 ("$x|x|$", "-ի համար", "$f'(0)=0$", ",", "$x|x|=o(x)$", "՝ առաջին կարգի բանաձևը կա, բայց", "$f''(0)$",
+                  "չկա, ուստի", "$n=2$", "-ով՝ ոչ։"), extra=0.5)
+        self.say(("Պեանոյի տեսքի համար պետք է", "$f^{(n)}(x_0)$", "-ն, Լագրանժի տեսքի համար՝", "$f^{(n+1)}$",
+                  "-ն ամբողջ շրջակայքում։"))
 
         # ---- Lagrange's remainder and the number e
         self.fade_all(keep=[head])
@@ -132,6 +172,10 @@ class TaylorFormula(AnalysisScene):
         lag.next_to(head, DOWN, buff=0.9)
         self.show_card(lag)
         self.play(lag.animate.scale(0.75).next_to(head, DOWN, buff=0.3), run_time=0.8)
+        self.say(("Ապացույց (գիրք)։", "$\\varphi(z)=f(x)-\\sum\\limits_{k=0}^{n}\\dfrac{f^{(k)}(z)}{k!}(x-z)^k$", ",",
+                  "$\\varphi'(z)=-\\dfrac{f^{(n+1)}(z)}{n!}(x-z)^n$", ","),
+                 ("$\\varphi(x_0)=r_n(x)$", ",", "$\\varphi(x)=0$", "։ Կոշիի բանաձևը", "$\\varphi$", "-ի և",
+                  "$\\psi(z)=(x-z)^{n+1}$", "-ի համար տալիս է Լագրանժի տեսքը։"))
         self.say(("Օրինակ՝", "$e^x$", ",", "$x_0=0$", ",", "$x=1$", "։", "$e=1+1+\\frac1{2!}+\\dots+\\frac1{n!}+r_n$", ","),
                  ("$r_n=\\dfrac{e^c}{(n+1)!}<\\dfrac{3}{(n+1)!}$", ", քանի որ", "$0<c<1$", "և", "$e<3$", "։"))
         head_row = VGroup(tex("n", 30, MUTED), tex(r"P_n(1)", 30, MUTED), tex(r"e-P_n(1)", 30, MUTED),
@@ -167,19 +211,25 @@ class TaylorFormula(AnalysisScene):
         self.play(Create(ax2), Create(gl), FadeIn(one), FadeIn(l_lab), run_time=1.5)
 
         def lpoly(n):
-            return ax2.plot(lambda x: float(np.clip(log_taylor(x, n), -2.2, 2.2)), x_range=[-0.88, 2.6, 0.005],
-                            color=ORANGE, stroke_width=3, use_smoothing=False)
+            lo, hi = window_range(lambda x: log_taylor(x, n), -0.88, 2.6, 2.2)
+            return ax2.plot(lambda x: float(log_taylor(x, n)), x_range=[lo, hi, 0.005], color=ORANGE, stroke_width=3,
+                            use_smoothing=False)
 
+        self.say(("$\\ln(1+x)=x-\\frac{x^2}{2}+\\dots+(-1)^{n-1}\\frac{x^n}{n}+r_n(x)$", "։ Նարնջագույնը՝ Թեյլորի",
+                  "բազմանդամը,"),
+                 ("այնքան, որքան տեղավորվում է նկարում։"))
         lp = lpoly(1)
         n_tex = tex("n=1", 32, ORANGE).move_to([4.7, 0.5, 0])
         self.play(Create(lp), FadeIn(n_tex), run_time=1.0)
+        self.wait(1.5)
         for n in (2, 3, 5, 8, 12):
             new_tex = tex(f"n={n}", 32, ORANGE).move_to(n_tex)
             self.play(Transform(lp, lpoly(n)), FadeTransform(n_tex, new_tex, stretch=False), run_time=1.1)
             n_tex = new_tex
-            self.wait(0.5)
-        self.say(("$\\ln(1+x)=x-\\frac{x^2}{2}+\\dots+(-1)^{n-1}\\frac{x^n}{n}+r_n(x)$", "։"),
-                 ("$x>1$", "դեպքում աստիճանը մեծացնելիս բազմանդամներն ավելի են հեռանում։"))
+            self.wait(1.6)
+        self.say(("$-1<x\\le1$", "-ում բազմանդամները մոտենում են", "$\\ln(1+x)$", "-ին։", "$x>1$", "դեպքում",
+                  "$\\frac{x^n}{n}\\not\\to0$", ", ուստի Թեյլորի շարքը"),
+                 ("տարամետ է՝ առաջին մի քանի բազմանդամը դեռ կարող է մոտենալ, բայց մի", "$n$", "-ից սկսած դրանք հեռանում են։"))
         self.say(("Թեյլորի բանաձևը ճիշտ է ամեն", "$n$", "-ի համար, բայց", "$r_n(x)$", "-ը կարող է մեծ լինել։"),
                  ("Երբ է", "$r_n(x)\\to0$", "-ն,", "$n\\to\\infty$", "դեպքում՝ Թեյլորի շարքերի հարցն է (9.5)։"),
                  extra=0.5)

@@ -1,0 +1,2 @@
+# Shell scripts run on Linux VMs (animations/cloud/): keep them LF on every checkout, also with core.autocrlf=true
+*.sh text eol=lf

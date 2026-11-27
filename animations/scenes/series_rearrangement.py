@@ -44,10 +44,11 @@ def greedy(alpha, count):
 
 
 def to_infinity(count):
-    """Pass 1, one negative term, pass 2, one negative term, ... (the book's case alpha = +infinity)."""
+    """The book's case alpha = +infinity (p. 292): positive terms until the sum stays above i even after the next
+    negative term, then that negative term, then the same for i + 1, ... (each stage ends above its level)."""
     p, q, s, level, out = 1, 2, 0.0, 1, []
     while len(out) < count:
-        while s <= level and len(out) < count:
+        while s - 1 / q <= level and len(out) < count:
             s += 1 / p
             out.append((1 / p, True))
             p += 2
@@ -114,8 +115,15 @@ class SeriesRearrangement(AnalysisScene):
             ("+" if pos and i else ("" if pos else "-")) + rf"\frac{{1}}{{{round(1 / abs(t))}}}"
             for i, (t, pos) in enumerate(first)) + r"+\dots"
         self.say(("$" + seq_tex + "$",),
-                 ("$\\alpha$", "-ն հատելիս շեղումը չի գերազանցում վերջին անդամին, որը ձգտում է 0-ի։ Գումարը՝", "$1{,}5$", "։"),
-                 extra=0.5)
+                 ("$\\alpha$", "-ն հատելիս շեղման մոդուլը չի գերազանցում վերջին ավելացված անդամի մոդուլը,"),
+                 ("իսկ դա ձգտում է 0-ի։ Գումարը՝", "$1{,}5$", "։"), extra=0.5)
+        self.say(("Ընդհանուր դեպքում", "$p_k$", "-երը դրական անդամներն են իրենց հերթականությամբ,", "$q_k$", "-երը՝",
+                  "բացասականների մոդուլները։"),
+                 ("Պայմանական զուգամիտությունից", "$\\sum p_k=\\sum q_k=+\\infty$", "(այլապես շարքը կլիներ բացարձակ",
+                  "զուգամետ կամ տարամետ), իսկ", "$a_n\\to0$", "։"))
+        self.say(("Ամեն քայլին վերցնում ենք հաջորդ չօգտագործված անդամը, ուստի ոչ մի անդամ բաց չի թողնվում"),
+                 ("և չի կրկնվում։ Միջանկյալ գումարներն ընկած են բլոկների ծայրերի միջև, ուստի նույնպես ձգտում են",
+                  "$\\alpha$", "-ի։"))
 
         # ---- alpha = 0
         alpha = 0.0
@@ -142,8 +150,10 @@ class SeriesRearrangement(AnalysisScene):
         dots3 = self.plot_sums(ax2, terms_inf, radius=0.032)
         self.play(Create(ax2), FadeIn(xn2), FadeIn(yn2), FadeIn(levels), run_time=0.9)
         self.play(LaggedStart(*[FadeIn(d) for d in dots3], lag_ratio=0.08), run_time=6.0)
-        self.say(("$\\alpha=+\\infty$", "։ Դրականներով անցնում ենք 1-ից, հանում ենք մեկ բացասական, անցնում ենք 2-ից, ..."),
-                 ("Գումարը դանդաղ, բայց անսահմանափակ աճում է՝ տեղափոխությունը տարամետ է։"), extra=0.5)
+        self.say(("$\\alpha=+\\infty$", "։ Դրական անդամներ ենք ավելացնում, մինչև հաջորդ բացասական անդամն ավելացնելուց"),
+                 ("հետո էլ գումարը մնա 1-ից մեծ, հետո՝ 2-ից մեծ, և այդպես շարունակ։"))
+        self.say(("Ուրեմն", "$i$", "-րդ փուլից հետո բոլոր մասնակի գումարները մեծ են", "$i$", "-ից՝ ձգտում են", "$+\\infty$", "-ի։"),
+                 ("Նշանները փոխելով՝ նույն ձևով ստանում ենք", "$-\\infty$", "։"), extra=0.5)
 
         # ---- contrast: absolute convergence (Dirichlet, theorem 4.2)
         self.fade_all(keep=[head])
@@ -164,8 +174,13 @@ class SeriesRearrangement(AnalysisScene):
         self.play(Create(ax3), FadeIn(yn3), FadeIn(side3), Create(goal), FadeIn(goal_lab), run_time=0.9)
         self.play(LaggedStart(*[FadeIn(d) for d in dots4], lag_ratio=0.08), Create(cap_line), FadeIn(cap_lab), run_time=4.0)
         self.say(("Բացարձակ զուգամետ շարքում դրական անդամների գումարը վերջավոր է՝", "$\\frac{\\pi^2}{8}$", "։"),
-                 ("Նույնիսկ բոլորը վերցնելով՝ 1,5-ին չենք հասնի։ Դիրիխլեի թեորեմ՝ ամեն տեղափոխության գումարը նույնն է։"),
-                 extra=0.5)
+                 ("Նույնիսկ բոլորը վերցնելով՝ 1,5-ին չենք հասնի։"))
+        self.say(("Թեորեմ 4.2 (Դիրիխլե)։ Բացարձակ զուգամետ շարքի յուրաքանչյուր տեղափոխություն"),
+                 ("բացարձակ զուգամետ է և ունի նույն գումարը։"))
+        self.say(("Դրական շարքի համար տեղափոխության ամեն մասնակի գումար", "$\\le A$", ", ուստի", "$A'\\le A$", ",",
+                  "և հակառակը՝", "$A\\le A'$", "։"),
+                 ("Ընդհանուր դեպքում", "$A=P-Q$", "(դրականների և բացասականների մոդուլների գումարներ), և",
+                  "$A'=P'-Q'=P-Q=A$", "։"), extra=0.5)
 
         self.outro(head, card("Տեղափոխություններ",
                               ("Բացարձակ զուգամետ շարք՝ ամեն տեղափոխության գումարը նույնն է (Դիրիխլե)։"),

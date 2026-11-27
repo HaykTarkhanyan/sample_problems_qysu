@@ -46,7 +46,11 @@ images: `pdftoppm -f P -l P -r 110 -png musoyan_1.pdf out` (110 dpi is enough fo
 The first 11 scenes were reviewed by Codex (gpt-6.1-sol, xhigh) on 2026-11-27 with an unbiased, critical prompt:
 37 findings (7 critical, e.g. the harmonic-sum inequality x_2n - x_n > 1/2, false at n = 1 and also in the book;
 the Rolle takeaway without its hypotheses; a cover's "farthest-reaching interval" that does not exist). All were
-checked against the book and the code and applied the same day.
+checked against the book and the code and applied the same day. The second batch (T1-T7) got the same review that
+evening: about 30 findings (e.g. Theorem 5.2 without integrability; "more Taylor terms are worse for x > 1", false
+near x = 1; clipped polynomial graphs; a +infinity rearrangement whose stages ended below their levels), all applied.
+
+Final renders run on a GCP VM in parallel (`animations/cloud/gce_render.sh`, one copy of `animations/` per scene).
 
 Each video follows the book's own proof (halving + nested intervals for theorems 2.3-type results, Bolzano-Weierstrass
 for Weierstrass, Cantor and Cauchy, Rolle for the mean value theorems), keeps the book's theorem numbers, and ends

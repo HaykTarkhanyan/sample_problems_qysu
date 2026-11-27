@@ -28,7 +28,7 @@ from _analysis import (
 
 SOURCE = "Վ. Մուսոյան, Մաթեմատիկական անալիզ, մաս 1, կետեր 5.5-5.6"
 A, B = 0.0, 4.0
-K = 0.8 / 1.5
+COEF = 0.8 / 1.5      # not K: on screen K is sup|f| (theorem 5.1)
 
 
 def f(t):
@@ -36,7 +36,7 @@ def f(t):
 
 
 def Phi(t):
-    return t - K * np.cos(1.5 * t)
+    return t - COEF * np.cos(1.5 * t)
 
 
 def F(x):
@@ -65,9 +65,9 @@ class NewtonLeibniz(AnalysisScene):
     def construct(self):
         head = title("Նյուտոն-Լայբնիցի բանաձևը")
         self.intro(head, card("Թեորեմներ 5.2 և 6.1",
-                              ("Եթե", "$f$", "-ն անընդհատ է", "$x_0$", "-ում, ապա", "$F(x)=\\int_a^x f(t)\\,dt$",
-                               "ֆունկցիան"),
-                              ("ունի ածանցյալ", "$x_0$", "-ում և", "$F'(x_0)=f(x_0)$", "։"),
+                              ("Եթե", "$f$", "-ն ինտեգրելի է", "$[a,b]$", "-ում և անընդհատ է", "$x_0\\in[a,b]$", "-ում,"),
+                              ("ապա", "$F(x)=\\int_a^x f(t)\\,dt$", "ֆունկցիան ունի ածանցյալ", "$x_0$", "-ում և",
+                               "$F'(x_0)=f(x_0)$", "։"),
                               ("Եթե", "$f$", "-ն անընդհատ է", "$[a,b]$", "-ում, իսկ", "$\\Phi$", "-ն նրա որևէ նախնականն է, ապա"),
                               ("$\\int_a^b f(t)\\,dt=\\Phi(b)-\\Phi(a)$", "։"),
                               source=SOURCE))
@@ -98,7 +98,8 @@ class NewtonLeibniz(AnalysisScene):
                  ("վերին սահմանի ֆունկցիա (5.5)։"))
         self.play(x.animate.set_value(B), run_time=6.0, rate_func=lambda u: u)
         self.say(("Որտեղ", "$f$", "-ը մեծ է,", "$F$", "-ն արագ է աճում, որտեղ փոքր է՝ դանդաղ։"),
-                 ("Թեորեմ 5.1։ Ինտեգրելի", "$f$", "-ի դեպքում", "$F$", "-ն անընդհատ է՝", "$|F(x_0+\\Delta x)-F(x_0)|\\le K|\\Delta x|$", "։"))
+                 ("Թեորեմ 5.1։ Ինտեգրելի", "$f$", "-ի դեպքում", "$F$", "-ն անընդհատ է՝", "$|F(x_0+\\Delta x)-F(x_0)|\\le K|\\Delta x|$", ",",
+                  "$K=\\sup\\limits_{[a,b]}|f|$", "։"))
 
         # ---- F'(x0) = f(x0): a thin strip
         x0 = 1.6
@@ -136,8 +137,13 @@ class NewtonLeibniz(AnalysisScene):
                  ("Շրջանակը՝", "$f(x_0)\\,\\Delta x$", "ուղղանկյունը։"))
         self.play(dx.animate.set_value(0.05), run_time=4.0)
         self.say(("(5.2)՝", "$\\dfrac{F(x_0+\\Delta x)-F(x_0)}{\\Delta x}-f(x_0)=\\dfrac{1}{\\Delta x}\\int_{x_0}^{x_0+\\Delta x}\\big[f(t)-f(x_0)\\big]dt$", "։"),
-                 ("Անընդհատությունից՝", "$|f(t)-f(x_0)|<\\varepsilon$", ", ուստի հատողը դառնում է շոշափող՝", "$F'(x_0)=f(x_0)$", "։"),
-                 extra=0.5)
+                 ("Անընդհատությունից՝", "$0<|\\Delta x|<\\delta$", "դեպքում", "$|f(t)-f(x_0)|<\\varepsilon$",
+                  "այդ միջակայքի բոլոր", "$t$", "-երի համար,"),
+                 ("ուստի աջ մասի մոդուլը", "$\\le\\varepsilon$", "(", "$\\Delta x$", "-ի երկու նշանի դեպքում էլ)։ Հատողը",
+                  "դառնում է շոշափող՝", "$F'(x_0)=f(x_0)$", "։"), extra=0.5)
+        self.say(("Անընդհատությունն էական է՝ եթե", "$f\\equiv0$", ", բացի մեկ կետից, որտեղ", "$f(c)=1$", ", ապա",
+                  "$F\\equiv0$", ","),
+                 ("և", "$F'(c)=0\\ne f(c)$", "։ Մեկ կետում փոփոխությունն ինտեգրալը չի փոխում։"))
 
         # ---- Newton-Leibniz
         self.play(*[FadeOut(m) for m in (st, rc, sc, rr, fx0, x0_lab)], area.animate.set_opacity(0.35), run_time=0.7)
@@ -165,16 +171,21 @@ class NewtonLeibniz(AnalysisScene):
             new_read = tex(rf"n={n}:\ \sum f(\xi_i)\Delta x_i=" + fmt(total), 30, ORANGE).move_to([4.95, 0.9, 0])
             if rects is None:
                 self.play(FadeIn(new_rects), FadeIn(xi_dots), FadeIn(new_read), run_time=1.0)
-                self.say(("Թեորեմ 6.2-ի ապացույցը։ Լագրանժի բանաձևով ամեն", "$[x_i,x_{i+1}]$", "-ում կա", "$\\xi_i$", ","),
-                         ("որ", "$\\Phi(x_{i+1})-\\Phi(x_i)=f(\\xi_i)\\Delta x_i$", "։ Գումարելով՝",
-                          "$\\Phi(b)-\\Phi(a)=\\sum f(\\xi_i)\\Delta x_i$", "։"))
+                self.say(("Թեորեմ 6.2։ Եթե", "$f$", "-ն ինտեգրելի է,", "$\\Phi$", "-ն անընդհատ է", "$[a,b]$", "-ում և",
+                          "$\\Phi'=f$", "բացի վերջավոր թվով կետերից,"),
+                         ("ապա", "$\\int_a^b f=\\Phi(b)-\\Phi(a)$", "։ Վերցնենք այդ կետերն ընդգրկող տրոհում։"))
+                self.say(("Լագրանժի բանաձևով ամեն", "$[x_i,x_{i+1}]$", "-ում կա", "$\\xi_i$", ", որ",
+                          "$\\Phi(x_{i+1})-\\Phi(x_i)=f(\\xi_i)\\Delta x_i$", "։"),
+                         ("Գումարելով՝", "$\\Phi(b)-\\Phi(a)=\\sum f(\\xi_i)\\Delta x_i$", "։"))
             else:
                 self.play(Transform(rects, new_rects), FadeOut(dots_prev), FadeIn(xi_dots),
                           FadeTransform(sums_read, new_read, stretch=False), run_time=1.2)
                 new_rects = rects
             rects, dots_prev, sums_read = new_rects, xi_dots, new_read
-        self.say(("Ամեն տրոհման համար այդ Ռիմանի գումարը ճիշտ", "$\\Phi(b)-\\Phi(a)$", "է։ Երբ", "$\\lambda\\to0$", ","),
-                 ("այն ձգտում է ինտեգրալին, ուստի", "$\\int_a^b f=\\Phi(b)-\\Phi(a)$", "։"), extra=0.5)
+        self.say(("Բացառիկ կետերն ընդգրկող ամեն տրոհման համար (այստեղ դրանք չկան) այդ Ռիմանի գումարը",
+                  "ճիշտ", "$\\Phi(b)-\\Phi(a)$", "է։"),
+                 ("Երբ", "$\\lambda\\to0$", ", այն ձգտում է ինտեգրալին, ուստի", "$\\int_a^b f=\\Phi(b)-\\Phi(a)$", "։"),
+                 extra=0.5)
 
         self.outro(head, card("Ինտեգրալ հաշվի հիմնական բանաձևը",
                               ("$\\dfrac{d}{dx}\\int_a^x f(t)\\,dt=f(x)$", ", եթե", "$f$", "-ն անընդհատ է։"),

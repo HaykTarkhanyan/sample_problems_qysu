@@ -82,6 +82,20 @@ class CompletenessMap(AnalysisScene):
         self.play(LaggedStart(*[FadeIn(n, scale=0.9) for n in nodes], lag_ratio=0.25), run_time=2.5)
         self.say(("Յոթ պնդում I-III գլուխներից։ Ամեն մեկը, ըստ էության, ասում է,"),
                  ("որ իրական առանցքը «անցքեր» չունի։"))
+        statements = [
+            (("1° Իրական թվերի ամեն", "$A/A'$", "հատույթ (ոչ դատարկ", "$A$", ",", "$A'$", ",", "$\\alpha<\\beta$",
+              "ամեն", "$\\alpha\\in A$", ",", "$\\beta\\in A'$", "-ի համար)"),
+             ("ունի բաժանող", "$\\gamma$", "թիվ՝", "$\\alpha\\le\\gamma\\le\\beta$", "։")),
+            (("2° Վերևից սահմանափակ ոչ դատարկ բազմությունն ունի ճշգրիտ վերին եզր։"),),
+            (("3° Աճող և վերևից սահմանափակ հաջորդականությունը զուգամետ է։"),),
+            (("4° Եթե", "$[a_n,b_n]$", "հատվածները ներդրված են և", "$b_n-a_n\\to0$", ", ապա կա մեկ և միայն մեկ",
+              "ընդհանուր կետ։"),),
+            (("5°", "$[a,b]$", "հատվածի բաց միջակայքերով ամեն ծածկույթ ունի վերջավոր ենթածածկույթ։"),),
+            (("6° Ամեն սահմանափակ հաջորդականություն ունի զուգամետ ենթահաջորդականություն։"),),
+            (("7° Ամեն ֆունդամենտալ հաջորդականություն զուգամետ է։"),),
+        ]
+        for k, rows in enumerate(statements):
+            self.say(*rows, anims=[Indicate(nodes[k], color=ORANGE, scale_factor=1.1)])
 
         old = {e: arrow(nodes, *e, MUTED) for e in OLD}
         self.play(LaggedStart(*[GrowArrow(old[e]) for e in OLD], lag_ratio=0.4), run_time=3.0)
@@ -92,7 +106,8 @@ class CompletenessMap(AnalysisScene):
         new = {e: arrow(nodes, *e, ORANGE) for e in NEW}
         self.play(GrowArrow(new[(4, 5)]), Indicate(nodes[4], color=ORANGE), Indicate(nodes[5], color=ORANGE),
                   run_time=1.2)
-        self.say(("ա) Բորել", "$\\Rightarrow$", "Բոլցանո-Վայերշտրաս։ Եթե", "$[a,b]$", "-ի ոչ մի կետ մասնակի սահման չէ,"),
+        self.say(("ա) Բորել", "$\\Rightarrow$", "Բոլցանո-Վայերշտրաս։ Դիցուք՝", "$a\\le x_n\\le b$", "։ Եթե",
+                  "$[a,b]$", "-ի ոչ մի կետ մասնակի սահման չէ,"),
                  ("ամեն", "$x$", "ունի", "$\\Delta_x$", "շրջակայք՝ հաջորդականության վերջավոր թվով անդամներով։"),
                  ("Վերջավոր ենթածածկույթից՝ ամբողջ հաջորդականությունը կունենար վերջավոր թվով անդամներ՝ հակասություն։"),
                  extra=0.5)
@@ -100,13 +115,18 @@ class CompletenessMap(AnalysisScene):
                   run_time=1.2)
         self.say(("բ) Կոշի", "$\\Rightarrow$", "ներդրված հատվածներ։", "$0\\le a_{n+m}-a_n<b_n-a_n\\to0$", ", ուստի",
                   "$a_n$", "-ը ֆունդամենտալ է՝", "$a_n\\to c$", "։"),
-                 ("Իսկ", "$b_n=(b_n-a_n)+a_n\\to c$", "։"), extra=0.5)
+                 ("Իսկ", "$b_n=(b_n-a_n)+a_n\\to c$", "։", "$m\\ge n$", "դեպքում", "$a_n\\le a_m\\le b_m\\le b_n$",
+                  ", ուստի", "$a_n\\le c\\le b_n$", "։"),
+                 ("Եթե", "$d$", "-ն էլ բոլորին պատկանի,", "$|c-d|\\le b_n-a_n\\to0$", "՝ կետը միակն է։"), extra=0.5)
         self.play(GrowArrow(new[(3, 0)]), Indicate(nodes[3], color=ORANGE), Indicate(nodes[0], color=ORANGE),
                   run_time=1.2)
         self.say(("գ) Ներդրված հատվածներ", "$\\Rightarrow$", "Դեդեկինդ։", "$A/A'$", "հատույթի համար հաջորդաբար կիսում ենք",
                   "$[\\alpha_1,\\beta_1]$", "-ը՝"),
-                 ("պահելով", "$\\alpha_n\\in A$", ",", "$\\beta_n\\in A'$", "։ Լեմմայով", "$\\alpha_n,\\beta_n\\to\\gamma$",
-                  ", և", "$\\gamma$", "-ն էլ հենց բաժանող թիվն է։"), extra=0.5)
+                 ("պահելով", "$\\alpha_n\\in A$", ",", "$\\beta_n\\in A'$", ",", "$\\beta_n-\\alpha_n=\\frac{\\beta_1-\\alpha_1}{2^{n-1}}$",
+                  "։ Լեմմայով", "$\\alpha_n,\\beta_n\\to\\gamma$", "։"))
+        self.say(("Եթե", "$\\alpha<\\gamma$", ", մի համարից", "$\\alpha<\\alpha_n\\in A$", ", ուրեմն", "$\\alpha\\in A$", "։",
+                  "Եթե", "$\\gamma<\\beta$", ", մի համարից", "$A'\\ni\\beta_n<\\beta$", ", ուրեմն", "$\\beta\\in A'$", "։"),
+                 ("Ուստի", "$\\gamma$", "-ն բաժանող թիվն է։"), extra=0.5)
 
         # ---- the cycle
         all_arrows = {**old, **new}

@@ -75,6 +75,9 @@ class UpperLowerLimits(AnalysisScene):
         self.say(("Մասնակի սահման՝ որևէ ենթահաջորդականության սահման։"),
                  ("Թեորեմ 3.2՝", "$a$", "-ն մասնակի սահման է այն և միայն այն դեպքում, երբ"),
                  ("նրա ամեն շրջակայքում կան անվերջ թվով անդամներ։"))
+        self.say(("Ապացույց։ Եթե այդպես է, ընտրում ենք", "$n_1<n_2<\\dots$", ", որ", "$|x_{n_k}-a|<\\frac1k$", "։ Ստանում ենք",
+                  "$x_{n_k}\\to a$", "։"),
+                 ("Հակառակը՝ զուգամետ ենթահաջորդականությունը մի համարից սկսած ընկած է", "$a$", "-ի ամեն շրջակայքում։"))
         lines = VGroup(DashedLine(ax.c2p(0, 1), ax.c2p(N + 1, 1), color=ORANGE, stroke_width=2, dash_length=0.08),
                        DashedLine(ax.c2p(0, -0.5), ax.c2p(N + 1, -0.5), color=RED, stroke_width=2, dash_length=0.08))
         self.play(*[d.animate.set_color(ORANGE if n % 3 == 0 else RED) for n, d in zip(NS, dots)], Create(lines),
@@ -100,6 +103,8 @@ class UpperLowerLimits(AnalysisScene):
         self.say(("$n$", "-ը մեծացնելիս", "$\\sup$", "-ը վերցվում է ավելի փոքր բազմության վրա, ուստի",
                   "$y_n$", "-ը նվազող է"),
                  ("և ունի սահման՝", "$y_n\\to c$", "։ Այստեղ", "$c=1$", "։"))
+        self.say(("Եթե", "$y_n\\to-\\infty$", ", ապա", "$x_n\\le y_n$", "-ից", "$x_n\\to-\\infty$", "։"),
+                 ("Ստորև ենթադրում ենք, որ", "$c$", "-ն վերջավոր է։"))
         c_line = DashedLine(ax.c2p(0, 1), ax.c2p(N + 1, 1), color=ORANGE, stroke_width=2, dash_length=0.08)
         self.play(Create(c_line), run_time=0.6)
         self.say(("Ամեն", "$\\varepsilon>0$", "-ի համար մի", "$N$", "-ից սկսած", "$x_n\\le y_n<c+\\varepsilon$", "՝"),
@@ -113,7 +118,8 @@ class UpperLowerLimits(AnalysisScene):
         low_line = DashedLine(ax.c2p(0, -0.5), ax.c2p(N + 1, -0.5), color=RED, stroke_width=2, dash_length=0.08)
         self.play(Create(env_low), FadeIn(z_name), Create(low_line), run_time=2.0)
         self.say(("Նույն ձևով", "$z_n=\\inf\\{x_n,x_{n+1},\\dots\\}$", "-ն աճող է և ձգտում է", "$\\varliminf x_n$", "-ին։"),
-                 ("Եթե", "$x_n$", "-ը վերևից սահմանափակ չէ, ապա", "$\\varlimsup x_n=+\\infty$", "։"))
+                 ("Եթե", "$x_n$", "-ը վերևից սահմանափակ չէ, ամեն", "$E$", "-ից մեծ անդամներ անվերջ թվով կան, և",
+                  "$\\varlimsup x_n=+\\infty$", "։"))
 
         # ---- equal upper and lower limits: convergence
         self.fade_all(keep=[head])

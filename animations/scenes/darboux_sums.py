@@ -24,7 +24,7 @@ from manim import (
 from scipy.integrate import quad
 
 from _analysis import (
-    BLUE, INK, MUTED, ORANGE, RED, AnalysisScene, card, tex, title,
+    BLUE, INK, MUTED, ORANGE, RED, AnalysisScene, card, reading_time, tex, title,
 )
 
 SOURCE = "Վ. Մուսոյան, Մաթեմատիկական անալիզ, մաս 1, կետեր 5.2-5.3"
@@ -40,8 +40,16 @@ INTEGRAL = quad(f, A, B)[0]
 
 
 def inf_sup(lo, hi):
-    xs = np.linspace(lo, hi, 400)
-    ys = f(xs)
+    """Exact min and max of f on [lo, hi]: the endpoints and the critical points, where
+    f'(x) = 1.12 cos 1.6x + 0.15 = 0, i.e. cos 1.6x = -15/112 (sampling would under- and overshoot)."""
+    base = np.arccos(-15 / 112)
+    cands = [lo, hi]
+    for k in range(-2, 6):
+        for t in (base + 2 * np.pi * k, -base + 2 * np.pi * k):
+            x = t / 1.6
+            if lo < x < hi:
+                cands.append(x)
+    ys = f(np.array(cands))
     return float(ys.min()), float(ys.max())
 
 
@@ -111,7 +119,11 @@ class DarbouxSums(AnalysisScene):
         s0, S0 = darboux(UNEVEN)
         sS = VGroup(tex("S=" + fmt(S0), 32, ORANGE), tex("s=" + fmt(s0), 32, RED)).arrange(DOWN, buff=0.25)
         sS.move_to([4.85, 0.0, 0])
-        self.play(FadeOut(riemann), FadeOut(xi_dots), FadeIn(up_r), FadeIn(low_r), FadeIn(sS), run_time=1.0)
+        self.say(("Թեորեմ 2.1։ Ինտեգրելի ֆունկցիան սահմանափակ է՝ եթե", "$f$", "-ը մի", "$[x_{i_0},x_{i_0+1}]$",
+                  "-ում սահմանափակ չէ,"),
+                 ("$\\xi_{i_0}$", "-ն փոխելով՝", "$\\sigma$", "-ն կարելի է դարձնել որքան ասես մեծ։ Ուստի դիտարկում ենք",
+                  "$[a,b]$", "-ում սահմանափակ", "$f$", "։"))
+        self.play(FadeOut(riemann), FadeOut(xi_dots), FadeOut(sig), FadeIn(up_r), FadeIn(low_r), FadeIn(sS), run_time=1.0)
         self.say(("$m_i$", "-ն և", "$M_i$", "-ն", "$f$", "-ի ճշգրիտ ստորին և վերին եզրերն են", "$[x_i,x_{i+1}]$", "-ում։"),
                  ("$s$", "-ը և", "$S$", "-ը", "$\\sigma$", "-երի ճշգրիտ եզրերն են՝ ֆիքսված տրոհման դեպքում։"))
 
@@ -130,6 +142,8 @@ class DarbouxSums(AnalysisScene):
 
         # ---- uniform partitions: the gap S - s shrinks
         self.play(FadeOut(ticks), FadeOut(new_tick), run_time=0.4)
+        self.say(("Սկսենք նոր՝ հավասարաչափ տրոհումից՝", "$n=4$", ", և ամեն անգամ կիսենք բոլոր միջակայքերը։"),
+                 ("Ամեն քայլ մանրացում է՝", "$S$", "-ը նվազում է,", "$s$", "-ը՝ աճում։"))
         gap_read = None
         for n in (4, 8, 16, 32):
             pts = list(np.linspace(A, B, n + 1))
@@ -146,14 +160,20 @@ class DarbouxSums(AnalysisScene):
                 anims += [FadeOut(gap_read), FadeIn(new_read)]
             self.play(*anims, run_time=1.3)
             gap_read = new_read
-            self.wait(1.2)
+            self.wait(max(2.0, reading_time(new_read)))
         self.say(("Նարնջագույն և կարմիր մակերեսների տարբերությունը", "$S-s=\\sum\\omega_i\\Delta x_i$", "-ն է,"),
                  ("$\\omega_i=M_i-m_i$", "՝ տատանումը", "$[x_i,x_{i+1}]$", "-ում։ Այն ձգտում է 0-ի։ Ինտեգրալը՝",
                   "$\\approx" + fmt(INTEGRAL) + "$", "։"))
         self.say(("Թեորեմ 2.2։ Ինտեգրալը գոյություն ունի այն և միայն այն դեպքում, երբ"),
                  ("$\\lim\\limits_{\\lambda\\to0}(S-s)=0$", ", այսինքն՝", "$\\lim\\limits_{\\lambda\\to0}\\sum\\omega_i\\Delta x_i=0$", "։"),
                  extra=0.5)
-        self.say(("Թեորեմ 3.1։ Անընդհատ", "$f$", "-ն ինտեգրելի է։ Կանտորի թեորեմով մի", "$\\delta$", "-ից փոքր"),
+        self.say(("Անհրաժեշտություն՝", "$\\lambda<\\delta$", "դեպքում բոլոր", "$\\sigma$", "-երը", "$(I-\\varepsilon,I+\\varepsilon)$",
+                  "-ում են, իսկ", "$s$", "-ը և", "$S$", "-ը նրանց ճշգրիտ եզրերն են,"),
+                 ("հետևաբար", "$S-s\\le2\\varepsilon$", "։ Բավարարություն՝", "$s\\le I_*\\le I^*\\le S$", "(Դարբուի ստորին և վերին",
+                  "ինտեգրալներ), ուրեմն", "$I_*=I^*=I$", ","),
+                 ("և", "$s\\le\\sigma\\le S$", "-ից՝", "$|\\sigma-I|\\le S-s\\to0$", "։"), extra=0.5)
+        self.say(("Թեորեմ 3.1։ Եթե", "$f$", "-ն անընդհատ է", "$[a,b]$", "հատվածում, ապա ինտեգրելի է։ Կանտորի թեորեմով մի",
+                  "$\\delta$", "-ից փոքր"),
                  ("$\\lambda$", "-ի դեպքում", "$\\omega_i<\\varepsilon$", ", ուստի", "$\\sum\\omega_i\\Delta x_i<\\varepsilon(b-a)$", "։"),
                  extra=0.5)
 
@@ -179,7 +199,7 @@ class DarbouxSums(AnalysisScene):
                                  ).move_to(ax2.c2p((a + b) / 2, 0.5)) for a, b in zip(pts[:-1], pts[1:])])
         self.play(FadeIn(up2), run_time=0.8)
         self.say(("Դիրիխլեի ֆունկցիա։ Ամեն միջակայքում կան և՛ ռացիոնալ, և՛ իռացիոնալ կետեր,"),
-                 ("ուստի", "$M_i=1$", ",", "$m_i=0$", "՝", "$S=1$", ",", "$s=0$", "ամեն տրոհման համար։"))
+                 ("այսինքն՝", "$M_i=1$", ",", "$m_i=0$", ",", "$S=1$", ",", "$s=0$", "ամեն տրոհման համար։"))
         self.say(("$S-s=1\\not\\to0$", "՝ ինտեգրելի չէ, թեև սահմանափակ է։ Թեորեմ 2.1-ի հակադարձը ճիշտ չէ՝"),
                  ("ինտեգրելի ֆունկցիան սահմանափակ է, բայց ոչ ամեն սահմանափակ ֆունկցիա է ինտեգրելի։"), extra=0.5)
 

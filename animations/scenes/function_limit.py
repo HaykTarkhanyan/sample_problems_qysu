@@ -47,6 +47,8 @@ class FunctionLimit(AnalysisScene):
     def construct(self):
         head = title("Ֆունկցիայի սահմանը՝ Կոշի և Հայնե")
         self.intro(head, card("Կոշիի սահմանում",
+                              ("Դիցուք՝", "$f$", "-ը որոշված է", "$X$", "-ի վրա, իսկ", "$a$", "-ն", "$X$",
+                               "-ի կուտակման կետ է։"),
                               ("$\\lim\\limits_{x\\to a}f(x)=A$", ", եթե յուրաքանչյուր", "$\\varepsilon>0$",
                                "թվի համար կա", "$\\delta>0$", ","),
                               ("այնպիսին, որ", "$0<|x-a|<\\delta,\\ x\\in X\\ \\Rightarrow\\ |f(x)-A|<\\varepsilon$", "։"),
@@ -95,6 +97,10 @@ class FunctionLimit(AnalysisScene):
         self.say(("Գիրքը վերցնում է", "$\\delta=\\min\\left\\{\\frac{\\pi}{2},\\varepsilon\\right\\}$", ", քանի որ",
                   "$\\left|1-\\frac{\\sin x}{x}\\right|<|x|$", "։"),
                  ("Կապույտ շերտում գրաֆիկն ամբողջությամբ նարնջագույն շերտի մեջ է։"))
+        self.say(("Ինչո՞ւ։ Միավոր շրջանում եռանկյան, սեկտորի և եռանկյան մակերեսների համեմատությունից"),
+                 ("$\\sin x<x<\\operatorname{tg}x$", ",", "$0<x<\\frac{\\pi}{2}$", "։ Այստեղից",
+                  "$0<1-\\frac{\\sin x}{x}<1-\\cos x=2\\sin^2\\frac x2<2\\sin\\frac x2<x$", "։"),
+                 ("Զույգության շնորհիվ՝", "$\\left|1-\\frac{\\sin x}{x}\\right|<|x|$", ", երբ", "$0<|x|<\\frac{\\pi}{2}$", "։"))
         self.play(eps.animate.set_value(0.12), run_time=2.5)
         self.say(("Փոքր", "$\\varepsilon$", "-ի համար", "$\\delta$", "-ն էլ է փոքրանում, բայց միշտ կա։"))
 
@@ -150,10 +156,11 @@ class FunctionLimit(AnalysisScene):
         self.play(Create(ax2), FadeIn(ylabs), Create(g2), FadeIn(side2), run_time=2.0)
         band0 = Rectangle(width=ax2.c2p(0.42, 0)[0] - ax2.c2p(0, 0)[0], height=ax2.c2p(0, 1.0)[1] - ax2.c2p(0, 0)[1],
                           stroke_width=0, fill_color=ORANGE, fill_opacity=0.16).move_to(ax2.c2p(0.21, 0))
-        self.say(("Հայնե", "$\\Rightarrow$", "Կոշի՝ հակասող ենթադրությամբ։ Եթե Կոշիի պայմանը տեղի չունի",
-                  "$A$", "-ի համար,"),
-                 ("ապա կա", "$\\varepsilon_0$", ", որ ոչ մի", "$\\delta$", "չի բավարարում։ Այստեղ՝", "$A=0$", ",",
-                  "$\\varepsilon_0=\\frac12$", "։"), anims=[FadeIn(band0)])
+        self.say(("Հայնե", "$\\Rightarrow$", "Կոշի՝ հակասող ենթադրությամբ։ Դիցուք՝ Հայնեի պայմանը տեղի ունի, իսկ Կոշիինը՝ ոչ։"),
+                 ("Այդ դեպքում կա", "$\\varepsilon_0>0$", ", որ ամեն", "$\\delta$", "-ի համար կա", "$x_\\delta\\in X$", ",",
+                  "$0<|x_\\delta-a|<\\delta$", ", բայց", "$|f(x_\\delta)-A|\\ge\\varepsilon_0$", "։"))
+        self.say(("Նկարը՝ որպես օրինակ՝", "$\\sin\\frac1x$", ",", "$a=0$", ",", "$A=0$", ",", "$\\varepsilon_0=\\frac12$", "։"),
+                 anims=[FadeIn(band0)])
         picks = VGroup()
         for n, x in enumerate(ONES[1:6], start=1):
             d = 1.2 * x
@@ -163,10 +170,9 @@ class FunctionLimit(AnalysisScene):
             self.play(FadeIn(win), FadeIn(pt), run_time=0.6)
             self.play(FadeOut(win), run_time=0.3)
             picks.add(pt)
-        self.say(("Ամեն", "$\\delta$", "-ի համար կա", "$x_\\delta$", ", որ", "$0<x_\\delta<\\delta$", ", բայց",
-                  "$|f(x_\\delta)-A|\\ge\\varepsilon_0$", "։"),
-                 ("$\\delta=\\frac1n$", "-ով ստանում ենք", "$x_n\\to0$", ", իսկ", "$f(x_n)\\not\\to A$",
-                  "՝ Հայնեի պայմանը խախտվում է։"), extra=0.5)
+        self.say(("$\\delta=\\frac1n$", "-ով ստանում ենք", "$x_n\\in X$", ",", "$0<|x_n-a|<\\frac1n$", ",",
+                  "$|f(x_n)-A|\\ge\\varepsilon_0$", "։"),
+                 ("Ուրեմն", "$x_n\\to a$", ", բայց", "$f(x_n)\\not\\to A$", "՝ հակասություն Հայնեի պայմանին։"), extra=0.5)
 
         zs = VGroup(*[Dot(ax2.c2p(x, 0), radius=0.06, color=BLUE) for x in ZEROS])
         self.play(FadeOut(band0), LaggedStart(*[FadeIn(z) for z in zs], lag_ratio=0.2), run_time=1.5)
@@ -188,7 +194,8 @@ class FunctionLimit(AnalysisScene):
                           ).arrange(DOWN, buff=0.3).move_to([4.6, 0.8, 0])
         self.play(Create(ax3), Create(lpart), Create(rpart), FadeIn(holes), run_time=1.6)
         self.say(("Միակողմանի սահմաններ՝ միայն", "$x<a$", "կամ միայն", "$x>a$", "կետերով։"),
-                 ("$\\lim\\limits_{x\\to a}f(x)=A$", "այն և միայն այն դեպքում, երբ երկու միակողմանի սահմաններն էլ", "$A$", "են։"),
+                 ("Եթե", "$a$", "-ն", "$X$", "-ի կուտակման կետ է և՛ ձախից, և՛ աջից, ապա", "$\\lim\\limits_{x\\to a}f(x)=A$"),
+                 ("այն և միայն այն դեպքում, երբ երկու միակողմանի սահմաններն էլ", "$A$", "են։"),
                  anims=[FadeIn(lim_labs)], extra=0.5)
 
         self.outro(head, card("Կոշի և Հայնե",
