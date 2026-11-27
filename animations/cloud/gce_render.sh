@@ -1,5 +1,5 @@
 #!/bin/bash
-# GCE startup script: render Manim scenes in parallel at 720p30 and upload videos plus render_check sheets.
+# GCE startup script: render Manim scenes in parallel at 1080p30 and upload videos plus render_check sheets.
 # Built from the gcp-compute skill's template (log everything, upload after every scene, power off on any exit,
 # skip scenes already in the bucket so a replacement VM resumes). Runs as root at boot. Keep this file LF-only.
 #
@@ -66,10 +66,10 @@ render_one() {                                # $1 = file.py:Class
   rm -rf $d; mkdir -p $d; cp -r $W $d/        # media/ next to the scene file and logs/ in the parent folder)
   cd $d/animations
   local t0=$(date +%s)
-  $PY tools/render_check.py scenes/$f $c --quality m --holds > /root/results/$c.render.txt 2>&1
+  $PY tools/render_check.py scenes/$f $c --quality f --holds > /root/results/$c.render.txt 2>&1
   local st=$?
   mkdir -p /root/results/$c
-  cp media/videos/${f%.py}/720p30/$c.mp4 /root/results/$c/ 2>/dev/null
+  cp media/videos/${f%.py}/1080p30/$c.mp4 /root/results/$c/ 2>/dev/null
   cp media/checks/$c/* /root/results/$c/ 2>/dev/null
   cp /root/results/$c.render.txt /root/results/$c/render.txt
   echo "==== $c: exit $st in $(( $(date +%s) - t0 )) s ===="

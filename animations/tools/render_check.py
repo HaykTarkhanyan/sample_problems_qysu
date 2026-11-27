@@ -4,7 +4,7 @@ Usage (from animations/):
     uv run python tools/render_check.py scenes/<file>.py <SceneClass> [--quality l|m|h] [--frames 8]
         [--holds] [--still] [--skip-render] [--strict]
 
-    --quality l|m|h   480p15 / 720p30 / 1080p60 (default l; the site ships m)
+    --quality l|m|h|f 480p15 / 720p30 / 1080p60 / 1080p30 (default l; the site ships m; f for the analysis videos)
     --frames N        frames on the contact sheet (default 8; with --holds the maximum, default 16)
     --holds           instead of evenly spaced frames, show the last frame of every pause (a still stretch of
                       0.4 s or more, i.e. what the viewer sees settled) and how long it is held
@@ -62,7 +62,9 @@ MEDIA_DIR = ANIM_DIR / "media"
 CHECKS_DIR = MEDIA_DIR / "checks"
 LOG_FILE = REPO_ROOT / "logs" / "render_check.log"
 
-QUALITY_DIRS = {"l": "480p15", "m": "720p30", "h": "1080p60"}  # manim's video_dir names for -ql / -qm / -qh
+# manim's video_dir names for -ql / -qm / -qh; "f" = 1080p at 30 fps (-qh --fps 30), for the long analysis videos
+# (owner 2026-11-27: 1080p; 60 fps would double frames and size for slow animations that do not need it)
+QUALITY_DIRS = {"l": "480p15", "m": "720p30", "h": "1080p60", "f": "1080p30"}
 SIZE_BUDGET = int(1.5 * 1024 * 1024)  # bytes per video at 720p30 (AUTHORING.md)
 CONTENT_DIFF = 48       # max channel difference from the background colour that counts as content
 EDGE_MIN_PIXELS = 3     # content pixels in a border strip needed to raise an edge flag
@@ -107,7 +109,8 @@ def rel(path):
 # ---------------------------------------------------------------- render
 
 def run_manim(scene_file, scene, quality, still, out_log):
-    cmd = [sys.executable, "-m", "manim", "render", "-q", quality, "--disable_caching",
+    manim_q = ["-q", "h", "--fps", "30"] if quality == "f" else ["-q", quality]
+    cmd = [sys.executable, "-m", "manim", "render", *manim_q, "--disable_caching",
            "--media_dir", str(MEDIA_DIR), "--progress_bar", "none", "--silent"]
     if still:
         cmd.append("-s")
