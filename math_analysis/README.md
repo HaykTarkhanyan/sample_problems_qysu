@@ -45,7 +45,7 @@ images: `pdftoppm -f P -l P -r 110 -png musoyan_1.pdf out` (110 dpi is enough fo
 
 | book section (PDF pages) | topic | scene | narration |
 |---|---|---|---|
-| 2.5.2-2.5.4 (56-61) | limit of a function, intuition first: the eps-delta game, a jump, Heine, sin(1/x), one-sided limits (3:47) | `function_limit_narrated.py` / `FunctionLimitNarrated` | `animations/narration/function_limit.hy.json`, 12 beats |
+| 2.5.2-2.5.4 (56-61) | limit of a function, intuition first: the eps-delta game, a jump, Heine, sin(1/x), one-sided limits (3:57) | `function_limit_narrated.py` / `FunctionLimitNarrated` | `animations/narration/function_limit.hy.json`, 12 beats |
 
 ## Review
 

@@ -26,3 +26,6 @@ datetime,model,voice,chars,tokens_in,tokens_audio,audio_s,usd_est,out
 2026-11-28T11:23:28,gemini-3.8-flash-tts,Sadaltager,280,154,529,21.1,0.00484,sin_inv.wav
 2026-11-28T11:23:34,gemini-3.8-flash-tts,Sadaltager,237,120,534,21.4,0.00487,one_sided.wav
 2026-11-28T11:23:39,gemini-3.8-flash-tts,Sadaltager,174,99,379,15.2,0.00346,closing.wav
+2026-11-28T12:07:23,gemini-3.8-flash-tts,Sadaltager,194,115,413,16.5,0.00377,hook.wav
+2026-11-28T12:07:30,gemini-3.8-flash-tts,Sadaltager,246,146,565,22.6,0.00516,eps_band.wav
+2026-11-28T12:07:38,gemini-3.8-flash-tts,Sadaltager,274,156,604,24.1,0.00551,cauchy.wav
