@@ -9,8 +9,10 @@ Steps (from animations/):
         media/narration/function_limit/
     uv run python tools/level_narration.py media/narration/function_limit/      # same loudness for every beat
     uv run python tools/render_check.py scenes/function_limit_narrated.py FunctionLimitNarrated
-    uv run python tools/render_check.py scenes/function_limit_narrated.py FunctionLimitNarrated --quality m
-Video length follows the narration (3:47). Render time, measured 2026-11-28: 4.9 min at -ql (one core).
+    uv run python tools/render_check.py scenes/function_limit_narrated.py FunctionLimitNarrated --quality f --strict
+Video length follows the narration (3:47). Render time, measured 2026-11-28 on one core: 3-5 min at -ql, 7.0 min
+at 1080p30 (--quality f, DECISIONS #31; 7.3 MB). The only --strict warning is manim's "Some options were not used"
+notice, printed whenever a sound track is muxed in.
 """
 import sys
 from pathlib import Path
