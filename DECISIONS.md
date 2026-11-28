@@ -2,6 +2,29 @@
 
 Newest first. Superseded entries stay, marked as such.
 
+## 32. Narrated intro videos sit beside the silent proof videos; narration clips are levelled to -17 LUFS
+
+- **Date / status:** 2026-11-28, active (owner: Q45 "function limit", Q46 "new narrated version", Q47 "Gemini
+  Sadaltager", Q48 "full build")
+- **Decision:** the first narrated analysis video, `FunctionLimitNarrated` (`scenes/function_limit_narrated.py`,
+  12 beats in `narration/function_limit.hy.json`, 3:47), is a separate intro video: intuition first (the eps-delta
+  game with a delta that fails, one that works, eps shrinking with delta following), Cauchy's definition shown once
+  the game has made it readable, a jump with no limit, Heine's sequences, sin(1/x), one-sided limits. The silent
+  `FunctionLimit` keeps the book's proofs (#30). Every narration clip is levelled in place to -17 LUFS with a -1
+  dBFS limiter (`tools/level_narration.py`, lengths unchanged, gain recorded in the manifest).
+- **Why:** the limit of a function is the course's first big hurdle, and the place where animation adds the most
+  (delta reacting to eps, sequences as probes). As an intro the silent video was too dense for 2.5 min (both
+  definitions, the full proof of |1 - sin x / x| < |x|, both directions of the equivalence, one by contradiction),
+  its captions carried whole inequality chains, and it showed no failing delta. A voice can carry the logic while the
+  screen stays almost text-free. Loudness: the 12 Gemini clips measured -19.3 to -16.3 LUFS (3.0 LU, audible
+  between beats); after levelling -17.2 to -16.9.
+- **Alternatives rejected:** reworking the silent video (it would lose the book's proofs, which #30 wants);
+  Darboux sums, intermediate value, Bolzano-Weierstrass, Taylor or uniform continuity first (less of a hurdle, or
+  less added by animation, or they assume eps-delta); Hayk's own voice (needs a recording session and re-takes for
+  every edit); leaving the clip levels as Gemini returns them.
+- **What would change this:** students or the owner find the narrated version less useful than the silent one, or
+  want narration added to the proof videos instead; a TTS voice that returns consistent levels.
+
 ## 31. Final renders of the long videos: 1080p30, in parallel on a GCP trial VM
 
 - **Date / status:** 2026-11-28, active (owner: "maybe render 1080p instead of 720"; Q2 "GCP VM, in parallel"; Q3 "Yes,

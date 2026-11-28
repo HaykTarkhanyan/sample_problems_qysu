@@ -41,6 +41,12 @@ images: `pdftoppm -f P -l P -r 110 -png musoyan_1.pdf out` (110 dpi is enough fo
 | T6 | 9.4.2 (290-292) | rearrangements: Dirichlet (theorem 4.2) and Riemann (theorem 4.3) | `series_rearrangement.py` / `SeriesRearrangement` |
 | T7 | 3.3.5 (92-93) | capstone: statements equivalent to completeness (theorem 3.3), the map of the series | `completeness_map.py` / `CompletenessMap` |
 
+## Narrated intro videos (DECISIONS #32)
+
+| book section (PDF pages) | topic | scene | narration |
+|---|---|---|---|
+| 2.5.2-2.5.4 (56-61) | limit of a function, intuition first: the eps-delta game, a jump, Heine, sin(1/x), one-sided limits (3:47) | `function_limit_narrated.py` / `FunctionLimitNarrated` | `animations/narration/function_limit.hy.json`, 12 beats |
+
 ## Review
 
 The first 11 scenes were reviewed by Codex (gpt-6.1-sol, xhigh) on 2026-11-27 with an unbiased, critical prompt:

@@ -14,3 +14,15 @@ datetime,model,voice,chars,tokens_in,tokens_audio,audio_s,usd_est,out
 2026-11-24T20:54:14,gemini-3.8-flash-tts,Sadaltager,143,77,268,10.7,0.00245,steps.wav
 2026-11-24T20:54:19,gemini-3.8-flash-tts,Sadaltager,143,81,311,12.4,0.00284,limit.wav
 2026-11-24T20:54:24,gemini-3.8-flash-tts,Sadaltager,153,84,332,13.3,0.00303,bound.wav
+2026-11-28T11:22:34,gemini-3.8-flash-tts,Sadaltager,166,102,360,14.4,0.00329,hook.wav
+2026-11-28T11:22:40,gemini-3.8-flash-tts,Sadaltager,193,121,420,16.8,0.00384,intuition.wav
+2026-11-28T11:22:45,gemini-3.8-flash-tts,Sadaltager,187,111,421,16.8,0.00384,eps_band.wav
+2026-11-28T11:22:51,gemini-3.8-flash-tts,Sadaltager,196,112,437,17.5,0.00399,delta_fail.wav
+2026-11-28T11:22:56,gemini-3.8-flash-tts,Sadaltager,176,101,366,14.6,0.00334,delta_ok.wav
+2026-11-28T11:23:01,gemini-3.8-flash-tts,Sadaltager,192,114,403,16.1,0.00368,shrink.wav
+2026-11-28T11:23:08,gemini-3.8-flash-tts,Sadaltager,252,145,556,22.2,0.00508,cauchy.wav
+2026-11-28T11:23:14,gemini-3.8-flash-tts,Sadaltager,254,156,510,20.4,0.00467,jump.wav
+2026-11-28T11:23:21,gemini-3.8-flash-tts,Sadaltager,277,157,588,23.5,0.00537,heine.wav
+2026-11-28T11:23:28,gemini-3.8-flash-tts,Sadaltager,280,154,529,21.1,0.00484,sin_inv.wav
+2026-11-28T11:23:34,gemini-3.8-flash-tts,Sadaltager,237,120,534,21.4,0.00487,one_sided.wav
+2026-11-28T11:23:39,gemini-3.8-flash-tts,Sadaltager,174,99,379,15.2,0.00346,closing.wav
