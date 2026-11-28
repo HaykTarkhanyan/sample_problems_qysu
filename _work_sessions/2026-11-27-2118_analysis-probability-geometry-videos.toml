@@ -1,0 +1,39 @@
+title = "Manim video series: 18 analysis (Musoyan part 1), 3 probability, 3 analytic geometry; Codex reviews; 1080p on GCP"
+date = "2026-11-27"
+time = "21:18"
+areas = ["animations/scenes", "animations/tools", "animations/cloud", "math_analysis", "probability", "analytic_geometry", "_knowledge", "DECISIONS.md"]
+done = [
+  "Found the Musoyan textbook (misc/code/manr_munr/opus_4_8_musoyan_qrs/musoyan_1.pdf, PDF page = printed + 1, read as images: the ABBYY text layer is garbage for Armenian)",
+  "Owner choices: all theorem groups, silent long-form (no narration, 12-30 s rule off), gallery first (DECISIONS #30)",
+  "Shared helper scenes/_analysis.py: say() holds captions for their reading time, card(), intro()/outro(), fade_all()",
+  "11 analysis scenes (monotone limit ... Darboux), then second batch T1-T7 (function limit, upper/lower limits, Darboux sums, Newton-Leibniz, Taylor, rearrangements, completeness map); math_analysis/README.md maps them",
+  "Codex CLI (MCP not connected): gpt-6.2-astra rejected for the ChatGPT account, gpt-6.1-sol xhigh yolo used; review 1 (11 scenes): 37 findings, review 2 (T1-T7): ~30 findings; all verified and applied",
+  "Global CLAUDE.md: Codex via the CLI, yolo by default, strongest accessible model, unbiased prompts (synced, notes 01807018, claude-setup 0afbc08)",
+  "1080p30 (owner): render_check --quality f = -qh --fps 30; GCP trial VM script animations/cloud/gce_render.sh (one copy of animations/ per scene, Arial from Windows) (DECISIONS #31)",
+  "gcloud: trial configuration (eabaxtimail, project-313180ba), Metric Academy login revoked (owner); gcp-compute skill updated (quota 12 vCPU, N2D custom not in europe-west1-b), backup pushed (notes fc4caade)",
+  "VM runs: 18 analysis scenes in ~13 min; contact-sheet review found 4 real bugs (set_opacity filled a curve, literal $\\alpha$ on a card, overlapping labels, incomplete sufficiency step), re-rendered on VM 2",
+  "Gallery: 17 standalone pages (<= 9.8 MB) + index linking html-review URLs, animations/media/review/analysis_2026-11-28/",
+  "Two agents: analytic geometry (Pilipossyan-Ohnikyan; mixed product 3D, conic sections with Dandelin spheres 3D, diameters) and probability (Buffon, density of g(xi), convolution); each reviewed by Codex (18 and 15 findings), applied by the agents, spot-checked",
+  "Owner: glossary terms over the textbook's in the geometry videos (սֆերա, ասիմպտոտիկ, հետևանք, օրթոնորմալ)",
+  "Probability videos rendered at 1080p on VM 3 and reviewed; geometry videos on VM 4",
+  "Billing checked in the console: free trial not upgraded, credit EUR 269.43 untouched so far (costs lag), report total EUR 0.00",
+]
+pending = [
+  "Owner review of the analysis gallery and of the 6 new videos (comments via html-review)",
+  "Site placement of all videos (not decided; site/ untouched)",
+  "Bucket gs://qysu-manim-313180 kept (~0.5 GB) until the owner says to delete it; verify bucket-side before deleting (gcp-compute rule 6)",
+  "Re-check GCP billing once costs appear (expected ~EUR 0.3-0.5, fully covered by the trial credit)",
+  "Geometry videos are 6-7 min after the review; owner may want cuts",
+]
+next = [
+  "Read the owner's gallery comments (review.py comments) and fix",
+  "Decide site placement; for site pages consider 720p copies (render_check --quality m) for size",
+]
+files = [
+  "animations/scenes/_analysis.py", "animations/scenes/{monotone_limit,nested_intervals,bolzano_weierstrass,cauchy_criterion,intermediate_value,weierstrass_extremes,uniform_continuity,borel_lemma,fermat_rolle,lagrange_cauchy,darboux,function_limit,upper_lower_limits,darboux_sums,newton_leibniz,taylor_formula,series_rearrangement,completeness_map}.py",
+  "animations/scenes/{_prob,prob_buffon,prob_function_density,prob_convolution}.py", "animations/scenes/{_ag3d,ag_mixed_product,ag_conic_sections,ag_diameters}.py",
+  "animations/tools/render_check.py", "animations/cloud/gce_render.sh", ".gitattributes",
+  "math_analysis/README.md", "probability/VIDEOS.md", "analytic_geometry/README.md", "_knowledge/manim_3d_notes.md", "DECISIONS.md", "animations/README.md",
+]
+commits = ["ade8411", "b1c56dd", "f9b048b", "9901bee", "f88ce21 (pushed df1f626..f88ce21)", "5f463f8", "4e2385c"]
+notes = "Renders: never two on the laptop at once; a LaTeX compile next to a render can delete the other process's files in media/Tex. Codex usage is readable from ~/.codex/sessions/*.jsonl rate_limits (now also via the usage-limits skill). Pages workflow only deploys on site/ changes, so these commits triggered no deploy."
