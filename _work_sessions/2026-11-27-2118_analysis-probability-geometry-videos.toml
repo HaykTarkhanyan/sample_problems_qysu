@@ -15,15 +15,15 @@ done = [
   "Gallery: 17 standalone pages (<= 9.8 MB) + index linking html-review URLs, animations/media/review/analysis_2026-11-28/",
   "Two agents: analytic geometry (Pilipossyan-Ohnikyan; mixed product 3D, conic sections with Dandelin spheres 3D, diameters) and probability (Buffon, density of g(xi), convolution); each reviewed by Codex (18 and 15 findings), applied by the agents, spot-checked",
   "Owner: glossary terms over the textbook's in the geometry videos (սֆերա, ասիմպտոտիկ, հետևանք, օրթոնորմալ)",
-  "Probability videos rendered at 1080p on VM 3 and reviewed; geometry videos on VM 4",
-  "Billing checked in the console: free trial not upgraded, credit EUR 269.43 untouched so far (costs lag), report total EUR 0.00",
+  "Probability videos rendered at 1080p on VM 3 and reviewed; geometry videos on VM 4 (diameters 405 s, mixed product 579 s, conic sections 1203 s render), all reviewed from contact sheets",
+  "Gallery of the 6 new videos: animations/media/review/new_videos_2026-11-28/ (one page per video; 4 pages exceed 10 MB because one 1080p video alone does, up to 19.3 MB)",
+  "Billing (console, 28 Nov 10:13): free trial not upgraded; EUR 269.08 of 269.43 left, EUR 0.35 used for 4 VM runs + bucket, report total EUR 0.00 (fully covered by the credit); no VMs or disks left (VM 4 deleted itself at its 3 h limit)",
 ]
 pending = [
   "Owner review of the analysis gallery and of the 6 new videos (comments via html-review)",
   "Site placement of all videos (not decided; site/ untouched)",
   "Bucket gs://qysu-manim-313180 kept (~0.5 GB) until the owner says to delete it; verify bucket-side before deleting (gcp-compute rule 6)",
-  "Re-check GCP billing once costs appear (expected ~EUR 0.3-0.5, fully covered by the trial credit)",
-  "Geometry videos are 6-7 min after the review; owner may want cuts",
+  "Geometry videos are 6-7 min after the review (conic sections 7.0 min); owner may want cuts",
 ]
 next = [
   "Read the owner's gallery comments (review.py comments) and fix",
